@@ -29,6 +29,8 @@
 
 @implementation CDXInfoOverviewViewController
 
+#define LogFileComponent lcl_cCDXInfoOverviewViewController
+
 @synthesize tableView = _tableView;
 @synthesize tableViewHeaderView = _tableViewHeaderView;
 
@@ -109,7 +111,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 1;
+        return 2;
     } else if (section == 1) {
         return 1;
     } else {
@@ -127,7 +129,11 @@
     }
     
     if (indexPath.section == 0) {
-        [cell configureWithText:@"Feedback, Bugs, ..."];
+        if (indexPath.row == 0) {
+            [cell configureWithText:@"0xc0.de/CardDecks"];
+        } else {
+            [cell configureWithText:@"Feedback, Bugs, ..."];
+        }
     } else if (indexPath.section == 1) {
         [cell configureWithText:@"License, Acknowledgements, ..."];
     } else {
@@ -139,7 +145,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        NSString *url = @"mailto:carddecks@0xc0.de?subject=CardDecks " CDXApplicationVersion ": Feedback";
+        NSString *url;
+        if (indexPath.row == 0) {
+            url = @"http://0xc0.de/CardDecks?m" CDXApplicationVersion "";
+        } else {
+            url = @"mailto:carddecks@0xc0.de?subject=CardDecks " CDXApplicationVersion ": Feedback";
+        }
+        LogDebug(@"url %@", url);
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     } else if (indexPath.section == 1) {
         NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];

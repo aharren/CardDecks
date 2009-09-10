@@ -37,16 +37,13 @@
 @synthesize committed = _committed;
 @synthesize dirty = _dirty;
 
-@synthesize standardRenderingContextPortrait = _standardRenderingContextPortrait;
-@synthesize standardRenderingContextLandscape = _standardRenderingContextLandscape;
-
 - (id)init {
     LogInvocation();
     
     if ((self = [super init])) {
         self.text = @"";
-        self.textColor = [CDXColor blackColor];
-        self.backgroundColor = [CDXColor whiteColor];
+        self.textColor = [CDXColor whiteColor];
+        self.backgroundColor = [CDXColor blackColor];
     }
     return self;
 }
@@ -68,16 +65,16 @@
         
         object = [dictionary objectForKey:@"TextColor"];
         if (object == nil || ![object isKindOfClass:[NSString class]]) {
-            self.textColor = [CDXColor blackColor];
+            self.textColor = [CDXColor whiteColor];
         } else {
-            self.textColor = [CDXColor cdxColorWithRGBString:(NSString *)object defaulsTo:[CDXColor blackColor]];
+            self.textColor = [CDXColor cdxColorWithRGBString:(NSString *)object defaulsTo:[CDXColor whiteColor]];
         }
         
         object = [dictionary objectForKey:@"BackgroundColor"];
         if (object == nil || ![object isKindOfClass:[NSString class]]) {
-            self.backgroundColor = [CDXColor whiteColor];
+            self.backgroundColor = [CDXColor blackColor];
         } else {
-            self.backgroundColor = [CDXColor cdxColorWithRGBString:(NSString *)object defaulsTo:[CDXColor whiteColor]];
+            self.backgroundColor = [CDXColor cdxColorWithRGBString:(NSString *)object defaulsTo:[CDXColor blackColor]];
         }
     }
     
@@ -92,10 +89,7 @@
     self.text = nil;
     self.backgroundColor = nil;
     self.textColor = nil;
-    
-    self.standardRenderingContextPortrait = nil;
-    self.standardRenderingContextLandscape = nil;
-    
+        
     [super dealloc];
 }
 
@@ -117,42 +111,6 @@
     LogInvocation();
     
     return [[[CDXCard alloc] initWithContentsOfDictionary:dictionary] autorelease];
-}
-
-- (CDXTextRenderingContext *)renderingContextPortraitForFont:(UIFont *)font width:(CGFloat)width height:(CGFloat)height text:(NSArray *)text cached:(BOOL)cached standard:(BOOL)standard {
-    LogInvocation();
-    
-    if (_standardRenderingContextPortrait != nil && cached && standard) {
-        return self.standardRenderingContextPortrait;
-    }
-    
-    if (text == nil) {
-        text = [_text componentsSeparatedByString:@"\n"];
-    }
-    
-    CDXTextRenderingContext *context = [CDXTextRenderingContext contextForText:text font:font width:width height:height];
-    if (standard) {
-        self.standardRenderingContextPortrait = context;
-    }
-    return context;
-}
-
-- (CDXTextRenderingContext *)renderingContextLandscapeForFont:(UIFont *)font width:(CGFloat)width height:(CGFloat)height text:(NSArray *)text cached:(BOOL)cached standard:(BOOL)standard {
-    LogInvocation();
-    
-    if (_standardRenderingContextLandscape != nil && cached && standard) {
-        return self.standardRenderingContextLandscape;
-    }
-    
-    if (text == nil) {
-        text = [_text componentsSeparatedByString:@"\n"];
-    }
-    
-    CDXTextRenderingContext *context = [CDXTextRenderingContext contextForText:text font:font width:width height:height];
-    if (standard) {
-        self.standardRenderingContextLandscape = context;
-    }
-    return context;
 }
 
 @end

@@ -47,5 +47,7 @@
 + (CDXColor *)blackColor;
 + (CDXColor *)whiteColor;
 
+- (BOOL)isEqual:(id)anObject;
+
 @end
 

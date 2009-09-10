@@ -54,7 +54,7 @@ typedef enum {
     UIBarButtonItem *_rightBarButtonItem;
     UISegmentedControl *_editingSegment;
     
-    UITextView *_text;
+    UILabel *_text;
     UITextView *_textEditable;
     
     UIView *_colorView;
@@ -83,7 +83,7 @@ typedef enum {
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *rightBarButtonItem;
 @property (nonatomic, retain) IBOutlet UISegmentedControl *editingSegment;
 
-@property (nonatomic, retain) IBOutlet UITextView *text;
+@property (nonatomic, retain) IBOutlet UILabel *text;
 @property (nonatomic, retain) IBOutlet UITextView *textEditable;
 
 @property (nonatomic, retain) IBOutlet UIView *colorView;

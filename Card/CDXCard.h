@@ -38,10 +38,6 @@
     // editing state
     BOOL _committed;
     BOOL _dirty;
-    
-    // rendering data
-    CDXTextRenderingContext *_standardRenderingContextPortrait;
-    CDXTextRenderingContext *_standardRenderingContextLandscape;
 }
 
 @property (nonatomic, copy) NSString *text;
@@ -51,18 +47,12 @@
 @property (nonatomic, assign) BOOL committed;
 @property (nonatomic, assign) BOOL dirty;
 
-@property (nonatomic, retain) CDXTextRenderingContext *standardRenderingContextPortrait;
-@property (nonatomic, retain) CDXTextRenderingContext *standardRenderingContextLandscape;
-
 - (id)init;
 - (id)initWithContentsOfDictionary:(NSDictionary *)dictionary;
 
 - (NSDictionary *)stateAsDictionary;
 
 + (CDXCard *)cardWithContentsOfDictionary:(NSDictionary *)dictionary;
-
-- (CDXTextRenderingContext *)renderingContextPortraitForFont:(UIFont *)font width:(CGFloat)width height:(CGFloat)height text:(NSArray *)text cached:(BOOL)cached standard:(BOOL)standard;
-- (CDXTextRenderingContext *)renderingContextLandscapeForFont:(UIFont *)font width:(CGFloat)width height:(CGFloat)height text:(NSArray *)text cached:(BOOL)cached standard:(BOOL)standard;
 
 @end
 

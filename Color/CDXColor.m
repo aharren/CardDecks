@@ -28,9 +28,31 @@
 
 @implementation CDXColor
 
+static CDXColor *_cdxColorBlack = nil;
+static CDXColor *_cdxColorWhite = nil;
+
 @synthesize red = _red;
 @synthesize green = _green;
 @synthesize blue = _blue;
+
++ (void)initialize {
+    // perform initialization only once
+    if (self != [CDXColor class]) {
+        return;
+    }
+    
+    // create black
+    _cdxColorBlack = [[CDXColor alloc] init];
+    _cdxColorBlack->_red = 0;
+    _cdxColorBlack->_green = 0;
+    _cdxColorBlack->_blue = 0;
+    
+    // create white
+    _cdxColorWhite = [[CDXColor alloc] init];
+    _cdxColorWhite->_red = 255;
+    _cdxColorWhite->_green = 255;
+    _cdxColorWhite->_blue = 255;
+}
 
 - (void)dealloc {
     [super dealloc];
@@ -87,11 +109,20 @@
 }
 
 + (CDXColor *)blackColor {
-    return [CDXColor cdxColorWithRed:0 green:0 blue:0];
+    return _cdxColorBlack;
 }
 
 + (CDXColor *)whiteColor {
-    return [CDXColor cdxColorWithRed:255 green:255 blue:255];
+    return _cdxColorWhite;
+}
+
+- (BOOL)isEqual:(id)anObject {
+    if (![anObject isMemberOfClass:[CDXColor class]]) {
+        return NO;
+    }
+    
+    CDXColor *anColorObject = (CDXColor *)anObject;
+    return _red == anColorObject.red && _green == anColorObject.green && _blue == anColorObject.blue;
 }
 
 @end

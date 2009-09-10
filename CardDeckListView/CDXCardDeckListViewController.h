@@ -70,7 +70,7 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 
-- (void)insertNewCardDeckAndScrollToView:(BOOL)scrollToView;
+- (NSIndexPath *)insertNewCardDeck;
 - (void)setEditMode:(BOOL)editMode withNewCard:(BOOL)withNewCard animated:(BOOL)animated;
 - (void)selectRowAtIndexPath:(NSIndexPath *)selectedRowPath;
 

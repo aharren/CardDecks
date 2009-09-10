@@ -56,8 +56,9 @@
     
     UIButton *_pageJumpLeftButton;
     UIButton *_pageJumpRightButton;
+    NSUInteger _pageJumpPagesMax;
+    NSUInteger _pageJumpPages[5];
     
-    NSUInteger _lastScrollPage;
     NSUInteger _currentPage;
     
     NSUInteger _cardViewControllersMax;
@@ -72,6 +73,9 @@
     
     CGRect _baseBounds;
     CGAffineTransform _baseTransform;
+    
+    NSMutableArray *_cardViewLandscapeRenderingContexts;
+    NSMutableArray *_cardViewPortraitRenderingContexts;
 }
 
 @property (nonatomic, retain) CDXCardDeck *cardDeck;
@@ -82,6 +86,9 @@
 @property (nonatomic, retain) IBOutlet UIButton *pageJumpLeftButton;
 @property (nonatomic, retain) IBOutlet UIButton *pageJumpRightButton;
 
+@property (nonatomic, retain) NSMutableArray *cardViewLandscapeRenderingContexts;
+@property (nonatomic, retain) NSMutableArray *cardViewPortraitRenderingContexts;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 
 - (void)hideNavigationBar:(BOOL)hidden;
@@ -91,7 +98,7 @@
 - (void)deviceOrientationDidChange:(NSNotification *)notification;
 
 - (void)configureCardViewControllerAtIndex:(NSUInteger)index page:(NSUInteger)page;
-- (void)showCardViewControllersForPage:(NSUInteger)page;
+- (void)configureViewForPage:(NSUInteger)page;
 
 - (IBAction)pageControlValueChanged:(id)sender;
 - (IBAction)backButtonPressed;

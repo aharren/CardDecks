@@ -39,3 +39,5 @@ _lcl_component(CDXCardDeckViewController,       "carddecks.view.carddeckview",  
 _lcl_component(CDXCardDeckEditViewController,   "carddecks.view.carddeckeditview",  "Card Decks/Views/Card Deck Edit View")
 _lcl_component(CDXCardDeckListViewController,   "carddecks.view.carddecklistview",  "Card Decks/Views/Card Deck List View")
 
+_lcl_component(CDXInfoOverviewViewController,   "carddecks.info.overview",          "Card Decks/Info")
+

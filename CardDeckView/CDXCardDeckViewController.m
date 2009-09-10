@@ -62,6 +62,9 @@
 @synthesize pageJumpLeftButton = _pageJumpLeftButton;
 @synthesize pageJumpRightButton = _pageJumpRightButton;
 
+@synthesize cardViewLandscapeRenderingContexts = _cardViewLandscapeRenderingContexts;
+@synthesize cardViewPortraitRenderingContexts = _cardViewPortraitRenderingContexts;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     LogInvocation();
     
@@ -87,6 +90,9 @@
         [_cardViewControllers[i] release];
         _cardViewControllers[i] = nil;
     }
+    
+    self.cardViewLandscapeRenderingContexts = nil;
+    self.cardViewPortraitRenderingContexts = nil;
     
     [super dealloc];
 }
@@ -139,20 +145,22 @@
     LogInvocation();
     
     [super viewWillAppear:animated];
-
+    
     // create the rendering data for all cards
+    self.cardViewLandscapeRenderingContexts = [NSMutableArray arrayWithCapacity:_pageCount];
+    self.cardViewPortraitRenderingContexts = [NSMutableArray arrayWithCapacity:_pageCount];
+    
     UIFont *font = [UIFont boldSystemFontOfSize:400];
     for (NSUInteger i = 0; i < _pageCount; i++) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         CDXCard *card = [_cardDeck cardAtIndex:i];
         NSArray *textLines = [card.text componentsSeparatedByString:@"\n"];
-        [card renderingContextPortraitForFont:font width:320 height:440 text:textLines cached:YES standard:YES];
-        [card renderingContextLandscapeForFont:font width:440 height:320 text:textLines cached:YES standard:YES];
+        [_cardViewLandscapeRenderingContexts addObject:[CDXTextRenderingContext contextForText:textLines font:font width:440 height:320]];
+        [_cardViewPortraitRenderingContexts addObject:[CDXTextRenderingContext contextForText:textLines font:font width:320 height:440]];        
         [pool release];
     }
     
     // add the views of the card view controllers
-    _lastScrollPage = 0;
     _currentPage = 0;
     for (NSUInteger i = _cardViewControllersMax; i > 0; i--) {
         LogDebug(@"controller %d", i-1);
@@ -163,6 +171,31 @@
     // configure the card view controllers with visible cards
     for (NSUInteger i = 0; i < MIN(3, _cardViewControllersMax); i++) {
         [self configureCardViewControllerAtIndex:i page:i];
+    }
+    
+    // configure the page jump pages
+    if (_pageCount <= 1) {
+        // no page jump for 1 or less pages
+        _pageJumpPagesMax = 0;
+    } else if (_pageCount <= 6) {
+        // 2 page jumps for up to 6 pages (first, last)
+        _pageJumpPagesMax = 2;
+        _pageJumpPages[0] = 0;
+        _pageJumpPages[1] = _pageCount-1;
+    } else if (_pageCount <= 16) {
+        // 3 page jumps for up to 16 pages (first, 1/2, last)
+        _pageJumpPagesMax = 3;
+        _pageJumpPages[0] = 0;
+        _pageJumpPages[1] = MAX(1, round(_pageCount / 2 + 0.5)) - 1;
+        _pageJumpPages[2] = MAX(1, _pageCount) - 1;
+    } else {
+        // 5 page jumps for up to 16 pages (first, 1/4, 1/2, last-1/4, last)
+        _pageJumpPagesMax = 5;
+        _pageJumpPages[0] = 0;
+        _pageJumpPages[1] = MAX(1, round(_pageCount / 4 + 0.5)) - 1;
+        _pageJumpPages[2] = MAX(1, round(_pageCount / 2 + 0.5)) - 1;
+        _pageJumpPages[3] = _pageCount - _pageJumpPages[1] - 1;
+        _pageJumpPages[4] = MAX(1, _pageCount) - 1;
     }
 }
 
@@ -218,6 +251,7 @@
     
     // page already configured?
     if (_cardViewControllersPage[index] == page+1) {
+        LogDebug(@"page %d already configured", page);
         return;
     }
     
@@ -228,26 +262,33 @@
     
     // assign the page
     _cardViewControllersPage[index] = page+1;
-    
-    // configure the controller
-    CDXCardViewController *cardViewController = (CDXCardViewController *)_cardViewControllers[index];
-    [cardViewController configureWithCard:[_cardDeck cardAtIndex:page]];
-    
-    // configure the view
-    CGRect frame = cardViewController.view.frame;
+    CGRect frame;
     frame.origin.x = _pageWidth * page;
     frame.origin.y = 0;
     frame.size.width = _pageWidth;
     frame.size.height = _pageHeight;
-    cardViewController.view.frame = frame;
     
-    [cardViewController viewWillAppear:YES];
+    // configure the view controller    
+    CDXCardViewController *cardViewController = (CDXCardViewController *)_cardViewControllers[index];
+    [cardViewController configureWithCard:[_cardDeck cardAtIndex:page]
+                landscapeRenderingContext:(CDXTextRenderingContext *)[_cardViewLandscapeRenderingContexts objectAtIndex:page]
+                 portraitRenderingContext:(CDXTextRenderingContext *)[_cardViewPortraitRenderingContexts objectAtIndex:page]
+                                    frame:frame];
+    
+    [cardViewController viewWillAppear:NO];
+    [cardViewController viewDidAppear:NO];
 }
 
-- (void)showCardViewControllersForPage:(NSUInteger)page {
+- (void)configureViewForPage:(NSUInteger)page {
     LogInvocation();
-
+    
+    // invalid page?
+    if (page >= _pageCount) {
+        return;
+    }
+    
 #   if CDXLoggingIsAvailable
+    // configured pages
     for (NSUInteger i = 0; i < _cardViewControllersMax; i++) {
         LogDebug(@"0 [%d] %@", _cardViewControllersPage[i], ((CDXCardViewController *)_cardViewControllers[i]).card.text);
     }
@@ -269,28 +310,52 @@
     }
     
 #   if CDXLoggingIsAvailable
+    // configured pages
     for (NSUInteger i = 0; i < _cardViewControllersMax; i++) {
         LogDebug(@"1 [%d] %@", _cardViewControllersPage[i], ((CDXCardViewController *)_cardViewControllers[i]).card.text);
     }
 #   endif
+    
+    // update current page, page control, etc.
+    _currentPage = page;
+    _pageControl.currentPage = page;
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    LogInvocation();
+    
+    const CGFloat contentOffsetX = _scrollView.contentOffset.x;
+    const NSUInteger newPage = contentOffsetX / _pageWidth;
+    
+    // configure visible pages
+    if (newPage != _currentPage) {
+        [self configureViewForPage:newPage];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
-    LogInvocation();
+    LogInvocation(@"%8.2f", _scrollView.contentOffset.x);
     
-    NSUInteger newPage = floor((_scrollView.contentOffset.x - _pageWidth / 2) / _pageWidth) + 1;
-    
-    // invalid page?
-    if (!(newPage >= 0 && newPage < _pageCount))
+    const CGFloat contentOffsetX = _scrollView.contentOffset.x;
+    if (contentOffsetX < 0 || contentOffsetX > _pageWidth * (_pageCount-1)) {
+        LogDebug(@"out of scope");
         return;
+    }
+    
+    const CGFloat contentOffsetXCurrentPage = (_currentPage * _pageWidth);
+    const CGFloat contentOffsetXDiff = contentOffsetX - contentOffsetXCurrentPage;
+    if (abs(contentOffsetXDiff) < _pageWidth + 20) {
+        LogDebug(@"update not required");
+        return;
+    }
+    
+    LogDebug(@"update required, diff %8.2f", contentOffsetXDiff);
+    const NSUInteger newPage = contentOffsetXDiff > 0 ? (contentOffsetX / _pageWidth) : ((contentOffsetX + _pageWidth-1) / _pageWidth);
     
     // configure visible pages
-    if (_lastScrollPage != newPage) {
-        [self showCardViewControllersForPage:newPage];
+    if (newPage != _currentPage) {
+        [self configureViewForPage:newPage];
     }
-    _lastScrollPage = newPage;
-    _currentPage = newPage;
-    _pageControl.currentPage = _currentPage;
 }
 
 - (void)scrollViewToPage:(NSUInteger)page {
@@ -302,10 +367,7 @@
     }
     
     // configure visible pages
-    [self showCardViewControllersForPage:page];
-    _currentPage = page;
-    _lastScrollPage = page;
-    _pageControl.currentPage = page;
+    [self configureViewForPage:page];
     
     // scroll view to new page
     CGRect frame = _scrollView.frame;
@@ -363,26 +425,28 @@
 - (IBAction)pageJumpLeftButtonPressed {
     LogInvocation();
     
-    if (_currentPage > 4) {
-        [self scrollViewToPage:_currentPage-4];
-    } else {
-        [self scrollViewToPage:0];
+    for (int i = _pageJumpPagesMax-1; i >= 0; i--) {
+        if (_currentPage > _pageJumpPages[i]) {
+            [self scrollViewToPage:_pageJumpPages[i]];
+            break;
+        }
     }
 }
 
 - (IBAction)pageJumpRightButtonPressed {
     LogInvocation();
     
-    if (_currentPage+4 < _pageCount) {
-        [self scrollViewToPage:_currentPage+4];
-    } else if (_pageCount > 0) {
-        [self scrollViewToPage:_pageCount-1];
+    for (int i = 0; i < _pageJumpPagesMax; i++) {
+        if (_currentPage < _pageJumpPages[i]) {
+            [self scrollViewToPage:_pageJumpPages[i]];
+            break;
+        }
     }
 }
 
 + (CDXCardDeckViewController *)cardDeckViewControllerWithCardDeck:(CDXCardDeck *)cardDeck {
     LogInvocation();
-
+    
     CDXCardDeckViewController *controller = [[[CDXCardDeckViewController alloc] initWithNibName:@"CDXCardDeckView" bundle:nil] autorelease];
     controller.cardDeck = cardDeck;
     

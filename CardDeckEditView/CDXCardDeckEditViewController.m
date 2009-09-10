@@ -108,9 +108,9 @@
     
     if (!_editModeActive) {
         _editModeActive = YES;
-        [self insertNewCardAndScrollToView:NO];
+        [self insertNewCard];
     }
-        
+    
     if (_editModeActive && ![_tableView isEditing]) {
         [_tableView setEditing:YES animated:NO];
     }
@@ -126,6 +126,7 @@
     LogInvocation();
     
     [super viewDidAppear:animated];
+    NSIndexPath *newCardIndexPath = nil;
     
     if (_tableViewSelectedRowIndexPath != nil) {
         [_tableView beginUpdates]; 
@@ -143,7 +144,7 @@
             [CDXStorage update:_cardDeck deferred:YES];
             
             if (_editCard == _newCard) {
-                [self insertNewCardAndScrollToView:YES];
+                newCardIndexPath = [self insertNewCard];
             }
         }
         [_tableView endUpdates];
@@ -153,6 +154,10 @@
     _editCard = nil;
     
     self.tableViewSelectedRowIndexPath = nil;
+
+    if (newCardIndexPath != nil) {
+        [_tableView scrollToRowAtIndexPath:newCardIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -270,7 +275,7 @@
     }
 }
 
-- (void)insertNewCardAndScrollToView:(BOOL)scrollToView {
+- (NSIndexPath *)insertNewCard {
     LogInvocation();
     
     NSUInteger row = -1;
@@ -290,11 +295,7 @@
     NSIndexPath *newCardIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
     [_tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newCardIndexPath] withRowAnimation:UITableViewRowAnimationFade];
     
-    if (scrollToView) {
-        if ([_tableView numberOfRowsInSection:0] > row) {
-            [_tableView scrollToRowAtIndexPath:newCardIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
-        }
-    }
+    return newCardIndexPath;
 }
 
 - (void)initCardEditViewController {
@@ -324,47 +325,30 @@
 - (IBAction)sendButtonPressed {
     LogInvocation();
     
-    [CDXStorage drainDeferred:nil];
+    NSString *url = nil;
     
-    NSMutableString *deck = [[[NSMutableString alloc] init] autorelease];
-    [deck appendString:@"carddecks:///add?"];
-    
-    NSString *defaultTextColorString = [_cardDeck.defaultTextColor rgbString];
-    NSString *defaultBackgroundColorString = [_cardDeck.defaultBackgroundColor rgbString];
-    
-    [deck appendFormat:@"%@,%@,%@", 
-     [[_cardDeck.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] 
-      stringByReplacingOccurrencesOfString:@"," withString:@"%2C"],
-     defaultTextColorString,
-     defaultBackgroundColorString]; 
-    
-    NSUInteger cardCount = [_cardDeck cardsCount];
-    for (NSUInteger cardIndex = 0; cardIndex < cardCount; cardIndex++) {
-        CDXCard *card = [_cardDeck cardAtIndex:cardIndex];
-        if (card.committed) {
-            NSString *textColorString = [card.textColor rgbString];
-            NSString *backgroundColorString = [card.backgroundColor rgbString];
-            BOOL textColorEqual = textColorString != nil && [textColorString isEqualToString:defaultTextColorString];
-            BOOL backgroundColorEqual = backgroundColorString != nil && [backgroundColorString isEqualToString:defaultBackgroundColorString];
-            
-            [deck appendFormat:@"&%@%@%@%@%@", 
-             [[card.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] 
-              stringByReplacingOccurrencesOfString:@"," withString:@"%2C"],
-             (!textColorEqual || !backgroundColorEqual) ? @"," : @"",
-             (!textColorEqual) ? textColorString : @"",
-             (!backgroundColorEqual) ? @"," : @"",
-             (!backgroundColorEqual) ? backgroundColorString : @""];
-        }    
+    {
+        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+        
+        [CDXStorage drainDeferred:nil];
+        
+        NSArray *cardDeckURLComponents = [_cardDeck stateAsURLComponents];
+        NSString *cardDeckURL = [NSString stringWithFormat:@"carddecks:///add?%@",
+                                 [cardDeckURLComponents componentsJoinedByString:@"&"]];
+        NSString *body = [NSString stringWithFormat:@"<a href=\"%@\">%@</a>", cardDeckURL, cardDeckURL];
+        
+        url = [NSString stringWithFormat:@"mailto:?&subject=%@&body=%@",
+               [[_cardDeck.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] 
+                stringByReplacingOccurrencesOfString:@"&" withString:@"%26"], 
+               [[body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] 
+                stringByReplacingOccurrencesOfString:@"&" withString:@"%26"]];
+        
+        [url retain];
+        [pool release];
     }
     
-    NSString *body = [NSString stringWithFormat:@"<a href=\"%@\">%@</a>", deck, deck];
-    
-    NSString *url = [NSString stringWithFormat:@"mailto:?&subject=%@&body=%@",
-                     [[_cardDeck.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] 
-                      stringByReplacingOccurrencesOfString:@"&" withString:@"%26"], 
-                     [[body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] 
-                      stringByReplacingOccurrencesOfString:@"&" withString:@"%26"]];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    [url release];
 }
 
 - (IBAction)nameButtonPressed {

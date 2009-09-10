@@ -125,13 +125,9 @@ static CDXColorRGB cdxColorsRGB[] = {
     [_colorView addSubview:_colorView2];
     _colorView1.alpha = 0.0;
     
-    UIImage *keyboardBackgroundImage = [UIImage imageNamed:@"KeyboardBackground.png"];
-    UIColor *backgroundColor = [UIColor colorWithPatternImage:keyboardBackgroundImage];
-    _colorView.backgroundColor = backgroundColor;
+    _text.numberOfLines = 0;
     
-    [self setEditModeTextAnimated:NO];    
     [self navigationItem].rightBarButtonItem = _rightBarButtonItem; // _titleView;
-    _editingSegment.tintColor = [UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:1];
 }
 
 - (void)viewDidUnload {
@@ -160,6 +156,7 @@ static CDXColorRGB cdxColorsRGB[] = {
 - (void)viewWillAppear:(BOOL)animated {
     LogInvocation();
     
+    [self setTextEditable:NO animated:NO];
     [self setEditModeTextAnimated:NO];
     
     [super viewWillAppear:animated];    
@@ -235,7 +232,7 @@ static CDXColorRGB cdxColorsRGB[] = {
     
     if (editable) {
         [_textEditable becomeFirstResponder];
-        _textEditable.font = [UIFont boldSystemFontOfSize:26];
+        _textEditable.font = [UIFont boldSystemFontOfSize:28];
         _textEditable.alpha = 1;
         _text.alpha = 0;
     } else {
@@ -246,8 +243,17 @@ static CDXColorRGB cdxColorsRGB[] = {
         
         UIFont *font = [UIFont boldSystemFontOfSize:400];
         NSArray *textLines = [_text.text componentsSeparatedByString:@"\n"];
-        CDXTextRenderingContext *textRenderingContext = [_card renderingContextPortraitForFont:font width:320 height:440 text:textLines cached:NO standard:YES];
+        CDXTextRenderingContext *textRenderingContext = [CDXTextRenderingContext contextForText:textLines font:font width:320 height:440];
         _text.font = [font fontWithSize:textRenderingContext.fontSize];
+        const CGFloat widthInternal = 800.0;
+        CGRect rect = _text.bounds;
+        rect.origin.x = 0;
+        rect.origin.y = 0;
+        rect.size.width = widthInternal;
+        _text.bounds = rect;
+        rect = _text.frame;
+        rect.origin.x = (self.view.frame.size.width - widthInternal)/2;
+        _text.frame = rect;
     }
     
     if (animated) {

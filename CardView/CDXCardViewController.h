@@ -35,18 +35,18 @@
     CDXCard *_card;
     
     // UI elements and controllers
-    UITextView *_textPortrait;
-    UITextView *_textLandscape;
+    UILabel *_textPortrait;
+    UILabel *_textLandscape;
 }
 
 @property (nonatomic, retain) IBOutlet CDXCard *card;
 
-@property (nonatomic, retain) IBOutlet UITextView *textPortrait;
-@property (nonatomic, retain) IBOutlet UITextView *textLandscape;
+@property (nonatomic, retain) IBOutlet UILabel *textPortrait;
+@property (nonatomic, retain) IBOutlet UILabel *textLandscape;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 
-- (void)configureWithCard:(CDXCard *)card;
+- (void)configureWithCard:(CDXCard *)card landscapeRenderingContext:(CDXTextRenderingContext *)landscapeRenderingContext portraitRenderingContext:(CDXTextRenderingContext *)portraitRenderingContext frame:(CGRect)frame;
 - (void)setOrientation:(UIDeviceOrientation)orientation;
 
 + (CDXCardViewController *)cardViewController;

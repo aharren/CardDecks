@@ -44,12 +44,13 @@
     NSDictionary *dictionary = [CDXStorage readAsDictionary:cardDeckListFile];
     self.cardDeckList = [CDXCardDeckList cardDeckListWithContentsOfDictionary:dictionary];
     self.cardDeckList.file = cardDeckListFile;
-
+    
     // create the corresponding UI controller
     self.cardDeckListViewController = [CDXCardDeckListViewController cardDeckListViewControllerWithCardDeckList:self.cardDeckList];
     
     // configure the navigation controller
     _navigationController.navigationBar.opaque = YES;
+    _navigationController.navigationBar.translucent = YES;
     [_navigationController setViewControllers:[NSArray arrayWithObject:self.cardDeckListViewController]];
     
     // configure the window
@@ -66,7 +67,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     LogInvocation();
-
+    
     [CDXStorage drainDeferred:nil];
 }
 
@@ -83,69 +84,27 @@
     }
     
     NSString *path = [url path];
-
+    
     if ([@"/add" isEqualToString:path]) {
-        NSArray *query = [[url query] componentsSeparatedByString:@"&"];
-        
-        NSString *queryCardDeck = nil;
-        NSMutableArray *queryCards = [[NSMutableArray alloc] initWithCapacity:[query count]];
-        
-        for (NSString *q in query) {
-            if (queryCardDeck == nil) {
-                queryCardDeck = q;
-            } else {
-                [queryCards addObject:q];
-            }   
-        }
-        
-        if (queryCardDeck == nil || [queryCards count] == 0) {
-            // handled, but empty
-            return YES;
-        }
-        
-        NSArray *queryCardDeckParts = [queryCardDeck componentsSeparatedByString:@","];
-        if ([queryCardDeckParts count] < 1) {
-            return YES;
-        }
-        CDXCardDeck *cardDeck = [[[CDXCardDeck alloc] init] autorelease];
-        cardDeck.file = [CDXStorage newStorageNameWithSuffix:@".CardDeck"];
-        cardDeck.name = [(NSString *)[queryCardDeckParts objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        if ([queryCardDeckParts count] >= 2) {
-            cardDeck.defaultTextColor = [CDXColor cdxColorWithRGBString:(NSString *)[queryCardDeckParts objectAtIndex:1] defaulsTo:[CDXColor whiteColor]];
-        }
-        if ([queryCardDeckParts count] >= 3) {
-            cardDeck.defaultBackgroundColor = [CDXColor cdxColorWithRGBString:(NSString *)[queryCardDeckParts objectAtIndex:2] defaulsTo:[CDXColor blackColor]];
-        }
-        
-        for (NSString *qc in queryCards) {
-            NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-            NSArray *queryCardParts = [qc componentsSeparatedByString:@","];
-            CDXCard *card = [[[CDXCard alloc] init] autorelease];
+        NSArray *urlQueryComponents = [[url query] componentsSeparatedByString:@"&"];
+        CDXCardDeck *cardDeck = [CDXCardDeck cardDeckWithContentsOfURLComponents:urlQueryComponents];
+        if (cardDeck != nil) {
+            // store the card deck
+            [CDXStorage update:cardDeck deferred:NO];
             
-            if ([queryCardParts count] >= 1) {
-                card.text = [(NSString *)[queryCardParts objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                card.textColor = cardDeck.defaultTextColor;
-                card.backgroundColor = cardDeck.defaultBackgroundColor;
-                
-                if ([queryCardParts count] >= 2) {
-                    card.textColor = [CDXColor cdxColorWithRGBString:(NSString *)[queryCardParts objectAtIndex:1] defaulsTo:[CDXColor whiteColor]];
-                }
-                if ([queryCardParts count] >= 3) {
-                    card.backgroundColor = [CDXColor cdxColorWithRGBString:(NSString *)[queryCardParts objectAtIndex:2] defaulsTo:[CDXColor blackColor]];
-                }
-                
-                card.committed = YES;
-                [cardDeck addCard:card];
-            }
-            [pool release];
+            // add the card deck to the list
+            CDXCardDeck *cardDeckInList = [[CDXCardDeck alloc] init];
+            cardDeckInList.name = cardDeck.name;
+            cardDeckInList.file = cardDeck.file;
+            cardDeckInList.committed = YES;
+            cardDeckInList.defaultTextColor = nil;
+            cardDeckInList.defaultBackgroundColor = nil;
+            cardDeckInList.cards = nil;
+            [self.cardDeckList insertCardDeck:cardDeckInList atIndex:0];
+            [CDXStorage update:self.cardDeckList deferred:NO];
+            
+            [self.cardDeckListViewController performSelector:@selector(selectRowAtIndexPath:) withObject:[NSIndexPath indexPathForRow:0 inSection:0] afterDelay:0.1];
         }
-        
-        [self.cardDeckList insertCardDeck:cardDeck atIndex:0];
-        cardDeck.committed = YES;
-        [CDXStorage update:cardDeck deferred:NO];
-        [CDXStorage update:self.cardDeckList deferred:NO];
-     
-        [self.cardDeckListViewController performSelector:@selector(selectRowAtIndexPath:) withObject:[NSIndexPath indexPathForRow:0 inSection:0] afterDelay:0.1];
         return YES;
     }
     
@@ -154,7 +113,7 @@
 
 - (void)dealloc {
     LogInvocation();
-
+    
     [_window release];
     [super dealloc];
 }

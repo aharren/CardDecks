@@ -53,7 +53,7 @@
         _cardDecks = [[NSMutableArray alloc] initWithCapacity:numberOfItems];
         
         for (NSUInteger i=0; i<numberOfItems; i++) {
-            CDXCardDeck *cardDeck = [CDXCardDeck cardDeckWithContentsOfDictionary:(NSDictionary *)[array objectAtIndex:i]];
+            CDXCardDeck *cardDeck = [CDXCardDeck cardDeckWithContentsOfDictionary:(NSDictionary *)[array objectAtIndex:i] cards:NO colors:NO];
             if (cardDeck.file != nil) {
                 [_cardDecks addObject:cardDeck];
             }
@@ -61,6 +61,16 @@
     }
     return self;
 }
+
+- (void)dealloc {
+    LogInvocation();
+    
+    [_cardDecks release];
+    [_file release];
+    
+    [super dealloc];
+}
+
 
 - (NSUInteger)cardDecksCount {
     LogInvocation();

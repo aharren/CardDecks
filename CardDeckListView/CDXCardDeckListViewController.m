@@ -136,6 +136,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     LogInvocation();
+    
+    NSIndexPath *newCardDeckIndexPath = nil;
 
     if (_tableViewSelectedRowIndexPath != nil) {
         [_tableView beginUpdates];
@@ -150,7 +152,7 @@
             [CDXStorage update:_cardDeckList deferred:YES];
             
             if (_editCardDeck == _newCardDeck) {
-                [self insertNewCardDeckAndScrollToView:YES];
+                newCardDeckIndexPath = [self insertNewCardDeck];
             }
         }
         [_tableView endUpdates];
@@ -159,6 +161,10 @@
     [super viewDidAppear:animated];
     
     self.tableViewSelectedRowIndexPath = nil;
+    
+    if (newCardDeckIndexPath != nil) {
+        [_tableView scrollToRowAtIndexPath:newCardDeckIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -245,7 +251,7 @@
         return;        
     }
     
-    CDXCardDeck *cardDeckDetail = [CDXCardDeck cardDeckWithContentsOfDictionary:dictionary];
+    CDXCardDeck *cardDeckDetail = [CDXCardDeck cardDeckWithContentsOfDictionary:dictionary cards:YES colors:YES];
     cardDeckDetail.name = cardDeck.name;
     cardDeckDetail.file = cardDeck.file;
     cardDeckDetail.committed = cardDeck.committed;
@@ -294,7 +300,7 @@
 }
 
 
-- (void)insertNewCardDeckAndScrollToView:(BOOL)scrollToView {
+- (NSIndexPath *)insertNewCardDeck {
     LogInvocation();
     
     NSUInteger row = -1;
@@ -313,11 +319,7 @@
     NSIndexPath *newCardDeckIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
     [_tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newCardDeckIndexPath] withRowAnimation:UITableViewRowAnimationFade];
     
-    if (scrollToView) {
-        if ([_tableView numberOfRowsInSection:0] > row) {
-            [_tableView scrollToRowAtIndexPath:newCardDeckIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
-        }
-    }
+    return newCardDeckIndexPath;
 }
 
 - (void)setEditMode:(BOOL)editMode withNewCard:(BOOL)withNewCard animated:(BOOL)animated {
@@ -367,7 +369,7 @@
             self.editCardDeck = nil;
             self.editCardDeckDetail = nil;
             
-            [self insertNewCardDeckAndScrollToView:NO];
+            [self insertNewCardDeck];
         }
         
         [_tableView setEditing:YES animated:animated];

@@ -45,7 +45,6 @@
 		E08485330FDAC2BF00F2864D /* CDXCardDeckList.m in Sources */ = {isa = PBXBuildFile; fileRef = E08485320FDAC2BF00F2864D /* CDXCardDeckList.m */; };
 		E08485390FDAC4B700F2864D /* Main.CardDecksList.plist in Resources */ = {isa = PBXBuildFile; fileRef = E08485380FDAC4B700F2864D /* Main.CardDecksList.plist */; };
 		E08B12150FED5089002B6A50 /* 60-0.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E08B12140FED5089002B6A50 /* 60-0.CardDeck.plist */; };
-		E094BB180FEB7AE8003F0505 /* KeyboardBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E094BB170FEB7AE8003F0505 /* KeyboardBackground.png */; };
 		E098E1EC0FDF0B8A006BBFD5 /* CDXCardEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E098E1EB0FDF0B8A006BBFD5 /* CDXCardEditView.xib */; };
 		E098E1F00FDF0BF6006BBFD5 /* CDXCardEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E098E1EF0FDF0BF6006BBFD5 /* CDXCardEditViewController.m */; };
 		E0A3C63E0FDACA0900F27B84 /* RedYellowGreen.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0A3C63D0FDACA0900F27B84 /* RedYellowGreen.CardDeck.plist */; };
@@ -120,7 +119,6 @@
 		E08485320FDAC2BF00F2864D /* CDXCardDeckList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckList.m; path = CardDeckList/CDXCardDeckList.m; sourceTree = "<group>"; };
 		E08485380FDAC4B700F2864D /* Main.CardDecksList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = Main.CardDecksList.plist; path = Templates/Main.CardDecksList.plist; sourceTree = "<group>"; };
 		E08B12140FED5089002B6A50 /* 60-0.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "60-0.CardDeck.plist"; path = "Templates/60-0.CardDeck.plist"; sourceTree = "<group>"; };
-		E094BB170FEB7AE8003F0505 /* KeyboardBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = KeyboardBackground.png; path = Images/KeyboardBackground.png; sourceTree = "<group>"; };
 		E098E1EB0FDF0B8A006BBFD5 /* CDXCardEditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardEditView.xib; path = CardEditView/CDXCardEditView.xib; sourceTree = "<group>"; };
 		E098E1EE0FDF0BE5006BBFD5 /* CDXCardEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardEditViewController.h; path = CardEditView/CDXCardEditViewController.h; sourceTree = "<group>"; };
 		E098E1EF0FDF0BF6006BBFD5 /* CDXCardEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardEditViewController.m; path = CardEditView/CDXCardEditViewController.m; sourceTree = "<group>"; };
@@ -225,7 +223,6 @@
 				E0557D4D0FEE3182008782D0 /* World.png */,
 				E0AC025A0FECECEE007F8CD0 /* Mail.png */,
 				E0015C2E0FEBEB7C005F3693 /* iTunesArtwork */,
-				E094BB170FEB7AE8003F0505 /* KeyboardBackground.png */,
 				E0210D8D0FD90E9300DFAC6F /* Icon-Settings.png */,
 				E0210D8E0FD90E9300DFAC6F /* Icon.png */,
 			);
@@ -454,7 +451,6 @@
 				E058529A0FDEF8B000388DC2 /* CDXCardDeckListViewTableCell.xib in Resources */,
 				E058529F0FDEF8F000388DC2 /* CDXCardDeckEditViewTableCell.xib in Resources */,
 				E098E1EC0FDF0B8A006BBFD5 /* CDXCardEditView.xib in Resources */,
-				E094BB180FEB7AE8003F0505 /* KeyboardBackground.png in Resources */,
 				E0AC025B0FECECEE007F8CD0 /* Mail.png in Resources */,
 				E08B12150FED5089002B6A50 /* 60-0.CardDeck.plist in Resources */,
 				E0557D4E0FEE3182008782D0 /* World.png in Resources */,

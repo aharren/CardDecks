@@ -72,7 +72,7 @@
 @property (nonatomic, retain) CDXCard *editCard;
 @property (nonatomic, retain) CDXCard *newCard;
 
-- (void)insertNewCardAndScrollToView:(BOOL)scrollToView;
+- (NSIndexPath *)insertNewCard;
 - (void)initCardEditViewController;
 
 - (IBAction)nameDidEndOnExit;

@@ -47,6 +47,7 @@
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) CDXColor *defaultTextColor;
 @property (nonatomic, retain) CDXColor *defaultBackgroundColor;
+@property (nonatomic, retain) NSMutableArray *cards;
 
 @property (nonatomic, assign) BOOL committed;
 @property (nonatomic, assign) BOOL dirty;
@@ -54,7 +55,7 @@
 @property (nonatomic, retain) NSString *file;
 
 - (id)init;
-- (id)initWithContentsOfDictionary:(NSDictionary *)dictionary;
+- (id)initWithContentsOfDictionary:(NSDictionary *)dictionary cards:(BOOL)cards colors:(BOOL)colors;
 
 - (NSUInteger)cardsCount;
 - (CDXCard *)cardAtIndex:(NSUInteger)index;
@@ -66,7 +67,10 @@
 - (NSString *)storageName;
 - (NSDictionary *)stateAsDictionary;
 
-+ (CDXCardDeck *)cardDeckWithContentsOfDictionary:(NSDictionary *)dictionary;
++ (CDXCardDeck *)cardDeckWithContentsOfDictionary:(NSDictionary *)dictionary cards:(BOOL)cards colors:(BOOL)colors;
+
+- (NSArray *)stateAsURLComponents;
++ (CDXCardDeck *)cardDeckWithContentsOfURLComponents:(NSArray *)urlComponents;
 
 @end
 

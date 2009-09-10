@@ -47,12 +47,21 @@
     // calculate the minimal font size based on all text lines
     for (NSString *textLine in textLines) {
         CGFloat fontSize;
-        [textLine sizeWithFont:[font fontWithSize:minFontSize] minFontSize:12 actualFontSize:&fontSize forWidth:maxLineSize.width lineBreakMode:UILineBreakModeClip];
-        CGSize lineSize = [textLine sizeWithFont:[font fontWithSize:fontSize] constrainedToSize:maxLineSize];
+        {
+            UIFont *fontWithMinFontSize = [font fontWithSize:floor(minFontSize)];
+            [textLine sizeWithFont:fontWithMinFontSize minFontSize:12 actualFontSize:&fontSize forWidth:maxLineSize.width lineBreakMode:UILineBreakModeClip];
+        }
+        
+        CGSize lineSize;
+        {
+            UIFont *fontWithFontSize = [font fontWithSize:floor(fontSize)];
+            lineSize = [textLine sizeWithFont:fontWithFontSize constrainedToSize:maxLineSize];
+        }
         
         if (lineSize.height > maxLineSize.height) {
             fontSize = fontSize / lineSize.height * maxLineSize.height;
-            [textLine sizeWithFont:[font fontWithSize:fontSize] minFontSize:12 actualFontSize:&fontSize forWidth:maxLineSize.width lineBreakMode:UILineBreakModeClip];
+            UIFont *fontWithFontSize = [font fontWithSize:floor(fontSize)];
+            [textLine sizeWithFont:fontWithFontSize minFontSize:12 actualFontSize:&fontSize forWidth:maxLineSize.width lineBreakMode:UILineBreakModeClip];
         }
         
         minFontSize = MIN(minFontSize, fontSize);
