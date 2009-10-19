@@ -45,7 +45,7 @@
 + (void)drainDeferred:(NSObject<CDXStorageable> *)object;
 + (void)cancelDeferred:(NSObject<CDXStorageable> *)object;
 
-+ (NSString *)newStorageNameWithSuffix:(NSString *)suffix;
++ (NSString *)storageNameWithSuffix:(NSString *)suffix;
 
 @end
 

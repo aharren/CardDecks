@@ -188,7 +188,7 @@ static NSMutableArray *_deferredRemoves = nil;
     [object release];
 }
 
-+ (NSString *)newStorageNameWithSuffix:(NSString *)suffix {
++ (NSString *)storageNameWithSuffix:(NSString *)suffix {
     struct timeval now;
     struct tm now_tm;
     

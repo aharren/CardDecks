@@ -252,7 +252,7 @@
     }
     
     CDXCardDeck *cardDeck = [[[CDXCardDeck alloc] init] autorelease];
-    cardDeck.file = [CDXStorage newStorageNameWithSuffix:@".CardDeck"];
+    cardDeck.file = [CDXStorage storageNameWithSuffix:@".CardDeck"];
     cardDeck.name = [CDXCardDeck stringByReplacingURLEscapes:(NSString *)[encodedCardDeckParts objectAtIndex:0]];
     if ([encodedCardDeckParts count] >= 2) {
         cardDeck.defaultTextColor = [CDXColor cdxColorWithRGBString:(NSString *)[encodedCardDeckParts objectAtIndex:1] defaulsTo:[CDXColor whiteColor]];

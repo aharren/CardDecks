@@ -46,6 +46,11 @@
     
     // calculate the minimal font size based on all text lines
     for (NSString *textLine in textLines) {
+        // use a single space for an empty line
+        if ([@"" isEqualToString:textLine]) {
+            textLine = @" ";
+        }
+        
         CGFloat fontSize;
         {
             UIFont *fontWithMinFontSize = [font fontWithSize:floor(minFontSize)];

@@ -140,6 +140,10 @@
     
     NSString *text = _card.text;
     if (text == nil) text = @"";
+    // add a single space for the last line if it is empty
+    if ([text length] >= 1 && [text characterAtIndex:[text length]-1] == '\n') {
+        text = [text stringByAppendingString:@" "];
+    }
     
     // get the colors
     UIColor *textColor = [_card.textColor uiColor];

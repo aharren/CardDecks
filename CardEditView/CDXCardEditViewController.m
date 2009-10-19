@@ -156,8 +156,12 @@ static CDXColorRGB cdxColorsRGB[] = {
 - (void)viewWillAppear:(BOOL)animated {
     LogInvocation();
     
+    // set text editing mode
     [self setTextEditable:NO animated:NO];
     [self setEditModeTextAnimated:NO];
+    
+    // reset the color editor
+    _colorView0Segment.selectedSegmentIndex = 0;
     
     [super viewWillAppear:animated];    
 }

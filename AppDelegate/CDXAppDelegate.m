@@ -93,7 +93,7 @@
             [CDXStorage update:cardDeck deferred:NO];
             
             // add the card deck to the list
-            CDXCardDeck *cardDeckInList = [[CDXCardDeck alloc] init];
+            CDXCardDeck *cardDeckInList = [[[CDXCardDeck alloc] init] autorelease];
             cardDeckInList.name = cardDeck.name;
             cardDeckInList.file = cardDeck.file;
             cardDeckInList.committed = YES;

@@ -240,7 +240,7 @@
         NSUInteger newCardDeckIndex = [_cardDeckList indexOfCardDeck:_newCardDeck];
         if (newCardDeckIndex == indexPath.row) {
             file = @"New.CardDeck";
-            cardDeck.file = [CDXStorage newStorageNameWithSuffix:@".CardDeck"];
+            cardDeck.file = [CDXStorage storageNameWithSuffix:@".CardDeck"];
             cardDeck.committed = NO;
         }
     }

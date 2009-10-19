@@ -91,7 +91,7 @@
 		E03F3A810FFBEEAE003AA79C /* CDXInfoHTMLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXInfoHTMLViewController.h; path = InfoView/CDXInfoHTMLViewController.h; sourceTree = "<group>"; };
 		E03F3A820FFBEEB4003AA79C /* CDXInfoHTMLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXInfoHTMLViewController.m; path = InfoView/CDXInfoHTMLViewController.m; sourceTree = "<group>"; };
 		E03F3AD10FFBF1B9003AA79C /* License.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = License.html; path = InfoView/License.html; sourceTree = "<group>"; };
-		E03F3C080FFC0680003AA79C /* 15-0.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "15-0.CardDeck.plist"; path = "Templates/15-0.CardDeck.plist"; sourceTree = "<group>"; };
+		E03F3C080FFC0680003AA79C /* 15-0.CardDeck.plist */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; name = "15-0.CardDeck.plist"; path = "Templates/15-0.CardDeck.plist"; sourceTree = "<group>"; };
 		E041C8040FD91F14000C14A4 /* CDXCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardView.xib; path = CardView/CDXCardView.xib; sourceTree = "<group>"; };
 		E041C8070FD91F43000C14A4 /* CDXCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardViewController.h; path = CardView/CDXCardViewController.h; sourceTree = "<group>"; };
 		E041C8080FD91F4E000C14A4 /* CDXCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardViewController.m; path = CardView/CDXCardViewController.m; sourceTree = "<group>"; };
@@ -114,19 +114,19 @@
 		E05A7C5C0FFB32E40058DC1A /* CDXInfoOverviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXInfoOverviewViewController.m; path = InfoView/CDXInfoOverviewViewController.m; sourceTree = "<group>"; };
 		E05A7C5E0FFB32EF0058DC1A /* CDXInfoOverviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXInfoOverviewView.xib; path = InfoView/CDXInfoOverviewView.xib; sourceTree = "<group>"; };
 		E05A7C620FFB348D0058DC1A /* Logo-Prerendered.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Logo-Prerendered.png"; path = "Images/Logo-Prerendered.png"; sourceTree = "<group>"; };
-		E0682DBC0FDAFCF100AA06C9 /* 0-10.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "0-10.CardDeck.plist"; path = "Templates/0-10.CardDeck.plist"; sourceTree = "<group>"; };
+		E0682DBC0FDAFCF100AA06C9 /* 0-10.CardDeck.plist */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; name = "0-10.CardDeck.plist"; path = "Templates/0-10.CardDeck.plist"; sourceTree = "<group>"; };
 		E08485310FDAC2B500F2864D /* CDXCardDeckList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckList.h; path = CardDeckList/CDXCardDeckList.h; sourceTree = "<group>"; };
 		E08485320FDAC2BF00F2864D /* CDXCardDeckList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckList.m; path = CardDeckList/CDXCardDeckList.m; sourceTree = "<group>"; };
-		E08485380FDAC4B700F2864D /* Main.CardDecksList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = Main.CardDecksList.plist; path = Templates/Main.CardDecksList.plist; sourceTree = "<group>"; };
-		E08B12140FED5089002B6A50 /* 60-0.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "60-0.CardDeck.plist"; path = "Templates/60-0.CardDeck.plist"; sourceTree = "<group>"; };
+		E08485380FDAC4B700F2864D /* Main.CardDecksList.plist */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; name = Main.CardDecksList.plist; path = Templates/Main.CardDecksList.plist; sourceTree = "<group>"; };
+		E08B12140FED5089002B6A50 /* 60-0.CardDeck.plist */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; name = "60-0.CardDeck.plist"; path = "Templates/60-0.CardDeck.plist"; sourceTree = "<group>"; };
 		E098E1EB0FDF0B8A006BBFD5 /* CDXCardEditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardEditView.xib; path = CardEditView/CDXCardEditView.xib; sourceTree = "<group>"; };
 		E098E1EE0FDF0BE5006BBFD5 /* CDXCardEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardEditViewController.h; path = CardEditView/CDXCardEditViewController.h; sourceTree = "<group>"; };
 		E098E1EF0FDF0BF6006BBFD5 /* CDXCardEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardEditViewController.m; path = CardEditView/CDXCardEditViewController.m; sourceTree = "<group>"; };
-		E0A3C63D0FDACA0900F27B84 /* RedYellowGreen.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RedYellowGreen.CardDeck.plist; path = Templates/RedYellowGreen.CardDeck.plist; sourceTree = "<group>"; };
-		E0AA86BD0FDC0BB600451CC5 /* YesNoPerhaps.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = YesNoPerhaps.CardDeck.plist; path = Templates/YesNoPerhaps.CardDeck.plist; sourceTree = "<group>"; };
+		E0A3C63D0FDACA0900F27B84 /* RedYellowGreen.CardDeck.plist */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; name = RedYellowGreen.CardDeck.plist; path = Templates/RedYellowGreen.CardDeck.plist; sourceTree = "<group>"; };
+		E0AA86BD0FDC0BB600451CC5 /* YesNoPerhaps.CardDeck.plist */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; name = YesNoPerhaps.CardDeck.plist; path = Templates/YesNoPerhaps.CardDeck.plist; sourceTree = "<group>"; };
 		E0AA880F0FDC1DAC00451CC5 /* CDXStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXStorage.h; path = Storage/CDXStorage.h; sourceTree = "<group>"; };
 		E0AA88100FDC1DB200451CC5 /* CDXStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXStorage.m; path = Storage/CDXStorage.m; sourceTree = "<group>"; };
-		E0AA89390FDC3E6200451CC5 /* New.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = New.CardDeck.plist; path = Templates/New.CardDeck.plist; sourceTree = "<group>"; };
+		E0AA89390FDC3E6200451CC5 /* New.CardDeck.plist */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; name = New.CardDeck.plist; path = Templates/New.CardDeck.plist; sourceTree = "<group>"; };
 		E0AC025A0FECECEE007F8CD0 /* Mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Mail.png; path = Images/Mail.png; sourceTree = "<group>"; };
 		E0B47B410FF7FA02004BA1A4 /* CDXTextRenderingContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXTextRenderingContext.h; path = Rendering/CDXTextRenderingContext.h; sourceTree = "<group>"; };
 		E0B47B420FF7FA0B004BA1A4 /* CDXTextRenderingContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXTextRenderingContext.m; path = Rendering/CDXTextRenderingContext.m; sourceTree = "<group>"; };
@@ -573,7 +573,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
