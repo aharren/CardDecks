@@ -101,6 +101,10 @@
                                          target:nil
                                          action:nil]
                                         autorelease];
+    
+    _tableView.separatorColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1];
+    _tableView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"TableBackground.png"]];
 }
 
 - (void)viewDidUnload {
@@ -165,6 +169,11 @@
     if (newCardDeckIndexPath != nil) {
         [_tableView scrollToRowAtIndexPath:newCardDeckIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
     }
+    
+    if (_editModeActive && _setEditModeInactive) {
+        [self setEditMode:NO withNewCard:NO animated:YES];
+    }
+    _setEditModeInactive = NO;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -409,6 +418,10 @@
     CDXInfoViewController *infoViewController = [CDXInfoViewController infoViewController];
     
     [self presentModalViewController:infoViewController animated:YES];
+}
+
+- (void)setEditModeInactive {
+    _setEditModeInactive = YES;
 }
 
 - (void)selectRowAtIndexPath:(NSIndexPath *)selectedRowPath {

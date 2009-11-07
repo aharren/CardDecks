@@ -64,6 +64,8 @@
 - (void)insertCard:(CDXCard *)card atIndex:(NSUInteger)index;
 - (void)removeCardAtIndex:(NSUInteger)index;
 
+- (void)removeUncommittedCards;
+
 - (NSString *)storageName;
 - (NSDictionary *)stateAsDictionary;
 

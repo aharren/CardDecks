@@ -50,6 +50,8 @@
     CDXCardDeck *_editCardDeckDetail;
     CDXCardDeck *_newCardDeck;
     
+    // events
+    BOOL _setEditModeInactive;
 }
 
 @property (nonatomic, retain) CDXCardDeckList *cardDeckList;
@@ -76,6 +78,8 @@
 
 - (IBAction)editButtonPressed;
 - (IBAction)worldButtonPressed;
+
+- (void)setEditModeInactive;
 
 + (CDXCardDeckListViewController *)cardDeckListViewControllerWithCardDeckList:(CDXCardDeckList *)cardDeckList;
 

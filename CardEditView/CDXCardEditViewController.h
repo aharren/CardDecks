@@ -26,16 +26,12 @@
 #import "CDXCard.h"
 #import "CDXCardDeck.h"
 #import "CDXCardDeckList.h"
-
-
-typedef enum {
-    CDXCardEditViewControllerEditModeText  = 0,
-    CDXCardEditViewControllerEditModeColor = 1
-} CDXCardEditViewControllerEditMode;
+#import "CDXColorKeyboardExtension.h"
+#import "CDXLayoutKeyboardExtension.h"
 
 
 // A controller for editing a single card.
-@interface CDXCardEditViewController : UIViewController {
+@interface CDXCardEditViewController : UIViewController <CDXColorKeyboardExtensionProtocol, CDXLayoutKeyboardExtensionProtocol> {
     
 @protected
     // data objects
@@ -44,34 +40,8 @@ typedef enum {
     CDXCardDeck *_cardDeckInList;
     CDXCard *_card;
     
-    // editing state
-    CDXCardEditViewControllerEditMode _editMode;
-    BOOL _editModeTransition;
-    BOOL _textEdited;
-    
     // UI elements and controllers
-    UIView *_titleView;
-    UIBarButtonItem *_rightBarButtonItem;
-    UISegmentedControl *_editingSegment;
-    
-    UILabel *_text;
-    UITextView *_textEditable;
-    
-    UIView *_colorView;
-    
-    UIView *_colorView0;
-    UISegmentedControl *_colorView0Segment;
-    
-    UIView *_colorView1;
-    UISlider *_colorView1RedSlider;
-    UISlider *_colorView1GreenSlider;
-    UISlider *_colorView1BlueSlider;
-    
-    UIView *_colorView2;
-    
-    CGFloat _sizeStartFontSize;
-    CGFloat _sizeStartDistance;
-    CGFloat _sizeEndDistance;
+    UITextView *_text;
 }
 
 @property (nonatomic, retain) CDXCardDeck *cardDeck;
@@ -79,39 +49,22 @@ typedef enum {
 @property (nonatomic, retain) CDXCardDeck *cardDeckInList;
 @property (nonatomic, retain) CDXCard *card;
 
-@property (nonatomic, retain) IBOutlet UIView *titleView;
-@property (nonatomic, retain) IBOutlet UIBarButtonItem *rightBarButtonItem;
-@property (nonatomic, retain) IBOutlet UISegmentedControl *editingSegment;
+@property (nonatomic, retain) IBOutlet UITextView *text;
 
-@property (nonatomic, retain) IBOutlet UILabel *text;
-@property (nonatomic, retain) IBOutlet UITextView *textEditable;
+- (CDXColor *)textCDXColor;
+- (void)setTextCDXColor:(CDXColor *)color;
+- (CDXColor *)backgroundCDXColor;
+- (void)setBackgroundCDXColor:(CDXColor *)color;
 
-@property (nonatomic, retain) IBOutlet UIView *colorView;
+- (CDXCardOrientation)cardOrientation;
+- (void)setCardOrientation:(CDXCardOrientation)cardOrientation;
 
-@property (nonatomic, retain) IBOutlet UIView *colorView0;
-@property (nonatomic, retain) IBOutlet UISegmentedControl *colorView0Segment;
+- (void)paste:(id)sender;
 
-@property (nonatomic, retain) IBOutlet UIView *colorView1;
-@property (nonatomic, retain) IBOutlet UISlider *colorView1RedSlider;
-@property (nonatomic, retain) IBOutlet UISlider *colorView1GreenSlider;
-@property (nonatomic, retain) IBOutlet UISlider *colorView1BlueSlider;
-
-@property (nonatomic, retain) IBOutlet UIView *colorView2;
+- (void)doneButtonPressed;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 - (void)configureWithCard:(CDXCard *)card cardDeck:(CDXCardDeck *)cardDeck cardDeckList:(CDXCardDeckList *)cardDeckList cardDeckInList:(CDXCardDeck *)cardDeckInList;
-
-- (void)setColorViewHidden:(BOOL)hidden animated:(BOOL)animated;
-- (void)setTextEditable:(BOOL)editable animated:(BOOL)animated;
-- (void)setEditModeTextAnimated:(BOOL)animated;
-- (void)setEditModeColorAnimated:(BOOL)animated;
-- (void)cardTextColorChanged:(CDXColor *)color;
-- (void)cardBackgroundColorChanged:(CDXColor *)color;
-
-- (IBAction)editingSegmentSelected;
-- (IBAction)colorView0SegmentSelected;
-- (IBAction)colorView1ValueChanged;
-- (IBAction)colorView2ValueChanged:(id)sender;
 
 + (CDXCardEditViewController *)cardEditViewControllerWithCard:(CDXCard *)card cardDeck:(CDXCardDeck *)cardDeck cardDeckList:(CDXCardDeckList *)cardDeckList cardDeckInList:(CDXCardDeck *)cardDeckInList;
 

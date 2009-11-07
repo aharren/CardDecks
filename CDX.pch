@@ -37,4 +37,6 @@
 // Global classes.
 #import "CDXColor.h"
 #import "CDXStorage.h"
+#import "CDXSettings.h"
+#import "CDXKeyboardExtensions.h"
 

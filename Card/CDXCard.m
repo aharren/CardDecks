@@ -33,6 +33,7 @@
 @synthesize text = _text;
 @synthesize textColor = _textColor;
 @synthesize backgroundColor = _backgroundColor;
+@synthesize orientation = _orientation;
 
 @synthesize committed = _committed;
 @synthesize dirty = _dirty;
@@ -44,6 +45,7 @@
         self.text = @"";
         self.textColor = [CDXColor whiteColor];
         self.backgroundColor = [CDXColor blackColor];
+        _orientation = CDXCardOrientationUp;
     }
     return self;
 }
@@ -76,23 +78,30 @@
         } else {
             self.backgroundColor = [CDXColor cdxColorWithRGBString:(NSString *)object defaulsTo:[CDXColor blackColor]];
         }
+        
+        object = [dictionary objectForKey:@"Orientation"];
+        if (object == nil || ![object isKindOfClass:[NSString class]]) {
+            self.orientation = CDXCardOrientationUp;
+        } else {
+            self.orientation = [CDXCardOrientationHelper cardOrientationFromString:(NSString *)object];
+        }
+        
+        _committed = YES;
+        _dirty = NO;
     }
     
-    _committed = YES;
-    _dirty = NO;
     return self;
 }
 
-- (void) dealloc {
+- (void)dealloc {
     LogInvocation();
     
     self.text = nil;
     self.backgroundColor = nil;
     self.textColor = nil;
-        
+    
     [super dealloc];
 }
-
 
 - (NSDictionary *)stateAsDictionary {
     LogInvocation();
@@ -102,6 +111,7 @@
     [dictionary setValue:_text forKey:@"Text"];
     [dictionary setValue:[_backgroundColor rgbString] forKey:@"BackgroundColor"];
     [dictionary setValue:[_textColor rgbString] forKey:@"TextColor"];
+    [dictionary setValue:[CDXCardOrientationHelper stringFromCardOrientation:_orientation] forKey:@"Orientation"];
     LogDebug(@"dictionary %@", dictionary);
     
     return dictionary;

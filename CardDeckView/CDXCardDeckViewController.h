@@ -48,11 +48,13 @@
 @protected
     // data objects
     CDXCardDeck *_cardDeck;
+    NSMutableArray *_cards;
     
     // UI elements and controllers
     UIScrollView *_scrollView;
     
     UIPageControl *_pageControl;
+    UIToolbar *_toolbar;
     
     UIButton *_pageJumpLeftButton;
     UIButton *_pageJumpRightButton;
@@ -76,12 +78,19 @@
     
     NSMutableArray *_cardViewLandscapeRenderingContexts;
     NSMutableArray *_cardViewPortraitRenderingContexts;
+    
+    BOOL _showStatusBar;
+    BOOL _showPageControl;
+    BOOL _autoRotate;
+    BOOL _shakeRandom;
 }
 
 @property (nonatomic, retain) CDXCardDeck *cardDeck;
+@property (nonatomic, retain) NSMutableArray *cards;
 
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, retain) IBOutlet UIPageControl *pageControl;
+@property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
 
 @property (nonatomic, retain) IBOutlet UIButton *pageJumpLeftButton;
 @property (nonatomic, retain) IBOutlet UIButton *pageJumpRightButton;
@@ -97,14 +106,22 @@
 
 - (void)deviceOrientationDidChange:(NSNotification *)notification;
 
-- (void)configureCardViewControllerAtIndex:(NSUInteger)index page:(NSUInteger)page;
-- (void)configureViewForPage:(NSUInteger)page;
+- (void)configureCardViewControllerAtIndex:(NSUInteger)index page:(NSUInteger)page cached:(BOOL)cached;
+- (void)configureViewForPage:(NSUInteger)page cached:(BOOL)cached;
+- (void)scrollViewToPage:(NSUInteger)page cached:(BOOL)cached;
 
 - (IBAction)pageControlValueChanged:(id)sender;
 - (IBAction)backButtonPressed;
 
+- (IBAction)pageLeftButtonPressed;
+- (IBAction)pageRightButtonPressed;
 - (IBAction)pageJumpLeftButtonPressed;
 - (IBAction)pageJumpRightButtonPressed;
+
+- (IBAction)editButtonPressed;
+- (IBAction)settingsButtonPressed;
+- (IBAction)shuffleButtonPressed;
+- (IBAction)randomButtonPressed;
 
 + (CDXCardDeckViewController *)cardDeckViewControllerWithCardDeck:(CDXCardDeck *)cardDeck;
 

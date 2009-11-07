@@ -26,6 +26,7 @@
 #import "CDXCardDeckEditViewController.h"
 #import "CDXCardDeckViewController.h"
 #import "CDXCardEditViewController.h"
+#import "CDXSymbolsKeyboardExtension.h"
 
 
 @implementation CDXCardDeckEditViewController
@@ -36,12 +37,12 @@
 
 @synthesize tableView = _tableView;
 @synthesize name = _name;
-@synthesize nameButton = _nameButton;
 
 @synthesize cardEditViewController = _cardEditViewController;
 @synthesize loadedTableViewCell = _loadedTableViewCell;
 
 @synthesize tableViewSelectedRowIndexPath = _tableViewSelectedRowIndexPath;
+@synthesize tableViewDirectEditRowIndexPath = _tableViewDirectEditRowIndexPath;
 
 @synthesize cardDeckList = _cardDeckList;
 @synthesize cardDeckInList = _cardDeckInList;
@@ -55,12 +56,12 @@
     
     self.tableView = nil;
     self.name = nil;
-    self.nameButton = nil;
     
     self.cardEditViewController = nil;
     self.loadedTableViewCell = nil;
     
     self.tableViewSelectedRowIndexPath = nil;
+    self.tableViewDirectEditRowIndexPath = nil;
     
     self.cardDeckList = nil;
     self.cardDeckInList = nil;
@@ -80,13 +81,22 @@
     UINavigationItem *navigationItem = [self navigationItem];
     navigationItem.title = _cardDeck.name;
     navigationItem.titleView = _name;
-    navigationItem.rightBarButtonItem = _nameButton;
     navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc]
                                          initWithTitle:@"Back" 
                                          style:UIBarButtonItemStylePlain 
                                          target:nil
                                          action:nil]
                                         autorelease];
+    navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
+                                          initWithTitle:@"Done" 
+                                          style:UIBarButtonItemStyleDone 
+                                          target:self
+                                          action:@selector(doneButtonPressed)]
+                                         autorelease];
+    
+    _tableView.separatorColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1];
+    _tableView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"TableBackground.png"]];
 }
 
 - (void)viewDidUnload {
@@ -94,7 +104,6 @@
     
     self.tableView = nil;
     self.name = nil;
-    self.nameButton = nil;
     
     self.loadedTableViewCell = nil;
     
@@ -120,6 +129,14 @@
         [cell setSelected:YES];
         [_tableView deselectRowAtIndexPath:_tableViewSelectedRowIndexPath animated:animated];
     }
+    
+    if (_tableViewDirectEditRowIndexPath != nil) {
+        // editing of deck name is not possible in this mode
+        _name.enabled = NO;
+    }
+    
+    [[[self navigationController] navigationBar] setAlpha:1.0];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -154,10 +171,16 @@
     _editCard = nil;
     
     self.tableViewSelectedRowIndexPath = nil;
-
+    
     if (newCardIndexPath != nil) {
         [_tableView scrollToRowAtIndexPath:newCardIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
-    }
+    }   
+    
+    if (_tableViewDirectEditRowIndexPath != nil) {
+        [_tableView selectRowAtIndexPath:_tableViewDirectEditRowIndexPath animated:animated scrollPosition:UITableViewScrollPositionMiddle];
+        [self tableView:_tableView didSelectRowAtIndexPath:_tableViewDirectEditRowIndexPath];
+        self.tableViewDirectEditRowIndexPath = nil;
+    } 
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -165,9 +188,7 @@
     
     [super viewWillDisappear:animated];
     
-    if (_editCard == nil) {
-        [CDXStorage drainDeferred:_cardDeck];
-    }
+    [CDXStorage drainDeferred:_cardDeck];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -229,6 +250,7 @@
     [_cardDeck removeCardAtIndex:fromIndexPath.row];
     [_cardDeck insertCard:card atIndex:toIndexPath.row];
     
+    _cardDeck.dirty = YES;
     [CDXStorage update:_cardDeck deferred:YES];
 }
 
@@ -258,6 +280,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [_cardDeck removeCardAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
+        _cardDeck.dirty = YES;
         [CDXStorage update:_cardDeck deferred:YES];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
@@ -306,10 +329,20 @@
     }
 }
 
+- (IBAction)nameDidBeginEditing {
+    LogInvocation();
+    
+    [[CDXKeyboardExtensions sharedInstance] setResponder:_name extensions:[NSArray arrayWithObject:[CDXSymbolsKeyboardExtension sharedInstance]]];
+}
+
 - (IBAction)nameDidEndOnExit {
+    LogInvocation();
+    
 }
 
 - (IBAction)nameEditingDidEnd {
+    LogInvocation();
+    
     _cardDeck.name = _name.text;
     [CDXStorage update:_cardDeck deferred:YES];
     
@@ -351,14 +384,17 @@
     [url release];
 }
 
-- (IBAction)nameButtonPressed {
+- (void)doneButtonPressed {
     LogInvocation();
     
-    if ([_name isFirstResponder]) {
-        [_name resignFirstResponder];
-    } else {
-        [_name becomeFirstResponder];
+    NSArray *viewControllers = [self.navigationController viewControllers];
+    
+    UIViewController *baseViewController = [viewControllers objectAtIndex:[viewControllers count] - 1 - 1];
+    if ([baseViewController respondsToSelector:@selector(setEditModeInactive)]) {
+        [baseViewController performSelector:@selector(setEditModeInactive)];
     }
+    
+    [self.navigationController popToViewController:baseViewController animated:YES];
 }
 
 + (CDXCardDeckEditViewController *)cardDeckEditViewControllerWithCardDeck:(CDXCardDeck *)cardDeck cardDeckList:(CDXCardDeckList *)cardDeckList cardDeckInList:(CDXCardDeck *)cardDeckInList {

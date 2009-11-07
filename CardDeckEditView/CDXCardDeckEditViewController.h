@@ -39,7 +39,6 @@
     // UI elements and controllers
     UITableView *_tableView;
     UITextField *_name;
-    UIBarButtonItem *_nameButton;
     
     CDXCardEditViewController *_cardEditViewController;
     
@@ -48,6 +47,7 @@
     // editing state
     BOOL _editModeActive;
     NSIndexPath *_tableViewSelectedRowIndexPath;
+    NSIndexPath *_tableViewDirectEditRowIndexPath;
     
     CDXCardDeck *_cardDeckInList; 
     CDXCardDeckList *_cardDeckList;
@@ -59,12 +59,12 @@
 
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) IBOutlet UITextField *name;
-@property (nonatomic, retain) IBOutlet UIBarButtonItem *nameButton;
 
 @property (nonatomic, retain) CDXCardEditViewController *cardEditViewController;
 
 @property (nonatomic, retain) IBOutlet CDXCardDeckEditViewTableCell *loadedTableViewCell;
 
+@property (nonatomic, retain) NSIndexPath *tableViewDirectEditRowIndexPath;
 @property (nonatomic, retain) NSIndexPath *tableViewSelectedRowIndexPath;
 
 @property (nonatomic, retain) CDXCardDeckList *cardDeckList;
@@ -72,13 +72,17 @@
 @property (nonatomic, retain) CDXCard *editCard;
 @property (nonatomic, retain) CDXCard *newCard;
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
+
 - (NSIndexPath *)insertNewCard;
 - (void)initCardEditViewController;
 
+- (IBAction)nameDidBeginEditing;
 - (IBAction)nameDidEndOnExit;
 - (IBAction)nameEditingDidEnd;
 - (IBAction)sendButtonPressed;
-- (IBAction)nameButtonPressed;
+
+- (void)doneButtonPressed;
 
 + (CDXCardDeckEditViewController *)cardDeckEditViewControllerWithCardDeck:(CDXCardDeck *)cardDeck cardDeckList:(CDXCardDeckList *)cardDeckList cardDeckInList:(CDXCardDeck *)cardDeckInList;
 

@@ -46,8 +46,8 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 
-- (void)configureWithCard:(CDXCard *)card landscapeRenderingContext:(CDXTextRenderingContext *)landscapeRenderingContext portraitRenderingContext:(CDXTextRenderingContext *)portraitRenderingContext frame:(CGRect)frame;
-- (void)setOrientation:(UIDeviceOrientation)orientation;
+- (void)configureWithCard:(CDXCard *)card landscapeRenderingContext:(CDXTextRenderingContext *)landscapeRenderingContext portraitRenderingContext:(CDXTextRenderingContext *)portraitRenderingContext frame:(CGRect)frame orientation:(CDXCardOrientation)orientation;
+- (void)setOrientation:(CDXCardOrientation)orientation;
 
 + (CDXCardViewController *)cardViewController;
 

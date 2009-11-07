@@ -41,3 +41,10 @@ _lcl_component(CDXCardDeckListViewController,   "carddecks.view.carddecklistview
 
 _lcl_component(CDXInfoOverviewViewController,   "carddecks.info.overview",          "Card Decks/Info")
 
+_lcl_component(CDXKeyboardExtensions,           "carddecks.kbext",                  "Card Decks/Keyboard Extensions/Main")
+_lcl_component(CDXColorKeyboardExtension,       "carddecks.kbext.color",            "Card Decks/Keyboard Extensions/Color")
+_lcl_component(CDXSymbolsKeyboardExtension,     "carddecks.kbext.symbols",          "Card Decks/Keyboard Extensions/Symbols")
+_lcl_component(CDXLayoutKeyboardExtension,      "carddecks.kbext.layout",           "Card Decks/Keyboard Extensions/Layout")
+
+_lcl_component(CDXSettingsViewController,       "carddecks.settings.view",          "Card Decks/Settings")
+

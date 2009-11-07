@@ -77,38 +77,28 @@
     [super viewWillAppear:animated];
 }
 
-- (void)setOrientation:(UIDeviceOrientation)orientation {
+- (void)setOrientation:(CDXCardOrientation)orientation {
     LogInvocation();
     
-    CGFloat transformAngle;
-    switch (orientation) {
-        case UIDeviceOrientationPortrait:
-        default:
-            transformAngle = 0;
-            break;
-        case UIDeviceOrientationPortraitUpsideDown:
-            transformAngle = M_PI;
-            break;
-        case UIDeviceOrientationLandscapeLeft:
-            transformAngle = M_PI_2;
-            break;
-        case UIDeviceOrientationLandscapeRight:
-            transformAngle = -M_PI_2;
-            break;
-    }
+    // add card's orientation and the device orientation
+    CDXCardOrientation cardOrientation = _card.orientation + orientation;
+    cardOrientation %= CDXCardOrientationCount;
     
-    CGAffineTransform transform = CGAffineTransformRotate(CGAffineTransformIdentity, transformAngle);
-    switch (orientation) {
+    // retrieve the corresponding transform
+    CGAffineTransform transform = [CDXCardOrientationHelper transformFromCardOrientation:cardOrientation];
+    
+    // update the views
+    switch (cardOrientation) {
         default:
-        case UIDeviceOrientationPortrait:
-        case UIDeviceOrientationPortraitUpsideDown:
+        case CDXCardOrientationUp:
+        case CDXCardOrientationDown:
             _textLandscape.alpha = 0;
             
             _textPortrait.transform = transform;
             _textPortrait.alpha = 1;
             break;
-        case UIDeviceOrientationLandscapeLeft:
-        case UIDeviceOrientationLandscapeRight:
+        case CDXCardOrientationLeft:
+        case CDXCardOrientationRight:
             _textPortrait.alpha = 0;
             
             _textLandscape.transform = transform;
@@ -130,11 +120,11 @@
     return controller;
 }
 
-- (void)configureWithCard:(CDXCard *)card landscapeRenderingContext:(CDXTextRenderingContext *)landscapeRenderingContext portraitRenderingContext:(CDXTextRenderingContext *)portraitRenderingContext frame:(CGRect)frame {
+- (void)configureWithCard:(CDXCard *)card landscapeRenderingContext:(CDXTextRenderingContext *)landscapeRenderingContext portraitRenderingContext:(CDXTextRenderingContext *)portraitRenderingContext frame:(CGRect)frame orientation:(CDXCardOrientation)orientation {
     LogInvocation();
     CGRect rect;
     const CGFloat widthInternal = 800.0;
-
+    
     self.card = card;
     UIFont *font = [UIFont boldSystemFontOfSize:400];
     
@@ -162,6 +152,7 @@
     _textPortrait.text = text;
     _textPortrait.textColor = textColor;
     _textPortrait.backgroundColor = backgroundColor;
+    _textPortrait.transform = CGAffineTransformRotate(CGAffineTransformIdentity, 0);
     _textPortrait.font = [font fontWithSize:portraitRenderingContext.fontSize];
     rect = _textPortrait.bounds;
     rect.origin.x = 0;
@@ -187,9 +178,9 @@
     rect.size.width = 440;
     rect.size.height = landscapeRenderingContext.height + 20;
     _textLandscape.bounds = rect;
-
+    
     // set the current orientation
-    [self setOrientation:[[UIDevice currentDevice] orientation]];
+    [self setOrientation:orientation];
 }
 
 @end

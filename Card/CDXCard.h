@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXTextRenderingContext.h"
+#import "CDXCardOrientation.h"
 
 
 // A card which has a text, a text color, and a background color.
@@ -34,6 +35,7 @@
     NSString *_text;
     CDXColor *_textColor;
     CDXColor *_backgroundColor;
+    CDXCardOrientation _orientation;
     
     // editing state
     BOOL _committed;
@@ -43,6 +45,7 @@
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, retain) CDXColor *textColor;
 @property (nonatomic, retain) CDXColor *backgroundColor;
+@property (nonatomic, assign) CDXCardOrientation orientation;
 
 @property (nonatomic, assign) BOOL committed;
 @property (nonatomic, assign) BOOL dirty;

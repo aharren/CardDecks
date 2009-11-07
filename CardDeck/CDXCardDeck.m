@@ -137,6 +137,15 @@
     [_cards removeObjectAtIndex:index];
 }
 
+- (void)removeUncommittedCards {
+    NSUInteger count = [_cards count];
+    for (NSUInteger i = count; i > 0; i--) {
+        if (![((CDXCard *)[_cards objectAtIndex:i-1]) committed]) {
+            [_cards removeObjectAtIndex:i-1];
+        }
+    }
+}
+
 - (NSString *)storageName {
     LogInvocation();
     
@@ -221,15 +230,19 @@
         if (card.committed) {
             NSString *textColorString = [card.textColor rgbString];
             NSString *backgroundColorString = [card.backgroundColor rgbString];
+            CDXCardOrientation orientation = card.orientation;
             BOOL textColorEqual = textColorString != nil && [textColorString isEqualToString:defaultTextColorString];
             BOOL backgroundColorEqual = backgroundColorString != nil && [backgroundColorString isEqualToString:defaultBackgroundColorString];
+            BOOL orientationPortrait = orientation == CDXCardOrientationUp;
             
-            NSString *cardString = [NSString stringWithFormat:@"%@%@%@%@%@",
+            NSString *cardString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@",
                                     [CDXCardDeck stringByAddingURLEscapes:card.text],
-                                    (!textColorEqual || !backgroundColorEqual) ? @"," : @"",
+                                    (!textColorEqual || !backgroundColorEqual || !orientationPortrait) ? @"," : @"",
                                     (!textColorEqual) ? textColorString : @"",
-                                    (!backgroundColorEqual) ? @"," : @"",
-                                    (!backgroundColorEqual) ? backgroundColorString : @""];
+                                    (!backgroundColorEqual || !orientationPortrait) ? @"," : @"",
+                                    (!backgroundColorEqual) ? backgroundColorString : @"",
+                                    (!orientationPortrait) ? @"," : @"",
+                                    (!orientationPortrait) ? [CDXCardOrientationHelper stringFromCardOrientation:orientation] : @""];
             [urlComponents addObject:cardString];
         }
         [pool release];
@@ -278,6 +291,9 @@
             }
             if ([encodedCardParts count] >= 3) {
                 card.backgroundColor = [CDXColor cdxColorWithRGBString:(NSString *)[encodedCardParts objectAtIndex:2] defaulsTo:cardDeck.defaultBackgroundColor];
+            }
+            if ([encodedCardParts count] >= 4) {
+                card.orientation = [CDXCardOrientationHelper cardOrientationFromString:(NSString *)[encodedCardParts objectAtIndex:3]];
             }
             
             card.committed = YES;

@@ -60,9 +60,12 @@
     
     // animate the card deck list
     [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationDuration:0.2];
     [self.cardDeckListViewController.view setAlpha:1.0];
     [UIView commitAnimations];
+    
+    // enable keyboard extensions
+    [[CDXKeyboardExtensions sharedInstance] setEnabled:YES];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
