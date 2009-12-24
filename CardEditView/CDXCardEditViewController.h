@@ -61,6 +61,7 @@
 
 - (void)paste:(id)sender;
 
+- (void)textViewDidEndEditing:(UITextView *)textView;
 - (void)doneButtonPressed;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;

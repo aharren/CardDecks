@@ -43,7 +43,6 @@
 		E05A7C5F0FFB32EF0058DC1A /* CDXInfoOverviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E05A7C5E0FFB32EF0058DC1A /* CDXInfoOverviewView.xib */; };
 		E05A7C630FFB348D0058DC1A /* Logo-Prerendered.png in Resources */ = {isa = PBXBuildFile; fileRef = E05A7C620FFB348D0058DC1A /* Logo-Prerendered.png */; };
 		E05B5266109622AC00E045A7 /* CDXSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E05B5265109622AC00E045A7 /* CDXSettingsViewController.m */; };
-		E05B5269109622E000E045A7 /* CDXSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E05B5268109622E000E045A7 /* CDXSettingsView.xib */; };
 		E05B52731096252200E045A7 /* CDXSettingsViewTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E05B52721096252200E045A7 /* CDXSettingsViewTableCell.m */; };
 		E05B52751096253200E045A7 /* CDXSettingsViewTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E05B52741096253200E045A7 /* CDXSettingsViewTableCell.xib */; };
 		E0682DBD0FDAFCF100AA06C9 /* 0-10.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0682DBC0FDAFCF100AA06C9 /* 0-10.CardDeck.plist */; };
@@ -82,6 +81,7 @@
 		E0E241B71087B9C9008444E8 /* CDXSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E241B61087B9C9008444E8 /* CDXSettings.m */; };
 		E0E2431C1088EE32008444E8 /* CDXKeyboardExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E2431B1088EE32008444E8 /* CDXKeyboardExtensions.m */; };
 		E0ED743E0FE0562000D448A5 /* CDXColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E0ED743D0FE0562000D448A5 /* CDXColor.m */; };
+		E0EF1F3210DABD6A00BE1503 /* CDXSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0EF1F3110DABD6A00BE1503 /* CDXSettingsView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -144,7 +144,6 @@
 		E05A7C620FFB348D0058DC1A /* Logo-Prerendered.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Logo-Prerendered.png"; path = "Images/Logo-Prerendered.png"; sourceTree = "<group>"; };
 		E05B5264109622AC00E045A7 /* CDXSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXSettingsViewController.h; path = SettingsView/CDXSettingsViewController.h; sourceTree = "<group>"; };
 		E05B5265109622AC00E045A7 /* CDXSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXSettingsViewController.m; path = SettingsView/CDXSettingsViewController.m; sourceTree = "<group>"; };
-		E05B5268109622E000E045A7 /* CDXSettingsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CDXSettingsView.xib; sourceTree = "<group>"; };
 		E05B52711096252200E045A7 /* CDXSettingsViewTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXSettingsViewTableCell.h; path = SettingsView/CDXSettingsViewTableCell.h; sourceTree = "<group>"; };
 		E05B52721096252200E045A7 /* CDXSettingsViewTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXSettingsViewTableCell.m; path = SettingsView/CDXSettingsViewTableCell.m; sourceTree = "<group>"; };
 		E05B52741096253200E045A7 /* CDXSettingsViewTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXSettingsViewTableCell.xib; path = SettingsView/CDXSettingsViewTableCell.xib; sourceTree = "<group>"; };
@@ -202,6 +201,7 @@
 		E0E2431B1088EE32008444E8 /* CDXKeyboardExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXKeyboardExtensions.m; path = KeyboardExtensions/CDXKeyboardExtensions.m; sourceTree = "<group>"; };
 		E0ED743C0FE0561900D448A5 /* CDXColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXColor.h; path = Color/CDXColor.h; sourceTree = "<group>"; };
 		E0ED743D0FE0562000D448A5 /* CDXColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXColor.m; path = Color/CDXColor.m; sourceTree = "<group>"; };
+		E0EF1F3110DABD6A00BE1503 /* CDXSettingsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXSettingsView.xib; path = SettingsView/CDXSettingsView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,7 +417,7 @@
 			children = (
 				E05B5264109622AC00E045A7 /* CDXSettingsViewController.h */,
 				E05B5265109622AC00E045A7 /* CDXSettingsViewController.m */,
-				E05B5268109622E000E045A7 /* CDXSettingsView.xib */,
+				E0EF1F3110DABD6A00BE1503 /* CDXSettingsView.xib */,
 				E05B52711096252200E045A7 /* CDXSettingsViewTableCell.h */,
 				E05B52721096252200E045A7 /* CDXSettingsViewTableCell.m */,
 				E05B52741096253200E045A7 /* CDXSettingsViewTableCell.xib */,
@@ -627,8 +627,8 @@
 				E0B5FC6D108B350000619C6E /* CDXSymbolsKeyboardExtensionTableViewCellB.xib in Resources */,
 				E078F488108E3E1E0001F654 /* KeyboardExtensionsBackground.png in Resources */,
 				E078F6A5108E56740001F654 /* TableBackground.png in Resources */,
-				E05B5269109622E000E045A7 /* CDXSettingsView.xib in Resources */,
 				E05B52751096253200E045A7 /* CDXSettingsViewTableCell.xib in Resources */,
+				E0EF1F3210DABD6A00BE1503 /* CDXSettingsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

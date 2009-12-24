@@ -27,7 +27,7 @@
 // Definition of version information (major, minor, etc.).
 #define CDXApplicationVersionMajor  1
 #define CDXApplicationVersionMinor  1
-#define CDXApplicationVersionBuild  1
+#define CDXApplicationVersionBuild  2
 #define CDXApplicationVersionSuffix ""
 
 // NSString with complete version information (<major>.<minor>.<build><suffix>).

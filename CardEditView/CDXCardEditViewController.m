@@ -105,11 +105,14 @@
     
     [super viewWillDisappear:animated];
     
+    [self textViewDidEndEditing:_text];
+    
+    LogInvocation(@"card dirty=%d", _card.dirty);
     if (_card.dirty) {
         _card.committed = YES;
         [CDXStorage update:_cardDeck deferred:YES];
         
-        LogInvocation(@"%d", _cardDeckInList.committed);
+        LogInvocation(@"list committed=%d", _cardDeckInList.committed);
         if (_cardDeckInList != nil && !_cardDeckInList.committed) {
             _cardDeckInList.committed = YES;
             _cardDeckInList.dirty = YES;

@@ -586,9 +586,11 @@
     _cardDeck.dirty = NO;
     CDXCardDeckEditViewController *cardDeckEditViewController = [CDXCardDeckEditViewController cardDeckEditViewControllerWithCardDeck:_cardDeck cardDeckList:nil cardDeckInList:nil];
     
-    CDXCard *currentCard = (CDXCard *)[_cards objectAtIndex:_currentPage];
-    NSUInteger editRow = [_cardDeck indexOfCard:currentCard] + 1; 
-    cardDeckEditViewController.tableViewDirectEditRowIndexPath = [NSIndexPath indexPathForRow:editRow inSection:0];
+    if (_pageCount > 0 && _currentPage < _pageCount) {
+        CDXCard *currentCard = (CDXCard *)[_cards objectAtIndex:_currentPage];
+        NSUInteger editRow = [_cardDeck indexOfCard:currentCard] + 1; 
+        cardDeckEditViewController.tableViewDirectEditRowIndexPath = [NSIndexPath indexPathForRow:editRow inSection:0];
+    }
     
     [[self navigationController] pushViewController:cardDeckEditViewController animated:YES];
 }
