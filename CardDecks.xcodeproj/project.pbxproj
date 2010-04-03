@@ -6,9 +6,24 @@
 	objectVersion = 45;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E03BA24D116747FC00FE7924 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BA24C116747FC00FE7924 /* main.m */; };
+		E03BA2721167488B00FE7924 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2711167488B00FE7924 /* Foundation.framework */; };
+		E03BA2741167489600FE7924 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2731167489600FE7924 /* UIKit.framework */; };
+		E03BA38611674C3300FE7924 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E03BA38511674C3300FE7924 /* MainWindow.xib */; };
+		E03BA38911674CBF00FE7924 /* CDXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BA38811674CBF00FE7924 /* CDXAppDelegate.m */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
-		E00DD48711662E5500D4215E /* CardDecks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardDecks.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E002B449116754350072C409 /* CardDecks2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardDecks2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E03BA23F1167475000FE7924 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E03BA24C116747FC00FE7924 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E03BA2501167485A00FE7924 /* CDX.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDX.pch; sourceTree = "<group>"; };
+		E03BA2711167488B00FE7924 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E03BA2731167489600FE7924 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E03BA38511674C3300FE7924 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainWindow.xib; path = UserInterfaces/MainWindow.xib; sourceTree = "<group>"; };
+		E03BA38711674CBF00FE7924 /* CDXAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppDelegate.h; path = Classes/CDXAppDelegate.h; sourceTree = "<group>"; };
+		E03BA38811674CBF00FE7924 /* CDXAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppDelegate.m; path = Classes/CDXAppDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -16,6 +31,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E03BA2721167488B00FE7924 /* Foundation.framework in Frameworks */,
+				E03BA2741167489600FE7924 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -25,7 +42,11 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				E03BA34911674A2F00FE7924 /* Classes */,
+				E03BA33A11674A2200FE7924 /* Other Sources */,
+				E03BA38311674C1000FE7924 /* User Interfaces */,
 				E03BA23F1167475000FE7924 /* Info.plist */,
+				E03BA26E1167488000FE7924 /* Frameworks */,
 				E00DD48811662E5500D4215E /* Products */,
 			);
 			name = CustomTemplate;
@@ -34,17 +55,52 @@
 		E00DD48811662E5500D4215E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E00DD48711662E5500D4215E /* CardDecks.app */,
+				E002B449116754350072C409 /* CardDecks2.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E03BA26E1167488000FE7924 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E03BA2711167488B00FE7924 /* Foundation.framework */,
+				E03BA2731167489600FE7924 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E03BA33A11674A2200FE7924 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				E03BA2501167485A00FE7924 /* CDX.pch */,
+				E03BA24C116747FC00FE7924 /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		E03BA34911674A2F00FE7924 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				E03BA38711674CBF00FE7924 /* CDXAppDelegate.h */,
+				E03BA38811674CBF00FE7924 /* CDXAppDelegate.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		E03BA38311674C1000FE7924 /* User Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				E03BA38511674C3300FE7924 /* MainWindow.xib */,
+			);
+			name = "User Interfaces";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* CardDecks */ = {
+		1D6058900D05DD3D006BFB54 /* CardDecks2 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "CardDecks" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "CardDecks2" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -54,9 +110,9 @@
 			);
 			dependencies = (
 			);
-			name = CardDecks;
+			name = CardDecks2;
 			productName = CardDecks;
-			productReference = E00DD48711662E5500D4215E /* CardDecks.app */;
+			productReference = E002B449116754350072C409 /* CardDecks2.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -72,7 +128,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* CardDecks */,
+				1D6058900D05DD3D006BFB54 /* CardDecks2 */,
 			);
 		};
 /* End PBXProject section */
@@ -82,6 +138,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E03BA38611674C3300FE7924 /* MainWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +149,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E03BA24D116747FC00FE7924 /* main.m in Sources */,
+				E03BA38911674CBF00FE7924 /* CDXAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,7 +169,7 @@
 				GCC_PREFIX_HEADER = CDX.pch;
 				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_NAME = CardDecks;
+				PRODUCT_NAME = CardDecks2;
 				SDKROOT = iphoneos3.0;
 			};
 			name = Debug;
@@ -126,7 +185,7 @@
 				GCC_PREFIX_HEADER = CDX.pch;
 				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_NAME = CardDecks;
+				PRODUCT_NAME = CardDecks2;
 				SDKROOT = iphoneos3.0;
 			};
 			name = Release;
@@ -182,7 +241,7 @@
 				GCC_PREFIX_HEADER = CDX.pch;
 				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_NAME = CardDecks;
+				PRODUCT_NAME = CardDecks2;
 				SDKROOT = iphoneos3.0;
 			};
 			name = Distribution;
@@ -190,7 +249,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "CardDecks" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "CardDecks2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
