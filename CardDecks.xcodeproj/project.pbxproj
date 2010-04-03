@@ -8,6 +8,7 @@
 
 /* Begin PBXFileReference section */
 		E00DD48711662E5500D4215E /* CardDecks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardDecks.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E03BA23F1167475000FE7924 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -24,6 +25,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				E03BA23F1167475000FE7924 /* Info.plist */,
 				E00DD48811662E5500D4215E /* Products */,
 			);
 			name = CustomTemplate;
