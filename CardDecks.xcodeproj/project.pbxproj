@@ -170,6 +170,7 @@
 				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = CardDecks2;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos3.0;
 			};
 			name = Debug;
@@ -186,6 +187,7 @@
 				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = CardDecks2;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos3.0;
 			};
 			name = Release;
@@ -242,6 +244,7 @@
 				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = CardDecks2;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos3.0;
 			};
 			name = Distribution;
