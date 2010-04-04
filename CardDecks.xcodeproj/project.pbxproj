@@ -19,6 +19,9 @@
 		E002B7011168942F0072C409 /* CDXCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B7001168942F0072C409 /* CDXCardDeck.m */; };
 		E002B7021168942F0072C409 /* CDXCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B7001168942F0072C409 /* CDXCardDeck.m */; };
 		E002B704116894980072C409 /* CDXCardDeckTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B703116894980072C409 /* CDXCardDeckTests.m */; };
+		E002B76111689C570072C409 /* CDXCardDeckURLSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B76011689C570072C409 /* CDXCardDeckURLSerializer.m */; };
+		E002B76211689C570072C409 /* CDXCardDeckURLSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B76011689C570072C409 /* CDXCardDeckURLSerializer.m */; };
+		E002B7881168A8060072C409 /* CDXCardDeckURLSerializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B7861168A8060072C409 /* CDXCardDeckURLSerializerTests.m */; };
 		E03BA24D116747FC00FE7924 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BA24C116747FC00FE7924 /* main.m */; };
 		E03BA2721167488B00FE7924 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2711167488B00FE7924 /* Foundation.framework */; };
 		E03BA2741167489600FE7924 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2731167489600FE7924 /* UIKit.framework */; };
@@ -51,6 +54,9 @@
 		E002B6FF1168942F0072C409 /* CDXCardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeck.h; path = Classes/Models/CDXCardDeck.h; sourceTree = "<group>"; };
 		E002B7001168942F0072C409 /* CDXCardDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeck.m; path = Classes/Models/CDXCardDeck.m; sourceTree = "<group>"; };
 		E002B703116894980072C409 /* CDXCardDeckTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckTests.m; path = Classes/Models/CDXCardDeckTests.m; sourceTree = "<group>"; };
+		E002B75F11689C570072C409 /* CDXCardDeckURLSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckURLSerializer.h; path = Classes/Models/CDXCardDeckURLSerializer.h; sourceTree = "<group>"; };
+		E002B76011689C570072C409 /* CDXCardDeckURLSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckURLSerializer.m; path = Classes/Models/CDXCardDeckURLSerializer.m; sourceTree = "<group>"; };
+		E002B7861168A8060072C409 /* CDXCardDeckURLSerializerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckURLSerializerTests.m; path = Classes/Models/CDXCardDeckURLSerializerTests.m; sourceTree = "<group>"; };
 		E03BA23F1167475000FE7924 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E03BA24C116747FC00FE7924 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E03BA2501167485A00FE7924 /* CDX.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDX.pch; sourceTree = "<group>"; };
@@ -110,6 +116,9 @@
 				E002B6FF1168942F0072C409 /* CDXCardDeck.h */,
 				E002B7001168942F0072C409 /* CDXCardDeck.m */,
 				E002B703116894980072C409 /* CDXCardDeckTests.m */,
+				E002B75F11689C570072C409 /* CDXCardDeckURLSerializer.h */,
+				E002B76011689C570072C409 /* CDXCardDeckURLSerializer.m */,
+				E002B7861168A8060072C409 /* CDXCardDeckURLSerializerTests.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -263,6 +272,7 @@
 				E002B6C7116885150072C409 /* CDXColor.m in Sources */,
 				E002B6D41168858C0072C409 /* CDXCard.m in Sources */,
 				E002B7011168942F0072C409 /* CDXCardDeck.m in Sources */,
+				E002B76211689C570072C409 /* CDXCardDeckURLSerializer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +286,8 @@
 				E002B6E011688B640072C409 /* CDXCard.m in Sources */,
 				E002B7021168942F0072C409 /* CDXCardDeck.m in Sources */,
 				E002B704116894980072C409 /* CDXCardDeckTests.m in Sources */,
+				E002B76111689C570072C409 /* CDXCardDeckURLSerializer.m in Sources */,
+				E002B7881168A8060072C409 /* CDXCardDeckURLSerializerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
