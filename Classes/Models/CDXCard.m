@@ -36,8 +36,8 @@
 - (id)init {
     if ((self = [super init])) {
         self.text = @"";
-        self.textColor = [CDXColor cdxColorWhite];
-        self.backgroundColor = [CDXColor cdxColorBlack];
+        self.textColor = [CDXColor colorWhite];
+        self.backgroundColor = [CDXColor colorBlack];
     }
     return self;
 }

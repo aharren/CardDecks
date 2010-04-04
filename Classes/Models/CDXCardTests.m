@@ -39,8 +39,8 @@
 - (void)testInitWithDefaults {
     CDXCard *card = [[CDXCard alloc] init];
     STAssertEqualObjects([card text], @"", nil);
-    STAssertEquals([card textColor], [CDXColor cdxColorWhite], nil);
-    STAssertEquals([card backgroundColor], [CDXColor cdxColorBlack], nil);
+    STAssertEquals([card textColor], [CDXColor colorWhite], nil);
+    STAssertEquals([card backgroundColor], [CDXColor colorBlack], nil);
     STAssertEquals((int)[card orientation], (int)CDXCardOrientationUp, nil);
     [card release];
 }

@@ -37,7 +37,7 @@
     return [string stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
-+ (CDXCardOrientation)cdxCardOrientationFromString:(NSString *)string defaultsTo:(CDXCardOrientation)defaultOrientation {
++ (CDXCardOrientation)cardOrientationFromString:(NSString *)string defaultsTo:(CDXCardOrientation)defaultOrientation {
     // valid orientations are 'u', 'r', 'd', and 'l', everything else maps to
     // the given default orientation
     string = [string lowercaseString];
@@ -54,7 +54,7 @@
     }
 }
 
-+ (CDXCardDeck *)cdxCardDeckFromString:(NSString *)string {
++ (CDXCardDeck *)cardDeckFromString:(NSString *)string {
     // string := <deck>[&<card>[&<card>[...]]]
     NSArray *sParts = [string componentsSeparatedByString:@"&"];
     if ([sParts count] == 0) {
@@ -78,18 +78,18 @@
         dDeck.name = [CDXCardDeckURLSerializer stringByReplacingURLEscapes:(NSString *)[sDeckParts objectAtIndex:0]];
         // [,[<text-color>] ...
         if ([sDeckParts count] >= 2) {
-            dDeck.defaultCardTextColor = [CDXColor cdxColorWithRGBAString:(NSString *)[sDeckParts objectAtIndex:1] 
-                                                                defaulsTo:[CDXColor cdxColorWhite]];
+            dDeck.defaultCardTextColor = [CDXColor colorWithRGBAString:(NSString *)[sDeckParts objectAtIndex:1]
+                                                             defaulsTo:[CDXColor colorWhite]];
         }
         //  [,[<background-color>] ...
         if ([sDeckParts count] >= 3) {
-            dDeck.defaultCardBackgroundColor = [CDXColor cdxColorWithRGBAString:(NSString *)[sDeckParts objectAtIndex:2]
-                                                                      defaulsTo:[CDXColor cdxColorBlack]];
+            dDeck.defaultCardBackgroundColor = [CDXColor colorWithRGBAString:(NSString *)[sDeckParts objectAtIndex:2]
+                                                                   defaulsTo:[CDXColor colorBlack]];
         }
         //  [,[<orientation>] ...
         if ([sDeckParts count] >= 4) {
-            dDeck.defaultCardOrientation = [CDXCardDeckURLSerializer cdxCardOrientationFromString:(NSString *)[sDeckParts objectAtIndex:3]
-                                                                                       defaultsTo:CDXCardOrientationUp];
+            dDeck.defaultCardOrientation = [CDXCardDeckURLSerializer cardOrientationFromString:(NSString *)[sDeckParts objectAtIndex:3]
+                                                                                    defaultsTo:CDXCardOrientationUp];
         }
     }
     
@@ -100,24 +100,24 @@
         NSString *sCard = (NSString *)[sParts objectAtIndex:i];
         NSArray *sCardParts = [sCard componentsSeparatedByString:@","];
         if ([sCardParts count] >= 1) {
-            CDXCard *dCard = [dDeck cdxCardWithDefaults];
+            CDXCard *dCard = [dDeck cardWithDefaults];
             
             // <text>
             dCard.text = [CDXCardDeckURLSerializer stringByReplacingURLEscapes:(NSString *)[sCardParts objectAtIndex:0]];
             // [,[<text-color>] ...
             if ([sCardParts count] >= 2) {
-                dCard.textColor = [CDXColor cdxColorWithRGBAString:(NSString *)[sCardParts objectAtIndex:1]
-                                                         defaulsTo:dCard.textColor];
+                dCard.textColor = [CDXColor colorWithRGBAString:(NSString *)[sCardParts objectAtIndex:1]
+                                                      defaulsTo:dCard.textColor];
             }
             // [,[<background-color>] ...
             if ([sCardParts count] >= 3) {
-                dCard.backgroundColor = [CDXColor cdxColorWithRGBAString:(NSString *)[sCardParts objectAtIndex:2]
-                                                               defaulsTo:dCard.backgroundColor];
+                dCard.backgroundColor = [CDXColor colorWithRGBAString:(NSString *)[sCardParts objectAtIndex:2]
+                                                            defaulsTo:dCard.backgroundColor];
             }
             //  [,[<orientation>] ...
             if ([sCardParts count] >= 4) {
-                dCard.orientation = [CDXCardDeckURLSerializer cdxCardOrientationFromString:(NSString *)[sCardParts objectAtIndex:3]
-                                                                                defaultsTo:dCard.orientation];
+                dCard.orientation = [CDXCardDeckURLSerializer cardOrientationFromString:(NSString *)[sCardParts objectAtIndex:3]
+                                                                             defaultsTo:dCard.orientation];
             }
             
             [dDeck addCard:dCard];

@@ -36,8 +36,8 @@
 - (id)init {
     if ((self = [super init])) {
         self.name = @"";
-        self.defaultCardTextColor = [CDXColor cdxColorWhite];
-        self.defaultCardBackgroundColor = [CDXColor cdxColorBlack];
+        self.defaultCardTextColor = [CDXColor colorWhite];
+        self.defaultCardBackgroundColor = [CDXColor colorBlack];
         cards = [[NSMutableArray alloc] init];
     }
     return self;
@@ -74,7 +74,7 @@
     [cards removeObjectAtIndex:index];
 }
 
-- (CDXCard *)cdxCardWithDefaults {
+- (CDXCard *)cardWithDefaults {
     CDXCard *card = [[[CDXCard alloc] init] autorelease];
     if (card) {
         card.textColor = defaultCardTextColor;

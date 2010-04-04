@@ -44,11 +44,11 @@
 - (BOOL)isEqual:(id)anObject;
 - (NSString *)description;
 
-+ (CDXColor *)cdxColorWithRed:(uint8_t)red green:(uint8_t)green blue:(uint8_t)blue alpha:(uint8_t)alpha;
-+ (CDXColor *)cdxColorWithRGBAString:(NSString *)string defaulsTo:(CDXColor *)defaultColor;
++ (CDXColor *)colorWithRed:(uint8_t)red green:(uint8_t)green blue:(uint8_t)blue alpha:(uint8_t)alpha;
++ (CDXColor *)colorWithRGBAString:(NSString *)string defaulsTo:(CDXColor *)defaultColor;
 
-+ (CDXColor *)cdxColorWhite;
-+ (CDXColor *)cdxColorBlack;
++ (CDXColor *)colorWhite;
++ (CDXColor *)colorBlack;
 
 @end
 

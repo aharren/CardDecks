@@ -27,17 +27,17 @@
 
 
 @interface CDXCardDeckURLSerializer : NSObject {
-
+    
 }
 
 // Deserializes the given string into a CDXCardDeck instance.
-// 
+//
 // Format:
 //   string := <deck>[&<card>[&<card>[...]]]
 //   deck   := <name>[,[<text-color>][,[<background-color>][,[<orientation>]]]]
 //   card   := <text>[,[<text-color>][,[<background-color>][,[<orientation>]]]]
 //
-+ (CDXCardDeck *)cdxCardDeckFromString:(NSString *)string;
++ (CDXCardDeck *)cardDeckFromString:(NSString *)string;
 
 @end
 

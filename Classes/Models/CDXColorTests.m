@@ -37,100 +37,100 @@
 @implementation CDXColorTests
 
 - (void)testRgbaString {
-    CDXColor *color = [CDXColor cdxColorWithRed:0x12 green:0x43 blue:0x56 alpha:0x87];
+    CDXColor *color = [CDXColor colorWithRed:0x12 green:0x43 blue:0x56 alpha:0x87];
     STAssertEqualObjects([color rgbaString], @"12435687", nil);
 }
 
 - (void)testIsEqual {
-    CDXColor *color = [CDXColor cdxColorWithRed:0x12 green:0x43 blue:0x56 alpha:0x87];
+    CDXColor *color = [CDXColor colorWithRed:0x12 green:0x43 blue:0x56 alpha:0x87];
     STAssertFalse([color isEqual:nil], nil);
-    STAssertTrue([color isEqual:[CDXColor cdxColorWithRed:0x12 green:0x43 blue:0x56 alpha:0x87]], nil);
-    STAssertFalse([color isEqual:[CDXColor cdxColorWithRed:0x00 green:0x43 blue:0x56 alpha:0x87]], nil);
-    STAssertFalse([color isEqual:[CDXColor cdxColorWithRed:0x12 green:0x00 blue:0x56 alpha:0x87]], nil);
-    STAssertFalse([color isEqual:[CDXColor cdxColorWithRed:0x12 green:0x43 blue:0x00 alpha:0x87]], nil);
-    STAssertFalse([color isEqual:[CDXColor cdxColorWithRed:0x12 green:0x43 blue:0x56 alpha:0x00]], nil);
+    STAssertTrue([color isEqual:[CDXColor colorWithRed:0x12 green:0x43 blue:0x56 alpha:0x87]], nil);
+    STAssertFalse([color isEqual:[CDXColor colorWithRed:0x00 green:0x43 blue:0x56 alpha:0x87]], nil);
+    STAssertFalse([color isEqual:[CDXColor colorWithRed:0x12 green:0x00 blue:0x56 alpha:0x87]], nil);
+    STAssertFalse([color isEqual:[CDXColor colorWithRed:0x12 green:0x43 blue:0x00 alpha:0x87]], nil);
+    STAssertFalse([color isEqual:[CDXColor colorWithRed:0x12 green:0x43 blue:0x56 alpha:0x00]], nil);
 }
 
-- (void)testCdxColorWithRedGreenBlueAlpha {
-    CDXColor *color = [CDXColor cdxColorWithRed:10 green:20 blue:30 alpha:40];
+- (void)testColorWithRedGreenBlueAlpha {
+    CDXColor *color = [CDXColor colorWithRed:10 green:20 blue:30 alpha:40];
     STAssertEquals((int)[color red], 10, nil);
     STAssertEquals((int)[color green], 20, nil);
     STAssertEquals((int)[color blue], 30, nil);
     STAssertEquals((int)[color alpha], 40, nil);
 }
 
-- (void)testCdxColorWithString6Numbers {
-    CDXColor *color = [CDXColor cdxColorWithRGBAString:@"123456" defaulsTo:nil];
+- (void)testColorWithString6Numbers {
+    CDXColor *color = [CDXColor colorWithRGBAString:@"123456" defaulsTo:nil];
     STAssertEquals((int)[color red], 0x12, nil);
     STAssertEquals((int)[color green], 0x34, nil);
     STAssertEquals((int)[color blue], 0x56, nil);
     STAssertEquals((int)[color alpha], 0xff, nil);
 }
 
-- (void)testCdxColorWithString6LowerCaseCharacters {
-    CDXColor *color = [CDXColor cdxColorWithRGBAString:@"fdabcd" defaulsTo:nil];
+- (void)testColorWithString6LowerCaseCharacters {
+    CDXColor *color = [CDXColor colorWithRGBAString:@"fdabcd" defaulsTo:nil];
     STAssertEquals((int)[color red], 0xfd, nil);
     STAssertEquals((int)[color green], 0xab, nil);
     STAssertEquals((int)[color blue], 0xcd, nil);
     STAssertEquals((int)[color alpha], 0xff, nil);
 }
 
-- (void)testCdxColorWithString6UpperCaseCharacters {
-    CDXColor *color = [CDXColor cdxColorWithRGBAString:@"ABCDEF" defaulsTo:nil];
+- (void)testColorWithString6UpperCaseCharacters {
+    CDXColor *color = [CDXColor colorWithRGBAString:@"ABCDEF" defaulsTo:nil];
     STAssertEquals((int)[color red], 0xab, nil);
     STAssertEquals((int)[color green], 0xcd, nil);
     STAssertEquals((int)[color blue], 0xef, nil);
     STAssertEquals((int)[color alpha], 0xff, nil);
 }
 
-- (void)testCdxColorWithString8Numbers {
-    CDXColor *color = [CDXColor cdxColorWithRGBAString:@"12345678" defaulsTo:nil];
+- (void)testColorWithString8Numbers {
+    CDXColor *color = [CDXColor colorWithRGBAString:@"12345678" defaulsTo:nil];
     STAssertEquals((int)[color red], 0x12, nil);
     STAssertEquals((int)[color green], 0x34, nil);
     STAssertEquals((int)[color blue], 0x56, nil);
     STAssertEquals((int)[color alpha], 0x78, nil);
 }
 
-- (void)testCdxColorWithString8LowerCaseCharacters {
-    CDXColor *color = [CDXColor cdxColorWithRGBAString:@"fdabcdef" defaulsTo:nil];
+- (void)testColorWithString8LowerCaseCharacters {
+    CDXColor *color = [CDXColor colorWithRGBAString:@"fdabcdef" defaulsTo:nil];
     STAssertEquals((int)[color red], 0xfd, nil);
     STAssertEquals((int)[color green], 0xab, nil);
     STAssertEquals((int)[color blue], 0xcd, nil);
     STAssertEquals((int)[color alpha], 0xef, nil);
 }
 
-- (void)testCdxColorWithString8UpperCaseCharacters {
-    CDXColor *color = [CDXColor cdxColorWithRGBAString:@"ABCDEFCA" defaulsTo:nil];
+- (void)testColorWithString8UpperCaseCharacters {
+    CDXColor *color = [CDXColor colorWithRGBAString:@"ABCDEFCA" defaulsTo:nil];
     STAssertEquals((int)[color red], 0xab, nil);
     STAssertEquals((int)[color green], 0xcd, nil);
     STAssertEquals((int)[color blue], 0xef, nil);
     STAssertEquals((int)[color alpha], 0xca, nil);
 }
 
-- (void)testCdxColorWithStringBadLength5 {
-    CDXColor *defaultColor = [CDXColor cdxColorWithRed:1 green:1 blue:1 alpha:1];
+- (void)testColorWithStringBadLength5 {
+    CDXColor *defaultColor = [CDXColor colorWithRed:1 green:1 blue:1 alpha:1];
     
-    CDXColor *color = [CDXColor cdxColorWithRGBAString:@"12345" defaulsTo:defaultColor];
+    CDXColor *color = [CDXColor colorWithRGBAString:@"12345" defaulsTo:defaultColor];
     STAssertEquals(color, defaultColor, nil);
 }
 
-- (void)testCdxColorWithStringBadCharacterX {
-    CDXColor *defaultColor = [CDXColor cdxColorWithRed:1 green:1 blue:1 alpha:1];
+- (void)testColorWithStringBadCharacterX {
+    CDXColor *defaultColor = [CDXColor colorWithRed:1 green:1 blue:1 alpha:1];
     
-    CDXColor *color = [CDXColor cdxColorWithRGBAString:@"12345X" defaulsTo:defaultColor];
+    CDXColor *color = [CDXColor colorWithRGBAString:@"12345X" defaulsTo:defaultColor];
     STAssertEquals(color, defaultColor, nil);
 }
 
-- (void)testCdxColorWhite {
-    CDXColor *color = [CDXColor cdxColorWhite];
+- (void)testColorWhite {
+    CDXColor *color = [CDXColor colorWhite];
     STAssertEquals((int)[color red], 0xff, nil);
     STAssertEquals((int)[color green], 0xff, nil);
     STAssertEquals((int)[color blue], 0xff, nil);
     STAssertEquals((int)[color alpha], 0xff, nil);
 }
 
-- (void)testCdxColorBlack {
-    CDXColor *color = [CDXColor cdxColorBlack];
+- (void)testColorBlack {
+    CDXColor *color = [CDXColor colorBlack];
     STAssertEquals((int)[color red], 0x00, nil);
     STAssertEquals((int)[color green], 0x00, nil);
     STAssertEquals((int)[color blue], 0x00, nil);

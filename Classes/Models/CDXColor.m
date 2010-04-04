@@ -28,8 +28,8 @@
 
 @implementation CDXColor
 
-static CDXColor *cdxColorWhite = nil;
-static CDXColor *cdxColorBlack = nil;
+static CDXColor *colorWhite = nil;
+static CDXColor *colorBlack = nil;
 
 @synthesize red;
 @synthesize green;
@@ -41,14 +41,14 @@ static CDXColor *cdxColorBlack = nil;
         return;
     }
     
-    cdxColorWhite = [[CDXColor alloc] init];
-    cdxColorWhite->red = 255;
-    cdxColorWhite->green = 255;
-    cdxColorWhite->blue = 255;
-    cdxColorWhite->alpha = 255;
+    colorWhite = [[CDXColor alloc] init];
+    colorWhite->red = 255;
+    colorWhite->green = 255;
+    colorWhite->blue = 255;
+    colorWhite->alpha = 255;
     
-    cdxColorBlack = [[CDXColor alloc] init];
-    cdxColorBlack->alpha = 255;
+    colorBlack = [[CDXColor alloc] init];
+    colorBlack->alpha = 255;
 }
 
 - (NSString *)rgbaString {
@@ -68,7 +68,7 @@ static CDXColor *cdxColorBlack = nil;
     return [self rgbaString];
 }
 
-+ (CDXColor *)cdxColorWithRed:(uint8_t)red green:(uint8_t)green blue:(uint8_t)blue alpha:(uint8_t)alpha {
++ (CDXColor *)colorWithRed:(uint8_t)red green:(uint8_t)green blue:(uint8_t)blue alpha:(uint8_t)alpha {
     CDXColor *color = [[[CDXColor alloc] init] autorelease];
     if (color) {
         color->red = red;
@@ -79,7 +79,7 @@ static CDXColor *cdxColorBlack = nil;
     return color;
 }
 
-+ (CDXColor *)cdxColorWithRGBAString:(NSString *)string defaulsTo:(CDXColor *)defaultColor {
++ (CDXColor *)colorWithRGBAString:(NSString *)string defaulsTo:(CDXColor *)defaultColor {
     if (string == nil) {
         return [[defaultColor retain] autorelease];
     }
@@ -106,18 +106,18 @@ static CDXColor *cdxColorBlack = nil;
         }
     }
     
-    return [CDXColor cdxColorWithRed:(nibbles[0] << 4) | nibbles[1]
-                               green:(nibbles[2] << 4) | nibbles[3]
-                                blue:(nibbles[4] << 4) | nibbles[5]
-                               alpha:(nibbles[6] << 4) | nibbles[7]];
+    return [CDXColor colorWithRed:(nibbles[0] << 4) | nibbles[1]
+                            green:(nibbles[2] << 4) | nibbles[3]
+                             blue:(nibbles[4] << 4) | nibbles[5]
+                            alpha:(nibbles[6] << 4) | nibbles[7]];
 }
 
-+ (CDXColor *)cdxColorWhite {
-    return cdxColorWhite;
++ (CDXColor *)colorWhite {
+    return colorWhite;
 }
 
-+ (CDXColor *)cdxColorBlack {
-    return cdxColorBlack;
++ (CDXColor *)colorBlack {
+    return colorBlack;
 }
 
 @end
