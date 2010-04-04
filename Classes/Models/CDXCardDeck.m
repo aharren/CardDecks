@@ -47,6 +47,7 @@
     ivar_release_and_clear(name);
     ivar_release_and_clear(defaultCardTextColor);
     ivar_release_and_clear(defaultCardBackgroundColor);
+    ivar_release_and_clear(cards);
     [super dealloc];
 }
 
