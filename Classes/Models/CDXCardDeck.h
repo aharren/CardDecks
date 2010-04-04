@@ -49,5 +49,7 @@
 - (void)insertCard:(CDXCard *)card atIndex:(NSUInteger)index;
 - (void)removeCardAtIndex:(NSUInteger)index;
 
+- (CDXCard *)cdxCardWithDefaults;
+
 @end
 

@@ -74,5 +74,15 @@
     [cards removeObjectAtIndex:index];
 }
 
+- (CDXCard *)cdxCardWithDefaults {
+    CDXCard *card = [[[CDXCard alloc] init] autorelease];
+    if (card) {
+        card.textColor = defaultCardTextColor;
+        card.backgroundColor = defaultCardBackgroundColor;
+        card.orientation = defaultCardOrientation;
+    }
+    return card;
+}
+
 @end
 
