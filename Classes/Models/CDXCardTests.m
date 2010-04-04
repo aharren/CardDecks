@@ -1,6 +1,6 @@
 //
 //
-// CDXColor.h
+// CDXCardTests.m
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,31 +23,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import <SenTestingKit/SenTestingKit.h>
+#import "CDXCard.h"
 
-@interface CDXColor : NSObject {
-    
-@protected
-    uint8_t red;
-    uint8_t green;
-    uint8_t blue;
-    uint8_t alpha;
+
+@interface CDXCardTests : SenTestCase {
     
 }
 
-@property (nonatomic, readonly) uint8_t red;
-@property (nonatomic, readonly) uint8_t green;
-@property (nonatomic, readonly) uint8_t blue;
-@property (nonatomic, readonly) uint8_t alpha;
+@end
 
-- (NSString *)rgbaString;
 
-- (BOOL)isEqual:(id)anObject;
+@implementation CDXCardTests
 
-+ (CDXColor *)cdxColorWithRed:(uint8_t)red green:(uint8_t)green blue:(uint8_t)blue alpha:(uint8_t)alpha;
-+ (CDXColor *)cdxColorWithRGBAString:(NSString *)string defaulsTo:(CDXColor *)defaultColor;
-
-+ (CDXColor *)cdxColorWhite;
-+ (CDXColor *)cdxColorBlack;
+- (void)testInitWithDefaults {
+    CDXCard *card = [[CDXCard alloc] init];
+    STAssertEqualObjects([card text], @"", nil);
+    STAssertEquals([card textColor], [CDXColor cdxColorWhite], nil);
+    STAssertEquals([card backgroundColor], [CDXColor cdxColorBlack], nil);
+    STAssertEquals((int)[card orientation], (int)CDXCardOrientationUp, nil);
+}
 
 @end
 

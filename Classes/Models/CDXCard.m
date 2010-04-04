@@ -1,6 +1,6 @@
 //
 //
-// CDXColor.h
+// CDXCard.m
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,31 +23,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import "CDXCard.h"
 
-@interface CDXColor : NSObject {
-    
-@protected
-    uint8_t red;
-    uint8_t green;
-    uint8_t blue;
-    uint8_t alpha;
-    
+
+@implementation CDXCard
+
+@synthesize text;
+@synthesize textColor;
+@synthesize backgroundColor;
+@synthesize orientation;
+
+- (id)init {
+    if ((self = [super init])) {
+        self.text = @"";
+        self.textColor = [CDXColor cdxColorWhite];
+        self.backgroundColor = [CDXColor cdxColorBlack];
+    }
+    return self;
 }
-
-@property (nonatomic, readonly) uint8_t red;
-@property (nonatomic, readonly) uint8_t green;
-@property (nonatomic, readonly) uint8_t blue;
-@property (nonatomic, readonly) uint8_t alpha;
-
-- (NSString *)rgbaString;
-
-- (BOOL)isEqual:(id)anObject;
-
-+ (CDXColor *)cdxColorWithRed:(uint8_t)red green:(uint8_t)green blue:(uint8_t)blue alpha:(uint8_t)alpha;
-+ (CDXColor *)cdxColorWithRGBAString:(NSString *)string defaulsTo:(CDXColor *)defaultColor;
-
-+ (CDXColor *)cdxColorWhite;
-+ (CDXColor *)cdxColorBlack;
 
 @end
 

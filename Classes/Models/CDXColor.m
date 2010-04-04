@@ -28,10 +28,40 @@
 
 @implementation CDXColor
 
-@synthesize red, green, blue, alpha;
+static CDXColor *cdxColorWhite = nil;
+static CDXColor *cdxColorBlack = nil;
+
+@synthesize red;
+@synthesize green;
+@synthesize blue;
+@synthesize alpha;
+
++ (void)initialize {
+    if (self != [CDXColor class]) {
+        return;
+    }
+    
+    cdxColorWhite = [[CDXColor alloc] init];
+    cdxColorWhite->red = 255;
+    cdxColorWhite->green = 255;
+    cdxColorWhite->blue = 255;
+    cdxColorWhite->alpha = 255;
+    
+    cdxColorBlack = [[CDXColor alloc] init];
+    cdxColorBlack->alpha = 255;
+}
 
 - (NSString *)rgbaString {
     return [NSString stringWithFormat:@"%02x%02x%02x%02x", red, green, blue, alpha] ;
+}
+
+- (BOOL)isEqual:(id)anObject {
+    if (![anObject isMemberOfClass:[CDXColor class]]) {
+        return NO;
+    }
+    
+    CDXColor *other = (CDXColor *)anObject;
+    return red == other.red && green == other.green && blue == other.blue && alpha == other.alpha;
 }
 
 + (CDXColor *)cdxColorWithRed:(uint8_t)red green:(uint8_t)green blue:(uint8_t)blue alpha:(uint8_t)alpha {
@@ -76,6 +106,14 @@
                                green:(nibbles[2] << 4) | nibbles[3]
                                 blue:(nibbles[4] << 4) | nibbles[5]
                                alpha:(nibbles[6] << 4) | nibbles[7]];
+}
+
++ (CDXColor *)cdxColorWhite {
+    return cdxColorWhite;
+}
+
++ (CDXColor *)cdxColorBlack {
+    return cdxColorBlack;
 }
 
 @end

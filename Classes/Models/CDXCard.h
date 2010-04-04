@@ -1,6 +1,6 @@
 //
 //
-// CDXColor.h
+// CDXCard.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,31 +23,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#include "CDXColor.h"
 
-@interface CDXColor : NSObject {
+
+typedef enum {
+    CDXCardOrientationUp    = 0,
+    CDXCardOrientationRight = 1,
+    CDXCardOrientationDown  = 2,
+    CDXCardOrientationLeft  = 3
+} CDXCardOrientation;
+
+
+@interface CDXCard : NSObject {
     
 @protected
-    uint8_t red;
-    uint8_t green;
-    uint8_t blue;
-    uint8_t alpha;
-    
+    NSString *text;
+    CDXColor *textColor;
+    CDXColor *backgroundColor;
+    CDXCardOrientation orientation;
 }
 
-@property (nonatomic, readonly) uint8_t red;
-@property (nonatomic, readonly) uint8_t green;
-@property (nonatomic, readonly) uint8_t blue;
-@property (nonatomic, readonly) uint8_t alpha;
-
-- (NSString *)rgbaString;
-
-- (BOOL)isEqual:(id)anObject;
-
-+ (CDXColor *)cdxColorWithRed:(uint8_t)red green:(uint8_t)green blue:(uint8_t)blue alpha:(uint8_t)alpha;
-+ (CDXColor *)cdxColorWithRGBAString:(NSString *)string defaulsTo:(CDXColor *)defaultColor;
-
-+ (CDXColor *)cdxColorWhite;
-+ (CDXColor *)cdxColorBlack;
+@property (nonatomic, copy) NSString *text;
+@property (nonatomic, retain) CDXColor *textColor;
+@property (nonatomic, retain) CDXColor *backgroundColor;
+@property (nonatomic, assign) CDXCardOrientation orientation;
 
 @end
 
