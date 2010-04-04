@@ -1,6 +1,6 @@
 //
 //
-// CDXCardTests.m
+// CDXMacros.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,27 +23,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <SenTestingKit/SenTestingKit.h>
-#import "CDXCard.h"
 
-
-@interface CDXCardTests : SenTestCase {
-    
-}
-
-@end
-
-
-@implementation CDXCardTests
-
-- (void)testInitWithDefaults {
-    CDXCard *card = [[CDXCard alloc] init];
-    STAssertEqualObjects([card text], @"", nil);
-    STAssertEquals([card textColor], [CDXColor cdxColorWhite], nil);
-    STAssertEquals([card backgroundColor], [CDXColor cdxColorBlack], nil);
-    STAssertEquals((int)[card orientation], (int)CDXCardOrientationUp, nil);
-    [card release];
-}
-
-@end
+#define ivar_release_and_clear(_ivar)                                          \
+    [_ivar release]; _ivar = nil;
 

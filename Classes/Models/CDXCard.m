@@ -42,5 +42,12 @@
     return self;
 }
 
+- (void)dealloc {
+    ivar_release_and_clear(text);
+    ivar_release_and_clear(textColor);
+    ivar_release_and_clear(backgroundColor);
+    [super dealloc];
+}
+
 @end
 
