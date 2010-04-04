@@ -64,6 +64,10 @@ static CDXColor *cdxColorBlack = nil;
     return red == other.red && green == other.green && blue == other.blue && alpha == other.alpha;
 }
 
+- (NSString *)description {
+    return [self rgbaString];
+}
+
 + (CDXColor *)cdxColorWithRed:(uint8_t)red green:(uint8_t)green blue:(uint8_t)blue alpha:(uint8_t)alpha {
     CDXColor *color = [[[CDXColor alloc] init] autorelease];
     if (color) {

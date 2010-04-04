@@ -42,6 +42,7 @@
 - (NSString *)rgbaString;
 
 - (BOOL)isEqual:(id)anObject;
+- (NSString *)description;
 
 + (CDXColor *)cdxColorWithRed:(uint8_t)red green:(uint8_t)green blue:(uint8_t)blue alpha:(uint8_t)alpha;
 + (CDXColor *)cdxColorWithRGBAString:(NSString *)string defaulsTo:(CDXColor *)defaultColor;
