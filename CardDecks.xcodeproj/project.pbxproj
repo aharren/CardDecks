@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E002B5951167613A0072C409 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2711167488B00FE7924 /* Foundation.framework */; };
+		E002B5E3116761410072C409 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2731167489600FE7924 /* UIKit.framework */; };
+		E002B62D116762300072C409 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E002B627116762260072C409 /* SenTestingKit.framework */; };
+		E002B6C7116885150072C409 /* CDXColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B6C6116885150072C409 /* CDXColor.m */; };
+		E002B6C9116885230072C409 /* CDXColorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B6C8116885230072C409 /* CDXColorTests.m */; };
+		E002B6CC116885340072C409 /* CDXColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B6C6116885150072C409 /* CDXColor.m */; };
 		E03BA24D116747FC00FE7924 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BA24C116747FC00FE7924 /* main.m */; };
 		E03BA2721167488B00FE7924 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2711167488B00FE7924 /* Foundation.framework */; };
 		E03BA2741167489600FE7924 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2731167489600FE7924 /* UIKit.framework */; };
@@ -14,8 +20,24 @@
 		E03BA38911674CBF00FE7924 /* CDXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BA38811674CBF00FE7924 /* CDXAppDelegate.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		E002B5051167608D0072C409 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E002B4F9116760650072C409 /* Tests */;
+			remoteInfo = Tests;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		E002B449116754350072C409 /* CardDecks2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardDecks2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E002B4FA116760650072C409 /* Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E002B4FB116760650072C409 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
+		E002B627116762260072C409 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Developer/Library/Frameworks/SenTestingKit.framework; sourceTree = SDKROOT; };
+		E002B6C5116885150072C409 /* CDXColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXColor.h; path = Classes/Models/CDXColor.h; sourceTree = "<group>"; };
+		E002B6C6116885150072C409 /* CDXColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXColor.m; path = Classes/Models/CDXColor.m; sourceTree = "<group>"; };
+		E002B6C8116885230072C409 /* CDXColorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXColorTests.m; path = Classes/Models/CDXColorTests.m; sourceTree = "<group>"; };
 		E03BA23F1167475000FE7924 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E03BA24C116747FC00FE7924 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E03BA2501167485A00FE7924 /* CDX.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDX.pch; sourceTree = "<group>"; };
@@ -36,6 +58,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E002B4F7116760650072C409 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E002B5951167613A0072C409 /* Foundation.framework in Frameworks */,
+				E002B5E3116761410072C409 /* UIKit.framework in Frameworks */,
+				E002B62D116762300072C409 /* SenTestingKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -46,16 +78,28 @@
 				E03BA33A11674A2200FE7924 /* Other Sources */,
 				E03BA38311674C1000FE7924 /* User Interfaces */,
 				E03BA23F1167475000FE7924 /* Info.plist */,
+				E002B4FB116760650072C409 /* Tests-Info.plist */,
 				E03BA26E1167488000FE7924 /* Frameworks */,
 				E00DD48811662E5500D4215E /* Products */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
 		};
+		E002B6C1116884B30072C409 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E002B6C5116885150072C409 /* CDXColor.h */,
+				E002B6C6116885150072C409 /* CDXColor.m */,
+				E002B6C8116885230072C409 /* CDXColorTests.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		E00DD48811662E5500D4215E /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				E002B449116754350072C409 /* CardDecks2.app */,
+				E002B4FA116760650072C409 /* Tests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -65,6 +109,7 @@
 			children = (
 				E03BA2711167488B00FE7924 /* Foundation.framework */,
 				E03BA2731167489600FE7924 /* UIKit.framework */,
+				E002B627116762260072C409 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -81,6 +126,7 @@
 		E03BA34911674A2F00FE7924 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E002B6C1116884B30072C409 /* Models */,
 				E03BA38711674CBF00FE7924 /* CDXAppDelegate.h */,
 				E03BA38811674CBF00FE7924 /* CDXAppDelegate.m */,
 			);
@@ -109,11 +155,30 @@
 			buildRules = (
 			);
 			dependencies = (
+				E002B5061167608D0072C409 /* PBXTargetDependency */,
 			);
 			name = CardDecks2;
 			productName = CardDecks;
 			productReference = E002B449116754350072C409 /* CardDecks2.app */;
 			productType = "com.apple.product-type.application";
+		};
+		E002B4F9116760650072C409 /* Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E002B4FF116760660072C409 /* Build configuration list for PBXNativeTarget "Tests" */;
+			buildPhases = (
+				E002B4F5116760650072C409 /* Resources */,
+				E002B4F6116760650072C409 /* Sources */,
+				E002B4F7116760650072C409 /* Frameworks */,
+				E002B4F8116760650072C409 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Tests;
+			productName = Tests;
+			productReference = E002B4FA116760650072C409 /* Tests.octest */;
+			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
 
@@ -129,6 +194,7 @@
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* CardDecks2 */,
+				E002B4F9116760650072C409 /* Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -142,7 +208,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E002B4F5116760650072C409 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E002B4F8116760650072C409 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
@@ -151,10 +240,28 @@
 			files = (
 				E03BA24D116747FC00FE7924 /* main.m in Sources */,
 				E03BA38911674CBF00FE7924 /* CDXAppDelegate.m in Sources */,
+				E002B6C7116885150072C409 /* CDXColor.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E002B4F6116760650072C409 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E002B6C9116885230072C409 /* CDXColorTests.m in Sources */,
+				E002B6CC116885340072C409 /* CDXColor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E002B5061167608D0072C409 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E002B4F9116760650072C409 /* Tests */;
+			targetProxy = E002B5051167608D0072C409 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
@@ -163,6 +270,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -182,6 +293,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = CDX.pch;
 				GCC_VERSION = 4.2;
@@ -219,6 +334,102 @@
 			};
 			name = Release;
 		};
+		E002B4FC116760660072C409 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"\"$(SDKROOT)$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = CDX.pch;
+				INFOPLIST_FILE = "Tests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					SenTestingKit,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Tests;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		E002B4FD116760660072C409 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"\"$(SDKROOT)$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = CDX.pch;
+				INFOPLIST_FILE = "Tests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					SenTestingKit,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Tests;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E002B4FE116760660072C409 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"\"$(SDKROOT)$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = CDX.pch;
+				INFOPLIST_FILE = "Tests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					SenTestingKit,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Tests;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Distribution;
+		};
 		E06615A30FFF78C800571D7D /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -239,6 +450,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = CDX.pch;
 				GCC_VERSION = 4.2;
@@ -268,6 +483,16 @@
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
 				E06615A30FFF78C800571D7D /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E002B4FF116760660072C409 /* Build configuration list for PBXNativeTarget "Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E002B4FC116760660072C409 /* Debug */,
+				E002B4FD116760660072C409 /* Release */,
+				E002B4FE116760660072C409 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
