@@ -123,6 +123,20 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		E002B8CB1168D6B70072C409 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		E002B8CC1168D6CA0072C409 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		E00DD48811662E5500D4215E /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +170,8 @@
 			isa = PBXGroup;
 			children = (
 				E002B6C1116884B30072C409 /* Models */,
+				E002B8CB1168D6B70072C409 /* Controllers */,
+				E002B8CC1168D6CA0072C409 /* Views */,
 				E03BA38711674CBF00FE7924 /* CDXAppDelegate.h */,
 				E03BA38811674CBF00FE7924 /* CDXAppDelegate.m */,
 			);
