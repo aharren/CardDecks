@@ -30,38 +30,38 @@
 
 - (id)init {
     if ((self = [super init])) {
-        decks = [[NSMutableArray alloc] init];
+        cardDecks = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
 - (void)dealloc {
-    ivar_release_and_clear(decks);
+    ivar_release_and_clear(cardDecks);
     [super dealloc];
 }
 
-- (NSUInteger)decksCount {
-    return [decks count];
+- (NSUInteger)cardDecksCount {
+    return [cardDecks count];
 }
 
-- (CDXCardDeck *)deckAtIndex:(NSUInteger)index {
-    return (CDXCardDeck *)[decks objectAtIndex:index];
+- (CDXCardDeck *)cardDeckAtIndex:(NSUInteger)index {
+    return (CDXCardDeck *)[cardDecks objectAtIndex:index];
 }
 
-- (void)addDeck:(CDXCardDeck *)deck {
-    [decks addObject:deck];
+- (void)addCardDeck:(CDXCardDeck *)cardDeck {
+    [cardDecks addObject:cardDeck];
 }
 
-- (void)insertDeck:(CDXCardDeck *)deck atIndex:(NSUInteger)index {
-    if (index >= [decks count]) {
-        [decks addObject:deck];
+- (void)insertCardDeck:(CDXCardDeck *)cardDeck atIndex:(NSUInteger)index {
+    if (index >= [cardDecks count]) {
+        [cardDecks addObject:cardDeck];
     } else {
-        [decks insertObject:deck atIndex:index];
+        [cardDecks insertObject:cardDeck atIndex:index];
     }
 }
 
-- (void)removeDeckAtIndex:(NSUInteger)index {
-    [decks removeObjectAtIndex:index];
+- (void)removeCardDeckAtIndex:(NSUInteger)index {
+    [cardDecks removeObjectAtIndex:index];
 }
 
 @end
