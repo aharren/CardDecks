@@ -27,3 +27,6 @@
 #define ivar_release_and_clear(_ivar)                                          \
     [_ivar release]; _ivar = nil;
 
+#define ivar_assign_and_retain(_ivar, _value)                                  \
+    [_ivar autorelease]; _ivar = [_value retain];
+
