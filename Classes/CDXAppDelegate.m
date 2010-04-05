@@ -24,13 +24,27 @@
 // THE SOFTWARE.
 
 #import "CDXAppDelegate.h"
+#import "CDXCardDeckURLSerializer.h"
+#import "CDXCardDecksViewController.h"
 
 
 @implementation CDXAppDelegate
 
 @synthesize window;
+@synthesize navigationController;
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
+    CDXCardDecks *decks = [[[CDXCardDecks alloc] init] autorelease];
+    for (int i = 0; i < 50; i++) {
+        [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"One%20Two%20Three&1&2&3"]];
+    }
+    CDXCardDecksViewController *decksViewController = [[[CDXCardDecksViewController alloc] initWithCardDecks:decks] autorelease];
+    
+    [navigationController setNavigationBarHidden:NO];
+    [navigationController setToolbarHidden:NO];
+    [navigationController setViewControllers:[NSArray arrayWithObject:decksViewController]];
+    
+    [window addSubview:navigationController.view];
     [window makeKeyAndVisible];
 }
 

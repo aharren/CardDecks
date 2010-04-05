@@ -1,6 +1,6 @@
 //
 //
-// CDXAppDelegate.h
+// CDXCardDecksViewController.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,16 +23,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import "CDXCardDecks.h"
 
-@interface CDXAppDelegate : NSObject <UIApplicationDelegate> {
+
+@interface CDXCardDecksViewController : UIViewController {
     
 @protected
-    UIWindow *window;
-    UINavigationController *navigationController;
+    UITableView *cardDecksTableView;
+    CDXCardDecks *cardDecks;
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UINavigationController *navigationController;
+@property (nonatomic, retain) IBOutlet UITableView *cardDecksTableView;
+@property (nonatomic, retain) CDXCardDecks *cardDecks;
+
+- (id)initWithCardDecks:(CDXCardDecks *)cardDecks;
 
 @end
 

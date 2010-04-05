@@ -25,6 +25,8 @@
 		E032F1311169D9FB0033980C /* CDXCardDecks.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1301169D9FB0033980C /* CDXCardDecks.m */; };
 		E032F1521169DB5D0033980C /* CDXCardDecks.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1301169D9FB0033980C /* CDXCardDecks.m */; };
 		E032F1541169DB790033980C /* CDXCardDecksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1531169DB790033980C /* CDXCardDecksTests.m */; };
+		E032F1661169DD9E0033980C /* CDXCardDecksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1651169DD9E0033980C /* CDXCardDecksViewController.m */; };
+		E032F1681169DDC10033980C /* CDXCardDecksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E032F1671169DDC10033980C /* CDXCardDecksView.xib */; };
 		E03BA24D116747FC00FE7924 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BA24C116747FC00FE7924 /* main.m */; };
 		E03BA2721167488B00FE7924 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2711167488B00FE7924 /* Foundation.framework */; };
 		E03BA2741167489600FE7924 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2731167489600FE7924 /* UIKit.framework */; };
@@ -63,6 +65,9 @@
 		E032F12F1169D9FB0033980C /* CDXCardDecks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDecks.h; path = Classes/Models/CDXCardDecks.h; sourceTree = "<group>"; };
 		E032F1301169D9FB0033980C /* CDXCardDecks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDecks.m; path = Classes/Models/CDXCardDecks.m; sourceTree = "<group>"; };
 		E032F1531169DB790033980C /* CDXCardDecksTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDecksTests.m; path = Classes/Models/CDXCardDecksTests.m; sourceTree = "<group>"; };
+		E032F1641169DD9E0033980C /* CDXCardDecksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDecksViewController.h; path = Classes/Controllers/CDXCardDecksViewController.h; sourceTree = "<group>"; };
+		E032F1651169DD9E0033980C /* CDXCardDecksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDecksViewController.m; path = Classes/Controllers/CDXCardDecksViewController.m; sourceTree = "<group>"; };
+		E032F1671169DDC10033980C /* CDXCardDecksView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardDecksView.xib; path = UserInterfaces/CDXCardDecksView.xib; sourceTree = "<group>"; };
 		E03BA23F1167475000FE7924 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E03BA24C116747FC00FE7924 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E03BA2501167485A00FE7924 /* CDX.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDX.pch; sourceTree = "<group>"; };
@@ -142,6 +147,8 @@
 		E002B8CC1168D6CA0072C409 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E032F1641169DD9E0033980C /* CDXCardDecksViewController.h */,
+				E032F1651169DD9E0033980C /* CDXCardDecksViewController.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -191,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				E03BA38511674C3300FE7924 /* MainWindow.xib */,
+				E032F1671169DDC10033980C /* CDXCardDecksView.xib */,
 			);
 			name = "User Interfaces";
 			sourceTree = "<group>";
@@ -259,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E03BA38611674C3300FE7924 /* MainWindow.xib in Resources */,
+				E032F1681169DDC10033980C /* CDXCardDecksView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +308,7 @@
 				E002B7011168942F0072C409 /* CDXCardDeck.m in Sources */,
 				E002B76211689C570072C409 /* CDXCardDeckURLSerializer.m in Sources */,
 				E032F1311169D9FB0033980C /* CDXCardDecks.m in Sources */,
+				E032F1661169DD9E0033980C /* CDXCardDecksViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
