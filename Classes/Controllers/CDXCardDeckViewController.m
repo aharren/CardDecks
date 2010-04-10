@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDecksViewController.m
+// CDXCardDeckViewController.m
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,32 +23,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXCardDecksViewController.h"
 #import "CDXCardDeckViewController.h"
 
 
-@implementation CDXCardDecksViewController
+@implementation CDXCardDeckViewController
 
-- (id)initWithCardDecks:(CDXCardDecks *)decks {
-    if ((self = [super initWithNibName:@"CDXCardDecksView" bundle:nil])) {
-        ivar_assign_and_retain(cardDecks, decks);
+- (id)initWithCardDeck:(CDXCardDeck *)deck {
+    if ((self = [super initWithNibName:@"CDXCardDeckView" bundle:nil])) {
+        ivar_assign_and_retain(cardDeck, deck);
     }
     return self;
 }
 
 - (void)dealloc {
-    ivar_release_and_clear(cardDecksTableView);
-    ivar_release_and_clear(cardDecks);
+    ivar_release_and_clear(cardDeckTableView);
+    ivar_release_and_clear(cardDeck);
     [super dealloc];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"Card Decks";
+    self.navigationItem.title = cardDeck.name;
 }
 
 - (void)viewDidUnload {
-    ivar_release_and_clear(cardDecksTableView);
+    ivar_release_and_clear(cardDeckTableView);
     [super viewDidUnload];
 }
 
@@ -57,7 +56,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [cardDecks cardDecksCount];
+    return [cardDeck cardsCount];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -67,8 +66,8 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
     }
     
-    CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
-    cell.textLabel.text = deck.name;
+    CDXCard *card = [cardDeck cardAtIndex:indexPath.row];
+    cell.textLabel.text = card.text;
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     return cell;
 }
@@ -78,9 +77,6 @@
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
-    CDXCardDeckViewController *vc = [[[CDXCardDeckViewController alloc] initWithCardDeck:deck] autorelease];
-    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
