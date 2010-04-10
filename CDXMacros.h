@@ -48,3 +48,43 @@
     }                                                                          \
     _ivar = [_value copy];                                                     \
 
+#define declare_singleton(_name, _class)                                       \
+    + (_class *)_name;                                                         \
+
+#define synthesize_singleton(_name, _class)                                    \
+                                                                               \
+    static _class *_name = nil;                                                \
+                                                                               \
+    + (void)initialize {                                                       \
+        if (!_name) {                                                          \
+            _name = [[super allocWithZone:nil] init];                          \
+        }                                                                      \
+    }                                                                          \
+                                                                               \
+    + (_class *)_name {                                                        \
+        return _name;                                                          \
+    }                                                                          \
+                                                                               \
+    + (id)allocWithZone:(NSZone *)zone {                                       \
+        return [_name retain];                                                 \
+    }                                                                          \
+                                                                               \
+    - (id)copyWithZone:(NSZone *)zone {                                        \
+        return self;                                                           \
+    }                                                                          \
+                                                                               \
+    - (id)retain {                                                             \
+        return self;                                                           \
+    }                                                                          \
+                                                                               \
+    - (NSUInteger)retainCount {                                                \
+        return NSUIntegerMax;                                                  \
+    }                                                                          \
+                                                                               \
+    - (void)release {                                                          \
+    }                                                                          \
+                                                                               \
+    - (id)autorelease {                                                        \
+        return self;                                                           \
+    }                                                                          \
+
