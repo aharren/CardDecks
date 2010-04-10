@@ -30,6 +30,12 @@
     }                                                                          \
     _ivar = nil;                                                               \
 
+#define ivar_assign(_ivar, _value)                                             \
+    if (_ivar) {                                                               \
+        [_ivar autorelease];                                                   \
+    }                                                                          \
+    _ivar = _value;                                                            \
+
 #define ivar_assign_and_retain(_ivar, _value)                                  \
     if (_ivar) {                                                               \
         [_ivar autorelease];                                                   \
