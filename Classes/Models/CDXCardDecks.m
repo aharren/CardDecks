@@ -30,7 +30,7 @@
 
 - (id)init {
     if ((self = [super init])) {
-        cardDecks = [[NSMutableArray alloc] init];
+        ivar_assign(cardDecks, [[NSMutableArray alloc] init]);
     }
     return self;
 }

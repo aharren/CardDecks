@@ -35,9 +35,9 @@
 
 - (id)init {
     if ((self = [super init])) {
-        self.text = @"";
-        self.textColor = [CDXColor colorWhite];
-        self.backgroundColor = [CDXColor colorBlack];
+        ivar_assign_and_copy(text, @"");
+        ivar_assign_and_retain(textColor, [CDXColor colorWhite]);
+        ivar_assign_and_retain(backgroundColor, [CDXColor colorBlack]);
     }
     return self;
 }

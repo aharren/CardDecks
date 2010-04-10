@@ -35,10 +35,10 @@
 
 - (id)init {
     if ((self = [super init])) {
-        self.name = @"";
-        self.defaultCardTextColor = [CDXColor colorWhite];
-        self.defaultCardBackgroundColor = [CDXColor colorBlack];
-        cards = [[NSMutableArray alloc] init];
+        ivar_assign_and_copy(name, @"");
+        ivar_assign_and_retain(defaultCardTextColor, [CDXColor colorWhite]);
+        ivar_assign_and_retain(defaultCardBackgroundColor, [CDXColor colorBlack]);
+        ivar_assign(cards, [[NSMutableArray alloc] init]);
     }
     return self;
 }
