@@ -42,9 +42,6 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 }
 
 - (void)makeWindowKeyAndVisible {
-    [navigationController setNavigationBarHidden:NO];
-    [navigationController setToolbarHidden:NO];
-    
     [window addSubview:navigationController.view];
     [window makeKeyAndVisible];
 }
