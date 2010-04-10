@@ -80,7 +80,7 @@
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
     CDXCardDeckViewController *vc = [[[CDXCardDeckViewController alloc] initWithCardDeck:deck] autorelease];
-    [self.navigationController pushViewController:vc animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] pushNavigationView:vc animated:YES];
 }
 
 @end
