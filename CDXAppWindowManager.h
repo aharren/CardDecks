@@ -34,6 +34,7 @@
 declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
+- (void)popViewControllerAnimated:(BOOL)animated;
 - (void)makeWindowKeyAndVisible;
 
 @end

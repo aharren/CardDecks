@@ -38,7 +38,48 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    [navigationController pushViewController:viewController animated:animated];
+    if ([viewController wantsFullScreenLayout]) {
+        [navigationController pushViewController:viewController animated:NO];
+        [[UIApplication sharedApplication] setStatusBarHidden:YES animated:animated];
+        if (animated) {
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDuration:0.4];
+            [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:window cache:YES];
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+        }
+        
+        [navigationController.view removeFromSuperview];
+        [window addSubview:viewController.view];
+        
+        if (animated) {
+            [UIView commitAnimations];
+        }
+    } else {
+        [navigationController pushViewController:viewController animated:animated];
+    }
+}
+
+- (void)popViewControllerAnimated:(BOOL)animated {
+    UIViewController *viewController = [navigationController visibleViewController];
+    if ([viewController wantsFullScreenLayout]) {
+        [navigationController popViewControllerAnimated:NO];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO animated:animated];
+        if (animated) {
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDuration:0.4];
+            [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:window cache:YES];
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+        }
+        
+        [viewController.view removeFromSuperview];
+        [window addSubview:navigationController.view];
+        
+        if (animated) {
+            [UIView commitAnimations];
+        }
+    } else {
+        [navigationController popViewControllerAnimated:animated];
+    }
 }
 
 - (void)makeWindowKeyAndVisible {

@@ -36,5 +36,7 @@
 
 - (id)initWithCardDeck:(CDXCardDeck *)cardDeck atIndex:(NSUInteger)index;
 
+- (IBAction)close;
+
 @end
 

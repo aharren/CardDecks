@@ -32,6 +32,7 @@
     if ((self = [super initWithNibName:@"CDXCardDeckCardView" bundle:nil])) {
         ivar_assign_and_retain(cardDeck, deck);
         currentCardIndex = index;
+        self.wantsFullScreenLayout = YES;
     }
     return self;
 }
@@ -53,6 +54,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     label.text = [cardDeck cardAtIndex:currentCardIndex].text;
+}
+
+- (IBAction)close {
+    [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES];
 }
 
 @end
