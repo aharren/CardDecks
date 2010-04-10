@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDeckViewController.h
+// CDXCardDeckListViewController.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -26,7 +26,7 @@
 #import "CDXCardDeck.h"
 
 
-@interface CDXCardDeckViewController : UIViewController {
+@interface CDXCardDeckListViewController : UIViewController {
     
 @protected
     IBOutlet UITableView *cardDeckTableView;
