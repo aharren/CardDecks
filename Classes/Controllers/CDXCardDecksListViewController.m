@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDecksViewController.m
+// CDXCardDecksListViewController.m
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,14 +23,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXCardDecksViewController.h"
+#import "CDXCardDecksListViewController.h"
 #import "CDXCardDeckViewController.h"
 
 
-@implementation CDXCardDecksViewController
+@implementation CDXCardDecksListViewController
 
 - (id)initWithCardDecks:(CDXCardDecks *)decks {
-    if ((self = [super initWithNibName:@"CDXCardDecksView" bundle:nil])) {
+    if ((self = [super initWithNibName:@"CDXCardDecksListView" bundle:nil])) {
         ivar_assign_and_retain(cardDecks, decks);
     }
     return self;

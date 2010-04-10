@@ -25,7 +25,7 @@
 
 #import "CDXAppDelegate.h"
 #import "CDXCardDeckURLSerializer.h"
-#import "CDXCardDecksViewController.h"
+#import "CDXCardDecksListViewController.h"
 
 
 @implementation CDXAppDelegate
@@ -35,9 +35,9 @@
     for (int i = 0; i < 50; i++) {
         [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"One%20Two%20Three&1&2&3"]];
     }
-    CDXCardDecksViewController *decksViewController = [[[CDXCardDecksViewController alloc] initWithCardDecks:decks] autorelease];
+    CDXCardDecksListViewController *vc = [[[CDXCardDecksListViewController alloc] initWithCardDecks:decks] autorelease];
     
-    [appWindowManager pushNavigationView:decksViewController animated:NO];
+    [appWindowManager pushNavigationView:vc animated:NO];
     [appWindowManager makeWindowKeyAndVisible];
 }
 
