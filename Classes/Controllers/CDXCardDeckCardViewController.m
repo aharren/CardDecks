@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeckCardViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 
 @implementation CDXCardDeckCardViewController
@@ -54,6 +55,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     label.text = [cardDeck cardAtIndex:currentCardIndex].text;
+    label.layer.cornerRadius = 20;
 }
 
 - (IBAction)close {
