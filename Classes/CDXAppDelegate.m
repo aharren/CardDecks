@@ -37,7 +37,7 @@
     }
     CDXCardDecksListViewController *vc = [[[CDXCardDecksListViewController alloc] initWithCardDecks:decks] autorelease];
     
-    [appWindowManager pushNavigationView:vc animated:NO];
+    [appWindowManager pushViewController:vc animated:NO];
     [appWindowManager makeWindowKeyAndVisible];
 }
 

@@ -37,7 +37,7 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     return self;
 }
 
-- (void)pushNavigationView:(UIViewController *)viewController animated:(BOOL)animated {
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     [navigationController pushViewController:viewController animated:animated];
 }
 
