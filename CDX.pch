@@ -31,3 +31,6 @@
 // Macros.
 #import "CDXMacros.h"
 
+// Window manager.
+#import "CDXAppWindowManager.h"
+
