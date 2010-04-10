@@ -30,3 +30,6 @@
 #define ivar_assign_and_retain(_ivar, _value)                                  \
     [_ivar autorelease]; _ivar = [_value retain];
 
+#define ivar_assign_and_copy(_ivar, _value)                                    \
+    [_ivar autorelease]; _ivar = [_value copy];
+
