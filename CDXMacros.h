@@ -25,11 +25,20 @@
 
 
 #define ivar_release_and_clear(_ivar)                                          \
-    [_ivar release]; _ivar = nil;
+    if (_ivar) {                                                               \
+        [_ivar release];                                                       \
+    }                                                                          \
+    _ivar = nil;                                                               \
 
 #define ivar_assign_and_retain(_ivar, _value)                                  \
-    [_ivar autorelease]; _ivar = [_value retain];
+    if (_ivar) {                                                               \
+        [_ivar autorelease];                                                   \
+    }                                                                          \
+    _ivar = [_value retain];                                                   \
 
 #define ivar_assign_and_copy(_ivar, _value)                                    \
-    [_ivar autorelease]; _ivar = [_value copy];
+    if (_ivar) {                                                               \
+        [_ivar autorelease];                                                   \
+    }                                                                          \
+    _ivar = [_value copy];                                                     \
 
