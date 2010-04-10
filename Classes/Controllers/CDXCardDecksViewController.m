@@ -44,7 +44,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"Card Decks";
+    UINavigationItem *navigationItem = self.navigationItem;
+    navigationItem.title = @"Card Decks";
+    navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc]
+                                         initWithTitle:@"Decks"
+                                         style:UIBarButtonItemStylePlain
+                                         target:nil
+                                         action:nil]
+                                        autorelease];
 }
 
 - (void)viewDidUnload {
