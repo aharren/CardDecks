@@ -32,9 +32,9 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
     CDXCardDecks *decks = [[[CDXCardDecks alloc] init] autorelease];
-    for (int i = 0; i < 50; i++) {
-        [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"One%20Two%20Three&1&2&3"]];
-    }
+    [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"0%2C%20...%2C%2010,ffffff,000000&0&1&2&3&4&5&6&7&8&9&10"]];
+    [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"15%2C%2010%2C%205%2C%200,ffffff,000000&15,000000,00ff00&10,000000,ffff00&5,000000,ff0000&0,ff0000"]];
+    
     CDXCardDecksListViewController *vc = [[[CDXCardDecksListViewController alloc] initWithCardDecks:decks] autorelease];
     
     [appWindowManager pushViewController:vc animated:NO];
