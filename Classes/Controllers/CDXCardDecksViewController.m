@@ -28,12 +28,9 @@
 
 @implementation CDXCardDecksViewController
 
-@synthesize cardDecksTableView;
-@synthesize cardDecks;
-
 - (id)initWithCardDecks:(CDXCardDecks *)decks {
     if ((self = [super initWithNibName:@"CDXCardDecksView" bundle:nil])) {
-        self.cardDecks = decks;
+        ivar_assign_and_retain(cardDecks, decks);
     }
     return self;
 }

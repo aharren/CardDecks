@@ -29,12 +29,9 @@
 @interface CDXCardDecksViewController : UIViewController {
     
 @protected
-    UITableView *cardDecksTableView;
+    IBOutlet UITableView *cardDecksTableView;
     CDXCardDecks *cardDecks;
 }
-
-@property (nonatomic, retain) IBOutlet UITableView *cardDecksTableView;
-@property (nonatomic, retain) CDXCardDecks *cardDecks;
 
 - (id)initWithCardDecks:(CDXCardDecks *)cardDecks;
 
