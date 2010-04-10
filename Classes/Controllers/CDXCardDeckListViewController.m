@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeckListViewController.h"
+#import "CDXCardDeckCardViewController.h"
 
 
 @implementation CDXCardDeckListViewController
@@ -74,6 +75,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeck:cardDeck atIndex:indexPath.row] autorelease];
+    [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
