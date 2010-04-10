@@ -1,6 +1,6 @@
 //
 //
-// CDXAppDelegate.h
+// CDXAppWindowManager.m
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -26,10 +26,27 @@
 #import "CDXAppWindowManager.h"
 
 
-@interface CDXAppDelegate : NSObject <UIApplicationDelegate> {
+@implementation CDXAppWindowManager
+
+synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
+
+- (id)init {
+    if ((self = [super init])) {
+        ivar_assign(navigationController, [[UINavigationController alloc] init]);
+    }
+    return self;
+}
+
+- (void)pushNavigationView:(UIViewController *)viewController animated:(BOOL)animated {
+    [navigationController pushViewController:viewController animated:animated];
+}
+
+- (void)makeWindowKeyAndVisible {
+    [navigationController setNavigationBarHidden:NO];
+    [navigationController setToolbarHidden:NO];
     
-@protected
-    IBOutlet CDXAppWindowManager *appWindowManager;
+    [window addSubview:navigationController.view];
+    [window makeKeyAndVisible];
 }
 
 @end

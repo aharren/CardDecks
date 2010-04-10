@@ -30,9 +30,6 @@
 
 @implementation CDXAppDelegate
 
-@synthesize window;
-@synthesize navigationController;
-
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
     CDXCardDecks *decks = [[[CDXCardDecks alloc] init] autorelease];
     for (int i = 0; i < 50; i++) {
@@ -40,12 +37,8 @@
     }
     CDXCardDecksViewController *decksViewController = [[[CDXCardDecksViewController alloc] initWithCardDecks:decks] autorelease];
     
-    [navigationController setNavigationBarHidden:NO];
-    [navigationController setToolbarHidden:NO];
-    [navigationController setViewControllers:[NSArray arrayWithObject:decksViewController]];
-    
-    [window addSubview:navigationController.view];
-    [window makeKeyAndVisible];
+    [appWindowManager pushNavigationView:decksViewController animated:NO];
+    [appWindowManager makeWindowKeyAndVisible];
 }
 
 @end
