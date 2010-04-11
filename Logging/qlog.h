@@ -29,21 +29,21 @@
 //
 
 
-#define qlcritical(_format, ...)                                               \
-    lcl_log(ql_component, lcl_vCritical, _format, ## __VA_ARGS__);
+#define qlcritical(...)                                                        \
+    lcl_log(ql_component, lcl_vCritical, @"" __VA_ARGS__);
 
-#define qlerror(_format, ...)                                                  \
-    lcl_log(ql_component, lcl_vError, _format, ## __VA_ARGS__);
+#define qlerror(...)                                                           \
+    lcl_log(ql_component, lcl_vError, @"" __VA_ARGS__);
 
-#define qlwarning(_format, ...)                                                \
-    lcl_log(ql_component, lcl_vWarning, _format, ## __VA_ARGS__);
+#define qlwarning(...)                                                         \
+    lcl_log(ql_component, lcl_vWarning, @"" __VA_ARGS__);
 
-#define qlinfo(_format, ...)                                                   \
-    lcl_log(ql_component, lcl_vInfo, _format, ## __VA_ARGS__);
+#define qlinfo(...)                                                            \
+    lcl_log(ql_component, lcl_vInfo, @"" __VA_ARGS__);
 
-#define qldebug(_format, ...)                                                  \
-    lcl_log(ql_component, lcl_vDebug, _format, ## __VA_ARGS__);
+#define qldebug(...)                                                           \
+    lcl_log(ql_component, lcl_vDebug, @"" __VA_ARGS__);
 
-#define qltrace(_format, ...)                                                  \
-    lcl_log(ql_component, lcl_vTrace, _format, ## __VA_ARGS__);
+#define qltrace(...)                                                           \
+    lcl_log(ql_component, lcl_vTrace, @"" __VA_ARGS__);
 
