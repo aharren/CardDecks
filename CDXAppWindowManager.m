@@ -24,6 +24,34 @@
 // THE SOFTWARE.
 
 #import "CDXAppWindowManager.h"
+#import "CDXImageFactory.h"
+
+
+@interface CDXAppWindowManagerAnimationContext : NSObject {
+    
+@protected
+    UIView *viewToRemove;
+    UIView *viewToAdd;
+}
+
+@property (nonatomic, retain) UIView *viewToRemove;
+@property (nonatomic, retain) UIView *viewToAdd;
+
+@end
+
+
+@implementation CDXAppWindowManagerAnimationContext
+
+@synthesize viewToRemove;
+@synthesize viewToAdd;
+
+- (void) dealloc {
+    ivar_release_and_clear(viewToRemove);
+    ivar_release_and_clear(viewToAdd);
+    [super dealloc];
+}
+
+@end
 
 
 @implementation CDXAppWindowManager
@@ -37,19 +65,40 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     return self;
 }
 
+- (void)pushViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
+    CDXAppWindowManagerAnimationContext *animationContext = (CDXAppWindowManagerAnimationContext *)context;
+    [animationContext.viewToRemove removeFromSuperview];
+    [window addSubview:animationContext.viewToAdd];
+    [animationContext release];
+}
+
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     if ([viewController wantsFullScreenLayout]) {
-        [navigationController pushViewController:viewController animated:NO];
-        [[UIApplication sharedApplication] setStatusBarHidden:YES animated:animated];
+        UIView *viewToHide = navigationController.view;
+        UIView *viewToShow = viewController.view;
         if (animated) {
-            [UIView beginAnimations:nil context:nil];
-            [UIView setAnimationDuration:0.4];
+            [window addSubview:viewToShow];
+            UIImage *image = [[CDXImageFactory sharedImageFactory] imageForView:viewToShow size:[UIScreen mainScreen].bounds.size];
+            UIImageView *imageView = [[[UIImageView alloc] initWithImage:image] autorelease];
+            [viewToShow removeFromSuperview];
+            viewToShow = imageView;
+            
+            CDXAppWindowManagerAnimationContext *animationContext = [[CDXAppWindowManagerAnimationContext alloc] init];
+            animationContext.viewToAdd = viewController.view;
+            animationContext.viewToRemove = imageView;
+            
+            [UIView beginAnimations:nil context:animationContext];
+            [UIView setAnimationDuration:0.6];
             [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:window cache:YES];
-            [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+            [UIView setAnimationDelegate:self];
+            [UIView setAnimationDidStopSelector:@selector(pushViewControllerAnimationDidStop:finished:context:)];
         }
         
-        [navigationController.view removeFromSuperview];
-        [window addSubview:viewController.view];
+        [navigationController pushViewController:viewController animated:NO];
+        [viewToHide removeFromSuperview];
+        [[UIApplication sharedApplication] setStatusBarHidden:YES animated:YES];
+        [window addSubview:viewToShow];
         
         if (animated) {
             [UIView commitAnimations];
@@ -60,19 +109,27 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 }
 
 - (void)popViewControllerAnimated:(BOOL)animated {
-    UIViewController *viewController = [navigationController visibleViewController];
-    if ([viewController wantsFullScreenLayout]) {
-        [navigationController popViewControllerAnimated:NO];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO animated:animated];
+    UIViewController *viewControllerToHide = [navigationController visibleViewController];
+    if ([viewControllerToHide wantsFullScreenLayout]) {
+        UIView *viewToHide = viewControllerToHide.view;
+        UIView *viewToShow = navigationController.view;
         if (animated) {
+            UIImage *image = [[CDXImageFactory sharedImageFactory] imageForView:viewToHide size:[UIScreen mainScreen].bounds.size];
+            UIImageView *imageView = [[[UIImageView alloc] initWithImage:image] autorelease];
+            [window addSubview:imageView];
+            [viewToHide removeFromSuperview];
+            viewToHide = imageView;
+            
             [UIView beginAnimations:nil context:nil];
-            [UIView setAnimationDuration:0.4];
+            [UIView setAnimationDuration:0.6];
             [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:window cache:YES];
-            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
         }
         
-        [viewController.view removeFromSuperview];
-        [window addSubview:navigationController.view];
+        [navigationController popViewControllerAnimated:NO];
+        [viewToHide removeFromSuperview];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO animated:YES];
+        [window addSubview:viewToShow];
         
         if (animated) {
             [UIView commitAnimations];
