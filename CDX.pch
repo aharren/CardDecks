@@ -30,6 +30,7 @@
 
 // Logging.
 #import "lcl.h"
+#define ql_component lcl_cMain
 
 // Macros.
 #import "CDXMacros.h"

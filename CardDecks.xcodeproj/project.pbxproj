@@ -107,6 +107,7 @@
 		E0D8C7FD1172255F00356C2C /* lcl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = lcl.m; path = Logging/lcl.m; sourceTree = "<group>"; };
 		E0D909261172275D00AD50DA /* CDXLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXLogger.h; path = Logging/CDXLogger.h; sourceTree = "<group>"; };
 		E0D909271172275D00AD50DA /* CDXLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXLogger.m; path = Logging/CDXLogger.m; sourceTree = "<group>"; };
+		E0D9096811722AD700AD50DA /* qlog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = qlog.h; path = Logging/qlog.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +276,7 @@
 				E0D8C7FB1172255F00356C2C /* lcl_config_logger.h */,
 				E0D909261172275D00AD50DA /* CDXLogger.h */,
 				E0D909271172275D00AD50DA /* CDXLogger.m */,
+				E0D9096811722AD700AD50DA /* qlog.h */,
 			);
 			name = Logging;
 			sourceTree = "<group>";

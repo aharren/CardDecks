@@ -1,9 +1,9 @@
 //
 //
-// lcl_config_extensions.h
+// qlog.h
 //
 //
-// Copyright (c) 2008-2010 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,5 +24,26 @@
 // THE SOFTWARE.
 
 
-#import "qlog.h"
+//
+// qlog -- quick logging macros
+//
+
+
+#define qlcritical(_format, ...)                                               \
+    lcl_log(ql_component, lcl_vCritical, _format, ## __VA_ARGS__);
+
+#define qlerror(_format, ...)                                                  \
+    lcl_log(ql_component, lcl_vError, _format, ## __VA_ARGS__);
+
+#define qlwarning(_format, ...)                                                \
+    lcl_log(ql_component, lcl_vWarning, _format, ## __VA_ARGS__);
+
+#define qlinfo(_format, ...)                                                   \
+    lcl_log(ql_component, lcl_vInfo, _format, ## __VA_ARGS__);
+
+#define qldebug(_format, ...)                                                  \
+    lcl_log(ql_component, lcl_vDebug, _format, ## __VA_ARGS__);
+
+#define qltrace(_format, ...)                                                  \
+    lcl_log(ql_component, lcl_vTrace, _format, ## __VA_ARGS__);
 
