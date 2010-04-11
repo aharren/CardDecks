@@ -29,7 +29,6 @@
 @interface CDXCardDeckCardViewController : UIViewController {
     
 @protected
-    IBOutlet UILabel *label;
     CDXCardDeck *cardDeck;
     NSUInteger currentCardIndex;
 }

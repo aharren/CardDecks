@@ -24,22 +24,32 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeckCardViewController.h"
-#import <QuartzCore/QuartzCore.h>
+#import "CDXImageFactory.h"
 
 
 @implementation CDXCardDeckCardViewController
 
+#undef ql_component
+#define ql_component lcl_cCDXCardDeckCardViewController
+
 - (id)initWithCardDeck:(CDXCardDeck *)deck atIndex:(NSUInteger)index {
+    qltrace();
     if ((self = [super initWithNibName:@"CDXCardDeckCardView" bundle:nil])) {
         ivar_assign_and_retain(cardDeck, deck);
         currentCardIndex = index;
         self.wantsFullScreenLayout = YES;
+        UIImage *image = [[CDXImageFactory sharedImageFactory]
+                          imageForCard:[cardDeck cardAtIndex:currentCardIndex]
+                          size:[UIScreen mainScreen].bounds.size
+                          deviceOrientation:[[UIDevice currentDevice] orientation]];
+        UIImageView *imageView = [[[UIImageView alloc] initWithImage:image] autorelease];
+        [self.view addSubview:imageView];
     }
+    qltrace();
     return self;
 }
 
 - (void)dealloc {
-    ivar_release_and_clear(label);
     ivar_release_and_clear(cardDeck);
     [super dealloc];
 }
@@ -49,13 +59,7 @@
 }
 
 - (void)viewDidUnload {
-    ivar_release_and_clear(label);
     [super viewDidUnload];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    label.text = [cardDeck cardAtIndex:currentCardIndex].text;
-    label.layer.cornerRadius = 20;
 }
 
 - (IBAction)close {

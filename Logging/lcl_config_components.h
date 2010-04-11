@@ -24,7 +24,9 @@
 // THE SOFTWARE.
 
 
-_lcl_component(CDXMain,             "main",             "Main")
+_lcl_component(CDXMain,                                 "main",                 "Main")
 
-_lcl_component(CDXAppDelegate,      "appdelegate",      "AppDelegate")
+_lcl_component(CDXAppDelegate,                          "appdelegate",          "AppDelegate")
+
+_lcl_component(CDXCardDeckCardViewController,           "cardview",             "CardView")
 
