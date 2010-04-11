@@ -30,6 +30,9 @@
 
 @implementation CDXAppDelegate
 
+#undef ql_component
+#define ql_component lcl_cCDXAppDelegate
+
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
     qltrace();
     CDXCardDecks *decks = [[[CDXCardDecks alloc] init] autorelease];

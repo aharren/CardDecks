@@ -24,5 +24,7 @@
 // THE SOFTWARE.
 
 
-_lcl_component(Main, "main", "Main")
+_lcl_component(CDXMain,             "main",             "Main")
+
+_lcl_component(CDXAppDelegate,      "appdelegate",      "AppDelegate")
 
