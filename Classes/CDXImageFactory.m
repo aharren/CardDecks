@@ -39,5 +39,13 @@ synthesize_singleton(sharedImageFactory, CDXImageFactory);
     return image;
 }
 
+- (UIImage *)imageForCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation {
+    if (!cardView) {
+        [[NSBundle mainBundle] loadNibNamed:@"CDXCardView" owner:self options:nil];
+    }
+    [cardView initWithCard:card deviceOrientation:deviceOrientation];
+    return [self imageForView:cardView size:size];
+}
+
 @end
 

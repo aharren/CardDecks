@@ -23,14 +23,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import "CDXCard.h"
+#import "CDXCardView.h"
+
 
 @interface CDXImageFactory : NSObject {
     
+@protected
+    IBOutlet CDXCardView *cardView;
 }
 
 declare_singleton(sharedImageFactory, CDXImageFactory);
 
 - (UIImage *)imageForView:(UIView *)view size:(CGSize)size;
+
+- (UIImage *)imageForCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation;
 
 @end
 
