@@ -1,9 +1,9 @@
 //
 //
-// main.m
+// lcl_config_components.h
 //
 //
-// Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2008-2010 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,5 @@
 // THE SOFTWARE.
 
 
-int main(int argc, char *argv[]) {
-    lcl_configure_by_identifier("*", lcl_vDebug);
-
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, nil);
-    [pool release];
-    return retVal;
-}
+_lcl_component(Main, "main,", "Main")
 

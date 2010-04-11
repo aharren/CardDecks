@@ -1,9 +1,9 @@
 //
 //
-// main.m
+// lcl_config_logger.h
 //
 //
-// Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2008-2010 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,15 @@
 // THE SOFTWARE.
 
 
-int main(int argc, char *argv[]) {
-    lcl_configure_by_identifier("*", lcl_vDebug);
-
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, nil);
-    [pool release];
-    return retVal;
+#define _lcl_logger(_component, _level, _format, ...) {                        \
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];                \
+    NSLog(@"%s %s:%@:%d:%s " _format,                                          \
+          _lcl_level_header_1[_level],                                         \
+          _lcl_component_header[_component],                                   \
+          [@__FILE__ lastPathComponent],                                       \
+          __LINE__,                                                            \
+          __FUNCTION__,                                                        \
+          ## __VA_ARGS__);                                                     \
+    [pool release];                                                            \
 }
 
