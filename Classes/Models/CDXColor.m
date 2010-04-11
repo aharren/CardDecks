@@ -55,6 +55,10 @@ static CDXColor *colorBlack = nil;
     return [NSString stringWithFormat:@"%02x%02x%02x%02x", red, green, blue, alpha] ;
 }
 
+- (UIColor *)uiColor {
+    return [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:alpha/255.0];
+}
+
 - (BOOL)isEqual:(id)anObject {
     if (![anObject isMemberOfClass:[CDXColor class]]) {
         return NO;

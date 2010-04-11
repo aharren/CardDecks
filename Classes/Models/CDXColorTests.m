@@ -137,5 +137,13 @@
     STAssertEquals((int)[color alpha], 0xff, nil);
 }
 
+- (void)testUiColor {
+    UIColor *color1 = [[CDXColor colorWhite] uiColor];
+    STAssertTrue(CGColorEqualToColor([color1 CGColor], [[UIColor colorWithRed:1 green:1 blue:1 alpha:1] CGColor]), nil);
+    
+    UIColor *color2 = [[CDXColor colorBlack] uiColor];
+    STAssertTrue(CGColorEqualToColor([color2 CGColor], [[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor]), nil);
+}
+
 @end
 

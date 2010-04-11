@@ -40,6 +40,7 @@
 @property (nonatomic, readonly) uint8_t alpha;
 
 - (NSString *)rgbaString;
+- (UIColor *)uiColor;
 
 - (BOOL)isEqual:(id)anObject;
 - (NSString *)description;
