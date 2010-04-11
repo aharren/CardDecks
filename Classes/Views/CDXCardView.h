@@ -1,6 +1,6 @@
 //
 //
-// CDXCard.h
+// CDXCardView.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,31 +23,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "CDXColor.h"
+#import "CDXCard.h"
 
 
-typedef enum {
-    CDXCardOrientationUp    = 0,
-    CDXCardOrientationRight = 1,
-    CDXCardOrientationDown  = 2,
-    CDXCardOrientationLeft  = 3,
-    CDXCardOrientationCount
-} CDXCardOrientation;
-
-
-@interface CDXCard : NSObject {
+@interface CDXCardView : UIView {
     
 @protected
-    NSString *text;
-    CDXColor *textColor;
-    CDXColor *backgroundColor;
-    CDXCardOrientation orientation;
+    IBOutlet UILabel *cardText;
+    IBOutlet UIView *cardBackground;
 }
 
-@property (nonatomic, copy) NSString *text;
-@property (nonatomic, retain) CDXColor *textColor;
-@property (nonatomic, retain) CDXColor *backgroundColor;
-@property (nonatomic, assign) CDXCardOrientation orientation;
+- (id)initWithCard:(CDXCard *)card deviceOrientation:(UIDeviceOrientation)deviceOrientation;
 
 @end
 
