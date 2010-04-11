@@ -1,6 +1,6 @@
 //
 //
-// CDXAppDelegate.m
+// CDXLogger.m
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,23 +23,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXAppDelegate.h"
-#import "CDXCardDeckURLSerializer.h"
-#import "CDXCardDecksListViewController.h"
+#import "lcl.h"
+#include <sys/time.h>
 
 
-@implementation CDXAppDelegate
+@implementation CDXLogger
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application {
-    lcl_log(lcl_cMain, lcl_vInfo, @"");
-    CDXCardDecks *decks = [[[CDXCardDecks alloc] init] autorelease];
-    [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"0%2C%20...%2C%2010,ffffff,000000&0&1&2&3&4&5&6&7&8&9&10"]];
-    [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"15%2C%2010%2C%205%2C%200,ffffff,000000&15,000000,00ff00&10,000000,ffff00&5,000000,ff0000&0,ff0000"]];
++ (void)logWithIdentifier:(const char *)identifier_c
+                    level:(const char *)level_c
+                 function:(const char *)function_c
+                   format:(NSString *)format, ... {
+    // get the message
+    va_list args;
+    va_start(args, format);
+    NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
+    va_end(args);
     
-    CDXCardDecksListViewController *vc = [[[CDXCardDecksListViewController alloc] initWithCardDecks:decks] autorelease];
+    // get current time
+    struct timeval now;
+    struct tm now_tm;
+    const int time_c_len = 24;
+    char time_c[time_c_len];
+    gettimeofday(&now, NULL);
+    localtime_r(&now.tv_sec, &now_tm);
+    snprintf(time_c, sizeof(time_c), "%02d:%02d:%02d.%03d",
+             now_tm.tm_hour,
+             now_tm.tm_min,
+             now_tm.tm_sec,
+             now.tv_usec / 1000);
     
-    [appWindowManager pushViewController:vc animated:NO];
-    [appWindowManager makeWindowKeyAndVisible];
+    // write the message
+    fprintf(stderr, "%s %s %s %s %s",
+            time_c,
+            level_c,
+            identifier_c,
+            function_c,
+            [message UTF8String]);
+    
+    [message release];
 }
 
 @end

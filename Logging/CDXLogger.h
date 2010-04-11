@@ -1,9 +1,9 @@
 //
 //
-// lcl_config_logger.h
+// CDXLogger.h
 //
 //
-// Copyright (c) 2008-2010 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,5 +24,26 @@
 // THE SOFTWARE.
 
 
-#import "CDXLogger.h"
+@interface CDXLogger : NSObject {
+    
+}
+
++ (void)logWithIdentifier:(const char *)identifier
+                    level:(const char *)level
+                 function:(const char *)function
+                   format:(NSString *)format, ... __attribute__((format(__NSString__, 4, 5)));
+
+@end
+
+
+
+#define _lcl_logger(_component, _level, _format, ...) {                        \
+    NSAutoreleasePool *_lcl_logger_pool = [[NSAutoreleasePool alloc] init];    \
+    [CDXLogger logWithIdentifier:_lcl_component_header[_component]             \
+                           level:_lcl_level_header_1[_level]                   \
+                        function:__FUNCTION__                                  \
+                          format:_format,                                      \
+                              ## __VA_ARGS__];                                 \
+    [_lcl_logger_pool release];                                                \
+}                                                                              \
 

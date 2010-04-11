@@ -42,6 +42,7 @@
 		E0CCC9041170E9420040D222 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0CCC9031170E9420040D222 /* QuartzCore.framework */; };
 		E0D01AED1170EF9200004856 /* CDXImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D01AEC1170EF9200004856 /* CDXImageFactory.m */; };
 		E0D8C7FE1172255F00356C2C /* lcl.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D8C7FD1172255F00356C2C /* lcl.m */; };
+		E0D909281172275D00AD50DA /* CDXLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D909271172275D00AD50DA /* CDXLogger.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,8 @@
 		E0D8C7FB1172255F00356C2C /* lcl_config_logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcl_config_logger.h; path = Logging/lcl_config_logger.h; sourceTree = "<group>"; };
 		E0D8C7FC1172255F00356C2C /* lcl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcl.h; path = Logging/lcl.h; sourceTree = "<group>"; };
 		E0D8C7FD1172255F00356C2C /* lcl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = lcl.m; path = Logging/lcl.m; sourceTree = "<group>"; };
+		E0D909261172275D00AD50DA /* CDXLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXLogger.h; path = Logging/CDXLogger.h; sourceTree = "<group>"; };
+		E0D909271172275D00AD50DA /* CDXLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXLogger.m; path = Logging/CDXLogger.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -270,6 +273,8 @@
 				E0D8C7F91172255F00356C2C /* lcl_config_components.h */,
 				E0D8C7FA1172255F00356C2C /* lcl_config_extensions.h */,
 				E0D8C7FB1172255F00356C2C /* lcl_config_logger.h */,
+				E0D909261172275D00AD50DA /* CDXLogger.h */,
+				E0D909271172275D00AD50DA /* CDXLogger.m */,
 			);
 			name = Logging;
 			sourceTree = "<group>";
@@ -389,6 +394,7 @@
 				E0CCC7401170DC600040D222 /* CDXCardDeckCardViewController.m in Sources */,
 				E0D01AED1170EF9200004856 /* CDXImageFactory.m in Sources */,
 				E0D8C7FE1172255F00356C2C /* lcl.m in Sources */,
+				E0D909281172275D00AD50DA /* CDXLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
