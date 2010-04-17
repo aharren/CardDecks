@@ -53,7 +53,7 @@
              now.tv_usec / 1000);
     
     // write the message
-    fprintf(stderr, "%s %s %s %s %s\n",
+    fprintf(stderr, "%s %s %-12s %s %s\n",
             time_c,
             level_c,
             identifier_c,
