@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDeckCardViewController.h
+// CDXCardsViewProtocols.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,18 +23,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXCardDeck.h"
-#import "CDXCardsViewProtocols.h"
+#import "CDXCard.h"
 
 
-@interface CDXCardDeckCardViewController : UIViewController<CDXCardsViewDelegate, CDXCardsViewDataSource> {
-    
-@protected
-    CDXCardDeck *cardDeck;
-    NSUInteger currentCardIndex;
-}
+@protocol CDXCardsViewDataSource
 
-- (id)initWithCardDeck:(CDXCardDeck *)cardDeck atIndex:(NSUInteger)index;
+@required
+- (NSUInteger)cardsViewDataSourceCardsCount;
+- (CDXCard *)cardsViewDataSourceCardAtIndex:(NSUInteger)index;
+
+@end
+
+
+@protocol CDXCardsViewDelegate
+
+@required
+- (void)cardsViewDelegateTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
 
 @end
 

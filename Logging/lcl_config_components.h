@@ -29,4 +29,5 @@ _lcl_component(CDXMain,                                 "main",                 
 _lcl_component(CDXAppDelegate,                          "appdelegate",          "AppDelegate")
 
 _lcl_component(CDXCardDeckCardViewController,           "cardview",             "CardView")
+_lcl_component(CDXCardsSideBySideView,                  "cardview",             "CardView")
 

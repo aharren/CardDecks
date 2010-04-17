@@ -24,7 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeckCardViewController.h"
-#import "CDXImageFactory.h"
+#import "CDXCardsSideBySideView.h"
 
 
 @implementation CDXCardDeckCardViewController
@@ -38,32 +38,39 @@
         ivar_assign_and_retain(cardDeck, deck);
         currentCardIndex = index;
         self.wantsFullScreenLayout = YES;
-        UIImage *image = [[CDXImageFactory sharedImageFactory]
-                          imageForCard:[cardDeck cardAtIndex:currentCardIndex]
-                          size:[UIScreen mainScreen].bounds.size
-                          deviceOrientation:[[UIDevice currentDevice] orientation]];
-        UIImageView *imageView = [[[UIImageView alloc] initWithImage:image] autorelease];
-        [self.view addSubview:imageView];
     }
-    qltrace();
     return self;
 }
 
 - (void)dealloc {
+    qltrace();
     ivar_release_and_clear(cardDeck);
     [super dealloc];
 }
 
 - (void)viewDidLoad {
+    qltrace();
     [super viewDidLoad];
+    CDXCardsSideBySideView *v = [[[CDXCardsSideBySideView alloc] initWithFrame:self.view.frame] autorelease];
+    [v setViewDelegate:self];
+    [v setViewDataSource:self];
+    [self.view insertSubview:v atIndex:0];
 }
 
-- (void)viewDidUnload {
-    [super viewDidUnload];
+- (NSUInteger)cardsViewDataSourceCardsCount {
+    return [cardDeck cardsCount];
 }
 
-- (IBAction)close {
-    [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES];
+- (CDXCard *)cardsViewDataSourceCardAtIndex:(NSUInteger)index {
+    return [cardDeck cardAtIndex:index];
+}
+
+- (void)cardsViewDelegateTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    qltrace();
+    UITouch *touch = [touches anyObject];
+    if ([touch tapCount] == 1) {
+        [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES];
+    }
 }
 
 @end

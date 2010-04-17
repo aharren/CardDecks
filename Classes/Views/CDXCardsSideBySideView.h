@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDeckCardViewController.h
+// CDXCardsSideBySideView.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -27,14 +27,21 @@
 #import "CDXCardsViewProtocols.h"
 
 
-@interface CDXCardDeckCardViewController : UIViewController<CDXCardsViewDelegate, CDXCardsViewDataSource> {
+@class CDXCardsSideBySideViewScrollView;
+
+@interface CDXCardsSideBySideView : UIView {
     
 @protected
-    CDXCardDeck *cardDeck;
-    NSUInteger currentCardIndex;
+    CDXCardsSideBySideViewScrollView *scrollView;
+    id<CDXCardsViewDelegate> viewDelegate;
+    id<CDXCardsViewDataSource> viewDataSource;
+    
 }
 
-- (id)initWithCardDeck:(CDXCardDeck *)cardDeck atIndex:(NSUInteger)index;
+- (id)initWithFrame:(CGRect)rect;
+
+@property (nonatomic, assign) id<CDXCardsViewDelegate> viewDelegate;
+@property (nonatomic, assign) id<CDXCardsViewDataSource> viewDataSource;
 
 @end
 
