@@ -86,7 +86,11 @@
     cardText.textColor = [card.textColor uiColor];
     cardText.transform = [self transformFromCardOrientation:cardOrientation];
     cardBackground.backgroundColor = [card.backgroundColor uiColor];
-    cardBackground.layer.cornerRadius = 20;
+    CALayer *cardBackgroundLayer = cardBackground.layer;
+    cardBackgroundLayer.cornerRadius = 20;
+    cardBackgroundLayer.borderColor = [[UIColor colorWithRed:1 green:1 blue:1 alpha:0.15] CGColor];
+    cardBackgroundLayer.borderWidth = 1;
+    self.backgroundColor = nil;
     
     return self;
 }
