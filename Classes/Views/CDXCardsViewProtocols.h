@@ -43,3 +43,13 @@
 
 @end
 
+
+@protocol CDXCardsViewView
+
+@required
+- (id)initWithFrame:(CGRect)rect;
+- (void)setViewDelegate:(id<CDXCardsViewDelegate>)delegate;
+- (void)setViewDataSource:(id<CDXCardsViewDataSource>)dataSource;
+
+@end
+

@@ -32,7 +32,7 @@
 
 #define CDXCardsSideBySideViewCardViewsMax 5
 
-@interface CDXCardsSideBySideView : UIView {
+@interface CDXCardsSideBySideView : UIView<CDXCardsViewView> {
     
 @protected
     CDXCardsSideBySideViewScrollView *scrollView;

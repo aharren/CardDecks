@@ -51,7 +51,7 @@
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
-    CDXCardsSideBySideView *v = [[[CDXCardsSideBySideView alloc] initWithFrame:self.view.frame] autorelease];
+    UIView<CDXCardsViewView> *v = [[[CDXCardsSideBySideView alloc] initWithFrame:self.view.frame] autorelease];
     [v setViewDelegate:self];
     [v setViewDataSource:self];
     [self.view insertSubview:v atIndex:0];
