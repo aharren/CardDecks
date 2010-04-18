@@ -31,6 +31,7 @@
 @required
 - (NSUInteger)cardsViewDataSourceCardsCount;
 - (CDXCard *)cardsViewDataSourceCardAtIndex:(NSUInteger)index;
+- (NSUInteger)cardsViewDataSourceInitialCardIndex;
 
 @end
 

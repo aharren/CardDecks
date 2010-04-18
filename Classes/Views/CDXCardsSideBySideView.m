@@ -37,16 +37,14 @@
 @end
 
 
-@implementation CDXCardsSideBySideViewScrollView
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self.superview touchesEnded:touches withEvent:event];
+@interface CDXCardsSideBySideViewScrollViewDelegate : NSObject<UIScrollViewDelegate> {
+    
+@protected
+    CDXCardsSideBySideView *cardsSideBySideView;
+    
 }
 
-- (void)dealloc {
-    qltrace();
-    [super dealloc];
-}
+@property (nonatomic, assign) CDXCardsSideBySideView *cardsSideBySideView;
 
 @end
 
@@ -66,7 +64,53 @@
 - (void)dealloc {
     qltrace();
     ivar_release_and_clear(scrollView);
+    ivar_release_and_clear(scrollViewDelegate);
     [super dealloc];
+}
+
+- (void)configureCardViewsViewAtIndex:(NSUInteger)viewIndex cardIndex:(NSUInteger)cardIndex {
+    if (cardIndex >= cardsCount) {
+        return;
+    }
+    viewIndex += CDXCardsSideBySideViewCardViewsMax;
+    viewIndex %= CDXCardsSideBySideViewCardViewsMax;
+    if (cardViewsCardIndex[viewIndex] == cardIndex+1) {
+        qltrace(@": %d => %d", viewIndex, cardIndex);
+        return;
+    }
+    qltrace(@": %d X> %d", viewIndex, cardIndex);
+    cardViewsCardIndex[viewIndex] = cardIndex+1;
+    UIImageView *view = cardViewsView[viewIndex];
+    UIImage *image = [[CDXImageFactory sharedImageFactory]
+                      imageForCard:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex]
+                      size:cardViewsSize
+                      deviceOrientation:[[UIDevice currentDevice] orientation]];
+    view.frame = CGRectMake(cardViewsWidthWithBorder * cardIndex + cardViewsBorder, 0, cardViewsSize.width, cardViewsSize.height);
+    view.image = image;
+}
+
+- (void)configureViewWithCardIndex:(NSUInteger)cardIndex {
+    NSUInteger viewIndex = 0;
+    for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsMax; i++) {
+        if (cardViewsCardIndex[i] == cardIndex+1) {
+            viewIndex = i;
+            break;
+        }
+    }
+    
+    qltrace(@": %d %d", cardIndex, viewIndex);
+    for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsMax; i++) {
+        [self configureCardViewsViewAtIndex:viewIndex-CDXCardsSideBySideViewCardViewsMax/2+i cardIndex:cardIndex-CDXCardsSideBySideViewCardViewsMax/2+i];
+    }
+    
+    currentCardIndex = cardIndex;
+}
+
+- (void)scrollToCardIndex:(NSUInteger)cardIndex {
+    CGRect frame = scrollView.frame;
+    frame.origin.x = cardViewsWidthWithBorder * cardIndex;
+    frame.origin.y = 0;
+    [scrollView scrollRectToVisible:frame animated:NO];
 }
 
 - (void)didMoveToSuperview {
@@ -75,41 +119,104 @@
     if (self.superview == nil) {
         [scrollView removeFromSuperview];
         ivar_release_and_clear(scrollView);
+        ivar_release_and_clear(scrollViewDelegate);
     } else {
         ivar_assign(scrollView, [[CDXCardsSideBySideViewScrollView alloc] initWithFrame:self.frame]);
+        ivar_assign(scrollViewDelegate, [[CDXCardsSideBySideViewScrollViewDelegate alloc] init]);
+        scrollView.delegate = scrollViewDelegate;
+        scrollViewDelegate.cardsSideBySideView = self;
         [self addSubview:scrollView];
-        
-        NSUInteger cardsCount = [viewDataSource cardsViewDataSourceCardsCount];
+        cardsCount = [viewDataSource cardsViewDataSourceCardsCount];
+        currentCardIndex = [viewDataSource cardsViewDataSourceInitialCardIndex];
         
         CGRect frame = self.frame;
-        const CGFloat gapSize = 10;
-        CGFloat frameWidth = frame.size.width;
-        CGFloat frameWidthPlusGap = frameWidth + 2 * gapSize;
-        CGFloat frameHeight = frame.size.height;
-        frame.origin.x -= gapSize;
-        frame.size.width = frameWidthPlusGap;
+        cardViewsBorder = 10;
+        cardViewsSize.width = frame.size.width;
+        cardViewsWidthWithBorder = cardViewsSize.width + 2 * cardViewsBorder;
+        cardViewsSize.height = frame.size.height;
+        frame.origin.x -= cardViewsBorder;
+        frame.size.width = cardViewsWidthWithBorder;
         scrollView.frame = frame;
         scrollView.backgroundColor = [UIColor blackColor];
-        scrollView.contentSize = CGSizeMake(frameWidthPlusGap * cardsCount, frameHeight);
+        scrollView.contentSize = CGSizeMake(cardViewsWidthWithBorder * cardsCount, cardViewsSize.height);
         scrollView.scrollEnabled = YES;
         scrollView.pagingEnabled = YES;
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.showsVerticalScrollIndicator = NO;
         
-        for (NSUInteger i = 0; i < cardsCount; i++) {
-            UIImage *cardImage = [[CDXImageFactory sharedImageFactory]
-                                  imageForCard:[viewDataSource cardsViewDataSourceCardAtIndex:i]
-                                  size:[UIScreen mainScreen].bounds.size
-                                  deviceOrientation:[[UIDevice currentDevice] orientation]];
-            UIImageView *cardImageView = [[[UIImageView alloc] initWithImage:cardImage] autorelease];
-            [scrollView addSubview:cardImageView];
-            cardImageView.frame = CGRectMake(frameWidthPlusGap * i + gapSize, 0, frameWidth, frameHeight);
+        for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsMax; i++) {
+            UIImageView *view = [[[UIImageView alloc] initWithImage:nil] autorelease];
+            [scrollView addSubview:view];
+            cardViewsView[i] = view;
+            cardViewsCardIndex[i] = 0;
         }
+        
+        [self configureViewWithCardIndex:currentCardIndex];
+        [self scrollToCardIndex:currentCardIndex];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating {
+    const CGFloat contentOffsetX = scrollView.contentOffset.x;
+    const NSUInteger newCardIndex = contentOffsetX / cardViewsWidthWithBorder;
+    
+    if (currentCardIndex != newCardIndex) {
+        [self configureViewWithCardIndex:newCardIndex];
+    }
+}
+
+- (void)scrollViewDidScroll {
+    const CGFloat width = cardViewsWidthWithBorder;
+    
+    const CGFloat contentOffsetX = scrollView.contentOffset.x;
+    if (contentOffsetX < 0 || contentOffsetX > width * (cardsCount-1)) {
+        return;
+    }
+    
+    const CGFloat contentOffsetXCurrentPage = (currentCardIndex * width);
+    const CGFloat contentOffsetXDiff = contentOffsetX - contentOffsetXCurrentPage;
+    if (abs(contentOffsetXDiff) < width + 20) {
+        return;
+    }
+    
+    const NSUInteger newCardIndex = contentOffsetXDiff > 0 ? (contentOffsetX / width) : ((contentOffsetX + width-1) / width);
+    
+    if (currentCardIndex != newCardIndex) {
+        [self configureViewWithCardIndex:newCardIndex];
     }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [viewDelegate cardsViewDelegateTouchesEnded:touches withEvent:event];
+}
+
+@end
+
+
+@implementation CDXCardsSideBySideViewScrollView
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.superview touchesEnded:touches withEvent:event];
+}
+
+- (void)dealloc {
+    qltrace();
+    [super dealloc];
+}
+
+@end
+
+
+@implementation CDXCardsSideBySideViewScrollViewDelegate
+
+@synthesize cardsSideBySideView;
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [cardsSideBySideView scrollViewDidEndDecelerating];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [cardsSideBySideView scrollViewDidScroll];
 }
 
 @end

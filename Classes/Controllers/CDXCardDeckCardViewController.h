@@ -31,7 +31,7 @@
     
 @protected
     CDXCardDeck *cardDeck;
-    NSUInteger currentCardIndex;
+    NSUInteger initialCardIndex;
 }
 
 - (id)initWithCardDeck:(CDXCardDeck *)cardDeck atIndex:(NSUInteger)index;

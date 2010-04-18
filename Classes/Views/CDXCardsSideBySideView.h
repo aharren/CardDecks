@@ -28,14 +28,27 @@
 
 
 @class CDXCardsSideBySideViewScrollView;
+@class CDXCardsSideBySideViewScrollViewDelegate;
+
+#define CDXCardsSideBySideViewCardViewsMax 5
 
 @interface CDXCardsSideBySideView : UIView {
     
 @protected
     CDXCardsSideBySideViewScrollView *scrollView;
+    CDXCardsSideBySideViewScrollViewDelegate *scrollViewDelegate;
+    
+    UIImageView *cardViewsView[CDXCardsSideBySideViewCardViewsMax];
+    NSUInteger cardViewsCardIndex[CDXCardsSideBySideViewCardViewsMax];
+    CGFloat cardViewsBorder;
+    CGFloat cardViewsWidthWithBorder;
+    CGSize cardViewsSize;
+    
     id<CDXCardsViewDelegate> viewDelegate;
     id<CDXCardsViewDataSource> viewDataSource;
     
+    NSUInteger cardsCount;
+    NSUInteger currentCardIndex;
 }
 
 - (id)initWithFrame:(CGRect)rect;

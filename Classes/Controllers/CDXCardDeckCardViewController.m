@@ -36,7 +36,7 @@
     qltrace();
     if ((self = [super initWithNibName:@"CDXCardDeckCardView" bundle:nil])) {
         ivar_assign_and_retain(cardDeck, deck);
-        currentCardIndex = index;
+        initialCardIndex = index;
         self.wantsFullScreenLayout = YES;
     }
     return self;
@@ -63,6 +63,10 @@
 
 - (CDXCard *)cardsViewDataSourceCardAtIndex:(NSUInteger)index {
     return [cardDeck cardAtIndex:index];
+}
+
+- (NSUInteger)cardsViewDataSourceInitialCardIndex {
+    return initialCardIndex;
 }
 
 - (void)cardsViewDelegateTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
