@@ -48,6 +48,16 @@
     }                                                                          \
     _ivar = [_value copy];                                                     \
 
+#define ivar_array_release_and_clear(_ivar, _size)                             \
+    {                                                                          \
+        for (NSUInteger _ivar_idx = 0; _ivar_idx < _size; _ivar_idx++) {       \
+            if (_ivar[_ivar_idx]) {                                            \
+                [_ivar[_ivar_idx] release];                                    \
+            }                                                                  \
+            _ivar[_ivar_idx] = nil;                                            \
+        }                                                                      \
+    }                                                                          \
+
 #define declare_singleton(_name, _class)                                       \
     + (_class *)_name;                                                         \
 
