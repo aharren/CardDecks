@@ -25,6 +25,7 @@
 
 #import "CDXCardDeckCardViewController.h"
 #import "CDXCardsSideBySideView.h"
+#import "CDXCardsStackView.h"
 
 
 @implementation CDXCardDeckCardViewController
@@ -51,7 +52,12 @@
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
-    UIView<CDXCardsViewView> *v = [[[CDXCardsSideBySideView alloc] initWithFrame:self.view.frame] autorelease];
+    UIView<CDXCardsViewView> *v;
+    if (initialCardIndex) {
+        v = [[[CDXCardsSideBySideView alloc] initWithFrame:self.view.frame] autorelease];
+    } else {
+        v = [[[CDXCardsStackView alloc] initWithFrame:self.view.frame] autorelease];
+    }
     [v setViewDelegate:self];
     [v setViewDataSource:self];
     [self.view insertSubview:v atIndex:0];

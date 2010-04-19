@@ -36,6 +36,7 @@
 		E041E3961169FDD5009DC453 /* CDXCardDeckURLSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E041E3941169FDD5009DC453 /* CDXCardDeckURLSerializer.m */; };
 		E041E3981169FDDB009DC453 /* CDXCardDeckURLSerializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E041E3951169FDD5009DC453 /* CDXCardDeckURLSerializerTests.m */; };
 		E041E3A21169FE24009DC453 /* CDXCardDeckURLSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E041E3941169FDD5009DC453 /* CDXCardDeckURLSerializer.m */; };
+		E0BEE1F7117BA68D002F62A7 /* CDXCardsStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */; };
 		E0CCC70E1170DA0A0040D222 /* Icon-Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CCC70C1170DA0A0040D222 /* Icon-Settings.png */; };
 		E0CCC70F1170DA0A0040D222 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CCC70D1170DA0A0040D222 /* Icon.png */; };
 		E0CCC73A1170DC120040D222 /* CDXCardDeckCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0CCC7391170DC120040D222 /* CDXCardDeckCardView.xib */; };
@@ -101,6 +102,8 @@
 		E041E3931169FDD5009DC453 /* CDXCardDeckURLSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckURLSerializer.h; path = Classes/Serializers/CDXCardDeckURLSerializer.h; sourceTree = "<group>"; };
 		E041E3941169FDD5009DC453 /* CDXCardDeckURLSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckURLSerializer.m; path = Classes/Serializers/CDXCardDeckURLSerializer.m; sourceTree = "<group>"; };
 		E041E3951169FDD5009DC453 /* CDXCardDeckURLSerializerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckURLSerializerTests.m; path = Classes/Serializers/CDXCardDeckURLSerializerTests.m; sourceTree = "<group>"; };
+		E0BEE1F5117BA68D002F62A7 /* CDXCardsStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsStackView.h; path = Classes/Views/CDXCardsStackView.h; sourceTree = "<group>"; };
+		E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsStackView.m; path = Classes/Views/CDXCardsStackView.m; sourceTree = "<group>"; };
 		E0CCC70C1170DA0A0040D222 /* Icon-Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Settings.png"; path = "Images/Icon-Settings.png"; sourceTree = "<group>"; };
 		E0CCC70D1170DA0A0040D222 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Images/Icon.png; sourceTree = "<group>"; };
 		E0CCC7391170DC120040D222 /* CDXCardDeckCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardDeckCardView.xib; path = UserInterfaces/CDXCardDeckCardView.xib; sourceTree = "<group>"; };
@@ -206,6 +209,8 @@
 				E0150132117A245900C3BF63 /* CDXCardsViewProtocols.h */,
 				E0150072117A1E4900C3BF63 /* CDXCardsSideBySideView.h */,
 				E0150073117A1E4900C3BF63 /* CDXCardsSideBySideView.m */,
+				E0BEE1F5117BA68D002F62A7 /* CDXCardsStackView.h */,
+				E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -423,6 +428,7 @@
 				E0D909281172275D00AD50DA /* CDXLogger.m in Sources */,
 				E0EB6E7C1172343600F41F7A /* CDXCardView.m in Sources */,
 				E0150074117A1E4900C3BF63 /* CDXCardsSideBySideView.m in Sources */,
+				E0BEE1F7117BA68D002F62A7 /* CDXCardsStackView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
