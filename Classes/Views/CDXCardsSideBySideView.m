@@ -78,7 +78,6 @@
         qltrace(@": %d => %d", viewIndex, cardIndex);
         return;
     }
-    qltrace(@": %d X> %d", viewIndex, cardIndex);
     cardViewsCardIndex[viewIndex] = cardIndex+1;
     UIImageView *view = cardViewsView[viewIndex];
     UIImage *image = [[CDXImageFactory sharedImageFactory]
@@ -87,6 +86,7 @@
                       deviceOrientation:[[UIDevice currentDevice] orientation]];
     view.frame = CGRectMake(cardViewsWidthWithBorder * cardIndex + cardViewsBorder, 0, cardViewsSize.width, cardViewsSize.height);
     view.image = image;
+    qltrace(@": %d X> %d", viewIndex, cardIndex);
 }
 
 - (void)configureViewWithCardIndex:(NSUInteger)cardIndex {
@@ -125,7 +125,6 @@
         ivar_assign(scrollViewDelegate, [[CDXCardsSideBySideViewScrollViewDelegate alloc] init]);
         scrollView.delegate = scrollViewDelegate;
         scrollViewDelegate.cardsSideBySideView = self;
-        [self addSubview:scrollView];
         cardsCount = [viewDataSource cardsViewDataSourceCardsCount];
         currentCardIndex = [viewDataSource cardsViewDataSourceInitialCardIndex];
         
@@ -150,6 +149,8 @@
             cardViewsView[i] = view;
             cardViewsCardIndex[i] = 0;
         }
+        
+        [self addSubview:scrollView];
         
         [self configureViewWithCardIndex:currentCardIndex];
         [self scrollToCardIndex:currentCardIndex];
