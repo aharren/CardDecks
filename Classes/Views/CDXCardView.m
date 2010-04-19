@@ -88,7 +88,7 @@
     cardBackground.backgroundColor = [card.backgroundColor uiColor];
     CALayer *cardBackgroundLayer = cardBackground.layer;
     cardBackgroundLayer.cornerRadius = 20;
-    cardBackgroundLayer.borderColor = [[UIColor colorWithRed:1 green:1 blue:1 alpha:0.15] CGColor];
+    cardBackgroundLayer.borderColor = [[UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:0.3] CGColor];
     cardBackgroundLayer.borderWidth = 1;
     self.backgroundColor = nil;
     
