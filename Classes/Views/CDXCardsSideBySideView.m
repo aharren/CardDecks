@@ -72,8 +72,8 @@
     if (cardIndex >= cardsCount) {
         return;
     }
-    viewIndex += CDXCardsSideBySideViewCardViewsMax;
-    viewIndex %= CDXCardsSideBySideViewCardViewsMax;
+    viewIndex += CDXCardsSideBySideViewCardViewsSize;
+    viewIndex %= CDXCardsSideBySideViewCardViewsSize;
     if (cardViewsCardIndex[viewIndex] == cardIndex+1) {
         qltrace(@": %d => %d", viewIndex, cardIndex);
         return;
@@ -91,7 +91,7 @@
 
 - (void)configureViewWithCardIndex:(NSUInteger)cardIndex {
     NSUInteger viewIndex = 0;
-    for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsMax; i++) {
+    for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
         if (cardViewsCardIndex[i] == cardIndex+1) {
             viewIndex = i;
             break;
@@ -99,8 +99,8 @@
     }
     
     qltrace(@": %d %d", cardIndex, viewIndex);
-    for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsMax; i++) {
-        [self configureCardViewsViewAtIndex:viewIndex-CDXCardsSideBySideViewCardViewsMax/2+i cardIndex:cardIndex-CDXCardsSideBySideViewCardViewsMax/2+i];
+    for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
+        [self configureCardViewsViewAtIndex:viewIndex-CDXCardsSideBySideViewCardViewsSize/2+i cardIndex:cardIndex-CDXCardsSideBySideViewCardViewsSize/2+i];
     }
     
     currentCardIndex = cardIndex;
@@ -144,7 +144,7 @@
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.showsVerticalScrollIndicator = NO;
         
-        for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsMax; i++) {
+        for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
             UIImageView *view = [[[UIImageView alloc] initWithImage:nil] autorelease];
             [scrollView addSubview:view];
             cardViewsView[i] = view;

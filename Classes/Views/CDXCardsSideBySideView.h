@@ -30,7 +30,7 @@
 @class CDXCardsSideBySideViewScrollView;
 @class CDXCardsSideBySideViewScrollViewDelegate;
 
-#define CDXCardsSideBySideViewCardViewsMax 5
+#define CDXCardsSideBySideViewCardViewsSize 5
 
 @interface CDXCardsSideBySideView : UIView<CDXCardsViewView> {
     
@@ -38,8 +38,8 @@
     CDXCardsSideBySideViewScrollView *scrollView;
     CDXCardsSideBySideViewScrollViewDelegate *scrollViewDelegate;
     
-    UIImageView *cardViewsView[CDXCardsSideBySideViewCardViewsMax];
-    NSUInteger cardViewsCardIndex[CDXCardsSideBySideViewCardViewsMax];
+    UIImageView *cardViewsView[CDXCardsSideBySideViewCardViewsSize];
+    NSUInteger cardViewsCardIndex[CDXCardsSideBySideViewCardViewsSize];
     CGFloat cardViewsBorder;
     CGFloat cardViewsWidthWithBorder;
     CGSize cardViewsSize;
