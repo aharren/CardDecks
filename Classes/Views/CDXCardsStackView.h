@@ -30,13 +30,17 @@
 @class CDXCardsStackViewScrollView;
 @class CDXCardsStackViewScrollViewDelegate;
 
-#define CDXCardsStackViewCardImagesSize     3
+enum {
+    CDXCardsStackViewCardImagesSize = 3
+};
 
-#define CDXCardsStackViewCardViewsSize      4
-#define CDXCardsStackViewCardViewsTopLeft   0
-#define CDXCardsStackViewCardViewsTopRight  1
-#define CDXCardsStackViewCardViewsMiddle    2
-#define CDXCardsStackViewCardViewsBottom    3
+enum {
+    CDXCardsStackViewCardViewsTopLeft = 0,
+    CDXCardsStackViewCardViewsTopRight,
+    CDXCardsStackViewCardViewsMiddle,
+    CDXCardsStackViewCardViewsBottom,
+    CDXCardsStackViewCardViewsSize
+};
 
 @interface CDXCardsStackView : UIView<CDXCardsViewView> {
     

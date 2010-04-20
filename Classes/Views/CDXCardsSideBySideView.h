@@ -30,7 +30,9 @@
 @class CDXCardsSideBySideViewScrollView;
 @class CDXCardsSideBySideViewScrollViewDelegate;
 
-#define CDXCardsSideBySideViewCardViewsSize 5
+enum {
+    CDXCardsSideBySideViewCardViewsSize = 5
+};
 
 @interface CDXCardsSideBySideView : UIView<CDXCardsViewView> {
     
