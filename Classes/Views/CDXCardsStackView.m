@@ -101,7 +101,7 @@
     view.hidden = NO;
 }
 
-- (void)showCardAtIndex:(NSUInteger)cardIndex {
+- (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate {
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsTopLeft cardIndex:cardIndex-1];
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsTopRight cardIndex:cardIndex];
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsMiddle cardIndex:cardIndex];
@@ -116,7 +116,13 @@
     
     currentCardIndex = cardIndex;
     scrollView.contentOffset = CGPointMake(cardViewsSize.width, 0);
-    [viewDelegate cardsViewCurrentCardIndexHasChangedTo:currentCardIndex];
+    if (tellDelegate) {
+        [viewDelegate cardsViewCurrentCardIndexHasChangedTo:currentCardIndex];
+    }
+}
+
+- (void)showCardAtIndex:(NSUInteger)cardIndex {
+    [self showCardAtIndex:cardIndex tellDelegate:YES];
 }
 
 - (NSUInteger)currentCardIndex {
@@ -199,7 +205,7 @@
                 [self showCardAtIndex:currentCardIndex - 1];
             } else {
                 // scrolling was aborted
-                [self showCardAtIndex:currentCardIndex];
+                [self showCardAtIndex:currentCardIndex tellDelegate:NO];
             }
             break;
         case CDXCardsStackViewScrollViewDirectionLeftOut:
@@ -208,7 +214,7 @@
                 [self showCardAtIndex:currentCardIndex + 1];
             } else {
                 // scrolling was aborted
-                [self showCardAtIndex:currentCardIndex];
+                [self showCardAtIndex:currentCardIndex tellDelegate:NO];
             }
             break;
     }
