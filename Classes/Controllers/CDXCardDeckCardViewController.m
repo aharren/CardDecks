@@ -34,6 +34,7 @@
 #define CDXCardDeckCardViewControllerPageControlAlphaVisible 0.9
 
 - (void)configurePageControl;
+- (void)flashPageControl;
 
 @end
 
@@ -110,6 +111,7 @@
 
 - (void)cardsViewCurrentCardIndexHasChangedTo:(NSUInteger)index {
     pageControl.currentPage = index;
+    [self flashPageControl];
 }
 
 - (void)configurePageControl {
@@ -142,6 +144,16 @@
         pageControlJumpPages[3] = pageCount - pageControlJumpPages[1] - 1;
         pageControlJumpPages[4] = MAX(1, pageCount) - 1;
     }
+}
+
+- (void)flashPageControl {
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    if (!cardDeck.showPageControl) {
+        pageControl.alpha = CDXCardDeckCardViewControllerPageControlAlphaVisible;
+        pageControl.alpha = CDXCardDeckCardViewControllerPageControlAlphaHidden;
+    }
+    [UIView commitAnimations];
 }
 
 - (IBAction)pageControlLeftButtonPressed {
