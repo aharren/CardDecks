@@ -33,6 +33,7 @@
 @synthesize defaultCardBackgroundColor;
 @synthesize defaultCardOrientation;
 @synthesize displayStyle;
+@synthesize showPageControl;
 
 - (id)init {
     if ((self = [super init])) {
@@ -41,6 +42,7 @@
         ivar_assign_and_retain(defaultCardBackgroundColor, [CDXColor colorBlack]);
         ivar_assign(cards, [[NSMutableArray alloc] init]);
         displayStyle = CDXCardDeckDisplayStyleStack;
+        showPageControl = NO;
     }
     return self;
 }

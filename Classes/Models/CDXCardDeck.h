@@ -44,6 +44,7 @@ typedef enum {
     NSMutableArray *cards;
     
     CDXCardDeckDisplayStyle displayStyle;
+    BOOL showPageControl;
 }
 
 @property (nonatomic, copy) NSString *name;
@@ -58,6 +59,7 @@ typedef enum {
 - (void)removeCardAtIndex:(NSUInteger)index;
 
 @property (nonatomic, assign) CDXCardDeckDisplayStyle displayStyle;
+@property (nonatomic, assign) BOOL showPageControl;
 
 - (CDXCard *)cardWithDefaults;
 
