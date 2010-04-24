@@ -32,6 +32,7 @@
 @synthesize defaultCardTextColor;
 @synthesize defaultCardBackgroundColor;
 @synthesize defaultCardOrientation;
+@synthesize displayStyle;
 
 - (id)init {
     if ((self = [super init])) {
@@ -39,6 +40,7 @@
         ivar_assign_and_retain(defaultCardTextColor, [CDXColor colorWhite]);
         ivar_assign_and_retain(defaultCardBackgroundColor, [CDXColor colorBlack]);
         ivar_assign(cards, [[NSMutableArray alloc] init]);
+        displayStyle = CDXCardDeckDisplayStyleStack;
     }
     return self;
 }

@@ -53,10 +53,14 @@
     qltrace();
     [super viewDidLoad];
     UIView<CDXCardsViewView> *v;
-    if (initialCardIndex) {
-        v = [[[CDXCardsSideBySideView alloc] initWithFrame:self.view.frame] autorelease];
-    } else {
-        v = [[[CDXCardsStackView alloc] initWithFrame:self.view.frame] autorelease];
+    switch (cardDeck.displayStyle) {
+        default:
+        case CDXCardDeckDisplayStyleSideBySide:
+            v = [[[CDXCardsSideBySideView alloc] initWithFrame:self.view.frame] autorelease];
+            break;
+        case CDXCardDeckDisplayStyleStack:
+            v = [[[CDXCardsStackView alloc] initWithFrame:self.view.frame] autorelease];
+            break;
     }
     [v setViewDelegate:self];
     [v setViewDataSource:self];

@@ -26,6 +26,12 @@
 #import "CDXCard.h"
 
 
+typedef enum {
+    CDXCardDeckDisplayStyleSideBySide,
+    CDXCardDeckDisplayStyleStack
+} CDXCardDeckDisplayStyle;
+
+
 @interface CDXCardDeck : NSObject {
     
 @protected
@@ -36,6 +42,8 @@
     CDXCardOrientation defaultCardOrientation;
     
     NSMutableArray *cards;
+    
+    CDXCardDeckDisplayStyle displayStyle;
 }
 
 @property (nonatomic, copy) NSString *name;
@@ -48,6 +56,8 @@
 - (void)addCard:(CDXCard *)card;
 - (void)insertCard:(CDXCard *)card atIndex:(NSUInteger)index;
 - (void)removeCardAtIndex:(NSUInteger)index;
+
+@property (nonatomic, assign) CDXCardDeckDisplayStyle displayStyle;
 
 - (CDXCard *)cardWithDefaults;
 
