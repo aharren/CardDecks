@@ -28,6 +28,16 @@
 #import "CDXCardsStackView.h"
 
 
+@interface CDXCardDeckCardViewController (PageControl)
+
+#define CDXCardDeckCardViewControllerPageControlAlphaHidden  0
+#define CDXCardDeckCardViewControllerPageControlAlphaVisible 0.9
+
+- (void)configurePageControl;
+
+@end
+
+
 @implementation CDXCardDeckCardViewController
 
 #undef ql_component
@@ -49,37 +59,6 @@
     ivar_release_and_clear(pageControl);
     ivar_release_and_clear(cardsView);
     [super dealloc];
-}
-
-- (void)configurePageControl {
-    const NSUInteger pageCount = [cardDeck cardsCount];
-    
-    pageControl.numberOfPages = pageCount;
-    
-    // configure the page jump pages
-    if (pageCount <= 1) {
-        // no page jump for 1 or less pages
-        pageControlJumpPagesCount = 0;
-    } else if (pageCount <= 6) {
-        // 2 page jumps for up to 6 pages (first, last)
-        pageControlJumpPagesCount = 2;
-        pageControlJumpPages[0] = 0;
-        pageControlJumpPages[1] = pageCount-1;
-    } else if (pageCount <= 16) {
-        // 3 page jumps for up to 16 pages (first, 1/2, last)
-        pageControlJumpPagesCount = 3;
-        pageControlJumpPages[0] = 0;
-        pageControlJumpPages[1] = MAX(1, round(pageCount / 2 + 0.5)) - 1;
-        pageControlJumpPages[2] = MAX(1, pageCount) - 1;
-    } else {
-        // 5 page jumps for more than 16 pages (first, 1/4, 1/2, last-1/4, last)
-        pageControlJumpPagesCount = 5;
-        pageControlJumpPages[0] = 0;
-        pageControlJumpPages[1] = MAX(1, round(pageCount / 4 + 0.5)) - 1;
-        pageControlJumpPages[2] = MAX(1, round(pageCount / 2 + 0.5)) - 1;
-        pageControlJumpPages[3] = pageCount - pageControlJumpPages[1] - 1;
-        pageControlJumpPages[4] = MAX(1, pageCount) - 1;
-    }
 }
 
 - (void)viewDidLoad {
@@ -131,6 +110,37 @@
 
 - (void)cardsViewCurrentCardIndexHasChangedTo:(NSUInteger)index {
     pageControl.currentPage = index;
+}
+
+- (void)configurePageControl {
+    const NSUInteger pageCount = [cardDeck cardsCount];
+    
+    pageControl.numberOfPages = pageCount;
+    
+    // configure the page jump pages
+    if (pageCount <= 1) {
+        // no page jump for 1 or less pages
+        pageControlJumpPagesCount = 0;
+    } else if (pageCount <= 6) {
+        // 2 page jumps for up to 6 pages (first, last)
+        pageControlJumpPagesCount = 2;
+        pageControlJumpPages[0] = 0;
+        pageControlJumpPages[1] = pageCount-1;
+    } else if (pageCount <= 16) {
+        // 3 page jumps for up to 16 pages (first, 1/2, last)
+        pageControlJumpPagesCount = 3;
+        pageControlJumpPages[0] = 0;
+        pageControlJumpPages[1] = MAX(1, round(pageCount / 2 + 0.5)) - 1;
+        pageControlJumpPages[2] = MAX(1, pageCount) - 1;
+    } else {
+        // 5 page jumps for more than 16 pages (first, 1/4, 1/2, last-1/4, last)
+        pageControlJumpPagesCount = 5;
+        pageControlJumpPages[0] = 0;
+        pageControlJumpPages[1] = MAX(1, round(pageCount / 4 + 0.5)) - 1;
+        pageControlJumpPages[2] = MAX(1, round(pageCount / 2 + 0.5)) - 1;
+        pageControlJumpPages[3] = pageCount - pageControlJumpPages[1] - 1;
+        pageControlJumpPages[4] = MAX(1, pageCount) - 1;
+    }
 }
 
 - (IBAction)pageControlLeftButtonPressed {
