@@ -89,7 +89,7 @@
     qltrace(@": %d X> %d", viewIndex, cardIndex);
 }
 
-- (void)configureViewWithCardIndex:(NSUInteger)cardIndex {
+- (void)showCardAtIndex:(NSUInteger)cardIndex {
     NSUInteger viewIndex = 0;
     for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
         if (cardViewsCardIndex[i] == cardIndex+1) {
@@ -104,6 +104,8 @@
     }
     
     currentCardIndex = cardIndex;
+    scrollView.contentOffset = CGPointMake(cardViewsWidthWithBorder * cardIndex, 0);
+    [viewDelegate cardsViewCurrentCardIndexHasChangedTo:currentCardIndex];
 }
 
 - (void)scrollToCardIndex:(NSUInteger)cardIndex {
@@ -111,6 +113,10 @@
     frame.origin.x = cardViewsWidthWithBorder * cardIndex;
     frame.origin.y = 0;
     [scrollView scrollRectToVisible:frame animated:NO];
+}
+
+- (NSUInteger)currentCardIndex {
+    return currentCardIndex;
 }
 
 - (void)didMoveToSuperview {
@@ -152,7 +158,7 @@
         
         [self addSubview:scrollView];
         
-        [self configureViewWithCardIndex:currentCardIndex];
+        [self showCardAtIndex:currentCardIndex];
         [self scrollToCardIndex:currentCardIndex];
     }
 }
@@ -162,7 +168,7 @@
     const NSUInteger newCardIndex = contentOffsetX / cardViewsWidthWithBorder;
     
     if (currentCardIndex != newCardIndex) {
-        [self configureViewWithCardIndex:newCardIndex];
+        [self showCardAtIndex:newCardIndex];
     }
 }
 
@@ -183,7 +189,7 @@
     const NSUInteger newCardIndex = contentOffsetXDiff > 0 ? (contentOffsetX / width) : ((contentOffsetX + width-1) / width);
     
     if (currentCardIndex != newCardIndex) {
-        [self configureViewWithCardIndex:newCardIndex];
+        [self showCardAtIndex:newCardIndex];
     }
 }
 

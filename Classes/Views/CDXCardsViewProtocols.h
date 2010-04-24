@@ -40,6 +40,7 @@
 
 @required
 - (void)cardsViewDelegateTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)cardsViewCurrentCardIndexHasChangedTo:(NSUInteger)index;
 
 @end
 
@@ -50,6 +51,8 @@
 - (id)initWithFrame:(CGRect)rect;
 - (void)setViewDelegate:(id<CDXCardsViewDelegate>)delegate;
 - (void)setViewDataSource:(id<CDXCardsViewDataSource>)dataSource;
+- (void)showCardAtIndex:(NSUInteger)index;
+- (NSUInteger)currentCardIndex;
 
 @end
 

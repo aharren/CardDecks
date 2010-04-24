@@ -87,5 +87,8 @@
     }
 }
 
+- (void)cardsViewCurrentCardIndexHasChangedTo:(NSUInteger)index {
+}
+
 @end
 

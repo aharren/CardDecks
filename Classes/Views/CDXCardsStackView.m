@@ -101,7 +101,7 @@
     view.hidden = NO;
 }
 
-- (void)configureViewWithCardIndex:(NSUInteger)cardIndex {
+- (void)showCardAtIndex:(NSUInteger)cardIndex {
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsTopLeft cardIndex:cardIndex-1];
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsTopRight cardIndex:cardIndex];
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsMiddle cardIndex:cardIndex];
@@ -116,6 +116,11 @@
     
     currentCardIndex = cardIndex;
     scrollView.contentOffset = CGPointMake(cardViewsSize.width, 0);
+    [viewDelegate cardsViewCurrentCardIndexHasChangedTo:currentCardIndex];
+}
+
+- (NSUInteger)currentCardIndex {
+    return currentCardIndex;
 }
 
 - (void)didMoveToSuperview {
@@ -170,7 +175,7 @@
         [scrollView addSubview:cardViewsView[CDXCardsStackViewCardViewsTopRight]];
         cardViewsView[CDXCardsStackViewCardViewsTopRight].frame = CGRectMake(cardViewsSize.width, 0, cardViewsSize.width, cardViewsSize.height);
         
-        [self configureViewWithCardIndex:currentCardIndex];
+        [self showCardAtIndex:currentCardIndex];
     }
 }
 
@@ -191,19 +196,19 @@
         case CDXCardsStackViewScrollViewDirectionRightIn:
             if (x <= 0) {
                 // the top left card was completely moved to the right
-                [self configureViewWithCardIndex:currentCardIndex - 1];
+                [self showCardAtIndex:currentCardIndex - 1];
             } else {
                 // scrolling was aborted
-                [self configureViewWithCardIndex:currentCardIndex];
+                [self showCardAtIndex:currentCardIndex];
             }
             break;
         case CDXCardsStackViewScrollViewDirectionLeftOut:
             if (x >= 2*width) {
                 // the top right card was completely moved to the left
-                [self configureViewWithCardIndex:currentCardIndex + 1];
+                [self showCardAtIndex:currentCardIndex + 1];
             } else {
                 // scrolling was aborted
-                [self configureViewWithCardIndex:currentCardIndex];
+                [self showCardAtIndex:currentCardIndex];
             }
             break;
     }
