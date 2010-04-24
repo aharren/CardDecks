@@ -115,7 +115,7 @@
     cardImagesCardIndex[2] = cardIndex+1+1;
     
     currentCardIndex = cardIndex;
-    [scrollView scrollRectToVisible:CGRectMake(cardViewsSize.width, 0, cardViewsSize.width, cardViewsSize.height) animated:NO];
+    scrollView.contentOffset = CGPointMake(cardViewsSize.width, 0);
 }
 
 - (void)didMoveToSuperview {
@@ -181,50 +181,76 @@
 - (void)scrollViewDidEndDecelerating {
     CGFloat x = scrollView.contentOffset.x;
     CGFloat width = cardViewsSize.width;
-    qltrace(": %f", x);
+    qltrace(": %f %d", x, scrollViewDirection);
     
-    scrollViewScrollDirection = 0;
-    
-    if (x >= 2*width) {
-        [self configureViewWithCardIndex:currentCardIndex + 1];
-        return;
+    switch (scrollViewDirection) {
+        case CDXCardsStackViewScrollViewDirectionNone:
+        default:
+            // there was no scroll direction, nothing to do
+            break;
+        case CDXCardsStackViewScrollViewDirectionRightIn:
+            if (x <= 0) {
+                // the top left card was completely moved to the right
+                [self configureViewWithCardIndex:currentCardIndex - 1];
+            } else {
+                // scrolling was aborted
+                [self configureViewWithCardIndex:currentCardIndex];
+            }
+            break;
+        case CDXCardsStackViewScrollViewDirectionLeftOut:
+            if (x >= 2*width) {
+                // the top right card was completely moved to the left
+                [self configureViewWithCardIndex:currentCardIndex + 1];
+            } else {
+                // scrolling was aborted
+                [self configureViewWithCardIndex:currentCardIndex];
+            }
+            break;
     }
     
-    if (x < width) {
-        [self configureViewWithCardIndex:currentCardIndex - 1];
-    }
+    scrollViewDirection = CDXCardsStackViewScrollViewDirectionNone;
 }
 
 - (void)scrollViewDidScroll {
     CGFloat x = scrollView.contentOffset.x;
     CGFloat width = cardViewsSize.width;
     
-    if (currentCardIndex == 0 && x < width) {
+    if (currentCardIndex == 0 && x <= width) {
+        // we can't scroll the topmost card to the right
         scrollView.contentOffset = CGPointMake(width, 0);
         return;
     }
     
     if (currentCardIndex == cardsCount-1 && x >= width) {
+        // we can't scroll the bottommost card to the left
         scrollView.contentOffset = CGPointMake(width, 0);
         return;
     }
     
-    if (x > width && scrollViewScrollDirection == 0) {
-        cardViewsView[CDXCardsStackViewCardViewsMiddle].hidden = YES;
-        cardViewsView[CDXCardsStackViewCardViewsTopRight].hidden = NO;
-        scrollViewScrollDirection = 1;
-        return;
-    }
-    
-    if (scrollViewScrollDirection == 1 && x < width) {
-        scrollView.contentOffset = CGPointMake(width, 0);
-        return;
-    }
-    
-    if (x < width && scrollViewScrollDirection == 0) {
-        cardViewsView[CDXCardsStackViewCardViewsMiddle].hidden = NO;
-        cardViewsView[CDXCardsStackViewCardViewsTopRight].hidden = YES;
-        scrollViewScrollDirection = 2;
+    switch (scrollViewDirection) {
+        case CDXCardsStackViewScrollViewDirectionNone:
+        default:
+            if (x < width) {
+                // scroll to the right which moves the top left card in
+                scrollViewDirection = CDXCardsStackViewScrollViewDirectionRightIn;
+                cardViewsView[CDXCardsStackViewCardViewsTopRight].hidden = YES;
+                cardViewsView[CDXCardsStackViewCardViewsMiddle].hidden = NO;
+            } else if (x > width) {
+                // scroll to the left which moves the top right card out
+                scrollViewDirection = CDXCardsStackViewScrollViewDirectionLeftOut;
+                cardViewsView[CDXCardsStackViewCardViewsTopRight].hidden = NO;
+                cardViewsView[CDXCardsStackViewCardViewsMiddle].hidden = YES;
+            }
+            break;
+        case CDXCardsStackViewScrollViewDirectionRightIn:
+            // there are no restrictions when scrolling to the right
+            break;
+        case CDXCardsStackViewScrollViewDirectionLeftOut:
+            if (x <= width) {
+                // we can't scroll the top right card to the right
+                scrollView.contentOffset = CGPointMake(width, 0);
+            }
+            break;
     }
 }
 

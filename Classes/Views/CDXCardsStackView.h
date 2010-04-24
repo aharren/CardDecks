@@ -42,11 +42,18 @@ enum {
     CDXCardsStackViewCardViewsSize
 };
 
+enum {
+    CDXCardsStackViewScrollViewDirectionNone = 0,
+    CDXCardsStackViewScrollViewDirectionRightIn,
+    CDXCardsStackViewScrollViewDirectionLeftOut
+};
+
 @interface CDXCardsStackView : UIView<CDXCardsViewView> {
     
 @protected
     CDXCardsStackViewScrollView *scrollView;
     CDXCardsStackViewScrollViewDelegate *scrollViewDelegate;
+    NSUInteger scrollViewDirection;
     
     UIImage *cardImagesImage[CDXCardsStackViewCardImagesSize];
     NSUInteger cardImagesCardIndex[CDXCardsStackViewCardImagesSize];
@@ -60,8 +67,6 @@ enum {
     
     NSUInteger cardsCount;
     NSUInteger currentCardIndex;
-
-    NSUInteger scrollViewScrollDirection;
 }
 
 - (id)initWithFrame:(CGRect)rect;
