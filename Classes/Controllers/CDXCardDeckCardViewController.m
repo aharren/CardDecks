@@ -115,6 +115,7 @@
 - (void)configurePageControl {
     const NSUInteger pageCount = [cardDeck cardsCount];
     
+    pageControl.alpha = cardDeck.showPageControl ? CDXCardDeckCardViewControllerPageControlAlphaVisible : CDXCardDeckCardViewControllerPageControlAlphaHidden;
     pageControl.numberOfPages = pageCount;
     
     // configure the page jump pages
