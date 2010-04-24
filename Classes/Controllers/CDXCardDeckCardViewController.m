@@ -46,13 +46,46 @@
 - (void)dealloc {
     qltrace();
     ivar_release_and_clear(cardDeck);
+    ivar_release_and_clear(pageControl);
+    ivar_release_and_clear(cardsView);
     [super dealloc];
+}
+
+- (void)configurePageControl {
+    const NSUInteger pageCount = [cardDeck cardsCount];
+    
+    pageControl.numberOfPages = pageCount;
+    
+    // configure the page jump pages
+    if (pageCount <= 1) {
+        // no page jump for 1 or less pages
+        pageControlJumpPagesCount = 0;
+    } else if (pageCount <= 6) {
+        // 2 page jumps for up to 6 pages (first, last)
+        pageControlJumpPagesCount = 2;
+        pageControlJumpPages[0] = 0;
+        pageControlJumpPages[1] = pageCount-1;
+    } else if (pageCount <= 16) {
+        // 3 page jumps for up to 16 pages (first, 1/2, last)
+        pageControlJumpPagesCount = 3;
+        pageControlJumpPages[0] = 0;
+        pageControlJumpPages[1] = MAX(1, round(pageCount / 2 + 0.5)) - 1;
+        pageControlJumpPages[2] = MAX(1, pageCount) - 1;
+    } else {
+        // 5 page jumps for more than 16 pages (first, 1/4, 1/2, last-1/4, last)
+        pageControlJumpPagesCount = 5;
+        pageControlJumpPages[0] = 0;
+        pageControlJumpPages[1] = MAX(1, round(pageCount / 4 + 0.5)) - 1;
+        pageControlJumpPages[2] = MAX(1, round(pageCount / 2 + 0.5)) - 1;
+        pageControlJumpPages[3] = pageCount - pageControlJumpPages[1] - 1;
+        pageControlJumpPages[4] = MAX(1, pageCount) - 1;
+    }
 }
 
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
-    UIView<CDXCardsViewView> *v;
+    UIView<CDXCardsViewView> *v = nil;
     switch (cardDeck.displayStyle) {
         default:
         case CDXCardDeckDisplayStyleSideBySide:
@@ -62,9 +95,18 @@
             v = [[[CDXCardsStackView alloc] initWithFrame:self.view.frame] autorelease];
             break;
     }
+    ivar_assign_and_retain(cardsView, v);
     [v setViewDelegate:self];
     [v setViewDataSource:self];
     [self.view insertSubview:v atIndex:0];
+    [self configurePageControl];
+}
+
+- (void)viewDidUnload {
+    qltrace();
+    ivar_release_and_clear(pageControl);
+    ivar_release_and_clear(cardsView);
+    [super viewDidUnload];
 }
 
 - (NSUInteger)cardsViewDataSourceCardsCount {
@@ -88,6 +130,41 @@
 }
 
 - (void)cardsViewCurrentCardIndexHasChangedTo:(NSUInteger)index {
+    pageControl.currentPage = index;
+}
+
+- (IBAction)pageControlLeftButtonPressed {
+    NSUInteger currentCardIndex = [cardsView currentCardIndex];
+    if (currentCardIndex > 0) {
+        [cardsView showCardAtIndex:currentCardIndex-1];
+    }
+}
+
+- (IBAction)pageControlRightButtonPressed {
+    NSUInteger currentCardIndex = [cardsView currentCardIndex];
+    if (currentCardIndex < [cardDeck cardsCount]-1) {
+        [cardsView showCardAtIndex:currentCardIndex+1];
+    }
+}
+
+- (IBAction)pageControlJumpLeftButtonPressed {
+    NSUInteger currentCardIndex = [cardsView currentCardIndex];
+    for (int i = pageControlJumpPagesCount-1; i >= 0; i--) {
+        if (currentCardIndex > pageControlJumpPages[i]) {
+            [cardsView showCardAtIndex:pageControlJumpPages[i]];
+            break;
+        }
+    }
+}
+
+- (IBAction)pageControlJumpRightButtonPressed {
+    NSUInteger currentCardIndex = [cardsView currentCardIndex];
+    for (int i = 0; i < pageControlJumpPagesCount; i++) {
+        if (currentCardIndex < pageControlJumpPages[i]) {
+            [cardsView showCardAtIndex:pageControlJumpPages[i]];
+            break;
+        }
+    }
 }
 
 @end

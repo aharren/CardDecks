@@ -32,9 +32,20 @@
 @protected
     CDXCardDeck *cardDeck;
     NSUInteger initialCardIndex;
+    
+    UIView<CDXCardsViewView> *cardsView;
+    
+    IBOutlet UIPageControl *pageControl;
+    NSUInteger pageControlJumpPagesCount;
+    NSUInteger pageControlJumpPages[5];
 }
 
 - (id)initWithCardDeck:(CDXCardDeck *)cardDeck atIndex:(NSUInteger)index;
+
+- (IBAction)pageControlLeftButtonPressed;
+- (IBAction)pageControlRightButtonPressed;
+- (IBAction)pageControlJumpLeftButtonPressed;
+- (IBAction)pageControlJumpRightButtonPressed;
 
 @end
 
