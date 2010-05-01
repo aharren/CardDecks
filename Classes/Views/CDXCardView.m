@@ -94,7 +94,7 @@
             cardBackgroundLayer.cornerRadius = 20;
             break;
         case CDXCardCornerStyleCornered:
-            cardBackgroundLayer.cornerRadius = 0;
+            cardBackgroundLayer.cornerRadius = 3;
             break;
     }
     
