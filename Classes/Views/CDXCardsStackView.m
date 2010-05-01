@@ -193,7 +193,7 @@
     }
 }
 
-- (void)scrollViewDidEndDecelerating {
+- (void)scrollViewDidEndScrolling {
     CGFloat x = scrollView.contentOffset.x;
     CGFloat width = scrollViewPageWidth;
     qltrace(": %f %d", x, scrollViewDirection);
@@ -224,6 +224,13 @@
     }
     
     scrollViewDirection = CDXCardsStackViewScrollViewDirectionNone;
+}
+
+- (void)scrollViewDidEndDecelerating {
+    qltrace();
+    if (scrollViewDirection != CDXCardsStackViewScrollViewDirectionNone) {
+        [self performSelector:@selector(scrollViewDidEndScrolling) withObject:nil afterDelay:0.01];
+    }
 }
 
 - (void)scrollViewDidScroll {
