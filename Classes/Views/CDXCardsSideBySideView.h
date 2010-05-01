@@ -39,6 +39,7 @@ enum {
 @protected
     CDXCardsSideBySideViewScrollView *scrollView;
     CDXCardsSideBySideViewScrollViewDelegate *scrollViewDelegate;
+    CGFloat scrollViewPageWidth;
     
     UIImageView *cardViewsView[CDXCardsSideBySideViewCardViewsSize];
     NSUInteger cardViewsCardIndex[CDXCardsSideBySideViewCardViewsSize];

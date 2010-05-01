@@ -84,7 +84,7 @@
                       imageForCard:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex]
                       size:cardViewsSize
                       deviceOrientation:[[UIDevice currentDevice] orientation]];
-    view.frame = CGRectMake(cardViewsWidthWithBorder * cardIndex + cardViewsBorder, 0, cardViewsSize.width, cardViewsSize.height);
+    view.frame = CGRectMake(scrollViewPageWidth * cardIndex + cardViewsBorder, 0, cardViewsSize.width, cardViewsSize.height);
     view.image = image;
     qltrace(@": %d X> %d", viewIndex, cardIndex);
 }
@@ -104,13 +104,13 @@
     }
     
     currentCardIndex = cardIndex;
-    scrollView.contentOffset = CGPointMake(cardViewsWidthWithBorder * cardIndex, 0);
+    scrollView.contentOffset = CGPointMake(scrollViewPageWidth * cardIndex, 0);
     [viewDelegate cardsViewCurrentCardIndexHasChangedTo:currentCardIndex];
 }
 
 - (void)scrollToCardIndex:(NSUInteger)cardIndex {
     CGRect frame = scrollView.frame;
-    frame.origin.x = cardViewsWidthWithBorder * cardIndex;
+    frame.origin.x = scrollViewPageWidth * cardIndex;
     frame.origin.y = 0;
     [scrollView scrollRectToVisible:frame animated:NO];
 }
@@ -141,9 +141,10 @@
         cardViewsSize.height = frame.size.height;
         frame.origin.x -= cardViewsBorder;
         frame.size.width = cardViewsWidthWithBorder;
+        scrollViewPageWidth = cardViewsWidthWithBorder;
         scrollView.frame = frame;
         scrollView.backgroundColor = [UIColor blackColor];
-        scrollView.contentSize = CGSizeMake(cardViewsWidthWithBorder * cardsCount, cardViewsSize.height);
+        scrollView.contentSize = CGSizeMake(scrollViewPageWidth * cardsCount, cardViewsSize.height);
         scrollView.scrollEnabled = YES;
         scrollView.pagingEnabled = YES;
         scrollView.showsHorizontalScrollIndicator = NO;
@@ -165,7 +166,7 @@
 
 - (void)scrollViewDidEndDecelerating {
     const CGFloat contentOffsetX = scrollView.contentOffset.x;
-    const NSUInteger newCardIndex = contentOffsetX / cardViewsWidthWithBorder;
+    const NSUInteger newCardIndex = contentOffsetX / scrollViewPageWidth;
     
     if (currentCardIndex != newCardIndex) {
         [self showCardAtIndex:newCardIndex];
@@ -173,7 +174,7 @@
 }
 
 - (void)scrollViewDidScroll {
-    const CGFloat width = cardViewsWidthWithBorder;
+    const CGFloat width = scrollViewPageWidth;
     
     const CGFloat contentOffsetX = scrollView.contentOffset.x;
     if (contentOffsetX < 0 || contentOffsetX > width * (cardsCount-1)) {
@@ -194,7 +195,10 @@
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [viewDelegate cardsViewDelegateTouchesEnded:touches withEvent:event];
+    // send touch events only if the scroll view is not scrolling
+    if ((int)scrollView.contentOffset.x % (int)(scrollViewPageWidth) == 0) {
+        [viewDelegate cardsViewDelegateTouchesEnded:touches withEvent:event];
+    }
 }
 
 @end

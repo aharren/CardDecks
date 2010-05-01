@@ -115,7 +115,7 @@
     cardImagesCardIndex[2] = cardIndex+1+1;
     
     currentCardIndex = cardIndex;
-    scrollView.contentOffset = CGPointMake(cardViewsSize.width, 0);
+    scrollView.contentOffset = CGPointMake(scrollViewPageWidth, 0);
     if (tellDelegate) {
         [viewDelegate cardsViewCurrentCardIndexHasChangedTo:currentCardIndex];
     }
@@ -152,9 +152,10 @@
         CGRect frame = self.frame;
         cardViewsSize.width = frame.size.width;
         cardViewsSize.height = frame.size.height;
+        scrollViewPageWidth = cardViewsSize.width;
         scrollView.frame = frame;
         scrollView.backgroundColor = [UIColor blackColor];
-        scrollView.contentSize = CGSizeMake(cardViewsSize.width * 3, cardViewsSize.height);
+        scrollView.contentSize = CGSizeMake(scrollViewPageWidth * 3, cardViewsSize.height);
         scrollView.scrollEnabled = YES;
         scrollView.pagingEnabled = YES;
         scrollView.showsHorizontalScrollIndicator = NO;
@@ -186,12 +187,15 @@
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [viewDelegate cardsViewDelegateTouchesEnded:touches withEvent:event];
+    // send touch events only if the scroll view is not scrolling
+    if ((int)scrollView.contentOffset.x % (int)(scrollViewPageWidth) == 0) {
+        [viewDelegate cardsViewDelegateTouchesEnded:touches withEvent:event];
+    }
 }
 
 - (void)scrollViewDidEndDecelerating {
     CGFloat x = scrollView.contentOffset.x;
-    CGFloat width = cardViewsSize.width;
+    CGFloat width = scrollViewPageWidth;
     qltrace(": %f %d", x, scrollViewDirection);
     
     switch (scrollViewDirection) {
@@ -224,7 +228,7 @@
 
 - (void)scrollViewDidScroll {
     CGFloat x = scrollView.contentOffset.x;
-    CGFloat width = cardViewsSize.width;
+    CGFloat width = scrollViewPageWidth;
     
     if (currentCardIndex == 0 && x <= width) {
         // we can't scroll the topmost card to the right

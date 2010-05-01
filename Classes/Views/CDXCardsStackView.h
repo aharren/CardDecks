@@ -53,6 +53,7 @@ enum {
 @protected
     CDXCardsStackViewScrollView *scrollView;
     CDXCardsStackViewScrollViewDelegate *scrollViewDelegate;
+    CGFloat scrollViewPageWidth;
     NSUInteger scrollViewDirection;
     
     UIImage *cardImagesImage[CDXCardsStackViewCardImagesSize];
