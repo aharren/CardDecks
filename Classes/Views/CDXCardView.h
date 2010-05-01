@@ -30,7 +30,6 @@
     
 @protected
     IBOutlet UILabel *cardText;
-    IBOutlet UIView *cardBackground;
 }
 
 - (id)initWithCard:(CDXCard *)card deviceOrientation:(UIDeviceOrientation)deviceOrientation;

@@ -79,35 +79,39 @@
         text = [text stringByAppendingString:@" "];
     }
     
-    // update view
+    // update text
+    cardText.bounds = CGRectMake(0, 0, 1024, 1024);
     cardText.numberOfLines = 0;
     cardText.font = [UIFont systemFontOfSize:200];
     cardText.text = text;
     cardText.textColor = [card.textColor uiColor];
     cardText.transform = [self transformFromCardOrientation:cardOrientation];
-    cardBackground.backgroundColor = [card.backgroundColor uiColor];
-    CALayer *cardBackgroundLayer = cardBackground.layer;
+    
+    // update background
+    cardText.backgroundColor = [card.backgroundColor uiColor];
+    
+    // update border
+    self.clipsToBounds = YES;
+    self.backgroundColor = [UIColor blackColor];
+    CALayer *borderLayer = self.layer;
+    borderLayer.borderColor = [[UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:0.3] CGColor];
+    borderLayer.borderWidth = 1;
     
     switch (card.cornerStyle) {
         default:
         case CDXCardCornerStyleRounded:
-            cardBackgroundLayer.cornerRadius = 20;
+            borderLayer.cornerRadius = 20;
             break;
         case CDXCardCornerStyleCornered:
-            cardBackgroundLayer.cornerRadius = 3;
+            borderLayer.cornerRadius = 3;
             break;
     }
-    
-    cardBackgroundLayer.borderColor = [[UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:0.3] CGColor];
-    cardBackgroundLayer.borderWidth = 1;
-    self.backgroundColor = nil;
     
     return self;
 }
 
 - (void)dealloc {
     ivar_release_and_clear(cardText);
-    ivar_release_and_clear(cardBackground);
     [super dealloc];
 }
 

@@ -42,6 +42,10 @@
     [decks cardDeckAtIndex:0].cornerStyle = CDXCardCornerStyleCornered;
     [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"0%2C%201%2C%202%2C%204%2C%208%2C%2016%2C%20%E2%88%9E,000000,ffffff&0&1&2&4&8&16&%E2%88%9E"]];
     [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"15%2C%2010%2C%205%2C%200,ffffff,000000&15,000000,00ff00&10,000000,ffff00&5,000000,ff0000&0,ff0000"]];
+    [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"multi%20line%20cards,ffffff,000000&ONE&ONE%0dTWO&ONE%0dTWO%0dTHREE&one%0dtwo%0dthree,00000088,ff0000&1%202%0d3%204,000000,ffffff88"]];
+    [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"multi%20line%20cards,ffffff,000000&ONE&ONE%0dTWO&ONE%0dTWO%0dTHREE&one%0dtwo%0dthree,00000088,ff0000&1%202%0d3%204,000000,ffffff88"]];
+    [decks cardDeckAtIndex:4].displayStyle = CDXCardDeckDisplayStyleSideBySide;
+    [decks cardDeckAtIndex:4].showPageControl = YES;
     
     CDXCardDecksListViewController *vc = [[[CDXCardDecksListViewController alloc] initWithCardDecks:decks] autorelease];
     
