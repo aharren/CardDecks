@@ -35,6 +35,13 @@ typedef enum {
 } CDXCardOrientation;
 
 
+typedef enum {
+    CDXCardCornerStyleRounded = 0,
+    CDXCardCornerStyleCornered,
+    CDXCardCornerStyleCount
+} CDXCardCornerStyle;
+
+
 @interface CDXCard : NSObject {
     
 @protected
@@ -42,12 +49,14 @@ typedef enum {
     CDXColor *textColor;
     CDXColor *backgroundColor;
     CDXCardOrientation orientation;
+    CDXCardCornerStyle cornerStyle;
 }
 
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, retain) CDXColor *textColor;
 @property (nonatomic, retain) CDXColor *backgroundColor;
 @property (nonatomic, assign) CDXCardOrientation orientation;
+@property (nonatomic, assign) CDXCardCornerStyle cornerStyle;
 
 @end
 

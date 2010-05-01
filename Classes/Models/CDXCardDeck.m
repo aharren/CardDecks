@@ -34,6 +34,7 @@
 @synthesize defaultCardOrientation;
 @synthesize displayStyle;
 @synthesize showPageControl;
+@synthesize cornerStyle;
 
 - (id)init {
     if ((self = [super init])) {
@@ -43,6 +44,7 @@
         ivar_assign(cards, [[NSMutableArray alloc] init]);
         displayStyle = CDXCardDeckDisplayStyleStack;
         showPageControl = NO;
+        cornerStyle = CDXCardCornerStyleRounded;
     }
     return self;
 }
@@ -64,10 +66,12 @@
 }
 
 - (void)addCard:(CDXCard *)card {
+    card.cornerStyle = cornerStyle;
     [cards addObject:card];
 }
 
 - (void)insertCard:(CDXCard *)card atIndex:(NSUInteger)index {
+    card.cornerStyle = cornerStyle;
     if (index >= [cards count]) {
         [cards addObject:card];
     } else {
@@ -85,8 +89,16 @@
         card.textColor = defaultCardTextColor;
         card.backgroundColor = defaultCardBackgroundColor;
         card.orientation = defaultCardOrientation;
+        card.cornerStyle = cornerStyle;
     }
     return card;
+}
+
+- (void)setCornerStyle:(CDXCardCornerStyle)aCornerStyle {
+    cornerStyle = aCornerStyle;
+    for (CDXCard *card in cards) {
+        card.cornerStyle = aCornerStyle;
+    }
 }
 
 @end

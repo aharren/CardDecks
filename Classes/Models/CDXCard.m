@@ -32,6 +32,7 @@
 @synthesize textColor;
 @synthesize backgroundColor;
 @synthesize orientation;
+@synthesize cornerStyle;
 
 - (id)init {
     if ((self = [super init])) {
