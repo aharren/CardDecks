@@ -58,5 +58,7 @@ typedef enum {
 @property (nonatomic, assign) CDXCardOrientation orientation;
 @property (nonatomic, assign) CDXCardCornerStyle cornerStyle;
 
+- (CGFloat)fontSizeConstrainedToSize:(CGSize)size;
+
 @end
 

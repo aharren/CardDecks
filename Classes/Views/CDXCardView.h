@@ -32,7 +32,7 @@
     IBOutlet UILabel *cardText;
 }
 
-- (id)initWithCard:(CDXCard *)card deviceOrientation:(UIDeviceOrientation)deviceOrientation;
+- (id)initWithCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation;
 
 @end
 

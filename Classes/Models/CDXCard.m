@@ -55,5 +55,46 @@
     ivar_assign_and_copy(text, [aText stringByReplacingOccurrencesOfString:@"\r" withString:@"\n"]);
 }
 
+- (CGFloat)fontSizeConstrainedToSize:(CGSize)size {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    NSArray *textLines = [text componentsSeparatedByString:@"\n"];
+    NSUInteger textLinesCount = [textLines count];
+    size.height = size.height / textLinesCount;
+    
+    CGFloat minFontSize = 400.0;
+    UIFont *font = [UIFont systemFontOfSize:floor(minFontSize)];
+    
+    // calculate the minimal font size based on all text lines
+    for (NSString *textLine in textLines) {
+        // use a single space for an empty line
+        if ([@"" isEqualToString:textLine]) {
+            textLine = @" ";
+        }
+        
+        CGFloat fontSize;
+        {
+            UIFont *fontWithMinFontSize = [font fontWithSize:floor(minFontSize)];
+            [textLine sizeWithFont:fontWithMinFontSize minFontSize:12 actualFontSize:&fontSize forWidth:size.width lineBreakMode:UILineBreakModeClip];
+        }
+        
+        CGSize lineSize;
+        {
+            UIFont *fontWithFontSize = [font fontWithSize:floor(fontSize)];
+            lineSize = [textLine sizeWithFont:fontWithFontSize constrainedToSize:size];
+        }
+        
+        if (lineSize.height > size.height) {
+            fontSize = fontSize / lineSize.height * size.height;
+            UIFont *fontWithFontSize = [font fontWithSize:floor(fontSize)];
+            [textLine sizeWithFont:fontWithFontSize minFontSize:12 actualFontSize:&fontSize forWidth:size.width lineBreakMode:UILineBreakModeClip];
+        }
+        
+        minFontSize = MIN(minFontSize, fontSize);
+    }
+    
+    [pool release];
+    return floor(minFontSize);
+}
+
 @end
 

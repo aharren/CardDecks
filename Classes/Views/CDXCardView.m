@@ -66,7 +66,7 @@
     return CGAffineTransformRotate(CGAffineTransformIdentity, transformAngle);
 }
 
-- (id)initWithCard:(CDXCard *)card deviceOrientation:(UIDeviceOrientation)deviceOrientation {
+- (id)initWithCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation {
     // calculate orientation
     CDXCardOrientation cardOrientation = card.orientation + [self cardOrientationFromDeviceOrientation:deviceOrientation];
     cardOrientation %= CDXCardOrientationCount;
@@ -80,9 +80,10 @@
     }
     
     // update text
+    CGFloat fontSize = [card fontSizeConstrainedToSize:size];
     cardText.bounds = CGRectMake(0, 0, 1024, 1024);
     cardText.numberOfLines = 0;
-    cardText.font = [UIFont systemFontOfSize:200];
+    cardText.font = [UIFont systemFontOfSize:fontSize];
     cardText.text = text;
     cardText.textColor = [card.textColor uiColor];
     cardText.transform = [self transformFromCardOrientation:cardOrientation];
