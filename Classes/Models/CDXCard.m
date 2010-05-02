@@ -33,6 +33,7 @@
 @synthesize backgroundColor;
 @synthesize orientation;
 @synthesize cornerStyle;
+@synthesize fontSize;
 
 - (id)init {
     if ((self = [super init])) {
@@ -55,45 +56,54 @@
     ivar_assign_and_copy(text, [aText stringByReplacingOccurrencesOfString:@"\r" withString:@"\n"]);
 }
 
+- (void)setFontSize:(CGFloat)aFontSize {
+    fontSize = floor(aFontSize <= 0.0 ? 0.0 - aFontSize : aFontSize);
+    fontSize = fontSize < CDXCardFontSizeMax ? fontSize : CDXCardFontSizeMax;
+}
+
 - (CGFloat)fontSizeConstrainedToSize:(CGSize)size {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSArray *textLines = [text componentsSeparatedByString:@"\n"];
-    NSUInteger textLinesCount = [textLines count];
-    size.height = size.height / textLinesCount;
-    
-    CGFloat minFontSize = 400.0;
-    UIFont *font = [UIFont systemFontOfSize:floor(minFontSize)];
-    
-    // calculate the minimal font size based on all text lines
-    for (NSString *textLine in textLines) {
-        // use a single space for an empty line
-        if ([@"" isEqualToString:textLine]) {
-            textLine = @" ";
+    if (fontSize != CDXCardFontSizeAutomatic) {
+        return fontSize;
+    } else {
+        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+        NSArray *textLines = [text componentsSeparatedByString:@"\n"];
+        NSUInteger textLinesCount = [textLines count];
+        size.height = size.height / textLinesCount;
+        
+        CGFloat minlineFontSize = CDXCardFontSizeMax;
+        UIFont *font = [UIFont systemFontOfSize:floor(minlineFontSize)];
+        
+        // calculate the minimal font size based on all text lines
+        for (NSString *textLine in textLines) {
+            // use a single space for an empty line
+            if ([@"" isEqualToString:textLine]) {
+                textLine = @" ";
+            }
+            
+            CGFloat lineFontSize;
+            {
+                UIFont *fontWithMinlineFontSize = [font fontWithSize:floor(minlineFontSize)];
+                [textLine sizeWithFont:fontWithMinlineFontSize minFontSize:12 actualFontSize:&lineFontSize forWidth:size.width lineBreakMode:UILineBreakModeClip];
+            }
+            
+            CGSize lineSize;
+            {
+                UIFont *fontWithlineFontSize = [font fontWithSize:floor(lineFontSize)];
+                lineSize = [textLine sizeWithFont:fontWithlineFontSize constrainedToSize:size];
+            }
+            
+            if (lineSize.height > size.height) {
+                lineFontSize = lineFontSize / lineSize.height * size.height;
+                UIFont *fontWithlineFontSize = [font fontWithSize:floor(lineFontSize)];
+                [textLine sizeWithFont:fontWithlineFontSize minFontSize:12 actualFontSize:&lineFontSize forWidth:size.width lineBreakMode:UILineBreakModeClip];
+            }
+            
+            minlineFontSize = MIN(minlineFontSize, lineFontSize);
         }
         
-        CGFloat fontSize;
-        {
-            UIFont *fontWithMinFontSize = [font fontWithSize:floor(minFontSize)];
-            [textLine sizeWithFont:fontWithMinFontSize minFontSize:12 actualFontSize:&fontSize forWidth:size.width lineBreakMode:UILineBreakModeClip];
-        }
-        
-        CGSize lineSize;
-        {
-            UIFont *fontWithFontSize = [font fontWithSize:floor(fontSize)];
-            lineSize = [textLine sizeWithFont:fontWithFontSize constrainedToSize:size];
-        }
-        
-        if (lineSize.height > size.height) {
-            fontSize = fontSize / lineSize.height * size.height;
-            UIFont *fontWithFontSize = [font fontWithSize:floor(fontSize)];
-            [textLine sizeWithFont:fontWithFontSize minFontSize:12 actualFontSize:&fontSize forWidth:size.width lineBreakMode:UILineBreakModeClip];
-        }
-        
-        minFontSize = MIN(minFontSize, fontSize);
+        [pool release];
+        return floor(minlineFontSize);
     }
-    
-    [pool release];
-    return floor(minFontSize);
 }
 
 @end

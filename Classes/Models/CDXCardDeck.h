@@ -46,6 +46,7 @@ typedef enum {
     CDXCardDeckDisplayStyle displayStyle;
     BOOL showPageControl;
     CDXCardCornerStyle cornerStyle;
+    CGFloat fontSize;
 }
 
 @property (nonatomic, copy) NSString *name;
@@ -62,6 +63,7 @@ typedef enum {
 @property (nonatomic, assign) CDXCardDeckDisplayStyle displayStyle;
 @property (nonatomic, assign) BOOL showPageControl;
 @property (nonatomic, assign) CDXCardCornerStyle cornerStyle;
+@property (nonatomic, assign) CGFloat fontSize;
 
 - (CDXCard *)cardWithDefaults;
 

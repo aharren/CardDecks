@@ -42,6 +42,7 @@
     STAssertEquals([card textColor], [CDXColor colorWhite], nil);
     STAssertEquals([card backgroundColor], [CDXColor colorBlack], nil);
     STAssertEquals((int)[card orientation], (int)CDXCardOrientationUp, nil);
+    STAssertEquals([card fontSize], CDXCardFontSizeAutomatic, nil);
     [card release];
 }
 
@@ -49,6 +50,33 @@
     CDXCard *card = [[CDXCard alloc] init];
     card.text = @"1 2 \r 3 4 \n 5 6";
     STAssertEqualObjects([card text], @"1 2 \n 3 4 \n 5 6", nil);
+    [card release];
+}
+
+- (void)testFontSize {
+    CDXCard *card = [[CDXCard alloc] init];
+    card.fontSize = -10.0;
+    STAssertEquals([card fontSize], (CGFloat)10.0, nil);
+    card.fontSize = 10.0;
+    STAssertEquals([card fontSize], (CGFloat)10.0, nil);
+    card.fontSize = -1.0;
+    STAssertEquals([card fontSize], (CGFloat)1.0, nil);
+    card.fontSize = 1.0;
+    STAssertEquals([card fontSize], (CGFloat)1.0, nil);
+    card.fontSize = -0.1;
+    STAssertEquals([card fontSize], (CGFloat)0.0, nil);
+    card.fontSize = 0.1;
+    STAssertEquals([card fontSize], (CGFloat)0.0, nil);
+    card.fontSize = -0.0;
+    STAssertEquals([card fontSize], (CGFloat)0.0, nil);
+    card.fontSize = 0.0;
+    STAssertEquals([card fontSize], (CGFloat)0.0, nil);
+    card.fontSize = 1000.0;
+    STAssertEquals([card fontSize], (CGFloat)400.0, nil);
+    card.fontSize = 401.0;
+    STAssertEquals([card fontSize], (CGFloat)400.0, nil);
+    card.fontSize = 399.0;
+    STAssertEquals([card fontSize], (CGFloat)399.0, nil);
     [card release];
 }
 

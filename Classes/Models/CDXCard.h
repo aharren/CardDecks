@@ -42,6 +42,10 @@ typedef enum {
 } CDXCardCornerStyle;
 
 
+#define CDXCardFontSizeAutomatic ((CGFloat) 0.0)
+#define CDXCardFontSizeMax       ((CGFloat) 400.0)
+
+
 @interface CDXCard : NSObject {
     
 @protected
@@ -50,6 +54,7 @@ typedef enum {
     CDXColor *backgroundColor;
     CDXCardOrientation orientation;
     CDXCardCornerStyle cornerStyle;
+    CGFloat fontSize;
 }
 
 @property (nonatomic, copy) NSString *text;
@@ -57,6 +62,7 @@ typedef enum {
 @property (nonatomic, retain) CDXColor *backgroundColor;
 @property (nonatomic, assign) CDXCardOrientation orientation;
 @property (nonatomic, assign) CDXCardCornerStyle cornerStyle;
+@property (nonatomic, assign) CGFloat fontSize;
 
 - (CGFloat)fontSizeConstrainedToSize:(CGSize)size;
 

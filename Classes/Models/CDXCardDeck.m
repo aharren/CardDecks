@@ -35,6 +35,7 @@
 @synthesize displayStyle;
 @synthesize showPageControl;
 @synthesize cornerStyle;
+@synthesize fontSize;
 
 - (id)init {
     if ((self = [super init])) {
@@ -98,6 +99,13 @@
     cornerStyle = aCornerStyle;
     for (CDXCard *card in cards) {
         card.cornerStyle = aCornerStyle;
+    }
+}
+
+- (void)setFontSize:(CGFloat)aFontSize {
+    fontSize = aFontSize;
+    for (CDXCard *card in cards) {
+        card.fontSize = aFontSize;
     }
 }
 
