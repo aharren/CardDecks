@@ -45,5 +45,12 @@
     [card release];
 }
 
+- (void)testTextCanonicalizedLinebreaks {
+    CDXCard *card = [[CDXCard alloc] init];
+    card.text = @"1 2 \r 3 4 \n 5 6";
+    STAssertEqualObjects([card text], @"1 2 \n 3 4 \n 5 6", nil);
+    [card release];
+}
+
 @end
 

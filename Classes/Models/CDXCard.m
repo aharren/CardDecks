@@ -50,5 +50,10 @@
     [super dealloc];
 }
 
+- (void)setText:(NSString *)aText {
+    // canonicalize linebreaks to \n
+    ivar_assign_and_copy(text, [aText stringByReplacingOccurrencesOfString:@"\r" withString:@"\n"]);
+}
+
 @end
 
