@@ -105,7 +105,7 @@
     
     currentCardIndex = cardIndex;
     scrollView.contentOffset = CGPointMake(scrollViewPageWidth * cardIndex, 0);
-    [viewDelegate cardsViewCurrentCardIndexHasChangedTo:currentCardIndex];
+    [viewDelegate cardsViewDelegateCurrentCardIndexHasChangedTo:currentCardIndex];
 }
 
 - (void)scrollToCardIndex:(NSUInteger)cardIndex {

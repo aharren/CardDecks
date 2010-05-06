@@ -40,7 +40,7 @@
 
 @required
 - (void)cardsViewDelegateTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)cardsViewCurrentCardIndexHasChangedTo:(NSUInteger)index;
+- (void)cardsViewDelegateCurrentCardIndexHasChangedTo:(NSUInteger)index;
 
 @end
 

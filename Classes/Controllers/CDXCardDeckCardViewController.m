@@ -109,7 +109,7 @@
     }
 }
 
-- (void)cardsViewCurrentCardIndexHasChangedTo:(NSUInteger)index {
+- (void)cardsViewDelegateCurrentCardIndexHasChangedTo:(NSUInteger)index {
     pageControl.currentPage = index;
     [self flashPageControl];
 }
