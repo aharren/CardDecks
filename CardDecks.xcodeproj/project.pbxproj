@@ -56,6 +56,7 @@
 		E0F2B34511955B700092D11B /* CDXLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D909271172275D00AD50DA /* CDXLogger.m */; };
 		E0F2B34611955B730092D11B /* lcl.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D8C7FD1172255F00356C2C /* lcl.m */; };
 		E0F2B3C11195617A0092D11B /* CDXCardsViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3C01195617A0092D11B /* CDXCardsViewBase.m */; };
+		E0F2B3F7119563910092D11B /* CDXCardsStackSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,8 @@
 		E0F2B33511955A7C0092D11B /* CDXObjectCacheTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXObjectCacheTest.m; path = Classes/CDXObjectCacheTest.m; sourceTree = "<group>"; };
 		E0F2B3BF1195617A0092D11B /* CDXCardsViewBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsViewBase.h; path = Classes/Views/CDXCardsViewBase.h; sourceTree = "<group>"; };
 		E0F2B3C01195617A0092D11B /* CDXCardsViewBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsViewBase.m; path = Classes/Views/CDXCardsViewBase.m; sourceTree = "<group>"; };
+		E0F2B3F5119563910092D11B /* CDXCardsStackSwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsStackSwipeView.h; path = Classes/Views/CDXCardsStackSwipeView.h; sourceTree = "<group>"; };
+		E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsStackSwipeView.m; path = Classes/Views/CDXCardsStackSwipeView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +227,8 @@
 				E0150073117A1E4900C3BF63 /* CDXCardsSideBySideView.m */,
 				E0BEE1F5117BA68D002F62A7 /* CDXCardsStackView.h */,
 				E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */,
+				E0F2B3F5119563910092D11B /* CDXCardsStackSwipeView.h */,
+				E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -447,6 +452,7 @@
 				E047CEF7119369430024A022 /* CDXAppWindowManager.m in Sources */,
 				E0F2B2AB119550BC0092D11B /* CDXObjectCache.m in Sources */,
 				E0F2B3C11195617A0092D11B /* CDXCardsViewBase.m in Sources */,
+				E0F2B3F7119563910092D11B /* CDXCardsStackSwipeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

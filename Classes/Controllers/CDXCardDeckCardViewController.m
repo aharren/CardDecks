@@ -25,7 +25,7 @@
 
 #import "CDXCardDeckCardViewController.h"
 #import "CDXCardsSideBySideView.h"
-#import "CDXCardsStackView.h"
+#import "CDXCardsStackSwipeView.h"
 
 
 @interface CDXCardDeckCardViewController (PageControl)
@@ -72,7 +72,7 @@
             v = [[[CDXCardsSideBySideView alloc] initWithFrame:self.view.frame] autorelease];
             break;
         case CDXCardDeckDisplayStyleStack:
-            v = [[[CDXCardsStackView alloc] initWithFrame:self.view.frame] autorelease];
+            v = [[[CDXCardsStackSwipeView alloc] initWithFrame:self.view.frame] autorelease];
             break;
     }
     ivar_assign_and_retain(cardsView, v);

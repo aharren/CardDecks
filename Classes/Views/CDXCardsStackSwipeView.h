@@ -1,6 +1,6 @@
 //
 //
-// lcl_config_components.h
+// CDXCardsStackSwipeView.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,16 +23,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import "CDXCardDeck.h"
+#import "CDXCardsViewBase.h"
+#import "CDXObjectCache.h"
 
-_lcl_component(CDXMain,                                 "main",                 "Main")
 
-_lcl_component(CDXObjectCache,                          "cache",                "ObjectCache")
+enum {
+    CDXCardsStackSwipeViewCardImagesSize = 3
+};
 
-_lcl_component(CDXAppDelegate,                          "appdelegate",          "AppDelegate")
+enum {
+    CDXCardsStackSwipeViewCardViewsTopLeft = 0,
+    CDXCardsStackSwipeViewCardViewsMiddle,
+    CDXCardsStackSwipeViewCardViewsBottom,
+    CDXCardsStackSwipeViewCardViewsSize
+};
 
-_lcl_component(CDXCardDeckCardViewController,           "cardview",             "CardView")
-_lcl_component(CDXCardsViewBase,                        "cardview",             "CardView")
-_lcl_component(CDXCardsSideBySideView,                  "cardview",             "CardView")
-_lcl_component(CDXCardsStackView,                       "cardview",             "CardView")
-_lcl_component(CDXCardsStackSwipeView,                  "cardview",             "CardView")
+@interface CDXCardsStackSwipeView : CDXCardsViewBase<CDXCardsViewView> {
+    
+@protected
+    CDXObjectCache *cardImages;
+    
+    UIImageView *cardViewsView[CDXCardsStackSwipeViewCardViewsSize];
+    CGSize cardViewsSize;
+    
+    CGPoint touchStartPosition;
+    
+    BOOL touchAnimationInProgress;
+    CGPoint touchAnimationStartPosition;
+    NSUInteger touchAnimationNewCardIndex;
+}
+
+- (id)initWithFrame:(CGRect)rect;
+
+@end
 
