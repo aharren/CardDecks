@@ -28,6 +28,7 @@
     
 @protected
     IBOutlet UIWindow *window;
+    UIViewController *fullScreenViewController;
     UINavigationController *navigationController;
 }
 
