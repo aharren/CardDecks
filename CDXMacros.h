@@ -58,6 +58,16 @@
         }                                                                      \
     }                                                                          \
 
+#define ivar_array_assign(_ivar, _size, _value)                                \
+    {                                                                          \
+        for (NSUInteger _ivar_idx = 0; _ivar_idx < _size; _ivar_idx++) {       \
+            if (_ivar[_ivar_idx]) {                                            \
+                [_ivar[_ivar_idx] release];                                    \
+            }                                                                  \
+            _ivar[_ivar_idx] = _value;                                         \
+        }                                                                      \
+    }                                                                          \
+
 #define ivar_array_set(_ivar, _size, _value)                                   \
     {                                                                          \
         for (NSUInteger _ivar_idx = 0; _ivar_idx < _size; _ivar_idx++) {       \
