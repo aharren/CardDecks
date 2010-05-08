@@ -1,6 +1,6 @@
 //
 //
-// lcl_config_components.h
+// CDXCardsViewBase.m
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,15 +23,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import "CDXCardsViewBase.h"
 
-_lcl_component(CDXMain,                                 "main",                 "Main")
+#undef ql_component
+#define ql_component lcl_cCDXCardsViewBase
 
-_lcl_component(CDXObjectCache,                          "cache",                "ObjectCache")
 
-_lcl_component(CDXAppDelegate,                          "appdelegate",          "AppDelegate")
+@implementation CDXCardsViewBase
 
-_lcl_component(CDXCardDeckCardViewController,           "cardview",             "CardView")
-_lcl_component(CDXCardsViewBase,                        "cardview",             "CardView")
-_lcl_component(CDXCardsSideBySideView,                  "cardview",             "CardView")
-_lcl_component(CDXCardsStackView,                       "cardview",             "CardView")
+@synthesize viewDelegate;
+@synthesize viewDataSource;
+
+- (id)initWithFrame:(CGRect)rect {
+    qltrace();
+    if ((self = [super initWithFrame:rect])) {
+    }
+    return self;
+}
+
+- (void)dealloc {
+    qltrace();
+    [super dealloc];
+}
+
+@end
 

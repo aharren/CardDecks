@@ -24,7 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeck.h"
-#import "CDXCardsViewProtocols.h"
+#import "CDXCardsViewBase.h"
 #import "CDXObjectCache.h"
 
 
@@ -49,7 +49,7 @@ enum {
     CDXCardsStackViewScrollViewDirectionLeftOut
 };
 
-@interface CDXCardsStackView : UIView<CDXCardsViewView> {
+@interface CDXCardsStackView : CDXCardsViewBase<CDXCardsViewView> {
     
 @protected
     CDXCardsStackViewScrollView *scrollView;
@@ -62,18 +62,9 @@ enum {
     UIImageView *cardViewsView[CDXCardsStackViewCardViewsSize];
     CGFloat cardViewsBorder;
     CGSize cardViewsSize;
-    
-    id<CDXCardsViewDelegate> viewDelegate;
-    id<CDXCardsViewDataSource> viewDataSource;
-    
-    NSUInteger cardsCount;
-    NSUInteger currentCardIndex;
 }
 
 - (id)initWithFrame:(CGRect)rect;
-
-@property (nonatomic, assign) id<CDXCardsViewDelegate> viewDelegate;
-@property (nonatomic, assign) id<CDXCardsViewDataSource> viewDataSource;
 
 @end
 

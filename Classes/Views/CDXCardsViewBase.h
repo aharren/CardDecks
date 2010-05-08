@@ -1,6 +1,6 @@
 //
 //
-// lcl_config_components.h
+// CDXCardsViewBase.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,15 +23,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import "CDXCardsViewProtocols.h"
 
-_lcl_component(CDXMain,                                 "main",                 "Main")
 
-_lcl_component(CDXObjectCache,                          "cache",                "ObjectCache")
+@interface CDXCardsViewBase : UIView {
+    
+@protected
+    id<CDXCardsViewDelegate> viewDelegate;
+    id<CDXCardsViewDataSource> viewDataSource;
+    
+    NSUInteger cardsCount;
+    NSUInteger currentCardIndex;
+}
 
-_lcl_component(CDXAppDelegate,                          "appdelegate",          "AppDelegate")
+- (id)initWithFrame:(CGRect)rect;
 
-_lcl_component(CDXCardDeckCardViewController,           "cardview",             "CardView")
-_lcl_component(CDXCardsViewBase,                        "cardview",             "CardView")
-_lcl_component(CDXCardsSideBySideView,                  "cardview",             "CardView")
-_lcl_component(CDXCardsStackView,                       "cardview",             "CardView")
+@property (nonatomic, assign) id<CDXCardsViewDelegate> viewDelegate;
+@property (nonatomic, assign) id<CDXCardsViewDataSource> viewDataSource;
+
+@end
 

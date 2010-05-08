@@ -24,7 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeck.h"
-#import "CDXCardsViewProtocols.h"
+#import "CDXCardsViewBase.h"
 
 
 @class CDXCardsSideBySideViewScrollView;
@@ -34,7 +34,7 @@ enum {
     CDXCardsSideBySideViewCardViewsSize = 5
 };
 
-@interface CDXCardsSideBySideView : UIView<CDXCardsViewView> {
+@interface CDXCardsSideBySideView : CDXCardsViewBase<CDXCardsViewView> {
     
 @protected
     CDXCardsSideBySideViewScrollView *scrollView;
@@ -46,18 +46,9 @@ enum {
     CGFloat cardViewsBorder;
     CGFloat cardViewsWidthWithBorder;
     CGSize cardViewsSize;
-    
-    id<CDXCardsViewDelegate> viewDelegate;
-    id<CDXCardsViewDataSource> viewDataSource;
-    
-    NSUInteger cardsCount;
-    NSUInteger currentCardIndex;
 }
 
 - (id)initWithFrame:(CGRect)rect;
-
-@property (nonatomic, assign) id<CDXCardsViewDelegate> viewDelegate;
-@property (nonatomic, assign) id<CDXCardsViewDataSource> viewDataSource;
 
 @end
 

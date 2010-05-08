@@ -51,9 +51,6 @@
 
 @implementation CDXCardsSideBySideView
 
-@synthesize viewDelegate;
-@synthesize viewDataSource;
-
 - (id)initWithFrame:(CGRect)rect {
     qltrace();
     if ((self = [super initWithFrame:rect])) {
