@@ -55,5 +55,9 @@
     [appWindowManager makeWindowKeyAndVisible];
 }
 
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+    qltrace();
+}
+
 @end
 
