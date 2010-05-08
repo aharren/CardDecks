@@ -25,6 +25,7 @@
 
 #import "CDXCardDeck.h"
 #import "CDXCardsViewProtocols.h"
+#import "CDXObjectCache.h"
 
 
 @class CDXCardsStackViewScrollView;
@@ -56,8 +57,7 @@ enum {
     CGFloat scrollViewPageWidth;
     NSUInteger scrollViewDirection;
     
-    UIImage *cardImagesImage[CDXCardsStackViewCardImagesSize];
-    NSUInteger cardImagesCardIndex[CDXCardsStackViewCardImagesSize];
+    CDXObjectCache *cardImages;
     
     UIImageView *cardViewsView[CDXCardsStackViewCardViewsSize];
     CGFloat cardViewsBorder;

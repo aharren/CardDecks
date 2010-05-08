@@ -1,6 +1,6 @@
 //
 //
-// lcl_config_components.h
+// CDXObjectCache.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -24,13 +24,35 @@
 // THE SOFTWARE.
 
 
-_lcl_component(CDXMain,                                 "main",                 "Main")
+enum {
+    CDXObjectCacheObjectsBase = 1,
+    CDXObjectCacheObjectsSize = CDXObjectCacheObjectsBase + 5
+};
 
-_lcl_component(CDXObjectCache,                          "cache",                "ObjectCache")
+enum {
+    CDXObjectCacheKeysInvalid = 0,
+    CDXObjectCacheKeysBase    = 1
+};
 
-_lcl_component(CDXAppDelegate,                          "appdelegate",          "AppDelegate")
 
-_lcl_component(CDXCardDeckCardViewController,           "cardview",             "CardView")
-_lcl_component(CDXCardsSideBySideView,                  "cardview",             "CardView")
-_lcl_component(CDXCardsStackView,                       "cardview",             "CardView")
+@interface CDXObjectCache : NSObject {
+    
+@protected
+    NSUInteger size;
+    NSUInteger nextIndex;
+    
+    NSUInteger keys[CDXObjectCacheObjectsSize];
+    id objects[CDXObjectCacheObjectsSize];
+}
+
+- (id)initWithSize:(NSUInteger)size;
+
+- (id)objectWithKey:(NSUInteger)key;
+- (void)addObject:(id)object withKey:(NSUInteger)key;
+
+- (NSUInteger)count;
+
+- (void)clear;
+
+@end
 

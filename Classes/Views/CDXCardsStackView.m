@@ -65,7 +65,7 @@
     qltrace();
     ivar_release_and_clear(scrollView);
     ivar_release_and_clear(scrollViewDelegate);
-    ivar_array_release_and_clear(cardImagesImage, CDXCardsStackViewCardImagesSize);
+    ivar_release_and_clear(cardImages);
     [super dealloc];
 }
 
@@ -78,24 +78,15 @@
         return;
     }
     
-    NSUInteger imageIndex = CDXCardsStackViewCardImagesSize;
-    for (NSUInteger i = 0; i < CDXCardsStackViewCardImagesSize; i++) {
-        if (cardImagesCardIndex[i] == cardIndex+1) {
-            imageIndex = i;
-            break;
-        }
-    }
-    
-    UIImage *image = nil;
-    if (imageIndex < CDXCardsStackViewCardImagesSize) {
-        image = cardImagesImage[imageIndex];
-        qltrace(@": %d => %d", imageIndex, cardIndex);
+    UIImage *image = [cardImages objectWithKey:cardIndex];
+    if (image != nil) {
+        qltrace(@": => %d", cardIndex);
     } else {
         image = [[CDXImageFactory sharedImageFactory]
                  imageForCard:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex]
                  size:cardViewsSize
                  deviceOrientation:[[UIDevice currentDevice] orientation]];
-        qltrace(@": %d X> %d", imageIndex, cardIndex);
+        qltrace(@": X> %d", cardIndex);
     }
     view.image = image;
     view.hidden = NO;
@@ -107,12 +98,10 @@
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsMiddle cardIndex:cardIndex];
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsBottom cardIndex:cardIndex+1];
     
-    ivar_assign_and_retain(cardImagesImage[0], cardViewsView[CDXCardsStackViewCardViewsTopLeft].image);
-    cardImagesCardIndex[0] = cardIndex-1+1;
-    ivar_assign_and_retain(cardImagesImage[1], cardViewsView[CDXCardsStackViewCardViewsTopRight].image);
-    cardImagesCardIndex[1] = cardIndex+1;
-    ivar_assign_and_retain(cardImagesImage[2], cardViewsView[CDXCardsStackViewCardViewsBottom].image);
-    cardImagesCardIndex[2] = cardIndex+1+1;
+    [cardImages clear];
+    [cardImages addObject:cardViewsView[CDXCardsStackViewCardViewsTopLeft].image withKey:cardIndex-1];
+    [cardImages addObject:cardViewsView[CDXCardsStackViewCardViewsTopRight].image withKey:cardIndex];
+    [cardImages addObject:cardViewsView[CDXCardsStackViewCardViewsBottom].image withKey:cardIndex+1];
     
     currentCardIndex = cardIndex;
     scrollView.contentOffset = CGPointMake(scrollViewPageWidth, 0);
@@ -137,10 +126,10 @@
         [cardViewsView[CDXCardsStackViewCardViewsTopRight] removeFromSuperview];
         [cardViewsView[CDXCardsStackViewCardViewsMiddle] removeFromSuperview];
         [cardViewsView[CDXCardsStackViewCardViewsBottom] removeFromSuperview];
-        ivar_array_release_and_clear(cardImagesImage, CDXCardsStackViewCardImagesSize);
         [scrollView removeFromSuperview];
         ivar_release_and_clear(scrollView);
         ivar_release_and_clear(scrollViewDelegate);
+        ivar_release_and_clear(cardImages);
     } else {
         ivar_assign(scrollView, [[CDXCardsStackViewScrollView alloc] initWithFrame:self.frame]);
         ivar_assign(scrollViewDelegate, [[CDXCardsStackViewScrollViewDelegate alloc] init]);
@@ -169,10 +158,7 @@
             view.frame = CGRectMake(0, 0, cardViewsSize.width, cardViewsSize.height);
         }
         
-        for (NSUInteger i = 0; i < CDXCardsStackViewCardImagesSize; i++) {
-            cardImagesImage[i] = nil;
-            cardImagesCardIndex[i] = 0;
-        }
+        ivar_assign(cardImages, [[CDXObjectCache alloc] initWithSize:3]);
         
         [self addSubview:cardViewsView[CDXCardsStackViewCardViewsBottom]];
         [self addSubview:cardViewsView[CDXCardsStackViewCardViewsMiddle]];
