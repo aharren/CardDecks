@@ -79,6 +79,9 @@
         text = [text stringByAppendingString:@" "];
     }
     
+    // scaling
+    CGFloat scale = MIN(size.width, size.height) / 320.0;
+    
     // set size
     self.frame = CGRectMake(0, 0, size.width, size.height);
     
@@ -104,10 +107,10 @@
     switch (card.cornerStyle) {
         default:
         case CDXCardCornerStyleRounded:
-            borderLayer.cornerRadius = 20;
+            borderLayer.cornerRadius = 20.0 * scale;
             break;
         case CDXCardCornerStyleCornered:
-            borderLayer.cornerRadius = 3;
+            borderLayer.cornerRadius = 3.0 * scale;
             break;
     }
     
