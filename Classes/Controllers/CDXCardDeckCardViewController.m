@@ -25,6 +25,7 @@
 
 #import "CDXCardDeckCardViewController.h"
 #import "CDXCardsSideBySideView.h"
+#import "CDXCardsStackView.h"
 #import "CDXCardsStackSwipeView.h"
 #import "CDXImageFactory.h"
 
@@ -81,6 +82,9 @@
                 v = [[[CDXCardsSideBySideView alloc] initWithFrame:self.view.frame] autorelease];
                 break;
             case CDXCardDeckDisplayStyleStack:
+                v = [[[CDXCardsStackView alloc] initWithFrame:self.view.frame] autorelease];
+                break;
+            case CDXCardDeckDisplayStyleSwipeStack:
                 v = [[[CDXCardsStackSwipeView alloc] initWithFrame:self.view.frame] autorelease];
                 break;
         }
