@@ -65,9 +65,17 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     return self;
 }
 
+- (void)pushFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES animated:YES];
+    [fullScreenViewController setUserInteractionEnabled:YES];
+}
+
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     if ([viewController wantsFullScreenLayout]) {
+        [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
+        [fullScreenViewController setUserInteractionEnabled:NO];
         ivar_assign_and_retain(fullScreenViewController, viewController);
+        
         UIView *viewToHide = navigationController.view;
         UIView *viewToShow = viewController.view;
         if (animated) {
@@ -75,10 +83,11 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
             [UIView setAnimationDuration:0.6];
             [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:window cache:YES];
             [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+            [UIView setAnimationDelegate:self];
+            [UIView setAnimationDidStopSelector:@selector(pushFullScreenViewControllerAnimationDidStop:finished:context:)];
         }
         
         [viewToHide removeFromSuperview];
-        [[UIApplication sharedApplication] setStatusBarHidden:YES animated:YES];
         [window addSubview:viewToShow];
         
         if (animated) {
@@ -91,6 +100,9 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 
 - (void)popViewControllerAnimated:(BOOL)animated {
     if (fullScreenViewController != nil) {
+        [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
+        [fullScreenViewController setUserInteractionEnabled:NO];
+        
         UIView *viewToHide = fullScreenViewController.view;
         UIView *viewToShow = navigationController.view;
         if (animated) {
@@ -101,7 +113,6 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
         }
         
         [viewToHide removeFromSuperview];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO animated:YES];
         [window addSubview:viewToShow];
         
         if (animated) {

@@ -23,18 +23,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import "CDXAppWindowProtocols.h"
+
 
 @interface CDXAppWindowManager : NSObject {
     
 @protected
     IBOutlet UIWindow *window;
-    UIViewController *fullScreenViewController;
+    UIViewController<CDXAppWindowViewController> *fullScreenViewController;
     UINavigationController *navigationController;
 }
 
 declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
+- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated;
 - (void)popViewControllerAnimated:(BOOL)animated;
 - (void)makeWindowKeyAndVisible;
 

@@ -25,15 +25,19 @@
 
 #import "CDXCardDeck.h"
 #import "CDXCardsViewProtocols.h"
+#import "CDXAppWindowProtocols.h"
 
 
-@interface CDXCardDeckCardViewController : UIViewController<CDXCardsViewDelegate, CDXCardsViewDataSource> {
+@interface CDXCardDeckCardViewController : UIViewController<CDXAppWindowViewController, CDXCardsViewDelegate, CDXCardsViewDataSource> {
     
 @protected
     CDXCardDeck *cardDeck;
     NSUInteger initialCardIndex;
     
     UIView<CDXCardsViewView> *cardsView;
+    
+    BOOL userInteractionEnabled;
+    UIView *imageView;
     
     IBOutlet UIPageControl *pageControl;
     NSUInteger pageControlJumpPagesCount;

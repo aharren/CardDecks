@@ -52,6 +52,9 @@
     [super viewDidUnload];
 }
 
+- (void)setUserInteractionEnabled:(BOOL)enabled {
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }

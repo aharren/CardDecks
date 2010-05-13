@@ -96,6 +96,7 @@
 		E032F1301169D9FB0033980C /* CDXCardDecks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDecks.m; path = Classes/Models/CDXCardDecks.m; sourceTree = "<group>"; };
 		E032F1531169DB790033980C /* CDXCardDecksTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDecksTests.m; path = Classes/Models/CDXCardDecksTests.m; sourceTree = "<group>"; };
 		E032F1671169DDC10033980C /* CDXCardDecksListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardDecksListView.xib; path = UserInterfaces/CDXCardDecksListView.xib; sourceTree = "<group>"; };
+		E034181A1195CD9F00007FF7 /* CDXAppWindowProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppWindowProtocols.h; path = Classes/CDXAppWindowProtocols.h; sourceTree = "<group>"; };
 		E03BA23F1167475000FE7924 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E03BA24C116747FC00FE7924 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E03BA2501167485A00FE7924 /* CDX.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDX.pch; sourceTree = "<group>"; };
@@ -273,6 +274,7 @@
 				E002B8CC1168D6CA0072C409 /* Views */,
 				E03BA38711674CBF00FE7924 /* CDXAppDelegate.h */,
 				E03BA38811674CBF00FE7924 /* CDXAppDelegate.m */,
+				E034181A1195CD9F00007FF7 /* CDXAppWindowProtocols.h */,
 				E047CEF5119369430024A022 /* CDXAppWindowManager.h */,
 				E047CEF6119369430024A022 /* CDXAppWindowManager.m */,
 				E0D01AEB1170EF9200004856 /* CDXImageFactory.h */,

@@ -24,9 +24,10 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeck.h"
+#import "CDXAppWindowProtocols.h"
 
 
-@interface CDXCardDeckListViewController : UIViewController {
+@interface CDXCardDeckListViewController : UIViewController<CDXAppWindowViewController> {
     
 @protected
     IBOutlet UITableView *cardDeckTableView;

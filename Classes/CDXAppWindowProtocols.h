@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDecksListViewController.h
+// CDXAppWindowProtocols.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,18 +23,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXCardDecks.h"
-#import "CDXAppWindowProtocols.h"
 
+@protocol CDXAppWindowViewController
 
-@interface CDXCardDecksListViewController : UIViewController<CDXAppWindowViewController> {
-    
-@protected
-    IBOutlet UITableView *cardDecksTableView;
-    CDXCardDecks *cardDecks;
-}
-
-- (id)initWithCardDecks:(CDXCardDecks *)cardDecks;
+@required
+- (void)setUserInteractionEnabled:(BOOL)enabled;
 
 @end
 

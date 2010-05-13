@@ -26,6 +26,7 @@
 #import "CDXCardDeckCardViewController.h"
 #import "CDXCardsSideBySideView.h"
 #import "CDXCardsStackSwipeView.h"
+#import "CDXImageFactory.h"
 
 
 @interface CDXCardDeckCardViewController (PageControl)
@@ -59,26 +60,50 @@
     ivar_release_and_clear(cardDeck);
     ivar_release_and_clear(pageControl);
     ivar_release_and_clear(cardsView);
+    ivar_release_and_clear(imageView);
     [super dealloc];
+}
+
+- (void)configureView {
+    [cardsView removeFromSuperview];
+    ivar_release_and_clear(cardsView);
+    
+    [imageView removeFromSuperview];
+    ivar_release_and_clear(imageView);
+    
+    if (userInteractionEnabled) {
+        qltrace(@"card");
+        
+        UIView<CDXCardsViewView> *v = nil;
+        switch (cardDeck.displayStyle) {
+            default:
+            case CDXCardDeckDisplayStyleSideBySide:
+                v = [[[CDXCardsSideBySideView alloc] initWithFrame:self.view.frame] autorelease];
+                break;
+            case CDXCardDeckDisplayStyleStack:
+                v = [[[CDXCardsStackSwipeView alloc] initWithFrame:self.view.frame] autorelease];
+                break;
+        }
+        ivar_assign_and_retain(cardsView, v);
+        [v setViewDelegate:self];
+        [v setViewDataSource:self];
+        [self.view insertSubview:v atIndex:0];
+    } else {
+        qltrace(@"image");
+        
+        UIImage *image = [[CDXImageFactory sharedImageFactory]
+                          imageForCard:[cardDeck cardAtIndex:initialCardIndex]
+                          size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
+                          deviceOrientation:[[UIDevice currentDevice] orientation]];
+        ivar_assign(imageView, [[UIImageView alloc] initWithImage:image]);
+        [self.view insertSubview:imageView atIndex:0];
+    }
 }
 
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
-    UIView<CDXCardsViewView> *v = nil;
-    switch (cardDeck.displayStyle) {
-        default:
-        case CDXCardDeckDisplayStyleSideBySide:
-            v = [[[CDXCardsSideBySideView alloc] initWithFrame:self.view.frame] autorelease];
-            break;
-        case CDXCardDeckDisplayStyleStack:
-            v = [[[CDXCardsStackSwipeView alloc] initWithFrame:self.view.frame] autorelease];
-            break;
-    }
-    ivar_assign_and_retain(cardsView, v);
-    [v setViewDelegate:self];
-    [v setViewDataSource:self];
-    [self.view insertSubview:v atIndex:0];
+    [self configureView];
     [self configurePageControl];
 }
 
@@ -86,7 +111,15 @@
     qltrace();
     ivar_release_and_clear(pageControl);
     ivar_release_and_clear(cardsView);
+    ivar_release_and_clear(imageView);
     [super viewDidUnload];
+}
+
+- (void)setUserInteractionEnabled:(BOOL)enabled {
+    userInteractionEnabled = enabled;
+    if (self.view.superview != nil) {
+        [self configureView];
+    }
 }
 
 - (NSUInteger)cardsViewDataSourceCardsCount {
