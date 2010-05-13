@@ -43,7 +43,7 @@
         ivar_assign_and_retain(defaultCardTextColor, [CDXColor colorWhite]);
         ivar_assign_and_retain(defaultCardBackgroundColor, [CDXColor colorBlack]);
         ivar_assign(cards, [[NSMutableArray alloc] init]);
-        displayStyle = CDXCardDeckDisplayStyleStack;
+        displayStyle = CDXCardDeckDisplayStyleDefault;
         showPageControl = NO;
         cornerStyle = CDXCardCornerStyleRounded;
     }

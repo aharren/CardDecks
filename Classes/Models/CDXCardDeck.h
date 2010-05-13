@@ -27,8 +27,11 @@
 
 
 typedef enum {
-    CDXCardDeckDisplayStyleSideBySide,
-    CDXCardDeckDisplayStyleStack
+    CDXCardDeckDisplayStyleSideBySide = 0,
+    CDXCardDeckDisplayStyleStack,
+    CDXCardDeckDisplayStyleSwipeStack,
+    CDXCardDeckDisplayStyleCount,
+    CDXCardDeckDisplayStyleDefault = 0
 } CDXCardDeckDisplayStyle;
 
 
