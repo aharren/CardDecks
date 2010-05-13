@@ -54,6 +54,19 @@
 - (id)initWithFrame:(CGRect)rect {
     qltrace();
     if ((self = [super initWithFrame:rect])) {
+        ivar_assign(scrollView, [[CDXCardsSideBySideViewScrollView alloc] initWithFrame:self.frame]);
+        ivar_assign(scrollViewDelegate, [[CDXCardsSideBySideViewScrollViewDelegate alloc] init]);
+
+        scrollView.delegate = scrollViewDelegate;
+        scrollViewDelegate.cardsSideBySideView = self;
+
+        ivar_array_assign(cardViewsView, CDXCardsSideBySideViewCardViewsSize, [[UIImageView alloc] initWithImage:nil]);
+        
+        [self addSubview:scrollView];
+
+        for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
+            [scrollView addSubview:cardViewsView[i]];
+        }
     }
     return self;
 }
@@ -62,6 +75,7 @@
     qltrace();
     ivar_release_and_clear(scrollView);
     ivar_release_and_clear(scrollViewDelegate);
+    ivar_array_release_and_clear(cardViewsView, CDXCardsSideBySideViewCardViewsSize);
     [super dealloc];
 }
 
@@ -120,45 +134,34 @@
     qltrace(@": %@", self.superview);
     [super didMoveToSuperview];
     if (self.superview == nil) {
-        [scrollView removeFromSuperview];
-        ivar_release_and_clear(scrollView);
-        ivar_release_and_clear(scrollViewDelegate);
-    } else {
-        ivar_assign(scrollView, [[CDXCardsSideBySideViewScrollView alloc] initWithFrame:self.frame]);
-        ivar_assign(scrollViewDelegate, [[CDXCardsSideBySideViewScrollViewDelegate alloc] init]);
-        scrollView.delegate = scrollViewDelegate;
-        scrollViewDelegate.cardsSideBySideView = self;
-        cardsCount = [viewDataSource cardsViewDataSourceCardsCount];
-        currentCardIndex = [viewDataSource cardsViewDataSourceInitialCardIndex];
-        
-        CGRect frame = self.frame;
-        cardViewsBorder = 10;
-        cardViewsSize.width = frame.size.width;
-        cardViewsWidthWithBorder = cardViewsSize.width + 2 * cardViewsBorder;
-        cardViewsSize.height = frame.size.height;
-        frame.origin.x -= cardViewsBorder;
-        frame.size.width = cardViewsWidthWithBorder;
-        scrollViewPageWidth = cardViewsWidthWithBorder;
-        scrollView.frame = frame;
-        scrollView.backgroundColor = [UIColor blackColor];
-        scrollView.contentSize = CGSizeMake(scrollViewPageWidth * cardsCount, cardViewsSize.height);
-        scrollView.scrollEnabled = YES;
-        scrollView.pagingEnabled = YES;
-        scrollView.showsHorizontalScrollIndicator = NO;
-        scrollView.showsVerticalScrollIndicator = NO;
-        
-        for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
-            UIImageView *view = [[[UIImageView alloc] initWithImage:nil] autorelease];
-            [scrollView addSubview:view];
-            cardViewsView[i] = view;
-            cardViewsCardIndex[i] = 0;
-        }
-        
-        [self addSubview:scrollView];
-        
-        [self showCardAtIndex:currentCardIndex];
-        [self scrollToCardIndex:currentCardIndex];
+        return;
     }
+    
+    cardsCount = [viewDataSource cardsViewDataSourceCardsCount];
+    currentCardIndex = [viewDataSource cardsViewDataSourceInitialCardIndex];
+    
+    CGRect frame = self.frame;
+    cardViewsBorder = 10;
+    cardViewsSize.width = frame.size.width;
+    cardViewsWidthWithBorder = cardViewsSize.width + 2 * cardViewsBorder;
+    cardViewsSize.height = frame.size.height;
+    frame.origin.x -= cardViewsBorder;
+    frame.size.width = cardViewsWidthWithBorder;
+    scrollViewPageWidth = cardViewsWidthWithBorder;
+    scrollView.frame = frame;
+    scrollView.backgroundColor = [UIColor blackColor];
+    scrollView.contentSize = CGSizeMake(scrollViewPageWidth * cardsCount, cardViewsSize.height);
+    scrollView.scrollEnabled = YES;
+    scrollView.pagingEnabled = YES;
+    scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.showsVerticalScrollIndicator = NO;
+    
+    for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
+        cardViewsCardIndex[i] = 0;
+    }
+    
+    [self showCardAtIndex:currentCardIndex];
+    [self scrollToCardIndex:currentCardIndex];
 }
 
 - (void)scrollViewDidEndDecelerating {
@@ -225,6 +228,11 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [cardsSideBySideView scrollViewDidScroll];
+}
+
+- (void)dealloc {
+    qltrace();
+    [super dealloc];
 }
 
 @end
