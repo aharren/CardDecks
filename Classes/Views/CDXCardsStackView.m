@@ -54,6 +54,21 @@
 - (id)initWithFrame:(CGRect)rect {
     qltrace();
     if ((self = [super initWithFrame:rect])) {
+        ivar_assign(scrollView, [[CDXCardsStackViewScrollView alloc] initWithFrame:self.frame]);
+        ivar_assign(scrollViewDelegate, [[CDXCardsStackViewScrollViewDelegate alloc] init]);
+        
+        scrollView.delegate = scrollViewDelegate;
+        scrollViewDelegate.cardsStackView = self;
+        
+        ivar_assign(cardImages, [[CDXObjectCache alloc] initWithSize:3]);
+        ivar_array_assign(cardViewsView, CDXCardsStackViewCardViewsSize, [[UIImageView alloc] initWithImage:nil]);
+        
+        [self addSubview:cardViewsView[CDXCardsStackViewCardViewsBottom]];
+        [self addSubview:cardViewsView[CDXCardsStackViewCardViewsMiddle]];
+        [self addSubview:scrollView];
+        
+        [scrollView addSubview:cardViewsView[CDXCardsStackViewCardViewsTopLeft]];
+        [scrollView addSubview:cardViewsView[CDXCardsStackViewCardViewsTopRight]];
     }
     return self;
 }
@@ -63,6 +78,7 @@
     ivar_release_and_clear(scrollView);
     ivar_release_and_clear(scrollViewDelegate);
     ivar_release_and_clear(cardImages);
+    ivar_array_release_and_clear(cardViewsView, CDXCardsStackViewCardViewsSize);
     [super dealloc];
 }
 
@@ -119,54 +135,32 @@
     qltrace(@": %@", self.superview);
     [super didMoveToSuperview];
     if (self.superview == nil) {
-        [cardViewsView[CDXCardsStackViewCardViewsTopLeft] removeFromSuperview];
-        [cardViewsView[CDXCardsStackViewCardViewsTopRight] removeFromSuperview];
-        [cardViewsView[CDXCardsStackViewCardViewsMiddle] removeFromSuperview];
-        [cardViewsView[CDXCardsStackViewCardViewsBottom] removeFromSuperview];
-        [scrollView removeFromSuperview];
-        ivar_release_and_clear(scrollView);
-        ivar_release_and_clear(scrollViewDelegate);
-        ivar_release_and_clear(cardImages);
-    } else {
-        ivar_assign(scrollView, [[CDXCardsStackViewScrollView alloc] initWithFrame:self.frame]);
-        ivar_assign(scrollViewDelegate, [[CDXCardsStackViewScrollViewDelegate alloc] init]);
-        scrollView.delegate = scrollViewDelegate;
-        scrollViewDelegate.cardsStackView = self;
-        cardsCount = [viewDataSource cardsViewDataSourceCardsCount];
-        currentCardIndex = [viewDataSource cardsViewDataSourceInitialCardIndex];
-        
-        CGRect frame = self.frame;
-        cardViewsSize.width = frame.size.width;
-        cardViewsSize.height = frame.size.height;
-        scrollViewPageWidth = cardViewsSize.width;
-        scrollView.frame = frame;
-        scrollView.backgroundColor = [UIColor blackColor];
-        scrollView.contentSize = CGSizeMake(scrollViewPageWidth * 3, cardViewsSize.height);
-        scrollView.scrollEnabled = YES;
-        scrollView.pagingEnabled = YES;
-        scrollView.showsHorizontalScrollIndicator = NO;
-        scrollView.showsVerticalScrollIndicator = NO;
-        scrollView.backgroundColor = nil;
-        scrollView.bounces = NO;
-        
-        for (NSUInteger i = 0; i < CDXCardsStackViewCardViewsSize; i++) {
-            UIImageView *view = [[[UIImageView alloc] initWithImage:nil] autorelease];
-            cardViewsView[i] = view;
-            view.frame = CGRectMake(0, 0, cardViewsSize.width, cardViewsSize.height);
-        }
-        
-        ivar_assign(cardImages, [[CDXObjectCache alloc] initWithSize:3]);
-        
-        [self addSubview:cardViewsView[CDXCardsStackViewCardViewsBottom]];
-        [self addSubview:cardViewsView[CDXCardsStackViewCardViewsMiddle]];
-        [self addSubview:scrollView];
-        
-        [scrollView addSubview:cardViewsView[CDXCardsStackViewCardViewsTopLeft]];
-        [scrollView addSubview:cardViewsView[CDXCardsStackViewCardViewsTopRight]];
-        cardViewsView[CDXCardsStackViewCardViewsTopRight].frame = CGRectMake(cardViewsSize.width, 0, cardViewsSize.width, cardViewsSize.height);
-        
-        [self showCardAtIndex:currentCardIndex];
+        return;
     }
+    
+    cardsCount = [viewDataSource cardsViewDataSourceCardsCount];
+    currentCardIndex = [viewDataSource cardsViewDataSourceInitialCardIndex];
+    
+    CGRect frame = self.frame;
+    cardViewsSize.width = frame.size.width;
+    cardViewsSize.height = frame.size.height;
+    scrollViewPageWidth = cardViewsSize.width;
+    scrollView.frame = frame;
+    scrollView.backgroundColor = [UIColor blackColor];
+    scrollView.contentSize = CGSizeMake(scrollViewPageWidth * 3, cardViewsSize.height);
+    scrollView.scrollEnabled = YES;
+    scrollView.pagingEnabled = YES;
+    scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.showsVerticalScrollIndicator = NO;
+    scrollView.backgroundColor = nil;
+    scrollView.bounces = NO;
+    
+    for (NSUInteger i = 0; i < CDXCardsStackViewCardViewsSize; i++) {
+        cardViewsView[i].frame = CGRectMake(0, 0, cardViewsSize.width, cardViewsSize.height);
+    }
+    cardViewsView[CDXCardsStackViewCardViewsTopRight].frame = CGRectMake(cardViewsSize.width, 0, cardViewsSize.width, cardViewsSize.height);
+    
+    [self showCardAtIndex:currentCardIndex];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -286,6 +280,11 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [cardsStackView scrollViewDidScroll];
+}
+
+- (void)dealloc {
+    qltrace();
+    [super dealloc];
 }
 
 @end
