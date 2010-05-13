@@ -36,18 +36,36 @@
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
     qltrace();
     CDXCardDecks *decks = [[[CDXCardDecks alloc] init] autorelease];
-    [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"0%2C%20...%2C%2010,ffffff,666666&0&1&2&3&4&5&6&7&8&9&10"]];
-    [decks cardDeckAtIndex:0].displayStyle = CDXCardDeckDisplayStyleSideBySide;
-    [decks cardDeckAtIndex:0].showPageControl = YES;
-    [decks cardDeckAtIndex:0].cornerStyle = CDXCardCornerStyleCornered;
-    [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"0%2C%201%2C%202%2C%204%2C%208%2C%2016%2C%20%E2%88%9E,000000,ffffff&0&1&2&4&8&16&%E2%88%9E"]];
-    [decks cardDeckAtIndex:1].fontSize = 200.0;
-    [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"15%2C%2010%2C%205%2C%200,ffffff,000000&15,000000,00ff00&10,000000,ffff00&5,000000,ff0000&0,ff0000"]];
-    [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"multi%20line%20cards,ffffff,000000&ONE&ONE%0dTWO&ONE%0dTWO%0dTHREE&one%0dtwo%0dthree,00000088,ff0000&1%202%0d3%204,000000,ffffff88"]];
-    [decks cardDeckAtIndex:3].fontSize = 200.0;
-    [decks addCardDeck:[CDXCardDeckURLSerializer cardDeckFromString:@"multi%20line%20cards,ffffff,000000&ONE&ONE%0dTWO&ONE%0dTWO%0dTHREE&one%0dtwo%0dthree,00000088,ff0000&1%202%0d3%204,000000,ffffff88"]];
-    [decks cardDeckAtIndex:4].displayStyle = CDXCardDeckDisplayStyleSideBySide;
-    [decks cardDeckAtIndex:4].showPageControl = YES;
+    {
+        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"0%2C%20...%2C%2010,ffffff,666666&0&1&2&3&4&5&6&7&8&9&10"];
+        deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
+        deck.showPageControl = YES;
+        deck.cornerStyle = CDXCardCornerStyleCornered;
+        [decks addCardDeck:deck];
+    }
+    {
+        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"0%2C%201%2C%202%2C%204%2C%208%2C%2016%2C%20%E2%88%9E,000000,ffffff&0&1&2&4&8&16&%E2%88%9E"];
+        deck.displayStyle = CDXCardDeckDisplayStyleStack;
+        deck.fontSize = 200.0;
+        [decks addCardDeck:deck];
+    }
+    {
+        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"15%2C%2010%2C%205%2C%200,ffffff,000000&15,000000,00ff00&10,000000,ffff00&5,000000,ff0000&0,ff0000"];
+        deck.displayStyle = CDXCardDeckDisplayStyleSwipeStack;
+        [decks addCardDeck:deck];
+    }
+    {
+        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"multi%20line%20cards,ffffff,000000&ONE&ONE%0dTWO&ONE%0dTWO%0dTHREE&one%0dtwo%0dthree,00000088,ff0000&1%202%0d3%204,000000,ffffff88"];
+        deck.displayStyle = CDXCardDeckDisplayStyleSwipeStack;
+        deck.fontSize = 200.0;
+        [decks addCardDeck:deck];
+    }
+    {
+        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"multi%20line%20cards,ffffff,000000&ONE&ONE%0dTWO&ONE%0dTWO%0dTHREE&one%0dtwo%0dthree,00000088,ff0000&1%202%0d3%204,000000,ffffff88"];
+        deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
+        deck.showPageControl = YES;
+        [decks addCardDeck:deck];
+    }
     
     CDXCardDecksListViewController *vc = [[[CDXCardDecksListViewController alloc] initWithCardDecks:decks] autorelease];
     
