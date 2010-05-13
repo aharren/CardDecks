@@ -79,6 +79,9 @@
         text = [text stringByAppendingString:@" "];
     }
     
+    // set size
+    self.frame = CGRectMake(0, 0, size.width, size.height);
+    
     // update text
     CGFloat fontSize = [card fontSizeConstrainedToSize:size];
     cardText.bounds = CGRectMake(0, 0, 1024, 1024);
