@@ -27,33 +27,6 @@
 #import "CDXImageFactory.h"
 
 
-@interface CDXAppWindowManagerAnimationContext : NSObject {
-    
-@protected
-    UIView *viewToRemove;
-    UIView *viewToAdd;
-}
-
-@property (nonatomic, retain) UIView *viewToRemove;
-@property (nonatomic, retain) UIView *viewToAdd;
-
-@end
-
-
-@implementation CDXAppWindowManagerAnimationContext
-
-@synthesize viewToRemove;
-@synthesize viewToAdd;
-
-- (void) dealloc {
-    ivar_release_and_clear(viewToRemove);
-    ivar_release_and_clear(viewToAdd);
-    [super dealloc];
-}
-
-@end
-
-
 @implementation CDXAppWindowManager
 
 synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
