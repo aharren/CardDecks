@@ -53,8 +53,6 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
         [fullScreenViewController setUserInteractionEnabled:NO];
         ivar_assign_and_retain(fullScreenViewController, viewController);
         
-        UIView *viewToHide = navigationController.view;
-        UIView *viewToShow = viewController.view;
         if (animated) {
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationDuration:0.6];
@@ -64,10 +62,8 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
             [UIView setAnimationWillStartSelector:@selector(pushFullScreenViewControllerAnimationWillStart:context:)];
             [UIView setAnimationDidStopSelector:@selector(pushFullScreenViewControllerAnimationDidStop:finished:context:)];
         }
-        
-        [viewToHide removeFromSuperview];
-        [window addSubview:viewToShow];
-        
+        [navigationController.view removeFromSuperview];
+        [window addSubview:fullScreenViewController.view];
         if (animated) {
             [UIView commitAnimations];
         }
@@ -85,8 +81,6 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
         [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
         [fullScreenViewController setUserInteractionEnabled:NO];
         
-        UIView *viewToHide = fullScreenViewController.view;
-        UIView *viewToShow = navigationController.view;
         if (animated) {
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationDuration:0.6];
@@ -95,13 +89,12 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
             [UIView setAnimationDelegate:self];
             [UIView setAnimationWillStartSelector:@selector(popFullScreenViewControllerAnimationWillStart:context:)];
         }
-        
-        [viewToHide removeFromSuperview];
-        [window addSubview:viewToShow];
-        
+        [fullScreenViewController.view removeFromSuperview];
+        [window addSubview:navigationController.view];
         if (animated) {
             [UIView commitAnimations];
         }
+
         ivar_release_and_clear(fullScreenViewController);
     } else {
         [navigationController popViewControllerAnimated:animated];
