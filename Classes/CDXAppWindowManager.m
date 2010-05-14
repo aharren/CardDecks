@@ -58,7 +58,6 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 }
 
 - (void)pushFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    [[UIApplication sharedApplication] setStatusBarHidden:YES animated:YES];
     [fullScreenViewController setUserInteractionEnabled:YES];
 }
 
