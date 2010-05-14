@@ -28,7 +28,7 @@ _lcl_component(CDXMain,                                 "main",                 
 
 _lcl_component(CDXObjectCache,                          "cache",                "ObjectCache")
 
-_lcl_component(CDXAppDelegate,                          "appdelegate",          "AppDelegate")
+_lcl_component(CDXAppDelegate,                          "application",          "AppDelegate")
 
 _lcl_component(CDXCardDeckCardViewController,           "cardview",             "CardView")
 _lcl_component(CDXCardsViewBase,                        "cardview",             "CardView")
