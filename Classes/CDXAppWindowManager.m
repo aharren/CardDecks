@@ -57,8 +57,8 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
     if ([viewController wantsFullScreenLayout]) {
         [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
-        [fullScreenViewController setUserInteractionEnabled:NO];
         ivar_assign_and_retain(fullScreenViewController, viewController);
+        [fullScreenViewController setUserInteractionEnabled:NO];
         
         if (animated) {
             [UIView beginAnimations:nil context:NULL];
