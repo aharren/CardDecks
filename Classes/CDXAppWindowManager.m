@@ -45,6 +45,14 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     return self;
 }
 
+- (UIViewController<CDXAppWindowViewController> *)visibleViewController {
+    if (fullScreenViewController != nil) {
+        return fullScreenViewController;
+    } else {
+        return [navigationController visibleViewController];
+    }
+}
+
 - (void)pushFullScreenViewControllerAnimationWillStart:(NSString *)animationID context:(void *)context {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
 }
