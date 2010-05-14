@@ -32,9 +32,13 @@
     IBOutlet UIWindow *window;
     UIViewController<CDXAppWindowViewController> *fullScreenViewController;
     UINavigationController *navigationController;
+    
+    UIDeviceOrientation deviceOrientation;
 }
 
 declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
+
+@property (nonatomic, readonly) UIDeviceOrientation deviceOrientation;
 
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated;
 - (void)popViewControllerAnimated:(BOOL)animated;

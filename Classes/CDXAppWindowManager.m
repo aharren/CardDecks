@@ -32,11 +32,15 @@
 
 @implementation CDXAppWindowManager
 
+@synthesize deviceOrientation;
+
 synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 
 - (id)init {
     if ((self = [super init])) {
         ivar_assign(navigationController, [[UINavigationController alloc] init]);
+        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
     return self;
 }
@@ -107,6 +111,16 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 - (void)makeWindowKeyAndVisible {
     [window addSubview:navigationController.view];
     [window makeKeyAndVisible];
+}
+
+- (void)deviceOrientationDidChange:(NSNotification *)notification {
+    UIDeviceOrientation newDeviceOrientation = [[UIDevice currentDevice] orientation];
+    if (newDeviceOrientation == deviceOrientation) {
+        return;
+    }
+    qltrace();
+    
+    deviceOrientation = newDeviceOrientation;
 }
 
 @end
