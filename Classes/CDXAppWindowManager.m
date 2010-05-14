@@ -26,6 +26,9 @@
 #import "CDXAppWindowManager.h"
 #import "CDXImageFactory.h"
 
+#undef ql_component
+#define ql_component lcl_cCDXAppWindowManager
+
 
 @implementation CDXAppWindowManager
 
