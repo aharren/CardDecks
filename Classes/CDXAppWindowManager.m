@@ -39,6 +39,8 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 - (id)init {
     if ((self = [super init])) {
         ivar_assign(navigationController, [[UINavigationController alloc] init]);
+        navigationController.toolbarHidden = NO;
+
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
     }

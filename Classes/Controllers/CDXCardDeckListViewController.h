@@ -26,15 +26,28 @@
 #import "CDXCardDeck.h"
 #import "CDXAppWindowProtocols.h"
 
+typedef enum {
+    CDXCardDeckListViewControllerEditModeNone = 0,
+    CDXCardDeckListViewControllerEditModeDelete,
+    CDXCardDeckListViewControllerEditModeReorder
+} CDXCardDeckListViewControllerEditMode;
+
 
 @interface CDXCardDeckListViewController : UIViewController<CDXAppWindowViewController> {
     
 @protected
     IBOutlet UITableView *cardDeckTableView;
     CDXCardDeck *cardDeck;
+    
+    CDXCardDeckListViewControllerEditMode editMode;
+    IBOutlet UIToolbar *viewToolbar;
 }
 
 - (id)initWithCardDeck:(CDXCardDeck *)cardDeck;
+
+- (IBAction)addButtonPressed;
+- (IBAction)deleteButtonPressed;
+- (IBAction)reorderButtonPressed;
 
 @end
 

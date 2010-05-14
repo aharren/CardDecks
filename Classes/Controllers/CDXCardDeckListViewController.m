@@ -39,16 +39,19 @@
 - (void)dealloc {
     ivar_release_and_clear(cardDeckTableView);
     ivar_release_and_clear(cardDeck);
+    ivar_release_and_clear(viewToolbar);
     [super dealloc];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = cardDeck.name;
+    self.toolbarItems = viewToolbar.items;
 }
 
 - (void)viewDidUnload {
     ivar_release_and_clear(cardDeckTableView);
+    ivar_release_and_clear(viewToolbar);
     [super viewDidUnload];
 }
 
@@ -86,6 +89,88 @@
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return editMode == CDXCardDeckListViewControllerEditModeReorder;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editMode == CDXCardDeckListViewControllerEditModeDelete) {
+        return UITableViewCellEditingStyleDelete;
+    } else {
+        return UITableViewCellEditingStyleNone;
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return editMode == CDXCardDeckListViewControllerEditModeDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editMode == CDXCardDeckListViewControllerEditModeDelete) {
+        if (editingStyle == UITableViewCellEditingStyleDelete) {
+            [cardDeck removeCardAtIndex:indexPath.row];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+    qltrace();
+    CDXCard *card = [cardDeck cardAtIndex:fromIndexPath.row];
+    [card retain];
+    [cardDeck removeCardAtIndex:fromIndexPath.row];
+    [cardDeck insertCard:card atIndex:toIndexPath.row];
+    [card release];
+}
+
+- (IBAction)addButtonPressed {
+    qltrace();
+}
+
+- (IBAction)deleteButtonPressed {
+    qltrace();
+    if (editMode == CDXCardDeckListViewControllerEditModeDelete) {
+        editMode = CDXCardDeckListViewControllerEditModeNone;
+        [self setEditing:NO animated:NO];
+        [cardDeckTableView setEditing:NO animated:YES];
+    } else {
+        if (editMode != CDXCardDeckListViewControllerEditModeNone) {
+            editMode = CDXCardDeckListViewControllerEditModeNone;
+            [self setEditing:NO animated:NO];
+            [cardDeckTableView setEditing:NO animated:YES];
+            [self performSelector:@selector(deleteButtonPressed) withObject:nil afterDelay:0.4];
+        } else {
+            editMode = CDXCardDeckListViewControllerEditModeDelete;
+            [self setEditing:YES animated:NO];
+            [cardDeckTableView setEditing:YES animated:YES];
+        }
+    }
+}
+
+- (IBAction)reorderButtonPressed {
+    qltrace();
+    if (editMode == CDXCardDeckListViewControllerEditModeReorder) {
+        editMode = CDXCardDeckListViewControllerEditModeNone;
+        [self setEditing:NO animated:NO];
+        [cardDeckTableView setEditing:NO animated:YES];
+    } else {
+        if (editMode != CDXCardDeckListViewControllerEditModeNone) {
+            editMode = CDXCardDeckListViewControllerEditModeNone;
+            [self setEditing:NO animated:NO];
+            [cardDeckTableView setEditing:NO animated:YES];
+            [self performSelector:@selector(reorderButtonPressed) withObject:nil afterDelay:0.4];
+        } else {
+            editMode = CDXCardDeckListViewControllerEditModeReorder;
+            [self setEditing:YES animated:NO];
+            [cardDeckTableView setEditing:YES animated:YES];
+        }
+    }
 }
 
 @end

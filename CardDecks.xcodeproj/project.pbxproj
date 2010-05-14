@@ -38,6 +38,9 @@
 		E047CEF7119369430024A022 /* CDXAppWindowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E047CEF6119369430024A022 /* CDXAppWindowManager.m */; };
 		E0BEE1F7117BA68D002F62A7 /* CDXCardsStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */; };
 		E0C51F14119DA03000D75D0E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C51F13119DA03000D75D0E /* Default.png */; };
+		E0C51F89119DAC6D00D75D0E /* Toolbar-Delete.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C51F88119DAC6D00D75D0E /* Toolbar-Delete.png */; };
+		E0C51FB4119DB05000D75D0E /* Toolbar-Add.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C51FB3119DB05000D75D0E /* Toolbar-Add.png */; };
+		E0C51FB6119DB12500D75D0E /* Toolbar-Reorder.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C51FB5119DB12500D75D0E /* Toolbar-Reorder.png */; };
 		E0CCC70E1170DA0A0040D222 /* Icon-Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CCC70C1170DA0A0040D222 /* Icon-Settings.png */; };
 		E0CCC70F1170DA0A0040D222 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CCC70D1170DA0A0040D222 /* Icon.png */; };
 		E0CCC73A1170DC120040D222 /* CDXCardDeckCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0CCC7391170DC120040D222 /* CDXCardDeckCardView.xib */; };
@@ -114,6 +117,9 @@
 		E0BEE1F5117BA68D002F62A7 /* CDXCardsStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsStackView.h; path = Classes/Views/CDXCardsStackView.h; sourceTree = "<group>"; };
 		E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsStackView.m; path = Classes/Views/CDXCardsStackView.m; sourceTree = "<group>"; };
 		E0C51F13119DA03000D75D0E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Images/Default.png; sourceTree = "<group>"; };
+		E0C51F88119DAC6D00D75D0E /* Toolbar-Delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Delete.png"; path = "Images/Toolbars/Toolbar-Delete.png"; sourceTree = "<group>"; };
+		E0C51FB3119DB05000D75D0E /* Toolbar-Add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Add.png"; path = "Images/Toolbars/Toolbar-Add.png"; sourceTree = "<group>"; };
+		E0C51FB5119DB12500D75D0E /* Toolbar-Reorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Reorder.png"; path = "Images/Toolbars/Toolbar-Reorder.png"; sourceTree = "<group>"; };
 		E0CCC70C1170DA0A0040D222 /* Icon-Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Settings.png"; path = "Images/Icon-Settings.png"; sourceTree = "<group>"; };
 		E0CCC70D1170DA0A0040D222 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Images/Icon.png; sourceTree = "<group>"; };
 		E0CCC7391170DC120040D222 /* CDXCardDeckCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardDeckCardView.xib; path = UserInterfaces/CDXCardDeckCardView.xib; sourceTree = "<group>"; };
@@ -310,9 +316,20 @@
 			name = Serializers;
 			sourceTree = "<group>";
 		};
+		E0C51F87119DAC5F00D75D0E /* Toolbars */ = {
+			isa = PBXGroup;
+			children = (
+				E0C51FB5119DB12500D75D0E /* Toolbar-Reorder.png */,
+				E0C51FB3119DB05000D75D0E /* Toolbar-Add.png */,
+				E0C51F88119DAC6D00D75D0E /* Toolbar-Delete.png */,
+			);
+			name = Toolbars;
+			sourceTree = "<group>";
+		};
 		E0CCC70A1170D9D50040D222 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E0C51F87119DAC5F00D75D0E /* Toolbars */,
 				E0C51F13119DA03000D75D0E /* Default.png */,
 				E0CCC70C1170DA0A0040D222 /* Icon-Settings.png */,
 				E0CCC70D1170DA0A0040D222 /* Icon.png */,
@@ -406,6 +423,9 @@
 				E0CCC73A1170DC120040D222 /* CDXCardDeckCardView.xib in Resources */,
 				E0EB6E71117233E400F41F7A /* CDXCardView.xib in Resources */,
 				E0C51F14119DA03000D75D0E /* Default.png in Resources */,
+				E0C51F89119DAC6D00D75D0E /* Toolbar-Delete.png in Resources */,
+				E0C51FB4119DB05000D75D0E /* Toolbar-Add.png in Resources */,
+				E0C51FB6119DB12500D75D0E /* Toolbar-Reorder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
