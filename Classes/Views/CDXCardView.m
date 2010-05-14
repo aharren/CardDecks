@@ -66,6 +66,21 @@
     return CGAffineTransformRotate(CGAffineTransformIdentity, transformAngle);
 }
 
+- (CGSize)sizeForCardOrientation:(CDXCardOrientation)cardOrientation size:(CGSize)size {
+    // map the given card orientation and size to a size
+    switch (cardOrientation) {
+        case CDXCardOrientationUp:
+        case CDXCardOrientationDown:
+        default:
+            return size;
+            break;
+        case CDXCardOrientationRight:
+        case CDXCardOrientationLeft:
+            return CGSizeMake(size.height, size.width);
+            break;
+    }
+}
+
 - (id)initWithCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation {
     // calculate orientation
     CDXCardOrientation cardOrientation = card.orientation + [self cardOrientationFromDeviceOrientation:deviceOrientation];
@@ -86,7 +101,7 @@
     self.frame = CGRectMake(0, 0, size.width, size.height);
     
     // update text
-    CGFloat fontSize = [card fontSizeConstrainedToSize:size];
+    CGFloat fontSize = [card fontSizeConstrainedToSize:[self sizeForCardOrientation:cardOrientation size:size]];
     cardText.bounds = CGRectMake(0, 0, 1024, 1024);
     cardText.numberOfLines = 0;
     cardText.font = [UIFont systemFontOfSize:fontSize];
