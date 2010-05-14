@@ -63,6 +63,9 @@
 - (void)setUserInteractionEnabled:(BOOL)enabled {
 }
 
+- (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }

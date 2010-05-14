@@ -104,6 +104,10 @@
     return currentCardIndex;
 }
 
+- (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
+    qltrace();
+}
+
 - (void)didMoveToSuperview {
     qltrace(@": %@", self.superview);
     [super didMoveToSuperview];

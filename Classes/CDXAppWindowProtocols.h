@@ -28,6 +28,7 @@
 
 @required
 - (void)setUserInteractionEnabled:(BOOL)enabled;
+- (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation;
 
 @end
 

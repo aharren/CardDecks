@@ -126,6 +126,12 @@
     }
 }
 
+- (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
+    if (cardDeck.autoRotate) {
+        [cardsView deviceOrientationDidChange:orientation];
+    }
+}
+
 - (NSUInteger)cardsViewDataSourceCardsCount {
     return [cardDeck cardsCount];
 }

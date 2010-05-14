@@ -53,6 +53,7 @@
 - (void)setViewDataSource:(id<CDXCardsViewDataSource>)dataSource;
 - (void)showCardAtIndex:(NSUInteger)index;
 - (NSUInteger)currentCardIndex;
+- (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation;
 
 @end
 

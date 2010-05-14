@@ -129,6 +129,7 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     qltrace();
     
     deviceOrientation = newDeviceOrientation;
+    [[self visibleViewController] deviceOrientationDidChange:newDeviceOrientation];
 }
 
 @end
