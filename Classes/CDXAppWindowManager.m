@@ -101,7 +101,7 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
         if (animated) {
             [UIView commitAnimations];
         }
-
+        
         ivar_release_and_clear(fullScreenViewController);
     } else {
         [navigationController popViewControllerAnimated:animated];
