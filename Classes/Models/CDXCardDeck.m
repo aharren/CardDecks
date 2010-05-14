@@ -34,6 +34,7 @@
 @synthesize defaultCardOrientation;
 @synthesize displayStyle;
 @synthesize showPageControl;
+@synthesize autoRotate;
 @synthesize cornerStyle;
 @synthesize fontSize;
 
@@ -45,6 +46,7 @@
         ivar_assign(cards, [[NSMutableArray alloc] init]);
         displayStyle = CDXCardDeckDisplayStyleDefault;
         showPageControl = NO;
+        autoRotate = YES;
         cornerStyle = CDXCardCornerStyleRounded;
     }
     return self;
