@@ -54,6 +54,7 @@
 - (void)showCardAtIndex:(NSUInteger)index;
 - (NSUInteger)currentCardIndex;
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation;
+- (void)setDeviceOrientation:(UIDeviceOrientation)orientation;
 
 @end
 

@@ -94,19 +94,23 @@
     UIImage *image = [[CDXImageFactory sharedImageFactory]
                       imageForCard:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex]
                       size:cardViewsSize
-                      deviceOrientation:[[UIDevice currentDevice] orientation]];
+                      deviceOrientation:deviceOrientation];
     view.frame = CGRectMake(scrollViewPageWidth * cardIndex + cardViewsBorder, 0, cardViewsSize.width, cardViewsSize.height);
     view.image = image;
     qltrace(@": %d X> %d", viewIndex, cardIndex);
 }
 
-- (void)showCardAtIndex:(NSUInteger)cardIndex {
+- (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate cached:(BOOL)cached {
     NSUInteger viewIndex = 0;
     for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
         if (cardViewsCardIndex[i] == cardIndex+1) {
             viewIndex = i;
             break;
         }
+    }
+
+    if (!cached) {
+        ivar_array_set(cardViewsCardIndex, CDXCardsSideBySideViewCardViewsSize, 0);
     }
     
     qltrace(@": %d %d", cardIndex, viewIndex);
@@ -116,7 +120,13 @@
     
     currentCardIndex = cardIndex;
     scrollView.contentOffset = CGPointMake(scrollViewPageWidth * cardIndex, 0);
-    [viewDelegate cardsViewDelegateCurrentCardIndexHasChangedTo:currentCardIndex];
+    if (tellDelegate) {
+        [viewDelegate cardsViewDelegateCurrentCardIndexHasChangedTo:currentCardIndex];
+    }
+}
+
+- (void)showCardAtIndex:(NSUInteger)cardIndex {
+    [self showCardAtIndex:cardIndex tellDelegate:YES cached:YES];
 }
 
 - (void)scrollToCardIndex:(NSUInteger)cardIndex {
@@ -132,6 +142,12 @@
 
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
     qltrace();
+    deviceOrientation = orientation;
+    if (self.superview == nil) {
+        return;
+    }
+
+    [self showCardAtIndex:currentCardIndex tellDelegate:NO cached:NO];
 }
 
 - (void)didMoveToSuperview {

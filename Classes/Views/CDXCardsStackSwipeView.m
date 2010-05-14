@@ -67,7 +67,7 @@
         image = [[CDXImageFactory sharedImageFactory]
                  imageForCard:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex]
                  size:cardViewsSize
-                 deviceOrientation:[[UIDevice currentDevice] orientation]];
+                 deviceOrientation:deviceOrientation];
         qltrace(@": X> %d", cardIndex);
     }
     view.image = image;
@@ -106,6 +106,13 @@
 
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
     qltrace();
+    deviceOrientation = orientation;
+    if (self.superview == nil) {
+        return;
+    }
+
+    [cardImages clear];
+    [self showCardAtIndex:currentCardIndex tellDelegate:NO];
 }
 
 - (void)didMoveToSuperview {

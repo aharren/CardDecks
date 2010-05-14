@@ -33,10 +33,12 @@
 
 @synthesize viewDelegate;
 @synthesize viewDataSource;
+@synthesize deviceOrientation;
 
 - (id)initWithFrame:(CGRect)rect {
     qltrace();
     if ((self = [super initWithFrame:rect])) {
+        deviceOrientation = UIDeviceOrientationPortrait;
     }
     return self;
 }

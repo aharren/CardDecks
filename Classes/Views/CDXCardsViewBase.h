@@ -34,12 +34,14 @@
     
     NSUInteger cardsCount;
     NSUInteger currentCardIndex;
+    UIDeviceOrientation deviceOrientation;
 }
 
 - (id)initWithFrame:(CGRect)rect;
 
 @property (nonatomic, assign) id<CDXCardsViewDelegate> viewDelegate;
 @property (nonatomic, assign) id<CDXCardsViewDataSource> viewDataSource;
+@property (nonatomic, assign) UIDeviceOrientation deviceOrientation;
 
 @end
 

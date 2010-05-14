@@ -72,6 +72,11 @@
     [imageView removeFromSuperview];
     ivar_release_and_clear(imageView);
     
+    UIDeviceOrientation deviceOrientation = UIDeviceOrientationPortrait;
+    if (cardDeck.autoRotate) {
+        deviceOrientation = [[CDXAppWindowManager sharedAppWindowManager] deviceOrientation];
+    }
+    
     if (userInteractionEnabled) {
         qltrace(@"card");
         
@@ -91,6 +96,7 @@
         ivar_assign_and_retain(cardsView, v);
         [v setViewDelegate:self];
         [v setViewDataSource:self];
+        [v setDeviceOrientation:deviceOrientation];
         [self.view insertSubview:v atIndex:0];
         [[UIApplication sharedApplication] setStatusBarHidden:YES animated:YES];
     } else {
@@ -99,7 +105,7 @@
         UIImage *image = [[CDXImageFactory sharedImageFactory]
                           imageForCard:[cardDeck cardAtIndex:initialCardIndex]
                           size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
-                          deviceOrientation:[[UIDevice currentDevice] orientation]];
+                          deviceOrientation:deviceOrientation];
         ivar_assign(imageView, [[UIImageView alloc] initWithImage:image]);
         [self.view insertSubview:imageView atIndex:0];
     }
@@ -129,7 +135,16 @@
 
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
     if (cardDeck.autoRotate) {
-        [cardsView deviceOrientationDidChange:orientation];
+        switch (orientation) {
+            default:
+                break;
+            case UIDeviceOrientationLandscapeLeft:
+            case UIDeviceOrientationLandscapeRight:
+            case UIDeviceOrientationPortrait:
+            case UIDeviceOrientationPortraitUpsideDown:
+                [cardsView deviceOrientationDidChange:orientation];
+                break;
+        }
     }
 }
 
