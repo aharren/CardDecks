@@ -65,6 +65,10 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     return self;
 }
 
+- (void)pushFullScreenViewControllerAnimationWillStart:(NSString *)animationID context:(void *)context {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
+}
+
 - (void)pushFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
     [[UIApplication sharedApplication] setStatusBarHidden:YES animated:YES];
     [fullScreenViewController setUserInteractionEnabled:YES];
@@ -84,6 +88,7 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
             [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:window cache:YES];
             [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
             [UIView setAnimationDelegate:self];
+            [UIView setAnimationWillStartSelector:@selector(pushFullScreenViewControllerAnimationWillStart:context:)];
             [UIView setAnimationDidStopSelector:@selector(pushFullScreenViewControllerAnimationDidStop:finished:context:)];
         }
         
@@ -98,6 +103,10 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     }
 }
 
+- (void)popFullScreenViewControllerAnimationWillStart:(NSString *)animationID context:(void *)context {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+}
+
 - (void)popViewControllerAnimated:(BOOL)animated {
     if (fullScreenViewController != nil) {
         [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
@@ -110,6 +119,8 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
             [UIView setAnimationDuration:0.6];
             [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:window cache:YES];
             [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+            [UIView setAnimationDelegate:self];
+            [UIView setAnimationWillStartSelector:@selector(popFullScreenViewControllerAnimationWillStart:context:)];
         }
         
         [viewToHide removeFromSuperview];
