@@ -33,7 +33,6 @@
 - (id)initWithCardDecks:(CDXCardDecks *)decks {
     if ((self = [super initWithNibName:@"CDXCardDecksListView" bundle:nil])) {
         ivar_assign_and_retain(cardDecks, decks);
-        editMode = CDXCardDecksListViewControllerEditModeNone;
     }
     return self;
 }
@@ -109,27 +108,21 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return editMode == CDXCardDecksListViewControllerEditModeReorder;
+    return YES;
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editMode == CDXCardDecksListViewControllerEditModeDelete) {
-        return UITableViewCellEditingStyleDelete;
-    } else {
-        return UITableViewCellEditingStyleNone;
-    }
+    return UITableViewCellEditingStyleDelete;
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    return editMode == CDXCardDecksListViewControllerEditModeDelete;
+    return YES;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editMode == CDXCardDecksListViewControllerEditModeDelete) {
-        if (editingStyle == UITableViewCellEditingStyleDelete) {
-            [cardDecks removeCardDeckAtIndex:indexPath.row];
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        }
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [cardDecks removeCardDeckAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 
@@ -142,48 +135,18 @@
     [deck release];
 }
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    [cardDecksTableView setEditing:editing animated:animated];
+}
+
 - (IBAction)addButtonPressed {
     qltrace();
 }
 
-- (IBAction)deleteButtonPressed {
+- (IBAction)editButtonPressed {
     qltrace();
-    if (editMode == CDXCardDecksListViewControllerEditModeDelete) {
-        editMode = CDXCardDecksListViewControllerEditModeNone;
-        [self setEditing:NO animated:NO];
-        [cardDecksTableView setEditing:NO animated:YES];
-    } else {
-        if (editMode != CDXCardDecksListViewControllerEditModeNone) {
-            editMode = CDXCardDecksListViewControllerEditModeNone;
-            [self setEditing:NO animated:NO];
-            [cardDecksTableView setEditing:NO animated:YES];
-            [self performSelector:@selector(deleteButtonPressed) withObject:nil afterDelay:0.4];
-        } else {
-            editMode = CDXCardDecksListViewControllerEditModeDelete;
-            [self setEditing:YES animated:NO];
-            [cardDecksTableView setEditing:YES animated:YES];
-        }
-    }
-}
-
-- (IBAction)reorderButtonPressed {
-    qltrace();
-    if (editMode == CDXCardDecksListViewControllerEditModeReorder) {
-        editMode = CDXCardDecksListViewControllerEditModeNone;
-        [self setEditing:NO animated:NO];
-        [cardDecksTableView setEditing:NO animated:YES];
-    } else {
-        if (editMode != CDXCardDecksListViewControllerEditModeNone) {
-            editMode = CDXCardDecksListViewControllerEditModeNone;
-            [self setEditing:NO animated:NO];
-            [cardDecksTableView setEditing:NO animated:YES];
-            [self performSelector:@selector(reorderButtonPressed) withObject:nil afterDelay:0.4];
-        } else {
-            editMode = CDXCardDecksListViewControllerEditModeReorder;
-            [self setEditing:YES animated:NO];
-            [cardDecksTableView setEditing:YES animated:YES];
-        }
-    }
+    [self setEditing:!self.editing animated:YES];
 }
 
 @end
