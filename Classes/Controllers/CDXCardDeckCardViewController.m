@@ -98,7 +98,6 @@
         [v setViewDataSource:self];
         [v setDeviceOrientation:deviceOrientation];
         [self.view insertSubview:v atIndex:0];
-        [[UIApplication sharedApplication] setStatusBarHidden:YES animated:YES];
     } else {
         qltrace(@"image");
         

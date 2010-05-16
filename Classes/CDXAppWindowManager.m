@@ -32,6 +32,7 @@
 
 @implementation CDXAppWindowManager
 
+@synthesize window;
 @synthesize deviceOrientation;
 
 synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
@@ -40,7 +41,7 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     if ((self = [super init])) {
         ivar_assign(navigationController, [[UINavigationController alloc] init]);
         navigationController.toolbarHidden = NO;
-
+        
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
@@ -56,46 +57,63 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 }
 
 - (void)pushFullScreenViewControllerAnimationWillStart:(NSString *)animationID context:(void *)context {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
 }
 
 - (void)pushFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
     [fullScreenViewController setUserInteractionEnabled:YES];
 }
 
+- (void)pushFullScreenViewControllerAnimatedAndRemoveView:(UIView *)view {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.6];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:window cache:NO];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationWillStartSelector:@selector(pushFullScreenViewControllerAnimationWillStart:context:)];
+    [UIView setAnimationDidStopSelector:@selector(pushFullScreenViewControllerAnimationDidStop:finished:context:)];
+    
+    [view removeFromSuperview];
+    [window addSubview:fullScreenViewController.view];
+    
+    [UIView commitAnimations];
+}
+
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
     if ([viewController wantsFullScreenLayout]) {
-        [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
         ivar_assign_and_retain(fullScreenViewController, viewController);
-        [fullScreenViewController setUserInteractionEnabled:NO];
-        
+        [fullScreenViewController setUserInteractionEnabled:!animated];
         if (animated) {
-            [UIView beginAnimations:nil context:NULL];
-            [UIView setAnimationDuration:0.6];
-            [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:window cache:YES];
-            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-            [UIView setAnimationDelegate:self];
-            [UIView setAnimationWillStartSelector:@selector(pushFullScreenViewControllerAnimationWillStart:context:)];
-            [UIView setAnimationDidStopSelector:@selector(pushFullScreenViewControllerAnimationDidStop:finished:context:)];
-        }
-        [navigationController.view removeFromSuperview];
-        [window addSubview:fullScreenViewController.view];
-        if (animated) {
-            [UIView commitAnimations];
+            UIImageView *screenshotView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForScreen]] autorelease];
+            navigationView.userInteractionEnabled = NO;
+            [navigationView removeFromSuperview];
+            [window addSubview:screenshotView];
+            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:screenshotView afterDelay:0.0001];
+        } else {
+            [navigationView removeFromSuperview];
+            [window addSubview:fullScreenViewController.view];
         }
     } else {
         [navigationController pushViewController:viewController animated:animated];
+        navigationController.view.frame = [[UIScreen mainScreen] applicationFrame];
     }
 }
 
 - (void)popFullScreenViewControllerAnimationWillStart:(NSString *)animationID context:(void *)context {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+}
+
+- (void)popFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
+    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:YES];
+    navigationController.view.frame = [[UIScreen mainScreen] applicationFrame];
+    navigationView.userInteractionEnabled = YES;
 }
 
 - (void)popViewControllerAnimated:(BOOL)animated {
     if (fullScreenViewController != nil) {
-        [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
         [fullScreenViewController setUserInteractionEnabled:NO];
+        navigationView.frame = [[UIScreen mainScreen] bounds];
         
         if (animated) {
             [UIView beginAnimations:nil context:NULL];
@@ -104,9 +122,12 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
             [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
             [UIView setAnimationDelegate:self];
             [UIView setAnimationWillStartSelector:@selector(popFullScreenViewControllerAnimationWillStart:context:)];
+            [UIView setAnimationDidStopSelector:@selector(popFullScreenViewControllerAnimationDidStop:finished:context:)];
         }
+        
         [fullScreenViewController.view removeFromSuperview];
-        [window addSubview:navigationController.view];
+        [window addSubview:navigationView];
+        
         if (animated) {
             [UIView commitAnimations];
         }
@@ -118,7 +139,12 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 }
 
 - (void)makeWindowKeyAndVisible {
-    [window addSubview:navigationController.view];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    
+    [window addSubview:navigationView];
+    navigationView.frame = [[UIScreen mainScreen] bounds];
+    [navigationView addSubview:navigationController.view];
+    
     [window makeKeyAndVisible];
 }
 

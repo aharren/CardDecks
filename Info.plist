@@ -28,6 +28,8 @@
 	<string>MainWindow</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>
+	<key>UIStatusBarHidden</key>
+	<false/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

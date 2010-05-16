@@ -30,6 +30,8 @@
     
 @protected
     IBOutlet UIWindow *window;
+    IBOutlet UIView *navigationView;
+
     UIViewController<CDXAppWindowViewController> *fullScreenViewController;
     UINavigationController *navigationController;
     
@@ -38,6 +40,7 @@
 
 declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 
+@property (nonatomic, readonly) UIWindow *window;
 @property (nonatomic, readonly) UIDeviceOrientation deviceOrientation;
 
 - (UIViewController<CDXAppWindowViewController> *)visibleViewController;
