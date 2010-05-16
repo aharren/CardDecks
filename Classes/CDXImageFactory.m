@@ -31,6 +31,12 @@
 
 synthesize_singleton(sharedImageFactory, CDXImageFactory);
 
+static CGImageRef CDXImageFactoryCreateScreenImage(void) {
+    extern CGImageRef UIGetScreenImage(void);
+    
+    return UIGetScreenImage();
+}
+
 - (UIImage *)imageForView:(UIView *)view size:(CGSize)size {
     UIGraphicsBeginImageContext(size);
     [view.layer renderInContext:UIGraphicsGetCurrentContext()];
@@ -45,6 +51,19 @@ synthesize_singleton(sharedImageFactory, CDXImageFactory);
     }
     [cardView initWithCard:card size:(CGSize)size deviceOrientation:deviceOrientation];
     return [self imageForView:cardView size:size];
+}
+
+- (UIImage *)imageForScreen {
+#if TARGET_IPHONE_SIMULATOR
+    CGRect bounds = [UIScreen mainScreen].bounds;
+    UIView *window = [CDXAppWindowManager sharedAppWindowManager].window;
+    return [self imageForView:window size:bounds.size];
+#else
+    CGImageRef cgImage = CDXImageFactoryCreateScreenImage();
+    UIImage *image = [UIImage imageWithCGImage:cgImage];
+    CGImageRelease(cgImage);
+    return image;
+#endif
 }
 
 @end

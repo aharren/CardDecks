@@ -39,5 +39,7 @@ declare_singleton(sharedImageFactory, CDXImageFactory);
 
 - (UIImage *)imageForCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation;
 
+- (UIImage *)imageForScreen;
+
 @end
 
