@@ -48,7 +48,7 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     return self;
 }
 
-- (UIViewController<CDXAppWindowViewController> *)visibleViewController {
+- (UIViewController *)visibleViewController {
     if (fullScreenViewController != nil) {
         return fullScreenViewController;
     } else {
@@ -156,7 +156,11 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     qltrace();
     
     deviceOrientation = newDeviceOrientation;
-    [[self visibleViewController] deviceOrientationDidChange:newDeviceOrientation];
+    
+    UIViewController *vc = [self visibleViewController];
+    if ([vc conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
+        [(UIViewController<CDXAppWindowViewController> *)vc deviceOrientationDidChange:newDeviceOrientation];
+    }
 }
 
 @end

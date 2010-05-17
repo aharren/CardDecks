@@ -43,7 +43,7 @@ declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 @property (nonatomic, readonly) UIWindow *window;
 @property (nonatomic, readonly) UIDeviceOrientation deviceOrientation;
 
-- (UIViewController<CDXAppWindowViewController> *)visibleViewController;
+- (UIViewController *)visibleViewController;
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated;
 - (void)popViewControllerAnimated:(BOOL)animated;
 - (void)makeWindowKeyAndVisible;
