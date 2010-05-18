@@ -33,7 +33,7 @@
 @synthesize defaultCardBackgroundColor;
 @synthesize defaultCardOrientation;
 @synthesize displayStyle;
-@synthesize showPageControl;
+@synthesize wantsPageControl;
 @synthesize autoRotate;
 @synthesize cornerStyle;
 @synthesize fontSize;
@@ -45,7 +45,7 @@
         ivar_assign_and_retain(defaultCardBackgroundColor, [CDXColor colorBlack]);
         ivar_assign(cards, [[NSMutableArray alloc] init]);
         displayStyle = CDXCardDeckDisplayStyleDefault;
-        showPageControl = NO;
+        wantsPageControl = NO;
         autoRotate = YES;
         cornerStyle = CDXCardCornerStyleRounded;
     }

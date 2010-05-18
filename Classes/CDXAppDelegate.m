@@ -39,7 +39,7 @@
     {
         CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"0%2C%20...%2C%2010,ffffff,666666&0&1&2&3&4&5&6&7&8&9&10"];
         deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
-        deck.showPageControl = YES;
+        deck.wantsPageControl = YES;
         deck.autoRotate = NO;
         deck.cornerStyle = CDXCardCornerStyleCornered;
         [decks addCardDeck:deck];
@@ -65,7 +65,7 @@
     {
         CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"multi%20line%20cards,ffffff,000000&ONE&ONE%0dTWO&ONE%0dTWO%0dTHREE&one%0dtwo%0dthree,00000088,ff0000&1%202%0d3%204,000000,ffffff88"];
         deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
-        deck.showPageControl = YES;
+        deck.wantsPageControl = YES;
         [decks addCardDeck:deck];
     }
     

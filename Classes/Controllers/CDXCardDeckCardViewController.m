@@ -175,7 +175,7 @@
 - (void)configurePageControl {
     const NSUInteger pageCount = [cardDeck cardsCount];
     
-    pageControl.alpha = cardDeck.showPageControl ? CDXCardDeckCardViewControllerPageControlAlphaVisible : CDXCardDeckCardViewControllerPageControlAlphaHidden;
+    pageControl.alpha = cardDeck.wantsPageControl ? CDXCardDeckCardViewControllerPageControlAlphaVisible : CDXCardDeckCardViewControllerPageControlAlphaHidden;
     pageControl.numberOfPages = pageCount;
     pageControl.currentPage = initialCardIndex;
     
@@ -208,7 +208,7 @@
 - (void)flashPageControl {
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.3];
-    if (!cardDeck.showPageControl) {
+    if (!cardDeck.wantsPageControl) {
         pageControl.alpha = CDXCardDeckCardViewControllerPageControlAlphaVisible;
         pageControl.alpha = CDXCardDeckCardViewControllerPageControlAlphaHidden;
     }

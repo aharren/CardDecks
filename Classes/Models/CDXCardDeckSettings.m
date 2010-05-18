@@ -88,7 +88,7 @@ static const CDXCardDeckSettingGroup groups[] = {
         default:
             return NO;
         case CDXCardDeckSettingsPageControl:
-            return cardDeck.showPageControl;
+            return cardDeck.wantsPageControl;
         case CDXCardDeckSettingsAutoRotate:
             return cardDeck.autoRotate;
     }
@@ -99,7 +99,7 @@ static const CDXCardDeckSettingGroup groups[] = {
         default:
             break;
         case CDXCardDeckSettingsPageControl:
-            cardDeck.showPageControl = value;
+            cardDeck.wantsPageControl = value;
             break;
         case CDXCardDeckSettingsAutoRotate:
             cardDeck.autoRotate = value;

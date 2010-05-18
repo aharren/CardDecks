@@ -47,7 +47,7 @@ typedef enum {
     NSMutableArray *cards;
     
     CDXCardDeckDisplayStyle displayStyle;
-    BOOL showPageControl;
+    BOOL wantsPageControl;
     BOOL autoRotate;
     CDXCardCornerStyle cornerStyle;
     CGFloat fontSize;
@@ -65,7 +65,7 @@ typedef enum {
 - (void)removeCardAtIndex:(NSUInteger)index;
 
 @property (nonatomic, assign) CDXCardDeckDisplayStyle displayStyle;
-@property (nonatomic, assign) BOOL showPageControl;
+@property (nonatomic, assign) BOOL wantsPageControl;
 @property (nonatomic, assign) BOOL autoRotate;
 @property (nonatomic, assign) CDXCardCornerStyle cornerStyle;
 @property (nonatomic, assign) CGFloat fontSize;
