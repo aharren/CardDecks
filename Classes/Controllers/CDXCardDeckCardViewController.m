@@ -177,6 +177,7 @@
     
     pageControl.alpha = cardDeck.showPageControl ? CDXCardDeckCardViewControllerPageControlAlphaVisible : CDXCardDeckCardViewControllerPageControlAlphaHidden;
     pageControl.numberOfPages = pageCount;
+    pageControl.currentPage = initialCardIndex;
     
     // configure the page jump pages
     if (pageCount <= 1) {
