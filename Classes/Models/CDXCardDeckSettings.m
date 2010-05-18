@@ -28,12 +28,14 @@
 
 enum {
     CDXCardDeckSettingsPageControl,
-    CDXCardDeckSettingsAutoRotate
+    CDXCardDeckSettingsAutoRotate,
+    CDXCardDeckSettingsCount
 };
 
 static const CDXSetting settings[] = {
     { CDXCardDeckSettingsPageControl, CDXSettingTypeBoolean, @"Page Control" },
-    { CDXCardDeckSettingsAutoRotate,  CDXSettingTypeBoolean, @"Auto Rotate"  }
+    { CDXCardDeckSettingsAutoRotate, CDXSettingTypeBoolean, @"Auto Rotate" },
+    { 0, 0, @"" }
 };
 
 typedef struct {
@@ -43,8 +45,9 @@ typedef struct {
 } CDXCardDeckSettingGroup;
 
 static const CDXCardDeckSettingGroup groups[] = {
-    { @"Appearance",    1, CDXCardDeckSettingsPageControl },
-    { @"Device Events", 1, CDXCardDeckSettingsAutoRotate  }
+    { @"Appearance", 1, CDXCardDeckSettingsPageControl },
+    { @"Device Events", 1, CDXCardDeckSettingsAutoRotate },
+    { @"", 0, 0 }
 };
 
 
@@ -67,7 +70,7 @@ static const CDXCardDeckSettingGroup groups[] = {
 }
 
 - (NSUInteger)numberOfGroups {
-    return sizeof(groups) / sizeof(CDXCardDeckSettingGroup);
+    return (sizeof(groups) / sizeof(CDXCardDeckSettingGroup)) - 1;
 }
 
 - (NSString *)titleForGroup:(NSUInteger)group {
