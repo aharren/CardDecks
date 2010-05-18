@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDeckListViewController.h
+// CDXSettings.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,24 +23,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXCardDeck.h"
-#import "CDXAppWindowProtocols.h"
+
+typedef enum {
+    CDXSettingTypeBoolean
+} CDXSettingType;
 
 
-@interface CDXCardDeckListViewController : UIViewController<CDXAppWindowViewController> {
-    
-@protected
-    IBOutlet UITableView *cardDeckTableView;
-    CDXCardDeck *cardDeck;
-    
-    IBOutlet UIToolbar *viewToolbar;
-}
+typedef struct {
+    NSUInteger tag;
+    CDXSettingType type;
+    NSString *label;
+} CDXSetting;
 
-- (id)initWithCardDeck:(CDXCardDeck *)cardDeck;
 
-- (IBAction)addButtonPressed;
-- (IBAction)editButtonPressed;
-- (IBAction)settingsButtonPressed;
+@protocol CDXSettings
+
+- (NSString *)title;
+
+- (NSUInteger)numberOfGroups;
+- (NSString *)titleForGroup:(NSUInteger)group;
+- (NSUInteger)numberOfSettingsInGroup:(NSUInteger)group;
+- (CDXSetting)settingAtIndex:(NSUInteger)index inGroup:(NSUInteger)group;
+
+- (BOOL)booleanValueForSettingWithTag:(NSUInteger)tag;
+- (void)setBooleanValue:(BOOL)value forSettingWithTag:(NSUInteger)tag;
 
 @end
 

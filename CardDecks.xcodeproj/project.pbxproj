@@ -37,6 +37,10 @@
 		E041E3A21169FE24009DC453 /* CDXCardDeckURLSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E041E3941169FDD5009DC453 /* CDXCardDeckURLSerializer.m */; };
 		E047CEF7119369430024A022 /* CDXAppWindowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E047CEF6119369430024A022 /* CDXAppWindowManager.m */; };
 		E0620F8B119E950D00234667 /* StatusBarDefault.png in Resources */ = {isa = PBXBuildFile; fileRef = E0620F8A119E950D00234667 /* StatusBarDefault.png */; };
+		E070CF5B119FF13800626F34 /* Toolbar-Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = E070CF5A119FF13800626F34 /* Toolbar-Settings.png */; };
+		E070CF8911A08B9600626F34 /* CDXSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E070CF8811A08B9600626F34 /* CDXSettingsViewController.m */; };
+		E070CF8B11A08BCE00626F34 /* CDXSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E070CF8A11A08BCE00626F34 /* CDXSettingsView.xib */; };
+		E070CFA911A08D4400626F34 /* CDXCardDeckSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E070CFA811A08D4400626F34 /* CDXCardDeckSettings.m */; };
 		E0BEE1F7117BA68D002F62A7 /* CDXCardsStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */; };
 		E0C51F14119DA03000D75D0E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C51F13119DA03000D75D0E /* Default.png */; };
 		E0C51FB4119DB05000D75D0E /* Toolbar-Add.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C51FB3119DB05000D75D0E /* Toolbar-Add.png */; };
@@ -115,6 +119,13 @@
 		E047CEF5119369430024A022 /* CDXAppWindowManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppWindowManager.h; path = Classes/CDXAppWindowManager.h; sourceTree = "<group>"; };
 		E047CEF6119369430024A022 /* CDXAppWindowManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppWindowManager.m; path = Classes/CDXAppWindowManager.m; sourceTree = "<group>"; };
 		E0620F8A119E950D00234667 /* StatusBarDefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StatusBarDefault.png; path = Images/StatusBarDefault.png; sourceTree = "<group>"; };
+		E070CF5A119FF13800626F34 /* Toolbar-Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Settings.png"; path = "Images/Toolbars/Toolbar-Settings.png"; sourceTree = "<group>"; };
+		E070CF8711A08B9600626F34 /* CDXSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXSettingsViewController.h; path = Classes/Controllers/CDXSettingsViewController.h; sourceTree = "<group>"; };
+		E070CF8811A08B9600626F34 /* CDXSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXSettingsViewController.m; path = Classes/Controllers/CDXSettingsViewController.m; sourceTree = "<group>"; };
+		E070CF8A11A08BCE00626F34 /* CDXSettingsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXSettingsView.xib; path = UserInterfaces/CDXSettingsView.xib; sourceTree = "<group>"; };
+		E070CFA711A08D4400626F34 /* CDXCardDeckSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckSettings.h; path = Classes/Models/CDXCardDeckSettings.h; sourceTree = "<group>"; };
+		E070CFA811A08D4400626F34 /* CDXCardDeckSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckSettings.m; path = Classes/Models/CDXCardDeckSettings.m; sourceTree = "<group>"; };
+		E0BE980F11A1CF0000F30C50 /* CDXSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXSettings.h; path = Classes/Models/CDXSettings.h; sourceTree = "<group>"; };
 		E0BEE1F5117BA68D002F62A7 /* CDXCardsStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsStackView.h; path = Classes/Views/CDXCardsStackView.h; sourceTree = "<group>"; };
 		E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsStackView.m; path = Classes/Views/CDXCardsStackView.m; sourceTree = "<group>"; };
 		E0C51F13119DA03000D75D0E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Images/Default.png; sourceTree = "<group>"; };
@@ -207,6 +218,9 @@
 				E032F12F1169D9FB0033980C /* CDXCardDecks.h */,
 				E032F1301169D9FB0033980C /* CDXCardDecks.m */,
 				E032F1531169DB790033980C /* CDXCardDecksTests.m */,
+				E0BE980F11A1CF0000F30C50 /* CDXSettings.h */,
+				E070CFA711A08D4400626F34 /* CDXCardDeckSettings.h */,
+				E070CFA811A08D4400626F34 /* CDXCardDeckSettings.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -220,6 +234,8 @@
 				E02320F6117093720043D6CF /* CDXCardDeckListViewController.m */,
 				E02320C4117091920043D6CF /* CDXCardDecksListViewController.h */,
 				E02320C5117091920043D6CF /* CDXCardDecksListViewController.m */,
+				E070CF8711A08B9600626F34 /* CDXSettingsViewController.h */,
+				E070CF8811A08B9600626F34 /* CDXSettingsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -302,6 +318,7 @@
 				E0CCC7391170DC120040D222 /* CDXCardDeckCardView.xib */,
 				E02320F8117093870043D6CF /* CDXCardDeckListView.xib */,
 				E032F1671169DDC10033980C /* CDXCardDecksListView.xib */,
+				E070CF8A11A08BCE00626F34 /* CDXSettingsView.xib */,
 			);
 			name = "User Interfaces";
 			sourceTree = "<group>";
@@ -319,6 +336,7 @@
 		E0C51F87119DAC5F00D75D0E /* Toolbars */ = {
 			isa = PBXGroup;
 			children = (
+				E070CF5A119FF13800626F34 /* Toolbar-Settings.png */,
 				E0C51FB5119DB12500D75D0E /* Toolbar-Edit-Reorder.png */,
 				E0C51FB3119DB05000D75D0E /* Toolbar-Add.png */,
 			);
@@ -426,6 +444,8 @@
 				E0C51FB4119DB05000D75D0E /* Toolbar-Add.png in Resources */,
 				E0C51FB6119DB12500D75D0E /* Toolbar-Edit-Reorder.png in Resources */,
 				E0620F8B119E950D00234667 /* StatusBarDefault.png in Resources */,
+				E070CF5B119FF13800626F34 /* Toolbar-Settings.png in Resources */,
+				E070CF8B11A08BCE00626F34 /* CDXSettingsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,6 +499,8 @@
 				E0F2B2AB119550BC0092D11B /* CDXObjectCache.m in Sources */,
 				E0F2B3C11195617A0092D11B /* CDXCardsViewBase.m in Sources */,
 				E0F2B3F7119563910092D11B /* CDXCardsStackSwipeView.m in Sources */,
+				E070CF8911A08B9600626F34 /* CDXSettingsViewController.m in Sources */,
+				E070CFA911A08D4400626F34 /* CDXCardDeckSettings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

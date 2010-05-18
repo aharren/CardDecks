@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDeckListViewController.h
+// CDXCardDeckSettings.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -24,23 +24,17 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeck.h"
-#import "CDXAppWindowProtocols.h"
+#import "CDXSettings.h"
 
 
-@interface CDXCardDeckListViewController : UIViewController<CDXAppWindowViewController> {
+@interface CDXCardDeckSettings : NSObject<CDXSettings> {
     
 @protected
-    IBOutlet UITableView *cardDeckTableView;
     CDXCardDeck *cardDeck;
     
-    IBOutlet UIToolbar *viewToolbar;
 }
 
 - (id)initWithCardDeck:(CDXCardDeck *)cardDeck;
-
-- (IBAction)addButtonPressed;
-- (IBAction)editButtonPressed;
-- (IBAction)settingsButtonPressed;
 
 @end
 
