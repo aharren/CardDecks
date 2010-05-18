@@ -40,7 +40,7 @@
         CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"0%2C%20...%2C%2010,ffffff,666666&0&1&2&3&4&5&6&7&8&9&10"];
         deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
         deck.wantsPageControl = YES;
-        deck.autoRotate = NO;
+        deck.wantsAutoRotate = NO;
         deck.cornerStyle = CDXCardCornerStyleCornered;
         [decks addCardDeck:deck];
     }
@@ -53,7 +53,7 @@
     {
         CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"15%2C%2010%2C%205%2C%200,ffffff,000000&15,000000,00ff00&10,000000,ffff00&5,000000,ff0000&0,ff0000"];
         deck.displayStyle = CDXCardDeckDisplayStyleSwipeStack;
-        deck.autoRotate = NO;
+        deck.wantsAutoRotate = NO;
         [decks addCardDeck:deck];
     }
     {

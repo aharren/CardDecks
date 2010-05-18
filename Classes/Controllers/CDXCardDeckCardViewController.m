@@ -73,7 +73,7 @@
     ivar_release_and_clear(imageView);
     
     UIDeviceOrientation deviceOrientation = UIDeviceOrientationPortrait;
-    if (cardDeck.autoRotate) {
+    if (cardDeck.wantsAutoRotate) {
         deviceOrientation = [[CDXAppWindowManager sharedAppWindowManager] deviceOrientation];
     }
     
@@ -133,7 +133,7 @@
 }
 
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
-    if (cardDeck.autoRotate) {
+    if (cardDeck.wantsAutoRotate) {
         switch (orientation) {
             default:
                 break;
