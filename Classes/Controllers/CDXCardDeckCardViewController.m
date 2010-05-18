@@ -219,6 +219,9 @@
     if (!cardDeck.wantsPageControl) {
         pageControl.alpha = CDXCardDeckCardViewControllerPageControlAlphaVisible;
         pageControl.alpha = CDXCardDeckCardViewControllerPageControlAlphaHidden;
+    } else {
+        pageControl.alpha = CDXCardDeckCardViewControllerPageControlAlphaHidden;
+        pageControl.alpha = CDXCardDeckCardViewControllerPageControlAlphaVisible;
     }
     [UIView commitAnimations];
 }
