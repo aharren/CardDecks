@@ -35,6 +35,7 @@
 @synthesize displayStyle;
 @synthesize wantsPageControl;
 @synthesize wantsAutoRotate;
+@synthesize wantsShakeRandom;
 @synthesize wantsIdleTimer;
 @synthesize cornerStyle;
 @synthesize fontSize;
@@ -48,6 +49,7 @@
         displayStyle = CDXCardDeckDisplayStyleDefault;
         wantsPageControl = NO;
         wantsAutoRotate = YES;
+        wantsShakeRandom = NO;
         wantsIdleTimer = NO;
         cornerStyle = CDXCardCornerStyleRounded;
     }

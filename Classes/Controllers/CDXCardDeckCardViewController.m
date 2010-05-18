@@ -98,9 +98,13 @@
         [v setViewDataSource:self];
         [v setDeviceOrientation:deviceOrientation];
         [self.view insertSubview:v atIndex:0];
+        
+        // receive shake events as first responder
+        [self becomeFirstResponder];
     } else {
         qltrace(@"image");
         
+        [self resignFirstResponder];
         UIImage *image = [[CDXImageFactory sharedImageFactory]
                           imageForCard:[cardDeck cardAtIndex:initialCardIndex]
                           size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
@@ -131,6 +135,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+    [self resignFirstResponder];
 }
 
 - (void)setUserInteractionEnabled:(BOOL)enabled {
@@ -178,6 +183,31 @@
 - (void)cardsViewDelegateCurrentCardIndexHasChangedTo:(NSUInteger)index {
     pageControl.currentPage = index;
     [self flashPageControl];
+}
+
+- (BOOL)canBecomeFirstResponder {
+    // required for receiving shake events
+    return YES;
+}
+
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    if (!userInteractionEnabled) {
+        return;
+    }
+    
+    // shake event received, jump to random page
+    if (event.type == UIEventSubtypeMotionShake && cardDeck.wantsShakeRandom) {
+        [self randomButtonPressed];
+    }
+    
+    if ([super respondsToSelector:@selector(motionEnded:withEvent:)]) {
+        [super motionEnded:motion withEvent:event];
+    }
+}
+
+- (IBAction)randomButtonPressed {
+    NSUInteger randomCardIndex = (((double)arc4random() / 0x100000000) * [cardDeck cardsCount]);
+    [cardsView showCardAtIndex:randomCardIndex];
 }
 
 - (void)configurePageControl {
