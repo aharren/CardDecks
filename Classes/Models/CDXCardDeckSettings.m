@@ -29,12 +29,14 @@
 enum {
     CDXCardDeckSettingsPageControl,
     CDXCardDeckSettingsAutoRotate,
+    CDXCardDeckSettingsIdleTimer,
     CDXCardDeckSettingsCount
 };
 
 static const CDXSetting settings[] = {
     { CDXCardDeckSettingsPageControl, CDXSettingTypeBoolean, @"Page Control" },
     { CDXCardDeckSettingsAutoRotate, CDXSettingTypeBoolean, @"Auto Rotate" },
+    { CDXCardDeckSettingsIdleTimer, CDXSettingTypeBoolean, @"Idle Timer" },
     { 0, 0, @"" }
 };
 
@@ -47,6 +49,7 @@ typedef struct {
 static const CDXCardDeckSettingGroup groups[] = {
     { @"Appearance", 1, CDXCardDeckSettingsPageControl },
     { @"Device Events", 1, CDXCardDeckSettingsAutoRotate },
+    { @"Energy Saver", 1, CDXCardDeckSettingsIdleTimer },
     { @"", 0, 0 }
 };
 
@@ -94,6 +97,8 @@ static const CDXCardDeckSettingGroup groups[] = {
             return cardDeck.wantsPageControl;
         case CDXCardDeckSettingsAutoRotate:
             return cardDeck.wantsAutoRotate;
+        case CDXCardDeckSettingsIdleTimer:
+            return cardDeck.wantsIdleTimer;
     }
 }
 
@@ -106,6 +111,9 @@ static const CDXCardDeckSettingGroup groups[] = {
             break;
         case CDXCardDeckSettingsAutoRotate:
             cardDeck.wantsAutoRotate = value;
+            break;
+        case CDXCardDeckSettingsIdleTimer:
+            cardDeck.wantsIdleTimer = value;
             break;
     }
 }

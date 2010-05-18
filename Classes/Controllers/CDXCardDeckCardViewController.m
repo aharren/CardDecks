@@ -125,6 +125,14 @@
     [super viewDidUnload];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [[UIApplication sharedApplication] setIdleTimerDisabled:!cardDeck.wantsIdleTimer];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+}
+
 - (void)setUserInteractionEnabled:(BOOL)enabled {
     userInteractionEnabled = enabled;
     if (self.view.superview != nil) {
