@@ -46,11 +46,12 @@ typedef enum {
     
     NSMutableArray *cards;
     
-    CDXCardDeckDisplayStyle displayStyle;
     BOOL wantsPageControl;
     BOOL wantsAutoRotate;
     BOOL wantsShakeRandom;
     BOOL wantsIdleTimer;
+    
+    CDXCardDeckDisplayStyle displayStyle;
     CDXCardCornerStyle cornerStyle;
     CGFloat fontSize;
 }
@@ -66,11 +67,12 @@ typedef enum {
 - (void)insertCard:(CDXCard *)card atIndex:(NSUInteger)index;
 - (void)removeCardAtIndex:(NSUInteger)index;
 
-@property (nonatomic, assign) CDXCardDeckDisplayStyle displayStyle;
 @property (nonatomic, assign) BOOL wantsPageControl;
 @property (nonatomic, assign) BOOL wantsAutoRotate;
 @property (nonatomic, assign) BOOL wantsShakeRandom;
 @property (nonatomic, assign) BOOL wantsIdleTimer;
+
+@property (nonatomic, assign) CDXCardDeckDisplayStyle displayStyle;
 @property (nonatomic, assign) CDXCardCornerStyle cornerStyle;
 @property (nonatomic, assign) CGFloat fontSize;
 

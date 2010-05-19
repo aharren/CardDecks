@@ -32,11 +32,11 @@
 @synthesize defaultCardTextColor;
 @synthesize defaultCardBackgroundColor;
 @synthesize defaultCardOrientation;
-@synthesize displayStyle;
 @synthesize wantsPageControl;
 @synthesize wantsAutoRotate;
 @synthesize wantsShakeRandom;
 @synthesize wantsIdleTimer;
+@synthesize displayStyle;
 @synthesize cornerStyle;
 @synthesize fontSize;
 
@@ -46,11 +46,11 @@
         ivar_assign_and_retain(defaultCardTextColor, [CDXColor colorWhite]);
         ivar_assign_and_retain(defaultCardBackgroundColor, [CDXColor colorBlack]);
         ivar_assign(cards, [[NSMutableArray alloc] init]);
-        displayStyle = CDXCardDeckDisplayStyleDefault;
         wantsPageControl = NO;
         wantsAutoRotate = YES;
         wantsShakeRandom = NO;
         wantsIdleTimer = NO;
+        displayStyle = CDXCardDeckDisplayStyleDefault;
         cornerStyle = CDXCardCornerStyleRounded;
     }
     return self;
