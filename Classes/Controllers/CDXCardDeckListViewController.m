@@ -74,7 +74,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if ([cardDeckTableView numberOfRowsInSection:0] != 0) {
-        [cardDeckTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+        [cardDeckTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
     }
     [cardDeckTableView reloadData];
 }
