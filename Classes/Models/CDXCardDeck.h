@@ -69,6 +69,7 @@ typedef enum {
 - (void)addCard:(CDXCard *)card;
 - (void)insertCard:(CDXCard *)card atIndex:(NSUInteger)index;
 - (void)removeCardAtIndex:(NSUInteger)index;
+- (void)replaceCardAtIndex:(NSUInteger)index withCard:(CDXCard *)card;
 
 @property (nonatomic, assign) BOOL wantsPageControl;
 @property (nonatomic, assign) BOOL wantsAutoRotate;

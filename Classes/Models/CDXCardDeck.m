@@ -119,6 +119,14 @@
     [self updateDescription];
 }
 
+- (void)replaceCardAtIndex:(NSUInteger)index withCard:(CDXCard *)card {
+    [card retain];
+    [cards removeObjectAtIndex:index];
+    [cards insertObject:card atIndex:index];
+    [card release];
+    [self updateDescription];
+}
+
 - (CDXCard *)cardWithDefaults {
     CDXCard *card = [[[CDXCard alloc] init] autorelease];
     if (card) {
