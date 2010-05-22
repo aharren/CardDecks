@@ -25,6 +25,7 @@
 
 #import "CDXCardDeckListViewController.h"
 #import "CDXCardDeckCardViewController.h"
+#import "CDXCardDeckCardEditViewController.h"
 #import "CDXSettingsViewController.h"
 #import "CDXImageFactory.h"
 
@@ -48,7 +49,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = cardDeck.name;
+    UINavigationItem *navigationItem = self.navigationItem;
+    navigationItem.title = cardDeck.name;
+    navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc]
+                                         initWithTitle:@"Cards"
+                                         style:UIBarButtonItemStylePlain
+                                         target:nil
+                                         action:nil]
+                                        autorelease];
     self.toolbarItems = viewToolbar.items;
     ivar_assign_and_retain(tableCellTextFont, [UIFont boldSystemFontOfSize:18]);
     tableCellImageSize = CGSizeMake(10, 10);
@@ -59,6 +67,11 @@
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(tableCellTextFont);
     [super viewDidUnload];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [cardDeckTableView reloadData];
 }
 
 - (void)setUserInteractionEnabled:(BOOL)enabled {
@@ -97,6 +110,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    CDXCardDeckCardEditViewController *vc = [[[CDXCardDeckCardEditViewController alloc] initWithCardDeck:cardDeck atIndex:indexPath.row] autorelease];
+    [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
