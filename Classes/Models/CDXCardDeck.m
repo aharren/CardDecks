@@ -91,6 +91,13 @@
     return (CDXCard *)[cards objectAtIndex:index];
 }
 
+- (CDXCard *)cardAtIndex:(NSUInteger)index orCard:(CDXCard *)card {
+    if ([cards count] <= index) {
+        return card;
+    }
+    return (CDXCard *)[cards objectAtIndex:index];
+}
+
 - (void)addCard:(CDXCard *)card {
     card.cornerStyle = cornerStyle;
     [cards addObject:card];
