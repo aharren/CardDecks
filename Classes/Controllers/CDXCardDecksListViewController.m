@@ -98,7 +98,11 @@
     }
     
     CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
-    cell.textLabel.text = deck.name;
+    NSString *name = deck.name;
+    if ([@"" isEqualToString:name]) {
+        name = @" ";
+    }
+    cell.textLabel.text = name;
     cell.textLabel.font = tableCellTextFont;
     cell.detailTextLabel.text = deck.description;
     cell.detailTextLabel.font = tableCellDetailTextFont;
