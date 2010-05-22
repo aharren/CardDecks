@@ -39,23 +39,38 @@
 
 - (void)dealloc {
     ivar_release_and_clear(text);
+    ivar_release_and_clear(viewButtonsUpDownBarButtonItem);
+    ivar_release_and_clear(viewButtonsUpDown);
     ivar_release_and_clear(cardDeck);
     [super dealloc];
 }
 
+- (void)showCardAtIndex:(NSUInteger)cardIndex {
+    CDXCard *card = [cardDeck cardAtIndex:cardIndex];
+    text.text = card.text;
+    currentCardIndex = cardIndex;
+    
+    [viewButtonsUpDown setEnabled:(currentCardIndex != 0) forSegmentAtIndex:0];
+    [viewButtonsUpDown setEnabled:(currentCardIndex < ([cardDeck cardsCount] - 1)) forSegmentAtIndex:1];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [text becomeFirstResponder];
 }
 
 - (void)viewDidUnload {
     ivar_release_and_clear(text);
+    ivar_release_and_clear(viewButtonsUpDownBarButtonItem);
+    ivar_release_and_clear(viewButtonsUpDown);
     [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    text.text = [cardDeck cardAtIndex:currentCardIndex].text;
+    self.navigationItem.rightBarButtonItem = viewButtonsUpDownBarButtonItem;
+
+    [self showCardAtIndex:currentCardIndex];
+    [text becomeFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -69,6 +84,10 @@
 }
 
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
+}
+
+- (IBAction)upDownButtonPressed {
+    [self showCardAtIndex:(currentCardIndex - 1) + (viewButtonsUpDown.selectedSegmentIndex << 1)];
 }
 
 @end

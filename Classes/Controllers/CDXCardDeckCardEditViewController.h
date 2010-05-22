@@ -32,11 +32,16 @@
 @protected
     IBOutlet UITextView *text;
 
+    IBOutlet UIBarButtonItem *viewButtonsUpDownBarButtonItem;
+    IBOutlet UISegmentedControl *viewButtonsUpDown;
+
     CDXCardDeck *cardDeck;
     NSUInteger currentCardIndex;
 }
 
 - (id)initWithCardDeck:(CDXCardDeck *)cardDeck atIndex:(NSUInteger)index;
+
+- (IBAction)upDownButtonPressed;
 
 @end
 
