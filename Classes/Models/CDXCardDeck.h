@@ -39,6 +39,7 @@ typedef enum {
     
 @protected
     NSString *name;
+    NSString *description;
     
     CDXColor *defaultCardTextColor;
     CDXColor *defaultCardBackgroundColor;
@@ -57,6 +58,7 @@ typedef enum {
 }
 
 @property (nonatomic, copy) NSString *name;
+@property (nonatomic, readonly) NSString *description;
 @property (nonatomic, retain) CDXColor *defaultCardTextColor;
 @property (nonatomic, retain) CDXColor *defaultCardBackgroundColor;
 @property (nonatomic, assign) CDXCardOrientation defaultCardOrientation;

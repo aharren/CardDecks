@@ -29,6 +29,7 @@
 @implementation CDXCardDeck
 
 @synthesize name;
+@synthesize description;
 @synthesize defaultCardTextColor;
 @synthesize defaultCardBackgroundColor;
 @synthesize defaultCardOrientation;
@@ -43,6 +44,7 @@
 - (id)init {
     if ((self = [super init])) {
         ivar_assign_and_copy(name, @"");
+        ivar_assign_and_copy(description, @"");
         ivar_assign_and_retain(defaultCardTextColor, [CDXColor colorWhite]);
         ivar_assign_and_retain(defaultCardBackgroundColor, [CDXColor colorBlack]);
         ivar_assign(cards, [[NSMutableArray alloc] init]);
@@ -58,10 +60,27 @@
 
 - (void)dealloc {
     ivar_release_and_clear(name);
+    ivar_release_and_clear(description);
     ivar_release_and_clear(defaultCardTextColor);
     ivar_release_and_clear(defaultCardBackgroundColor);
     ivar_release_and_clear(cards);
     [super dealloc];
+}
+
+- (void)updateDescription {
+    NSMutableString *d = [[[NSMutableString alloc] initWithCapacity:100] autorelease];
+    BOOL first = YES;
+    for (CDXCard *card in cards) {
+        if (!first) {
+            [d appendString:@", "];
+        }
+        [d appendString:card.text];
+        first = NO;
+        if ([d length] >= 60) {
+            break;
+        }
+    }
+    ivar_assign_and_copy(description, d);
 }
 
 - (NSUInteger)cardsCount {
@@ -75,6 +94,7 @@
 - (void)addCard:(CDXCard *)card {
     card.cornerStyle = cornerStyle;
     [cards addObject:card];
+    [self updateDescription];
 }
 
 - (void)insertCard:(CDXCard *)card atIndex:(NSUInteger)index {
@@ -84,10 +104,12 @@
     } else {
         [cards insertObject:card atIndex:index];
     }
+    [self updateDescription];
 }
 
 - (void)removeCardAtIndex:(NSUInteger)index {
     [cards removeObjectAtIndex:index];
+    [self updateDescription];
 }
 
 - (CDXCard *)cardWithDefaults {
