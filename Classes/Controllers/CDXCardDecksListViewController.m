@@ -110,13 +110,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
-    CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeck:deck atIndex:0] autorelease];
+    CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck] autorelease];
+    CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:context] autorelease];
     [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
-    CDXCardDeckListViewController *vc = [[[CDXCardDeckListViewController alloc] initWithCardDeck:deck] autorelease];
+    CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck] autorelease];
+    CDXCardDeckListViewController *vc = [[[CDXCardDeckListViewController alloc] initWithCardDeckViewContext:context] autorelease];
     [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
 }
 

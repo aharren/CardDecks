@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeck.h"
+#import "CDXCardDeckViewContext.h"
 #import "CDXCardsViewProtocols.h"
 #import "CDXAppWindowProtocols.h"
 
@@ -31,8 +32,8 @@
 @interface CDXCardDeckCardViewController : UIViewController<CDXAppWindowViewController, CDXCardsViewDelegate, CDXCardsViewDataSource> {
     
 @protected
+    CDXCardDeckViewContext *cardDeckViewContext;
     CDXCardDeck *cardDeck;
-    NSUInteger initialCardIndex;
     
     UIView<CDXCardsViewView> *cardsView;
     
@@ -44,7 +45,7 @@
     NSUInteger pageControlJumpPages[5];
 }
 
-- (id)initWithCardDeck:(CDXCardDeck *)cardDeck atIndex:(NSUInteger)index;
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
 
 - (IBAction)pageControlLeftButtonPressed;
 - (IBAction)pageControlRightButtonPressed;

@@ -46,11 +46,11 @@
 #undef ql_component
 #define ql_component lcl_cCDXCardDeckCardViewController
 
-- (id)initWithCardDeck:(CDXCardDeck *)deck atIndex:(NSUInteger)index {
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
     qltrace();
     if ((self = [super initWithNibName:@"CDXCardDeckCardView" bundle:nil])) {
-        ivar_assign_and_retain(cardDeck, deck);
-        initialCardIndex = index;
+        ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
+        ivar_assign_and_retain(cardDeck, cardDeckViewContext.cardDeck);
         self.wantsFullScreenLayout = YES;
     }
     return self;
@@ -58,6 +58,7 @@
 
 - (void)dealloc {
     qltrace();
+    ivar_release_and_clear(cardDeckViewContext);
     ivar_release_and_clear(cardDeck);
     ivar_release_and_clear(pageControl);
     ivar_release_and_clear(cardsView);
@@ -105,7 +106,7 @@
         qltrace(@"image");
         
         [self resignFirstResponder];
-        CDXCard *card = [cardDeck cardAtIndex:initialCardIndex orCard:nil];
+        CDXCard *card = [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex orCard:nil];
         if (card != nil) {
             UIImage *image = [[CDXImageFactory sharedImageFactory]
                               imageForCard:card
@@ -172,7 +173,7 @@
 }
 
 - (NSUInteger)cardsViewDataSourceInitialCardIndex {
-    return initialCardIndex;
+    return cardDeckViewContext.currentCardIndex;
 }
 
 - (void)cardsViewDelegateTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -184,6 +185,7 @@
 }
 
 - (void)cardsViewDelegateCurrentCardIndexHasChangedTo:(NSUInteger)index {
+    cardDeckViewContext.currentCardIndex = index;
     pageControl.currentPage = index;
     [self flashPageControl];
 }
@@ -218,7 +220,7 @@
     
     pageControl.alpha = cardDeck.wantsPageControl ? CDXCardDeckCardViewControllerPageControlAlphaVisible : CDXCardDeckCardViewControllerPageControlAlphaHidden;
     pageControl.numberOfPages = pageCount;
-    pageControl.currentPage = initialCardIndex;
+    pageControl.currentPage = cardDeckViewContext.currentCardIndex;
     
     // configure the page jump pages
     if (pageCount <= 1) {

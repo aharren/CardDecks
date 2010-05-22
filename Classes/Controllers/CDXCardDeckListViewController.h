@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeck.h"
+#import "CDXCardDeckViewContext.h"
 #import "CDXAppWindowProtocols.h"
 
 
@@ -31,6 +32,7 @@
     
 @protected
     IBOutlet UITableView *cardDeckTableView;
+    CDXCardDeckViewContext *cardDeckViewContext;
     CDXCardDeck *cardDeck;
     
     IBOutlet UIToolbar *viewToolbar;
@@ -39,7 +41,7 @@
     CGSize tableCellImageSize;
 }
 
-- (id)initWithCardDeck:(CDXCardDeck *)cardDeck;
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
 
 - (IBAction)addButtonPressed;
 - (IBAction)editButtonPressed;

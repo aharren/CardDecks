@@ -32,15 +32,17 @@
 
 @implementation CDXCardDeckListViewController
 
-- (id)initWithCardDeck:(CDXCardDeck *)deck {
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
     if ((self = [super initWithNibName:@"CDXCardDeckListView" bundle:nil])) {
-        ivar_assign_and_retain(cardDeck, deck);
+        ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
+        ivar_assign_and_retain(cardDeck, cardDeckViewContext.cardDeck);
     }
     return self;
 }
 
 - (void)dealloc {
     ivar_release_and_clear(cardDeckTableView);
+    ivar_release_and_clear(cardDeckViewContext);
     ivar_release_and_clear(cardDeck);
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(tableCellTextFont);
@@ -71,6 +73,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    if ([cardDeckTableView numberOfRowsInSection:0] != 0) {
+        [cardDeckTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+    }
     [cardDeckTableView reloadData];
 }
 
@@ -105,12 +110,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeck:cardDeck atIndex:indexPath.row] autorelease];
+    cardDeckViewContext.currentCardIndex = indexPath.row;
+    CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
     [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    CDXCardDeckCardEditViewController *vc = [[[CDXCardDeckCardEditViewController alloc] initWithCardDeck:cardDeck atIndex:indexPath.row] autorelease];
+    cardDeckViewContext.currentCardIndex = indexPath.row;
+    CDXCardDeckCardEditViewController *vc = [[[CDXCardDeckCardEditViewController alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
     [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
 }
 

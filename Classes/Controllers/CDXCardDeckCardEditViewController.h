@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeck.h"
+#import "CDXCardDeckViewContext.h"
 #import "CDXAppWindowProtocols.h"
 
 
@@ -35,11 +36,11 @@
     IBOutlet UIBarButtonItem *viewButtonsUpDownBarButtonItem;
     IBOutlet UISegmentedControl *viewButtonsUpDown;
 
+    CDXCardDeckViewContext *cardDeckViewContext;
     CDXCardDeck *cardDeck;
-    NSUInteger currentCardIndex;
 }
 
-- (id)initWithCardDeck:(CDXCardDeck *)cardDeck atIndex:(NSUInteger)index;
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
 
 - (IBAction)upDownButtonPressed;
 

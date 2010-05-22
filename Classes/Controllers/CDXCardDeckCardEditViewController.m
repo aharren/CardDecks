@@ -28,10 +28,10 @@
 
 @implementation CDXCardDeckCardEditViewController
 
-- (id)initWithCardDeck:(CDXCardDeck *)deck atIndex:(NSUInteger)index {
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
     if ((self = [super initWithNibName:@"CDXCardDeckCardEditView" bundle:nil])) {
-        ivar_assign_and_retain(cardDeck, deck);
-        currentCardIndex = index;
+        ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
+        ivar_assign_and_retain(cardDeck, cardDeckViewContext.cardDeck);
         self.hidesBottomBarWhenPushed = YES;
     }
     return self;
@@ -46,12 +46,13 @@
 }
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex {
+    cardDeckViewContext.currentCardIndex = cardIndex;
+
     CDXCard *card = [cardDeck cardAtIndex:cardIndex];
     text.text = card.text;
-    currentCardIndex = cardIndex;
     
-    [viewButtonsUpDown setEnabled:(currentCardIndex != 0) forSegmentAtIndex:0];
-    [viewButtonsUpDown setEnabled:(currentCardIndex < ([cardDeck cardsCount] - 1)) forSegmentAtIndex:1];
+    [viewButtonsUpDown setEnabled:(cardIndex != 0) forSegmentAtIndex:0];
+    [viewButtonsUpDown setEnabled:(cardIndex < ([cardDeck cardsCount] - 1)) forSegmentAtIndex:1];
 }
 
 - (void)viewDidLoad {
@@ -68,15 +69,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationItem.rightBarButtonItem = viewButtonsUpDownBarButtonItem;
-
-    [self showCardAtIndex:currentCardIndex];
+    
+    [self showCardAtIndex:cardDeckViewContext.currentCardIndex];
     [text becomeFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    CDXCard *card = [cardDeck cardAtIndex:currentCardIndex];
+    CDXCard *card = [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex];
     card.text = text.text;
-    [cardDeck replaceCardAtIndex:currentCardIndex withCard:card];
+    [cardDeck replaceCardAtIndex:cardDeckViewContext.currentCardIndex withCard:card];
     [super viewWillDisappear:animated];
 }
 
@@ -87,7 +88,7 @@
 }
 
 - (IBAction)upDownButtonPressed {
-    [self showCardAtIndex:(currentCardIndex - 1) + (viewButtonsUpDown.selectedSegmentIndex << 1)];
+    [self showCardAtIndex:(cardDeckViewContext.currentCardIndex - 1) + (viewButtonsUpDown.selectedSegmentIndex << 1)];
 }
 
 @end
