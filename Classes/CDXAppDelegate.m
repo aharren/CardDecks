@@ -45,25 +45,33 @@
         [decks addCardDeck:deck];
     }
     {
-        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"0%2C%201%2C%202%2C%204%2C%208%2C%2016%2C%20%E2%88%9E,000000,ffffff&0&1&2&4&8&16&%E2%88%9E"];
+        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"Estimation%201,000000,ffffff&0&1&2&4&8&16&32&64&%E2%88%9E"];
         deck.displayStyle = CDXCardDeckDisplayStyleStack;
         deck.fontSize = 200.0;
         [decks addCardDeck:deck];
     }
     {
-        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"15%2C%2010%2C%205%2C%200,ffffff,000000&15,000000,00ff00&10,000000,ffff00&5,000000,ff0000&0,ff0000"];
+        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"Estimation%202,000044,ffffff&XXS&XS&S&M&L&XL&XXL&%E2%88%9E"];
         deck.displayStyle = CDXCardDeckDisplayStyleSwipeStack;
+        deck.fontSize = 180.0;
         deck.wantsAutoRotate = NO;
         [decks addCardDeck:deck];
     }
     {
-        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"multi%20line%20cards,ffffff,000000&ONE&ONE%0dTWO&ONE%0dTWO%0dTHREE&one%0dtwo%0dthree,00000088,ff0000&1%202%0d3%204,000000,ffffff88"];
+        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"Count%20Down,ffffff,000000&15,000000,00ff00&10,000000,ffff00&5,000000,ff0000&0,ff0000"];
+        deck.displayStyle = CDXCardDeckDisplayStyleSwipeStack;
+        deck.fontSize = 270.0;
+        deck.wantsAutoRotate = NO;
+        [decks addCardDeck:deck];
+    }
+    {
+        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"Test%201,ffffff,000000&ONE&ONE%0dTWO&ONE%0dTWO%0dTHREE&one%0dtwo%0dthree,00000088,ff0000&1%202%0d3%204,000000,ffffff88"];
         deck.displayStyle = CDXCardDeckDisplayStyleSwipeStack;
         deck.fontSize = 200.0;
         [decks addCardDeck:deck];
     }
     {
-        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"multi%20line%20cards,ffffff,000000&ONE&ONE%0dTWO&ONE%0dTWO%0dTHREE&one%0dtwo%0dthree,00000088,ff0000&1%202%0d3%204,000000,ffffff88"];
+        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"Test%202,ffffff,000000&ONE&ONE%0dTWO&ONE%0dTWO%0dTHREE&one%0dtwo%0dthree,00000088,ff0000&1%202%0d3%204,000000,ffffff88"];
         deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
         deck.wantsPageControl = YES;
         [decks addCardDeck:deck];
