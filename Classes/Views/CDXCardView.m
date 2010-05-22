@@ -129,6 +129,9 @@
             break;
     }
     
+    // set alpha
+    self.alpha = 1.0;
+    
     return self;
 }
 
@@ -149,6 +152,10 @@
     borderLayer.borderColor = card ? [[UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:0.3] CGColor] : nil;
     borderLayer.borderWidth = 1;
     borderLayer.cornerRadius = 0;
+    
+    // set alpha
+    self.alpha = card ? 1.0 : 0.0;
+    
     return self;
 }
 
