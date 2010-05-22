@@ -140,6 +140,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [cardDeck removeCardAtIndex:indexPath.row];
+        cardDeckViewContext.currentCardIndex = indexPath.row > 0 ? indexPath.row-1 : 0;
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
