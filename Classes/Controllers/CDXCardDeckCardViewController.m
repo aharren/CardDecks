@@ -105,12 +105,15 @@
         qltrace(@"image");
         
         [self resignFirstResponder];
-        UIImage *image = [[CDXImageFactory sharedImageFactory]
-                          imageForCard:[cardDeck cardAtIndex:initialCardIndex]
-                          size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
-                          deviceOrientation:deviceOrientation];
-        ivar_assign(imageView, [[UIImageView alloc] initWithImage:image]);
-        [self.view insertSubview:imageView atIndex:0];
+        CDXCard *card = [cardDeck cardAtIndex:initialCardIndex orCard:nil];
+        if (card != nil) {
+            UIImage *image = [[CDXImageFactory sharedImageFactory]
+                              imageForCard:card
+                              size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
+                              deviceOrientation:deviceOrientation];
+            ivar_assign(imageView, [[UIImageView alloc] initWithImage:image]);
+            [self.view insertSubview:imageView atIndex:0];
+        }
     }
 }
 
