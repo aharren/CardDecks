@@ -161,6 +161,13 @@
 
 - (IBAction)addButtonPressed {
     qltrace();
+    CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
+    [cardDecks addCardDeck:deck];
+    [cardDecksTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[cardDecks cardDecksCount]-1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    [cardDecksTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[cardDecks cardDecksCount]-1 inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+    CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck] autorelease];
+    CDXCardDeckListViewController *vc = [[[CDXCardDeckListViewController alloc] initWithCardDeckViewContext:context] autorelease];
+    [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
 }
 
 - (IBAction)editButtonPressed {
