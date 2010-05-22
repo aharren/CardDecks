@@ -45,11 +45,24 @@ static CGImageRef CDXImageFactoryCreateScreenImage(void) {
     return image;
 }
 
+- (void)initCardView {
+    ivar_release_and_clear(cardView);
+    [[NSBundle mainBundle] loadNibNamed:@"CDXCardView" owner:self options:nil];
+}
+
 - (UIImage *)imageForCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation {
     if (!cardView) {
-        [[NSBundle mainBundle] loadNibNamed:@"CDXCardView" owner:self options:nil];
+        [self initCardView];
     }
     [cardView initWithCard:card size:(CGSize)size deviceOrientation:deviceOrientation];
+    return [self imageForView:cardView size:size];
+}
+
+- (UIImage *)imageForThumbnailCard:(CDXCard *)card size:(CGSize)size {
+    if (!cardView) {
+        [self initCardView];
+    }
+    [cardView initWithThumbnailCard:card size:(CGSize)size];
     return [self imageForView:cardView size:size];
 }
 
