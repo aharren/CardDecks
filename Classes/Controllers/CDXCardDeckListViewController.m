@@ -26,6 +26,7 @@
 #import "CDXCardDeckListViewController.h"
 #import "CDXCardDeckCardViewController.h"
 #import "CDXSettingsViewController.h"
+#import "CDXImageFactory.h"
 
 
 @implementation CDXCardDeckListViewController
@@ -41,6 +42,7 @@
     ivar_release_and_clear(cardDeckTableView);
     ivar_release_and_clear(cardDeck);
     ivar_release_and_clear(viewToolbar);
+    ivar_release_and_clear(tableCellTextFont);
     [super dealloc];
 }
 
@@ -48,11 +50,14 @@
     [super viewDidLoad];
     self.navigationItem.title = cardDeck.name;
     self.toolbarItems = viewToolbar.items;
+    ivar_assign_and_retain(tableCellTextFont, [UIFont boldSystemFontOfSize:18]);
+    tableCellImageSize = CGSizeMake(10, 10);
 }
 
 - (void)viewDidUnload {
     ivar_release_and_clear(cardDeckTableView);
     ivar_release_and_clear(viewToolbar);
+    ivar_release_and_clear(tableCellTextFont);
     [super viewDidUnload];
 }
 
@@ -79,7 +84,9 @@
     
     CDXCard *card = [cardDeck cardAtIndex:indexPath.row];
     cell.textLabel.text = card.text;
+    cell.textLabel.font = tableCellTextFont;
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForThumbnailCard:card size:tableCellImageSize];
     return cell;
 }
 
