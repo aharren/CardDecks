@@ -34,6 +34,10 @@
     CDXCardDecks *cardDecks;
     
     IBOutlet UIToolbar *viewToolbar;
+    
+    UIFont *tableCellTextFont;
+    UIFont *tableCellDetailTextFont;
+    CGSize tableCellImageSize;
 }
 
 - (id)initWithCardDecks:(CDXCardDecks *)cardDecks;

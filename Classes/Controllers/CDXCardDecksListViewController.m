@@ -26,6 +26,7 @@
 #import "CDXCardDecksListViewController.h"
 #import "CDXCardDeckCardViewController.h"
 #import "CDXCardDeckListViewController.h"
+#import "CDXImageFactory.h"
 
 
 @implementation CDXCardDecksListViewController
@@ -41,6 +42,8 @@
     ivar_release_and_clear(cardDecksTableView);
     ivar_release_and_clear(cardDecks);
     ivar_release_and_clear(viewToolbar);
+    ivar_release_and_clear(tableCellTextFont);
+    ivar_release_and_clear(tableCellDetailTextFont);
     [super dealloc];
 }
 
@@ -55,12 +58,22 @@
                                          action:nil]
                                         autorelease];
     self.toolbarItems = viewToolbar.items;
+    ivar_assign_and_retain(tableCellTextFont, [UIFont boldSystemFontOfSize:18]);
+    ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:12]);
+    tableCellImageSize = CGSizeMake(10, 10);
 }
 
 - (void)viewDidUnload {
     ivar_release_and_clear(cardDecksTableView);
     ivar_release_and_clear(viewToolbar);
+    ivar_release_and_clear(tableCellTextFont);
+    ivar_release_and_clear(tableCellDetailTextFont);
     [super viewDidUnload];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [cardDecksTableView reloadData];
 }
 
 - (void)setUserInteractionEnabled:(BOOL)enabled {
@@ -81,12 +94,16 @@
     static NSString *reuseIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier] autorelease];
     }
     
     CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
     cell.textLabel.text = deck.name;
+    cell.textLabel.font = tableCellTextFont;
+    cell.detailTextLabel.text = deck.description;
+    cell.detailTextLabel.font = tableCellDetailTextFont;
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForThumbnailCard:[deck cardAtIndex:0 orCard:nil] size:tableCellImageSize];
     return cell;
 }
 
