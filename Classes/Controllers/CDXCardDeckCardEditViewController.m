@@ -55,6 +55,12 @@
     [viewButtonsUpDown setEnabled:(cardIndex < ([cardDeck cardsCount] - 1)) forSegmentAtIndex:1];
 }
 
+- (void)finishCardModification {
+    CDXCard *card = [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex];
+    card.text = text.text;
+    [cardDeck replaceCardAtIndex:cardDeckViewContext.currentCardIndex withCard:card];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 }
@@ -75,9 +81,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    CDXCard *card = [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex];
-    card.text = text.text;
-    [cardDeck replaceCardAtIndex:cardDeckViewContext.currentCardIndex withCard:card];
+    [self finishCardModification];
     [super viewWillDisappear:animated];
 }
 
@@ -88,6 +92,7 @@
 }
 
 - (IBAction)upDownButtonPressed {
+    [self finishCardModification];
     [self showCardAtIndex:(cardDeckViewContext.currentCardIndex - 1) + (viewButtonsUpDown.selectedSegmentIndex << 1)];
 }
 
