@@ -45,5 +45,13 @@
     [super dealloc];
 }
 
+- (NSUInteger)currentCardIndex {
+    NSUInteger count = [cardDeck cardsCount];
+    if (currentCardIndex >= count) {
+        currentCardIndex = (count == 0) ? 0 : count-1;
+    }
+    return currentCardIndex;
+}
+
 @end
 
