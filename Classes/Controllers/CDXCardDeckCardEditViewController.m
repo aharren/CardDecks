@@ -53,6 +53,8 @@
     
     [viewButtonsUpDown setEnabled:(cardIndex != 0) forSegmentAtIndex:0];
     [viewButtonsUpDown setEnabled:(cardIndex < ([cardDeck cardsCount] - 1)) forSegmentAtIndex:1];
+    
+    self.navigationItem.title = [NSString stringWithFormat:@"%d of %d", cardIndex+1, [cardDeck cardsCount]];
 }
 
 - (void)finishCardModification {
