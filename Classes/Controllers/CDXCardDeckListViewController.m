@@ -47,6 +47,10 @@
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(tableCellTextFont);
     ivar_release_and_clear(tableCellTextTextColor);
+    ivar_release_and_clear(tableCellTextTextColorAction);
+    ivar_release_and_clear(tableCellDetailTextFont);
+    ivar_release_and_clear(tableCellDetailTextTextColor);
+    ivar_release_and_clear(tableCellBackgroundColorAction);
     [super dealloc];
 }
 
@@ -63,6 +67,10 @@
     self.toolbarItems = viewToolbar.items;
     ivar_assign_and_retain(tableCellTextFont, [UIFont boldSystemFontOfSize:18]);
     ivar_assign_and_retain(tableCellTextTextColor, [UIColor blackColor]);
+    ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor lightGrayColor]);
+    ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:12]);
+    ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor lightGrayColor]);
+    ivar_assign_and_retain(tableCellBackgroundColorAction, [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.0]);
     tableCellImageSize = CGSizeMake(10, 10);
 }
 
@@ -71,15 +79,19 @@
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(tableCellTextFont);
     ivar_release_and_clear(tableCellTextTextColor);
+    ivar_release_and_clear(tableCellTextTextColorAction);
+    ivar_release_and_clear(tableCellDetailTextFont);
+    ivar_release_and_clear(tableCellDetailTextTextColor);
+    ivar_release_and_clear(tableCellBackgroundColorAction);
     [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if ([cardDeckTableView numberOfRowsInSection:0] != 0) {
-        [cardDeckTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
-    }
     [cardDeckTableView reloadData];
+    if ([cardDeckTableView numberOfRowsInSection:1] != 0) {
+        [cardDeckTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:1] atScrollPosition:UITableViewScrollPositionNone animated:NO];
+    }
 }
 
 - (void)setUserInteractionEnabled:(BOOL)enabled {
@@ -89,35 +101,91 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [cardDeck cardsCount];
+    switch (section) {
+        default:
+        case 0:
+            return 0;
+        case 1:
+            return [cardDeck cardsCount];
+        case 2:
+            return 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *reuseIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
-        cell.textLabel.font = tableCellTextFont;
-        cell.textLabel.textColor = tableCellTextTextColor;
-        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    static NSString *reuseIdentifierSection1 = @"Section1Cell";
+    static NSString *reuseIdentifierSection2 = @"Section2Cell";
+    switch (indexPath.section) {
+        default:
+        case 0: {
+            return nil;
+        }
+        case 1: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection1];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection1] autorelease];
+                cell.textLabel.font = tableCellTextFont;
+                cell.textLabel.textColor = tableCellTextTextColor;
+                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+            }
+            
+            CDXCard *card = [cardDeck cardAtIndex:indexPath.row];
+            cell.textLabel.text = card.text;
+            cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForThumbnailCard:card size:tableCellImageSize];
+            return cell;
+        }
+        case 2: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection2];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
+                cell.textLabel.font = tableCellDetailTextFont;
+                cell.textLabel.textColor = tableCellTextTextColorAction;
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            cell.textLabel.text = @"TOUCH TO ADD A NEW CARD";
+            cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForThumbnailCard:nil size:tableCellImageSize];
+            return cell;
+        }
     }
-    
-    CDXCard *card = [cardDeck cardAtIndex:indexPath.row];
-    cell.textLabel.text = card.text;
-    cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForThumbnailCard:card size:tableCellImageSize];
-    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 1:
+            break;
+        default:
+        case 0:
+        case 2:
+            cell.backgroundColor = tableCellBackgroundColorAction;
+            break;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    cardDeckViewContext.currentCardIndex = indexPath.row;
-    CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+    
+    switch (indexPath.section) {
+        default:
+        case 0: {
+            break;
+        }
+        case 1: {
+            cardDeckViewContext.currentCardIndex = indexPath.row;
+            CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
+            [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+            break;
+        }
+        case 2: {
+            [self addButtonPressed];
+            break;
+        }
+    }
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
@@ -127,11 +195,11 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    return indexPath.section == 1;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    return indexPath.section == 1;
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -168,8 +236,8 @@
     CDXCard *card = [cardDeck cardWithDefaults];
     [cardDeck addCard:card];
     cardDeckViewContext.currentCardIndex = [cardDeck cardsCount]-1;
-    [cardDeckTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-    [cardDeckTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    [cardDeckTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+    [cardDeckTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
     [self setEditing:NO animated:YES];
 }
 

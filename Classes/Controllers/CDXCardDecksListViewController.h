@@ -38,8 +38,10 @@
     UIFont *tableCellTextFont;
     UIColor *tableCellTextTextColor;
     UIColor *tableCellTextTextColorNoCards;
+    UIColor *tableCellTextTextColorAction;
     UIFont *tableCellDetailTextFont;
     UIColor *tableCellDetailTextTextColor;
+    UIColor *tableCellBackgroundColorAction;
     CGSize tableCellImageSize;
 }
 
