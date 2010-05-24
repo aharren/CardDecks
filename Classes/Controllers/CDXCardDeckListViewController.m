@@ -104,6 +104,7 @@
         cell.textLabel.font = tableCellTextFont;
         cell.textLabel.textColor = tableCellTextTextColor;
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     }
     
     CDXCard *card = [cardDeck cardAtIndex:indexPath.row];

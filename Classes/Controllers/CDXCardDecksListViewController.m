@@ -121,8 +121,10 @@
     
     if ([deck cardsCount] == 0) {
         cell.textLabel.textColor = tableCellTextTextColorNoCards;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     } else {
         cell.textLabel.textColor = tableCellTextTextColor;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     }
     
     return cell;
