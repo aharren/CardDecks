@@ -165,6 +165,7 @@
     cardDeckViewContext.currentCardIndex = [cardDeck cardsCount]-1;
     [cardDeckTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
     [cardDeckTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    [self setEditing:NO animated:YES];
 }
 
 - (IBAction)editButtonPressed {

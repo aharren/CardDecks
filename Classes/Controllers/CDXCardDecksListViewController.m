@@ -169,6 +169,7 @@
     [cardDecks addCardDeck:deck];
     [cardDecksTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[cardDecks cardDecksCount]-1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
     [cardDecksTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[cardDecks cardDecksCount]-1 inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    [self setEditing:NO animated:YES];
 }
 
 - (IBAction)editButtonPressed {
