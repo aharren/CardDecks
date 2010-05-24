@@ -36,6 +36,7 @@
 @synthesize fontSize;
 
 - (id)init {
+    qltrace();
     if ((self = [super init])) {
         ivar_assign_and_copy(text, @"");
         ivar_assign_and_retain(textColor, [CDXColor colorWhite]);
@@ -45,10 +46,22 @@
 }
 
 - (void)dealloc {
+    qltrace();
     ivar_release_and_clear(text);
     ivar_release_and_clear(textColor);
     ivar_release_and_clear(backgroundColor);
     [super dealloc];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    CDXCard *copy = [[[self class] allocWithZone:zone] init];
+    copy.text = text;
+    copy.textColor = textColor;
+    copy.backgroundColor = backgroundColor;
+    copy.orientation = orientation;
+    copy.cornerStyle = cornerStyle;
+    copy.fontSize = fontSize;
+    return copy;
 }
 
 - (void)setText:(NSString *)aText {

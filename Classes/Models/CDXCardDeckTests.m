@@ -39,9 +39,10 @@
 - (void)testInitWithDefaults {
     CDXCardDeck *deck = [[CDXCardDeck alloc] init];
     STAssertEqualObjects([deck name], @"", nil);
-    STAssertEquals([deck defaultCardTextColor], [CDXColor colorWhite], nil);
-    STAssertEquals([deck defaultCardBackgroundColor], [CDXColor colorBlack], nil);
-    STAssertEquals((int)[deck defaultCardOrientation], (int)CDXCardOrientationUp, nil);
+    CDXCard *defaults = deck.cardDefaults;
+    STAssertEquals([defaults textColor], [CDXColor colorWhite], nil);
+    STAssertEquals([defaults backgroundColor], [CDXColor colorBlack], nil);
+    STAssertEquals((int)[defaults orientation], (int)CDXCardOrientationUp, nil);
     [deck release];
 }
 
@@ -118,10 +119,11 @@
     STAssertEquals([card1 textColor], [CDXColor colorWhite], nil);
     STAssertEquals([card1 backgroundColor], [CDXColor colorBlack], nil);
     STAssertEquals((int)[card1 orientation], (int)CDXCardOrientationUp, nil);
-    
-    deck.defaultCardTextColor = [CDXColor colorWithRed:0x10 green:0x10 blue:0x10 alpha:0x10];
-    deck.defaultCardBackgroundColor =  [CDXColor colorWithRed:0x20 green:0x20 blue:0x20 alpha:0x20];
-    deck.defaultCardOrientation = CDXCardOrientationDown;
+
+    CDXCard *defaults = deck.cardDefaults;
+    defaults.textColor = [CDXColor colorWithRed:0x10 green:0x10 blue:0x10 alpha:0x10];
+    defaults.backgroundColor =  [CDXColor colorWithRed:0x20 green:0x20 blue:0x20 alpha:0x20];
+    defaults.orientation = CDXCardOrientationDown;
     CDXCard *card2 = [deck cardWithDefaults];
     STAssertEqualObjects([card2 text], @"", nil);
     STAssertEqualObjects([card2 textColor], [CDXColor colorWithRed:0x10 green:0x10 blue:0x10 alpha:0x10], nil);

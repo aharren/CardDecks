@@ -46,7 +46,7 @@ typedef enum {
 #define CDXCardFontSizeMax       ((CGFloat) 400.0)
 
 
-@interface CDXCard : NSObject {
+@interface CDXCard : NSObject<NSCopying> {
     
 @protected
     NSString *text;

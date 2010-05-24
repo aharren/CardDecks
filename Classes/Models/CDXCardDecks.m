@@ -28,8 +28,11 @@
 
 @implementation CDXCardDecks
 
+@synthesize cardDeckDefaults;
+
 - (id)init {
     if ((self = [super init])) {
+        ivar_assign(cardDeckDefaults, [[CDXCardDeck alloc] init]);
         ivar_assign(cardDecks, [[NSMutableArray alloc] init]);
     }
     return self;
@@ -62,6 +65,10 @@
 
 - (void)removeCardDeckAtIndex:(NSUInteger)index {
     [cardDecks removeObjectAtIndex:index];
+}
+
+- (CDXCardDeck *)cardDeckWithDefaults {
+    return [[cardDeckDefaults copy] autorelease];
 }
 
 @end

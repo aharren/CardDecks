@@ -76,6 +76,17 @@
         deck.wantsPageControl = YES;
         [decks addCardDeck:deck];
     }
+    {
+        // default card deck
+        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"New%20Card%20Deck,ffffff,000000"];
+        deck.displayStyle = CDXCardDeckDisplayStyleSwipeStack;
+        deck.wantsPageControl = YES;
+        deck.wantsAutoRotate = NO;
+        deck.wantsIdleTimer = NO;
+        deck.wantsShakeRandom = NO;
+        deck.cornerStyle = CDXCardCornerStyleCornered;
+        decks.cardDeckDefaults = deck;
+    }
     
     CDXCardDecksListViewController *vc = [[[CDXCardDecksListViewController alloc] initWithCardDecks:decks] autorelease];
     

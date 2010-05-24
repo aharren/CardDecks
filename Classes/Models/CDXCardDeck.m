@@ -28,11 +28,9 @@
 
 @implementation CDXCardDeck
 
+@synthesize cardDefaults;
 @synthesize name;
 @synthesize description;
-@synthesize defaultCardTextColor;
-@synthesize defaultCardBackgroundColor;
-@synthesize defaultCardOrientation;
 @synthesize wantsPageControl;
 @synthesize wantsAutoRotate;
 @synthesize wantsShakeRandom;
@@ -42,11 +40,13 @@
 @synthesize fontSize;
 
 - (id)init {
+    qltrace();
     if ((self = [super init])) {
+        ivar_assign(cardDefaults, [[CDXCard alloc] init]);
+        cardDefaults.textColor = [CDXColor colorWhite];
+        cardDefaults.backgroundColor = [CDXColor colorBlack];
         ivar_assign_and_copy(name, @"");
         ivar_assign_and_copy(description, @"");
-        ivar_assign_and_retain(defaultCardTextColor, [CDXColor colorWhite]);
-        ivar_assign_and_retain(defaultCardBackgroundColor, [CDXColor colorBlack]);
         ivar_assign(cards, [[NSMutableArray alloc] init]);
         wantsPageControl = NO;
         wantsAutoRotate = YES;
@@ -59,12 +59,28 @@
 }
 
 - (void)dealloc {
+    qltrace();
+    ivar_release_and_clear(cardDefaults);
     ivar_release_and_clear(name);
     ivar_release_and_clear(description);
-    ivar_release_and_clear(defaultCardTextColor);
-    ivar_release_and_clear(defaultCardBackgroundColor);
     ivar_release_and_clear(cards);
     [super dealloc];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    CDXCardDeck *copy = [[[self class] allocWithZone:zone] init];
+    copy.cardDefaults = [[cardDefaults copyWithZone:zone] autorelease];
+    copy.name = name;
+    copy.wantsPageControl = wantsPageControl;
+    copy.wantsAutoRotate = wantsAutoRotate;
+    copy.wantsShakeRandom = wantsShakeRandom;
+    copy.wantsIdleTimer = wantsIdleTimer;
+    copy.displayStyle = displayStyle;
+    copy.cornerStyle = cornerStyle;
+    for (CDXCard *card in cards) {
+        [copy addCard:[[card copyWithZone:zone] autorelease]];
+    }
+    return copy;
 }
 
 - (void)updateDescription {
@@ -128,14 +144,7 @@
 }
 
 - (CDXCard *)cardWithDefaults {
-    CDXCard *card = [[[CDXCard alloc] init] autorelease];
-    if (card) {
-        card.textColor = defaultCardTextColor;
-        card.backgroundColor = defaultCardBackgroundColor;
-        card.orientation = defaultCardOrientation;
-        card.cornerStyle = cornerStyle;
-    }
-    return card;
+    return [[cardDefaults copy] autorelease];
 }
 
 - (void)setCornerStyle:(CDXCardCornerStyle)aCornerStyle {

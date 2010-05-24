@@ -73,23 +73,24 @@
         }
         
         dDeck = [[[CDXCardDeck alloc] init] autorelease];
+        CDXCard *dCardDefaults = dDeck.cardDefaults;
         
         // <name>
         dDeck.name = [CDXCardDeckURLSerializer stringByReplacingURLEscapes:(NSString *)[sDeckParts objectAtIndex:0]];
         // [,[<text-color>] ...
         if ([sDeckParts count] >= 2) {
-            dDeck.defaultCardTextColor = [CDXColor colorWithRGBAString:(NSString *)[sDeckParts objectAtIndex:1]
-                                                             defaulsTo:[CDXColor colorWhite]];
+            dCardDefaults.textColor = [CDXColor colorWithRGBAString:(NSString *)[sDeckParts objectAtIndex:1]
+                                                          defaulsTo:[CDXColor colorWhite]];
         }
         //  [,[<background-color>] ...
         if ([sDeckParts count] >= 3) {
-            dDeck.defaultCardBackgroundColor = [CDXColor colorWithRGBAString:(NSString *)[sDeckParts objectAtIndex:2]
-                                                                   defaulsTo:[CDXColor colorBlack]];
+            dCardDefaults.backgroundColor = [CDXColor colorWithRGBAString:(NSString *)[sDeckParts objectAtIndex:2]
+                                                                defaulsTo:[CDXColor colorBlack]];
         }
         //  [,[<orientation>] ...
         if ([sDeckParts count] >= 4) {
-            dDeck.defaultCardOrientation = [CDXCardDeckURLSerializer cardOrientationFromString:(NSString *)[sDeckParts objectAtIndex:3]
-                                                                                    defaultsTo:CDXCardOrientationUp];
+            dCardDefaults.orientation = [CDXCardDeckURLSerializer cardOrientationFromString:(NSString *)[sDeckParts objectAtIndex:3]
+                                                                                 defaultsTo:CDXCardOrientationUp];
         }
     }
     

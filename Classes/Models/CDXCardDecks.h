@@ -29,15 +29,20 @@
 @interface CDXCardDecks : NSObject {
     
 @protected
+    CDXCardDeck *cardDeckDefaults;
     NSMutableArray *cardDecks;
     
 }
+
+@property (nonatomic, retain) CDXCardDeck *cardDeckDefaults;
 
 - (NSUInteger)cardDecksCount;
 - (CDXCardDeck *)cardDeckAtIndex:(NSUInteger)index;
 - (void)addCardDeck:(CDXCardDeck *)cardDeck;
 - (void)insertCardDeck:(CDXCardDeck *)cardDeck atIndex:(NSUInteger)index;
 - (void)removeCardDeckAtIndex:(NSUInteger)index;
+
+- (CDXCardDeck *)cardDeckWithDefaults;
 
 @end
 

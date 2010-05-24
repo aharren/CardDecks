@@ -35,15 +35,13 @@ typedef enum {
 } CDXCardDeckDisplayStyle;
 
 
-@interface CDXCardDeck : NSObject {
+@interface CDXCardDeck : NSObject<NSCopying> {
     
 @protected
+    CDXCard *cardDefaults;
+
     NSString *name;
     NSString *description;
-    
-    CDXColor *defaultCardTextColor;
-    CDXColor *defaultCardBackgroundColor;
-    CDXCardOrientation defaultCardOrientation;
     
     NSMutableArray *cards;
     
@@ -57,11 +55,10 @@ typedef enum {
     CGFloat fontSize;
 }
 
+@property (nonatomic, retain) CDXCard *cardDefaults;
+
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, readonly) NSString *description;
-@property (nonatomic, retain) CDXColor *defaultCardTextColor;
-@property (nonatomic, retain) CDXColor *defaultCardBackgroundColor;
-@property (nonatomic, assign) CDXCardOrientation defaultCardOrientation;
 
 - (NSUInteger)cardsCount;
 - (CDXCard *)cardAtIndex:(NSUInteger)index;
