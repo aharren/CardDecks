@@ -36,6 +36,7 @@
     IBOutlet UIToolbar *viewToolbar;
     
     UIFont *tableCellTextFont;
+    UIFont *tableCellTextFontAction;
     UIColor *tableCellTextTextColor;
     UIColor *tableCellTextTextColorNoCards;
     UIColor *tableCellTextTextColorAction;

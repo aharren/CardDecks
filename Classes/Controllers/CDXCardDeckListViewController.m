@@ -46,6 +46,7 @@
     ivar_release_and_clear(cardDeck);
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(tableCellTextFont);
+    ivar_release_and_clear(tableCellTextFontAction);
     ivar_release_and_clear(tableCellTextTextColor);
     ivar_release_and_clear(tableCellTextTextColorAction);
     ivar_release_and_clear(tableCellDetailTextFont);
@@ -66,6 +67,7 @@
                                         autorelease];
     self.toolbarItems = viewToolbar.items;
     ivar_assign_and_retain(tableCellTextFont, [UIFont boldSystemFontOfSize:18]);
+    ivar_assign_and_retain(tableCellTextFontAction, [UIFont systemFontOfSize:12]);
     ivar_assign_and_retain(tableCellTextTextColor, [UIColor blackColor]);
     ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor lightGrayColor]);
     ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:12]);
@@ -78,6 +80,7 @@
     ivar_release_and_clear(cardDeckTableView);
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(tableCellTextFont);
+    ivar_release_and_clear(tableCellTextFontAction);
     ivar_release_and_clear(tableCellTextTextColor);
     ivar_release_and_clear(tableCellTextTextColorAction);
     ivar_release_and_clear(tableCellDetailTextFont);
@@ -143,7 +146,7 @@
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection2];
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
-                cell.textLabel.font = tableCellDetailTextFont;
+                cell.textLabel.font = tableCellTextFontAction;
                 cell.textLabel.textColor = tableCellTextTextColorAction;
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
