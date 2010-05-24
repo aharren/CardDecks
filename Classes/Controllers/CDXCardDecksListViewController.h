@@ -36,7 +36,10 @@
     IBOutlet UIToolbar *viewToolbar;
     
     UIFont *tableCellTextFont;
+    UIColor *tableCellTextTextColor;
+    UIColor *tableCellTextTextColorNoCards;
     UIFont *tableCellDetailTextFont;
+    UIColor *tableCellDetailTextTextColor;
     CGSize tableCellImageSize;
 }
 

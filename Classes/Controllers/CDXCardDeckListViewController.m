@@ -46,6 +46,7 @@
     ivar_release_and_clear(cardDeck);
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(tableCellTextFont);
+    ivar_release_and_clear(tableCellTextTextColor);
     [super dealloc];
 }
 
@@ -61,6 +62,7 @@
                                         autorelease];
     self.toolbarItems = viewToolbar.items;
     ivar_assign_and_retain(tableCellTextFont, [UIFont boldSystemFontOfSize:18]);
+    ivar_assign_and_retain(tableCellTextTextColor, [UIColor blackColor]);
     tableCellImageSize = CGSizeMake(10, 10);
 }
 
@@ -68,6 +70,7 @@
     ivar_release_and_clear(cardDeckTableView);
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(tableCellTextFont);
+    ivar_release_and_clear(tableCellTextTextColor);
     [super viewDidUnload];
 }
 
@@ -98,12 +101,13 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+        cell.textLabel.font = tableCellTextFont;
+        cell.textLabel.textColor = tableCellTextTextColor;
+        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     }
     
     CDXCard *card = [cardDeck cardAtIndex:indexPath.row];
     cell.textLabel.text = card.text;
-    cell.textLabel.font = tableCellTextFont;
-    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForThumbnailCard:card size:tableCellImageSize];
     return cell;
 }

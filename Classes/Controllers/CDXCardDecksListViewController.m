@@ -43,7 +43,10 @@
     ivar_release_and_clear(cardDecks);
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(tableCellTextFont);
+    ivar_release_and_clear(tableCellTextTextColor);
+    ivar_release_and_clear(tableCellTextTextColorNoCards);
     ivar_release_and_clear(tableCellDetailTextFont);
+    ivar_release_and_clear(tableCellDetailTextTextColor);
     [super dealloc];
 }
 
@@ -59,7 +62,10 @@
                                         autorelease];
     self.toolbarItems = viewToolbar.items;
     ivar_assign_and_retain(tableCellTextFont, [UIFont boldSystemFontOfSize:18]);
+    ivar_assign_and_retain(tableCellTextTextColor, [UIColor blackColor]);
+    ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor lightGrayColor]);
     ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:12]);
+    ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor lightGrayColor]);
     tableCellImageSize = CGSizeMake(10, 10);
 }
 
@@ -67,7 +73,10 @@
     ivar_release_and_clear(cardDecksTableView);
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(tableCellTextFont);
+    ivar_release_and_clear(tableCellTextTextColor);
+    ivar_release_and_clear(tableCellTextTextColorNoCards);
     ivar_release_and_clear(tableCellDetailTextFont);
+    ivar_release_and_clear(tableCellDetailTextTextColor);
     [super viewDidUnload];
 }
 
@@ -95,6 +104,10 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier] autorelease];
+        cell.textLabel.font = tableCellTextFont;
+        cell.detailTextLabel.font = tableCellDetailTextFont;
+        cell.detailTextLabel.textColor = tableCellDetailTextTextColor;
+        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     }
     
     CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
@@ -103,11 +116,15 @@
         name = @" ";
     }
     cell.textLabel.text = name;
-    cell.textLabel.font = tableCellTextFont;
     cell.detailTextLabel.text = deck.description;
-    cell.detailTextLabel.font = tableCellDetailTextFont;
-    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForThumbnailCard:[deck cardAtIndex:0 orCard:nil] size:tableCellImageSize];
+    
+    if ([deck cardsCount] == 0) {
+        cell.textLabel.textColor = tableCellTextTextColorNoCards;
+    } else {
+        cell.textLabel.textColor = tableCellTextTextColor;
+    }
+    
     return cell;
 }
 
