@@ -116,14 +116,15 @@
         name = @" ";
     }
     cell.textLabel.text = name;
-    cell.detailTextLabel.text = deck.description;
     cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForThumbnailCard:[deck cardAtIndex:0 orCard:nil] size:tableCellImageSize];
     
     if ([deck cardsCount] == 0) {
         cell.textLabel.textColor = tableCellTextTextColorNoCards;
+        cell.detailTextLabel.text = @"TOUCH TO ADD CARDS";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     } else {
         cell.textLabel.textColor = tableCellTextTextColor;
+        cell.detailTextLabel.text = deck.description;
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     }
     
