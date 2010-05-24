@@ -164,8 +164,7 @@
     [cardDeck addCard:card];
     cardDeckViewContext.currentCardIndex = [cardDeck cardsCount]-1;
     [cardDeckTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-    CDXCardDeckCardEditViewController *vc = [[[CDXCardDeckCardEditViewController alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+    [cardDeckTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
 }
 
 - (IBAction)editButtonPressed {
