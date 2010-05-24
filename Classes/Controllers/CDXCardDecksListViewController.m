@@ -166,6 +166,7 @@
 - (IBAction)addButtonPressed {
     qltrace();
     CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
+    deck.name = @"New Card Deck";
     [cardDecks addCardDeck:deck];
     [cardDecksTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[cardDecks cardDecksCount]-1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
     [cardDecksTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[cardDecks cardDecksCount]-1 inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
