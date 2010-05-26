@@ -49,6 +49,7 @@
 - (id)initWithCardDecks:(CDXCardDecks *)cardDecks;
 
 - (IBAction)addButtonPressed;
+- (IBAction)defaultsButtonPressed;
 - (IBAction)editButtonPressed;
 
 @end

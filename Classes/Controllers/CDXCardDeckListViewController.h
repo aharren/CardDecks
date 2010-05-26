@@ -50,6 +50,7 @@
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
 
 - (IBAction)addButtonPressed;
+- (IBAction)defaultsButtonPressed;
 - (IBAction)editButtonPressed;
 - (IBAction)settingsButtonPressed;
 

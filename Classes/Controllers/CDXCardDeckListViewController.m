@@ -115,7 +115,7 @@
         case 1:
             return [cardDeck cardsCount];
         case 2:
-            return 1;
+            return 2;
     }
 }
 
@@ -151,7 +151,18 @@
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
-            cell.textLabel.text = @"TOUCH TO ADD A NEW CARD";
+            switch (indexPath.row) {
+                default:
+                case 0: {
+                    cell.textLabel.text = @"TOUCH TO ADD A CARD";
+                    break;
+                }
+                case 1: {
+                    cell.textLabel.text = @"TOUCH TO CONFIGURE CARD DEFAULTS";
+                    break;
+                }
+            }
+            
             cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForThumbnailCard:nil size:tableCellImageSize];
             return cell;
         }
@@ -185,8 +196,17 @@
             break;
         }
         case 2: {
-            [self addButtonPressed];
-            break;
+            switch (indexPath.row) {
+                default:
+                case 0: {
+                    [self addButtonPressed];
+                    break;
+                }
+                case 1: {
+                    [self defaultsButtonPressed];
+                    break;
+                }
+            }
         }
     }
 }
@@ -229,6 +249,24 @@
     [card release];
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
+    switch (proposedDestinationIndexPath.section) {
+        default:
+        case 0: {
+            return [NSIndexPath indexPathForRow:0 inSection:1];
+            break;
+        }
+        case 1: {
+            return proposedDestinationIndexPath;
+            break;
+        }
+        case 2: {
+            return [NSIndexPath indexPathForRow:[self tableView:tableView numberOfRowsInSection:1]-1 inSection:1];
+            break;
+        }
+    }
+}
+
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     [cardDeckTableView setEditing:editing animated:animated];
@@ -242,6 +280,15 @@
     [cardDeckTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     [cardDeckTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
     [self setEditing:NO animated:YES];
+}
+
+- (IBAction)defaultsButtonPressed {
+    qltrace();
+    CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
+    [deck addCard:cardDeck.cardDefaults];
+    CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck] autorelease];
+    CDXCardDeckCardEditViewController *vc = [[[CDXCardDeckCardEditViewController alloc] initWithCardDeckViewContext:context] autorelease];
+    [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
 }
 
 - (IBAction)editButtonPressed {

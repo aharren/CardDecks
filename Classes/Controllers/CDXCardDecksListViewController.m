@@ -112,7 +112,7 @@
         case 1:
             return [cardDecks cardDecksCount];
         case 2:
-            return 1;
+            return 2;
     }
 }
 
@@ -162,7 +162,19 @@
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
-            cell.textLabel.text = @"TOUCH TO ADD A NEW CARD DECK";
+            
+            switch (indexPath.row) {
+                default:
+                case 0: {
+                    cell.textLabel.text = @"TOUCH TO ADD A DECK";
+                    break;
+                }
+                case 1: {
+                    cell.textLabel.text = @"TOUCH TO CONFIGURE DECK DEFAULTS";
+                    break;
+                }
+            }
+            
             cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForThumbnailCard:nil size:tableCellImageSize];
             return cell;
         }
@@ -181,8 +193,7 @@
     }
 }
 
-- (void)pushCardDeckListViewControllerWithIndexPath:(NSIndexPath *)indexPath {
-    CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
+- (void)pushCardDeckListViewControllerWithCardDeck:(CDXCardDeck *)deck {
     CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck] autorelease];
     CDXCardDeckListViewController *vc = [[[CDXCardDeckListViewController alloc] initWithCardDeckViewContext:context] autorelease];
     [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
@@ -199,7 +210,7 @@
         case 1: {
             CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
             if ([deck cardsCount] == 0) {
-                [self pushCardDeckListViewControllerWithIndexPath:indexPath];
+                [self pushCardDeckListViewControllerWithCardDeck:deck];
                 return;
             }
             
@@ -209,14 +220,24 @@
             break;
         }
         case 2: {
-            [self addButtonPressed];
-            break;
+            switch (indexPath.row) {
+                default:
+                case 0: {
+                    [self addButtonPressed];
+                    break;
+                }
+                case 1: {
+                    [self defaultsButtonPressed];
+                    break;
+                }
+            }
         }
     }
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    [self pushCardDeckListViewControllerWithIndexPath:indexPath];
+    CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
+    [self pushCardDeckListViewControllerWithCardDeck:deck];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -251,6 +272,24 @@
     [deck release];
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
+    switch (proposedDestinationIndexPath.section) {
+        default:
+        case 0: {
+            return [NSIndexPath indexPathForRow:0 inSection:1];
+            break;
+        }
+        case 1: {
+            return proposedDestinationIndexPath;
+            break;
+        }
+        case 2: {
+            return [NSIndexPath indexPathForRow:[self tableView:tableView numberOfRowsInSection:1]-1 inSection:1];
+            break;
+        }
+    }
+}
+
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     [cardDecksTableView setEditing:editing animated:animated];
@@ -263,6 +302,11 @@
     [cardDecksTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[cardDecks cardDecksCount]-1 inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     [cardDecksTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
     [self setEditing:NO animated:YES];
+}
+
+- (IBAction)defaultsButtonPressed {
+    qltrace();
+    [self pushCardDeckListViewControllerWithCardDeck:cardDecks.cardDeckDefaults];
 }
 
 - (IBAction)editButtonPressed {
