@@ -47,14 +47,16 @@
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex {
     cardDeckViewContext.currentCardIndex = cardIndex;
-
+    
     CDXCard *card = [cardDeck cardAtIndex:cardIndex];
     text.text = card.text;
     
     [viewButtonsUpDown setEnabled:(cardIndex != 0) forSegmentAtIndex:0];
     [viewButtonsUpDown setEnabled:(cardIndex < ([cardDeck cardsCount] - 1)) forSegmentAtIndex:1];
     
-    self.navigationItem.title = [NSString stringWithFormat:@"%d of %d", cardIndex+1, [cardDeck cardsCount]];
+    if ([cardDeck cardsCount] > 1) {
+        self.navigationItem.title = [NSString stringWithFormat:@"%d of %d", cardIndex+1, [cardDeck cardsCount]];
+    }
 }
 
 - (void)finishCardModification {
@@ -76,6 +78,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.navigationItem.title = @"";
     self.navigationItem.rightBarButtonItem = viewButtonsUpDownBarButtonItem;
     
     [self showCardAtIndex:cardDeckViewContext.currentCardIndex];
