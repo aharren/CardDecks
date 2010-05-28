@@ -130,7 +130,7 @@
                 cell.textLabel.font = tableCellTextFont;
                 cell.detailTextLabel.font = tableCellDetailTextFont;
                 cell.detailTextLabel.textColor = tableCellDetailTextTextColor;
-                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
             
             CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
@@ -214,9 +214,7 @@
                 return;
             }
             
-            CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck] autorelease];
-            CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:context] autorelease];
-            [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+            [self pushCardDeckListViewControllerWithCardDeck:deck];
             break;
         }
         case 2: {
@@ -233,11 +231,6 @@
             }
         }
     }
-}
-
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
-    [self pushCardDeckListViewControllerWithCardDeck:deck];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
