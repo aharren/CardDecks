@@ -79,7 +79,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationItem.title = @"";
-    self.navigationItem.rightBarButtonItem = viewButtonsUpDownBarButtonItem;
+    self.navigationItem.rightBarButtonItem = ([cardDeck cardsCount] > 1) ? viewButtonsUpDownBarButtonItem : nil;
     
     [self showCardAtIndex:cardDeckViewContext.currentCardIndex];
     [text becomeFirstResponder];
