@@ -231,6 +231,25 @@ synthesize_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
     return button;
 }
 
+- (void)refreshKeyboardExtensions {
+    NSUInteger count = [keyboardExtensions count];
+    for (NSUInteger tag = 0; tag < count; tag++) {
+        NSObject<CDXKeyboardExtension> *keyboardExtension = [keyboardExtensions objectAtIndex:tag];
+        if (tag == activeExtensionTag) {
+            if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionWillBecomeActive)]) {
+                [keyboardExtension keyboardExtensionWillBecomeActive];
+            }
+        }
+        UIBarButtonItem *button = [toolbarButtons objectAtIndex:tag+1];
+        button.title = [keyboardExtension keyboardExtensionTitle];
+        if (tag == activeExtensionTag) {
+            if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionDidBecomeActive)]) {
+                [keyboardExtension keyboardExtensionDidBecomeActive];
+            }
+        }
+    }
+}
+
 - (void)activateKeyboardExtension:(NSObject<CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag {
     if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionWillBecomeActive)]) {
         [keyboardExtension keyboardExtensionWillBecomeActive];
