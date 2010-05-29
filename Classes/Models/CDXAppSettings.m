@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDeckSettings.m
+// CDXAppSettings.m
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,56 +23,59 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXCardDeckSettings.h"
+#import "CDXAppSettings.h"
 
 
 enum {
-    CDXCardDeckSettingsPageControl,
-    CDXCardDeckSettingsAutoRotate,
-    CDXCardDeckSettingsShakeRandom,
-    CDXCardDeckSettingsCount
+    CDXAppSettingsIdleTimer,
+    CDXAppSettingsCount
 };
 
 static const CDXSetting settings[] = {
-    { CDXCardDeckSettingsPageControl, CDXSettingTypeBoolean, @"Page Control" },
-    { CDXCardDeckSettingsAutoRotate, CDXSettingTypeBoolean, @"Auto Rotate" },
-    { CDXCardDeckSettingsShakeRandom, CDXSettingTypeBoolean, @"Shake Random" },
+    { CDXAppSettingsIdleTimer, CDXSettingTypeBoolean, @"Idle Timer" },
     { 0, 0, @"" }
+};
+
+static NSString *settingsUserDefaultsKeys[] = {
+    @"enable_idle_timer",
+    nil
 };
 
 typedef struct {
     NSString *title;
     unsigned int settingsCount;
     unsigned int firstIndex;
-} CDXCardDeckSettingGroup;
+} CDXAppSettingGroup;
 
-static const CDXCardDeckSettingGroup groups[] = {
-    { @"Appearance", 1, CDXCardDeckSettingsPageControl },
-    { @"Device Events", 2, CDXCardDeckSettingsAutoRotate },
+static const CDXAppSettingGroup groups[] = {
+    { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
     { @"", 0, 0 }
 };
 
 
-@implementation CDXCardDeckSettings
+@implementation CDXAppSettings
 
-- (id)initWithCardDeck:(CDXCardDeck *)deck {
-    if ((self = [super init])) {
-        ivar_assign_and_retain(cardDeck, deck);
+synthesize_singleton(sharedAppSettings, CDXAppSettings);
+
++ (BOOL)userDefaultsBooleanValueForKey:(NSString *)key defaults:(BOOL)defaults {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if ([userDefaults objectForKey:key] == nil) {
+        return defaults;
     }
-    return self;
+    return [userDefaults boolForKey:key];
 }
 
-- (void)dealloc {
-    ivar_release_and_clear(cardDeck);
-    [super dealloc];
++ (void)setUserDefaultsBooleanValue:(BOOL)value forKey:(NSString *)key {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];    
+    [userDefaults setBool:value forKey:key];
 }
 
 - (NSString *)title {
-    return @"Deck Settings";
+    return @"Settings";
 }
 
 - (NSUInteger)numberOfGroups {
-    return (sizeof(groups) / sizeof(CDXCardDeckSettingGroup)) - 1;
+    return (sizeof(groups) / sizeof(CDXAppSettingGroup)) - 1;
 }
 
 - (NSString *)titleForGroup:(NSUInteger)group {
@@ -92,12 +95,8 @@ static const CDXCardDeckSettingGroup groups[] = {
     switch (tag) {
         default:
             return NO;
-        case CDXCardDeckSettingsPageControl:
-            return cardDeck.wantsPageControl;
-        case CDXCardDeckSettingsAutoRotate:
-            return cardDeck.wantsAutoRotate;
-        case CDXCardDeckSettingsShakeRandom:
-            return cardDeck.wantsShakeRandom;
+        case CDXAppSettingsIdleTimer:
+            return [self enableIdleTimer];
     }
 }
 
@@ -105,16 +104,14 @@ static const CDXCardDeckSettingGroup groups[] = {
     switch (tag) {
         default:
             break;
-        case CDXCardDeckSettingsPageControl:
-            cardDeck.wantsPageControl = value;
-            break;
-        case CDXCardDeckSettingsAutoRotate:
-            cardDeck.wantsAutoRotate = value;
-            break;
-        case CDXCardDeckSettingsShakeRandom:
-            cardDeck.wantsShakeRandom = value;
+        case CDXAppSettingsIdleTimer:
+            [CDXAppSettings setUserDefaultsBooleanValue:value forKey:settingsUserDefaultsKeys[tag]];
             break;
     }
+}
+
+- (BOOL)enableIdleTimer {
+    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsIdleTimer] defaults:NO];
 }
 
 @end

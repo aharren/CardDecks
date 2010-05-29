@@ -28,6 +28,7 @@
 #import "CDXCardsStackView.h"
 #import "CDXCardsStackSwipeView.h"
 #import "CDXImageFactory.h"
+#import "CDXAppSettings.h"
 
 
 @interface CDXCardDeckCardViewController (PageControl)
@@ -134,7 +135,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [[UIApplication sharedApplication] setIdleTimerDisabled:!cardDeck.wantsIdleTimer];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:![[CDXAppSettings sharedAppSettings] enableIdleTimer]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

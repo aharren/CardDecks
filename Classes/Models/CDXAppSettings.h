@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDecksListViewController.h
+// CDXAppSettings.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,35 +23,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXCardDecks.h"
-#import "CDXAppWindowProtocols.h"
+#import "CDXSettings.h"
 
 
-@interface CDXCardDecksListViewController : UIViewController<CDXAppWindowViewController> {
+@interface CDXAppSettings : NSObject<CDXSettings> {
     
-@protected
-    IBOutlet UITableView *cardDecksTableView;
-    CDXCardDecks *cardDecks;
-    
-    IBOutlet UIToolbar *viewToolbar;
-    
-    UIFont *tableCellTextFont;
-    UIFont *tableCellTextFontAction;
-    UIColor *tableCellTextTextColor;
-    UIColor *tableCellTextTextColorNoCards;
-    UIColor *tableCellTextTextColorAction;
-    UIFont *tableCellDetailTextFont;
-    UIColor *tableCellDetailTextTextColor;
-    UIColor *tableCellBackgroundColorAction;
-    CGSize tableCellImageSize;
 }
 
-- (id)initWithCardDecks:(CDXCardDecks *)cardDecks;
+declare_singleton(sharedAppSettings, CDXAppSettings);
 
-- (IBAction)addButtonPressed;
-- (IBAction)defaultsButtonPressed;
-- (IBAction)editButtonPressed;
-- (IBAction)settingsButtonPressed;
+- (BOOL)enableIdleTimer;
 
 @end
 

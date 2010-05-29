@@ -34,7 +34,6 @@
 @synthesize wantsPageControl;
 @synthesize wantsAutoRotate;
 @synthesize wantsShakeRandom;
-@synthesize wantsIdleTimer;
 @synthesize displayStyle;
 @synthesize cornerStyle;
 @synthesize fontSize;
@@ -51,7 +50,6 @@
         wantsPageControl = NO;
         wantsAutoRotate = YES;
         wantsShakeRandom = NO;
-        wantsIdleTimer = NO;
         displayStyle = CDXCardDeckDisplayStyleDefault;
         cornerStyle = CDXCardCornerStyleRounded;
     }
@@ -74,7 +72,6 @@
     copy.wantsPageControl = wantsPageControl;
     copy.wantsAutoRotate = wantsAutoRotate;
     copy.wantsShakeRandom = wantsShakeRandom;
-    copy.wantsIdleTimer = wantsIdleTimer;
     copy.displayStyle = displayStyle;
     copy.cornerStyle = cornerStyle;
     for (CDXCard *card in cards) {

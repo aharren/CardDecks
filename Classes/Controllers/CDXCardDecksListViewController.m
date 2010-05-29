@@ -27,6 +27,8 @@
 #import "CDXCardDeckCardViewController.h"
 #import "CDXCardDeckListViewController.h"
 #import "CDXImageFactory.h"
+#import "CDXAppSettings.h"
+#import "CDXSettingsViewController.h"
 
 
 @implementation CDXCardDecksListViewController
@@ -305,6 +307,13 @@
 - (IBAction)editButtonPressed {
     qltrace();
     [self setEditing:!self.editing animated:YES];
+}
+
+- (IBAction)settingsButtonPressed {
+    qltrace();
+    CDXAppSettings *settings = [CDXAppSettings sharedAppSettings];
+    CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings] autorelease];
+    [self presentModalViewController:vc animated:YES];
 }
 
 @end

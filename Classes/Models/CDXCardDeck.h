@@ -48,7 +48,6 @@ typedef enum {
     BOOL wantsPageControl;
     BOOL wantsAutoRotate;
     BOOL wantsShakeRandom;
-    BOOL wantsIdleTimer;
     
     CDXCardDeckDisplayStyle displayStyle;
     CDXCardCornerStyle cornerStyle;
@@ -71,7 +70,6 @@ typedef enum {
 @property (nonatomic, assign) BOOL wantsPageControl;
 @property (nonatomic, assign) BOOL wantsAutoRotate;
 @property (nonatomic, assign) BOOL wantsShakeRandom;
-@property (nonatomic, assign) BOOL wantsIdleTimer;
 
 @property (nonatomic, assign) CDXCardDeckDisplayStyle displayStyle;
 @property (nonatomic, assign) CDXCardCornerStyle cornerStyle;
