@@ -133,6 +133,7 @@
                 cell.detailTextLabel.font = tableCellDetailTextFont;
                 cell.detailTextLabel.textColor = tableCellDetailTextTextColor;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             }
             
             CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
@@ -146,11 +147,9 @@
             if ([deck cardsCount] == 0) {
                 cell.textLabel.textColor = tableCellTextTextColorNoCards;
                 cell.detailTextLabel.text = @"TOUCH TO ADD CARDS";
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             } else {
                 cell.textLabel.textColor = tableCellTextTextColor;
                 cell.detailTextLabel.text = deck.description;
-                cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             }
             
             return cell;
