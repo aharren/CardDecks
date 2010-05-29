@@ -38,7 +38,7 @@ enum {
 static const CDXSetting settings[] = {
     { CDXCardDeckSettingsDeckDisplayStyle, CDXSettingTypeEnumeration, @"Deck Style" },
     { CDXCardDeckSettingsCornerStyle, CDXSettingTypeEnumeration, @"Corner Style" },
-    { CDXCardDeckSettingsPageControl, CDXSettingTypeBoolean, @"Page Control" },
+    { CDXCardDeckSettingsPageControl, CDXSettingTypeBoolean, @"Page Display" },
     { CDXCardDeckSettingsAutoRotate, CDXSettingTypeBoolean, @"Auto Rotate" },
     { CDXCardDeckSettingsShakeRandom, CDXSettingTypeBoolean, @"Shake Random" },
     { 0, 0, @"" }
