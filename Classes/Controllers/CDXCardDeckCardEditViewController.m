@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeckCardEditViewController.h"
+#import "CDXKeyboardExtensions.h"
 
 
 @implementation CDXCardDeckCardEditViewController
@@ -99,6 +100,11 @@
 - (IBAction)upDownButtonPressed {
     [self finishCardModification];
     [self showCardAtIndex:(cardDeckViewContext.currentCardIndex - 1) + (viewButtonsUpDown.selectedSegmentIndex << 1)];
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    NSArray *extensions = [NSArray arrayWithObjects:nil];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
 }
 
 @end

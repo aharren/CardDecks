@@ -72,6 +72,7 @@
 		E0F2B34611955B730092D11B /* lcl.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D8C7FD1172255F00356C2C /* lcl.m */; };
 		E0F2B3C11195617A0092D11B /* CDXCardsViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3C01195617A0092D11B /* CDXCardsViewBase.m */; };
 		E0F2B3F7119563910092D11B /* CDXCardsStackSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */; };
+		E0F7A50A11B158DA00CD786B /* CDXKeyboardExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +176,8 @@
 		E0F2B3C01195617A0092D11B /* CDXCardsViewBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsViewBase.m; path = Classes/Views/CDXCardsViewBase.m; sourceTree = "<group>"; };
 		E0F2B3F5119563910092D11B /* CDXCardsStackSwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsStackSwipeView.h; path = Classes/Views/CDXCardsStackSwipeView.h; sourceTree = "<group>"; };
 		E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsStackSwipeView.m; path = Classes/Views/CDXCardsStackSwipeView.m; sourceTree = "<group>"; };
+		E0F7A50811B158DA00CD786B /* CDXKeyboardExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXKeyboardExtensions.h; path = Classes/Keyboards/CDXKeyboardExtensions.h; sourceTree = "<group>"; };
+		E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXKeyboardExtensions.m; path = Classes/Keyboards/CDXKeyboardExtensions.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -320,6 +323,7 @@
 				E041E3921169FD5D009DC453 /* Serializers */,
 				E002B8CB1168D6B70072C409 /* Controllers */,
 				E002B8CC1168D6CA0072C409 /* Views */,
+				E0F7A50711B158C600CD786B /* Keyboards */,
 				E03BA38711674CBF00FE7924 /* CDXAppDelegate.h */,
 				E03BA38811674CBF00FE7924 /* CDXAppDelegate.m */,
 				E034181A1195CD9F00007FF7 /* CDXAppWindowProtocols.h */,
@@ -395,6 +399,15 @@
 				E0D9096811722AD700AD50DA /* qlog.h */,
 			);
 			name = Logging;
+			sourceTree = "<group>";
+		};
+		E0F7A50711B158C600CD786B /* Keyboards */ = {
+			isa = PBXGroup;
+			children = (
+				E0F7A50811B158DA00CD786B /* CDXKeyboardExtensions.h */,
+				E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */,
+			);
+			name = Keyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -535,6 +548,7 @@
 				E0A1C00111A82BE100911848 /* CDXCardDeckCardEditViewController.m in Sources */,
 				E0805B4B11A85C6600199172 /* CDXCardDeckViewContext.m in Sources */,
 				E04B448A11B0441600DDBD33 /* CDXAppSettings.m in Sources */,
+				E0F7A50A11B158DA00CD786B /* CDXKeyboardExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

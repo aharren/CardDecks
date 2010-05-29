@@ -26,6 +26,7 @@
 #import "CDXAppDelegate.h"
 #import "CDXCardDeckURLSerializer.h"
 #import "CDXCardDecksListViewController.h"
+#import "CDXKeyboardExtensions.h"
 
 
 @implementation CDXAppDelegate
@@ -86,6 +87,8 @@
         deck.cornerStyle = CDXCardCornerStyleCornered;
         decks.cardDeckDefaults = deck;
     }
+    
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
     
     CDXCardDecksListViewController *vc = [[[CDXCardDecksListViewController alloc] initWithCardDecks:decks] autorelease];
     
