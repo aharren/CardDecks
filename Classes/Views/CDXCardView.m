@@ -29,7 +29,7 @@
 
 @implementation CDXCardView
 
-- (CDXCardOrientation)cardOrientationFromDeviceOrientation:(UIDeviceOrientation)deviceOrientation {
+- (CDXCardOrientation)cardOrientationForDeviceOrientation:(UIDeviceOrientation)deviceOrientation {
     // map the given device orientation to a card orientation
     switch (deviceOrientation) {
         case UIDeviceOrientationPortrait:
@@ -83,7 +83,7 @@
 
 - (id)initWithCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation {
     // calculate orientation
-    CDXCardOrientation cardOrientation = card.orientation + [self cardOrientationFromDeviceOrientation:deviceOrientation];
+    CDXCardOrientation cardOrientation = card.orientation + [self cardOrientationForDeviceOrientation:deviceOrientation];
     cardOrientation %= CDXCardOrientationCount;
     
     // get text
