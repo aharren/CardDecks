@@ -44,7 +44,7 @@
     }
 }
 
-- (CGAffineTransform)transformFromCardOrientation:(CDXCardOrientation)cardOrientation {
++ (CGAffineTransform)transformForCardOrientation:(CDXCardOrientation)cardOrientation {
     // map the given card orientation to a transform
     CGFloat transformAngle;
     switch (cardOrientation) {
@@ -107,7 +107,7 @@
     cardText.font = [UIFont systemFontOfSize:fontSize];
     cardText.text = text;
     cardText.textColor = [card.textColor uiColor];
-    cardText.transform = [self transformFromCardOrientation:cardOrientation];
+    cardText.transform = [CDXCardView transformForCardOrientation:cardOrientation];
     
     // update background
     cardText.backgroundColor = [card.backgroundColor uiColor];

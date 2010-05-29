@@ -35,5 +35,7 @@
 - (id)initWithCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation;
 - (id)initWithThumbnailCard:(CDXCard *)card size:(CGSize)size;
 
++ (CGAffineTransform)transformForCardOrientation:(CDXCardOrientation)cardOrientation;
+
 @end
 
