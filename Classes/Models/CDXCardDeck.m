@@ -32,6 +32,7 @@
 @synthesize name;
 @synthesize description;
 @synthesize wantsPageControl;
+@synthesize wantsPageJumps;
 @synthesize wantsAutoRotate;
 @synthesize wantsShakeRandom;
 @synthesize displayStyle;
@@ -48,6 +49,7 @@
         ivar_assign_and_copy(description, @"");
         ivar_assign(cards, [[NSMutableArray alloc] init]);
         wantsPageControl = NO;
+        wantsPageJumps = YES;
         wantsAutoRotate = YES;
         wantsShakeRandom = NO;
         displayStyle = CDXCardDeckDisplayStyleDefault;
@@ -70,6 +72,7 @@
     copy.cardDefaults = [[cardDefaults copyWithZone:zone] autorelease];
     copy.name = name;
     copy.wantsPageControl = wantsPageControl;
+    copy.wantsPageJumps = wantsPageJumps;
     copy.wantsAutoRotate = wantsAutoRotate;
     copy.wantsShakeRandom = wantsShakeRandom;
     copy.displayStyle = displayStyle;

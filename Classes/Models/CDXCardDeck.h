@@ -46,6 +46,7 @@ typedef enum {
     NSMutableArray *cards;
     
     BOOL wantsPageControl;
+    BOOL wantsPageJumps;
     BOOL wantsAutoRotate;
     BOOL wantsShakeRandom;
     
@@ -68,6 +69,7 @@ typedef enum {
 - (void)replaceCardAtIndex:(NSUInteger)index withCard:(CDXCard *)card;
 
 @property (nonatomic, assign) BOOL wantsPageControl;
+@property (nonatomic, assign) BOOL wantsPageJumps;
 @property (nonatomic, assign) BOOL wantsAutoRotate;
 @property (nonatomic, assign) BOOL wantsShakeRandom;
 

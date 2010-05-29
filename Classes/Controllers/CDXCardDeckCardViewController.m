@@ -222,6 +222,7 @@
     pageControl.alpha = cardDeck.wantsPageControl ? CDXCardDeckCardViewControllerPageControlAlphaVisible : CDXCardDeckCardViewControllerPageControlAlphaHidden;
     pageControl.numberOfPages = pageCount;
     pageControl.currentPage = cardDeckViewContext.currentCardIndex;
+    pageControl.userInteractionEnabled = NO;
     
     // configure the page jump pages
     if (pageCount <= 1) {
@@ -263,6 +264,10 @@
 }
 
 - (IBAction)pageControlLeftButtonPressed {
+    if (!cardDeck.wantsPageJumps) {
+        return;
+    }
+    
     NSUInteger currentCardIndex = [cardsView currentCardIndex];
     if (currentCardIndex > 0) {
         [cardsView showCardAtIndex:currentCardIndex-1];
@@ -270,6 +275,10 @@
 }
 
 - (IBAction)pageControlRightButtonPressed {
+    if (!cardDeck.wantsPageJumps) {
+        return;
+    }
+    
     NSUInteger currentCardIndex = [cardsView currentCardIndex];
     if (currentCardIndex < [cardDeck cardsCount]-1) {
         [cardsView showCardAtIndex:currentCardIndex+1];
@@ -277,6 +286,10 @@
 }
 
 - (IBAction)pageControlJumpLeftButtonPressed {
+    if (!cardDeck.wantsPageJumps) {
+        return;
+    }
+    
     NSUInteger currentCardIndex = [cardsView currentCardIndex];
     for (int i = pageControlJumpPagesCount-1; i >= 0; i--) {
         if (currentCardIndex > pageControlJumpPages[i]) {
@@ -287,6 +300,10 @@
 }
 
 - (IBAction)pageControlJumpRightButtonPressed {
+    if (!cardDeck.wantsPageJumps) {
+        return;
+    }
+    
     NSUInteger currentCardIndex = [cardsView currentCardIndex];
     for (int i = 0; i < pageControlJumpPagesCount; i++) {
         if (currentCardIndex < pageControlJumpPages[i]) {

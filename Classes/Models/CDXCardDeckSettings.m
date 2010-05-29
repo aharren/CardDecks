@@ -30,6 +30,7 @@ enum {
     CDXCardDeckSettingsDeckDisplayStyle,
     CDXCardDeckSettingsCornerStyle,
     CDXCardDeckSettingsPageControl,
+    CDXCardDeckSettingsPageJumps,
     CDXCardDeckSettingsAutoRotate,
     CDXCardDeckSettingsShakeRandom,
     CDXCardDeckSettingsCount
@@ -39,6 +40,7 @@ static const CDXSetting settings[] = {
     { CDXCardDeckSettingsDeckDisplayStyle, CDXSettingTypeEnumeration, @"Deck Style" },
     { CDXCardDeckSettingsCornerStyle, CDXSettingTypeEnumeration, @"Corner Style" },
     { CDXCardDeckSettingsPageControl, CDXSettingTypeBoolean, @"Page Display" },
+    { CDXCardDeckSettingsPageJumps, CDXSettingTypeBoolean, @"Page Jumps" },
     { CDXCardDeckSettingsAutoRotate, CDXSettingTypeBoolean, @"Auto Rotate" },
     { CDXCardDeckSettingsShakeRandom, CDXSettingTypeBoolean, @"Shake Random" },
     { 0, 0, @"" }
@@ -51,7 +53,7 @@ typedef struct {
 } CDXCardDeckSettingGroup;
 
 static const CDXCardDeckSettingGroup groups[] = {
-    { @"Appearance", 3, CDXCardDeckSettingsDeckDisplayStyle },
+    { @"Appearance", 4, CDXCardDeckSettingsDeckDisplayStyle },
     { @"Device Events", 2, CDXCardDeckSettingsAutoRotate },
     { @"", 0, 0 }
 };
@@ -98,6 +100,8 @@ static const CDXCardDeckSettingGroup groups[] = {
             return NO;
         case CDXCardDeckSettingsPageControl:
             return cardDeck.wantsPageControl;
+        case CDXCardDeckSettingsPageJumps:
+            return cardDeck.wantsPageJumps;
         case CDXCardDeckSettingsAutoRotate:
             return cardDeck.wantsAutoRotate;
         case CDXCardDeckSettingsShakeRandom:
@@ -111,6 +115,9 @@ static const CDXCardDeckSettingGroup groups[] = {
             break;
         case CDXCardDeckSettingsPageControl:
             cardDeck.wantsPageControl = value;
+            break;
+        case CDXCardDeckSettingsPageJumps:
+            cardDeck.wantsPageJumps = value;
             break;
         case CDXCardDeckSettingsAutoRotate:
             cardDeck.wantsAutoRotate = value;
