@@ -100,6 +100,7 @@
 - (IBAction)upDownButtonPressed {
     [self finishCardModification];
     [self showCardAtIndex:(cardDeckViewContext.currentCardIndex - 1) + (viewButtonsUpDown.selectedSegmentIndex << 1)];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] refreshKeyboardExtensions];
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
