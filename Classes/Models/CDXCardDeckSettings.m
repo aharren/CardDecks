@@ -27,6 +27,7 @@
 
 
 enum {
+    CDXCardDeckSettingsDeckDisplayStyle,
     CDXCardDeckSettingsCornerStyle,
     CDXCardDeckSettingsPageControl,
     CDXCardDeckSettingsAutoRotate,
@@ -35,6 +36,7 @@ enum {
 };
 
 static const CDXSetting settings[] = {
+    { CDXCardDeckSettingsDeckDisplayStyle, CDXSettingTypeEnumeration, @"Deck Style" },
     { CDXCardDeckSettingsCornerStyle, CDXSettingTypeEnumeration, @"Corner Style" },
     { CDXCardDeckSettingsPageControl, CDXSettingTypeBoolean, @"Page Control" },
     { CDXCardDeckSettingsAutoRotate, CDXSettingTypeBoolean, @"Auto Rotate" },
@@ -49,7 +51,7 @@ typedef struct {
 } CDXCardDeckSettingGroup;
 
 static const CDXCardDeckSettingGroup groups[] = {
-    { @"Appearance", 2, CDXCardDeckSettingsCornerStyle },
+    { @"Appearance", 3, CDXCardDeckSettingsDeckDisplayStyle },
     { @"Device Events", 2, CDXCardDeckSettingsAutoRotate },
     { @"", 0, 0 }
 };
@@ -123,6 +125,8 @@ static const CDXCardDeckSettingGroup groups[] = {
     switch (tag) {
         default:
             return 0;
+        case CDXCardDeckSettingsDeckDisplayStyle:
+            return (NSUInteger)cardDeck.displayStyle;
         case CDXCardDeckSettingsCornerStyle:
             return (NSUInteger)cardDeck.cornerStyle;
     }
@@ -131,6 +135,9 @@ static const CDXCardDeckSettingGroup groups[] = {
 - (void)setEnumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag {
     switch (tag) {
         default:
+            break;
+        case CDXCardDeckSettingsDeckDisplayStyle:
+            cardDeck.displayStyle = value;
             break;
         case CDXCardDeckSettingsCornerStyle:
             cardDeck.cornerStyle = value;
@@ -142,6 +149,8 @@ static const CDXCardDeckSettingGroup groups[] = {
     switch (tag) {
         default:
             return 0;
+        case CDXCardDeckSettingsDeckDisplayStyle:
+            return (NSUInteger)CDXCardDeckDisplayStyleCount;
         case CDXCardDeckSettingsCornerStyle:
             return CDXCardCornerStyleCount;
     }
@@ -151,6 +160,16 @@ static const CDXCardDeckSettingGroup groups[] = {
     switch (tag) {
         default:
             return 0;
+        case CDXCardDeckSettingsDeckDisplayStyle:
+            switch (value) {
+                default:
+                case CDXCardDeckDisplayStyleSideBySide:
+                    return @"Side-by-side (Scroll)";
+                case CDXCardDeckDisplayStyleStack:
+                    return @"Stacked (Scroll)";
+                case CDXCardDeckDisplayStyleSwipeStack:
+                    return @"Stacked (Swipe)";
+            }
         case CDXCardDeckSettingsCornerStyle:
             switch (value) {
                 default:
