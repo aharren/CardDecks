@@ -67,7 +67,7 @@
                                         autorelease];
     self.toolbarItems = viewToolbar.items;
     ivar_assign_and_retain(tableCellTextFont, [UIFont boldSystemFontOfSize:18]);
-    ivar_assign_and_retain(tableCellTextFontAction, [UIFont systemFontOfSize:12]);
+    ivar_assign_and_retain(tableCellTextFontAction, [UIFont boldSystemFontOfSize:11]);
     ivar_assign_and_retain(tableCellTextTextColor, [UIColor blackColor]);
     ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor lightGrayColor]);
     ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor lightGrayColor]);
@@ -160,8 +160,9 @@
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
                 cell.textLabel.font = tableCellTextFontAction;
                 cell.textLabel.textColor = tableCellTextTextColorAction;
+                cell.textLabel.textAlignment = UITextAlignmentCenter;
                 cell.accessoryType = UITableViewCellAccessoryNone;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
             }
             
             switch (indexPath.row) {
@@ -176,7 +177,6 @@
                 }
             }
             
-            cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForThumbnailCard:nil size:tableCellImageSize];
             return cell;
         }
     }
