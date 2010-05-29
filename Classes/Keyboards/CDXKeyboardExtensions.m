@@ -57,9 +57,9 @@ synthesize_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
     [super dealloc];
 }
 
-- (NSObject <CDXKeyboardExtension> *)keyboardExtensionByTag:(NSInteger)tag {
+- (NSObject<CDXKeyboardExtension> *)keyboardExtensionByTag:(NSInteger)tag {
     if (tag >= 0) {
-        return [[(NSObject <CDXKeyboardExtension> *)[keyboardExtensions objectAtIndex:tag] retain] autorelease];
+        return [[(NSObject<CDXKeyboardExtension> *)[keyboardExtensions objectAtIndex:tag] retain] autorelease];
     }
     
     return nil;
@@ -120,7 +120,7 @@ synthesize_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
     [toolbar setFrame:toolbarFrameAnimationEnd];
     
     if (hidden && activeExtensionTag != -1) {
-        NSObject <CDXKeyboardExtension> *extension = [self keyboardExtensionByTag:activeExtensionTag];
+        NSObject<CDXKeyboardExtension> *extension = [self keyboardExtensionByTag:activeExtensionTag];
         UIView *extensionView = [extension keyboardExtensionView];
         CGRect extensionViewFrameAnimationEnd = [extensionView frame];
         extensionViewFrameAnimationEnd.origin.y = keyboardAnimationEndPoint.y - keyboardBounds.size.height/2;
@@ -190,7 +190,7 @@ synthesize_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
     toolbarKeyboardButton.tag = tag;
     
     ivar_assign_and_copy(keyboardExtensions, aKeyboardExtensions);
-    for (NSObject <CDXKeyboardExtension> *extension in keyboardExtensions) {
+    for (NSObject<CDXKeyboardExtension> *extension in keyboardExtensions) {
         UIBarButtonItem *button = [self toolbarButtonWithTitle:[extension keyboardExtensionTitle]];
         button.tag = ++tag;
         [toolbarButtons addObject:button];
@@ -230,7 +230,7 @@ synthesize_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
     return button;
 }
 
-- (void)activateKeyboardExtension:(NSObject <CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag {
+- (void)activateKeyboardExtension:(NSObject<CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag {
     if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionWillBecomeActive)]) {
         [keyboardExtension keyboardExtensionWillBecomeActive];
     }
@@ -250,7 +250,7 @@ synthesize_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
     button.style = UIBarButtonItemStyleDone;
 }
 
-- (void)deactivateKeyboardExtension:(NSObject <CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag {
+- (void)deactivateKeyboardExtension:(NSObject<CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag {
     if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionWillBecomeInactive)]) {
         [keyboardExtension keyboardExtensionWillBecomeInactive];
     }    

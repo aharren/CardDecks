@@ -72,8 +72,8 @@ declare_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
 
 - (void)setEnabled:(BOOL)enabled;
 
-- (void)activateKeyboardExtension:(NSObject <CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag;
-- (void)deactivateKeyboardExtension:(NSObject <CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag;
+- (void)activateKeyboardExtension:(NSObject<CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag;
+- (void)deactivateKeyboardExtension:(NSObject<CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag;
 
 - (void)toolbarButtonPressed:(id)sender;
 - (UIBarButtonItem *)toolbarButtonWithTitle:(NSString *)title;
