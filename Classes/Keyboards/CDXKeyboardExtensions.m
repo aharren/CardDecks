@@ -227,6 +227,7 @@ synthesize_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
                                 style:UIBarButtonItemStyleBordered
                                 target:self action:@selector(toolbarButtonPressed:)]
                                autorelease];
+    button.width = 40;
     return button;
 }
 
@@ -247,7 +248,10 @@ synthesize_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
     
     activeExtensionTag = tag;
     UIBarButtonItem *button = [self toolbarButtonByTag:tag];
-    button.style = UIBarButtonItemStyleDone;
+    button.enabled = NO;
+    if (tag != -1) {
+        button.title = [keyboardExtension keyboardExtensionTitle];
+    }
 }
 
 - (void)deactivateKeyboardExtension:(NSObject<CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag {
@@ -265,7 +269,7 @@ synthesize_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
     }    
     
     UIBarButtonItem *button = [self toolbarButtonByTag:tag];
-    button.style = UIBarButtonItemStyleBordered;
+    button.enabled = YES;
 }
 
 - (void)toolbarButtonPressed:(id)sender {
