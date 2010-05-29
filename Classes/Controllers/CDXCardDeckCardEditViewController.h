@@ -26,9 +26,10 @@
 #import "CDXCardDeck.h"
 #import "CDXCardDeckViewContext.h"
 #import "CDXAppWindowProtocols.h"
+#import "CDXOrientationKeyboardExtension.h"
 
 
-@interface CDXCardDeckCardEditViewController : UIViewController<CDXAppWindowViewController> {
+@interface CDXCardDeckCardEditViewController : UIViewController<CDXAppWindowViewController, CDXOrientationKeyboardExtensionResponder> {
     
 @protected
     IBOutlet UITextView *text;
@@ -43,6 +44,9 @@
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
 
 - (IBAction)upDownButtonPressed;
+
+- (CDXCardOrientation)orientationKeyboardExtensionCardOrientation;
+- (void)orientationKeyboardExtensionSetCardOrientation:(CDXCardOrientation)cardOrientation;
 
 @end
 

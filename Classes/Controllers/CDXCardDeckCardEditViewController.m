@@ -25,6 +25,7 @@
 
 #import "CDXCardDeckCardEditViewController.h"
 #import "CDXKeyboardExtensions.h"
+#import "CDXOrientationKeyboardExtension.h"
 
 
 @implementation CDXCardDeckCardEditViewController
@@ -104,8 +105,18 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    NSArray *extensions = [NSArray arrayWithObjects:nil];
+    NSArray *extensions = [NSArray arrayWithObjects:
+                           [CDXOrientationKeyboardExtension sharedOrientationKeyboardExtension],
+                           nil];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
+}
+
+- (CDXCardOrientation)orientationKeyboardExtensionCardOrientation {
+    return [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].orientation;
+}
+
+- (void)orientationKeyboardExtensionSetCardOrientation:(CDXCardOrientation)cardOrientation {
+    [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].orientation = cardOrientation;
 }
 
 @end
