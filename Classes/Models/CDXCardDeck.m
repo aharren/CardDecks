@@ -149,6 +149,7 @@
     for (CDXCard *card in cards) {
         card.cornerStyle = aCornerStyle;
     }
+    cardDefaults.cornerStyle = aCornerStyle;
 }
 
 - (void)setFontSize:(CGFloat)aFontSize {
@@ -156,6 +157,7 @@
     for (CDXCard *card in cards) {
         card.fontSize = aFontSize;
     }
+    cardDefaults.fontSize = aFontSize;
 }
 
 @end
