@@ -39,6 +39,7 @@ synthesize_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
         toolbar.barStyle = UIBarStyleDefault;
         ivar_assign(toolbarButtons, [[NSMutableArray alloc] init]);
         ivar_assign_and_retain(toolbarKeyboardButton, [self toolbarButtonWithTitle:@"abc"]);
+        ivar_assign_and_retain(backgroundColor, [UIColor colorWithPatternImage:[UIImage imageNamed:@"KeyboardExtensionsBackground.png"]]);
         enabled = NO;
         visible = NO;
         activeExtensionTag = -1;

@@ -73,6 +73,7 @@
 		E0F2B3C11195617A0092D11B /* CDXCardsViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3C01195617A0092D11B /* CDXCardsViewBase.m */; };
 		E0F2B3F7119563910092D11B /* CDXCardsStackSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */; };
 		E0F7A50A11B158DA00CD786B /* CDXKeyboardExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */; };
+		E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,6 +179,7 @@
 		E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsStackSwipeView.m; path = Classes/Views/CDXCardsStackSwipeView.m; sourceTree = "<group>"; };
 		E0F7A50811B158DA00CD786B /* CDXKeyboardExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXKeyboardExtensions.h; path = Classes/Keyboards/CDXKeyboardExtensions.h; sourceTree = "<group>"; };
 		E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXKeyboardExtensions.m; path = Classes/Keyboards/CDXKeyboardExtensions.m; sourceTree = "<group>"; };
+		E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = KeyboardExtensionsBackground.png; path = Images/KeyboardExtensionsBackground.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -377,6 +379,7 @@
 		E0CCC70A1170D9D50040D222 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */,
 				E0C51F87119DAC5F00D75D0E /* Toolbars */,
 				E0C51F13119DA03000D75D0E /* Default.png */,
 				E0620F8A119E950D00234667 /* StatusBarDefault.png */,
@@ -490,6 +493,7 @@
 				E0A1C15D11A83F0D00911848 /* Toolbar-Down.png in Resources */,
 				E0A1C15E11A83F0D00911848 /* Toolbar-Up.png in Resources */,
 				E04B44C011B04C0800DDBD33 /* Settings.bundle in Resources */,
+				E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
