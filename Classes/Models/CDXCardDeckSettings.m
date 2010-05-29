@@ -27,6 +27,7 @@
 
 
 enum {
+    CDXCardDeckSettingsCornerStyle,
     CDXCardDeckSettingsPageControl,
     CDXCardDeckSettingsAutoRotate,
     CDXCardDeckSettingsShakeRandom,
@@ -34,6 +35,7 @@ enum {
 };
 
 static const CDXSetting settings[] = {
+    { CDXCardDeckSettingsCornerStyle, CDXSettingTypeEnumeration, @"Corner Style" },
     { CDXCardDeckSettingsPageControl, CDXSettingTypeBoolean, @"Page Control" },
     { CDXCardDeckSettingsAutoRotate, CDXSettingTypeBoolean, @"Auto Rotate" },
     { CDXCardDeckSettingsShakeRandom, CDXSettingTypeBoolean, @"Shake Random" },
@@ -47,7 +49,7 @@ typedef struct {
 } CDXCardDeckSettingGroup;
 
 static const CDXCardDeckSettingGroup groups[] = {
-    { @"Appearance", 1, CDXCardDeckSettingsPageControl },
+    { @"Appearance", 2, CDXCardDeckSettingsCornerStyle },
     { @"Device Events", 2, CDXCardDeckSettingsAutoRotate },
     { @"", 0, 0 }
 };
@@ -114,6 +116,49 @@ static const CDXCardDeckSettingGroup groups[] = {
         case CDXCardDeckSettingsShakeRandom:
             cardDeck.wantsShakeRandom = value;
             break;
+    }
+}
+
+- (NSUInteger)enumerationValueForSettingWithTag:(NSUInteger)tag {
+    switch (tag) {
+        default:
+            return 0;
+        case CDXCardDeckSettingsCornerStyle:
+            return (NSUInteger)cardDeck.cornerStyle;
+    }
+}
+
+- (void)setEnumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag {
+    switch (tag) {
+        default:
+            break;
+        case CDXCardDeckSettingsCornerStyle:
+            cardDeck.cornerStyle = value;
+            break;
+    }
+}
+
+- (NSUInteger)enumerationValuesCountForSettingWithTag:(NSUInteger)tag {
+    switch (tag) {
+        default:
+            return 0;
+        case CDXCardDeckSettingsCornerStyle:
+            return CDXCardCornerStyleCount;
+    }
+}
+
+- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag {
+    switch (tag) {
+        default:
+            return 0;
+        case CDXCardDeckSettingsCornerStyle:
+            switch (value) {
+                default:
+                case CDXCardCornerStyleRounded:
+                    return @"Rounded";
+                case CDXCardCornerStyleCornered:
+                    return @"Cornered";
+            }
     }
 }
 

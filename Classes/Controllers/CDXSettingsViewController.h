@@ -26,11 +26,9 @@
 #import "CDXCardDeckSettings.h"
 
 
-@interface CDXSettingsViewController : UIViewController {
+@interface CDXSettingsViewController : UINavigationController {
     
 @protected
-    IBOutlet UITableView *settingsTableView;
-    IBOutlet UINavigationItem *settingsNavigationItem;
     NSObject<CDXSettings> *settings;
     
 }

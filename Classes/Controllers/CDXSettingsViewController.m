@@ -26,31 +26,89 @@
 #import "CDXSettingsViewController.h"
 
 
-@implementation CDXSettingsViewController
+@interface CDXSettingsEnumerationViewController : UITableViewController {
+    
+@protected
+    NSObject<CDXSettings> *settings;
+    CDXSetting setting;
+    
+}
 
-- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings {
-    if ((self = [super initWithNibName:@"CDXSettingsView" bundle:nil])) {
-        ivar_assign_and_retain(settings, aSettings);
+@end
+
+
+@implementation CDXSettingsEnumerationViewController
+
+- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings setting:(CDXSetting)aSetting {
+    if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
+        ivar_assign(settings, aSettings);
+        setting = aSetting;
     }
     return self;
 }
 
-- (void)dealloc {
-    ivar_release_and_clear(settingsTableView);
-    ivar_release_and_clear(settingsNavigationItem);
-    ivar_release_and_clear(settings);
-    [super dealloc];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    settingsNavigationItem.title = [settings title];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [settings enumerationValuesCountForSettingWithTag:setting.tag];
 }
 
-- (void)viewDidUnload {
-    ivar_release_and_clear(settingsTableView);
-    ivar_release_and_clear(settingsNavigationItem);
-    [super viewDidUnload];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *reuseIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+    }
+    cell.textLabel.text = [settings descriptionForEumerationValue:indexPath.row forSettingWithTag:setting.tag];
+    if (indexPath.row == [settings enumerationValueForSettingWithTag:setting.tag]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSUInteger value = [settings enumerationValueForSettingWithTag:setting.tag];
+    if (value != indexPath.row) {
+        [settings setEnumerationValue:indexPath.row forSettingWithTag:setting.tag];
+        NSArray *paths = [NSArray arrayWithObjects:
+                          [NSIndexPath indexPathForRow:value inSection:0],
+                          indexPath,
+                          nil];
+        [tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+@end
+
+
+@interface CDXSettingsMainViewController : UITableViewController {
+    
+@protected
+    NSObject<CDXSettings> *settings;
+    
+}
+
+@end
+
+
+@implementation CDXSettingsMainViewController
+
+- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings {
+    if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
+        ivar_assign(settings, aSettings);
+    }
+    return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -72,6 +130,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *reuseIdentifierDefault = @"DefaultCell";
     static NSString *reuseIdentifierBoolean = @"BooleanCell";
+    static NSString *reuseIdentifierEnumeration = @"EnumerationCell";
     
     CDXSetting setting = [settings settingAtIndex:indexPath.row inGroup:indexPath.section];
     
@@ -101,7 +160,69 @@
             cellSwitch.on = [settings booleanValueForSettingWithTag:setting.tag];
             return cell;
         }
+        case CDXSettingTypeEnumeration: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierEnumeration];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifierEnumeration] autorelease];
+                cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            } else {
+            }
+            cell.tag = setting.tag;
+            cell.textLabel.text = setting.label;
+            NSUInteger enumValue = [settings enumerationValueForSettingWithTag:setting.tag];
+            cell.detailTextLabel.text = [settings descriptionForEumerationValue:enumValue forSettingWithTag:setting.tag];
+            return cell;
+        }
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    CDXSetting setting = [settings settingAtIndex:indexPath.row inGroup:indexPath.section];
+    switch (setting.type) {
+        default: {
+            break;
+        }
+        case CDXSettingTypeEnumeration: {
+            UITableViewController *vc = [[[CDXSettingsEnumerationViewController alloc] initWithSettings:settings setting:setting] autorelease];
+            vc.title = setting.label;
+            [[self navigationController] pushViewController:vc animated:YES];
+        }
+    }
+}
+
+@end
+
+
+@implementation CDXSettingsViewController
+
+- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings {
+    if ((self = [super init])) {
+        ivar_assign_and_retain(settings, aSettings);
+        UITableViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:settings] autorelease];
+        vc.title = [settings title];
+        vc.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
+                                                 initWithTitle:@"Done"
+                                                 style:UIBarButtonItemStyleDone
+                                                 target:self
+                                                 action:@selector(closeButtonPressed)]
+                                                autorelease];
+        vc.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc]
+                                                initWithTitle:@"Settings"
+                                                style:UIBarButtonItemStylePlain
+                                                target:nil
+                                                action:nil]
+                                               autorelease];
+        [self pushViewController:vc animated:NO];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    ivar_release_and_clear(settings);
+    [super dealloc];
 }
 
 - (IBAction)closeButtonPressed {

@@ -25,7 +25,8 @@
 
 
 typedef enum {
-    CDXSettingTypeBoolean
+    CDXSettingTypeBoolean,
+    CDXSettingTypeEnumeration
 } CDXSettingType;
 
 
@@ -47,6 +48,12 @@ typedef struct {
 
 - (BOOL)booleanValueForSettingWithTag:(NSUInteger)tag;
 - (void)setBooleanValue:(BOOL)value forSettingWithTag:(NSUInteger)tag;
+
+- (NSUInteger)enumerationValueForSettingWithTag:(NSUInteger)tag;
+- (void)setEnumerationValue:(NSUInteger)value  forSettingWithTag:(NSUInteger)tag;
+
+- (NSUInteger)enumerationValuesCountForSettingWithTag:(NSUInteger)tag;
+- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag;
 
 @end
 

@@ -70,6 +70,10 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
     [userDefaults setBool:value forKey:key];
 }
 
+- (BOOL)enableIdleTimer {
+    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsIdleTimer] defaults:NO];
+}
+
 - (NSString *)title {
     return @"Settings";
 }
@@ -110,8 +114,19 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
     }
 }
 
-- (BOOL)enableIdleTimer {
-    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsIdleTimer] defaults:NO];
+- (NSUInteger)enumerationValueForSettingWithTag:(NSUInteger)tag {
+    return 0;
+}
+
+- (void)setEnumerationValue:(NSUInteger)value  forSettingWithTag:(NSUInteger)tag {
+}
+
+- (NSUInteger)enumerationValuesCountForSettingWithTag:(NSUInteger)tag {
+    return 0;
+}
+
+- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag {
+    return @"";
 }
 
 @end
