@@ -278,8 +278,11 @@
     CDXCard *card = [cardDeck cardWithDefaults];
     [cardDeck addCard:card];
     cardDeckViewContext.currentCardIndex = [cardDeck cardsCount]-1;
-    [cardDeckTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+    NSIndexPath *path = [NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:1];
+    [cardDeckTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
     [cardDeckTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+    [cardDeckTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
+    [cardDeckTableView deselectRowAtIndexPath:path animated:YES];
     [self setEditing:NO animated:YES];
 }
 

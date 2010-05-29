@@ -293,8 +293,11 @@
     qltrace();
     CDXCardDeck *deck = [cardDecks cardDeckWithDefaults];
     [cardDecks addCardDeck:deck];
-    [cardDecksTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[cardDecks cardDecksCount]-1 inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+    NSIndexPath *path = [NSIndexPath indexPathForRow:[cardDecks cardDecksCount]-1 inSection:1];
+    [cardDecksTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
     [cardDecksTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+    [cardDecksTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
+    [cardDecksTableView deselectRowAtIndexPath:path animated:YES];
     [self setEditing:NO animated:YES];
 }
 
