@@ -52,6 +52,7 @@
 - (IBAction)addButtonPressed;
 - (IBAction)defaultsButtonPressed;
 - (IBAction)editButtonPressed;
+- (IBAction)bottomButtonPressed;
 - (IBAction)settingsButtonPressed;
 
 @end

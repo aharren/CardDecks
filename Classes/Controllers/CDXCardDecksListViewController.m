@@ -311,6 +311,10 @@
     [self setEditing:!self.editing animated:YES];
 }
 
+- (IBAction)bottomButtonPressed {
+    [cardDecksTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self tableView:cardDecksTableView numberOfRowsInSection:2]-1 inSection:2] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+}
+
 - (IBAction)settingsButtonPressed {
     qltrace();
     CDXAppSettings *settings = [CDXAppSettings sharedAppSettings];

@@ -76,6 +76,7 @@
 		E0F7A56D11B15FB500CD786B /* CDXOrientationKeyboardExtensionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A56C11B15FB500CD786B /* CDXOrientationKeyboardExtensionView.xib */; };
 		E0F7A57111B15FD700CD786B /* CDXOrientationKeyboardExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F7A57011B15FD700CD786B /* CDXOrientationKeyboardExtension.m */; };
 		E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */; };
+		E0F7A71A11B17B3700CD786B /* Toolbar-Bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A71911B17B3700CD786B /* Toolbar-Bottom.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,6 +186,7 @@
 		E0F7A56F11B15FD700CD786B /* CDXOrientationKeyboardExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXOrientationKeyboardExtension.h; path = Classes/Keyboards/CDXOrientationKeyboardExtension.h; sourceTree = "<group>"; };
 		E0F7A57011B15FD700CD786B /* CDXOrientationKeyboardExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXOrientationKeyboardExtension.m; path = Classes/Keyboards/CDXOrientationKeyboardExtension.m; sourceTree = "<group>"; };
 		E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = KeyboardExtensionsBackground.png; path = Images/KeyboardExtensionsBackground.png; sourceTree = "<group>"; };
+		E0F7A71911B17B3700CD786B /* Toolbar-Bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Bottom.png"; path = "Images/Toolbars/Toolbar-Bottom.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -373,6 +375,7 @@
 		E0C51F87119DAC5F00D75D0E /* Toolbars */ = {
 			isa = PBXGroup;
 			children = (
+				E0F7A71911B17B3700CD786B /* Toolbar-Bottom.png */,
 				E070CF5A119FF13800626F34 /* Toolbar-Settings.png */,
 				E0C51FB5119DB12500D75D0E /* Toolbar-Edit-Reorder.png */,
 				E0C51FB3119DB05000D75D0E /* Toolbar-Add.png */,
@@ -503,6 +506,7 @@
 				E04B44C011B04C0800DDBD33 /* Settings.bundle in Resources */,
 				E0F7A56D11B15FB500CD786B /* CDXOrientationKeyboardExtensionView.xib in Resources */,
 				E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */,
+				E0F7A71A11B17B3700CD786B /* Toolbar-Bottom.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

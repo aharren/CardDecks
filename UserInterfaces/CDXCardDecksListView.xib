@@ -94,13 +94,13 @@
 							<string key="NSResourceName">Toolbar-Add.png</string>
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<float key="IBUIWidth">20</float>
 						<reference key="IBUIToolbar" ref="144887132"/>
 					</object>
-					<object class="IBUIBarButtonItem" id="620635151">
+					<object class="IBUIBarButtonItem" id="907937540">
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<float key="IBUIWidth">30</float>
 						<reference key="IBUIToolbar" ref="144887132"/>
-						<int key="IBUISystemItemIdentifier">6</int>
+						<int key="IBUISystemItemIdentifier">5</int>
 					</object>
 					<object class="IBUIBarButtonItem" id="363547133">
 						<object class="NSCustomResource" key="IBUIImage">
@@ -108,9 +108,34 @@
 							<string key="NSResourceName">Toolbar-Edit-Reorder.png</string>
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<float key="IBUIWidth">20</float>
+						<reference key="IBUIToolbar" ref="144887132"/>
+					</object>
+					<object class="IBUIBarButtonItem" id="938605788">
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<reference key="IBUIToolbar" ref="144887132"/>
+						<int key="IBUISystemItemIdentifier">5</int>
+					</object>
+					<object class="IBUIBarButtonItem" id="392443776">
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">Toolbar-Bottom.png</string>
+						</object>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<reference key="IBUIToolbar" ref="144887132"/>
 					</object>
 					<object class="IBUIBarButtonItem" id="335702994">
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<reference key="IBUIToolbar" ref="144887132"/>
+						<int key="IBUISystemItemIdentifier">5</int>
+					</object>
+					<object class="IBUIBarButtonItem" id="785415450">
+						<bool key="IBUIEnabled">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<float key="IBUIWidth">20</float>
+						<reference key="IBUIToolbar" ref="144887132"/>
+					</object>
+					<object class="IBUIBarButtonItem" id="506512332">
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<reference key="IBUIToolbar" ref="144887132"/>
 						<int key="IBUISystemItemIdentifier">5</int>
@@ -121,6 +146,7 @@
 							<string key="NSResourceName">Toolbar-Settings.png</string>
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<float key="IBUIWidth">20</float>
 						<reference key="IBUIToolbar" ref="144887132"/>
 					</object>
 					<object class="IBUIBarButtonItem" id="983017430">
@@ -199,6 +225,14 @@
 					</object>
 					<int key="connectionID">35</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">bottomButtonPressed</string>
+						<reference key="source" ref="392443776"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">46</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -241,11 +275,15 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="654809595"/>
 							<reference ref="363547133"/>
-							<reference ref="620635151"/>
 							<reference ref="335702994"/>
 							<reference ref="961020434"/>
 							<reference ref="749273311"/>
 							<reference ref="983017430"/>
+							<reference ref="392443776"/>
+							<reference ref="938605788"/>
+							<reference ref="785415450"/>
+							<reference ref="506512332"/>
+							<reference ref="907937540"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -257,11 +295,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">25</int>
 						<reference key="object" ref="363547133"/>
-						<reference key="parent" ref="144887132"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">26</int>
-						<reference key="object" ref="620635151"/>
 						<reference key="parent" ref="144887132"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -284,6 +317,31 @@
 						<reference key="object" ref="983017430"/>
 						<reference key="parent" ref="144887132"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">38</int>
+						<reference key="object" ref="392443776"/>
+						<reference key="parent" ref="144887132"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">39</int>
+						<reference key="object" ref="938605788"/>
+						<reference key="parent" ref="144887132"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">43</int>
+						<reference key="object" ref="785415450"/>
+						<reference key="parent" ref="144887132"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">44</int>
+						<reference key="object" ref="506512332"/>
+						<reference key="parent" ref="144887132"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">45</int>
+						<reference key="object" ref="907937540"/>
+						<reference key="parent" ref="144887132"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -299,11 +357,15 @@
 					<string>12.IBPluginDependency</string>
 					<string>20.IBPluginDependency</string>
 					<string>25.IBPluginDependency</string>
-					<string>26.IBPluginDependency</string>
 					<string>3.IBPluginDependency</string>
 					<string>30.IBPluginDependency</string>
 					<string>33.IBPluginDependency</string>
 					<string>34.IBPluginDependency</string>
+					<string>38.IBPluginDependency</string>
+					<string>39.IBPluginDependency</string>
+					<string>43.IBPluginDependency</string>
+					<string>44.IBPluginDependency</string>
+					<string>45.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -312,6 +374,10 @@
 					<string>{{219, 200}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{255, 154}, {320, 44}}</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -339,7 +405,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">35</int>
+			<int key="maxID">46</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -352,12 +418,14 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addButtonPressed</string>
+							<string>bottomButtonPressed</string>
 							<string>defaultsButtonPressed</string>
 							<string>editButtonPressed</string>
 							<string>settingsButtonPressed</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -369,6 +437,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addButtonPressed</string>
+							<string>bottomButtonPressed</string>
 							<string>defaultsButtonPressed</string>
 							<string>editButtonPressed</string>
 							<string>settingsButtonPressed</string>
@@ -377,6 +446,10 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">addButtonPressed</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">bottomButtonPressed</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -684,11 +757,13 @@
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>Toolbar-Add.png</string>
+				<string>Toolbar-Bottom.png</string>
 				<string>Toolbar-Edit-Reorder.png</string>
 				<string>Toolbar-Settings.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>{20, 22}</string>
 				<string>{20, 22}</string>
 				<string>{20, 22}</string>
 				<string>{20, 22}</string>
