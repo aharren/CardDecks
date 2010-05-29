@@ -53,6 +53,7 @@ synthesize_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
     ivar_release_and_clear(toolbarButtons);
     ivar_release_and_clear(responder);
     ivar_release_and_clear(keyboardExtensions);
+    ivar_release_and_clear(backgroundColor);
     [super dealloc];
 }
 
