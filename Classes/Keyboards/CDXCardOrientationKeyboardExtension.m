@@ -1,6 +1,6 @@
 //
 //
-// CDXOrientationKeyboardExtension.m
+// CDXCardOrientationKeyboardExtension.m
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,13 +23,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXOrientationKeyboardExtension.h"
+#import "CDXCardOrientationKeyboardExtension.h"
 #import "CDXCardView.h"
 
 
-@implementation CDXOrientationKeyboardExtension
+@implementation CDXCardOrientationKeyboardExtension
 
-synthesize_singleton(sharedOrientationKeyboardExtension, CDXOrientationKeyboardExtension);
+synthesize_singleton(sharedOrientationKeyboardExtension, CDXCardOrientationKeyboardExtension);
 
 - (void)dealloc {
     ivar_release_and_clear(viewController);
@@ -42,8 +42,8 @@ synthesize_singleton(sharedOrientationKeyboardExtension, CDXOrientationKeyboardE
 - (NSString *)keyboardExtensionTitle {
     CDXCardOrientation orientation = CDXCardOrientationUp;
     NSObject *responder = [[CDXKeyboardExtensions sharedKeyboardExtensions] responder];
-    if ([responder conformsToProtocol:@protocol(CDXOrientationKeyboardExtensionResponder)]) {
-        NSObject<CDXOrientationKeyboardExtensionResponder> *r = (NSObject<CDXOrientationKeyboardExtensionResponder> *)responder;
+    if ([responder conformsToProtocol:@protocol(CDXCardOrientationKeyboardExtensionResponder)]) {
+        NSObject<CDXCardOrientationKeyboardExtensionResponder> *r = (NSObject<CDXCardOrientationKeyboardExtensionResponder> *)responder;
         orientation = [r orientationKeyboardExtensionCardOrientation];
     }
     
@@ -62,7 +62,7 @@ synthesize_singleton(sharedOrientationKeyboardExtension, CDXOrientationKeyboardE
 
 - (UIView *)keyboardExtensionView {
     if (viewController == nil) {
-        ivar_assign(viewController, [[CDXOrientationKeyboardExtensionViewController alloc] init]);
+        ivar_assign(viewController, [[CDXCardOrientationKeyboardExtensionViewController alloc] init]);
     }
     
     return viewController.view;
@@ -88,10 +88,10 @@ synthesize_singleton(sharedOrientationKeyboardExtension, CDXOrientationKeyboardE
 @end
 
 
-@implementation CDXOrientationKeyboardExtensionViewController 
+@implementation CDXCardOrientationKeyboardExtensionViewController 
 
 - (id)init {
-    if ((self = [super initWithNibName:@"CDXOrientationKeyboardExtensionView" bundle:nil])) {
+    if ((self = [super initWithNibName:@"CDXCardOrientationKeyboardExtensionView" bundle:nil])) {
     }
     return self;
 }
@@ -119,8 +119,8 @@ synthesize_singleton(sharedOrientationKeyboardExtension, CDXOrientationKeyboardE
 - (void)updateOrientationSample {
     CDXCardOrientation orientation = CDXCardOrientationUp;
     NSObject *responder = [[CDXKeyboardExtensions sharedKeyboardExtensions] responder];
-    if ([responder conformsToProtocol:@protocol(CDXOrientationKeyboardExtensionResponder)]) {
-        NSObject<CDXOrientationKeyboardExtensionResponder> *r = (NSObject<CDXOrientationKeyboardExtensionResponder> *)responder;
+    if ([responder conformsToProtocol:@protocol(CDXCardOrientationKeyboardExtensionResponder)]) {
+        NSObject<CDXCardOrientationKeyboardExtensionResponder> *r = (NSObject<CDXCardOrientationKeyboardExtensionResponder> *)responder;
         orientation = [r orientationKeyboardExtensionCardOrientation];
     }
     
@@ -132,8 +132,8 @@ synthesize_singleton(sharedOrientationKeyboardExtension, CDXOrientationKeyboardE
     
     CDXCardOrientation orientation = (CDXCardOrientation)[button tag];
     NSObject *responder = [[CDXKeyboardExtensions sharedKeyboardExtensions] responder];
-    if ([responder conformsToProtocol:@protocol(CDXOrientationKeyboardExtensionResponder)]) {
-        NSObject<CDXOrientationKeyboardExtensionResponder> *r = (NSObject<CDXOrientationKeyboardExtensionResponder> *)responder;
+    if ([responder conformsToProtocol:@protocol(CDXCardOrientationKeyboardExtensionResponder)]) {
+        NSObject<CDXCardOrientationKeyboardExtensionResponder> *r = (NSObject<CDXCardOrientationKeyboardExtensionResponder> *)responder;
         [r orientationKeyboardExtensionSetCardOrientation:orientation];
     }
     

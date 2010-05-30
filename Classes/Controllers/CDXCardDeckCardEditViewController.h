@@ -26,10 +26,10 @@
 #import "CDXCardDeck.h"
 #import "CDXCardDeckViewContext.h"
 #import "CDXAppWindowProtocols.h"
-#import "CDXOrientationKeyboardExtension.h"
+#import "CDXCardOrientationKeyboardExtension.h"
 
 
-@interface CDXCardDeckCardEditViewController : UIViewController<CDXAppWindowViewController, CDXOrientationKeyboardExtensionResponder> {
+@interface CDXCardDeckCardEditViewController : UIViewController<CDXAppWindowViewController, CDXCardOrientationKeyboardExtensionResponder> {
     
 @protected
     IBOutlet UITextView *text;

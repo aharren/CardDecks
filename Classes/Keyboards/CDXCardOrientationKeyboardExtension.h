@@ -1,6 +1,6 @@
 //
 //
-// CDXOrientationKeyboardExtension.h
+// CDXCardOrientationKeyboardExtension.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -27,7 +27,7 @@
 #import "CDXKeyboardExtensions.h"
 
 
-@protocol CDXOrientationKeyboardExtensionResponder
+@protocol CDXCardOrientationKeyboardExtensionResponder
 
 @required
 
@@ -37,22 +37,22 @@
 @end
 
 
-@class CDXOrientationKeyboardExtensionViewController;
+@class CDXCardOrientationKeyboardExtensionViewController;
 
 
-@interface CDXOrientationKeyboardExtension : NSObject<CDXKeyboardExtension> {
+@interface CDXCardOrientationKeyboardExtension : NSObject<CDXKeyboardExtension> {
     
 @protected
-    CDXOrientationKeyboardExtensionViewController *viewController;
+    CDXCardOrientationKeyboardExtensionViewController *viewController;
     
 }
 
-declare_singleton(sharedOrientationKeyboardExtension, CDXOrientationKeyboardExtension);
+declare_singleton(sharedOrientationKeyboardExtension, CDXCardOrientationKeyboardExtension);
 
 @end
 
 
-@interface CDXOrientationKeyboardExtensionViewController : UIViewController {
+@interface CDXCardOrientationKeyboardExtensionViewController : UIViewController {
     
 @protected
     IBOutlet UILabel *orientationSample;

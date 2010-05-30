@@ -73,8 +73,8 @@
 		E0F2B3C11195617A0092D11B /* CDXCardsViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3C01195617A0092D11B /* CDXCardsViewBase.m */; };
 		E0F2B3F7119563910092D11B /* CDXCardsStackSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */; };
 		E0F7A50A11B158DA00CD786B /* CDXKeyboardExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */; };
-		E0F7A56D11B15FB500CD786B /* CDXOrientationKeyboardExtensionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A56C11B15FB500CD786B /* CDXOrientationKeyboardExtensionView.xib */; };
-		E0F7A57111B15FD700CD786B /* CDXOrientationKeyboardExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F7A57011B15FD700CD786B /* CDXOrientationKeyboardExtension.m */; };
+		E0F7A56D11B15FB500CD786B /* CDXCardOrientationKeyboardExtensionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A56C11B15FB500CD786B /* CDXCardOrientationKeyboardExtensionView.xib */; };
+		E0F7A57111B15FD700CD786B /* CDXCardOrientationKeyboardExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F7A57011B15FD700CD786B /* CDXCardOrientationKeyboardExtension.m */; };
 		E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */; };
 		E0F7A71A11B17B3700CD786B /* Toolbar-Bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A71911B17B3700CD786B /* Toolbar-Bottom.png */; };
 /* End PBXBuildFile section */
@@ -183,9 +183,9 @@
 		E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsStackSwipeView.m; path = Classes/Views/CDXCardsStackSwipeView.m; sourceTree = "<group>"; };
 		E0F7A50811B158DA00CD786B /* CDXKeyboardExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXKeyboardExtensions.h; path = Classes/Keyboards/CDXKeyboardExtensions.h; sourceTree = "<group>"; };
 		E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXKeyboardExtensions.m; path = Classes/Keyboards/CDXKeyboardExtensions.m; sourceTree = "<group>"; };
-		E0F7A56C11B15FB500CD786B /* CDXOrientationKeyboardExtensionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXOrientationKeyboardExtensionView.xib; path = UserInterfaces/CDXOrientationKeyboardExtensionView.xib; sourceTree = "<group>"; };
-		E0F7A56F11B15FD700CD786B /* CDXOrientationKeyboardExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXOrientationKeyboardExtension.h; path = Classes/Keyboards/CDXOrientationKeyboardExtension.h; sourceTree = "<group>"; };
-		E0F7A57011B15FD700CD786B /* CDXOrientationKeyboardExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXOrientationKeyboardExtension.m; path = Classes/Keyboards/CDXOrientationKeyboardExtension.m; sourceTree = "<group>"; };
+		E0F7A56C11B15FB500CD786B /* CDXCardOrientationKeyboardExtensionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardOrientationKeyboardExtensionView.xib; path = UserInterfaces/CDXCardOrientationKeyboardExtensionView.xib; sourceTree = "<group>"; };
+		E0F7A56F11B15FD700CD786B /* CDXCardOrientationKeyboardExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardOrientationKeyboardExtension.h; path = Classes/Keyboards/CDXCardOrientationKeyboardExtension.h; sourceTree = "<group>"; };
+		E0F7A57011B15FD700CD786B /* CDXCardOrientationKeyboardExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardOrientationKeyboardExtension.m; path = Classes/Keyboards/CDXCardOrientationKeyboardExtension.m; sourceTree = "<group>"; };
 		E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = KeyboardExtensionsBackground.png; path = Images/KeyboardExtensionsBackground.png; sourceTree = "<group>"; };
 		E0F7A71911B17B3700CD786B /* Toolbar-Bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Bottom.png"; path = "Images/Toolbars/Toolbar-Bottom.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -359,7 +359,7 @@
 				E0A1C00211A82C5600911848 /* CDXCardDeckCardEditView.xib */,
 				E02320F8117093870043D6CF /* CDXCardDeckListView.xib */,
 				E032F1671169DDC10033980C /* CDXCardDecksListView.xib */,
-				E0F7A56C11B15FB500CD786B /* CDXOrientationKeyboardExtensionView.xib */,
+				E0F7A56C11B15FB500CD786B /* CDXCardOrientationKeyboardExtensionView.xib */,
 			);
 			name = "User Interfaces";
 			sourceTree = "<group>";
@@ -420,8 +420,8 @@
 			children = (
 				E0F7A50811B158DA00CD786B /* CDXKeyboardExtensions.h */,
 				E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */,
-				E0F7A56F11B15FD700CD786B /* CDXOrientationKeyboardExtension.h */,
-				E0F7A57011B15FD700CD786B /* CDXOrientationKeyboardExtension.m */,
+				E0F7A56F11B15FD700CD786B /* CDXCardOrientationKeyboardExtension.h */,
+				E0F7A57011B15FD700CD786B /* CDXCardOrientationKeyboardExtension.m */,
 			);
 			name = Keyboards;
 			sourceTree = "<group>";
@@ -505,7 +505,7 @@
 				E0A1C15D11A83F0D00911848 /* Toolbar-Down.png in Resources */,
 				E0A1C15E11A83F0D00911848 /* Toolbar-Up.png in Resources */,
 				E04B44C011B04C0800DDBD33 /* Settings.bundle in Resources */,
-				E0F7A56D11B15FB500CD786B /* CDXOrientationKeyboardExtensionView.xib in Resources */,
+				E0F7A56D11B15FB500CD786B /* CDXCardOrientationKeyboardExtensionView.xib in Resources */,
 				E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */,
 				E0F7A71A11B17B3700CD786B /* Toolbar-Bottom.png in Resources */,
 			);
@@ -567,7 +567,7 @@
 				E0805B4B11A85C6600199172 /* CDXCardDeckViewContext.m in Sources */,
 				E04B448A11B0441600DDBD33 /* CDXAppSettings.m in Sources */,
 				E0F7A50A11B158DA00CD786B /* CDXKeyboardExtensions.m in Sources */,
-				E0F7A57111B15FD700CD786B /* CDXOrientationKeyboardExtension.m in Sources */,
+				E0F7A57111B15FD700CD786B /* CDXCardOrientationKeyboardExtension.m in Sources */,
 				E0DDD81011B26807004CECCB /* CDXListViewControllerBase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

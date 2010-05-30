@@ -294,7 +294,7 @@
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>CDXOrientationKeyboardExtensionViewController</string>
+					<string>CDXCardOrientationKeyboardExtensionViewController</string>
 					<string>UIResponder</string>
 					<string>{{316, 83}, {320, 215}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -327,7 +327,7 @@
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
-					<string key="className">CDXOrientationKeyboardExtensionViewController</string>
+					<string key="className">CDXCardOrientationKeyboardExtensionViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">orientationButtonPressed:</string>
@@ -353,7 +353,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Keyboards/CDXOrientationKeyboardExtension.h</string>
+						<string key="minorKey">Classes/Keyboards/CDXCardOrientationKeyboardExtension.h</string>
 					</object>
 				</object>
 			</object>
