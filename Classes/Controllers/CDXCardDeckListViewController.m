@@ -156,11 +156,11 @@
             switch (indexPath.row) {
                 default:
                 case 0: {
-                    cell.textLabel.text = @"TOUCH TO ADD A CARD";
+                    cell.textLabel.text = @"TAP HERE TO ADD A CARD";
                     break;
                 }
                 case 1: {
-                    cell.textLabel.text = @"TOUCH TO CONFIGURE CARD DEFAULTS";
+                    cell.textLabel.text = @"TAP HERE TO CONFIGURE CARD DEFAULTS";
                     break;
                 }
             }

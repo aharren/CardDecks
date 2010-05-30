@@ -168,11 +168,11 @@
             switch (indexPath.row) {
                 default:
                 case 0: {
-                    cell.textLabel.text = @"TOUCH TO ADD A DECK";
+                    cell.textLabel.text = @"TAP HERE TO ADD A DECK";
                     break;
                 }
                 case 1: {
-                    cell.textLabel.text = @"TOUCH TO CONFIGURE DECK DEFAULTS";
+                    cell.textLabel.text = @"TAP HERE TO CONFIGURE DECK DEFAULTS";
                     break;
                 }
             }
