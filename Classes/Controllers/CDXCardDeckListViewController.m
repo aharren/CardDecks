@@ -288,6 +288,7 @@
 
 - (IBAction)defaultsButtonPressed {
     qltrace();
+    cardDeckViewContext.currentCardIndex = [cardDeck cardsCount]-1;
     CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
     [deck addCard:cardDeck.cardDefaults];
     CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck] autorelease];
