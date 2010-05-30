@@ -166,7 +166,7 @@ static const CDXCardDeckSettingGroup groups[] = {
 - (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag {
     switch (tag) {
         default:
-            return 0;
+            return @"";
         case CDXCardDeckSettingsDeckDisplayStyle:
             switch (value) {
                 default:
