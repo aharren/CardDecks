@@ -37,6 +37,7 @@
     UIColor *tableCellTextTextColor;
     UIColor *tableCellTextTextColorNoCards;
     UIColor *tableCellTextTextColorAction;
+    UIColor *tableCellTextTextColorActionInactive;
     UIFont *tableCellDetailTextFont;
     UIColor *tableCellDetailTextTextColor;
     UIColor *tableCellBackgroundColorAction;

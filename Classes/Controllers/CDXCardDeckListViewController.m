@@ -93,12 +93,12 @@
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
                 cell.textLabel.font = tableCellTextFontAction;
-                cell.textLabel.textColor = tableCellTextTextColorAction;
                 cell.textLabel.textAlignment = UITextAlignmentCenter;
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
             }
             
+            cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
             switch (indexPath.row) {
                 default:
                 case 0: {

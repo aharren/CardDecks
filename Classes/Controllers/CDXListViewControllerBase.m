@@ -44,6 +44,7 @@
     ivar_release_and_clear(tableCellTextTextColor);
     ivar_release_and_clear(tableCellTextTextColorNoCards);
     ivar_release_and_clear(tableCellTextTextColorAction);
+    ivar_release_and_clear(tableCellTextTextColorActionInactive);
     ivar_release_and_clear(tableCellDetailTextFont);
     ivar_release_and_clear(tableCellDetailTextTextColor);
     ivar_release_and_clear(tableCellBackgroundColorAction);
@@ -68,6 +69,7 @@
     ivar_assign_and_retain(tableCellTextTextColor, [UIColor blackColor]);
     ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor lightGrayColor]);
     ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor lightGrayColor]);
+    ivar_assign_and_retain(tableCellTextTextColorActionInactive, [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]);
     ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:12]);
     ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor lightGrayColor]);
     ivar_assign_and_retain(tableCellBackgroundColorAction, [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.0]);
@@ -82,6 +84,7 @@
     ivar_release_and_clear(tableCellTextTextColor);
     ivar_release_and_clear(tableCellTextTextColorNoCards);
     ivar_release_and_clear(tableCellTextTextColorAction);
+    ivar_release_and_clear(tableCellTextTextColorActionInactive);
     ivar_release_and_clear(tableCellDetailTextFont);
     ivar_release_and_clear(tableCellDetailTextTextColor);
     ivar_release_and_clear(tableCellBackgroundColorAction);
@@ -161,6 +164,8 @@
 - (IBAction)editButtonPressed {
     qltrace();
     [self setEditing:!self.editing animated:YES];
+    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (IBAction)bottomButtonPressed {
