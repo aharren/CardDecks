@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXSettingsViewController.h"
+#import "CDXKeyboardExtensions.h"
 
 
 @interface CDXSettingsEnumerationViewController : UITableViewController {
@@ -124,13 +125,30 @@
 }
 
 - (void)booleanValueChanged:(UISwitch *)cellSwitch {
+    qltrace();
     [settings setBooleanValue:cellSwitch.on forSettingWithTag:cellSwitch.tag];
+}
+
+- (void)textStartedEditing:(UITextField *)cellText {
+    qltrace();
+    self.tableView.scrollEnabled = NO;
+    [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
+    NSArray *extensions = [NSArray arrayWithObjects:
+                           nil];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:cellText keyboardExtensions:extensions];
+}
+
+- (void)textValueChanged:(UITextField *)cellText {
+    qltrace();
+    self.tableView.scrollEnabled = YES;
+    [settings setTextValue:cellText.text forSettingWithTag:cellText.tag];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *reuseIdentifierDefault = @"DefaultCell";
     static NSString *reuseIdentifierBoolean = @"BooleanCell";
     static NSString *reuseIdentifierEnumeration = @"EnumerationCell";
+    static NSString *reuseIdentifierText = @"TextCell";
     
     CDXSetting setting = [settings settingAtIndex:indexPath.row inGroup:indexPath.section];
     
@@ -164,14 +182,37 @@
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierEnumeration];
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifierEnumeration] autorelease];
-                cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             } else {
             }
+            cell.selectionStyle = self.tableView.scrollEnabled ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
             cell.tag = setting.tag;
             cell.textLabel.text = setting.label;
             NSUInteger enumValue = [settings enumerationValueForSettingWithTag:setting.tag];
             cell.detailTextLabel.text = [settings descriptionForEumerationValue:enumValue forSettingWithTag:setting.tag];
+            return cell;
+        }
+        case CDXSettingTypeText: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierText];
+            UITextField *cellText = nil;
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifierText] autorelease];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cellText = [[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 170, 24)] autorelease];
+                [cellText addTarget:self action:@selector(textStartedEditing:) forControlEvents:UIControlEventEditingDidBegin];
+                [cellText addTarget:self action:@selector(textValueChanged:) forControlEvents:UIControlEventEditingDidEnd];
+                [cellText addTarget:self action:@selector(textValueChanged:) forControlEvents:UIControlEventEditingDidEndOnExit];
+                cellText.clearButtonMode = UITextFieldViewModeWhileEditing;
+                cellText.textColor = cell.detailTextLabel.textColor;
+                cell.accessoryView = cellText;
+            } else {
+                cellText = (UITextField *)cell.accessoryView;
+            }
+            cell.tag = setting.tag;
+            cell.textLabel.text = setting.label;
+            cellText.tag = setting.tag;
+            cellText.text = [settings textValueForSettingWithTag:setting.tag];
+            cellText.userInteractionEnabled = YES;
             return cell;
         }
     }
@@ -179,6 +220,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (!self.tableView.scrollEnabled) {
+        return;
+    }
     
     CDXSetting setting = [settings settingAtIndex:indexPath.row inGroup:indexPath.section];
     switch (setting.type) {

@@ -48,6 +48,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.navigationItem.title = cardDeckViewContext.cardDeck.name;
     if ([viewTableView numberOfRowsInSection:1] != 0) {
         [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:1] atScrollPosition:UITableViewScrollPositionNone animated:NO];
     }

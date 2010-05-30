@@ -27,6 +27,7 @@
 
 
 enum {
+    CDXCardDeckSettingsName,
     CDXCardDeckSettingsDeckDisplayStyle,
     CDXCardDeckSettingsCornerStyle,
     CDXCardDeckSettingsPageControl,
@@ -37,6 +38,7 @@ enum {
 };
 
 static const CDXSetting settings[] = {
+    { CDXCardDeckSettingsName, CDXSettingTypeText, @"Name" },
     { CDXCardDeckSettingsDeckDisplayStyle, CDXSettingTypeEnumeration, @"Deck Style" },
     { CDXCardDeckSettingsCornerStyle, CDXSettingTypeEnumeration, @"Corner Style" },
     { CDXCardDeckSettingsPageControl, CDXSettingTypeBoolean, @"Page Display" },
@@ -53,6 +55,7 @@ typedef struct {
 } CDXCardDeckSettingGroup;
 
 static const CDXCardDeckSettingGroup groups[] = {
+    { @"", 1, CDXCardDeckSettingsName },
     { @"Appearance", 4, CDXCardDeckSettingsDeckDisplayStyle },
     { @"Device Events", 2, CDXCardDeckSettingsAutoRotate },
     { @"", 0, 0 }
@@ -185,6 +188,25 @@ static const CDXCardDeckSettingGroup groups[] = {
                 case CDXCardCornerStyleCornered:
                     return @"Cornered";
             }
+    }
+}
+
+- (NSString *)textValueForSettingWithTag:(NSUInteger)tag {
+    switch (tag) {
+        default:
+            return @"";
+        case CDXCardDeckSettingsName:
+            return cardDeck.name;
+    }
+}
+
+- (void)setTextValue:(NSString *)value forSettingWithTag:(NSUInteger)tag {
+    switch (tag) {
+        default:
+            break;
+        case CDXCardDeckSettingsName:
+            cardDeck.name = value;
+            break;
     }
 }
 

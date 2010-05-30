@@ -129,5 +129,12 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
     return @"";
 }
 
+- (NSString *)textValueForSettingWithTag:(NSUInteger)tag {
+    return @"";
+}
+
+- (void)setTextValue:(NSString *)value forSettingWithTag:(NSUInteger)tag {
+}
+
 @end
 
