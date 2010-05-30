@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDecksListViewController.h
+// CDXListViewControllerBase.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,21 +23,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXCardDecks.h"
-#import "CDXListViewControllerBase.h"
+#import "CDXAppWindowProtocols.h"
 
 
-@interface CDXCardDecksListViewController : CDXListViewControllerBase {
+@interface CDXListViewControllerBase : UIViewController<CDXAppWindowViewController> {
     
 @protected
-    CDXCardDecks *cardDecks;
+    IBOutlet UITableView *viewTableView;
+    IBOutlet UIToolbar *viewToolbar;
+    
+    UIFont *tableCellTextFont;
+    UIFont *tableCellTextFontAction;
+    UIColor *tableCellTextTextColor;
+    UIColor *tableCellTextTextColorNoCards;
+    UIColor *tableCellTextTextColorAction;
+    UIFont *tableCellDetailTextFont;
+    UIColor *tableCellDetailTextTextColor;
+    UIColor *tableCellBackgroundColorAction;
+    CGSize tableCellImageSize;
+    
+    NSString *titleText;
+    NSString *backButtonText;
 }
 
-- (id)initWithCardDecks:(CDXCardDecks *)cardDecks;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)titleText backButtonText:(NSString *)backButtonText;
 
-- (IBAction)addButtonPressed;
-- (IBAction)defaultsButtonPressed;
-- (IBAction)settingsButtonPressed;
+- (IBAction)editButtonPressed;
+- (IBAction)bottomButtonPressed;
 
 @end
 

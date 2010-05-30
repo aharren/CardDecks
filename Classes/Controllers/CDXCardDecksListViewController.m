@@ -34,72 +34,15 @@
 @implementation CDXCardDecksListViewController
 
 - (id)initWithCardDecks:(CDXCardDecks *)decks {
-    if ((self = [super initWithNibName:@"CDXCardDecksListView" bundle:nil])) {
+    if ((self = [super initWithNibName:@"CDXCardDecksListView" bundle:nil titleText:@"Card Decks" backButtonText:@"Decks"])) {
         ivar_assign_and_retain(cardDecks, decks);
     }
     return self;
 }
 
 - (void)dealloc {
-    ivar_release_and_clear(cardDecksTableView);
     ivar_release_and_clear(cardDecks);
-    ivar_release_and_clear(viewToolbar);
-    ivar_release_and_clear(tableCellTextFont);
-    ivar_release_and_clear(tableCellTextFontAction);
-    ivar_release_and_clear(tableCellTextTextColor);
-    ivar_release_and_clear(tableCellTextTextColorNoCards);
-    ivar_release_and_clear(tableCellTextTextColorAction);
-    ivar_release_and_clear(tableCellDetailTextFont);
-    ivar_release_and_clear(tableCellDetailTextTextColor);
-    ivar_release_and_clear(tableCellBackgroundColorAction);
     [super dealloc];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    UINavigationItem *navigationItem = self.navigationItem;
-    navigationItem.title = @"Card Decks";
-    navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc]
-                                         initWithTitle:@"Decks"
-                                         style:UIBarButtonItemStylePlain
-                                         target:nil
-                                         action:nil]
-                                        autorelease];
-    self.toolbarItems = viewToolbar.items;
-    ivar_assign_and_retain(tableCellTextFont, [UIFont boldSystemFontOfSize:18]);
-    ivar_assign_and_retain(tableCellTextFontAction, [UIFont boldSystemFontOfSize:11]);
-    ivar_assign_and_retain(tableCellTextTextColor, [UIColor blackColor]);
-    ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor lightGrayColor]);
-    ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor lightGrayColor]);
-    ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:12]);
-    ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor lightGrayColor]);
-    ivar_assign_and_retain(tableCellBackgroundColorAction, [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.0]);
-    tableCellImageSize = CGSizeMake(10, 10);
-}
-
-- (void)viewDidUnload {
-    ivar_release_and_clear(cardDecksTableView);
-    ivar_release_and_clear(viewToolbar);
-    ivar_release_and_clear(tableCellTextFont);
-    ivar_release_and_clear(tableCellTextFontAction);
-    ivar_release_and_clear(tableCellTextTextColor);
-    ivar_release_and_clear(tableCellTextTextColorNoCards);
-    ivar_release_and_clear(tableCellTextTextColorAction);
-    ivar_release_and_clear(tableCellDetailTextFont);
-    ivar_release_and_clear(tableCellDetailTextTextColor);
-    ivar_release_and_clear(tableCellBackgroundColorAction);
-    [super viewDidUnload];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [cardDecksTableView reloadData];
-}
-
-- (void)setUserInteractionEnabled:(BOOL)enabled {
-}
-
-- (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -284,35 +227,21 @@
     }
 }
 
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    [super setEditing:editing animated:animated];
-    [cardDecksTableView setEditing:editing animated:animated];
-}
-
 - (IBAction)addButtonPressed {
     qltrace();
     CDXCardDeck *deck = [cardDecks cardDeckWithDefaults];
     [cardDecks addCardDeck:deck];
     NSIndexPath *path = [NSIndexPath indexPathForRow:[cardDecks cardDecksCount]-1 inSection:1];
-    [cardDecksTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
-    [cardDecksTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
-    [cardDecksTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
-    [cardDecksTableView deselectRowAtIndexPath:path animated:YES];
+    [viewTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
+    [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+    [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
+    [viewTableView deselectRowAtIndexPath:path animated:YES];
     [self setEditing:NO animated:YES];
 }
 
 - (IBAction)defaultsButtonPressed {
     qltrace();
     [self pushCardDeckListViewControllerWithCardDeck:cardDecks.cardDeckDefaults];
-}
-
-- (IBAction)editButtonPressed {
-    qltrace();
-    [self setEditing:!self.editing animated:YES];
-}
-
-- (IBAction)bottomButtonPressed {
-    [cardDecksTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self tableView:cardDecksTableView numberOfRowsInSection:2]-1 inSection:2] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 - (IBAction)settingsButtonPressed {

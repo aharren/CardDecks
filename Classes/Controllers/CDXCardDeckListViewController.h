@@ -25,34 +25,21 @@
 
 #import "CDXCardDeck.h"
 #import "CDXCardDeckViewContext.h"
-#import "CDXAppWindowProtocols.h"
+#import "CDXListViewControllerBase.h"
 
 
-@interface CDXCardDeckListViewController : UIViewController<CDXAppWindowViewController> {
+@interface CDXCardDeckListViewController : CDXListViewControllerBase {
     
 @protected
-    IBOutlet UITableView *cardDeckTableView;
     CDXCardDeckViewContext *cardDeckViewContext;
     CDXCardDeck *cardDeck;
     
-    IBOutlet UIToolbar *viewToolbar;
-    
-    UIFont *tableCellTextFont;
-    UIFont *tableCellTextFontAction;
-    UIColor *tableCellTextTextColor;
-    UIColor *tableCellTextTextColorAction;
-    UIFont *tableCellDetailTextFont;
-    UIColor *tableCellDetailTextTextColor;
-    UIColor *tableCellBackgroundColorAction;
-    CGSize tableCellImageSize;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
 
 - (IBAction)addButtonPressed;
 - (IBAction)defaultsButtonPressed;
-- (IBAction)editButtonPressed;
-- (IBAction)bottomButtonPressed;
 - (IBAction)settingsButtonPressed;
 
 @end
