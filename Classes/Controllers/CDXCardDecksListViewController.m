@@ -146,7 +146,7 @@
             
             if ([deck cardsCount] == 0) {
                 cell.textLabel.textColor = tableCellTextTextColorNoCards;
-                cell.detailTextLabel.text = @"TOUCH TO ADD CARDS";
+                cell.detailTextLabel.text = @"NO CARDS";
             } else {
                 cell.textLabel.textColor = tableCellTextTextColor;
                 cell.detailTextLabel.text = deck.description;
