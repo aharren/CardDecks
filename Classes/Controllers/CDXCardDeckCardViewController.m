@@ -180,7 +180,7 @@
 - (void)cardsViewDelegateTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     qltrace();
     UITouch *touch = [touches anyObject];
-    if ([touch tapCount] == 1) {
+    if ([touch tapCount] == 2) {
         [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES];
     }
 }
