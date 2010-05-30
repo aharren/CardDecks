@@ -45,10 +45,6 @@
     [super dealloc];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         default:
@@ -125,18 +121,6 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case 1:
-            break;
-        default:
-        case 0:
-        case 2:
-            cell.backgroundColor = tableCellBackgroundColorAction;
-            break;
-    }
-}
-
 - (void)pushCardDeckListViewControllerWithCardDeck:(CDXCardDeck *)deck {
     CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck] autorelease];
     CDXCardDeckListViewController *vc = [[[CDXCardDeckListViewController alloc] initWithCardDeckViewContext:context] autorelease];
@@ -177,22 +161,6 @@
     }
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.section == 1;
-}
-
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.section == 1;
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.editing ? UITableViewCellEditingStyleNone : UITableViewCellEditingStyleDelete;
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
-}
-
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [cardDecks removeCardDeckAtIndex:indexPath.row];
@@ -207,24 +175,6 @@
     [cardDecks removeCardDeckAtIndex:fromIndexPath.row];
     [cardDecks insertCardDeck:deck atIndex:toIndexPath.row];
     [deck release];
-}
-
-- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
-    switch (proposedDestinationIndexPath.section) {
-        default:
-        case 0: {
-            return [NSIndexPath indexPathForRow:0 inSection:1];
-            break;
-        }
-        case 1: {
-            return proposedDestinationIndexPath;
-            break;
-        }
-        case 2: {
-            return [NSIndexPath indexPathForRow:[self tableView:tableView numberOfRowsInSection:1]-1 inSection:1];
-            break;
-        }
-    }
 }
 
 - (IBAction)addButtonPressed {
