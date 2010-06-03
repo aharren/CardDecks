@@ -38,10 +38,11 @@
     qltrace();
     CDXCardDecks *decks = [[[CDXCardDecks alloc] init] autorelease];
     {
-        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"0%2C%20...%2C%2010,ffffff,666666&0&1&2&3&4&5&6&7&8&9&10"];
+        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"0%2C%20...%2C%2010,ffffff,000000&0&1&2&3&4&5&6&7&8&9&10"];
         deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
+        deck.fontSize = 300.0;
         deck.wantsPageControl = YES;
-        deck.wantsAutoRotate = NO;
+        deck.wantsAutoRotate = YES;
         deck.cornerStyle = CDXCardCornerStyleCornered;
         [decks addCardDeck:deck];
     }
@@ -49,6 +50,7 @@
         CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"Estimation%201,000000,ffffff&0&1&2&4&8&16&32&64&%E2%88%9E"];
         deck.displayStyle = CDXCardDeckDisplayStyleStack;
         deck.fontSize = 200.0;
+        deck.wantsAutoRotate = NO;
         [decks addCardDeck:deck];
     }
     {
@@ -59,7 +61,7 @@
         [decks addCardDeck:deck];
     }
     {
-        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"Count%20Down,ffffff,000000&15,000000,00ff00&10,000000,ffff00&5,000000,ff0000&0,ff0000"];
+        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:@"Remaining%20Minutes,ffffff,000000&15,000000,00ff00&10,000000,ffff00&5,000000,ff0000&0,ff0000"];
         deck.displayStyle = CDXCardDeckDisplayStyleSwipeStack;
         deck.fontSize = 270.0;
         deck.wantsAutoRotate = NO;
