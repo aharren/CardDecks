@@ -1,6 +1,6 @@
 //
 //
-// CDXCardOrientationKeyboardExtension.h
+// CDXTextKeyboardExtension.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -27,39 +27,46 @@
 #import "CDXKeyboardExtensions.h"
 
 
-@protocol CDXCardOrientationKeyboardExtensionResponder
+@protocol CDXTextKeyboardExtensionResponder
 
 @required
+- (CDXCardOrientation)textKeyboardExtensionCardOrientation;
+- (void)textKeyboardExtensionSetCardOrientation:(CDXCardOrientation)cardOrientation;
 
-- (CDXCardOrientation)orientationKeyboardExtensionCardOrientation;
-- (void)orientationKeyboardExtensionSetCardOrientation:(CDXCardOrientation)cardOrientation;
+- (CGFloat)textKeyboardExtensionFontSize;
+- (void)textKeyboardExtensionSetFontSize:(CGFloat)fontSize;
 
 @end
 
 
-@class CDXCardOrientationKeyboardExtensionViewController;
+@class CDXTextKeyboardExtensionViewController;
 
 
-@interface CDXCardOrientationKeyboardExtension : NSObject<CDXKeyboardExtension> {
+@interface CDXTextKeyboardExtension : NSObject<CDXKeyboardExtension> {
     
 @protected
-    CDXCardOrientationKeyboardExtensionViewController *viewController;
+    CDXTextKeyboardExtensionViewController *viewController;
     
 }
 
-declare_singleton(sharedOrientationKeyboardExtension, CDXCardOrientationKeyboardExtension);
+declare_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
 
 @end
 
 
-@interface CDXCardOrientationKeyboardExtensionViewController : UIViewController {
+@interface CDXTextKeyboardExtensionViewController : UIViewController {
     
 @protected
+    IBOutlet UISlider *sizeChooserSlider;
+    IBOutlet UILabel *sizeChooserSliderLabel;
     IBOutlet UILabel *orientationSample;
 }
 
+- (void)updateSize;
 - (void)updateOrientationSample;
+
 - (IBAction)orientationButtonPressed:(id)sender;
+- (IBAction)sizeChooserSliderValueChanged;
 
 @end
 

@@ -24,10 +24,6 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeckCardEditViewController.h"
-#import "CDXKeyboardExtensions.h"
-#import "CDXSymbolsKeyboardExtension.h"
-#import "CDXColorKeyboardExtension.h"
-#import "CDXCardOrientationKeyboardExtension.h"
 
 
 @implementation CDXCardDeckCardEditViewController
@@ -122,7 +118,7 @@
     NSArray *extensions = [NSArray arrayWithObjects:
                            [CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension],
                            [CDXColorKeyboardExtension sharedColorKeyboardExtension],
-                           [CDXCardOrientationKeyboardExtension sharedOrientationKeyboardExtension],
+                           [CDXTextKeyboardExtension sharedtextKeyboardExtension],
                            nil];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
 }
@@ -145,12 +141,20 @@
     [self showCardColors];
 }
 
-- (CDXCardOrientation)orientationKeyboardExtensionCardOrientation {
+- (CDXCardOrientation)textKeyboardExtensionCardOrientation {
     return [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].orientation;
 }
 
-- (void)orientationKeyboardExtensionSetCardOrientation:(CDXCardOrientation)cardOrientation {
+- (void)textKeyboardExtensionSetCardOrientation:(CDXCardOrientation)cardOrientation {
     [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].orientation = cardOrientation;
+}
+
+- (CGFloat)textKeyboardExtensionFontSize {
+    return [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].fontSize;
+}
+
+- (void)textKeyboardExtensionSetFontSize:(CGFloat)fontSize {
+    [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].fontSize = fontSize;
 }
 
 - (void)paste:(id)sender {

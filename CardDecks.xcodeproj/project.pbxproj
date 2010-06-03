@@ -47,6 +47,8 @@
 		E09AC62611B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09AC62411B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib */; };
 		E09AC6FD11B7E75100C96E25 /* CDXColorKeyboardExtensionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09AC6FC11B7E75100C96E25 /* CDXColorKeyboardExtensionView.xib */; };
 		E09AC70111B7E76700C96E25 /* CDXColorKeyboardExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E09AC70011B7E76700C96E25 /* CDXColorKeyboardExtension.m */; };
+		E09AC7E611B7F60D00C96E25 /* CDXTextKeyboardExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E09AC7E511B7F60D00C96E25 /* CDXTextKeyboardExtension.m */; };
+		E09AC84511B7F95C00C96E25 /* CDXTextKeyboardExtensionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09AC84411B7F95C00C96E25 /* CDXTextKeyboardExtensionView.xib */; };
 		E09FCDBA11B7B69900135582 /* CDXSymbolsKeyboardExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E09FCDB911B7B69900135582 /* CDXSymbolsKeyboardExtension.m */; };
 		E09FCDF311B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09FCDF211B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib */; };
 		E0A1C00111A82BE100911848 /* CDXCardDeckCardEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A1C00011A82BE100911848 /* CDXCardDeckCardEditViewController.m */; };
@@ -79,8 +81,6 @@
 		E0F2B3C11195617A0092D11B /* CDXCardsViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3C01195617A0092D11B /* CDXCardsViewBase.m */; };
 		E0F2B3F7119563910092D11B /* CDXCardsStackSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */; };
 		E0F7A50A11B158DA00CD786B /* CDXKeyboardExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */; };
-		E0F7A56D11B15FB500CD786B /* CDXCardOrientationKeyboardExtensionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A56C11B15FB500CD786B /* CDXCardOrientationKeyboardExtensionView.xib */; };
-		E0F7A57111B15FD700CD786B /* CDXCardOrientationKeyboardExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F7A57011B15FD700CD786B /* CDXCardOrientationKeyboardExtension.m */; };
 		E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */; };
 		E0F7A71A11B17B3700CD786B /* Toolbar-Bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A71911B17B3700CD786B /* Toolbar-Bottom.png */; };
 /* End PBXBuildFile section */
@@ -152,6 +152,9 @@
 		E09AC6FC11B7E75100C96E25 /* CDXColorKeyboardExtensionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXColorKeyboardExtensionView.xib; path = UserInterfaces/CDXColorKeyboardExtensionView.xib; sourceTree = "<group>"; };
 		E09AC6FF11B7E76700C96E25 /* CDXColorKeyboardExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXColorKeyboardExtension.h; path = Classes/Keyboards/CDXColorKeyboardExtension.h; sourceTree = "<group>"; };
 		E09AC70011B7E76700C96E25 /* CDXColorKeyboardExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXColorKeyboardExtension.m; path = Classes/Keyboards/CDXColorKeyboardExtension.m; sourceTree = "<group>"; };
+		E09AC7E411B7F60D00C96E25 /* CDXTextKeyboardExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXTextKeyboardExtension.h; path = Classes/Keyboards/CDXTextKeyboardExtension.h; sourceTree = "<group>"; };
+		E09AC7E511B7F60D00C96E25 /* CDXTextKeyboardExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXTextKeyboardExtension.m; path = Classes/Keyboards/CDXTextKeyboardExtension.m; sourceTree = "<group>"; };
+		E09AC84411B7F95C00C96E25 /* CDXTextKeyboardExtensionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXTextKeyboardExtensionView.xib; path = UserInterfaces/CDXTextKeyboardExtensionView.xib; sourceTree = "<group>"; };
 		E09FCDB811B7B69900135582 /* CDXSymbolsKeyboardExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXSymbolsKeyboardExtension.h; path = Classes/Keyboards/CDXSymbolsKeyboardExtension.h; sourceTree = "<group>"; };
 		E09FCDB911B7B69900135582 /* CDXSymbolsKeyboardExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXSymbolsKeyboardExtension.m; path = Classes/Keyboards/CDXSymbolsKeyboardExtension.m; sourceTree = "<group>"; };
 		E09FCDF211B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXSymbolsKeyboardExtensionTableView.xib; path = UserInterfaces/CDXSymbolsKeyboardExtensionTableView.xib; sourceTree = "<group>"; };
@@ -197,9 +200,6 @@
 		E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsStackSwipeView.m; path = Classes/Views/CDXCardsStackSwipeView.m; sourceTree = "<group>"; };
 		E0F7A50811B158DA00CD786B /* CDXKeyboardExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXKeyboardExtensions.h; path = Classes/Keyboards/CDXKeyboardExtensions.h; sourceTree = "<group>"; };
 		E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXKeyboardExtensions.m; path = Classes/Keyboards/CDXKeyboardExtensions.m; sourceTree = "<group>"; };
-		E0F7A56C11B15FB500CD786B /* CDXCardOrientationKeyboardExtensionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardOrientationKeyboardExtensionView.xib; path = UserInterfaces/CDXCardOrientationKeyboardExtensionView.xib; sourceTree = "<group>"; };
-		E0F7A56F11B15FD700CD786B /* CDXCardOrientationKeyboardExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardOrientationKeyboardExtension.h; path = Classes/Keyboards/CDXCardOrientationKeyboardExtension.h; sourceTree = "<group>"; };
-		E0F7A57011B15FD700CD786B /* CDXCardOrientationKeyboardExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardOrientationKeyboardExtension.m; path = Classes/Keyboards/CDXCardOrientationKeyboardExtension.m; sourceTree = "<group>"; };
 		E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = KeyboardExtensionsBackground.png; path = Images/KeyboardExtensionsBackground.png; sourceTree = "<group>"; };
 		E0F7A71911B17B3700CD786B /* Toolbar-Bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Bottom.png"; path = "Images/Toolbars/Toolbar-Bottom.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -373,8 +373,8 @@
 				E0A1C00211A82C5600911848 /* CDXCardDeckCardEditView.xib */,
 				E02320F8117093870043D6CF /* CDXCardDeckListView.xib */,
 				E032F1671169DDC10033980C /* CDXCardDecksListView.xib */,
-				E0F7A56C11B15FB500CD786B /* CDXCardOrientationKeyboardExtensionView.xib */,
 				E09AC6FC11B7E75100C96E25 /* CDXColorKeyboardExtensionView.xib */,
+				E09AC84411B7F95C00C96E25 /* CDXTextKeyboardExtensionView.xib */,
 				E09FCDF211B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib */,
 				E09AC62311B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib */,
 				E09AC62411B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib */,
@@ -438,10 +438,10 @@
 			children = (
 				E0F7A50811B158DA00CD786B /* CDXKeyboardExtensions.h */,
 				E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */,
-				E0F7A56F11B15FD700CD786B /* CDXCardOrientationKeyboardExtension.h */,
-				E0F7A57011B15FD700CD786B /* CDXCardOrientationKeyboardExtension.m */,
 				E09AC6FF11B7E76700C96E25 /* CDXColorKeyboardExtension.h */,
 				E09AC70011B7E76700C96E25 /* CDXColorKeyboardExtension.m */,
+				E09AC7E411B7F60D00C96E25 /* CDXTextKeyboardExtension.h */,
+				E09AC7E511B7F60D00C96E25 /* CDXTextKeyboardExtension.m */,
 				E09FCDB811B7B69900135582 /* CDXSymbolsKeyboardExtension.h */,
 				E09FCDB911B7B69900135582 /* CDXSymbolsKeyboardExtension.m */,
 			);
@@ -527,13 +527,13 @@
 				E0A1C15D11A83F0D00911848 /* Toolbar-Down.png in Resources */,
 				E0A1C15E11A83F0D00911848 /* Toolbar-Up.png in Resources */,
 				E04B44C011B04C0800DDBD33 /* Settings.bundle in Resources */,
-				E0F7A56D11B15FB500CD786B /* CDXCardOrientationKeyboardExtensionView.xib in Resources */,
 				E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */,
 				E0F7A71A11B17B3700CD786B /* Toolbar-Bottom.png in Resources */,
 				E09FCDF311B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib in Resources */,
 				E09AC62511B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib in Resources */,
 				E09AC62611B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib in Resources */,
 				E09AC6FD11B7E75100C96E25 /* CDXColorKeyboardExtensionView.xib in Resources */,
+				E09AC84511B7F95C00C96E25 /* CDXTextKeyboardExtensionView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,10 +593,10 @@
 				E0805B4B11A85C6600199172 /* CDXCardDeckViewContext.m in Sources */,
 				E04B448A11B0441600DDBD33 /* CDXAppSettings.m in Sources */,
 				E0F7A50A11B158DA00CD786B /* CDXKeyboardExtensions.m in Sources */,
-				E0F7A57111B15FD700CD786B /* CDXCardOrientationKeyboardExtension.m in Sources */,
 				E0DDD81011B26807004CECCB /* CDXListViewControllerBase.m in Sources */,
 				E09FCDBA11B7B69900135582 /* CDXSymbolsKeyboardExtension.m in Sources */,
 				E09AC70111B7E76700C96E25 /* CDXColorKeyboardExtension.m in Sources */,
+				E09AC7E611B7F60D00C96E25 /* CDXTextKeyboardExtension.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

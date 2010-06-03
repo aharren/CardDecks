@@ -1,6 +1,6 @@
 //
 //
-// CDXCardOrientationKeyboardExtension.m
+// CDXTextKeyboardExtension.m
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,46 +23,64 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXCardOrientationKeyboardExtension.h"
+#import "CDXTextKeyboardExtension.h"
 #import "CDXCardView.h"
 
 
-@implementation CDXCardOrientationKeyboardExtension
+@implementation CDXTextKeyboardExtension
 
-synthesize_singleton(sharedOrientationKeyboardExtension, CDXCardOrientationKeyboardExtension);
+synthesize_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
 
 - (void)dealloc {
     ivar_release_and_clear(viewController);
     [super dealloc];
 }
 
++ (NSString *)stringForFontSize:(CGFloat)fontSize {
+    if (fontSize == CDXCardFontSizeAutomatic) {
+        return @"\u21e0\u21e2";
+    } else {
+        return [NSString stringWithFormat:@"%d", (int)floor(fontSize)];
+    }
+}
+
 - (void)keyboardExtensionInitialize {
 }
 
 - (NSString *)keyboardExtensionTitle {
+    CGFloat fontSize = CDXCardFontSizeAutomatic;
     CDXCardOrientation orientation = CDXCardOrientationUp;
     NSObject *responder = [[CDXKeyboardExtensions sharedKeyboardExtensions] responder];
-    if ([responder conformsToProtocol:@protocol(CDXCardOrientationKeyboardExtensionResponder)]) {
-        NSObject<CDXCardOrientationKeyboardExtensionResponder> *r = (NSObject<CDXCardOrientationKeyboardExtensionResponder> *)responder;
-        orientation = [r orientationKeyboardExtensionCardOrientation];
+    if ([responder conformsToProtocol:@protocol(CDXTextKeyboardExtensionResponder)]) {
+        NSObject<CDXTextKeyboardExtensionResponder> *r = (NSObject<CDXTextKeyboardExtensionResponder> *)responder;
+        fontSize = [r textKeyboardExtensionFontSize];
+        orientation = [r textKeyboardExtensionCardOrientation];
     }
+    NSString *fontText = [CDXTextKeyboardExtension stringForFontSize:fontSize];
     
+    NSString *orientationText;
     switch (orientation) {
         default:
         case CDXCardOrientationUp:
-            return @"\u25B2";
+            orientationText = @"\u25B2";
+            break;
         case CDXCardOrientationRight:
-            return @"\u25B6";
+            orientationText = @"\u25B6";
+            break;
         case CDXCardOrientationDown:
-            return @"\u25BC";
+            orientationText = @"\u25BC";
+            break;
         case CDXCardOrientationLeft:
-            return @"\u25C0";
+            orientationText = @"\u25C0";
+            break;
     }
+    
+    return [orientationText stringByAppendingString:fontText];
 }
 
 - (UIView *)keyboardExtensionView {
     if (viewController == nil) {
-        ivar_assign(viewController, [[CDXCardOrientationKeyboardExtensionViewController alloc] init]);
+        ivar_assign(viewController, [[CDXTextKeyboardExtensionViewController alloc] init]);
     }
     
     return viewController.view;
@@ -88,15 +106,11 @@ synthesize_singleton(sharedOrientationKeyboardExtension, CDXCardOrientationKeybo
 @end
 
 
-@implementation CDXCardOrientationKeyboardExtensionViewController 
-
-- (id)init {
-    if ((self = [super initWithNibName:@"CDXCardOrientationKeyboardExtensionView" bundle:nil])) {
-    }
-    return self;
-}
+@implementation CDXTextKeyboardExtensionViewController
 
 - (void)dealloc {
+    ivar_release_and_clear(sizeChooserSlider);
+    ivar_release_and_clear(sizeChooserSliderLabel);
     ivar_release_and_clear(orientationSample);
     [super dealloc];
 }
@@ -107,24 +121,50 @@ synthesize_singleton(sharedOrientationKeyboardExtension, CDXCardOrientationKeybo
 }
 
 - (void)viewDidUnload {
+    ivar_release_and_clear(sizeChooserSlider);
+    ivar_release_and_clear(sizeChooserSliderLabel);
     ivar_release_and_clear(orientationSample);
     [super viewDidUnload];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    sizeChooserSlider.minimumValue = CDXCardFontSizeAutomatic;
+    sizeChooserSlider.maximumValue = CDXCardFontSizeMax;
+    [self updateSize];
     [self updateOrientationSample];
+}
+
+- (void)updateSize {
+    CGFloat fontSize = 0;
+    NSObject *responder = [[CDXKeyboardExtensions sharedKeyboardExtensions] responder];
+    if ([responder conformsToProtocol:@protocol(CDXTextKeyboardExtensionResponder)]) {
+        NSObject <CDXTextKeyboardExtensionResponder> *r = (NSObject <CDXTextKeyboardExtensionResponder> *)responder;
+        fontSize = [r textKeyboardExtensionFontSize];
+    }
+    sizeChooserSlider.value = fontSize;
+    sizeChooserSliderLabel.text = [CDXTextKeyboardExtension stringForFontSize:fontSize];
 }
 
 - (void)updateOrientationSample {
     CDXCardOrientation orientation = CDXCardOrientationUp;
     NSObject *responder = [[CDXKeyboardExtensions sharedKeyboardExtensions] responder];
-    if ([responder conformsToProtocol:@protocol(CDXCardOrientationKeyboardExtensionResponder)]) {
-        NSObject<CDXCardOrientationKeyboardExtensionResponder> *r = (NSObject<CDXCardOrientationKeyboardExtensionResponder> *)responder;
-        orientation = [r orientationKeyboardExtensionCardOrientation];
+    if ([responder conformsToProtocol:@protocol(CDXTextKeyboardExtensionResponder)]) {
+        NSObject<CDXTextKeyboardExtensionResponder> *r = (NSObject<CDXTextKeyboardExtensionResponder> *)responder;
+        orientation = [r textKeyboardExtensionCardOrientation];
     }
     
     orientationSample.transform = [CDXCardView transformForCardOrientation:orientation];
+}
+
+- (IBAction)sizeChooserSliderValueChanged {
+    NSObject *responder = [[CDXKeyboardExtensions sharedKeyboardExtensions] responder];
+    if ([responder conformsToProtocol:@protocol(CDXTextKeyboardExtensionResponder)]) {
+        NSObject <CDXTextKeyboardExtensionResponder> *r = (NSObject <CDXTextKeyboardExtensionResponder> *)responder;
+        [r textKeyboardExtensionSetFontSize:sizeChooserSlider.value];
+    }
+    [self updateSize];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] refreshKeyboardExtensions];
 }
 
 - (IBAction)orientationButtonPressed:(id)sender {
@@ -132,9 +172,9 @@ synthesize_singleton(sharedOrientationKeyboardExtension, CDXCardOrientationKeybo
     
     CDXCardOrientation orientation = (CDXCardOrientation)[button tag];
     NSObject *responder = [[CDXKeyboardExtensions sharedKeyboardExtensions] responder];
-    if ([responder conformsToProtocol:@protocol(CDXCardOrientationKeyboardExtensionResponder)]) {
-        NSObject<CDXCardOrientationKeyboardExtensionResponder> *r = (NSObject<CDXCardOrientationKeyboardExtensionResponder> *)responder;
-        [r orientationKeyboardExtensionSetCardOrientation:orientation];
+    if ([responder conformsToProtocol:@protocol(CDXTextKeyboardExtensionResponder)]) {
+        NSObject<CDXTextKeyboardExtensionResponder> *r = (NSObject<CDXTextKeyboardExtensionResponder> *)responder;
+        [r textKeyboardExtensionSetCardOrientation:orientation];
     }
     
     [UIView beginAnimations:nil context:NULL];
@@ -143,11 +183,10 @@ synthesize_singleton(sharedOrientationKeyboardExtension, CDXCardOrientationKeybo
     button.backgroundColor = [UIColor blueColor];
     button.backgroundColor = color;
     [UIView commitAnimations];
-
+    
     [self updateOrientationSample];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] refreshKeyboardExtensions];
 }
 
 @end
-
 
