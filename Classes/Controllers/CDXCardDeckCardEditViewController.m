@@ -26,6 +26,7 @@
 #import "CDXCardDeckCardEditViewController.h"
 #import "CDXKeyboardExtensions.h"
 #import "CDXSymbolsKeyboardExtension.h"
+#import "CDXColorKeyboardExtension.h"
 #import "CDXCardOrientationKeyboardExtension.h"
 
 
@@ -48,6 +49,12 @@
     [super dealloc];
 }
 
+- (void)showCardColors {
+    CDXCard *card = [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex];
+    text.textColor = [card.textColor uiColor];
+    text.backgroundColor = [card.backgroundColor uiColor];
+}
+
 - (void)showCardAtIndex:(NSUInteger)cardIndex {
     cardDeckViewContext.currentCardIndex = cardIndex;
     
@@ -60,6 +67,7 @@
     if ([cardDeck cardsCount] > 1) {
         self.navigationItem.title = [NSString stringWithFormat:@"%d of %d", cardIndex+1, [cardDeck cardsCount]];
     }
+    [self showCardColors];
 }
 
 - (void)finishCardModification {
@@ -113,9 +121,28 @@
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     NSArray *extensions = [NSArray arrayWithObjects:
                            [CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension],
+                           [CDXColorKeyboardExtension sharedColorKeyboardExtension],
                            [CDXCardOrientationKeyboardExtension sharedOrientationKeyboardExtension],
                            nil];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
+}
+
+- (CDXColor *)colorKeyboardExtensionTextColor {
+    return [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].textColor;
+}
+
+- (void)colorKeyboardExtensionSetTextColor:(CDXColor *)color {
+    [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].textColor = color;
+    [self showCardColors];
+}
+
+- (CDXColor *)colorKeyboardExtensionBackgroundColor {
+    return [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].backgroundColor;
+}
+
+- (void)colorKeyboardExtensionSetBackgroundColor:(CDXColor *)color {
+    [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].backgroundColor = color;
+    [self showCardColors];
 }
 
 - (CDXCardOrientation)orientationKeyboardExtensionCardOrientation {
