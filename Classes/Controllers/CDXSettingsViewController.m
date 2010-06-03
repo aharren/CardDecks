@@ -25,6 +25,7 @@
 
 #import "CDXSettingsViewController.h"
 #import "CDXKeyboardExtensions.h"
+#import "CDXSymbolsKeyboardExtension.h"
 
 
 @interface CDXSettingsEnumerationViewController : UITableViewController {
@@ -112,6 +113,11 @@
     [self.tableView reloadData];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension] reset];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [settings numberOfGroups];
 }
@@ -134,6 +140,7 @@
     self.tableView.scrollEnabled = NO;
     [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
     NSArray *extensions = [NSArray arrayWithObjects:
+                           [CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension],
                            nil];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:cellText keyboardExtensions:extensions];
 }

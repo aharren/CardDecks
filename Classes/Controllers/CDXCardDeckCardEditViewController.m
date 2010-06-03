@@ -25,6 +25,7 @@
 
 #import "CDXCardDeckCardEditViewController.h"
 #import "CDXKeyboardExtensions.h"
+#import "CDXSymbolsKeyboardExtension.h"
 #import "CDXCardOrientationKeyboardExtension.h"
 
 
@@ -87,6 +88,11 @@
     [text becomeFirstResponder];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension] reset];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [self finishCardModification];
     [super viewWillDisappear:animated];
@@ -106,6 +112,7 @@
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     NSArray *extensions = [NSArray arrayWithObjects:
+                           [CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension],
                            [CDXCardOrientationKeyboardExtension sharedOrientationKeyboardExtension],
                            nil];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
@@ -117,6 +124,17 @@
 
 - (void)orientationKeyboardExtensionSetCardOrientation:(CDXCardOrientation)cardOrientation {
     [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].orientation = cardOrientation;
+}
+
+- (void)paste:(id)sender {
+    // we want to paste to text, but it doesn't respond to paste directly, so
+    // search for the right subview
+    for (UIView *view in [text subviews]) {
+        if ([view respondsToSelector:@selector(paste:)]) {
+            [view paste:nil];
+            return;
+        }
+    }
 }
 
 @end

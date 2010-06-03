@@ -48,5 +48,7 @@
 - (CDXCardOrientation)orientationKeyboardExtensionCardOrientation;
 - (void)orientationKeyboardExtensionSetCardOrientation:(CDXCardOrientation)cardOrientation;
 
+- (void)paste:(id)sender;
+
 @end
 

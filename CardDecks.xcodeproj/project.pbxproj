@@ -43,6 +43,10 @@
 		E070CF8911A08B9600626F34 /* CDXSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E070CF8811A08B9600626F34 /* CDXSettingsViewController.m */; };
 		E070CFA911A08D4400626F34 /* CDXCardDeckSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E070CFA811A08D4400626F34 /* CDXCardDeckSettings.m */; };
 		E0805B4B11A85C6600199172 /* CDXCardDeckViewContext.m in Sources */ = {isa = PBXBuildFile; fileRef = E0805B4A11A85C6600199172 /* CDXCardDeckViewContext.m */; };
+		E09AC62511B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09AC62311B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib */; };
+		E09AC62611B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09AC62411B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib */; };
+		E09FCDBA11B7B69900135582 /* CDXSymbolsKeyboardExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E09FCDB911B7B69900135582 /* CDXSymbolsKeyboardExtension.m */; };
+		E09FCDF311B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09FCDF211B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib */; };
 		E0A1C00111A82BE100911848 /* CDXCardDeckCardEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A1C00011A82BE100911848 /* CDXCardDeckCardEditViewController.m */; };
 		E0A1C00311A82C5600911848 /* CDXCardDeckCardEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0A1C00211A82C5600911848 /* CDXCardDeckCardEditView.xib */; };
 		E0A1C15D11A83F0D00911848 /* Toolbar-Down.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A1C15B11A83F0D00911848 /* Toolbar-Down.png */; };
@@ -141,6 +145,11 @@
 		E070CFA811A08D4400626F34 /* CDXCardDeckSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckSettings.m; path = Classes/Models/CDXCardDeckSettings.m; sourceTree = "<group>"; };
 		E0805B4911A85C6600199172 /* CDXCardDeckViewContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckViewContext.h; path = Classes/Models/CDXCardDeckViewContext.h; sourceTree = "<group>"; };
 		E0805B4A11A85C6600199172 /* CDXCardDeckViewContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckViewContext.m; path = Classes/Models/CDXCardDeckViewContext.m; sourceTree = "<group>"; };
+		E09AC62311B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXSymbolsKeyboardExtensionTableViewCellA.xib; path = UserInterfaces/CDXSymbolsKeyboardExtensionTableViewCellA.xib; sourceTree = "<group>"; };
+		E09AC62411B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXSymbolsKeyboardExtensionTableViewCellB.xib; path = UserInterfaces/CDXSymbolsKeyboardExtensionTableViewCellB.xib; sourceTree = "<group>"; };
+		E09FCDB811B7B69900135582 /* CDXSymbolsKeyboardExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXSymbolsKeyboardExtension.h; path = Classes/Keyboards/CDXSymbolsKeyboardExtension.h; sourceTree = "<group>"; };
+		E09FCDB911B7B69900135582 /* CDXSymbolsKeyboardExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXSymbolsKeyboardExtension.m; path = Classes/Keyboards/CDXSymbolsKeyboardExtension.m; sourceTree = "<group>"; };
+		E09FCDF211B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXSymbolsKeyboardExtensionTableView.xib; path = UserInterfaces/CDXSymbolsKeyboardExtensionTableView.xib; sourceTree = "<group>"; };
 		E0A1BFFF11A82BE100911848 /* CDXCardDeckCardEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckCardEditViewController.h; path = Classes/Controllers/CDXCardDeckCardEditViewController.h; sourceTree = "<group>"; };
 		E0A1C00011A82BE100911848 /* CDXCardDeckCardEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckCardEditViewController.m; path = Classes/Controllers/CDXCardDeckCardEditViewController.m; sourceTree = "<group>"; };
 		E0A1C00211A82C5600911848 /* CDXCardDeckCardEditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardDeckCardEditView.xib; path = UserInterfaces/CDXCardDeckCardEditView.xib; sourceTree = "<group>"; };
@@ -360,6 +369,9 @@
 				E02320F8117093870043D6CF /* CDXCardDeckListView.xib */,
 				E032F1671169DDC10033980C /* CDXCardDecksListView.xib */,
 				E0F7A56C11B15FB500CD786B /* CDXCardOrientationKeyboardExtensionView.xib */,
+				E09FCDF211B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib */,
+				E09AC62311B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib */,
+				E09AC62411B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib */,
 			);
 			name = "User Interfaces";
 			sourceTree = "<group>";
@@ -422,6 +434,8 @@
 				E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */,
 				E0F7A56F11B15FD700CD786B /* CDXCardOrientationKeyboardExtension.h */,
 				E0F7A57011B15FD700CD786B /* CDXCardOrientationKeyboardExtension.m */,
+				E09FCDB811B7B69900135582 /* CDXSymbolsKeyboardExtension.h */,
+				E09FCDB911B7B69900135582 /* CDXSymbolsKeyboardExtension.m */,
 			);
 			name = Keyboards;
 			sourceTree = "<group>";
@@ -508,6 +522,9 @@
 				E0F7A56D11B15FB500CD786B /* CDXCardOrientationKeyboardExtensionView.xib in Resources */,
 				E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */,
 				E0F7A71A11B17B3700CD786B /* Toolbar-Bottom.png in Resources */,
+				E09FCDF311B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib in Resources */,
+				E09AC62511B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib in Resources */,
+				E09AC62611B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,6 +586,7 @@
 				E0F7A50A11B158DA00CD786B /* CDXKeyboardExtensions.m in Sources */,
 				E0F7A57111B15FD700CD786B /* CDXCardOrientationKeyboardExtension.m in Sources */,
 				E0DDD81011B26807004CECCB /* CDXListViewControllerBase.m in Sources */,
+				E09FCDBA11B7B69900135582 /* CDXSymbolsKeyboardExtension.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
