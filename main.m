@@ -25,7 +25,9 @@
 
 
 int main(int argc, char *argv[]) {
+#   ifndef _LCL_NO_LOGGING
     lcl_configure_by_identifier("*", lcl_vTrace);
+#   endif
 
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     int retVal = UIApplicationMain(argc, argv, nil, nil);
