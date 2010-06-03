@@ -12,9 +12,9 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="49"/>
 			<integer value="26"/>
 			<integer value="54"/>
+			<integer value="49"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -699,7 +699,7 @@
 					<object class="IBUILabel" id="819286903">
 						<reference key="NSNextResponder" ref="1002885225"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{15, 78.5}, {50, 16}}</string>
+						<string key="NSFrame">{{15, 79}, {50, 16}}</string>
 						<reference key="NSSuperview" ref="1002885225"/>
 						<reference key="IBUIBackgroundColor" ref="14076722"/>
 						<bool key="IBUIOpaque">NO</bool>
