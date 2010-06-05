@@ -129,7 +129,7 @@
             switch (indexPath.row) {
                 default:
                 case 0: {
-                    cell.textLabel.text = @"CARD DEFAULTS";
+                    cell.textLabel.text = @"  CARD DEFAULTS";
                     break;
                 }
             }

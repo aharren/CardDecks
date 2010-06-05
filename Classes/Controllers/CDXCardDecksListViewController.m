@@ -107,7 +107,7 @@
             switch (indexPath.row) {
                 default:
                 case 0: {
-                    cell.textLabel.text = @"DECK DEFAULTS";
+                    cell.textLabel.text = @"  DECK DEFAULTS";
                     break;
                 }
             }
