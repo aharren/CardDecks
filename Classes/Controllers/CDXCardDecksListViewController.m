@@ -177,7 +177,7 @@
     [deck release];
 }
 
-- (IBAction)addButtonPressed {
+- (IBAction)addButtonPressedDelayed {
     qltrace();
     CDXCardDeck *deck = [cardDecks cardDeckWithDefaults];
     [cardDecks addCardDeck:deck];
@@ -187,6 +187,16 @@
     [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
     [viewTableView deselectRowAtIndexPath:path animated:YES];
     [self setEditing:NO animated:YES];
+}
+
+- (IBAction)addButtonPressed {
+    if (![[viewTableView indexPathsForVisibleRows] containsObject:[NSIndexPath indexPathForRow:0 inSection:2]]) {
+        qltrace();
+        [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+        [self performSelector:@selector(addButtonPressedDelayed) withObject:nil afterDelay:0.3];
+    } else {
+        [self addButtonPressedDelayed];
+    }
 }
 
 - (IBAction)defaultsButtonPressed {
