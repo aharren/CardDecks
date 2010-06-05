@@ -1,6 +1,6 @@
 //
 //
-// CDXAppWindowManager.h
+// CDXAppWindowNoticeView.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,35 +23,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXAppWindowProtocols.h"
-#import "CDXAppWindowNoticeView.h"
 
-
-@interface CDXAppWindowManager : NSObject {
+@interface CDXAppWindowNoticeView : UIView {
     
 @protected
-    IBOutlet UIWindow *window;
-    IBOutlet UIView *navigationView;
+    IBOutlet UIView *background;
+    IBOutlet UIImageView *imageView;
     
-    IBOutlet CDXAppWindowNoticeView *noticeView;
-
-    UIViewController<CDXAppWindowViewController> *fullScreenViewController;
-    UINavigationController *navigationController;
-    
-    UIDeviceOrientation deviceOrientation;
 }
 
-declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
-
-@property (nonatomic, readonly) UIWindow *window;
-@property (nonatomic, readonly) UIDeviceOrientation deviceOrientation;
-
-- (UIViewController *)visibleViewController;
-- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated;
-- (void)popViewControllerAnimated:(BOOL)animated;
-- (void)makeWindowKeyAndVisible;
-- (void)showNoticeWithImageNamed:(NSString *)name timeInterval:(NSTimeInterval)timeInterval;
-+ (CGAffineTransform)transformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation;
+- (void)showImageNamed:(NSString *)name timeInterval:(NSTimeInterval)timeInterval window:(UIWindow *)window;
 
 @end
 

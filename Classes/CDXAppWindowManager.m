@@ -163,5 +163,32 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     }
 }
 
+- (void)showNoticeWithImageNamed:(NSString *)name timeInterval:(NSTimeInterval)timeInterval {
+    [[NSBundle mainBundle] loadNibNamed:@"CDXAppWindowNoticeView" owner:self options:nil];
+    [noticeView showImageNamed:name timeInterval:timeInterval window:window];
+    ivar_release_and_clear(noticeView);
+}
+
++ (CGAffineTransform)transformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation {
+    CGFloat transformAngle;
+    switch (deviceOrientation) {
+        case UIDeviceOrientationPortrait:
+        default:
+            transformAngle = 0;
+            break;
+        case UIDeviceOrientationLandscapeLeft:
+            transformAngle = M_PI_2;
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            transformAngle = M_PI;
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            transformAngle = -M_PI_2;
+            break;
+    }
+    
+    return CGAffineTransformRotate(CGAffineTransformIdentity, transformAngle);
+}
+
 @end
 
