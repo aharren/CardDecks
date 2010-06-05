@@ -88,7 +88,7 @@
         case 1:
             return [cardDeck cardsCount];
         case 2:
-            return 2;
+            return 1;
     }
 }
 
@@ -121,7 +121,7 @@
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
                 cell.textLabel.font = tableCellTextFontAction;
                 cell.textLabel.textAlignment = UITextAlignmentCenter;
-                cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
             }
             
@@ -129,11 +129,7 @@
             switch (indexPath.row) {
                 default:
                 case 0: {
-                    cell.textLabel.text = @"TAP HERE TO ADD A CARD";
-                    break;
-                }
-                case 1: {
-                    cell.textLabel.text = @"TAP HERE TO CONFIGURE CARD DEFAULTS";
+                    cell.textLabel.text = @"CARD DEFAULTS";
                     break;
                 }
             }
@@ -161,10 +157,6 @@
             switch (indexPath.row) {
                 default:
                 case 0: {
-                    [self addButtonPressed];
-                    break;
-                }
-                case 1: {
                     [self defaultsButtonPressed];
                     break;
                 }
