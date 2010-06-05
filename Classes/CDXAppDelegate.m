@@ -85,7 +85,7 @@
         deck.displayStyle = CDXCardDeckDisplayStyleSwipeStack;
         deck.wantsPageControl = YES;
         deck.wantsAutoRotate = NO;
-        deck.wantsShakeRandom = NO;
+        deck.wantsShakeShuffle = NO;
         deck.cornerStyle = CDXCardCornerStyleCornered;
         decks.cardDeckDefaults = deck;
     }

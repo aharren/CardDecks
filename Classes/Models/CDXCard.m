@@ -119,5 +119,9 @@
     }
 }
 
+- (NSString *)description {
+    return text;
+}
+
 @end
 

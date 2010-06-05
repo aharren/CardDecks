@@ -157,15 +157,18 @@
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    if ([self isEditing] == editing) {
+        return;
+    }
     [super setEditing:editing animated:animated];
     [viewTableView setEditing:editing animated:animated];
+    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (IBAction)editButtonPressed {
     qltrace();
     [self setEditing:!self.editing animated:YES];
-    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (IBAction)bottomButtonPressed {

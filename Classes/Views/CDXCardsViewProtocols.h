@@ -52,6 +52,7 @@
 - (void)setViewDelegate:(id<CDXCardsViewDelegate>)delegate;
 - (void)setViewDataSource:(id<CDXCardsViewDataSource>)dataSource;
 - (void)showCardAtIndex:(NSUInteger)index;
+- (void)invalidateDataSourceCaches;
 - (NSUInteger)currentCardIndex;
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation;
 - (void)setDeviceOrientation:(UIDeviceOrientation)orientation;

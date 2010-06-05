@@ -52,7 +52,7 @@
 - (IBAction)pageControlJumpLeftButtonPressed;
 - (IBAction)pageControlJumpRightButtonPressed;
 
-- (IBAction)randomButtonPressed;
+- (IBAction)shuffleButtonPressed;
 
 @end
 

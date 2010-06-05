@@ -34,10 +34,11 @@
 @synthesize wantsPageControl;
 @synthesize wantsPageJumps;
 @synthesize wantsAutoRotate;
-@synthesize wantsShakeRandom;
+@synthesize wantsShakeShuffle;
 @synthesize displayStyle;
 @synthesize cornerStyle;
 @synthesize fontSize;
+@synthesize isShuffled;
 
 - (id)init {
     qltrace();
@@ -51,9 +52,11 @@
         wantsPageControl = NO;
         wantsPageJumps = YES;
         wantsAutoRotate = YES;
-        wantsShakeRandom = NO;
+        wantsShakeShuffle = NO;
         displayStyle = CDXCardDeckDisplayStyleDefault;
         cornerStyle = CDXCardCornerStyleRounded;
+        isShuffled = NO;
+        shuffleIndexes = nil;
     }
     return self;
 }
@@ -64,6 +67,7 @@
     ivar_release_and_clear(name);
     ivar_release_and_clear(description);
     ivar_release_and_clear(cards);
+    ivar_release_and_clear(shuffleIndexes);
     [super dealloc];
 }
 
@@ -74,13 +78,21 @@
     copy.wantsPageControl = wantsPageControl;
     copy.wantsPageJumps = wantsPageJumps;
     copy.wantsAutoRotate = wantsAutoRotate;
-    copy.wantsShakeRandom = wantsShakeRandom;
+    copy.wantsShakeShuffle = wantsShakeShuffle;
     copy.displayStyle = displayStyle;
     copy.cornerStyle = cornerStyle;
     for (CDXCard *card in cards) {
         [copy addCard:[[card copyWithZone:zone] autorelease]];
     }
     return copy;
+}
+
+- (NSUInteger)cardsIndex:(NSUInteger)index {
+    if (isShuffled) {
+        return [(NSNumber *)[shuffleIndexes objectAtIndex:index] unsignedIntegerValue];
+    } else {
+        return index;
+    }
 }
 
 - (void)updateDescription {
@@ -103,44 +115,71 @@
     return [cards count];
 }
 
+- (CDXCard *)cardAtCardsIndex:(NSUInteger)cardsIndex {
+    return (CDXCard *)[cards objectAtIndex:cardsIndex];
+}
+
 - (CDXCard *)cardAtIndex:(NSUInteger)index {
-    return (CDXCard *)[cards objectAtIndex:index];
+    NSUInteger cardsIndex = [self cardsIndex:index];
+    return (CDXCard *)[cards objectAtIndex:cardsIndex];
 }
 
 - (CDXCard *)cardAtIndex:(NSUInteger)index orCard:(CDXCard *)card {
     if ([cards count] <= index) {
         return card;
     }
-    return (CDXCard *)[cards objectAtIndex:index];
+    NSUInteger cardsIndex = [self cardsIndex:index];
+    return (CDXCard *)[cards objectAtIndex:cardsIndex];
 }
 
 - (void)addCard:(CDXCard *)card {
     card.cornerStyle = cornerStyle;
     [cards addObject:card];
-    [self updateDescription];
-}
-
-- (void)insertCard:(CDXCard *)card atIndex:(NSUInteger)index {
-    card.cornerStyle = cornerStyle;
-    if (index >= [cards count]) {
-        [cards addObject:card];
-    } else {
-        [cards insertObject:card atIndex:index];
+    if (isShuffled) {
+        NSUInteger cardsIndex = [cards count]-1;
+        [shuffleIndexes addObject:[NSNumber numberWithUnsignedInteger:cardsIndex]];
     }
     [self updateDescription];
 }
 
 - (void)removeCardAtIndex:(NSUInteger)index {
-    [cards removeObjectAtIndex:index];
+    NSUInteger cardsIndex = [self cardsIndex:index];
+    [cards removeObjectAtIndex:cardsIndex];
+    if (isShuffled) {
+        [shuffleIndexes removeObjectAtIndex:index];
+        NSUInteger count = [cards count];
+        for (NSUInteger i = 0; i < count; i++) {
+            NSUInteger aCardsIndex = [(NSNumber *)[shuffleIndexes objectAtIndex:i] unsignedIntegerValue];
+            if (aCardsIndex >= cardsIndex) {
+                [shuffleIndexes replaceObjectAtIndex:i withObject:[NSNumber numberWithUnsignedInteger:aCardsIndex-1]];
+            }
+        }
+    }
     [self updateDescription];
 }
 
 - (void)replaceCardAtIndex:(NSUInteger)index withCard:(CDXCard *)card {
     [card retain];
-    [cards removeObjectAtIndex:index];
-    [cards insertObject:card atIndex:index];
+    NSUInteger cardsIndex = [self cardsIndex:index];
+    [cards removeObjectAtIndex:cardsIndex];
+    [cards insertObject:card atIndex:cardsIndex];
     [card release];
     [self updateDescription];
+}
+
+- (void)moveCardAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex {
+    if (isShuffled) {
+        NSUInteger cardsIndex = [self cardsIndex:fromIndex];
+        [shuffleIndexes removeObjectAtIndex:fromIndex];
+        [shuffleIndexes insertObject:[NSNumber numberWithUnsignedInteger:cardsIndex] atIndex:toIndex];
+    } else {
+        CDXCard *card = (CDXCard *)[cards objectAtIndex:fromIndex];
+        [card retain];
+        [cards removeObjectAtIndex:fromIndex];
+        [cards insertObject:card atIndex:toIndex];
+        [card release];
+        [self updateDescription];
+    }
 }
 
 - (CDXCard *)cardWithDefaults {
@@ -161,6 +200,24 @@
         card.fontSize = aFontSize;
     }
     cardDefaults.fontSize = aFontSize;
+}
+
+- (void)shuffle {
+    NSUInteger count = [cards count];
+    ivar_assign(shuffleIndexes, [[NSMutableArray alloc] initWithCapacity:count]);
+    for (NSUInteger i = 0; i < count; i++) {
+        [shuffleIndexes addObject:[NSNumber numberWithUnsignedInteger:i]];
+    }
+    for (NSUInteger i = 0; i < count; i++) {
+        NSUInteger newIndex = (((double)arc4random() / 0x100000000) * count);
+        [shuffleIndexes exchangeObjectAtIndex:newIndex withObjectAtIndex:i];
+    }
+    isShuffled = YES;
+}
+
+- (void)sort {
+    isShuffled = NO;
+    ivar_release_and_clear(shuffleIndexes);
 }
 
 @end

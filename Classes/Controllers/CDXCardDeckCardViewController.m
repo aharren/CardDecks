@@ -201,9 +201,9 @@
         return;
     }
     
-    // shake event received, jump to random page
-    if (event.type == UIEventSubtypeMotionShake && cardDeck.wantsShakeRandom) {
-        [self randomButtonPressed];
+    // shake event received, shuffle the deck
+    if (event.type == UIEventSubtypeMotionShake && cardDeck.wantsShakeShuffle) {
+        [self shuffleButtonPressed];
     }
     
     if ([super respondsToSelector:@selector(motionEnded:withEvent:)]) {
@@ -211,9 +211,10 @@
     }
 }
 
-- (IBAction)randomButtonPressed {
-    NSUInteger randomCardIndex = (((double)arc4random() / 0x100000000) * [cardDeck cardsCount]);
-    [cardsView showCardAtIndex:randomCardIndex];
+- (IBAction)shuffleButtonPressed {
+    [cardDeck shuffle];
+    [cardsView invalidateDataSourceCaches];
+    [cardsView showCardAtIndex:0];
 }
 
 - (void)configurePageControl {

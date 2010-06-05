@@ -33,7 +33,7 @@ enum {
     CDXCardDeckSettingsPageControl,
     CDXCardDeckSettingsPageJumps,
     CDXCardDeckSettingsAutoRotate,
-    CDXCardDeckSettingsShakeRandom,
+    CDXCardDeckSettingsShakeShuffle,
     CDXCardDeckSettingsCount
 };
 
@@ -44,7 +44,7 @@ static const CDXSetting settings[] = {
     { CDXCardDeckSettingsPageControl, CDXSettingTypeBoolean, @"Page Display" },
     { CDXCardDeckSettingsPageJumps, CDXSettingTypeBoolean, @"Page Jumps" },
     { CDXCardDeckSettingsAutoRotate, CDXSettingTypeBoolean, @"Auto Rotate" },
-    { CDXCardDeckSettingsShakeRandom, CDXSettingTypeBoolean, @"Shake Random" },
+    { CDXCardDeckSettingsShakeShuffle, CDXSettingTypeBoolean, @"Shake Shuffle" },
     { 0, 0, @"" }
 };
 
@@ -107,8 +107,8 @@ static const CDXCardDeckSettingGroup groups[] = {
             return cardDeck.wantsPageJumps;
         case CDXCardDeckSettingsAutoRotate:
             return cardDeck.wantsAutoRotate;
-        case CDXCardDeckSettingsShakeRandom:
-            return cardDeck.wantsShakeRandom;
+        case CDXCardDeckSettingsShakeShuffle:
+            return cardDeck.wantsShakeShuffle;
     }
 }
 
@@ -125,8 +125,8 @@ static const CDXCardDeckSettingGroup groups[] = {
         case CDXCardDeckSettingsAutoRotate:
             cardDeck.wantsAutoRotate = value;
             break;
-        case CDXCardDeckSettingsShakeRandom:
-            cardDeck.wantsShakeRandom = value;
+        case CDXCardDeckSettingsShakeShuffle:
+            cardDeck.wantsShakeShuffle = value;
             break;
     }
 }

@@ -100,6 +100,10 @@
     qltrace(@": %d X> %d", viewIndex, cardIndex);
 }
 
+- (void)invalidateDataSourceCaches {
+    ivar_array_set(cardViewsCardIndex, CDXCardsSideBySideViewCardViewsSize, 0);
+}
+
 - (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate cached:(BOOL)cached {
     NSUInteger viewIndex = 0;
     for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {

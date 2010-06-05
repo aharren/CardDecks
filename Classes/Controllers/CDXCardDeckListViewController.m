@@ -43,7 +43,21 @@
 - (void)dealloc {
     ivar_release_and_clear(cardDeckViewContext);
     ivar_release_and_clear(cardDeck);
+    ivar_release_and_clear(shuffleButton);
     [super dealloc];
+}
+
+- (void)viewDidUnload {
+    ivar_release_and_clear(shuffleButton);
+    [super viewDidUnload];
+}
+
+- (void)updateShuffleButton {
+    if ([cardDeck isShuffled]) {
+        shuffleButton.image = [UIImage imageNamed:@"Toolbar-Sort.png"];
+    } else {
+        shuffleButton.image = [UIImage imageNamed:@"Toolbar-Shuffle.png"];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -52,6 +66,7 @@
     if ([viewTableView numberOfRowsInSection:1] != 0) {
         [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:1] atScrollPosition:UITableViewScrollPositionNone animated:NO];
     }
+    [self updateShuffleButton];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -162,11 +177,7 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
     qltrace();
-    CDXCard *card = [cardDeck cardAtIndex:fromIndexPath.row];
-    [card retain];
-    [cardDeck removeCardAtIndex:fromIndexPath.row];
-    [cardDeck insertCard:card atIndex:toIndexPath.row];
-    [card release];
+    [cardDeck moveCardAtIndex:fromIndexPath.row toIndex:toIndexPath.row];
 }
 
 - (IBAction)addButtonPressed {
@@ -197,6 +208,17 @@
     CDXCardDeckSettings *settings = [[[CDXCardDeckSettings alloc] initWithCardDeck:cardDeck] autorelease];
     CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings] autorelease];
     [self presentModalViewController:vc animated:YES];
+}
+
+- (IBAction)shuffleButtonPressed {
+    [self setEditing:NO animated:YES];
+    if ([cardDeck isShuffled]) {
+        [cardDeck sort];
+    } else {
+        [cardDeck shuffle];
+    }
+    [self updateShuffleButton];
+    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 @end

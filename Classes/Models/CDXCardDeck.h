@@ -48,11 +48,14 @@ typedef enum {
     BOOL wantsPageControl;
     BOOL wantsPageJumps;
     BOOL wantsAutoRotate;
-    BOOL wantsShakeRandom;
+    BOOL wantsShakeShuffle;
     
     CDXCardDeckDisplayStyle displayStyle;
     CDXCardCornerStyle cornerStyle;
     CGFloat fontSize;
+
+    BOOL isShuffled;
+    NSMutableArray *shuffleIndexes;
 }
 
 @property (nonatomic, retain) CDXCard *cardDefaults;
@@ -61,21 +64,29 @@ typedef enum {
 @property (nonatomic, readonly) NSString *description;
 
 - (NSUInteger)cardsCount;
+
+- (NSUInteger)cardsIndex:(NSUInteger)index;
+- (CDXCard *)cardAtCardsIndex:(NSUInteger)cardsIndex;
+
 - (CDXCard *)cardAtIndex:(NSUInteger)index;
 - (CDXCard *)cardAtIndex:(NSUInteger)index orCard:(CDXCard *)card;
 - (void)addCard:(CDXCard *)card;
-- (void)insertCard:(CDXCard *)card atIndex:(NSUInteger)index;
 - (void)removeCardAtIndex:(NSUInteger)index;
 - (void)replaceCardAtIndex:(NSUInteger)index withCard:(CDXCard *)card;
+- (void)moveCardAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
 
 @property (nonatomic, assign) BOOL wantsPageControl;
 @property (nonatomic, assign) BOOL wantsPageJumps;
 @property (nonatomic, assign) BOOL wantsAutoRotate;
-@property (nonatomic, assign) BOOL wantsShakeRandom;
+@property (nonatomic, assign) BOOL wantsShakeShuffle;
 
 @property (nonatomic, assign) CDXCardDeckDisplayStyle displayStyle;
 @property (nonatomic, assign) CDXCardCornerStyle cornerStyle;
 @property (nonatomic, assign) CGFloat fontSize;
+
+@property (nonatomic, readonly) BOOL isShuffled;
+- (void)shuffle;
+- (void)sort;
 
 - (CDXCard *)cardWithDefaults;
 

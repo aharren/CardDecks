@@ -34,6 +34,7 @@
     CDXCardDeckViewContext *cardDeckViewContext;
     CDXCardDeck *cardDeck;
     
+    IBOutlet UIBarButtonItem *shuffleButton;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
@@ -41,6 +42,7 @@
 - (IBAction)addButtonPressed;
 - (IBAction)defaultsButtonPressed;
 - (IBAction)settingsButtonPressed;
+- (IBAction)shuffleButtonPressed;
 
 @end
 

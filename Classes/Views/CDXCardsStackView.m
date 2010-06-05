@@ -105,6 +105,10 @@
     view.hidden = NO;
 }
 
+- (void)invalidateDataSourceCaches {
+    [cardImages clear];
+}
+
 - (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate {
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsTopLeft cardIndex:cardIndex-1];
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsTopRight cardIndex:cardIndex];
