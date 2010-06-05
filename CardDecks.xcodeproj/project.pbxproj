@@ -42,6 +42,8 @@
 		E0620B3111BA82BC006AABD2 /* Toolbar-Sort.png in Resources */ = {isa = PBXBuildFile; fileRef = E0620B3011BA82BC006AABD2 /* Toolbar-Sort.png */; };
 		E0620CF611BA9EA3006AABD2 /* CDXAppWindowNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0620CF511BA9EA3006AABD2 /* CDXAppWindowNoticeView.m */; };
 		E0620D0111BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0620D0011BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib */; };
+		E0620D5511BAA61A006AABD2 /* Notice-Shuffle.png in Resources */ = {isa = PBXBuildFile; fileRef = E0620D5311BAA61A006AABD2 /* Notice-Shuffle.png */; };
+		E0620D5611BAA61A006AABD2 /* Notice-Sort.png in Resources */ = {isa = PBXBuildFile; fileRef = E0620D5411BAA61A006AABD2 /* Notice-Sort.png */; };
 		E0620F8B119E950D00234667 /* StatusBarDefault.png in Resources */ = {isa = PBXBuildFile; fileRef = E0620F8A119E950D00234667 /* StatusBarDefault.png */; };
 		E070CF5B119FF13800626F34 /* Toolbar-Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = E070CF5A119FF13800626F34 /* Toolbar-Settings.png */; };
 		E070CF8911A08B9600626F34 /* CDXSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E070CF8811A08B9600626F34 /* CDXSettingsViewController.m */; };
@@ -148,6 +150,8 @@
 		E0620CF411BA9EA3006AABD2 /* CDXAppWindowNoticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppWindowNoticeView.h; path = Classes/CDXAppWindowNoticeView.h; sourceTree = "<group>"; };
 		E0620CF511BA9EA3006AABD2 /* CDXAppWindowNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppWindowNoticeView.m; path = Classes/CDXAppWindowNoticeView.m; sourceTree = "<group>"; };
 		E0620D0011BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXAppWindowNoticeView.xib; path = UserInterfaces/CDXAppWindowNoticeView.xib; sourceTree = "<group>"; };
+		E0620D5311BAA61A006AABD2 /* Notice-Shuffle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Shuffle.png"; path = "Images/Notices/Notice-Shuffle.png"; sourceTree = "<group>"; };
+		E0620D5411BAA61A006AABD2 /* Notice-Sort.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Sort.png"; path = "Images/Notices/Notice-Sort.png"; sourceTree = "<group>"; };
 		E0620F8A119E950D00234667 /* StatusBarDefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StatusBarDefault.png; path = Images/StatusBarDefault.png; sourceTree = "<group>"; };
 		E070CF5A119FF13800626F34 /* Toolbar-Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Settings.png"; path = "Images/Toolbars/Toolbar-Settings.png"; sourceTree = "<group>"; };
 		E070CF8711A08B9600626F34 /* CDXSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXSettingsViewController.h; path = Classes/Controllers/CDXSettingsViewController.h; sourceTree = "<group>"; };
@@ -404,6 +408,15 @@
 			name = Serializers;
 			sourceTree = "<group>";
 		};
+		E0620D5211BAA606006AABD2 /* Notices */ = {
+			isa = PBXGroup;
+			children = (
+				E0620D5311BAA61A006AABD2 /* Notice-Shuffle.png */,
+				E0620D5411BAA61A006AABD2 /* Notice-Sort.png */,
+			);
+			name = Notices;
+			sourceTree = "<group>";
+		};
 		E0C51F87119DAC5F00D75D0E /* Toolbars */ = {
 			isa = PBXGroup;
 			children = (
@@ -424,6 +437,7 @@
 			children = (
 				E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */,
 				E0C51F87119DAC5F00D75D0E /* Toolbars */,
+				E0620D5211BAA606006AABD2 /* Notices */,
 				E0C51F13119DA03000D75D0E /* Default.png */,
 				E0620F8A119E950D00234667 /* StatusBarDefault.png */,
 				E0CCC70C1170DA0A0040D222 /* Icon-Settings.png */,
@@ -551,6 +565,8 @@
 				E0620AEF11BA7F22006AABD2 /* Toolbar-Shuffle.png in Resources */,
 				E0620B3111BA82BC006AABD2 /* Toolbar-Sort.png in Resources */,
 				E0620D0111BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib in Resources */,
+				E0620D5511BAA61A006AABD2 /* Notice-Shuffle.png in Resources */,
+				E0620D5611BAA61A006AABD2 /* Notice-Sort.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -35,6 +35,7 @@
     CDXCardDeck *cardDeck;
     
     IBOutlet UIBarButtonItem *shuffleButton;
+    BOOL viewWasAlreadyVisible;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;

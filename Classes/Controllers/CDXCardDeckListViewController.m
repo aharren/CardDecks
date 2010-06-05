@@ -36,6 +36,7 @@
     if ((self = [super initWithNibName:@"CDXCardDeckListView" bundle:nil titleText:aCardDeckViewContext.cardDeck.name backButtonText:@"Cards"])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
         ivar_assign_and_retain(cardDeck, aCardDeckViewContext.cardDeck);
+        viewWasAlreadyVisible = NO;
     }
     return self;
 }
@@ -67,6 +68,16 @@
         [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:1] atScrollPosition:UITableViewScrollPositionNone animated:NO];
     }
     [self updateShuffleButton];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if ([cardDeck isShuffled]) {
+        if (!viewWasAlreadyVisible) {
+            [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" timeInterval:0.8];
+        }
+    }
+    viewWasAlreadyVisible = YES;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -214,8 +225,10 @@
     [self setEditing:NO animated:YES];
     if ([cardDeck isShuffled]) {
         [cardDeck sort];
+        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" timeInterval:0.8];
     } else {
         [cardDeck shuffle];
+        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" timeInterval:0.8];
     }
     [self updateShuffleButton];
     [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
