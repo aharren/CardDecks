@@ -179,13 +179,14 @@
     [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
     [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
     [viewTableView deselectRowAtIndexPath:path animated:YES];
-    [self setEditing:NO animated:YES];
     [self updateToolbarButtons];
 }
 
 - (IBAction)addButtonPressed {
-    if (![[viewTableView indexPathsForVisibleRows] containsObject:[NSIndexPath indexPathForRow:0 inSection:2]]) {
+    if (![[viewTableView indexPathsForVisibleRows] containsObject:[NSIndexPath indexPathForRow:0 inSection:2]] ||
+        [viewTableView isEditing]) {
         qltrace();
+        [self setEditing:NO animated:YES];
         [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
         [self performSelector:@selector(addButtonPressedDelayed) withObject:nil afterDelay:0.3];
     } else {
