@@ -31,6 +31,7 @@
 @protected
     IBOutlet UITableView *viewTableView;
     IBOutlet UIToolbar *viewToolbar;
+    IBOutlet UIBarButtonItem *editButton;
     
     UIFont *tableCellTextFont;
     UIFont *tableCellTextFontAction;
@@ -52,6 +53,7 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
 
+- (void)updateToolbarButtons;
 - (IBAction)editButtonPressed;
 - (IBAction)bottomButtonPressed;
 

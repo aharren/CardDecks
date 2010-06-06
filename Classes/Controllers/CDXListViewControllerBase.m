@@ -39,6 +39,7 @@
 - (void)dealloc {
     ivar_release_and_clear(viewTableView);
     ivar_release_and_clear(viewToolbar);
+    ivar_release_and_clear(editButton);
     ivar_release_and_clear(tableCellTextFont);
     ivar_release_and_clear(tableCellTextFontAction);
     ivar_release_and_clear(tableCellTextTextColor);
@@ -81,6 +82,7 @@
 - (void)viewDidUnload {
     ivar_release_and_clear(viewTableView);
     ivar_release_and_clear(viewToolbar);
+    ivar_release_and_clear(editButton);
     ivar_release_and_clear(tableCellTextFont);
     ivar_release_and_clear(tableCellTextFontAction);
     ivar_release_and_clear(tableCellTextTextColor);
@@ -97,6 +99,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [viewTableView reloadData];
+    [self updateToolbarButtons];
 }
 
 - (void)setUserInteractionEnabled:(BOOL)enabled {
@@ -167,6 +170,10 @@
     [viewTableView setEditing:editing animated:animated];
     [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (void)updateToolbarButtons {
+    editButton.enabled = ([self tableView:viewTableView numberOfRowsInSection:1] != 0);
 }
 
 - (IBAction)editButtonPressed {

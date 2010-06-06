@@ -157,6 +157,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [cardDecks removeCardDeckAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self updateToolbarButtons];
     }
 }
 
@@ -179,6 +180,7 @@
     [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
     [viewTableView deselectRowAtIndexPath:path animated:YES];
     [self setEditing:NO animated:YES];
+    [self updateToolbarButtons];
 }
 
 - (IBAction)addButtonPressed {

@@ -53,21 +53,12 @@
     [super viewDidUnload];
 }
 
-- (void)updateShuffleButton {
-    if ([cardDeck isShuffled]) {
-        shuffleButton.image = [UIImage imageNamed:@"Toolbar-Sort.png"];
-    } else {
-        shuffleButton.image = [UIImage imageNamed:@"Toolbar-Shuffle.png"];
-    }
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationItem.title = cardDeckViewContext.cardDeck.name;
     if ([viewTableView numberOfRowsInSection:1] != 0) {
         [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:1] atScrollPosition:UITableViewScrollPositionNone animated:NO];
     }
-    [self updateShuffleButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -185,6 +176,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [cardDeck removeCardAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self updateToolbarButtons];
     }
 }
 
@@ -192,6 +184,20 @@
     qltrace();
     [cardDeck moveCardAtIndex:fromIndexPath.row toIndex:toIndexPath.row];
     [viewTableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.2];
+}
+
+- (void)updateShuffleButton {
+    if ([cardDeck isShuffled]) {
+        shuffleButton.image = [UIImage imageNamed:@"Toolbar-Sort.png"];
+    } else {
+        shuffleButton.image = [UIImage imageNamed:@"Toolbar-Shuffle.png"];
+    }
+    shuffleButton.enabled = ([self tableView:viewTableView numberOfRowsInSection:1] != 0);
+}
+
+- (void)updateToolbarButtons {
+    [super updateToolbarButtons];
+    [self updateShuffleButton];
 }
 
 - (IBAction)addButtonPressedDelayed {
@@ -204,6 +210,7 @@
     [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
     [viewTableView deselectRowAtIndexPath:path animated:YES];
     [self setEditing:NO animated:YES];
+    [self updateToolbarButtons];
 }
 
 - (IBAction)addButtonPressed {
