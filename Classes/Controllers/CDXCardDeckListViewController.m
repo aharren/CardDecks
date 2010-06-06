@@ -223,7 +223,6 @@
 }
 
 - (IBAction)shuffleButtonPressed {
-    [self setEditing:NO animated:YES];
     if ([cardDeck isShuffled]) {
         [cardDeck sort];
         [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" timeInterval:0.8];
