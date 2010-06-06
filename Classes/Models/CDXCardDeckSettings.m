@@ -43,8 +43,8 @@ static const CDXSetting settings[] = {
     { CDXCardDeckSettingsGroupSize, CDXSettingTypeEnumeration, @"Grouping" },
     { CDXCardDeckSettingsDeckDisplayStyle, CDXSettingTypeEnumeration, @"Deck Style" },
     { CDXCardDeckSettingsCornerStyle, CDXSettingTypeEnumeration, @"Corner Style" },
-    { CDXCardDeckSettingsPageControl, CDXSettingTypeBoolean, @"Page Display" },
-    { CDXCardDeckSettingsPageJumps, CDXSettingTypeBoolean, @"Page Jumps" },
+    { CDXCardDeckSettingsPageControl, CDXSettingTypeBoolean, @"Index Dots" },
+    { CDXCardDeckSettingsPageJumps, CDXSettingTypeBoolean, @"Index Jumps" },
     { CDXCardDeckSettingsAutoRotate, CDXSettingTypeBoolean, @"Auto Rotate" },
     { CDXCardDeckSettingsShakeShuffle, CDXSettingTypeBoolean, @"Shake Shuffle" },
     { 0, 0, @"" }
