@@ -57,7 +57,7 @@ typedef struct {
 static const CDXCardDeckSettingGroup groups[] = {
     { @"", 1, CDXCardDeckSettingsName },
     { @"Appearance", 4, CDXCardDeckSettingsDeckDisplayStyle },
-    { @"Device Events", 2, CDXCardDeckSettingsAutoRotate },
+    { @"Events", 2, CDXCardDeckSettingsAutoRotate },
     { @"", 0, 0 }
 };
 
