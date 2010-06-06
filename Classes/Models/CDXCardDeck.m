@@ -159,6 +159,9 @@
         }
     }
     [self updateDescription];
+    if ([cards count] == 0) {
+        [self sort];
+    }
 }
 
 - (void)replaceCardAtIndex:(NSUInteger)index withCard:(CDXCard *)card {
