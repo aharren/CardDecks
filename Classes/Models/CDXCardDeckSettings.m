@@ -162,7 +162,7 @@ static const CDXCardDeckSettingGroup groups[] = {
         case CDXCardDeckSettingsDeckDisplayStyle:
             return (NSUInteger)CDXCardDeckDisplayStyleCount;
         case CDXCardDeckSettingsCornerStyle:
-            return CDXCardCornerStyleCount;
+            return (NSUInteger)CDXCardCornerStyleCount;
     }
 }
 
