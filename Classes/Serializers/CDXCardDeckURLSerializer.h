@@ -37,7 +37,7 @@
 //   deck   := <name>[,[<text-color>][,[<background-color>][,[<orientation>]]]]
 //   card   := <text>[,[<text-color>][,[<background-color>][,[<orientation>]]]]
 //
-+ (CDXCardDeck *)cardDeckFromString:(NSString *)string;
++ (CDXCardDeck *)cardDeckFromVersion1String:(NSString *)string;
 
 @end
 

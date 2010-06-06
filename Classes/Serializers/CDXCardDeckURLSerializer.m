@@ -54,7 +54,7 @@
     }
 }
 
-+ (CDXCardDeck *)cardDeckFromString:(NSString *)string {
++ (CDXCardDeck *)cardDeckFromVersion1String:(NSString *)string {
     // string := <deck>[&<card>[&<card>[...]]]
     NSArray *sParts = [string componentsSeparatedByString:@"&"];
     if ([sParts count] == 0) {

@@ -41,7 +41,7 @@
     "card%20deck"
     "&card%201"
     "&card%202";
-    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:string];
+    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
     
     STAssertEqualObjects(deck.name, @"card deck", nil);
     CDXCard *defaults = deck.cardDefaults;
@@ -65,7 +65,7 @@
     "card%20deck,010203,040506"
     "&card%201"
     "&card%202";
-    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:string];
+    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
     
     STAssertEqualObjects(deck.name, @"card deck", nil);
     CDXCard *defaults = deck.cardDefaults;
@@ -89,7 +89,7 @@
     "card%20deck,010203,040506"
     "&card%201,"
     "&card%202,";
-    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:string];
+    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
     
     STAssertEqualObjects(deck.name, @"card deck", nil);
     CDXCard *defaults = deck.cardDefaults;
@@ -113,7 +113,7 @@
     "card%20deck,010203,040506"
     "&card%201,,"
     "&card%202,,";
-    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:string];
+    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
     
     STAssertEqualObjects(deck.name, @"card deck", nil);
     CDXCard *defaults = deck.cardDefaults;
@@ -137,7 +137,7 @@
     "card%20deck,010203,040506"
     "&card%201,bad,color"
     "&card%202,bad,color";
-    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:string];
+    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
     
     STAssertEqualObjects(deck.name, @"card deck", nil);
     CDXCard *defaults = deck.cardDefaults;
@@ -161,7 +161,7 @@
     "card%20deck,331122,000000"
     "&card%201,111214"
     "&card%202,102141";
-    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:string];
+    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
     
     STAssertEqualObjects(deck.name, @"card deck", nil);
     CDXCard *defaults = deck.cardDefaults;
@@ -185,7 +185,7 @@
     "card%20deck,33112244,00000055"
     "&card%201,11121466"
     "&card%202,10214177";
-    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:string];
+    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
     
     STAssertEqualObjects(deck.name, @"card deck", nil);
     CDXCard *defaults = deck.cardDefaults;
@@ -209,7 +209,7 @@
     "card%20deck,331122,000000"
     "&card%201,111214,"
     "&card%202,102141,";
-    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:string];
+    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
     
     STAssertEqualObjects(deck.name, @"card deck", nil);
     CDXCard *defaults = deck.cardDefaults;
@@ -233,7 +233,7 @@
     "card%20deck,010101,112233"
     "&card%201,,88898a"
     "&card%202,,556575";
-    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:string];
+    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
     
     STAssertEqualObjects(deck.name, @"card deck", nil);
     CDXCard *defaults = deck.cardDefaults;
@@ -257,7 +257,7 @@
     "card%20deck,010101,112233"
     "&card%201,,88898a32"
     "&card%202,,55657512";
-    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:string];
+    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
     
     STAssertEqualObjects(deck.name, @"card deck", nil);
     CDXCard *defaults = deck.cardDefaults;
@@ -290,7 +290,7 @@
     "&card%209,050505,090909,l"
     "&card%20a,,,l"
     "&card%20b,,,x";
-    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:string];
+    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
     STAssertEquals([deck cardsCount], (NSUInteger)11, nil);
     
     CDXCard *defaults = deck.cardDefaults;
@@ -322,7 +322,7 @@
     "&card%209,050505,090909,l"
     "&card%20a,,,l"
     "&card%20b,,,x";
-    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromString:string];
+    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
     STAssertEquals([deck cardsCount], (NSUInteger)11, nil);
     
     CDXCard *defaults = deck.cardDefaults;
