@@ -62,7 +62,6 @@ typedef enum {
     
     CDXCardDeckDisplayStyle displayStyle;
     CDXCardCornerStyle cornerStyle;
-    CGFloat fontSize;
 
     BOOL isShuffled;
     NSMutableArray *shuffleIndexes;
@@ -94,7 +93,7 @@ typedef enum {
 
 @property (nonatomic, assign) CDXCardDeckDisplayStyle displayStyle;
 @property (nonatomic, assign) CDXCardCornerStyle cornerStyle;
-@property (nonatomic, assign) CGFloat fontSize;
+- (void)setFontSize:(CGFloat)aFontSize;
 
 @property (nonatomic, readonly) BOOL isShuffled;
 - (void)shuffle;

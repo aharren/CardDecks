@@ -39,7 +39,6 @@
 @synthesize groupSize;
 @synthesize displayStyle;
 @synthesize cornerStyle;
-@synthesize fontSize;
 @synthesize isShuffled;
 
 - (id)init {
@@ -203,7 +202,6 @@
 }
 
 - (void)setFontSize:(CGFloat)aFontSize {
-    fontSize = aFontSize;
     for (CDXCard *card in cards) {
         card.fontSize = aFontSize;
     }
