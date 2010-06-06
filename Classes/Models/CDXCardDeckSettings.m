@@ -28,6 +28,7 @@
 
 enum {
     CDXCardDeckSettingsName,
+    CDXCardDeckSettingsGroupSize,
     CDXCardDeckSettingsDeckDisplayStyle,
     CDXCardDeckSettingsCornerStyle,
     CDXCardDeckSettingsPageControl,
@@ -39,6 +40,7 @@ enum {
 
 static const CDXSetting settings[] = {
     { CDXCardDeckSettingsName, CDXSettingTypeText, @"Name" },
+    { CDXCardDeckSettingsGroupSize, CDXSettingTypeEnumeration, @"Grouping" },
     { CDXCardDeckSettingsDeckDisplayStyle, CDXSettingTypeEnumeration, @"Deck Style" },
     { CDXCardDeckSettingsCornerStyle, CDXSettingTypeEnumeration, @"Corner Style" },
     { CDXCardDeckSettingsPageControl, CDXSettingTypeBoolean, @"Page Display" },
@@ -55,7 +57,7 @@ typedef struct {
 } CDXCardDeckSettingGroup;
 
 static const CDXCardDeckSettingGroup groups[] = {
-    { @"", 1, CDXCardDeckSettingsName },
+    { @"", 2, CDXCardDeckSettingsName },
     { @"Appearance", 4, CDXCardDeckSettingsDeckDisplayStyle },
     { @"Events", 2, CDXCardDeckSettingsAutoRotate },
     { @"", 0, 0 }
@@ -139,6 +141,8 @@ static const CDXCardDeckSettingGroup groups[] = {
             return (NSUInteger)cardDeck.displayStyle;
         case CDXCardDeckSettingsCornerStyle:
             return (NSUInteger)cardDeck.cornerStyle;
+        case CDXCardDeckSettingsGroupSize:
+            return cardDeck.groupSize;
     }
 }
 
@@ -152,6 +156,9 @@ static const CDXCardDeckSettingGroup groups[] = {
         case CDXCardDeckSettingsCornerStyle:
             cardDeck.cornerStyle = value;
             break;
+        case CDXCardDeckSettingsGroupSize:
+            cardDeck.groupSize = value;
+            break;
     }
 }
 
@@ -163,6 +170,8 @@ static const CDXCardDeckSettingGroup groups[] = {
             return (NSUInteger)CDXCardDeckDisplayStyleCount;
         case CDXCardDeckSettingsCornerStyle:
             return (NSUInteger)CDXCardCornerStyleCount;
+        case CDXCardDeckSettingsGroupSize:
+            return (NSUInteger)CDXCardDeckGroupSizeCount;
     }
 }
 
@@ -188,6 +197,15 @@ static const CDXCardDeckSettingGroup groups[] = {
                 case CDXCardCornerStyleCornered:
                     return @"Cornered";
             }
+        case CDXCardDeckSettingsGroupSize: {
+            if (value == CDXCardDeckGroupSizeNoGroups) {
+                return @"Off";
+            } else if (value == 1) {
+                return @"1 Card";
+            } else {
+                return [NSString stringWithFormat:@"%d Cards", value];
+            }
+        }
     }
 }
 

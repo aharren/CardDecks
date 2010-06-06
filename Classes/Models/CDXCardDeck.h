@@ -35,6 +35,14 @@ typedef enum {
 } CDXCardDeckDisplayStyle;
 
 
+typedef enum {
+    CDXCardDeckGroupSizeNoGroups = 0,
+    CDXCardDeckGroupSizeMax = 12,
+    CDXCardDeckGroupSizeCount,
+    CDXCardDeckGroupSizeDefault = 0
+} CDXCardDeckGroupSize;
+
+
 @interface CDXCardDeck : NSObject<NSCopying> {
     
 @protected
@@ -49,6 +57,7 @@ typedef enum {
     BOOL wantsPageJumps;
     BOOL wantsAutoRotate;
     BOOL wantsShakeShuffle;
+    CDXCardDeckGroupSize groupSize;
     
     CDXCardDeckDisplayStyle displayStyle;
     CDXCardCornerStyle cornerStyle;
@@ -79,6 +88,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL wantsPageJumps;
 @property (nonatomic, assign) BOOL wantsAutoRotate;
 @property (nonatomic, assign) BOOL wantsShakeShuffle;
+@property (nonatomic, assign) CDXCardDeckGroupSize groupSize;
 
 @property (nonatomic, assign) CDXCardDeckDisplayStyle displayStyle;
 @property (nonatomic, assign) CDXCardCornerStyle cornerStyle;

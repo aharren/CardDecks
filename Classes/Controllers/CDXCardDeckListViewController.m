@@ -92,6 +92,16 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
+    if (indexPath.section == 1) {
+        NSUInteger groupSize = [cardDeck groupSize];
+        if (groupSize > 0 && (indexPath.row / groupSize) % 2 == 0) {
+            cell.backgroundColor = tableCellBackgroundColorAltGroup;
+        }
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *reuseIdentifierSection1 = @"Section1Cell";
     static NSString *reuseIdentifierSection2 = @"Section2Cell";
@@ -181,6 +191,7 @@
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
     qltrace();
     [cardDeck moveCardAtIndex:fromIndexPath.row toIndex:toIndexPath.row];
+    [viewTableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.2];
 }
 
 - (IBAction)addButtonPressedDelayed {

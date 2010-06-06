@@ -35,6 +35,7 @@
 @synthesize wantsPageJumps;
 @synthesize wantsAutoRotate;
 @synthesize wantsShakeShuffle;
+@synthesize groupSize;
 @synthesize displayStyle;
 @synthesize cornerStyle;
 @synthesize fontSize;
@@ -53,6 +54,7 @@
         wantsPageJumps = YES;
         wantsAutoRotate = YES;
         wantsShakeShuffle = NO;
+        groupSize = CDXCardDeckGroupSizeDefault;
         displayStyle = CDXCardDeckDisplayStyleDefault;
         cornerStyle = CDXCardCornerStyleRounded;
         isShuffled = NO;
@@ -79,6 +81,7 @@
     copy.wantsPageJumps = wantsPageJumps;
     copy.wantsAutoRotate = wantsAutoRotate;
     copy.wantsShakeShuffle = wantsShakeShuffle;
+    copy.groupSize = groupSize;
     copy.displayStyle = displayStyle;
     copy.cornerStyle = cornerStyle;
     for (CDXCard *card in cards) {

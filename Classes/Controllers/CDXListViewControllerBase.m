@@ -48,6 +48,7 @@
     ivar_release_and_clear(tableCellDetailTextFont);
     ivar_release_and_clear(tableCellDetailTextTextColor);
     ivar_release_and_clear(tableCellBackgroundColorAction);
+    ivar_release_and_clear(tableCellBackgroundColorAltGroup);
     ivar_release_and_clear(titleText);
     ivar_release_and_clear(backButtonText);
     [super dealloc];
@@ -73,6 +74,7 @@
     ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:12]);
     ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor lightGrayColor]);
     ivar_assign_and_retain(tableCellBackgroundColorAction, [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1.0]);
+    ivar_assign_and_retain(tableCellBackgroundColorAltGroup, [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1]);
     tableCellImageSize = CGSizeMake(10, 10);
 }
 
@@ -88,6 +90,7 @@
     ivar_release_and_clear(tableCellDetailTextFont);
     ivar_release_and_clear(tableCellDetailTextTextColor);
     ivar_release_and_clear(tableCellBackgroundColorAction);
+    ivar_release_and_clear(tableCellBackgroundColorAltGroup);
     [super viewDidUnload];
 }
 
