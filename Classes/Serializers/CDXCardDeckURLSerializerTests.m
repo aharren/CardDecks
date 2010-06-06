@@ -36,7 +36,7 @@
 
 @implementation CDXCardDeckURLSerializerTests
 
-- (void)testCardDeckFromStringNames {
+- (void)testCardDeckFromVersion1StringNames {
     NSString *string = @""
     "card%20deck"
     "&card%201"
@@ -60,7 +60,7 @@
     STAssertEquals((int)[deck cardAtIndex:1].orientation, (int)CDXCardOrientationUp, nil);
 }
 
-- (void)testCardDeckFromStringDefaultCardColors {
+- (void)testCardDeckFromVersion1StringDefaultCardColors {
     NSString *string = @""
     "card%20deck,010203,040506"
     "&card%201"
@@ -84,7 +84,7 @@
     STAssertEquals((int)[deck cardAtIndex:1].orientation, (int)CDXCardOrientationUp, nil);
 }
 
-- (void)testCardDeckFromStringDefaultCardColorsComma {
+- (void)testCardDeckFromVersion1StringDefaultCardColorsComma {
     NSString *string = @""
     "card%20deck,010203,040506"
     "&card%201,"
@@ -108,7 +108,7 @@
     STAssertEquals((int)[deck cardAtIndex:1].orientation, (int)CDXCardOrientationUp, nil);
 }
 
-- (void)testCardDeckFromStringDefaultCardColorsCommaComma {
+- (void)testCardDeckFromVersion1StringDefaultCardColorsCommaComma {
     NSString *string = @""
     "card%20deck,010203,040506"
     "&card%201,,"
@@ -132,7 +132,7 @@
     STAssertEquals((int)[deck cardAtIndex:1].orientation, (int)CDXCardOrientationUp, nil);
 }
 
-- (void)testCardDeckFromStringBadCardColors {
+- (void)testCardDeckFromVersion1StringBadCardColors {
     NSString *string = @""
     "card%20deck,010203,040506"
     "&card%201,bad,color"
@@ -156,7 +156,7 @@
     STAssertEquals((int)[deck cardAtIndex:1].orientation, (int)CDXCardOrientationUp, nil);
 }
 
-- (void)testCardDeckFromStringDefaultCardBackgroundColorRGB {
+- (void)testCardDeckFromVersion1StringDefaultCardBackgroundColorRGB {
     NSString *string = @""
     "card%20deck,331122,000000"
     "&card%201,111214"
@@ -180,7 +180,7 @@
     STAssertEquals((int)[deck cardAtIndex:1].orientation, (int)CDXCardOrientationUp, nil);
 }
 
-- (void)testCardDeckFromStringDefaultCardBackgroundColorRGBA {
+- (void)testCardDeckFromVersion1StringDefaultCardBackgroundColorRGBA {
     NSString *string = @""
     "card%20deck,33112244,00000055"
     "&card%201,11121466"
@@ -204,7 +204,7 @@
     STAssertEquals((int)[deck cardAtIndex:1].orientation, (int)CDXCardOrientationUp, nil);
 }
 
-- (void)testCardDeckFromStringDefaultCardBackgroundColorRGBComma {
+- (void)testCardDeckFromVersion1StringDefaultCardBackgroundColorRGBComma {
     NSString *string = @""
     "card%20deck,331122,000000"
     "&card%201,111214,"
@@ -228,7 +228,7 @@
     STAssertEquals((int)[deck cardAtIndex:1].orientation, (int)CDXCardOrientationUp, nil);
 }
 
-- (void)testCardDeckFromStringDefaultCardTextColorRGB {
+- (void)testCardDeckFromVersion1StringDefaultCardTextColorRGB {
     NSString *string = @""
     "card%20deck,010101,112233"
     "&card%201,,88898a"
@@ -252,7 +252,7 @@
     STAssertEquals((int)[deck cardAtIndex:1].orientation, (int)CDXCardOrientationUp, nil);
 }
 
-- (void)testCardDeckFromStringDefaultCardTextColorRGBA {
+- (void)testCardDeckFromVersion1StringDefaultCardTextColorRGBA {
     NSString *string = @""
     "card%20deck,010101,112233"
     "&card%201,,88898a32"
@@ -276,7 +276,7 @@
     STAssertEquals((int)[deck cardAtIndex:1].orientation, (int)CDXCardOrientationUp, nil);
 }
 
-- (void)testCardDeckFromStringOrientationNoDefaultOrientation {
+- (void)testCardDeckFromVersion1StringOrientationNoDefaultOrientation {
     NSString *string = @""
     "card%20deck,010203,040506"
     "&card%201"
@@ -308,7 +308,7 @@
     STAssertEquals((int)[deck cardAtIndex:10].orientation, (int)CDXCardOrientationUp, nil);
 }
 
-- (void)testCardDeckFromStringOrientationDefaultOrientationDown {
+- (void)testCardDeckFromVersion1StringOrientationDefaultOrientationDown {
     NSString *string = @""
     "card%20deck,010203,040506,d"
     "&card%201"
