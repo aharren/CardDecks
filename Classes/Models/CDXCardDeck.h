@@ -50,6 +50,7 @@ typedef enum {
 
     NSString *name;
     NSString *description;
+    NSString *file;
     
     NSMutableArray *cards;
     
@@ -71,6 +72,7 @@ typedef enum {
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, readonly) NSString *description;
+@property (nonatomic, copy) NSString *file;
 
 - (NSUInteger)cardsCount;
 

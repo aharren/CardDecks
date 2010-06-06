@@ -123,5 +123,34 @@
     return text;
 }
 
++ (CDXCardOrientation)cardOrientationFromString:(NSString *)string {
+    // valid orientations are 'u', 'r', 'd', and 'l', everything else maps to 'u'
+    string = [string lowercaseString];
+    if ([@"r" isEqualToString:string]) {
+        return CDXCardOrientationRight;
+    } else if ([@"d" isEqualToString:string]) {
+        return CDXCardOrientationDown;
+    } else if ([@"l" isEqualToString:string]) {
+        return CDXCardOrientationLeft;
+    } else {
+        return CDXCardOrientationUp;
+    }
+}
+
++ (NSString *)stringFromCardOrientation:(CDXCardOrientation)cardOrientation {
+    // return orientation: 'u', 'r', 'd', or 'l'
+    switch (cardOrientation) {
+        case CDXCardOrientationUp:
+        default:
+            return @"u";
+        case CDXCardOrientationRight:
+            return @"r";
+        case CDXCardOrientationDown:
+            return @"d";
+        case CDXCardOrientationLeft:
+            return @"l";
+    }
+}
+
 @end
 

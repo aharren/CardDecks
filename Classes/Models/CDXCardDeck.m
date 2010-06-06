@@ -31,6 +31,7 @@
 @synthesize cardDefaults;
 @synthesize name;
 @synthesize description;
+@synthesize file;
 @synthesize wantsPageControl;
 @synthesize wantsPageJumps;
 @synthesize wantsAutoRotate;
@@ -49,6 +50,7 @@
         cardDefaults.backgroundColor = [CDXColor colorBlack];
         ivar_assign_and_copy(name, @"");
         ivar_assign_and_copy(description, @"");
+        file = nil;
         ivar_assign(cards, [[NSMutableArray alloc] init]);
         wantsPageControl = NO;
         wantsPageJumps = YES;
