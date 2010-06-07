@@ -40,6 +40,7 @@
 @synthesize displayStyle;
 @synthesize cornerStyle;
 @synthesize isShuffled;
+@synthesize shuffleIndexes;
 
 - (id)init {
     qltrace();
@@ -49,7 +50,7 @@
         cardDefaults.backgroundColor = [CDXColor colorBlack];
         ivar_assign_and_copy(name, @"");
         ivar_assign_and_copy(description, @"");
-        file = nil;
+        ivar_assign_and_copy(file, @"");
         ivar_assign(cards, [[NSMutableArray alloc] init]);
         wantsPageControl = NO;
         wantsPageJumps = YES;
@@ -206,6 +207,11 @@
         card.fontSize = aFontSize;
     }
     cardDefaults.fontSize = aFontSize;
+}
+
+- (void)setShuffleIndexes:(NSMutableArray *)indexes {
+    ivar_assign(shuffleIndexes, [indexes copy]); // unchecked
+    isShuffled = YES;
 }
 
 - (void)shuffle {

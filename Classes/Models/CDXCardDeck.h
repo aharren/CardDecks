@@ -96,6 +96,7 @@ typedef enum {
 - (void)setFontSize:(CGFloat)aFontSize;
 
 @property (nonatomic, readonly) BOOL isShuffled;
+@property (nonatomic, copy) NSMutableArray *shuffleIndexes;
 - (void)shuffle;
 - (void)sort;
 
