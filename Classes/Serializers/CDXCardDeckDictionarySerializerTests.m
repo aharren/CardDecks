@@ -298,5 +298,27 @@
     STAssertEqualObjects([[deck2 cardAtIndex:2] description], [card3s description], nil);
 }
 
+- (void)testCardDeckFromDictionary {
+    NSDictionary *dictionary;
+    CDXCardDeck *deck;
+    
+    dictionary = [self dictionaryFromFile:@"CDXCardDeckDictionarySerializerTestsDeck1.CardDeck.plist"];
+    deck = [CDXCardDeckDictionarySerializer cardDeckFromDictionary:dictionary];
+    STAssertEqualObjects([deck name], @"Yes, No, Perhaps", nil);
+    
+    dictionary = [self dictionaryFromFile:@"CDXCardDeckDictionarySerializerTestsDeck2.CardDeck.plist"];
+    deck = [CDXCardDeckDictionarySerializer cardDeckFromDictionary:dictionary];
+    STAssertEqualObjects([deck name], @"Deck:Name", nil);
+}
+
+- (void)testDictionaryFromCardDeck {
+    CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
+    deck.name = @"Deck:Name";
+    
+    NSDictionary *dictionary = [CDXCardDeckDictionarySerializer dictionaryFromCardDeck:deck];
+    STAssertEqualObjects([[dictionary valueForKey:@"VERSION"] description], @"2", nil);
+    STAssertEqualObjects([[dictionary valueForKey:@"name"] description], @"Deck:Name", nil);
+}
+
 @end
 

@@ -64,6 +64,18 @@
     }
 }
 
++ (CDXCardDeck *)cardDeckFromDictionary:(NSDictionary *)dictionary {
+    NSUInteger version = [CDXCardDeckDictionarySerializer unsignedIntegerFromDictionary:dictionary forKey:@"VERSION" defaultsTo:1];
+    switch (version) {
+        default:
+            return [CDXCardDeckDictionarySerializer cardDeckFromVersion1Dictionary:dictionary];
+            break;
+        case 2:
+            return [CDXCardDeckDictionarySerializer cardDeckFromVersion2Dictionary:dictionary];
+            break;
+    }
+}
+
 + (CDXCardDeck *)cardDeckFromVersion1Dictionary:(NSDictionary *)dictionary {
     CDXCardDeck *dDeck = [[[CDXCardDeck alloc] init] autorelease];
     dDeck.name = (NSString *)[dictionary objectForKey:@"Name"];
@@ -174,6 +186,10 @@
     return dDeck;
 }
 
++ (NSDictionary *)dictionaryFromCardDeck:(CDXCardDeck *)cardDeck {
+    return [CDXCardDeckDictionarySerializer version2DictionaryFromCardDeck:cardDeck];
+}
+
 + (NSDictionary *)version2DictionaryFromCard:(CDXCard *)card {
     NSMutableDictionary *dictionary = [[[NSMutableDictionary alloc] init] autorelease];
     
@@ -218,6 +234,7 @@
         [dictionary setObject:[[[cardDeck shuffleIndexes] copy] autorelease] forKey:@"shuffleIndexes"];
     }
     
+    [dictionary setObject:[NSNumber numberWithUnsignedInteger:2] forKey:@"VERSION"];
     return dictionary;
 }
 

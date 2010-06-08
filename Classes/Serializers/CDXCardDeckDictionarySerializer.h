@@ -31,10 +31,12 @@
 }
 
 // Deserializes the given dictionary into a CDXCardDeck instance.
++ (CDXCardDeck *)cardDeckFromDictionary:(NSDictionary *)dictionary;
 + (CDXCardDeck *)cardDeckFromVersion1Dictionary:(NSDictionary *)dictionary;
 + (CDXCardDeck *)cardDeckFromVersion2Dictionary:(NSDictionary *)dictionary;
 
 // Serializes the given CDXCardDeck instance into a dictionary.
++ (NSDictionary *)dictionaryFromCardDeck:(CDXCardDeck *)cardDeck;
 + (NSDictionary *)version2DictionaryFromCardDeck:(CDXCardDeck *)cardDeck;
 
 @end

@@ -68,5 +68,7 @@
 	<true/>
 	<key>wantsShakeShuffle</key>
 	<false/>
+	<key>VERSION</key>
+	<integer>2</integer>
 </dict>
 </plist>
