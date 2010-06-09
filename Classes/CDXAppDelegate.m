@@ -79,16 +79,6 @@
         deck.wantsPageControl = YES;
         [decks addCardDeck:deck];
     }
-    {
-        // default card deck
-        CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"New%20Card%20Deck,ffffff,000000"];
-        deck.displayStyle = CDXCardDeckDisplayStyleSwipeStack;
-        deck.wantsPageControl = YES;
-        deck.wantsAutoRotate = NO;
-        deck.wantsShakeShuffle = NO;
-        deck.cornerStyle = CDXCardCornerStyleCornered;
-        decks.cardDeckDefaults = deck;
-    }
     
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
     

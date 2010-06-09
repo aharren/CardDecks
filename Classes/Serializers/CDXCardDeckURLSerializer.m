@@ -74,6 +74,8 @@
         
         dDeck = [[[CDXCardDeck alloc] init] autorelease];
         CDXCard *dCardDefaults = dDeck.cardDefaults;
+        dCardDefaults.backgroundColor = [CDXColor colorBlack];
+        dCardDefaults.textColor = [CDXColor colorWhite];
         
         // <name>
         dDeck.name = [CDXCardDeckURLSerializer stringByReplacingURLEscapes:(NSString *)[sDeckParts objectAtIndex:0]];

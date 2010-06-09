@@ -43,14 +43,15 @@
     qltrace();
     if ((self = [super init])) {
         cardDeck = self;
+        ivar_assign_and_copy(name, @"New Card Deck");
         ivar_assign(cardDefaults, [[CDXCard alloc] init]);
-        cardDefaults.textColor = [CDXColor colorWhite];
-        cardDefaults.backgroundColor = [CDXColor colorBlack];
+        cardDefaults.textColor = [CDXColor colorBlack];
+        cardDefaults.backgroundColor = [CDXColor colorWhite];
         ivar_assign(cards, [[NSMutableArray alloc] init]);
-        wantsPageControl = NO;
+        wantsPageControl = YES;
         wantsPageJumps = YES;
         wantsAutoRotate = YES;
-        wantsShakeShuffle = NO;
+        wantsShakeShuffle = YES;
         groupSize = CDXCardDeckGroupSizeDefault;
         displayStyle = CDXCardDeckDisplayStyleDefault;
         cornerStyle = CDXCardCornerStyleRounded;
