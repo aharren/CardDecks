@@ -97,6 +97,8 @@
 		E0F7A50A11B158DA00CD786B /* CDXKeyboardExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */; };
 		E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */; };
 		E0F7A71A11B17B3700CD786B /* Toolbar-Bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A71911B17B3700CD786B /* Toolbar-Bottom.png */; };
+		E0FAC00B11C024CD00CDA558 /* CDXDictionarySerializerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FAC00A11C024CD00CDA558 /* CDXDictionarySerializerUtils.m */; };
+		E0FAC00C11C024CD00CDA558 /* CDXDictionarySerializerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FAC00A11C024CD00CDA558 /* CDXDictionarySerializerUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -231,6 +233,8 @@
 		E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXKeyboardExtensions.m; path = Classes/Keyboards/CDXKeyboardExtensions.m; sourceTree = "<group>"; };
 		E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = KeyboardExtensionsBackground.png; path = Images/KeyboardExtensionsBackground.png; sourceTree = "<group>"; };
 		E0F7A71911B17B3700CD786B /* Toolbar-Bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Bottom.png"; path = "Images/Toolbars/Toolbar-Bottom.png"; sourceTree = "<group>"; };
+		E0FAC00911C024CD00CDA558 /* CDXDictionarySerializerUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXDictionarySerializerUtils.h; path = Classes/Serializers/CDXDictionarySerializerUtils.h; sourceTree = "<group>"; };
+		E0FAC00A11C024CD00CDA558 /* CDXDictionarySerializerUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXDictionarySerializerUtils.m; path = Classes/Serializers/CDXDictionarySerializerUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -419,6 +423,8 @@
 		E041E3921169FD5D009DC453 /* Serializers */ = {
 			isa = PBXGroup;
 			children = (
+				E0FAC00911C024CD00CDA558 /* CDXDictionarySerializerUtils.h */,
+				E0FAC00A11C024CD00CDA558 /* CDXDictionarySerializerUtils.m */,
 				E0260A3411BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.h */,
 				E0260A3511BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m */,
 				E0260A3811BC02F800FCAB34 /* CDXCardDeckDictionarySerializerTests.m */,
@@ -660,6 +666,7 @@
 				E0620CF611BA9EA3006AABD2 /* CDXAppWindowNoticeView.m in Sources */,
 				E0260A3611BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m in Sources */,
 				E0743BCB11C023BE00B40ED4 /* CDXCardDeckBase.m in Sources */,
+				E0FAC00C11C024CD00CDA558 /* CDXDictionarySerializerUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -684,6 +691,7 @@
 				E0260A3711BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m in Sources */,
 				E0260A3A11BC02F800FCAB34 /* CDXCardDeckDictionarySerializerTests.m in Sources */,
 				E0743BCA11C023BE00B40ED4 /* CDXCardDeckBase.m in Sources */,
+				E0FAC00B11C024CD00CDA558 /* CDXDictionarySerializerUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

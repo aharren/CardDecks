@@ -24,48 +24,13 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeckDictionarySerializer.h"
+#import "CDXDictionarySerializerUtils.h"
 
 
 @implementation CDXCardDeckDictionarySerializer
 
-+ (NSString *)stringFromDictionary:(NSDictionary *)dictionary forKey:(NSString *)key defaultsTo:(NSString *)defaultValue {
-    NSObject *object = [dictionary objectForKey:key];
-    if (object == nil || ![object isKindOfClass:[NSString class]]) {
-        return defaultValue;
-    } else {
-        return (NSString *)object;
-    }
-}
-
-+ (BOOL)boolFromDictionary:(NSDictionary *)dictionary forKey:(NSString *)key defaultsTo:(BOOL)defaultValue {
-    NSObject *object = [dictionary objectForKey:key];
-    if (object == nil || ![object isKindOfClass:[NSNumber class]]) {
-        return defaultValue;
-    } else {
-        return [(NSNumber *)object boolValue] ? YES : NO;
-    }
-}
-
-+ (NSUInteger)unsignedIntegerFromDictionary:(NSDictionary *)dictionary forKey:(NSString *)key defaultsTo:(NSUInteger)defaultValue {
-    NSObject *object = [dictionary objectForKey:key];
-    if (object == nil || ![object isKindOfClass:[NSNumber class]]) {
-        return defaultValue;
-    } else {
-        return [(NSNumber *)object unsignedIntegerValue];
-    }
-}
-
-+ (NSDictionary *)dictionaryFromDictionary:(NSDictionary *)dictionary forKey:(NSString *)key defaultsTo:(NSDictionary *)defaultValue {
-    NSObject *object = [dictionary objectForKey:key];
-    if (object == nil || ![object isKindOfClass:[NSDictionary class]]) {
-        return defaultValue;
-    } else {
-        return (NSDictionary *)object;
-    }
-}
-
 + (CDXCardDeck *)cardDeckFromDictionary:(NSDictionary *)dictionary {
-    NSUInteger version = [CDXCardDeckDictionarySerializer unsignedIntegerFromDictionary:dictionary forKey:@"VERSION" defaultsTo:1];
+    NSUInteger version = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"VERSION" defaultsTo:1];
     switch (version) {
         default:
             return [CDXCardDeckDictionarySerializer cardDeckFromVersion1Dictionary:dictionary];
@@ -131,18 +96,18 @@
 + (CDXCard *)cardFromVersion2Dictionary:(NSDictionary *)dictionary cardDeck:(CDXCardDeck*)cardDeck {
     CDXCard *card = [cardDeck cardWithDefaults];
     
-    card.text = [CDXCardDeckDictionarySerializer stringFromDictionary:dictionary forKey:@"text" defaultsTo:@""];
-    NSString *textColor = [CDXCardDeckDictionarySerializer stringFromDictionary:dictionary forKey:@"textColor" defaultsTo:nil];
+    card.text = [CDXDictionarySerializerUtils stringFromDictionary:dictionary forKey:@"text" defaultsTo:@""];
+    NSString *textColor = [CDXDictionarySerializerUtils stringFromDictionary:dictionary forKey:@"textColor" defaultsTo:nil];
     if (textColor != nil) {
         card.textColor = [CDXColor colorWithRGBAString:textColor defaulsTo:card.textColor];
     }
-    NSString *backgroundColor = [CDXCardDeckDictionarySerializer stringFromDictionary:dictionary forKey:@"backgroundColor" defaultsTo:nil];
+    NSString *backgroundColor = [CDXDictionarySerializerUtils stringFromDictionary:dictionary forKey:@"backgroundColor" defaultsTo:nil];
     if (textColor != nil) {
         card.backgroundColor = [CDXColor colorWithRGBAString:backgroundColor defaulsTo:card.backgroundColor];
     }
-    card.orientation = [CDXCardDeckDictionarySerializer unsignedIntegerFromDictionary:dictionary forKey:@"orientation" defaultsTo:card.orientation]; 
-    card.cornerStyle = [CDXCardDeckDictionarySerializer unsignedIntegerFromDictionary:dictionary forKey:@"cornerStyle" defaultsTo:card.cornerStyle]; 
-    card.fontSize = (CGFloat)[CDXCardDeckDictionarySerializer unsignedIntegerFromDictionary:dictionary forKey:@"fontSize" defaultsTo:(NSUInteger)card.fontSize]; 
+    card.orientation = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"orientation" defaultsTo:card.orientation];
+    card.cornerStyle = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"cornerStyle" defaultsTo:card.cornerStyle];
+    card.fontSize = (CGFloat)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"fontSize" defaultsTo:(NSUInteger)card.fontSize];
     
     return card;
 }
@@ -150,23 +115,23 @@
 + (CDXCardDeck *)cardDeckFromVersion2Dictionary:(NSDictionary *)dictionary {
     CDXCardDeck *dDeck = [[[CDXCardDeck alloc] init] autorelease];
     
-    NSDictionary *cardDefaultsDictionary = [CDXCardDeckDictionarySerializer dictionaryFromDictionary:dictionary forKey:@"cardDefaults" defaultsTo:nil];
+    NSDictionary *cardDefaultsDictionary = [CDXDictionarySerializerUtils dictionaryFromDictionary:dictionary forKey:@"cardDefaults" defaultsTo:nil];
     if (cardDefaultsDictionary != nil) {
         CDXCard *dCardDefaults = [CDXCardDeckDictionarySerializer cardFromVersion2Dictionary:cardDefaultsDictionary cardDeck:dDeck];
         dDeck.cardDefaults = dCardDefaults;
     }
     
-    dDeck.name = [CDXCardDeckDictionarySerializer stringFromDictionary:dictionary forKey:@"name" defaultsTo:@""];
-    dDeck.file = [CDXCardDeckDictionarySerializer stringFromDictionary:dictionary forKey:@"file" defaultsTo:nil];
+    dDeck.name = [CDXDictionarySerializerUtils stringFromDictionary:dictionary forKey:@"name" defaultsTo:@""];
+    dDeck.file = [CDXDictionarySerializerUtils stringFromDictionary:dictionary forKey:@"file" defaultsTo:nil];
     
-    dDeck.wantsPageControl = [CDXCardDeckDictionarySerializer boolFromDictionary:dictionary forKey:@"wantsPageControl" defaultsTo:dDeck.wantsPageControl];
-    dDeck.wantsPageJumps = [CDXCardDeckDictionarySerializer boolFromDictionary:dictionary forKey:@"wantsPageJumps" defaultsTo:dDeck.wantsPageJumps];
-    dDeck.wantsAutoRotate = [CDXCardDeckDictionarySerializer boolFromDictionary:dictionary forKey:@"wantsAutoRotate" defaultsTo:dDeck.wantsAutoRotate];
-    dDeck.wantsShakeShuffle = [CDXCardDeckDictionarySerializer boolFromDictionary:dictionary forKey:@"wantsShakeShuffle" defaultsTo:dDeck.wantsShakeShuffle];
+    dDeck.wantsPageControl = [CDXDictionarySerializerUtils boolFromDictionary:dictionary forKey:@"wantsPageControl" defaultsTo:dDeck.wantsPageControl];
+    dDeck.wantsPageJumps = [CDXDictionarySerializerUtils boolFromDictionary:dictionary forKey:@"wantsPageJumps" defaultsTo:dDeck.wantsPageJumps];
+    dDeck.wantsAutoRotate = [CDXDictionarySerializerUtils boolFromDictionary:dictionary forKey:@"wantsAutoRotate" defaultsTo:dDeck.wantsAutoRotate];
+    dDeck.wantsShakeShuffle = [CDXDictionarySerializerUtils boolFromDictionary:dictionary forKey:@"wantsShakeShuffle" defaultsTo:dDeck.wantsShakeShuffle];
     
-    dDeck.groupSize = [CDXCardDeckDictionarySerializer unsignedIntegerFromDictionary:dictionary forKey:@"groupSize" defaultsTo:dDeck.groupSize]; 
-    dDeck.displayStyle = [CDXCardDeckDictionarySerializer unsignedIntegerFromDictionary:dictionary forKey:@"displayStyle" defaultsTo:dDeck.displayStyle]; 
-    dDeck.cornerStyle = [CDXCardDeckDictionarySerializer unsignedIntegerFromDictionary:dictionary forKey:@"cornerStyle" defaultsTo:dDeck.cornerStyle]; 
+    dDeck.groupSize = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"groupSize" defaultsTo:dDeck.groupSize];
+    dDeck.displayStyle = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"displayStyle" defaultsTo:dDeck.displayStyle];
+    dDeck.cornerStyle = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"cornerStyle" defaultsTo:dDeck.cornerStyle];
     
     NSArray *cardDictionaries = (NSArray *)[dictionary objectForKey:@"cards"];
     for (NSDictionary *cardDictionary in cardDictionaries) {
