@@ -29,9 +29,6 @@
 @implementation CDXCardDeck
 
 @synthesize cardDefaults;
-@synthesize name;
-@synthesize description;
-@synthesize file;
 @synthesize wantsPageControl;
 @synthesize wantsPageJumps;
 @synthesize wantsAutoRotate;
@@ -45,12 +42,10 @@
 - (id)init {
     qltrace();
     if ((self = [super init])) {
+        cardDeck = self;
         ivar_assign(cardDefaults, [[CDXCard alloc] init]);
         cardDefaults.textColor = [CDXColor colorWhite];
         cardDefaults.backgroundColor = [CDXColor colorBlack];
-        ivar_assign_and_copy(name, @"");
-        ivar_assign_and_copy(description, @"");
-        ivar_assign_and_copy(file, @"");
         ivar_assign(cards, [[NSMutableArray alloc] init]);
         wantsPageControl = NO;
         wantsPageJumps = YES;
@@ -68,8 +63,6 @@
 - (void)dealloc {
     qltrace();
     ivar_release_and_clear(cardDefaults);
-    ivar_release_and_clear(name);
-    ivar_release_and_clear(description);
     ivar_release_and_clear(cards);
     ivar_release_and_clear(shuffleIndexes);
     [super dealloc];
@@ -100,7 +93,8 @@
     }
 }
 
-- (void)updateDescription {
+- (void)updateFields {
+    // description
     NSMutableString *d = [[[NSMutableString alloc] initWithCapacity:100] autorelease];
     BOOL first = YES;
     for (CDXCard *card in cards) {
@@ -114,10 +108,16 @@
         }
     }
     ivar_assign_and_copy(description, d);
-}
-
-- (NSUInteger)cardsCount {
-    return [cards count];
+    
+    // cardsCount
+    cardsCount = [cards count];
+    
+    // thumbnailColor
+    if (cardsCount != 0) {
+        ivar_assign_and_retain(thumbnailColor, ((CDXCard *)[cards objectAtIndex:0]).backgroundColor);
+    } else {
+        ivar_release_and_clear(thumbnailColor);
+    }
 }
 
 - (CDXCard *)cardAtCardsIndex:(NSUInteger)cardsIndex {
@@ -144,7 +144,7 @@
         NSUInteger cardsIndex = [cards count]-1;
         [shuffleIndexes addObject:[NSNumber numberWithUnsignedInteger:cardsIndex]];
     }
-    [self updateDescription];
+    [self updateFields];
 }
 
 - (void)removeCardAtIndex:(NSUInteger)index {
@@ -160,7 +160,7 @@
             }
         }
     }
-    [self updateDescription];
+    [self updateFields];
     if ([cards count] == 0) {
         [self sort];
     }
@@ -172,7 +172,7 @@
     [cards removeObjectAtIndex:cardsIndex];
     [cards insertObject:card atIndex:cardsIndex];
     [card release];
-    [self updateDescription];
+    [self updateFields];
 }
 
 - (void)moveCardAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex {
@@ -186,7 +186,7 @@
         [cards removeObjectAtIndex:fromIndex];
         [cards insertObject:card atIndex:toIndex];
         [card release];
-        [self updateDescription];
+        [self updateFields];
     }
 }
 

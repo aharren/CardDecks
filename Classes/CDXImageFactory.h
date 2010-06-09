@@ -38,7 +38,8 @@ declare_singleton(sharedImageFactory, CDXImageFactory);
 - (UIImage *)imageForView:(UIView *)view size:(CGSize)size;
 
 - (UIImage *)imageForCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation;
-- (UIImage *)imageForThumbnailCard:(CDXCard *)card size:(CGSize)size;
+
+- (UIImage *)imageForColor:(CDXColor *)color size:(CGSize)size;
 
 - (UIImage *)imageForScreen;
 

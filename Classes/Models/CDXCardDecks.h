@@ -37,9 +37,9 @@
 @property (nonatomic, retain) CDXCardDeck *cardDeckDefaults;
 
 - (NSUInteger)cardDecksCount;
-- (CDXCardDeck *)cardDeckAtIndex:(NSUInteger)index;
-- (void)addCardDeck:(CDXCardDeck *)cardDeck;
-- (void)insertCardDeck:(CDXCardDeck *)cardDeck atIndex:(NSUInteger)index;
+- (CDXCardDeckBase *)cardDeckAtIndex:(NSUInteger)index;
+- (void)addCardDeck:(CDXCardDeckBase *)cardDeck;
+- (void)insertCardDeck:(CDXCardDeckBase *)cardDeck atIndex:(NSUInteger)index;
 - (void)removeCardDeckAtIndex:(NSUInteger)index;
 
 - (CDXCardDeck *)cardDeckWithDefaults;

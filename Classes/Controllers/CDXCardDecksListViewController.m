@@ -75,13 +75,13 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             }
             
-            CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
+            CDXCardDeckBase *deck = [cardDecks cardDeckAtIndex:indexPath.row];
             NSString *name = deck.name;
             if ([@"" isEqualToString:name]) {
                 name = @" ";
             }
             cell.textLabel.text = name;
-            cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForThumbnailCard:[deck cardAtIndex:0 orCard:nil] size:tableCellImageSize];
+            cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForColor:deck.thumbnailColor size:tableCellImageSize];
             
             if ([deck cardsCount] == 0) {
                 cell.textLabel.textColor = tableCellTextTextColorNoCards;
@@ -132,12 +132,7 @@
             break;
         }
         case 1: {
-            CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row];
-            if ([deck cardsCount] == 0) {
-                [self pushCardDeckListViewControllerWithCardDeck:deck];
-                return;
-            }
-            
+            CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row].cardDeck;
             [self pushCardDeckListViewControllerWithCardDeck:deck];
             break;
         }
@@ -163,7 +158,7 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
     qltrace();
-    CDXCardDeck *deck = [cardDecks cardDeckAtIndex:fromIndexPath.row];
+    CDXCardDeckBase *deck = [cardDecks cardDeckAtIndex:fromIndexPath.row];
     [deck retain];
     [cardDecks removeCardDeckAtIndex:fromIndexPath.row];
     [cardDecks insertCardDeck:deck atIndex:toIndexPath.row];

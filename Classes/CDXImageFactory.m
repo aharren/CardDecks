@@ -58,12 +58,32 @@ static CGImageRef CDXImageFactoryCreateScreenImage(void) {
     return [self imageForView:cardView size:size];
 }
 
-- (UIImage *)imageForThumbnailCard:(CDXCard *)card size:(CGSize)size {
-    if (!cardView) {
-        [self initCardView];
+- (UIImage *)imageForColor:(CDXColor *)color size:(CGSize)size {
+    UIGraphicsBeginImageContext(size);
+    CGContextRef cgContext = UIGraphicsGetCurrentContext();
+    // background
+    if (color != nil) {
+        CGContextSetFillColorWithColor(cgContext, [[color uiColor] CGColor]);
+    } else {
+        CGContextSetFillColorWithColor(cgContext, [[UIColor whiteColor] CGColor]);
     }
-    [cardView initWithThumbnailCard:card size:(CGSize)size];
-    return [self imageForView:cardView size:size];
+    CGContextFillRect(cgContext, CGRectMake(0, 0, size.width, size.height));
+    // border
+    CGContextSetStrokeColorWithColor(cgContext, [[UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:0.3] CGColor]);
+    CGPoint cgPoints[] = {
+        CGPointMake(0, 0),
+        CGPointMake(size.width, 0),
+        CGPointMake(size.width, 1),
+        CGPointMake(size.width, size.height-1),
+        CGPointMake(size.width, size.height),
+        CGPointMake(0, size.height),
+        CGPointMake(0, size.height-1),
+        CGPointMake(0, 1),
+    };
+    CGContextStrokeLineSegments(cgContext, cgPoints, 8);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 
 - (UIImage *)imageForScreen {

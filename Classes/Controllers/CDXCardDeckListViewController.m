@@ -113,7 +113,7 @@
             
             CDXCard *card = [cardDeck cardAtIndex:indexPath.row];
             cell.textLabel.text = card.text;
-            cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForThumbnailCard:card size:tableCellImageSize];
+            cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForColor:card.backgroundColor size:tableCellImageSize];
             return cell;
         }
         case 2: {

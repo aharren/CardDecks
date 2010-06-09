@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDecks.m
+// CDXCardDeckBase.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,53 +23,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXCardDecks.h"
+#import "CDXColor.h"
 
 
-@implementation CDXCardDecks
+@class CDXCardDeck;
 
-@synthesize cardDeckDefaults;
 
-- (id)init {
-    if ((self = [super init])) {
-        ivar_assign(cardDeckDefaults, [[CDXCardDeck alloc] init]);
-        ivar_assign(cardDecks, [[NSMutableArray alloc] init]);
-    }
-    return self;
+@interface CDXCardDeckBase : NSObject {
+    
+@protected
+    CDXCardDeck *cardDeck;
+    
+    NSString *name;
+    NSString *description;
+    
+    NSString *file;
+    
+    CDXColor *thumbnailColor;
+    NSUInteger cardsCount;
 }
 
-- (void)dealloc {
-    ivar_release_and_clear(cardDecks);
-    [super dealloc];
-}
+@property (nonatomic, readonly) CDXCardDeck *cardDeck;
 
-- (NSUInteger)cardDecksCount {
-    return [cardDecks count];
-}
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, readonly) NSString *description;
+@property (nonatomic, copy) NSString *file;
 
-- (CDXCardDeckBase *)cardDeckAtIndex:(NSUInteger)index {
-    return (CDXCardDeckBase *)[cardDecks objectAtIndex:index];
-}
-
-- (void)addCardDeck:(CDXCardDeckBase *)cardDeck {
-    [cardDecks addObject:cardDeck];
-}
-
-- (void)insertCardDeck:(CDXCardDeckBase *)cardDeck atIndex:(NSUInteger)index {
-    if (index >= [cardDecks count]) {
-        [cardDecks addObject:cardDeck];
-    } else {
-        [cardDecks insertObject:cardDeck atIndex:index];
-    }
-}
-
-- (void)removeCardDeckAtIndex:(NSUInteger)index {
-    [cardDecks removeObjectAtIndex:index];
-}
-
-- (CDXCardDeck *)cardDeckWithDefaults {
-    return [[cardDeckDefaults copy] autorelease];
-}
+@property (nonatomic, readonly) CDXColor *thumbnailColor;
+- (NSUInteger)cardsCount;
 
 @end
 

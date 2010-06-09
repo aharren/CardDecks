@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCard.h"
+#import "CDXCardDeckBase.h"
 
 
 typedef enum {
@@ -43,15 +44,11 @@ typedef enum {
 } CDXCardDeckGroupSize;
 
 
-@interface CDXCardDeck : NSObject<NSCopying> {
+@interface CDXCardDeck : CDXCardDeckBase<NSCopying> {
     
 @protected
     CDXCard *cardDefaults;
 
-    NSString *name;
-    NSString *description;
-    NSString *file;
-    
     NSMutableArray *cards;
     
     BOOL wantsPageControl;
@@ -68,12 +65,6 @@ typedef enum {
 }
 
 @property (nonatomic, retain) CDXCard *cardDefaults;
-
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, readonly) NSString *description;
-@property (nonatomic, copy) NSString *file;
-
-- (NSUInteger)cardsCount;
 
 - (NSUInteger)cardsIndex:(NSUInteger)index;
 - (CDXCard *)cardAtCardsIndex:(NSUInteger)cardsIndex;

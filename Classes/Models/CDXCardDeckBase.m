@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDecks.m
+// CDXCardDeckBase.m
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,52 +23,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXCardDecks.h"
+#import "CDXCardDeckBase.h"
+#import "CDXCardDeckDictionarySerializer.h"
 
 
-@implementation CDXCardDecks
+@implementation CDXCardDeckBase
 
-@synthesize cardDeckDefaults;
+@synthesize name;
+@synthesize description;
+@synthesize file;
+@synthesize thumbnailColor;
+@synthesize cardDeck;
 
 - (id)init {
+    qltrace();
     if ((self = [super init])) {
-        ivar_assign(cardDeckDefaults, [[CDXCardDeck alloc] init]);
-        ivar_assign(cardDecks, [[NSMutableArray alloc] init]);
+        ivar_assign_and_copy(name, @"");
+        ivar_assign_and_copy(description, @"");
+        ivar_assign_and_copy(file, @"");
     }
     return self;
 }
 
 - (void)dealloc {
-    ivar_release_and_clear(cardDecks);
+    qltrace();
+    ivar_release_and_clear(name);
+    ivar_release_and_clear(description);
+    ivar_release_and_clear(file);
+    ivar_release_and_clear(thumbnailColor);
+    cardDeck = nil;
     [super dealloc];
 }
 
-- (NSUInteger)cardDecksCount {
-    return [cardDecks count];
+- (NSUInteger)cardsCount {
+    return cardsCount;
 }
 
-- (CDXCardDeckBase *)cardDeckAtIndex:(NSUInteger)index {
-    return (CDXCardDeckBase *)[cardDecks objectAtIndex:index];
-}
-
-- (void)addCardDeck:(CDXCardDeckBase *)cardDeck {
-    [cardDecks addObject:cardDeck];
-}
-
-- (void)insertCardDeck:(CDXCardDeckBase *)cardDeck atIndex:(NSUInteger)index {
-    if (index >= [cardDecks count]) {
-        [cardDecks addObject:cardDeck];
-    } else {
-        [cardDecks insertObject:cardDeck atIndex:index];
-    }
-}
-
-- (void)removeCardDeckAtIndex:(NSUInteger)index {
-    [cardDecks removeObjectAtIndex:index];
-}
-
-- (CDXCardDeck *)cardDeckWithDefaults {
-    return [[cardDeckDefaults copy] autorelease];
+- (CDXCardDeck *)cardDeck {
+    return cardDeck;
 }
 
 @end

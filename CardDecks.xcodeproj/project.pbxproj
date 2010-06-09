@@ -52,6 +52,8 @@
 		E070CF5B119FF13800626F34 /* Toolbar-Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = E070CF5A119FF13800626F34 /* Toolbar-Settings.png */; };
 		E070CF8911A08B9600626F34 /* CDXSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E070CF8811A08B9600626F34 /* CDXSettingsViewController.m */; };
 		E070CFA911A08D4400626F34 /* CDXCardDeckSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E070CFA811A08D4400626F34 /* CDXCardDeckSettings.m */; };
+		E0743BCA11C023BE00B40ED4 /* CDXCardDeckBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E0743BC911C023BE00B40ED4 /* CDXCardDeckBase.m */; };
+		E0743BCB11C023BE00B40ED4 /* CDXCardDeckBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E0743BC911C023BE00B40ED4 /* CDXCardDeckBase.m */; };
 		E07CDED311BC1D4C008D7E8F /* CDXCardDeckDictionarySerializerTestsDeck2.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E07CDED211BC1D4C008D7E8F /* CDXCardDeckDictionarySerializerTestsDeck2.CardDeck.plist */; };
 		E07CDF0F11BC2146008D7E8F /* CDXCardDeckDictionarySerializerTestsDeck3.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E07CDF0E11BC2146008D7E8F /* CDXCardDeckDictionarySerializerTestsDeck3.CardDeck.plist */; };
 		E0805B4B11A85C6600199172 /* CDXCardDeckViewContext.m in Sources */ = {isa = PBXBuildFile; fileRef = E0805B4A11A85C6600199172 /* CDXCardDeckViewContext.m */; };
@@ -168,6 +170,8 @@
 		E070CF8811A08B9600626F34 /* CDXSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXSettingsViewController.m; path = Classes/Controllers/CDXSettingsViewController.m; sourceTree = "<group>"; };
 		E070CFA711A08D4400626F34 /* CDXCardDeckSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckSettings.h; path = Classes/Models/CDXCardDeckSettings.h; sourceTree = "<group>"; };
 		E070CFA811A08D4400626F34 /* CDXCardDeckSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckSettings.m; path = Classes/Models/CDXCardDeckSettings.m; sourceTree = "<group>"; };
+		E0743BC811C023BE00B40ED4 /* CDXCardDeckBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckBase.h; path = Classes/Models/CDXCardDeckBase.h; sourceTree = "<group>"; };
+		E0743BC911C023BE00B40ED4 /* CDXCardDeckBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckBase.m; path = Classes/Models/CDXCardDeckBase.m; sourceTree = "<group>"; };
 		E07CDED211BC1D4C008D7E8F /* CDXCardDeckDictionarySerializerTestsDeck2.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = CDXCardDeckDictionarySerializerTestsDeck2.CardDeck.plist; path = Classes/Serializers/CDXCardDeckDictionarySerializerTestsDeck2.CardDeck.plist; sourceTree = "<group>"; };
 		E07CDF0E11BC2146008D7E8F /* CDXCardDeckDictionarySerializerTestsDeck3.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = CDXCardDeckDictionarySerializerTestsDeck3.CardDeck.plist; path = Classes/Serializers/CDXCardDeckDictionarySerializerTestsDeck3.CardDeck.plist; sourceTree = "<group>"; };
 		E0805B4911A85C6600199172 /* CDXCardDeckViewContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckViewContext.h; path = Classes/Models/CDXCardDeckViewContext.h; sourceTree = "<group>"; };
@@ -282,6 +286,8 @@
 				E002B6D21168858C0072C409 /* CDXCard.h */,
 				E002B6D31168858C0072C409 /* CDXCard.m */,
 				E002B6DE11688B5F0072C409 /* CDXCardTests.m */,
+				E0743BC811C023BE00B40ED4 /* CDXCardDeckBase.h */,
+				E0743BC911C023BE00B40ED4 /* CDXCardDeckBase.m */,
 				E002B6FF1168942F0072C409 /* CDXCardDeck.h */,
 				E002B7001168942F0072C409 /* CDXCardDeck.m */,
 				E002B703116894980072C409 /* CDXCardDeckTests.m */,
@@ -653,6 +659,7 @@
 				E09AC7E611B7F60D00C96E25 /* CDXTextKeyboardExtension.m in Sources */,
 				E0620CF611BA9EA3006AABD2 /* CDXAppWindowNoticeView.m in Sources */,
 				E0260A3611BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m in Sources */,
+				E0743BCB11C023BE00B40ED4 /* CDXCardDeckBase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,6 +683,7 @@
 				E0F2B34611955B730092D11B /* lcl.m in Sources */,
 				E0260A3711BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m in Sources */,
 				E0260A3A11BC02F800FCAB34 /* CDXCardDeckDictionarySerializerTests.m in Sources */,
+				E0743BCA11C023BE00B40ED4 /* CDXCardDeckBase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
