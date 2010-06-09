@@ -191,7 +191,7 @@
 
 - (IBAction)defaultsButtonPressed {
     qltrace();
-    [self pushCardDeckListViewControllerWithCardDeck:cardDecks.cardDeckDefaults];
+    [self pushCardDeckListViewControllerWithCardDeck:cardDecks.cardDeckDefaults.cardDeck];
 }
 
 - (IBAction)settingsButtonPressed {

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>VERSION</key>
+	<integer>2</integer>
+	<key>cardDeckDefaults</key>
+	<dict>
+		<key>cardsCount</key>
+		<integer>0</integer>
+		<key>description</key>
+		<string></string>
+		<key>file</key>
+		<string></string>
+		<key>name</key>
+		<string>*NEW CARD DECK*</string>
+	</dict>
+	<key>cardDecks</key>
+	<array>
+		<dict>
+			<key>cardsCount</key>
+			<integer>11</integer>
+			<key>description</key>
+			<string>0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10</string>
+			<key>file</key>
+			<string>File1</string>
+			<key>name</key>
+			<string>0, ..., 10</string>
+		</dict>
+		<dict>
+			<key>cardsCount</key>
+			<integer>8</integer>
+			<key>description</key>
+			<string>0, 1, 2, 4, 8, 16, 32, 64</string>
+			<key>file</key>
+			<string>File2</string>
+			<key>name</key>
+			<string>Estimation 1</string>
+			<key>thumbnailColor</key>
+			<string>f0f0f0ff</string>
+		</dict>
+		<dict>
+			<key>cardsCount</key>
+			<integer>7</integer>
+			<key>description</key>
+			<string>XXS, XS, S, M, L, XL, XXL</string>
+			<key>file</key>
+			<string>File3</string>
+			<key>name</key>
+			<string>Estimation 2</string>
+			<key>thumbnailColor</key>
+			<string>ffffffff</string>
+		</dict>
+	</array>
+</dict>
+</plist>

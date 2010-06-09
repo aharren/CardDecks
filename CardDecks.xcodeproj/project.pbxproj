@@ -103,6 +103,7 @@
 		E0FAC02B11C026A900CDA558 /* CDXCardDecksDictionarySerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FAC02A11C026A900CDA558 /* CDXCardDecksDictionarySerializer.m */; };
 		E0FAC02C11C026A900CDA558 /* CDXCardDecksDictionarySerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FAC02A11C026A900CDA558 /* CDXCardDecksDictionarySerializer.m */; };
 		E0FAC03011C0279E00CDA558 /* CDXCardDecksDictionarySerializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FAC02F11C0279E00CDA558 /* CDXCardDecksDictionarySerializerTests.m */; };
+		E0FAC0B611C0303600CDA558 /* CDXCardDecksDictionarySerializerTestsDecks2.CardDeckList.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0FAC0B511C0303600CDA558 /* CDXCardDecksDictionarySerializerTestsDecks2.CardDeckList.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -243,6 +244,7 @@
 		E0FAC02911C026A900CDA558 /* CDXCardDecksDictionarySerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDecksDictionarySerializer.h; path = Classes/Serializers/CDXCardDecksDictionarySerializer.h; sourceTree = "<group>"; };
 		E0FAC02A11C026A900CDA558 /* CDXCardDecksDictionarySerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDecksDictionarySerializer.m; path = Classes/Serializers/CDXCardDecksDictionarySerializer.m; sourceTree = "<group>"; };
 		E0FAC02F11C0279E00CDA558 /* CDXCardDecksDictionarySerializerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDecksDictionarySerializerTests.m; path = Classes/Serializers/CDXCardDecksDictionarySerializerTests.m; sourceTree = "<group>"; };
+		E0FAC0B511C0303600CDA558 /* CDXCardDecksDictionarySerializerTestsDecks2.CardDeckList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = CDXCardDecksDictionarySerializerTestsDecks2.CardDeckList.plist; path = Classes/Serializers/CDXCardDecksDictionarySerializerTestsDecks2.CardDeckList.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -443,6 +445,7 @@
 				E0FAC02A11C026A900CDA558 /* CDXCardDecksDictionarySerializer.m */,
 				E0FAC02F11C0279E00CDA558 /* CDXCardDecksDictionarySerializerTests.m */,
 				E0FAC02511C0268000CDA558 /* CDXCardDecksDictionarySerializerTestsDecks1.CardDeckList.plist */,
+				E0FAC0B511C0303600CDA558 /* CDXCardDecksDictionarySerializerTestsDecks2.CardDeckList.plist */,
 				E041E3931169FDD5009DC453 /* CDXCardDeckURLSerializer.h */,
 				E041E3941169FDD5009DC453 /* CDXCardDeckURLSerializer.m */,
 				E041E3951169FDD5009DC453 /* CDXCardDeckURLSerializerTests.m */,
@@ -620,6 +623,7 @@
 				E07CDED311BC1D4C008D7E8F /* CDXCardDeckDictionarySerializerTestsDeck2.CardDeck.plist in Resources */,
 				E07CDF0F11BC2146008D7E8F /* CDXCardDeckDictionarySerializerTestsDeck3.CardDeck.plist in Resources */,
 				E0FAC02611C0268000CDA558 /* CDXCardDecksDictionarySerializerTestsDecks1.CardDeckList.plist in Resources */,
+				E0FAC0B611C0303600CDA558 /* CDXCardDecksDictionarySerializerTestsDecks2.CardDeckList.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

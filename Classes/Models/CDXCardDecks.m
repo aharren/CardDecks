@@ -68,7 +68,7 @@
 }
 
 - (CDXCardDeck *)cardDeckWithDefaults {
-    return [[cardDeckDefaults copy] autorelease];
+    return [[cardDeckDefaults.cardDeck copy] autorelease];
 }
 
 @end

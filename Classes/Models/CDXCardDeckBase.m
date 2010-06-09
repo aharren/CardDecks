@@ -34,6 +34,7 @@
 @synthesize file;
 @synthesize thumbnailColor;
 @synthesize cardDeck;
+@synthesize cardsCount;
 
 - (id)init {
     qltrace();

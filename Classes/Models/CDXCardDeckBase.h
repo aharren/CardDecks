@@ -46,11 +46,11 @@
 @property (nonatomic, readonly) CDXCardDeck *cardDeck;
 
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, readonly) NSString *description;
+@property (nonatomic, copy) NSString *description;
 @property (nonatomic, copy) NSString *file;
 
-@property (nonatomic, readonly) CDXColor *thumbnailColor;
-- (NSUInteger)cardsCount;
+@property (nonatomic, retain) CDXColor *thumbnailColor;
+@property (nonatomic, assign) NSUInteger cardsCount;
 
 @end
 

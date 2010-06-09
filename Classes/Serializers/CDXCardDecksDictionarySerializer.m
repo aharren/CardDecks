@@ -62,16 +62,82 @@
     return dDecks;
 }
 
++ (CDXCardDeckBase *)cardDeckBaseFromVersion2Dictionary:(NSDictionary *)dictionary {
+    CDXCardDeckBase *deck = [[[CDXCardDeckBase alloc] init] autorelease];
+    
+    deck.name = [CDXDictionarySerializerUtils stringFromDictionary:dictionary forKey:@"name" defaultsTo:@""];
+    deck.description = [CDXDictionarySerializerUtils stringFromDictionary:dictionary forKey:@"description" defaultsTo:@""];
+    deck.file = [CDXDictionarySerializerUtils stringFromDictionary:dictionary forKey:@"file" defaultsTo:@""];
+    
+    NSString *thumbnailColor = [CDXDictionarySerializerUtils stringFromDictionary:dictionary forKey:@"thumbnailColor" defaultsTo:nil];
+    if (thumbnailColor != nil) {
+        deck.thumbnailColor = [CDXColor colorWithRGBAString:thumbnailColor defaulsTo:nil];
+    }
+    
+    deck.cardsCount = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"cardsCount" defaultsTo:0];
+    
+    return deck;
+}
+
 + (CDXCardDecks *)cardDecksFromVersion2Dictionary:(NSDictionary *)dictionary {
-    return nil;
+    CDXCardDecks *decks = [[[CDXCardDecks alloc] init] autorelease];
+    
+    NSDictionary *deckDefaultsDictionary = [CDXDictionarySerializerUtils dictionaryFromDictionary:dictionary forKey:@"cardDeckDefaults" defaultsTo:nil];
+    if (deckDefaultsDictionary != nil) {
+        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+        
+        CDXCardDeckBase *deck = [CDXCardDecksDictionarySerializer cardDeckBaseFromVersion2Dictionary:deckDefaultsDictionary];
+        decks.cardDeckDefaults = deck;
+        
+        [pool release];
+    }
+    
+    NSArray *deckDictionaries = (NSArray *)[dictionary objectForKey:@"cardDecks"];
+    for (NSDictionary *deckDictionary in deckDictionaries) {
+        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+        
+        CDXCardDeckBase *deck = [CDXCardDecksDictionarySerializer cardDeckBaseFromVersion2Dictionary:deckDictionary];
+        [decks addCardDeck:deck];
+        
+        [pool release];
+    }
+    
+    return decks;
 }
 
 + (NSDictionary *)dictionaryFromCardDecks:(CDXCardDecks *)cardDecks {
     return [CDXCardDecksDictionarySerializer version2DictionaryFromCardDecks:cardDecks];
 }
 
++ (NSDictionary *)version2DictionaryFromCardDeckBase:(CDXCardDeckBase *)cardDeck {
+    NSMutableDictionary *dictionary = [[[NSMutableDictionary alloc] init] autorelease];
+    
+    [dictionary setObject:cardDeck.name forKey:@"name"];
+    [dictionary setObject:cardDeck.description forKey:@"description"];
+    [dictionary setObject:cardDeck.file forKey:@"file"];
+    
+    if (cardDeck.thumbnailColor != nil) {
+        [dictionary setObject:[cardDeck.thumbnailColor rgbaString] forKey:@"thumbnailColor"];
+    }
+    [dictionary setObject:[NSNumber numberWithUnsignedInteger:[cardDeck cardsCount]] forKey:@"cardsCount"];
+    
+    return dictionary;
+}
+
 + (NSDictionary *)version2DictionaryFromCardDecks:(CDXCardDecks *)cardDecks {
-    return nil;
+    NSMutableDictionary *dictionary = [[[NSMutableDictionary alloc] init] autorelease];
+    
+    [dictionary setObject:[CDXCardDecksDictionarySerializer version2DictionaryFromCardDeckBase:cardDecks.cardDeckDefaults] forKey:@"cardDeckDefaults"];
+    
+    NSUInteger decksCount = [cardDecks cardDecksCount];
+    NSMutableArray *decks = [NSMutableArray arrayWithCapacity:decksCount];
+    for (NSUInteger i=0; i < decksCount; i++) {
+        [decks addObject:[CDXCardDecksDictionarySerializer version2DictionaryFromCardDeckBase:[cardDecks cardDeckAtIndex:i]]];
+    }
+    [dictionary setObject:decks forKey:@"cardDecks"];
+    
+    [dictionary setObject:[NSNumber numberWithUnsignedInteger:2] forKey:@"VERSION"];
+    return dictionary;
 }
 
 @end
