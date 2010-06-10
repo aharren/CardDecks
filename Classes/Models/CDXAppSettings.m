@@ -25,6 +25,9 @@
 
 #import "CDXAppSettings.h"
 
+#undef ql_component
+#define ql_component lcl_cCDXModel
+
 
 enum {
     CDXAppSettingsIdleTimer,

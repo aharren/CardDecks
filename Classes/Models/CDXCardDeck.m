@@ -26,6 +26,9 @@
 #import "CDXCardDeck.h"
 #import "CDXStorage.h"
 
+#undef ql_component
+#define ql_component lcl_cCDXModel
+
 
 @implementation CDXCardDeck
 
