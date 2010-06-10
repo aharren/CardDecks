@@ -118,6 +118,11 @@
     [[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension] reset];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:nil keyboardExtensions:nil];
+    [super viewWillDisappear:animated];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [settings numberOfGroups];
 }
