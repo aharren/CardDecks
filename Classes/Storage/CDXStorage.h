@@ -1,6 +1,6 @@
 //
 //
-// lcl_config_components.h
+// CDXStorage.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -24,17 +24,14 @@
 // THE SOFTWARE.
 
 
-_lcl_component(CDXMain,                                 "main",                 "Main")
+@interface CDXStorage : NSObject {
+    
+}
 
-_lcl_component(CDXObjectCache,                          "cache",                "ObjectCache")
++ (NSDictionary *)readDictionaryFromFile:(NSString *)file;
++ (void)writeDictionary:(NSDictionary *)dictionary toFile:(NSString *)file;
 
-_lcl_component(CDXAppDelegate,                          "application",          "AppDelegate")
-_lcl_component(CDXAppWindowManager,                     "application",          "AppWindowManager")
++ (NSString *)fileWithSuffix:(NSString *)suffix;
 
-_lcl_component(CDXCardDeckCardViewController,           "cardview",             "CardView")
-_lcl_component(CDXCardsViewBase,                        "cardview",             "CardView")
-_lcl_component(CDXCardsSideBySideView,                  "cardview",             "CardView")
-_lcl_component(CDXCardsStackView,                       "cardview",             "CardView")
-_lcl_component(CDXCardsStackSwipeView,                  "cardview",             "CardView")
+@end
 
-_lcl_component(CDXStorage,                              "storage",              "Storage")
