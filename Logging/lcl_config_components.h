@@ -31,6 +31,8 @@ _lcl_component(CDXObjectCache,                          "cache",                
 _lcl_component(CDXAppDelegate,                          "application",          "AppDelegate")
 _lcl_component(CDXAppWindowManager,                     "application",          "AppWindowManager")
 
+_lcl_component(CDXModel,                                "model",                "Model")
+
 _lcl_component(CDXCardDeckCardViewController,           "cardview",             "CardView")
 _lcl_component(CDXCardsViewBase,                        "cardview",             "CardView")
 _lcl_component(CDXCardsSideBySideView,                  "cardview",             "CardView")
