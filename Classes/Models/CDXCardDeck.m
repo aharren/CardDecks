@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeck.h"
+#import "CDXStorage.h"
 
 
 @implementation CDXCardDeck
@@ -44,6 +45,7 @@
     if ((self = [super init])) {
         cardDeck = self;
         ivar_assign_and_copy(name, @"New Card Deck");
+        ivar_assign_and_copy(file, [CDXStorage fileWithSuffix:@".CardDeck"]);
         ivar_assign(cardDefaults, [[CDXCard alloc] init]);
         cardDefaults.textColor = [CDXColor colorBlack];
         cardDefaults.backgroundColor = [CDXColor colorWhite];

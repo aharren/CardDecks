@@ -126,6 +126,7 @@
     }
     
     decks.cardDeckDefaults.name = @"*NEW CARD DECK*";
+    decks.cardDeckDefaults.file = @"FileDefault";
     
     STAssertEquals([decks cardDecksCount], (NSUInteger)3, nil);
     
