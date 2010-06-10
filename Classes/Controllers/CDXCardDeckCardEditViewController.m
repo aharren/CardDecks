@@ -41,6 +41,7 @@
     ivar_release_and_clear(text);
     ivar_release_and_clear(viewButtonsUpDownBarButtonItem);
     ivar_release_and_clear(viewButtonsUpDown);
+    ivar_release_and_clear(cardDeckViewContext);
     ivar_release_and_clear(cardDeck);
     [super dealloc];
 }
