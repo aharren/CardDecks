@@ -35,6 +35,7 @@
     CDXCardDeck *cardDeck;
     
     IBOutlet UIBarButtonItem *shuffleButton;
+    IBOutlet UIBarButtonItem *actionButton;
     BOOL viewWasAlreadyVisible;
 }
 
@@ -44,6 +45,7 @@
 - (IBAction)defaultsButtonPressed;
 - (IBAction)settingsButtonPressed;
 - (IBAction)shuffleButtonPressed;
+- (IBAction)actionButtonPressed;
 
 @end
 

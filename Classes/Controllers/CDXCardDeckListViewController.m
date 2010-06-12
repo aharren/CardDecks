@@ -45,11 +45,13 @@
     ivar_release_and_clear(cardDeckViewContext);
     ivar_release_and_clear(cardDeck);
     ivar_release_and_clear(shuffleButton);
+    ivar_release_and_clear(actionButton);
     [super dealloc];
 }
 
 - (void)viewDidUnload {
     ivar_release_and_clear(shuffleButton);
+    ivar_release_and_clear(actionButton);
     [super viewDidUnload];
 }
 
@@ -267,6 +269,9 @@
     
     [self updateShuffleButton];
     [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (IBAction)actionButtonPressed {
 }
 
 @end
