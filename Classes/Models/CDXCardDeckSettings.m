@@ -85,6 +85,10 @@ static const CDXCardDeckSettingGroup groups[] = {
     return @"Deck Settings";
 }
 
+- (UIView *)titleView {
+    return nil;
+}
+
 - (NSUInteger)numberOfGroups {
     return (sizeof(groups) / sizeof(CDXCardDeckSettingGroup)) - 1;
 }

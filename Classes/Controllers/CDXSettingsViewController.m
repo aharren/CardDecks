@@ -111,6 +111,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
+    self.tableView.tableHeaderView = [settings titleView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

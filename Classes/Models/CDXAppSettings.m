@@ -81,6 +81,10 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
     return @"Settings";
 }
 
+- (UIView *)titleView {
+    return nil;
+}
+
 - (NSUInteger)numberOfGroups {
     return (sizeof(groups) / sizeof(CDXAppSettingGroup)) - 1;
 }

@@ -43,6 +43,7 @@ typedef struct {
 @protocol CDXSettings
 
 - (NSString *)title;
+- (UIView *)titleView;
 
 - (NSUInteger)numberOfGroups;
 - (NSString *)titleForGroup:(NSUInteger)group;
