@@ -1,6 +1,6 @@
 //
 //
-// CDXAppSettings.m
+// CDXAppAboutSettings.m
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,29 +23,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXAppSettings.h"
 #import "CDXAppAboutSettings.h"
+#import "CDXApplicationVersion.h"
 
 #undef ql_component
 #define ql_component lcl_cCDXModel
 
 
 enum {
-    CDXAppSettingsAbout,
-    CDXAppSettingsIdleTimer,
-    CDXAppSettingsCount
+    CDXAppAboutSettingsFeedback,
+    CDXAppAboutSettingsSite,
+    CDXAppAboutSettingsCount
 };
 
 static const CDXSetting settings[] = {
-    { CDXAppSettingsAbout, CDXSettingTypeSettings, @"About Card Decks" },
-    { CDXAppSettingsIdleTimer, CDXSettingTypeBoolean, @"Idle Timer" },
+    { CDXAppAboutSettingsFeedback, CDXSettingTypeURLAction, @"Feedback" },
+    { CDXAppAboutSettingsSite, CDXSettingTypeURLAction, @"0xc0.de/CardDecks" },
     { 0, 0, @"" }
-};
-
-static NSString *settingsUserDefaultsKeys[] = {
-    nil,
-    @"enable_idle_timer",
-    nil
 };
 
 typedef struct {
@@ -55,15 +49,14 @@ typedef struct {
 } CDXAppSettingGroup;
 
 static const CDXAppSettingGroup groups[] = {
-    { @"", 1, CDXAppSettingsAbout },
-    { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
+    { @"", 2, CDXAppAboutSettingsFeedback },
     { @"", 0, 0 }
 };
 
 
-@implementation CDXAppSettings
+@implementation CDXAppAboutSettings
 
-synthesize_singleton(sharedAppSettings, CDXAppSettings);
+synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
 
 + (BOOL)userDefaultsBooleanValueForKey:(NSString *)key defaults:(BOOL)defaults {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -78,16 +71,17 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
     [userDefaults setBool:value forKey:key];
 }
 
-- (BOOL)enableIdleTimer {
-    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsIdleTimer] defaults:NO];
-}
-
 - (NSString *)title {
-    return @"Settings";
+    return @"About";
 }
 
 - (UIView *)titleView {
-    return nil;
+    [[NSBundle mainBundle] loadNibNamed:@"CDXAppAboutSettingsTitleView" owner:self options:nil];
+    UIView *view = [[titleView retain] autorelease];
+    titleViewVersion.text = CDXApplicationVersion;
+    ivar_release_and_clear(titleView);
+    ivar_release_and_clear(titleViewVersion);
+    return view;
 }
 
 - (NSUInteger)numberOfGroups {
@@ -111,17 +105,12 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
     switch (tag) {
         default:
             return NO;
-        case CDXAppSettingsIdleTimer:
-            return [self enableIdleTimer];
     }
 }
 
 - (void)setBooleanValue:(BOOL)value forSettingWithTag:(NSUInteger)tag {
     switch (tag) {
         default:
-            break;
-        case CDXAppSettingsIdleTimer:
-            [CDXAppSettings setUserDefaultsBooleanValue:value forKey:settingsUserDefaultsKeys[tag]];
             break;
     }
 }
@@ -153,25 +142,25 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
         default:
             return nil;
             break;
-        case CDXAppSettingsAbout:
-            return [UIImage imageNamed:@"Cell-Logo.png"];
-            break;
     }
 }
 
 - (NSObject<CDXSettings> *)settingsSettingsForSettingWithTag:(NSUInteger)tag {
+    return self;
+}
+
+- (NSString *)urlActionURLForSettingWithTag:(NSUInteger)tag {
     switch (tag) {
         default:
             return nil;
             break;
-        case CDXAppSettingsAbout:
-            return [CDXAppAboutSettings sharedAppAboutSettings];
+        case CDXAppAboutSettingsFeedback:
+            return @"mailto:carddecks@0xc0.de?subject=CardDecks " CDXApplicationVersion ": Feedback";
+            break;
+        case CDXAppAboutSettingsSite:
+            return @"http://0xc0.de/CardDecks?m" CDXApplicationVersion "";
             break;
     }
-}
-
-- (NSString *)urlActionURLForSettingWithTag:(NSUInteger)tag {
-    return nil;
 }
 
 @end

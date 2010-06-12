@@ -31,6 +31,10 @@
 		E032F1521169DB5D0033980C /* CDXCardDecks.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1301169D9FB0033980C /* CDXCardDecks.m */; };
 		E032F1541169DB790033980C /* CDXCardDecksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1531169DB790033980C /* CDXCardDecksTests.m */; };
 		E032F1681169DDC10033980C /* CDXCardDecksListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E032F1671169DDC10033980C /* CDXCardDecksListView.xib */; };
+		E03B106011C3F93800591E45 /* Cell-Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E03B105F11C3F93800591E45 /* Cell-Logo.png */; };
+		E03B10A311C3FC4300591E45 /* CDXAppAboutSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E03B10A211C3FC4300591E45 /* CDXAppAboutSettings.m */; };
+		E03B10B911C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E03B10B811C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib */; };
+		E03B113E11C415CB00591E45 /* Logo-Prerendered.png in Resources */ = {isa = PBXBuildFile; fileRef = E03B113D11C415CB00591E45 /* Logo-Prerendered.png */; };
 		E03BA24D116747FC00FE7924 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BA24C116747FC00FE7924 /* main.m */; };
 		E03BA2721167488B00FE7924 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2711167488B00FE7924 /* Foundation.framework */; };
 		E03BA2741167489600FE7924 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2731167489600FE7924 /* UIKit.framework */; };
@@ -152,6 +156,11 @@
 		E032F1671169DDC10033980C /* CDXCardDecksListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardDecksListView.xib; path = UserInterfaces/CDXCardDecksListView.xib; sourceTree = "<group>"; };
 		E034181A1195CD9F00007FF7 /* CDXAppWindowProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppWindowProtocols.h; path = Classes/CDXAppWindowProtocols.h; sourceTree = "<group>"; };
 		E03B103011C3F4A300591E45 /* CDXApplicationVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDXApplicationVersion.h; sourceTree = "<group>"; };
+		E03B105F11C3F93800591E45 /* Cell-Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell-Logo.png"; path = "Images/Cells/Cell-Logo.png"; sourceTree = "<group>"; };
+		E03B10A111C3FC4300591E45 /* CDXAppAboutSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppAboutSettings.h; path = Classes/Models/CDXAppAboutSettings.h; sourceTree = "<group>"; };
+		E03B10A211C3FC4300591E45 /* CDXAppAboutSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppAboutSettings.m; path = Classes/Models/CDXAppAboutSettings.m; sourceTree = "<group>"; };
+		E03B10B811C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXAppAboutSettingsTitleView.xib; path = UserInterfaces/CDXAppAboutSettingsTitleView.xib; sourceTree = "<group>"; };
+		E03B113D11C415CB00591E45 /* Logo-Prerendered.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Logo-Prerendered.png"; path = "Images/Logo-Prerendered.png"; sourceTree = "<group>"; };
 		E03BA23F1167475000FE7924 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E03BA24C116747FC00FE7924 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E03BA2501167485A00FE7924 /* CDX.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDX.pch; sourceTree = "<group>"; };
@@ -319,6 +328,8 @@
 				E0BE980F11A1CF0000F30C50 /* CDXSettings.h */,
 				E04B448811B0441600DDBD33 /* CDXAppSettings.h */,
 				E04B448911B0441600DDBD33 /* CDXAppSettings.m */,
+				E03B10A111C3FC4300591E45 /* CDXAppAboutSettings.h */,
+				E03B10A211C3FC4300591E45 /* CDXAppAboutSettings.m */,
 				E070CFA711A08D4400626F34 /* CDXCardDeckSettings.h */,
 				E070CFA811A08D4400626F34 /* CDXCardDeckSettings.m */,
 				E0805B4911A85C6600199172 /* CDXCardDeckViewContext.h */,
@@ -371,6 +382,14 @@
 				E002B4FA116760650072C409 /* Tests.octest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E03B105E11C3F92900591E45 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E03B105F11C3F93800591E45 /* Cell-Logo.png */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		E03BA26E1167488000FE7924 /* Frameworks */ = {
@@ -426,6 +445,7 @@
 			children = (
 				E03BA38511674C3300FE7924 /* MainWindow.xib */,
 				E0620D0011BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib */,
+				E03B10B811C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib */,
 				E0EB6E70117233E400F41F7A /* CDXCardView.xib */,
 				E0CCC7391170DC120040D222 /* CDXCardDeckCardView.xib */,
 				E0A1C00211A82C5600911848 /* CDXCardDeckCardEditView.xib */,
@@ -491,12 +511,14 @@
 			isa = PBXGroup;
 			children = (
 				E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */,
+				E03B105E11C3F92900591E45 /* Cells */,
 				E0C51F87119DAC5F00D75D0E /* Toolbars */,
 				E0620D5211BAA606006AABD2 /* Notices */,
 				E0C51F13119DA03000D75D0E /* Default.png */,
 				E0620F8A119E950D00234667 /* StatusBarDefault.png */,
 				E0CCC70C1170DA0A0040D222 /* Icon-Settings.png */,
 				E0CCC70D1170DA0A0040D222 /* Icon.png */,
+				E03B113D11C415CB00591E45 /* Logo-Prerendered.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -631,6 +653,9 @@
 				E0620D0111BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib in Resources */,
 				E0620D5511BAA61A006AABD2 /* Notice-Shuffle.png in Resources */,
 				E0620D5611BAA61A006AABD2 /* Notice-Sort.png in Resources */,
+				E03B106011C3F93800591E45 /* Cell-Logo.png in Resources */,
+				E03B10B911C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib in Resources */,
+				E03B113E11C415CB00591E45 /* Logo-Prerendered.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -705,6 +730,7 @@
 				E0FAC00C11C024CD00CDA558 /* CDXDictionarySerializerUtils.m in Sources */,
 				E0FAC02C11C026A900CDA558 /* CDXCardDecksDictionarySerializer.m in Sources */,
 				E0FAC13C11C0398800CDA558 /* CDXStorage.m in Sources */,
+				E03B10A311C3FC4300591E45 /* CDXAppAboutSettings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
