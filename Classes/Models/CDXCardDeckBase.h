@@ -27,11 +27,13 @@
 
 
 @class CDXCardDeck;
+@class CDXCardDecks;
 
 
 @interface CDXCardDeckBase : NSObject {
     
 @protected
+    CDXCardDeckBase *base;
     CDXCardDeck *cardDeck;
     
     NSString *name;
@@ -43,6 +45,7 @@
     NSUInteger cardsCount;
 }
 
+@property (nonatomic, readonly) CDXCardDeckBase *base;
 @property (nonatomic, readonly) CDXCardDeck *cardDeck;
 
 @property (nonatomic, copy) NSString *name;
@@ -51,6 +54,14 @@
 
 @property (nonatomic, retain) CDXColor *thumbnailColor;
 @property (nonatomic, assign) NSUInteger cardsCount;
+
+- (id)init;
+- (id)initWithCardDeck:(CDXCardDeck *)cardDeck;
++ (id)cardDeckBaseWithCardDeck:(CDXCardDeck *)cardDeck;
+
+- (void)linkBase:(CDXCardDeckBase *)base;
+- (void)unlinkBase;
+- (void)unlinkCardDeck;
 
 @end
 

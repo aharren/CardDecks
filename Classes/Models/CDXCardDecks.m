@@ -24,6 +24,8 @@
 // THE SOFTWARE.
 
 #import "CDXCardDecks.h"
+#import "CDXCardDecksDictionarySerializer.h"
+#import "CDXDictionarySerializerUtils.h"
 
 #undef ql_component
 #define ql_component lcl_cCDXModel
@@ -31,6 +33,7 @@
 
 @implementation CDXCardDecks
 
+@synthesize file;
 @synthesize cardDeckDefaults;
 
 - (id)init {
@@ -44,6 +47,17 @@
 - (void)dealloc {
     ivar_release_and_clear(cardDecks);
     [super dealloc];
+}
+
+- (CDXCardDeckBase *)cardDeckDefaults {
+    qltrace();
+    CDXCardDeck *deck = cardDeckDefaults.cardDeck;
+    if (deck == nil) {
+        deck = [[[CDXCardDeck alloc] init] autorelease];
+        deck.file = cardDeckDefaults.file;
+        [deck updateStorageObjectDeferred:NO];
+    }
+    return cardDeckDefaults;
 }
 
 - (NSUInteger)cardDecksCount {
@@ -70,8 +84,34 @@
     [cardDecks removeObjectAtIndex:index];
 }
 
-- (CDXCardDeck *)cardDeckWithDefaults {
-    return [[cardDeckDefaults.cardDeck copy] autorelease];
+- (CDXCardDeckBase *)cardDeckWithDefaults {
+    return [[[CDXCardDeckBase alloc] initWithCardDeck:[[cardDeckDefaults.cardDeck copy] autorelease]] autorelease];
+}
+
+- (NSString *)storageObjectName {
+    return file;
+}
+
+- (NSDictionary *)storageObjectAsDictionary {
+    return [CDXCardDecksDictionarySerializer dictionaryFromCardDecks:self];
+}
+
++ (CDXCardDecks *)cardDecksFromStorageObjectNamed:(NSString *)file version:(NSUInteger *)version {
+    NSDictionary *dictionary = [CDXStorage readDictionaryFromFile:file];
+    if (dictionary == nil) {
+        return nil;
+    }
+    if (version) {
+        *version = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"VERSION" defaultsTo:0];
+    }
+    
+    CDXCardDecks *cardDecks = [CDXCardDecksDictionarySerializer cardDecksFromDictionary:dictionary];
+    cardDecks.file = file;
+    return cardDecks;
+}
+
+- (void)updateStorageObjectDeferred:(BOOL)deferred {
+    [CDXStorage updateStorageObject:self deferred:deferred];
 }
 
 @end

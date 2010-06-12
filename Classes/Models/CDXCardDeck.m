@@ -25,6 +25,7 @@
 
 #import "CDXCardDeck.h"
 #import "CDXStorage.h"
+#import "CDXCardDeckDictionarySerializer.h"
 
 #undef ql_component
 #define ql_component lcl_cCDXModel
@@ -46,6 +47,7 @@
 - (id)init {
     qltrace();
     if ((self = [super init])) {
+        base = nil;
         cardDeck = self;
         ivar_assign_and_copy(name, @"New Card Deck");
         ivar_assign_and_copy(file, [CDXStorage fileWithSuffix:@".CardDeck"]);
@@ -71,6 +73,8 @@
     ivar_release_and_clear(cardDefaults);
     ivar_release_and_clear(cards);
     ivar_release_and_clear(shuffleIndexes);
+    [base unlinkCardDeck]; // unlinkBase
+    base = nil;
     [super dealloc];
 }
 
@@ -99,6 +103,23 @@
     }
 }
 
+- (void)updateBase {
+    if (!base) {
+        return;
+    }
+    
+    base.name = name;
+    base.file = file;
+    base.description = description;
+    base.cardsCount = cardsCount;
+    base.thumbnailColor = thumbnailColor;
+}
+
+- (void)linkBase:(CDXCardDeckBase *)aBase {
+    [super linkBase:aBase];
+    [self updateBase];
+}
+
 - (void)updateFields {
     // description
     NSMutableString *d = [[[NSMutableString alloc] initWithCapacity:100] autorelease];
@@ -124,6 +145,13 @@
     } else {
         ivar_release_and_clear(thumbnailColor);
     }
+    
+    [self updateBase];
+}
+
+- (void)setName:(NSString *)aName {
+    [super setName:aName];
+    [self updateBase];
 }
 
 - (CDXCard *)cardAtCardsIndex:(NSUInteger)cardsIndex {
@@ -236,6 +264,27 @@
 - (void)sort {
     isShuffled = NO;
     ivar_release_and_clear(shuffleIndexes);
+}
+
+- (NSString *)storageObjectName {
+    return file;
+}
+
+- (NSDictionary *)storageObjectAsDictionary {
+    return [CDXCardDeckDictionarySerializer dictionaryFromCardDeck:self];
+}
+
++ (CDXCardDeck *)cardDeckFromStorageObjectNamed:(NSString *)file {
+    NSDictionary *dictionary = [CDXStorage readDictionaryFromFile:file];
+    if (dictionary == nil) {
+        return nil;
+    }
+    CDXCardDeck *cardDeck = [CDXCardDeckDictionarySerializer cardDeckFromDictionary:dictionary];
+    return cardDeck;
+}
+
+- (void)updateStorageObjectDeferred:(BOOL)deferred {
+    [CDXStorage updateStorageObject:self deferred:deferred];
 }
 
 @end

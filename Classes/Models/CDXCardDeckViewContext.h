@@ -24,20 +24,25 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeck.h"
+#import "CDXStorage.h"
 
 
 @interface CDXCardDeckViewContext : NSObject {
     
 @protected
     CDXCardDeck *cardDeck;
+    CDXCardDecks *cardDecks;
     NSUInteger currentCardIndex;
     
 }
 
 @property (nonatomic, readonly) CDXCardDeck *cardDeck;
+@property (nonatomic, readonly) CDXCardDecks *cardDecks;
 @property (nonatomic, assign) NSUInteger currentCardIndex;
 
-- (id)initWithCardDeck:(CDXCardDeck *)cardDeck;
+- (id)initWithCardDeck:(CDXCardDeck *)cardDeck cardDecks:(CDXCardDecks *)cardDecks;
+
+- (void)updateStorageObjectsDeferred:(BOOL)deferred;
 
 @end
 

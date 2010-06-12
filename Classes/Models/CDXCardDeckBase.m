@@ -24,7 +24,8 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeckBase.h"
-#import "CDXCardDeckDictionarySerializer.h"
+#import "CDXCardDeck.h"
+#import "CDXStorage.h"
 
 #undef ql_component
 #define ql_component lcl_cCDXModel
@@ -32,16 +33,19 @@
 
 @implementation CDXCardDeckBase
 
+@synthesize base;
+@synthesize cardDeck;
 @synthesize name;
 @synthesize description;
 @synthesize file;
 @synthesize thumbnailColor;
-@synthesize cardDeck;
 @synthesize cardsCount;
 
 - (id)init {
     qltrace();
     if ((self = [super init])) {
+        base = nil;
+        cardDeck = nil;
         ivar_assign_and_copy(name, @"");
         ivar_assign_and_copy(description, @"");
         ivar_assign_and_copy(file, @"");
@@ -49,13 +53,32 @@
     return self;
 }
 
+- (id)initWithCardDeck:(CDXCardDeck *)aCardDeck {
+    qltrace();
+    if ((self = [super init])) {
+        base = nil;
+        cardDeck = aCardDeck;
+        ivar_assign_and_copy(name, @"");
+        ivar_assign_and_copy(description, @"");
+        ivar_assign_and_copy(file, @"");
+        
+        [cardDeck linkBase:self];
+    }
+    return self;
+}
+
++ (id)cardDeckBaseWithCardDeck:(CDXCardDeck *)cardDeck {
+    return [[[CDXCardDeckBase alloc] initWithCardDeck:cardDeck] autorelease];
+}
+
 - (void)dealloc {
     qltrace();
+    [cardDeck unlinkBase];
+    cardDeck = nil; // unlinkCardDeck
     ivar_release_and_clear(name);
     ivar_release_and_clear(description);
     ivar_release_and_clear(file);
     ivar_release_and_clear(thumbnailColor);
-    cardDeck = nil;
     [super dealloc];
 }
 
@@ -63,7 +86,27 @@
     return cardsCount;
 }
 
+- (void)linkBase:(CDXCardDeckBase *)aBase {
+    qltrace();
+    base = aBase;
+}
+
+- (void)unlinkBase {
+    qltrace();
+    base = nil;
+}
+
+- (void)unlinkCardDeck {
+    qltrace();
+    cardDeck = nil;
+}
+
 - (CDXCardDeck *)cardDeck {
+    qltrace();
+    if (cardDeck == nil) {
+        cardDeck = [CDXCardDeck cardDeckFromStorageObjectNamed:file];
+        [cardDeck linkBase:self];
+    }
     return cardDeck;
 }
 

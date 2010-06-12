@@ -24,14 +24,31 @@
 // THE SOFTWARE.
 
 
+@protocol CDXStorageObject
+
+- (NSString *)storageObjectName;
+- (NSDictionary *)storageObjectAsDictionary;
+
+@end
+
+
 @interface CDXStorage : NSObject {
     
 }
 
 + (NSDictionary *)readDictionaryFromFile:(NSString *)file;
 + (void)writeDictionary:(NSDictionary *)dictionary toFile:(NSString *)file;
++ (void)removeFile:(NSString *)file;
 
 + (NSString *)fileWithSuffix:(NSString *)suffix;
+
++ (void)updateStorageObject:(NSObject<CDXStorageObject> *)object deferred:(BOOL)deferred;
++ (void)removeStorageObject:(NSObject<CDXStorageObject> *)object deferred:(BOOL)deferred;
+
++ (void)drainDeferredActionForStorageObject:(NSObject<CDXStorageObject> *)object;
++ (void)cancelDeferredActionForStorageObject:(NSObject<CDXStorageObject> *)object;
+
++ (void)drainAllDeferredActions;
 
 @end
 

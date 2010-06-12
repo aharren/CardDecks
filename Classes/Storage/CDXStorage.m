@@ -24,13 +24,23 @@
 // THE SOFTWARE.
 
 #import "CDXStorage.h"
+#import "CDXDictionarySerializerUtils.h"
 #import <sys/time.h>
 
 #undef ql_component
 #define ql_component lcl_cCDXStorage
 
 
+static NSMutableArray *storageDeferredUpdates = nil;
+static NSMutableArray *storageDeferredRemoves = nil;
+
 @implementation CDXStorage
+
++ (void)initialize {
+    qltrace();
+    storageDeferredUpdates = [[NSMutableArray alloc] init];
+    storageDeferredRemoves = [[NSMutableArray alloc] init];
+}
 
 + (NSDictionary *)readDictionaryFromFile:(NSString *)file {
     qltrace(@"file %@", file);
@@ -76,6 +86,19 @@
     [dictionary writeToFile:path atomically:YES];        
 }
 
++ (void)removeFile:(NSString *)file {
+    qltrace(@"file %@", file);
+    
+    NSString *fileName = [NSString stringWithFormat:@"%@.plist", file];
+    
+    // remove file in 'Documents' folder
+    NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *path = [folder stringByAppendingPathComponent:fileName];
+    qltrace(@"path %@", path);
+    
+    [[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
+}
+
 + (NSString *)fileWithSuffix:(NSString *)suffix {
     struct timeval now;
     struct tm now_tm;
@@ -91,6 +114,113 @@
             now_tm.tm_sec,
             now.tv_usec,
             suffix];
+}
+
++ (void)updateStorageObject:(NSObject<CDXStorageObject> *)object deferred:(BOOL)deferred {
+    qltrace(@"%@:%d", [object storageObjectName], deferred);
+    
+    if (object == nil) {
+        return;
+    }
+    
+    [object retain];
+    
+    if (deferred) {
+        [CDXStorage cancelDeferredActionForStorageObject:object];
+        [storageDeferredUpdates addObject:object];
+    } else {
+        [CDXStorage writeDictionary:[object storageObjectAsDictionary] toFile:[object storageObjectName]];
+    }
+    
+    [object release];
+}
+
++ (void)removeStorageObject:(NSObject<CDXStorageObject> *)object deferred:(BOOL)deferred {
+    qltrace(@"%@:%d", [object storageObjectName], deferred);
+    
+    if (object == nil) {
+        return;
+    }
+    
+    [object retain];
+    
+    if (deferred) {
+        [CDXStorage cancelDeferredActionForStorageObject:object];
+        [storageDeferredRemoves addObject:object];
+    } else {
+        [CDXStorage removeFile:[object storageObjectName]];
+    }
+    
+    [object release];
+}
+
++ (void)drainDeferredActionForStorageObject:(NSObject<CDXStorageObject> *)object {
+    qltrace(@"%@ (updates:%d removes:%d)", [object storageObjectName], [storageDeferredUpdates count], [storageDeferredRemoves count]);
+    
+    [object retain];
+    
+    NSString *storageObjectName = [object storageObjectName];
+    NSUInteger indexPlus1;
+    
+    indexPlus1 = [storageDeferredUpdates count];
+    for (;indexPlus1 > 0; indexPlus1--) {
+        NSObject<CDXStorageObject> *object = (NSObject<CDXStorageObject> *)[storageDeferredUpdates objectAtIndex:indexPlus1-1];
+        if (storageObjectName == nil || [[object storageObjectName] isEqualToString:storageObjectName]) {
+            [CDXStorage updateStorageObject:object deferred:NO];
+            [storageDeferredUpdates removeObjectAtIndex:indexPlus1-1];
+        }
+    }
+    if ([storageDeferredUpdates count] == 0) {
+        [storageDeferredUpdates release];
+        storageDeferredUpdates = [[NSMutableArray alloc] init];
+    }
+    
+    indexPlus1 = [storageDeferredRemoves count];
+    for (;indexPlus1 > 0; indexPlus1--) {
+        NSObject<CDXStorageObject> *object = (NSObject<CDXStorageObject> *)[storageDeferredRemoves objectAtIndex:indexPlus1-1];
+        if (storageObjectName == nil || [[object storageObjectName] isEqualToString:storageObjectName]) {
+            [CDXStorage removeStorageObject:object deferred:NO];
+            [storageDeferredRemoves removeObjectAtIndex:indexPlus1-1];
+        }
+    }
+    if ([storageDeferredRemoves count] == 0) {
+        [storageDeferredRemoves release];
+        storageDeferredRemoves = [[NSMutableArray alloc] init];
+    }
+    
+    [object release];
+}
+
++ (void)cancelDeferredActionForStorageObject:(NSObject<CDXStorageObject> *)object {
+    qltrace(@"%@", [object storageObjectName]);
+    
+    [object retain];
+    
+    NSString *storageObjectName = [object storageObjectName];
+    NSUInteger indexPlus1;
+    
+    indexPlus1 = [storageDeferredUpdates count];
+    for (;indexPlus1 > 0; indexPlus1--) {
+        NSObject<CDXStorageObject> *object = (NSObject<CDXStorageObject> *)[storageDeferredUpdates objectAtIndex:indexPlus1-1];
+        if ([[object storageObjectName] isEqualToString:storageObjectName]) {
+            [storageDeferredUpdates removeObjectAtIndex:indexPlus1-1];
+        }
+    }
+    
+    indexPlus1 = [storageDeferredRemoves count];
+    for (;indexPlus1 > 0; indexPlus1--) {
+        NSObject<CDXStorageObject> *object = (NSObject<CDXStorageObject> *)[storageDeferredRemoves objectAtIndex:indexPlus1-1];
+        if ([[object storageObjectName] isEqualToString:storageObjectName]) {
+            [storageDeferredRemoves removeObjectAtIndex:indexPlus1-1];
+        }
+    }
+    
+    [object release];
+}
+
++ (void)drainAllDeferredActions {
+    qltrace();
+    [CDXStorage drainDeferredActionForStorageObject:nil];
 }
 
 @end

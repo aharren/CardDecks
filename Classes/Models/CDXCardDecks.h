@@ -24,16 +24,19 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeck.h"
+#import "CDXStorage.h"
 
 
-@interface CDXCardDecks : NSObject {
+@interface CDXCardDecks : NSObject<CDXStorageObject> {
     
 @protected
+    NSString *file;
     CDXCardDeckBase *cardDeckDefaults;
     NSMutableArray *cardDecks;
     
 }
 
+@property (nonatomic, copy) NSString *file;
 @property (nonatomic, retain) CDXCardDeckBase *cardDeckDefaults;
 
 - (NSUInteger)cardDecksCount;
@@ -42,7 +45,10 @@
 - (void)insertCardDeck:(CDXCardDeckBase *)cardDeck atIndex:(NSUInteger)index;
 - (void)removeCardDeckAtIndex:(NSUInteger)index;
 
-- (CDXCardDeck *)cardDeckWithDefaults;
+- (CDXCardDeckBase *)cardDeckWithDefaults;
+
++ (CDXCardDecks *)cardDecksFromStorageObjectNamed:(NSString *)file version:(NSUInteger *)version;
+- (void)updateStorageObjectDeferred:(BOOL)deferred;
 
 @end
 

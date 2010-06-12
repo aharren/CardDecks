@@ -29,6 +29,7 @@
 #import "CDXCardsStackSwipeView.h"
 #import "CDXImageFactory.h"
 #import "CDXAppSettings.h"
+#import "CDXStorage.h"
 
 
 @interface CDXCardDeckCardViewController (PageControl)
@@ -213,6 +214,8 @@
 
 - (IBAction)shuffleButtonPressed {
     [cardDeck shuffle];
+    [cardDeck updateStorageObjectDeferred:YES];
+
     [cardsView invalidateDataSourceCaches];
     [cardsView showCardAtIndex:0];
     [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" timeInterval:0.8];

@@ -25,6 +25,7 @@
 
 #import "CDXCard.h"
 #import "CDXCardDeckBase.h"
+#import "CDXStorage.h"
 
 
 typedef enum {
@@ -44,11 +45,11 @@ typedef enum {
 } CDXCardDeckGroupSize;
 
 
-@interface CDXCardDeck : CDXCardDeckBase<NSCopying> {
+@interface CDXCardDeck : CDXCardDeckBase<NSCopying, CDXStorageObject> {
     
 @protected
     CDXCard *cardDefaults;
-
+    
     NSMutableArray *cards;
     
     BOOL wantsPageControl;
@@ -59,7 +60,7 @@ typedef enum {
     
     CDXCardDeckDisplayStyle displayStyle;
     CDXCardCornerStyle cornerStyle;
-
+    
     BOOL isShuffled;
     NSMutableArray *shuffleIndexes;
 }
@@ -92,6 +93,9 @@ typedef enum {
 - (void)sort;
 
 - (CDXCard *)cardWithDefaults;
+
++ (CDXCardDeck *)cardDeckFromStorageObjectNamed:(NSString *)file;
+- (void)updateStorageObjectDeferred:(BOOL)deferred;
 
 @end
 

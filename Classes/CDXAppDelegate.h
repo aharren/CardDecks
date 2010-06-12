@@ -25,11 +25,14 @@
 
 #import "CDXAppWindowManager.h"
 
+@class CDXCardDecks;
+
 
 @interface CDXAppDelegate : NSObject <UIApplicationDelegate> {
     
 @protected
     IBOutlet CDXAppWindowManager *appWindowManager;
+    CDXCardDecks *cardDecks;
 }
 
 @end

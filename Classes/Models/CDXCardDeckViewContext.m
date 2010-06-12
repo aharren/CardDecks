@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeckViewContext.h"
+#import "CDXCardDecks.h"
 
 #undef ql_component
 #define ql_component lcl_cCDXModel
@@ -32,12 +33,14 @@
 @implementation CDXCardDeckViewContext
 
 @synthesize cardDeck;
+@synthesize cardDecks;
 @synthesize currentCardIndex;
 
-- (id)initWithCardDeck:(CDXCardDeck *)aCardDeck {
+- (id)initWithCardDeck:(CDXCardDeck *)aCardDeck cardDecks:(CDXCardDecks *)aCardDecks {
     qltrace();
     if ((self = [super init])) {
         ivar_assign_and_retain(cardDeck, aCardDeck);
+        ivar_assign_and_retain(cardDecks, aCardDecks);
     }
     return self;
 }
@@ -45,6 +48,7 @@
 - (void)dealloc {
     qltrace();
     ivar_release_and_clear(cardDeck);
+    ivar_release_and_clear(cardDecks);
     [super dealloc];
 }
 
@@ -54,6 +58,11 @@
         currentCardIndex = (count == 0) ? 0 : count-1;
     }
     return currentCardIndex;
+}
+
+- (void)updateStorageObjectsDeferred:(BOOL)deferred {
+    [CDXStorage updateStorageObject:cardDeck deferred:deferred];
+    [CDXStorage updateStorageObject:cardDecks deferred:deferred];
 }
 
 @end

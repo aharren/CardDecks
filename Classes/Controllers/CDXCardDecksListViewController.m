@@ -29,6 +29,7 @@
 #import "CDXImageFactory.h"
 #import "CDXAppSettings.h"
 #import "CDXSettingsViewController.h"
+#import "CDXCardDecks.h"
 
 
 @implementation CDXCardDecksListViewController
@@ -43,6 +44,11 @@
 - (void)dealloc {
     ivar_release_and_clear(cardDecks);
     [super dealloc];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [CDXStorage drainAllDeferredActions];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -118,7 +124,11 @@
 }
 
 - (void)pushCardDeckListViewControllerWithCardDeck:(CDXCardDeck *)deck {
-    CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck] autorelease];
+    if (deck == nil) {
+        return;
+    }
+    
+    CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
     CDXCardDeckListViewController *vc = [[[CDXCardDeckListViewController alloc] initWithCardDeckViewContext:context] autorelease];
     [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
 }
@@ -150,7 +160,12 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        CDXCardDeckBase *deck = [cardDecks cardDeckAtIndex:indexPath.row];
+        [CDXStorage removeStorageObject:deck.cardDeck deferred:NO];
+        
         [cardDecks removeCardDeckAtIndex:indexPath.row];
+        [cardDecks updateStorageObjectDeferred:YES];
+        
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self updateToolbarButtons];
     }
@@ -162,13 +177,18 @@
     [deck retain];
     [cardDecks removeCardDeckAtIndex:fromIndexPath.row];
     [cardDecks insertCardDeck:deck atIndex:toIndexPath.row];
+    [cardDecks updateStorageObjectDeferred:YES];
     [deck release];
 }
 
 - (IBAction)addButtonPressedDelayed {
     qltrace();
-    CDXCardDeck *deck = [cardDecks cardDeckWithDefaults];
+    CDXCardDeckBase *deck = [cardDecks cardDeckWithDefaults];
+    [deck.cardDeck updateStorageObjectDeferred:NO];
+
     [cardDecks addCardDeck:deck];
+    [cardDecks updateStorageObjectDeferred:NO];
+    
     NSIndexPath *path = [NSIndexPath indexPathForRow:[cardDecks cardDecksCount]-1 inSection:1];
     [viewTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
     [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];

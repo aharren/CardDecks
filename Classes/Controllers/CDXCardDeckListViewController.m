@@ -170,11 +170,15 @@
     cardDeckViewContext.currentCardIndex = indexPath.row;
     CDXCardDeckCardEditViewController *vc = [[[CDXCardDeckCardEditViewController alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
     [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+    
+    [cardDeckViewContext updateStorageObjectsDeferred:YES];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [cardDeck removeCardAtIndex:indexPath.row];
+        [cardDeckViewContext updateStorageObjectsDeferred:YES];
+        
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self updateToolbarButtons];
     }
@@ -183,6 +187,8 @@
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
     qltrace();
     [cardDeck moveCardAtIndex:fromIndexPath.row toIndex:toIndexPath.row];
+    [cardDeckViewContext updateStorageObjectsDeferred:YES];
+    
     [viewTableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.2];
 }
 
@@ -203,6 +209,8 @@
 - (IBAction)addButtonPressedDelayed {
     CDXCard *card = [cardDeck cardWithDefaults];
     [cardDeck addCard:card];
+    [cardDeckViewContext updateStorageObjectsDeferred:YES];
+    
     cardDeckViewContext.currentCardIndex = [cardDeck cardsCount]-1;
     NSIndexPath *path = [NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:1];
     [viewTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
@@ -228,10 +236,14 @@
     qltrace();
     cardDeckViewContext.currentCardIndex = [cardDeck cardsCount]-1;
     CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
+    deck.file = nil;
     [deck addCard:cardDeck.cardDefaults];
-    CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck] autorelease];
+    
+    CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:nil] autorelease];
     CDXCardDeckCardEditViewController *vc = [[[CDXCardDeckCardEditViewController alloc] initWithCardDeckViewContext:context] autorelease];
     [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+    
+    [cardDeck updateStorageObjectDeferred:YES];
 }
 
 - (IBAction)settingsButtonPressed {
@@ -239,6 +251,8 @@
     CDXCardDeckSettings *settings = [[[CDXCardDeckSettings alloc] initWithCardDeck:cardDeck] autorelease];
     CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings] autorelease];
     [self presentModalViewController:vc animated:YES];
+    
+    [cardDeck updateStorageObjectDeferred:YES];
 }
 
 - (IBAction)shuffleButtonPressed {
@@ -249,6 +263,8 @@
         [cardDeck shuffle];
         [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" timeInterval:0.8];
     }
+    [cardDeck updateStorageObjectDeferred:YES];
+    
     [self updateShuffleButton];
     [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
 }
