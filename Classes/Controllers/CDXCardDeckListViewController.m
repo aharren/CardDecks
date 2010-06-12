@@ -28,6 +28,7 @@
 #import "CDXCardDeckCardEditViewController.h"
 #import "CDXSettingsViewController.h"
 #import "CDXImageFactory.h"
+#import "CDXCardDecks.h"
 
 
 @implementation CDXCardDeckListViewController
@@ -272,6 +273,35 @@
 }
 
 - (IBAction)actionButtonPressed {
+    UIActionSheet *actionSheet = [[[UIActionSheet alloc]
+                                   initWithTitle:nil
+                                   delegate:self
+                                   cancelButtonTitle:@"Cancel"
+                                   destructiveButtonTitle:nil
+                                   otherButtonTitles:@"Duplicate Deck", nil]
+                                  autorelease];
+    actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+    [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        default:
+            break;
+        case 0: {
+            CDXCardDeck *deckCopy = [[cardDeck copy] autorelease];
+            deckCopy.name = [deckCopy.name stringByAppendingString:@" - Copy"];
+            [deckCopy updateStorageObjectDeferred:NO];
+            
+            CDXCardDeckBase *deckCopyBase = [[[CDXCardDeckBase alloc] initWithCardDeck:deckCopy] autorelease];
+            CDXCardDecks *decks = cardDeckViewContext.cardDecks;
+            [decks insertCardDeck:deckCopyBase atIndex:[decks indexOfCardDeck:cardDeck.base]];
+            [decks updateStorageObjectDeferred:NO];
+            
+            [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES];
+            break;
+        }
+    }
 }
 
 @end

@@ -28,7 +28,7 @@
 #import "CDXListViewControllerBase.h"
 
 
-@interface CDXCardDeckListViewController : CDXListViewControllerBase {
+@interface CDXCardDeckListViewController : CDXListViewControllerBase<UIActionSheetDelegate> {
     
 @protected
     CDXCardDeckViewContext *cardDeckViewContext;
