@@ -92,6 +92,9 @@
     for (CDXCard *card in cards) {
         [copy addCard:[[card copyWithZone:zone] autorelease]];
     }
+    if (isShuffled) {
+        copy.shuffleIndexes = shuffleIndexes;
+    }
     return copy;
 }
 
