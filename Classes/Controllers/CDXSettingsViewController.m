@@ -161,6 +161,7 @@
     static NSString *reuseIdentifierBoolean = @"BooleanCell";
     static NSString *reuseIdentifierEnumeration = @"EnumerationCell";
     static NSString *reuseIdentifierText = @"TextCell";
+    static NSString *reuseIdentifierSettings = @"SettingsCell";
     
     CDXSetting setting = [settings settingAtIndex:indexPath.row inGroup:indexPath.section];
     
@@ -227,6 +228,19 @@
             cellText.userInteractionEnabled = YES;
             return cell;
         }
+        case CDXSettingTypeSettings: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSettings];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSettings] autorelease];
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            } else {
+            }
+            cell.selectionStyle = self.tableView.scrollEnabled ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
+            cell.tag = setting.tag;
+            cell.textLabel.text = setting.label;
+            cell.imageView.image = [settings settingsImageForSettingWithTag:setting.tag];
+            return cell;
+        }
     }
 }
 
@@ -246,6 +260,15 @@
             UITableViewController *vc = [[[CDXSettingsEnumerationViewController alloc] initWithSettings:settings setting:setting] autorelease];
             vc.title = setting.label;
             [[self navigationController] pushViewController:vc animated:YES];
+            break;
+        }
+        case CDXSettingTypeSettings: {
+            NSObject<CDXSettings> *s = [settings settingsSettingsForSettingWithTag:setting.tag];
+            if (s != nil) {
+                UITableViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:s] autorelease];
+                [[self navigationController] pushViewController:vc animated:YES];
+            }
+            break;
         }
     }
 }

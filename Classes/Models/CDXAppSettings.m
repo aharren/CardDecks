@@ -139,5 +139,13 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
 - (void)setTextValue:(NSString *)value forSettingWithTag:(NSUInteger)tag {
 }
 
+- (UIImage *)settingsImageForSettingWithTag:(NSUInteger)tag {
+    return nil;
+}
+
+- (NSObject<CDXSettings> *)settingsSettingsForSettingWithTag:(NSUInteger)tag {
+    return nil;
+}
+
 @end
 

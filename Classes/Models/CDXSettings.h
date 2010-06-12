@@ -28,6 +28,7 @@ typedef enum {
     CDXSettingTypeBoolean,
     CDXSettingTypeEnumeration,
     CDXSettingTypeText,
+    CDXSettingTypeSettings,
     CDXSettingTypeCount
 } CDXSettingType;
 
@@ -59,6 +60,9 @@ typedef struct {
 
 - (NSString *)textValueForSettingWithTag:(NSUInteger)tag;
 - (void)setTextValue:(NSString *)value forSettingWithTag:(NSUInteger)tag;
+
+- (UIImage *)settingsImageForSettingWithTag:(NSUInteger)tag;
+- (NSObject<CDXSettings> *)settingsSettingsForSettingWithTag:(NSUInteger)tag;
 
 @end
 

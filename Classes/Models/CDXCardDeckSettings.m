@@ -231,5 +231,13 @@ static const CDXCardDeckSettingGroup groups[] = {
     }
 }
 
+- (UIImage *)settingsImageForSettingWithTag:(NSUInteger)tag {
+    return nil;
+}
+
+- (NSObject<CDXSettings> *)settingsSettingsForSettingWithTag:(NSUInteger)tag {
+    return nil;
+}
+
 @end
 
