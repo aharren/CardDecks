@@ -216,7 +216,7 @@
 }
 
 - (void)setShuffleIndexes:(NSMutableArray *)indexes {
-    ivar_assign(shuffleIndexes, [indexes copy]); // unchecked
+    ivar_assign(shuffleIndexes, [indexes mutableCopy]); // unchecked
     isShuffled = YES;
 }
 

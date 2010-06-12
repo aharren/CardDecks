@@ -296,6 +296,11 @@
     STAssertEqualObjects([[deck2 cardAtIndex:0] description], [card1s description], nil);
     STAssertEqualObjects([[deck2 cardAtIndex:1] description], [card2s description], nil);
     STAssertEqualObjects([[deck2 cardAtIndex:2] description], [card3s description], nil);
+    
+     // shuffle indexes should be mutable
+    [deck2 removeCardAtIndex:1];
+    STAssertEqualObjects([[deck2 cardAtIndex:0] description], [card1s description], nil);
+    STAssertEqualObjects([[deck2 cardAtIndex:1] description], [card3s description], nil);
 }
 
 - (void)testCardDeckFromDictionary {
