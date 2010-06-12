@@ -272,7 +272,7 @@
     CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings] autorelease];
     [self presentModalViewController:vc animated:YES];
     
-    [cardDeck updateStorageObjectDeferred:YES];
+    [cardDeckViewContext updateStorageObjectsDeferred:YES];
 }
 
 - (IBAction)shuffleButtonPressed {
