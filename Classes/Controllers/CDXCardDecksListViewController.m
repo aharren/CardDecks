@@ -123,27 +123,31 @@
     }
 }
 
-- (void)pushCardDeckListViewControllerWithCardDeck:(CDXCardDeck *)deck {
-    if (deck == nil) {
+- (void)pushCardDeckListViewControllerWithCardDeckBase:(CDXCardDeckBase *)deckBase {
+    if (deckBase == nil) {
         return;
     }
     
+    CDXCardDeck *deck = deckBase.cardDeck;
     CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
     CDXCardDeckListViewController *vc = [[[CDXCardDeckListViewController alloc] initWithCardDeckViewContext:context] autorelease];
     [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+    
+    [viewTableView deselectRowAtIndexPath:[viewTableView indexPathForSelectedRow] animated:YES];
+    [self performBlockingSelectorEnd];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    BOOL deselectRow = YES;
     switch (indexPath.section) {
         default:
         case 0: {
             break;
         }
         case 1: {
-            CDXCardDeck *deck = [cardDecks cardDeckAtIndex:indexPath.row].cardDeck;
-            [self pushCardDeckListViewControllerWithCardDeck:deck];
+            [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckBase:)
+                               withObject:[cardDecks cardDeckAtIndex:indexPath.row]];
+            deselectRow = NO;
             break;
         }
         case 2: {
@@ -151,10 +155,14 @@
                 default:
                 case 0: {
                     [self defaultsButtonPressed];
+                    deselectRow = NO;
                     break;
                 }
             }
         }
+    }
+    if (deselectRow) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
 
@@ -185,7 +193,7 @@
     qltrace();
     CDXCardDeckBase *deck = [cardDecks cardDeckWithDefaults];
     [deck.cardDeck updateStorageObjectDeferred:NO];
-
+    
     [cardDecks addCardDeck:deck];
     [cardDecks updateStorageObjectDeferred:NO];
     
@@ -211,7 +219,8 @@
 
 - (IBAction)defaultsButtonPressed {
     qltrace();
-    [self pushCardDeckListViewControllerWithCardDeck:cardDecks.cardDeckDefaults.cardDeck];
+    [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckBase:)
+                       withObject:cardDecks.cardDeckDefaults];
 }
 
 - (IBAction)settingsButtonPressed {

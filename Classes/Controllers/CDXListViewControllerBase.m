@@ -65,6 +65,12 @@
                                          target:nil
                                          action:nil]
                                         autorelease];
+    
+    ivar_assign(activityIndicator, [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]);
+    activityIndicator.hidesWhenStopped = YES;
+    navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
+                                          initWithCustomView:activityIndicator]
+                                         autorelease];
     self.toolbarItems = viewToolbar.items;
     ivar_assign_and_retain(tableCellTextFont, [UIFont boldSystemFontOfSize:18]);
     ivar_assign_and_retain(tableCellTextFontAction, [UIFont boldSystemFontOfSize:11]);
@@ -83,6 +89,7 @@
     ivar_release_and_clear(viewTableView);
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(editButton);
+    ivar_release_and_clear(activityIndicator);
     ivar_release_and_clear(tableCellTextFont);
     ivar_release_and_clear(tableCellTextFontAction);
     ivar_release_and_clear(tableCellTextTextColor);
@@ -98,8 +105,14 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self performBlockingSelectorEnd];
     [viewTableView reloadData];
     [self updateToolbarButtons];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self performBlockingSelectorEnd];
 }
 
 - (void)setUserInteractionEnabled:(BOOL)enabled {
@@ -183,6 +196,17 @@
 
 - (IBAction)bottomButtonPressed {
     [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self tableView:viewTableView numberOfRowsInSection:2]-1 inSection:2] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+}
+
+- (void)performBlockingSelector:(SEL)selector withObject:(NSObject *)object {
+    [self setUserInteractionEnabled:NO];
+    [activityIndicator startAnimating];
+    [self performSelector:selector withObject:object afterDelay:0.001];
+}
+
+- (void)performBlockingSelectorEnd {
+    [self setUserInteractionEnabled:YES];
+    [activityIndicator stopAnimating];
 }
 
 @end

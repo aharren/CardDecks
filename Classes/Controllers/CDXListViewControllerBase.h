@@ -33,6 +33,8 @@
     IBOutlet UIToolbar *viewToolbar;
     IBOutlet UIBarButtonItem *editButton;
     
+    UIActivityIndicatorView *activityIndicator;
+    
     UIFont *tableCellTextFont;
     UIFont *tableCellTextFontAction;
     UIColor *tableCellTextTextColor;
@@ -56,6 +58,9 @@
 - (void)updateToolbarButtons;
 - (IBAction)editButtonPressed;
 - (IBAction)bottomButtonPressed;
+
+- (void)performBlockingSelector:(SEL)selector withObject:(NSObject *)object;
+- (void)performBlockingSelectorEnd;
 
 @end
 

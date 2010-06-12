@@ -143,9 +143,16 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+- (void)pushCardDeckCardViewControllerWithViewContext:(CDXCardDeckViewContext *)viewContext {
+    CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:viewContext] autorelease];
+    [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
     
+    [viewTableView deselectRowAtIndexPath:[viewTableView indexPathForSelectedRow] animated:YES];
+    [self performBlockingSelectorEnd];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    BOOL deselectRow = YES;
     switch (indexPath.section) {
         default:
         case 0: {
@@ -153,8 +160,9 @@
         }
         case 1: {
             cardDeckViewContext.currentCardIndex = indexPath.row;
-            CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-            [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+            [self performBlockingSelector:@selector(pushCardDeckCardViewControllerWithViewContext:)
+                               withObject:cardDeckViewContext];
+            deselectRow = NO;
             break;
         }
         case 2: {
@@ -162,19 +170,30 @@
                 default:
                 case 0: {
                     [self defaultsButtonPressed];
+                    deselectRow = NO;
                     break;
                 }
             }
         }
     }
+    if (deselectRow) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
+
+- (void)pushCardDeckEditViewControllerWithViewContext:(CDXCardDeckViewContext *)viewContext {
+    CDXCardDeckCardEditViewController *vc = [[[CDXCardDeckCardEditViewController alloc] initWithCardDeckViewContext:viewContext] autorelease];
+    [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+    
+    [cardDeckViewContext updateStorageObjectsDeferred:YES];
+    
+    [self performBlockingSelectorEnd];
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     cardDeckViewContext.currentCardIndex = indexPath.row;
-    CDXCardDeckCardEditViewController *vc = [[[CDXCardDeckCardEditViewController alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
-    
-    [cardDeckViewContext updateStorageObjectsDeferred:YES];
+    [self performBlockingSelector:@selector(pushCardDeckEditViewControllerWithViewContext:)
+                       withObject:cardDeckViewContext];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -243,10 +262,8 @@
     [deck addCard:cardDeck.cardDefaults];
     
     CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:nil] autorelease];
-    CDXCardDeckCardEditViewController *vc = [[[CDXCardDeckCardEditViewController alloc] initWithCardDeckViewContext:context] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
-    
-    [cardDeck updateStorageObjectDeferred:YES];
+    [self performBlockingSelector:@selector(pushCardDeckEditViewControllerWithViewContext:)
+                       withObject:context];
 }
 
 - (IBAction)settingsButtonPressed {
