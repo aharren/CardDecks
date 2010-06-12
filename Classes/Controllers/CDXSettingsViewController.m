@@ -163,6 +163,7 @@
     static NSString *reuseIdentifierEnumeration = @"EnumerationCell";
     static NSString *reuseIdentifierText = @"TextCell";
     static NSString *reuseIdentifierSettings = @"SettingsCell";
+    static NSString *reuseIdentifierURLAction = @"URLActionCell";
     
     CDXSetting setting = [settings settingAtIndex:indexPath.row inGroup:indexPath.section];
     
@@ -242,6 +243,18 @@
             cell.imageView.image = [settings settingsImageForSettingWithTag:setting.tag];
             return cell;
         }
+        case CDXSettingTypeURLAction: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierURLAction];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierURLAction] autorelease];
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            } else {
+            }
+            cell.selectionStyle = self.tableView.scrollEnabled ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
+            cell.tag = setting.tag;
+            cell.textLabel.text = setting.label;
+            return cell;
+        }
     }
 }
 
@@ -268,6 +281,13 @@
             if (s != nil) {
                 UITableViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:s] autorelease];
                 [[self navigationController] pushViewController:vc animated:YES];
+            }
+            break;
+        }
+        case CDXSettingTypeURLAction: {
+            NSString *url = [settings urlActionURLForSettingWithTag:setting.tag];
+            if (url != nil) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
             }
             break;
         }

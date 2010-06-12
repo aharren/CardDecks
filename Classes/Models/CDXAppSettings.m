@@ -151,5 +151,9 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
     return nil;
 }
 
+- (NSString *)urlActionURLForSettingWithTag:(NSUInteger)tag {
+    return nil;
+}
+
 @end
 
