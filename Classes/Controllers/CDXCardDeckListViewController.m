@@ -278,7 +278,7 @@
                                    delegate:self
                                    cancelButtonTitle:@"Cancel"
                                    destructiveButtonTitle:nil
-                                   otherButtonTitles:@"Duplicate Deck", nil]
+                                   otherButtonTitles:@"Email Deck", @"Duplicate Deck", nil]
                                   autorelease];
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     [actionSheet showInView:self.view];
@@ -288,7 +288,9 @@
     switch (buttonIndex) {
         default:
             break;
-        case 0: {
+        case 0:
+            break;
+        case 1: {
             CDXCardDeck *deckCopy = [[cardDeck copy] autorelease];
             deckCopy.name = [deckCopy.name stringByAppendingString:@" - Copy"];
             [deckCopy updateStorageObjectDeferred:NO];
