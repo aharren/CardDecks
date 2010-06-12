@@ -84,6 +84,14 @@
     [cardDecks removeObjectAtIndex:index];
 }
 
+- (NSUInteger)indexOfCardDeck:(CDXCardDeckBase *)cardDeck {
+    NSUInteger index = [cardDecks indexOfObject:cardDeck];
+    if (index != NSNotFound) {
+        return index;
+    }
+    return 0;
+}
+
 - (CDXCardDeckBase *)cardDeckWithDefaults {
     return [[[CDXCardDeckBase alloc] initWithCardDeck:[[cardDeckDefaults.cardDeck copy] autorelease]] autorelease];
 }

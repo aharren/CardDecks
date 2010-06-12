@@ -44,6 +44,7 @@
 - (void)addCardDeck:(CDXCardDeckBase *)cardDeck;
 - (void)insertCardDeck:(CDXCardDeckBase *)cardDeck atIndex:(NSUInteger)index;
 - (void)removeCardDeckAtIndex:(NSUInteger)index;
+- (NSUInteger)indexOfCardDeck:(CDXCardDeckBase *)cardDeck;
 
 - (CDXCardDeckBase *)cardDeckWithDefaults;
 
