@@ -223,6 +223,10 @@ static float keyboardExtensionsOsVersion;
     [self activateKeyboardExtension:nil tag:-1];
 }
 
+- (void)removeResponder {
+    ivar_release_and_clear(responder);
+}
+
 - (UIWindow *)keyboardWindow {
     // try to find the keyboard's window
     NSArray *applicationWindows = [[UIApplication sharedApplication] windows];

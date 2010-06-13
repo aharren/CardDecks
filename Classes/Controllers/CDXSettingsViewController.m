@@ -120,7 +120,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:nil keyboardExtensions:nil];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] removeResponder];
     [super viewWillDisappear:animated];
 }
 

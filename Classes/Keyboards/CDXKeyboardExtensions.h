@@ -69,6 +69,7 @@ declare_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
 @property (nonatomic, copy) NSArray *keyboardExtensions;
 
 - (void)setResponder:(NSObject *)responder keyboardExtensions:(NSArray *)keyboardExtensions;
+- (void)removeResponder;
 
 - (void)setEnabled:(BOOL)enabled;
 

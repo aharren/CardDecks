@@ -100,7 +100,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self finishCardModification];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:nil keyboardExtensions:nil];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] removeResponder];
     [super viewWillDisappear:animated];
 }
 
