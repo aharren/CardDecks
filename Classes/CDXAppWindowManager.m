@@ -104,7 +104,7 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 }
 
 - (void)popFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     navigationController.view.frame = [[UIScreen mainScreen] applicationFrame];
     navigationView.userInteractionEnabled = YES;
 }
