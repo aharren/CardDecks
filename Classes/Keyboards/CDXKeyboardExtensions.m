@@ -33,6 +33,8 @@ synthesize_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
 @synthesize responder;
 @synthesize keyboardExtensions;
 
+static float keyboardExtensionsOsVersion;
+
 - (id)init {
     if ((self = [super init])) {
         ivar_assign(toolbar, [[UIToolbar alloc] init]);
@@ -43,6 +45,7 @@ synthesize_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
         enabled = NO;
         visible = NO;
         activeExtensionTag = -1;
+        keyboardExtensionsOsVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
     }
     
     return self;
@@ -74,15 +77,32 @@ synthesize_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
 }
 
 - (void)setToolbarHidden:(BOOL)hidden notification:(NSNotification *)notification {
-    // get animation information for the keyboard
     CGRect keyboardBounds;
-    [[notification.userInfo valueForKey:UIKeyboardBoundsUserInfoKey] getValue:&keyboardBounds];
+    CGPoint keyboardAnimationStartPoint;
+    CGPoint keyboardAnimationEndPoint;
+    
+    // get animation information for the keyboard
     double keyboardAnimationDuration;
     [[notification.userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&keyboardAnimationDuration];
-    CGPoint keyboardAnimationStartPoint;
-    [[notification.userInfo valueForKey:UIKeyboardCenterBeginUserInfoKey] getValue:&keyboardAnimationStartPoint];
-    CGPoint keyboardAnimationEndPoint;
-    [[notification.userInfo valueForKey:UIKeyboardCenterEndUserInfoKey] getValue:&keyboardAnimationEndPoint];
+    if (keyboardExtensionsOsVersion >= 3.2) {
+        qltrace(@"FrameBegin");
+        CGRect keyboardAnimationStartFrame;
+        [[notification.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue:&keyboardAnimationStartFrame];
+        CGRect keyboardAnimationEndFrame;
+        [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardAnimationEndFrame];
+        keyboardAnimationEndPoint.x = keyboardAnimationEndFrame.origin.x + keyboardAnimationEndFrame.size.width / 2;
+        keyboardAnimationEndPoint.y = keyboardAnimationEndFrame.origin.y + keyboardAnimationEndFrame.size.height / 2;
+        keyboardAnimationStartPoint.x = keyboardAnimationStartFrame.origin.x + keyboardAnimationStartFrame.size.width / 2;
+        keyboardAnimationStartPoint.y = keyboardAnimationStartFrame.origin.y + keyboardAnimationStartFrame.size.height / 2;
+        keyboardBounds.origin = CGPointMake(0, 0);
+        keyboardBounds.size = CGSizeMake(MAX(keyboardAnimationStartFrame.size.width, keyboardAnimationEndFrame.size.width),
+                                         MAX(keyboardAnimationStartFrame.size.height, keyboardAnimationEndFrame.size.height));
+    } else {
+        qltrace(@"KeyboardBounds");
+        [[notification.userInfo valueForKey:UIKeyboardBoundsUserInfoKey] getValue:&keyboardBounds];
+        [[notification.userInfo valueForKey:UIKeyboardCenterBeginUserInfoKey] getValue:&keyboardAnimationStartPoint];
+        [[notification.userInfo valueForKey:UIKeyboardCenterEndUserInfoKey] getValue:&keyboardAnimationEndPoint];
+    }
     
     // animate the toolbar?
     BOOL keyboardAnimationHasYDistance = keyboardAnimationStartPoint.y != keyboardAnimationEndPoint.y;
