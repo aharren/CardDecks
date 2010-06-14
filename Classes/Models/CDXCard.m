@@ -26,7 +26,7 @@
 #import "CDXCard.h"
 
 #undef ql_component
-#define ql_component lcl_cCDXModel
+#define ql_component lcl_cModel
 
 
 @implementation CDXCard

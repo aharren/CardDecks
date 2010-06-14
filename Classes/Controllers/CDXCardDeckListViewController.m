@@ -30,6 +30,9 @@
 #import "CDXImageFactory.h"
 #import "CDXCardDecks.h"
 
+#undef ql_component
+#define ql_component lcl_cController
+
 
 @implementation CDXCardDeckListViewController
 

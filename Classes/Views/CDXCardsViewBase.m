@@ -26,7 +26,7 @@
 #import "CDXCardsViewBase.h"
 
 #undef ql_component
-#define ql_component lcl_cCDXCardsViewBase
+#define ql_component lcl_cView
 
 
 @implementation CDXCardsViewBase

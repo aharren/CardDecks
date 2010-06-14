@@ -28,7 +28,7 @@
 #import <sys/time.h>
 
 #undef ql_component
-#define ql_component lcl_cCDXStorage
+#define ql_component lcl_cStorage
 
 
 static NSMutableArray *storageDeferredUpdates = nil;

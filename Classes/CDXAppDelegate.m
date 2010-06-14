@@ -30,11 +30,11 @@
 #import "CDXDictionarySerializerUtils.h"
 #import "CDXCardDecks.h"
 
+#undef ql_component
+#define ql_component lcl_cApplication
+
 
 @implementation CDXAppDelegate
-
-#undef ql_component
-#define ql_component lcl_cCDXAppDelegate
 
 - (void)addDefaultCardDecks:(CDXCardDecks *)decks {
     CDXCardDeck *base;

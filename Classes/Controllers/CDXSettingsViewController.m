@@ -27,6 +27,9 @@
 #import "CDXKeyboardExtensions.h"
 #import "CDXSymbolsKeyboardExtension.h"
 
+#undef ql_component
+#define ql_component lcl_cController
+
 
 @interface CDXSettingsEnumerationViewController : UITableViewController {
     

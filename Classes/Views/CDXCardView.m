@@ -26,6 +26,9 @@
 #import "CDXCardView.h"
 #import <QuartzCore/QuartzCore.h>
 
+#undef ql_component
+#define ql_component lcl_cView
+
 
 @implementation CDXCardView
 

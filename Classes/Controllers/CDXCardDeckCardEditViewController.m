@@ -25,6 +25,9 @@
 
 #import "CDXCardDeckCardEditViewController.h"
 
+#undef ql_component
+#define ql_component lcl_cController
+
 
 @implementation CDXCardDeckCardEditViewController
 

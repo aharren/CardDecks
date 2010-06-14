@@ -28,7 +28,7 @@
 #import "CDXDictionarySerializerUtils.h"
 
 #undef ql_component
-#define ql_component lcl_cCDXModel
+#define ql_component lcl_cModel
 
 
 @implementation CDXCardDecks

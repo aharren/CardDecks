@@ -27,7 +27,7 @@
 #import "CDXImageFactory.h"
 
 #undef ql_component
-#define ql_component lcl_cCDXCardsStackSwipeView
+#define ql_component lcl_cView
 
 
 @implementation CDXCardsStackSwipeView

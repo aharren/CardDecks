@@ -24,19 +24,15 @@
 // THE SOFTWARE.
 
 
-_lcl_component(CDXMain,                                 "main",                 "Main")
+_lcl_component(Main,            "main",         "Main")
 
-_lcl_component(CDXObjectCache,                          "cache",                "ObjectCache")
+_lcl_component(Application,     "application",  "AppDelegate")
 
-_lcl_component(CDXAppDelegate,                          "application",          "AppDelegate")
-_lcl_component(CDXAppWindowManager,                     "application",          "AppWindowManager")
+_lcl_component(Storage,         "storage",      "Storage")
+_lcl_component(Cache,           "cache",        "Cache")
+_lcl_component(Image,           "image",        "Image")
 
-_lcl_component(CDXModel,                                "model",                "Model")
+_lcl_component(Controller,      "controller",   "Controller")
+_lcl_component(Model,           "model",        "Model")
+_lcl_component(View,            "view",         "View")
 
-_lcl_component(CDXCardDeckCardViewController,           "cardview",             "CardView")
-_lcl_component(CDXCardsViewBase,                        "cardview",             "CardView")
-_lcl_component(CDXCardsSideBySideView,                  "cardview",             "CardView")
-_lcl_component(CDXCardsStackView,                       "cardview",             "CardView")
-_lcl_component(CDXCardsStackSwipeView,                  "cardview",             "CardView")
-
-_lcl_component(CDXStorage,                              "storage",              "Storage")

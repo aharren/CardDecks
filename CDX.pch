@@ -33,7 +33,7 @@
 #define _LCL_NO_LOGGING
 #endif
 #import "lcl.h"
-#define ql_component lcl_cCDXMain
+#define ql_component lcl_cMain
 
 // Macros.
 #import "CDXMacros.h"

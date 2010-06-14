@@ -26,6 +26,9 @@
 #import "CDXImageFactory.h"
 #include <QuartzCore/QuartzCore.h>
 
+#undef ql_component
+#define ql_component lcl_cImage
+
 
 @implementation CDXImageFactory
 
