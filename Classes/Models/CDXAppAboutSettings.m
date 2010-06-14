@@ -58,19 +58,6 @@ static const CDXAppSettingGroup groups[] = {
 
 synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
 
-+ (BOOL)userDefaultsBooleanValueForKey:(NSString *)key defaults:(BOOL)defaults {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if ([userDefaults objectForKey:key] == nil) {
-        return defaults;
-    }
-    return [userDefaults boolForKey:key];
-}
-
-+ (void)setUserDefaultsBooleanValue:(BOOL)value forKey:(NSString *)key {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];    
-    [userDefaults setBool:value forKey:key];
-}
-
 - (NSString *)title {
     return @"About";
 }
