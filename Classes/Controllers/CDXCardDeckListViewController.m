@@ -229,6 +229,7 @@
 - (void)updateToolbarButtons {
     [super updateToolbarButtons];
     [self updateShuffleButton];
+    actionButton.enabled = ([self tableView:viewTableView numberOfRowsInSection:1] != 0);
 }
 
 - (IBAction)addButtonPressedDelayed {
