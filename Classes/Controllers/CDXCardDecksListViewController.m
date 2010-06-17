@@ -176,7 +176,7 @@
         [CDXStorage removeStorageObject:deck.cardDeck deferred:NO];
         
         [cardDecks removeCardDeckAtIndex:indexPath.row];
-        [cardDecks updateStorageObjectDeferred:YES];
+        [cardDecks updateStorageObjectDeferred:NO];
         
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self updateToolbarButtons];
