@@ -216,7 +216,7 @@
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifierText] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                cellText = [[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 170, 24)] autorelease];
+                cellText = [[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 170, 22)] autorelease];
                 [cellText addTarget:self action:@selector(textStartedEditing:) forControlEvents:UIControlEventEditingDidBegin];
                 [cellText addTarget:self action:@selector(textValueChanged:) forControlEvents:UIControlEventEditingDidEnd];
                 [cellText addTarget:self action:@selector(textValueChanged:) forControlEvents:UIControlEventEditingDidEndOnExit];
