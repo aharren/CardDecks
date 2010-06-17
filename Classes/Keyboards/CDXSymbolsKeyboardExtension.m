@@ -24,7 +24,10 @@
 // THE SOFTWARE.
 
 #import "CDXSymbolsKeyboardExtension.h"
+#import "CDXAppSettings.h"
 
+
+static BOOL symbolsUseAllSymbols = NO;
 
 @implementation CDXSymbolsKeyboardExtension
 
@@ -36,6 +39,8 @@ synthesize_singleton(sharedSymbolsKeyboardExtension, CDXSymbolsKeyboardExtension
 }
 
 - (void)keyboardExtensionInitialize {
+    symbolsUseAllSymbols = [[CDXAppSettings sharedAppSettings] enableAllKeyboardSymbols];
+    [viewController reset];
 }
 
 - (NSString *)keyboardExtensionTitle {
@@ -248,16 +253,9 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     { 0x2150, 0x2150 +  8*7, @"Number Forms" }
 };
 
-static BOOL symbolsUseAllSymbolsInitialized = NO;
-static BOOL symbolsUseAllSymbols = 0;
-
 @implementation CDXSymbolsKeyboardExtensionBlocks
 
 + (NSUInteger)count {
-    if (!symbolsUseAllSymbolsInitialized) {
-        symbolsUseAllSymbols = NO;
-        symbolsUseAllSymbolsInitialized = YES;
-    }
     if (symbolsUseAllSymbols) {
         return sizeof(symbolsBlocksAll)/sizeof(CDXSymbolsKeyboardExtensionBlockStruct);
     } else {
@@ -266,10 +264,6 @@ static BOOL symbolsUseAllSymbols = 0;
 }
 
 + (CDXSymbolsKeyboardExtensionBlockStruct *)blockByIndex:(NSUInteger)index {
-    if (!symbolsUseAllSymbolsInitialized) {
-        symbolsUseAllSymbols = YES;
-        symbolsUseAllSymbolsInitialized = YES;
-    }
     if (symbolsUseAllSymbols) {
         if (index < sizeof(symbolsBlocksAll)/sizeof(CDXSymbolsKeyboardExtensionBlockStruct)) {
             return &symbolsBlocksAll[index];
@@ -300,6 +294,7 @@ static BOOL symbolsUseAllSymbols = 0;
 - (void)reset {
     [self popToRootViewControllerAnimated:NO];
     CDXSymbolsKeyboardExtensionTableViewController *tvc = (CDXSymbolsKeyboardExtensionTableViewController *)[[self viewControllers] objectAtIndex:0];
+    [[tvc tableView] reloadData];
     [[tvc tableView] scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 

@@ -33,18 +33,21 @@
 enum {
     CDXAppSettingsAbout,
     CDXAppSettingsIdleTimer,
+    CDXAppSettingsAllSymbols,
     CDXAppSettingsCount
 };
 
 static const CDXSetting settings[] = {
     { CDXAppSettingsAbout, CDXSettingTypeSettings, @"About Card Decks" },
     { CDXAppSettingsIdleTimer, CDXSettingTypeBoolean, @"Idle Timer" },
+    { CDXAppSettingsAllSymbols, CDXSettingTypeBoolean, @"Full Symbol Table" },
     { 0, 0, @"" }
 };
 
 static NSString *settingsUserDefaultsKeys[] = {
     nil,
     @"enable_idle_timer",
+    @"enable_all_symbols",
     nil
 };
 
@@ -57,6 +60,7 @@ typedef struct {
 static const CDXAppSettingGroup groups[] = {
     { @"", 1, CDXAppSettingsAbout },
     { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
+    { @"Keyboards", 1, CDXAppSettingsAllSymbols },
     { @"", 0, 0 }
 };
 
@@ -80,6 +84,10 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
 
 - (BOOL)enableIdleTimer {
     return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsIdleTimer] defaults:NO];
+}
+
+- (BOOL)enableAllKeyboardSymbols {
+    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsAllSymbols] defaults:NO];
 }
 
 - (NSString *)title {
@@ -113,6 +121,8 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
             return NO;
         case CDXAppSettingsIdleTimer:
             return [self enableIdleTimer];
+        case CDXAppSettingsAllSymbols:
+            return [self enableAllKeyboardSymbols];
     }
 }
 
@@ -121,6 +131,7 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
         default:
             break;
         case CDXAppSettingsIdleTimer:
+        case CDXAppSettingsAllSymbols:
             [CDXAppSettings setUserDefaultsBooleanValue:value forKey:settingsUserDefaultsKeys[tag]];
             break;
     }

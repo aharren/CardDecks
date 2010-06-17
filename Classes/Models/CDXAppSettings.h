@@ -33,6 +33,7 @@
 declare_singleton(sharedAppSettings, CDXAppSettings);
 
 - (BOOL)enableIdleTimer;
+- (BOOL)enableAllKeyboardSymbols;
 
 @end
 
