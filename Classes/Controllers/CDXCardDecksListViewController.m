@@ -132,10 +132,11 @@
     }
     
     CDXCardDeck *deck = deckBase.cardDeck;
-    CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
-    CDXCardDeckListViewController *vc = [[[CDXCardDeckListViewController alloc] initWithCardDeckViewContext:context] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
-    
+    if (deck != nil) {
+        CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
+        CDXCardDeckListViewController *vc = [[[CDXCardDeckListViewController alloc] initWithCardDeckViewContext:context] autorelease];
+        [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+    }
     [viewTableView deselectRowAtIndexPath:[viewTableView indexPathForSelectedRow] animated:YES];
     [self performBlockingSelectorEnd];
 }
