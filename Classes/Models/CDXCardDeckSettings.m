@@ -138,6 +138,7 @@ static const CDXCardDeckSettingGroup groups[] = {
             cardDeck.wantsShakeShuffle = value;
             break;
     }
+    [cardDeck updateStorageObjectDeferred:YES];
 }
 
 - (NSUInteger)enumerationValueForSettingWithTag:(NSUInteger)tag {
@@ -167,6 +168,7 @@ static const CDXCardDeckSettingGroup groups[] = {
             cardDeck.groupSize = value;
             break;
     }
+    [cardDeck updateStorageObjectDeferred:YES];
 }
 
 - (NSUInteger)enumerationValuesCountForSettingWithTag:(NSUInteger)tag {
@@ -233,6 +235,7 @@ static const CDXCardDeckSettingGroup groups[] = {
             cardDeck.name = value;
             break;
     }
+    [cardDeck updateStorageObjectDeferred:YES];
 }
 
 - (UIImage *)settingsImageForSettingWithTag:(NSUInteger)tag {
