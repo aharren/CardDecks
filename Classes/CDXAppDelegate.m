@@ -117,5 +117,10 @@
     [CDXStorage drainAllDeferredActions];
 }
 
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    qltrace();
+    [CDXStorage drainAllDeferredActions];
+}
+
 @end
 
