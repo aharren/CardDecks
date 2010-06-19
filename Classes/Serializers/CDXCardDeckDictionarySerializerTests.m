@@ -93,8 +93,8 @@
     CDXCard *card;
     card = [deck cardWithDefaults];
     card.text = @"Card1:Text";
-    card.textColor = [CDXColor colorWithRGBAString:@"12345678" defaulsTo:nil];
-    card.backgroundColor = [CDXColor colorWithRGBAString:@"22345678" defaulsTo:nil];
+    card.textColor = [CDXColor colorWithRGBAString:@"12345678" defaultsTo:nil];
+    card.backgroundColor = [CDXColor colorWithRGBAString:@"22345678" defaultsTo:nil];
     card.orientation = CDXCardOrientationUp;
     card.cornerStyle = CDXCardCornerStyleRounded;
     card.fontSize = 1;
@@ -102,8 +102,8 @@
     
     card = [deck cardWithDefaults];
     card.text = @"Card2:Text";
-    card.textColor = [CDXColor colorWithRGBAString:@"32345678" defaulsTo:nil];
-    card.backgroundColor = [CDXColor colorWithRGBAString:@"42345678" defaulsTo:nil];
+    card.textColor = [CDXColor colorWithRGBAString:@"32345678" defaultsTo:nil];
+    card.backgroundColor = [CDXColor colorWithRGBAString:@"42345678" defaultsTo:nil];
     card.orientation = CDXCardOrientationLeft;
     card.cornerStyle = CDXCardCornerStyleRounded;
     card.fontSize = 2;
@@ -111,8 +111,8 @@
     
     card = [deck cardDefaults];
     card.text = @"Defaults:Text";
-    card.textColor = [CDXColor colorWithRGBAString:@"52345678" defaulsTo:nil];
-    card.backgroundColor = [CDXColor colorWithRGBAString:@"62345678" defaulsTo:nil];
+    card.textColor = [CDXColor colorWithRGBAString:@"52345678" defaultsTo:nil];
+    card.backgroundColor = [CDXColor colorWithRGBAString:@"62345678" defaultsTo:nil];
     card.orientation = CDXCardOrientationDown;
     card.cornerStyle = CDXCardCornerStyleCornered;
     card.fontSize = 3;
@@ -139,8 +139,8 @@
     CDXCard *card;
     card = [deck cardWithDefaults];
     card.text = @"Card1:TextReverse";
-    card.textColor = [CDXColor colorWithRGBAString:@"12345678" defaulsTo:nil];
-    card.backgroundColor = [CDXColor colorWithRGBAString:@"22345678" defaulsTo:nil];
+    card.textColor = [CDXColor colorWithRGBAString:@"12345678" defaultsTo:nil];
+    card.backgroundColor = [CDXColor colorWithRGBAString:@"22345678" defaultsTo:nil];
     card.orientation = CDXCardOrientationUp;
     card.cornerStyle = CDXCardCornerStyleCornered;
     card.fontSize = 1;
@@ -148,8 +148,8 @@
     
     card = [deck cardWithDefaults];
     card.text = @"Card2:TextReverse";
-    card.textColor = [CDXColor colorWithRGBAString:@"32345678" defaulsTo:nil];
-    card.backgroundColor = [CDXColor colorWithRGBAString:@"42345678" defaulsTo:nil];
+    card.textColor = [CDXColor colorWithRGBAString:@"32345678" defaultsTo:nil];
+    card.backgroundColor = [CDXColor colorWithRGBAString:@"42345678" defaultsTo:nil];
     card.orientation = CDXCardOrientationLeft;
     card.cornerStyle = CDXCardCornerStyleRounded;
     card.fontSize = 2;
@@ -157,8 +157,8 @@
     
     card = [deck cardDefaults];
     card.text = @"Defaults:TextReverse";
-    card.textColor = [CDXColor colorWithRGBAString:@"52345678" defaulsTo:nil];
-    card.backgroundColor = [CDXColor colorWithRGBAString:@"62345678" defaulsTo:nil];
+    card.textColor = [CDXColor colorWithRGBAString:@"52345678" defaultsTo:nil];
+    card.backgroundColor = [CDXColor colorWithRGBAString:@"62345678" defaultsTo:nil];
     card.orientation = CDXCardOrientationDown;
     card.cornerStyle = CDXCardCornerStyleCornered;
     card.fontSize = 3;
@@ -188,24 +188,24 @@
     CDXCard *card;
     card = [deck cardAtCardsIndex:0];
     STAssertEqualObjects(card.text, @"Card1:Text", nil);
-    STAssertEqualObjects(card.textColor, [CDXColor colorWithRGBAString:@"12345678" defaulsTo:nil], nil);
-    STAssertEqualObjects(card.backgroundColor, [CDXColor colorWithRGBAString:@"22345678" defaulsTo:nil], nil);
+    STAssertEqualObjects(card.textColor, [CDXColor colorWithRGBAString:@"12345678" defaultsTo:nil], nil);
+    STAssertEqualObjects(card.backgroundColor, [CDXColor colorWithRGBAString:@"22345678" defaultsTo:nil], nil);
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationUp, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleCornered, nil);
     STAssertEquals(card.fontSize, (CGFloat)1, nil);
     
     card = [deck cardAtCardsIndex:1];
     STAssertEqualObjects(card.text, @"Card2:Text", nil);
-    STAssertEqualObjects(card.textColor, [CDXColor colorWithRGBAString:@"32345678" defaulsTo:nil], nil);
-    STAssertEqualObjects(card.backgroundColor, [CDXColor colorWithRGBAString:@"42345678" defaulsTo:nil], nil);
+    STAssertEqualObjects(card.textColor, [CDXColor colorWithRGBAString:@"32345678" defaultsTo:nil], nil);
+    STAssertEqualObjects(card.backgroundColor, [CDXColor colorWithRGBAString:@"42345678" defaultsTo:nil], nil);
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationLeft, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleCornered, nil);
     STAssertEquals(card.fontSize, (CGFloat)2, nil);
     
     card = [deck cardDefaults];
     STAssertEqualObjects(card.text, @"Defaults:Text", nil);
-    STAssertEqualObjects(card.textColor, [CDXColor colorWithRGBAString:@"52345678" defaulsTo:nil], nil);
-    STAssertEqualObjects(card.backgroundColor, [CDXColor colorWithRGBAString:@"62345678" defaulsTo:nil], nil);
+    STAssertEqualObjects(card.textColor, [CDXColor colorWithRGBAString:@"52345678" defaultsTo:nil], nil);
+    STAssertEqualObjects(card.backgroundColor, [CDXColor colorWithRGBAString:@"62345678" defaultsTo:nil], nil);
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationDown, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleCornered, nil);
     STAssertEquals(card.fontSize, (CGFloat)3, nil);
@@ -231,24 +231,24 @@
     CDXCard *card;
     card = [deck cardAtCardsIndex:0];
     STAssertEqualObjects(card.text, @"Card1:TextReverse", nil);
-    STAssertEqualObjects(card.textColor, [CDXColor colorWithRGBAString:@"12345678" defaulsTo:nil], nil);
-    STAssertEqualObjects(card.backgroundColor, [CDXColor colorWithRGBAString:@"22345678" defaulsTo:nil], nil);
+    STAssertEqualObjects(card.textColor, [CDXColor colorWithRGBAString:@"12345678" defaultsTo:nil], nil);
+    STAssertEqualObjects(card.backgroundColor, [CDXColor colorWithRGBAString:@"22345678" defaultsTo:nil], nil);
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationUp, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleRounded, nil);
     STAssertEquals(card.fontSize, (CGFloat)1, nil);
     
     card = [deck cardAtCardsIndex:1];
     STAssertEqualObjects(card.text, @"Card2:TextReverse", nil);
-    STAssertEqualObjects(card.textColor, [CDXColor colorWithRGBAString:@"32345678" defaulsTo:nil], nil);
-    STAssertEqualObjects(card.backgroundColor, [CDXColor colorWithRGBAString:@"42345678" defaulsTo:nil], nil);
+    STAssertEqualObjects(card.textColor, [CDXColor colorWithRGBAString:@"32345678" defaultsTo:nil], nil);
+    STAssertEqualObjects(card.backgroundColor, [CDXColor colorWithRGBAString:@"42345678" defaultsTo:nil], nil);
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationLeft, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleRounded, nil);
     STAssertEquals(card.fontSize, (CGFloat)2, nil);
     
     card = [deck cardDefaults];
     STAssertEqualObjects(card.text, @"Defaults:TextReverse", nil);
-    STAssertEqualObjects(card.textColor, [CDXColor colorWithRGBAString:@"52345678" defaulsTo:nil], nil);
-    STAssertEqualObjects(card.backgroundColor, [CDXColor colorWithRGBAString:@"62345678" defaulsTo:nil], nil);
+    STAssertEqualObjects(card.textColor, [CDXColor colorWithRGBAString:@"52345678" defaultsTo:nil], nil);
+    STAssertEqualObjects(card.backgroundColor, [CDXColor colorWithRGBAString:@"62345678" defaultsTo:nil], nil);
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationDown, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleRounded, nil);
     STAssertEquals(card.fontSize, (CGFloat)3, nil);

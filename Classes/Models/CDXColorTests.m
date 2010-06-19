@@ -60,7 +60,7 @@
 }
 
 - (void)testColorWithString6Numbers {
-    CDXColor *color = [CDXColor colorWithRGBAString:@"123456" defaulsTo:nil];
+    CDXColor *color = [CDXColor colorWithRGBAString:@"123456" defaultsTo:nil];
     STAssertEquals((int)[color red], 0x12, nil);
     STAssertEquals((int)[color green], 0x34, nil);
     STAssertEquals((int)[color blue], 0x56, nil);
@@ -68,7 +68,7 @@
 }
 
 - (void)testColorWithString6LowerCaseCharacters {
-    CDXColor *color = [CDXColor colorWithRGBAString:@"fdabcd" defaulsTo:nil];
+    CDXColor *color = [CDXColor colorWithRGBAString:@"fdabcd" defaultsTo:nil];
     STAssertEquals((int)[color red], 0xfd, nil);
     STAssertEquals((int)[color green], 0xab, nil);
     STAssertEquals((int)[color blue], 0xcd, nil);
@@ -76,7 +76,7 @@
 }
 
 - (void)testColorWithString6UpperCaseCharacters {
-    CDXColor *color = [CDXColor colorWithRGBAString:@"ABCDEF" defaulsTo:nil];
+    CDXColor *color = [CDXColor colorWithRGBAString:@"ABCDEF" defaultsTo:nil];
     STAssertEquals((int)[color red], 0xab, nil);
     STAssertEquals((int)[color green], 0xcd, nil);
     STAssertEquals((int)[color blue], 0xef, nil);
@@ -84,7 +84,7 @@
 }
 
 - (void)testColorWithString8Numbers {
-    CDXColor *color = [CDXColor colorWithRGBAString:@"12345678" defaulsTo:nil];
+    CDXColor *color = [CDXColor colorWithRGBAString:@"12345678" defaultsTo:nil];
     STAssertEquals((int)[color red], 0x12, nil);
     STAssertEquals((int)[color green], 0x34, nil);
     STAssertEquals((int)[color blue], 0x56, nil);
@@ -92,7 +92,7 @@
 }
 
 - (void)testColorWithString8LowerCaseCharacters {
-    CDXColor *color = [CDXColor colorWithRGBAString:@"fdabcdef" defaulsTo:nil];
+    CDXColor *color = [CDXColor colorWithRGBAString:@"fdabcdef" defaultsTo:nil];
     STAssertEquals((int)[color red], 0xfd, nil);
     STAssertEquals((int)[color green], 0xab, nil);
     STAssertEquals((int)[color blue], 0xcd, nil);
@@ -100,7 +100,7 @@
 }
 
 - (void)testColorWithString8UpperCaseCharacters {
-    CDXColor *color = [CDXColor colorWithRGBAString:@"ABCDEFCA" defaulsTo:nil];
+    CDXColor *color = [CDXColor colorWithRGBAString:@"ABCDEFCA" defaultsTo:nil];
     STAssertEquals((int)[color red], 0xab, nil);
     STAssertEquals((int)[color green], 0xcd, nil);
     STAssertEquals((int)[color blue], 0xef, nil);
@@ -110,14 +110,14 @@
 - (void)testColorWithStringBadLength5 {
     CDXColor *defaultColor = [CDXColor colorWithRed:1 green:1 blue:1 alpha:1];
     
-    CDXColor *color = [CDXColor colorWithRGBAString:@"12345" defaulsTo:defaultColor];
+    CDXColor *color = [CDXColor colorWithRGBAString:@"12345" defaultsTo:defaultColor];
     STAssertEquals(color, defaultColor, nil);
 }
 
 - (void)testColorWithStringBadCharacterX {
     CDXColor *defaultColor = [CDXColor colorWithRed:1 green:1 blue:1 alpha:1];
     
-    CDXColor *color = [CDXColor colorWithRGBAString:@"12345X" defaulsTo:defaultColor];
+    CDXColor *color = [CDXColor colorWithRGBAString:@"12345X" defaultsTo:defaultColor];
     STAssertEquals(color, defaultColor, nil);
 }
 

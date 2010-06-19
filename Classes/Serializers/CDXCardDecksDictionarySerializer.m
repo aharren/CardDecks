@@ -71,7 +71,7 @@
     
     NSString *thumbnailColor = [CDXDictionarySerializerUtils stringFromDictionary:dictionary forKey:@"thumbnailColor" defaultsTo:nil];
     if (thumbnailColor != nil) {
-        deck.thumbnailColor = [CDXColor colorWithRGBAString:thumbnailColor defaulsTo:nil];
+        deck.thumbnailColor = [CDXColor colorWithRGBAString:thumbnailColor defaultsTo:nil];
     }
     
     deck.cardsCount = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"cardsCount" defaultsTo:0];

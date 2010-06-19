@@ -82,12 +82,12 @@
         // [,[<text-color>] ...
         if ([sDeckParts count] >= 2) {
             dCardDefaults.textColor = [CDXColor colorWithRGBAString:(NSString *)[sDeckParts objectAtIndex:1]
-                                                          defaulsTo:[CDXColor colorWhite]];
+                                                          defaultsTo:[CDXColor colorWhite]];
         }
         //  [,[<background-color>] ...
         if ([sDeckParts count] >= 3) {
             dCardDefaults.backgroundColor = [CDXColor colorWithRGBAString:(NSString *)[sDeckParts objectAtIndex:2]
-                                                                defaulsTo:[CDXColor colorBlack]];
+                                                                defaultsTo:[CDXColor colorBlack]];
         }
         //  [,[<orientation>] ...
         if ([sDeckParts count] >= 4) {
@@ -110,12 +110,12 @@
             // [,[<text-color>] ...
             if ([sCardParts count] >= 2) {
                 dCard.textColor = [CDXColor colorWithRGBAString:(NSString *)[sCardParts objectAtIndex:1]
-                                                      defaulsTo:dCard.textColor];
+                                                      defaultsTo:dCard.textColor];
             }
             // [,[<background-color>] ...
             if ([sCardParts count] >= 3) {
                 dCard.backgroundColor = [CDXColor colorWithRGBAString:(NSString *)[sCardParts objectAtIndex:2]
-                                                            defaulsTo:dCard.backgroundColor];
+                                                            defaultsTo:dCard.backgroundColor];
             }
             //  [,[<orientation>] ...
             if ([sCardParts count] >= 4) {

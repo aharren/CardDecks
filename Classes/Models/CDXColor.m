@@ -86,7 +86,7 @@ static CDXColor *colorBlack = nil;
     return color;
 }
 
-+ (CDXColor *)colorWithRGBAString:(NSString *)string defaulsTo:(CDXColor *)defaultColor {
++ (CDXColor *)colorWithRGBAString:(NSString *)string defaultsTo:(CDXColor *)defaultColor {
     if (string == nil) {
         return [[defaultColor retain] autorelease];
     }

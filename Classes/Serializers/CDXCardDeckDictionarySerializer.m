@@ -47,8 +47,8 @@
     dDeck.file = (NSString *)[dictionary objectForKey:@"File"];
     
     CDXCard *dCardDefaults = dDeck.cardDefaults;
-    dCardDefaults.textColor = [CDXColor colorWithRGBAString:(NSString *)[dictionary objectForKey:@"DefaultTextColor"] defaulsTo:[CDXColor colorWhite]];
-    dCardDefaults.backgroundColor = [CDXColor colorWithRGBAString:(NSString *)[dictionary objectForKey:@"DefaultBackgroundColor"] defaulsTo:[CDXColor colorBlack]];
+    dCardDefaults.textColor = [CDXColor colorWithRGBAString:(NSString *)[dictionary objectForKey:@"DefaultTextColor"] defaultsTo:[CDXColor colorWhite]];
+    dCardDefaults.backgroundColor = [CDXColor colorWithRGBAString:(NSString *)[dictionary objectForKey:@"DefaultBackgroundColor"] defaultsTo:[CDXColor colorBlack]];
     
     NSArray *cardDictionaries = (NSArray *)[dictionary objectForKey:@"Cards"];
     for (NSDictionary *cardDictionary in cardDictionaries) {
@@ -68,14 +68,14 @@
         if (object == nil || ![object isKindOfClass:[NSString class]]) {
             dCard.textColor = [CDXColor colorWhite];
         } else {
-            dCard.textColor = [CDXColor colorWithRGBAString:(NSString *)object defaulsTo:[CDXColor colorWhite]];
+            dCard.textColor = [CDXColor colorWithRGBAString:(NSString *)object defaultsTo:[CDXColor colorWhite]];
         }
         
         object = [cardDictionary objectForKey:@"BackgroundColor"];
         if (object == nil || ![object isKindOfClass:[NSString class]]) {
             dCard.backgroundColor = [CDXColor colorBlack];
         } else {
-            dCard.backgroundColor = [CDXColor colorWithRGBAString:(NSString *)object defaulsTo:[CDXColor colorBlack]];
+            dCard.backgroundColor = [CDXColor colorWithRGBAString:(NSString *)object defaultsTo:[CDXColor colorBlack]];
         }
         
         object = [cardDictionary objectForKey:@"Orientation"];
@@ -99,11 +99,11 @@
     card.text = [CDXDictionarySerializerUtils stringFromDictionary:dictionary forKey:@"text" defaultsTo:@""];
     NSString *textColor = [CDXDictionarySerializerUtils stringFromDictionary:dictionary forKey:@"textColor" defaultsTo:nil];
     if (textColor != nil) {
-        card.textColor = [CDXColor colorWithRGBAString:textColor defaulsTo:card.textColor];
+        card.textColor = [CDXColor colorWithRGBAString:textColor defaultsTo:card.textColor];
     }
     NSString *backgroundColor = [CDXDictionarySerializerUtils stringFromDictionary:dictionary forKey:@"backgroundColor" defaultsTo:nil];
     if (textColor != nil) {
-        card.backgroundColor = [CDXColor colorWithRGBAString:backgroundColor defaulsTo:card.backgroundColor];
+        card.backgroundColor = [CDXColor colorWithRGBAString:backgroundColor defaultsTo:card.backgroundColor];
     }
     card.orientation = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"orientation" defaultsTo:card.orientation];
     card.cornerStyle = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"cornerStyle" defaultsTo:card.cornerStyle];

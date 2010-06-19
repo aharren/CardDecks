@@ -46,7 +46,7 @@
 - (NSString *)description;
 
 + (CDXColor *)colorWithRed:(uint8_t)red green:(uint8_t)green blue:(uint8_t)blue alpha:(uint8_t)alpha;
-+ (CDXColor *)colorWithRGBAString:(NSString *)string defaulsTo:(CDXColor *)defaultColor;
++ (CDXColor *)colorWithRGBAString:(NSString *)string defaultsTo:(CDXColor *)defaultColor;
 
 + (CDXColor *)colorWhite;
 + (CDXColor *)colorBlack;
