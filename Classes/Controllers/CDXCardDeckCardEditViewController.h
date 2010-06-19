@@ -41,9 +41,11 @@
 
     CDXCardDeckViewContext *cardDeckViewContext;
     CDXCardDeck *cardDeck;
+    
+    BOOL editingDefaults;
 }
 
-- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext editDefaults:(BOOL)editDefaults;
 
 - (IBAction)upDownButtonPressed;
 

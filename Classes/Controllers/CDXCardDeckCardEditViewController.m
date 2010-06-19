@@ -31,11 +31,12 @@
 
 @implementation CDXCardDeckCardEditViewController
 
-- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext editDefaults:(BOOL)editDefaults {
     if ((self = [super initWithNibName:@"CDXCardDeckCardEditView" bundle:nil])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
         ivar_assign_and_retain(cardDeck, cardDeckViewContext.cardDeck);
         self.hidesBottomBarWhenPushed = YES;
+        editingDefaults = editDefaults;
     }
     return self;
 }
@@ -49,31 +50,43 @@
     [super dealloc];
 }
 
+- (CDXCard *)currentCard {
+    if (editingDefaults) {
+        return cardDeck.cardDefaults;
+    } else {
+        return [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex];
+    }
+}
+
 - (void)showCardColors {
-    CDXCard *card = [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex];
+    CDXCard *card = [self currentCard];
     text.textColor = [card.textColor uiColor];
     text.backgroundColor = [card.backgroundColor uiColor];
 }
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex {
     cardDeckViewContext.currentCardIndex = cardIndex;
-    
-    CDXCard *card = [cardDeck cardAtIndex:cardIndex];
+    CDXCard *card = [self currentCard];
     text.text = card.text;
-    
-    [viewButtonsUpDown setEnabled:(cardIndex != 0) forSegmentAtIndex:0];
-    [viewButtonsUpDown setEnabled:(cardIndex < ([cardDeck cardsCount] - 1)) forSegmentAtIndex:1];
-    
-    if ([cardDeck cardsCount] > 1) {
-        self.navigationItem.title = [NSString stringWithFormat:@"%d of %d", cardIndex+1, [cardDeck cardsCount]];
+    if (!editingDefaults) {
+        [viewButtonsUpDown setEnabled:(cardIndex != 0) forSegmentAtIndex:0];
+        [viewButtonsUpDown setEnabled:(cardIndex < ([cardDeck cardsCount] - 1)) forSegmentAtIndex:1];
+        
+        if ([cardDeck cardsCount] > 1) {
+            self.navigationItem.title = [NSString stringWithFormat:@"%d of %d", cardIndex+1, [cardDeck cardsCount]];
+        }
     }
     [self showCardColors];
 }
 
 - (void)finishCardModification {
-    CDXCard *card = [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex];
+    CDXCard *card = [self currentCard];
     card.text = text.text;
-    [cardDeck replaceCardAtIndex:cardDeckViewContext.currentCardIndex withCard:card];
+    if (!editingDefaults) {
+        [cardDeck replaceCardAtIndex:cardDeckViewContext.currentCardIndex withCard:card];
+    }
+    
+    [cardDeckViewContext updateStorageObjectsDeferred:YES];
 }
 
 - (void)viewDidLoad {
@@ -90,7 +103,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationItem.title = @"";
-    self.navigationItem.rightBarButtonItem = ([cardDeck cardsCount] > 1) ? viewButtonsUpDownBarButtonItem : nil;
+    self.navigationItem.rightBarButtonItem = (([cardDeck cardsCount] > 1) && !editingDefaults) ? viewButtonsUpDownBarButtonItem : nil;
     
     [self showCardAtIndex:cardDeckViewContext.currentCardIndex];
     [text becomeFirstResponder];
@@ -129,37 +142,37 @@
 }
 
 - (CDXColor *)colorKeyboardExtensionTextColor {
-    return [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].textColor;
+    return [self currentCard].textColor;
 }
 
 - (void)colorKeyboardExtensionSetTextColor:(CDXColor *)color {
-    [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].textColor = color;
+    [self currentCard].textColor = color;
     [self showCardColors];
 }
 
 - (CDXColor *)colorKeyboardExtensionBackgroundColor {
-    return [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].backgroundColor;
+    return [self currentCard].backgroundColor;
 }
 
 - (void)colorKeyboardExtensionSetBackgroundColor:(CDXColor *)color {
-    [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].backgroundColor = color;
+    [self currentCard].backgroundColor = color;
     [self showCardColors];
 }
 
 - (CDXCardOrientation)textKeyboardExtensionCardOrientation {
-    return [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].orientation;
+    return [self currentCard].orientation;
 }
 
 - (void)textKeyboardExtensionSetCardOrientation:(CDXCardOrientation)cardOrientation {
-    [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].orientation = cardOrientation;
+    [self currentCard].orientation = cardOrientation;
 }
 
 - (CGFloat)textKeyboardExtensionFontSize {
-    return [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].fontSize;
+    return [self currentCard].fontSize;
 }
 
 - (void)textKeyboardExtensionSetFontSize:(CGFloat)fontSize {
-    [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex].fontSize = fontSize;
+    [self currentCard].fontSize = fontSize;
 }
 
 - (void)paste:(id)sender {
