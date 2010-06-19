@@ -239,11 +239,33 @@
     cardDefaults.cornerStyle = aCornerStyle;
 }
 
-- (void)setFontSize:(CGFloat)aFontSize {
+- (void)setFontSize:(CGFloat)fontSize {
     for (CDXCard *card in cards) {
-        card.fontSize = aFontSize;
+        card.fontSize = fontSize;
     }
-    cardDefaults.fontSize = aFontSize;
+    cardDefaults.fontSize = fontSize;
+}
+
+- (void)setOrientation:(CDXCardOrientation)orientation {
+    for (CDXCard *card in cards) {
+        card.orientation = orientation;
+    }
+    cardDefaults.orientation = orientation;
+}
+
+- (void)setTextColor:(CDXColor *)textColor {
+    for (CDXCard *card in cards) {
+        card.textColor = textColor;
+    }
+    cardDefaults.textColor = textColor;
+}
+
+- (void)setBackgroundColor:(CDXColor *)backgroundColor {
+    for (CDXCard *card in cards) {
+        card.backgroundColor = backgroundColor;
+    }
+    cardDefaults.backgroundColor = backgroundColor;
+    [self updateFields];
 }
 
 - (void)setShuffleIndexes:(NSMutableArray *)indexes {

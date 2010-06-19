@@ -85,7 +85,10 @@ typedef enum {
 
 @property (nonatomic, assign) CDXCardDeckDisplayStyle displayStyle;
 @property (nonatomic, assign) CDXCardCornerStyle cornerStyle;
-- (void)setFontSize:(CGFloat)aFontSize;
+- (void)setFontSize:(CGFloat)fontSize;
+- (void)setOrientation:(CDXCardOrientation)orientation;
+- (void)setTextColor:(CDXColor *)textColor;
+- (void)setBackgroundColor:(CDXColor *)backgroundColor;
 
 @property (nonatomic, readonly) BOOL isShuffled;
 @property (nonatomic, copy) NSMutableArray *shuffleIndexes;
