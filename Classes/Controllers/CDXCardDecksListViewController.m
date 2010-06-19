@@ -54,6 +54,13 @@
     [CDXStorage drainAllDeferredActions];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if ([cardDecks hasPendingCardDeckAdds]) {
+        [self performBlockingSelector:@selector(processPendingCardDeckAdd) withObject:nil];
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         default:
@@ -137,7 +144,9 @@
         CDXCardDeckListViewController *vc = [[[CDXCardDeckListViewController alloc] initWithCardDeckViewContext:context] autorelease];
         [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
     }
-    [viewTableView deselectRowAtIndexPath:[viewTableView indexPathForSelectedRow] animated:YES];
+    NSIndexPath *indexPath = [viewTableView indexPathForSelectedRow];
+    [viewTableView deselectRowAtIndexPath:indexPath animated:YES];
+    lastCardDeckIndex = indexPath.row;
     [self performBlockingSelectorEnd];
 }
 
@@ -232,6 +241,26 @@
     CDXAppSettings *settings = [CDXAppSettings sharedAppSettings];
     CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings] autorelease];
     [self presentModalViewController:vc animated:YES];
+}
+
+- (void)processPendingCardDeckAdd {
+    CDXCardDeckBase *base = [cardDecks popPendingCardDeckAdd];
+    if (base != nil) {
+        NSUInteger row = (lastCardDeckIndex < [cardDecks cardDecksCount]) ? lastCardDeckIndex : 0;
+        [cardDecks insertCardDeck:base atIndex:row];
+        [cardDecks updateStorageObjectDeferred:YES];
+        NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:1];
+        [viewTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
+        [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
+        [viewTableView deselectRowAtIndexPath:path animated:YES];
+    }
+    
+    if ([cardDecks hasPendingCardDeckAdds]) {
+        [self performBlockingSelector:@selector(processPendingCardDeckAdd) withObject:nil];
+    } else {
+        [CDXStorage drainAllDeferredActions];
+        [self performBlockingSelectorEnd];
+    }
 }
 
 @end

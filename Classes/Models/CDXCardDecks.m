@@ -40,6 +40,7 @@
     if ((self = [super init])) {
         ivar_assign(cardDeckDefaults, [[CDXCardDeck alloc] init]);
         ivar_assign(cardDecks, [[NSMutableArray alloc] init]);
+        ivar_assign(pendingCardDeckAdds, [[NSMutableArray alloc] initWithCapacity:0])
     }
     return self;
 }
@@ -48,6 +49,7 @@
     ivar_release_and_clear(file);
     ivar_release_and_clear(cardDeckDefaults);
     ivar_release_and_clear(cardDecks);
+    ivar_release_and_clear(pendingCardDeckAdds);
     [super dealloc];
 }
 
@@ -96,6 +98,26 @@
 
 - (CDXCardDeckBase *)cardDeckWithDefaults {
     return [[[CDXCardDeckBase alloc] initWithCardDeck:[[cardDeckDefaults.cardDeck copy] autorelease]] autorelease];
+}
+
+- (void)addPendingCardDeckAdd:(CDXCardDeckBase *)aCardDeck {
+    [pendingCardDeckAdds addObject:aCardDeck];
+}
+
+- (BOOL)hasPendingCardDeckAdds {
+    return [pendingCardDeckAdds count] != 0;
+}
+
+- (CDXCardDeckBase *)popPendingCardDeckAdd {
+    if (![self hasPendingCardDeckAdds]) {
+        return nil;
+    } else {
+        CDXCardDeckBase *object = (CDXCardDeckBase *)[pendingCardDeckAdds objectAtIndex:0];
+        [object retain];
+        [pendingCardDeckAdds removeObjectAtIndex:0];
+        [object autorelease];
+        return object;
+    }
 }
 
 - (NSString *)storageObjectName {

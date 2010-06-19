@@ -31,6 +31,7 @@
     
 @protected
     CDXCardDecks *cardDecks;
+    NSUInteger lastCardDeckIndex;
 }
 
 - (id)initWithCardDecks:(CDXCardDecks *)cardDecks;

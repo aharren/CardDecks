@@ -34,6 +34,7 @@
     CDXCardDeckBase *cardDeckDefaults;
     NSMutableArray *cardDecks;
     
+    NSMutableArray *pendingCardDeckAdds;
 }
 
 @property (nonatomic, copy) NSString *file;
@@ -47,6 +48,10 @@
 - (NSUInteger)indexOfCardDeck:(CDXCardDeckBase *)cardDeck;
 
 - (CDXCardDeckBase *)cardDeckWithDefaults;
+
+- (void)addPendingCardDeckAdd:(CDXCardDeckBase *)cardDeck;
+- (BOOL)hasPendingCardDeckAdds;
+- (CDXCardDeckBase *)popPendingCardDeckAdd;
 
 + (CDXCardDecks *)cardDecksFromStorageObjectNamed:(NSString *)file version:(NSUInteger *)version;
 - (void)updateStorageObjectDeferred:(BOOL)deferred;
