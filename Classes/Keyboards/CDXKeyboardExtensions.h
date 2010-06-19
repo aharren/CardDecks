@@ -44,12 +44,22 @@
 @end
 
 
+@protocol CDXKeyboardExtensionResponderWithActions
+
+@required
+- (BOOL)keyboardExtensionResponderHasActionsForExtensionAtIndex:(NSUInteger)index;
+- (void)keyboardExtensionResponderRunActionsForExtensionAtIndex:(NSUInteger)index;
+
+@end
+
+
 @interface CDXKeyboardExtensions : NSObject {
     
 @protected
     UIToolbar *toolbar;
     NSMutableArray *toolbarButtons;
     UIBarButtonItem *toolbarKeyboardButton;
+    UIBarButtonItem *toolbarActionButton;
     
     NSObject *responder;
     CGRect extensionViewRect;
@@ -79,6 +89,7 @@ declare_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
 - (void)deactivateKeyboardExtension:(NSObject<CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag;
 
 - (void)toolbarButtonPressed:(id)sender;
+- (void)toolbarActionButtonPressed;
 - (UIBarButtonItem *)toolbarButtonWithTitle:(NSString *)title;
 
 - (UIColor *)backgroundColor;

@@ -41,6 +41,9 @@ static float keyboardExtensionsOsVersion;
         toolbar.barStyle = UIBarStyleDefault;
         ivar_assign(toolbarButtons, [[NSMutableArray alloc] init]);
         ivar_assign_and_retain(toolbarKeyboardButton, [self toolbarButtonWithTitle:@"abc"]);
+        ivar_assign(toolbarActionButton, [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+                                                                                       target:self
+                                                                                       action:@selector(toolbarActionButtonPressed)]);
         ivar_assign_and_retain(backgroundColor, [UIColor colorWithPatternImage:[UIImage imageNamed:@"KeyboardExtensionsBackground.png"]]);
         enabled = NO;
         visible = NO;
@@ -54,6 +57,8 @@ static float keyboardExtensionsOsVersion;
 - (void)dealloc {
     ivar_release_and_clear(toolbar);
     ivar_release_and_clear(toolbarButtons);
+    ivar_release_and_clear(toolbarKeyboardButton);
+    ivar_release_and_clear(toolbarActionButton);
     ivar_release_and_clear(responder);
     ivar_release_and_clear(keyboardExtensions);
     ivar_release_and_clear(backgroundColor);
@@ -217,6 +222,11 @@ static float keyboardExtensionsOsVersion;
         [extension keyboardExtensionInitialize];
     }
     
+    if ([aResponder conformsToProtocol:@protocol(CDXKeyboardExtensionResponderWithActions)]) {
+        [toolbarButtons addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease]];
+        [toolbarButtons addObject:toolbarActionButton];
+    }
+    
     // set the toolbar buttons
     [toolbar setItems:toolbarButtons animated:NO];
     
@@ -295,6 +305,11 @@ static float keyboardExtensionsOsVersion;
     if (tag != -1) {
         button.title = [keyboardExtension keyboardExtensionTitle];
     }
+    
+    if ([responder conformsToProtocol:@protocol(CDXKeyboardExtensionResponderWithActions)]) {
+        NSObject<CDXKeyboardExtensionResponderWithActions> *r = (NSObject<CDXKeyboardExtensionResponderWithActions> *)responder;
+        toolbarActionButton.enabled = [r keyboardExtensionResponderHasActionsForExtensionAtIndex:tag];
+    }
 }
 
 - (void)deactivateKeyboardExtension:(NSObject<CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag {
@@ -326,6 +341,15 @@ static float keyboardExtensionsOsVersion;
     
     [self deactivateKeyboardExtension:[self keyboardExtensionByTag:activeExtensionTag] tag:activeExtensionTag];
     [self activateKeyboardExtension:[self keyboardExtensionByTag:eventExtensionTag] tag:eventExtensionTag];
+}
+
+- (void)toolbarActionButtonPressed {
+    if ([responder conformsToProtocol:@protocol(CDXKeyboardExtensionResponderWithActions)]) {
+        NSObject<CDXKeyboardExtensionResponderWithActions> *r = (NSObject<CDXKeyboardExtensionResponderWithActions> *)responder;
+        if ([r keyboardExtensionResponderHasActionsForExtensionAtIndex:activeExtensionTag]) {
+            [r keyboardExtensionResponderRunActionsForExtensionAtIndex:activeExtensionTag];
+        }
+    }
 }
 
 - (UIColor *)backgroundColor {
