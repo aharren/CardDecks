@@ -45,6 +45,8 @@
 }
 
 - (void)dealloc {
+    ivar_release_and_clear(file);
+    ivar_release_and_clear(cardDeckDefaults);
     ivar_release_and_clear(cardDecks);
     [super dealloc];
 }
