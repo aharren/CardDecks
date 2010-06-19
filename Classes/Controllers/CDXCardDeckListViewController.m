@@ -308,15 +308,11 @@
         case 0:
             break;
         case 1: {
-            CDXCardDeck *deckCopy = [[cardDeck copy] autorelease];
-            deckCopy.name = [deckCopy.name stringByAppendingString:@" - Copy"];
-            [deckCopy updateStorageObjectDeferred:NO];
-            
-            CDXCardDeckBase *deckCopyBase = [[[CDXCardDeckBase alloc] initWithCardDeck:deckCopy] autorelease];
-            CDXCardDecks *decks = cardDeckViewContext.cardDecks;
-            [decks insertCardDeck:deckCopyBase atIndex:[decks indexOfCardDeck:cardDeck.base]];
-            [decks updateStorageObjectDeferred:NO];
-            
+            CDXCardDeck *deck = [[cardDeck copy] autorelease];
+            deck.name = [deck.name stringByAppendingString:@" - Copy"];
+            [deck updateStorageObjectDeferred:NO];
+            CDXCardDeckBase *base = [CDXCardDeckBase cardDeckBaseWithCardDeck:deck];
+            [cardDeckViewContext.cardDecks addPendingCardDeckAdd:base];
             [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES];
             break;
         }
