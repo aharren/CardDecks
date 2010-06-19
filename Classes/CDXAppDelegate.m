@@ -43,6 +43,30 @@
     deck = decks.cardDeckDefaults.cardDeck;
     [deck updateStorageObjectDeferred:NO];
     
+    deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Remaining%20Minutes,ffffff,000000&15,000000,00ff00&10,000000,ffff00&5,000000,ff0000&0,ff0000"];
+    deck.displayStyle = CDXCardDeckDisplayStyleSwipeStack;
+    [deck setFontSize:270.0];
+    deck.wantsAutoRotate = NO;
+    [deck updateStorageObjectDeferred:NO];
+    base = [CDXCardDeckBase cardDeckBaseWithCardDeck:deck];
+    [decks addPendingCardDeckAdd:base];
+    
+    deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Estimation%202,000044,ffffff&XXS&XS&S&M&L&XL&XXL&%E2%88%9E"];
+    deck.displayStyle = CDXCardDeckDisplayStyleSwipeStack;
+    [deck setFontSize:180.0];
+    deck.wantsAutoRotate = NO;
+    [deck updateStorageObjectDeferred:NO];
+    base = [CDXCardDeckBase cardDeckBaseWithCardDeck:deck];
+    [decks addPendingCardDeckAdd:base];
+    
+    deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Estimation%201,000000,ffffff&0&1&2&4&8&16&32&64&%E2%88%9E"];
+    deck.displayStyle = CDXCardDeckDisplayStyleStack;
+    [deck setFontSize:200.0];
+    deck.wantsAutoRotate = NO;
+    [deck updateStorageObjectDeferred:NO];
+    base = [CDXCardDeckBase cardDeckBaseWithCardDeck:deck];
+    [decks addPendingCardDeckAdd:base];
+    
     deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"0%2C%20...%2C%2010,ffffff,000000&0&1&2&3&4&5&6&7&8&9&10"];
     deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
     [deck setFontSize:300.0];
@@ -51,31 +75,7 @@
     deck.cornerStyle = CDXCardCornerStyleCornered;
     [deck updateStorageObjectDeferred:NO];
     base = [CDXCardDeckBase cardDeckBaseWithCardDeck:deck];
-    [decks insertCardDeck:base atIndex:0];
-    
-    deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Estimation%201,000000,ffffff&0&1&2&4&8&16&32&64&%E2%88%9E"];
-    deck.displayStyle = CDXCardDeckDisplayStyleStack;
-    [deck setFontSize:200.0];
-    deck.wantsAutoRotate = NO;
-    [deck updateStorageObjectDeferred:NO];
-    base = [CDXCardDeckBase cardDeckBaseWithCardDeck:deck];
-    [decks insertCardDeck:base atIndex:1];
-    
-    deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Estimation%202,000044,ffffff&XXS&XS&S&M&L&XL&XXL&%E2%88%9E"];
-    deck.displayStyle = CDXCardDeckDisplayStyleSwipeStack;
-    [deck setFontSize:180.0];
-    deck.wantsAutoRotate = NO;
-    [deck updateStorageObjectDeferred:NO];
-    base = [CDXCardDeckBase cardDeckBaseWithCardDeck:deck];
-    [decks insertCardDeck:base atIndex:2];
-    
-    deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Remaining%20Minutes,ffffff,000000&15,000000,00ff00&10,000000,ffff00&5,000000,ff0000&0,ff0000"];
-    deck.displayStyle = CDXCardDeckDisplayStyleSwipeStack;
-    [deck setFontSize:270.0];
-    deck.wantsAutoRotate = NO;
-    [deck updateStorageObjectDeferred:NO];
-    base = [CDXCardDeckBase cardDeckBaseWithCardDeck:deck];
-    [decks insertCardDeck:base atIndex:3];
+    [decks addPendingCardDeckAdd:base];
 }
 
 - (CDXCardDecks *)cardDecks {
