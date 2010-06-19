@@ -141,6 +141,125 @@
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
 }
 
+- (BOOL)keyboardExtensionResponderHasActionsForExtensionAtIndex:(NSUInteger)index {
+    return index == 1 || index == 2;
+}
+
+- (void)keyboardExtensionResponderRunActionsForExtensionAtIndex:(NSUInteger)index {
+    qltrace();
+    UIActionSheet *sheet = nil;
+    if (editingDefaults) {
+        index = -index;
+    }
+    switch (index) {
+        case 1:
+            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Color Properties"
+                                                 delegate:self
+                                        cancelButtonTitle:@"Cancel"
+                                   destructiveButtonTitle:nil
+                                        otherButtonTitles:@"Text \u21e2 Defaults", @"Text \u21e0 Defaults", @"Background \u21e2 Defaults", @"Background \u21e0 Defaults", nil] autorelease];
+            break;
+        case 2:
+            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Text Properties"
+                                                 delegate:self
+                                        cancelButtonTitle:@"Cancel"
+                                   destructiveButtonTitle:nil
+                                        otherButtonTitles:@"Layout \u21e2 Defaults", @"Layout \u21e0 Defaults", @"Size \u21e2 Defaults", @"Size \u21e0 Defaults", nil] autorelease];
+            break;
+        case -1:
+            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Color Properties"
+                                                 delegate:self
+                                        cancelButtonTitle:@"Cancel"
+                                   destructiveButtonTitle:nil
+                                        otherButtonTitles:@"Text \u21e2 All Cards", @"Background \u21e2 All Cards", nil] autorelease];
+            break;
+        case -2:
+            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Text Properties"
+                                                 delegate:self
+                                        cancelButtonTitle:@"Cancel"
+                                   destructiveButtonTitle:nil
+                                        otherButtonTitles:@"Layout \u21e2 All Cards", @"Size \u21e2 All Cards", nil] autorelease];
+            break;
+        default:
+            break;
+    }
+    if (sheet) {
+        sheet.tag = index;
+        [sheet showInView:self.view];
+    }
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    qltrace();
+    CDXCard *card = [self currentCard];
+    switch (actionSheet.tag) {
+        case 1:
+            switch (buttonIndex) {
+                case 0:
+                    cardDeck.cardDefaults.textColor = card.textColor;
+                    break;
+                case 1:
+                    card.textColor = cardDeck.cardDefaults.textColor;
+                    break;
+                case 2:
+                    cardDeck.cardDefaults.backgroundColor = card.backgroundColor;
+                    break;
+                case 3:
+                    card.backgroundColor = cardDeck.cardDefaults.backgroundColor;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 2:
+            switch (buttonIndex) {
+                case 0:
+                    cardDeck.cardDefaults.orientation = card.orientation;
+                    break;
+                case 1:
+                    card.orientation = cardDeck.cardDefaults.orientation;
+                    break;
+                case 2:
+                    cardDeck.cardDefaults.fontSize = card.fontSize;
+                    break;
+                case 3:
+                    card.fontSize = cardDeck.cardDefaults.fontSize;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case -1:
+            switch (buttonIndex) {
+                case 0:
+                    [cardDeck setTextColor:card.textColor];
+                    break;
+                case 1:
+                    [cardDeck setBackgroundColor:card.backgroundColor];
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case -2:
+            switch (buttonIndex) {
+                case 0:
+                    [cardDeck setOrientation:card.orientation];
+                    break;
+                case 1:
+                    [cardDeck setFontSize:card.fontSize];
+                    break;
+                default:
+                    break;
+            }
+            break;
+        default:
+            break;
+    }
+    [self showCardColors];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] refreshKeyboardExtensions];
+}
+
 - (CDXColor *)colorKeyboardExtensionTextColor {
     return [self currentCard].textColor;
 }

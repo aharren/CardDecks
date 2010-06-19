@@ -31,7 +31,7 @@
 #import "CDXSymbolsKeyboardExtension.h"
 
 
-@interface CDXCardDeckCardEditViewController : UIViewController<CDXAppWindowViewController, CDXColorKeyboardExtensionResponder, CDXTextKeyboardExtensionResponder> {
+@interface CDXCardDeckCardEditViewController : UIViewController<CDXAppWindowViewController, UIActionSheetDelegate, CDXKeyboardExtensionResponderWithActions, CDXColorKeyboardExtensionResponder, CDXTextKeyboardExtensionResponder> {
     
 @protected
     IBOutlet UITextView *text;
