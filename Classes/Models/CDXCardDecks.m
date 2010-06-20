@@ -86,9 +86,9 @@
 
 - (CDXCardDeckHolder *)cardDeckDefaults {
     qltrace();
-    CDXCardDeck *deck = cardDeckDefaults.cardDeck;
-    if (deck == nil) {
-        deck = [[[CDXCardDeck alloc] init] autorelease];
+    if (![CDXStorage existsFile:cardDeckDefaults.file]) {
+        qltrace(@"recreate defaults file %@", cardDeckDefaults.file);
+        CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
         deck.file = cardDeckDefaults.file;
         [deck updateStorageObjectDeferred:NO];
     }
@@ -128,7 +128,7 @@
 }
 
 - (CDXCardDeckHolder *)cardDeckWithDefaults {
-    return [[[CDXCardDeckHolder alloc] initWithCardDeck:[[cardDeckDefaults.cardDeck copy] autorelease]] autorelease];
+    return [[[CDXCardDeckHolder alloc] initWithCardDeck:[[[self cardDeckDefaults].cardDeck copy] autorelease]] autorelease];
 }
 
 - (void)addPendingCardDeckAdd:(CDXCardDeckHolder *)aCardDeck {
