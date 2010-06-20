@@ -68,7 +68,7 @@
 - (id)init {
     qltrace();
     if ((self = [super init])) {
-        ivar_assign(cardDeckDefaults, [[CDXCardDeck alloc] init]);
+        ivar_assign(cardDeckDefaults, [[CDXCardDeckHolder alloc] init]);
         ivar_assign(cardDecks, [[NSMutableArray alloc] init]);
         ivar_assign(pendingCardDeckAdds, [[NSMutableArray alloc] initWithCapacity:0])
     }
