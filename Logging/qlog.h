@@ -1,6 +1,6 @@
 //
 //
-// qlog.h
+// qlog.h -- 1.0.1
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -25,7 +25,14 @@
 
 
 //
-// qlog -- quick logging macros
+// qlog -- a set of quick logging macros for LibComponentLogging.
+//
+// qlog just consists of this small header file which defines a short logging
+// macro for every log level of LibComponentLogging, e.g. qlerror() for error
+// messages and qltrace() for trace messages. Additionally, all logging macros
+// take the current log component from the ql_component preprocessor define
+// which can be (re)defined in your application at a file-level, section-based,
+// or global scope.
 //
 
 
