@@ -39,6 +39,7 @@
 + (NSDictionary *)readDictionaryFromFile:(NSString *)file;
 + (void)writeDictionary:(NSDictionary *)dictionary toFile:(NSString *)file;
 + (void)removeFile:(NSString *)file;
++ (BOOL)existsFile:(NSString *)file;
 
 + (NSString *)fileWithSuffix:(NSString *)suffix;
 

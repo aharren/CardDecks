@@ -99,6 +99,33 @@ static NSMutableArray *storageDeferredRemoves = nil;
     [[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
 }
 
++ (BOOL)existsFile:(NSString *)file {
+    qltrace(@"file %@", file);
+    
+    NSString *fileName = [NSString stringWithFormat:@"%@.plist", file];
+    // first, look in 'Documents' folder
+    {
+        NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+        NSString *path = [folder stringByAppendingPathComponent:fileName];
+        qltrace(@"path1 %@", path);
+        if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+            return YES;
+        }
+    }
+    
+    // second, look in application bundle
+    {
+        NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks2.app"];
+        NSString *path = [folder stringByAppendingPathComponent:fileName];
+        qltrace(@"path2 %@", path);
+        if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
 + (NSString *)fileWithSuffix:(NSString *)suffix {
     struct timeval now;
     struct tm now_tm;
