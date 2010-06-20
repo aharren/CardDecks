@@ -79,6 +79,7 @@
 }
 
 - (id)copyWithZone:(NSZone *)zone {
+    qltrace();
     CDXCardDeck *copy = [[[self class] allocWithZone:zone] init];
     copy.cardDefaults = [[cardDefaults copyWithZone:zone] autorelease];
     copy.name = name;

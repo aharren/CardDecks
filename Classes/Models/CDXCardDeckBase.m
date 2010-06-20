@@ -67,10 +67,6 @@
     return self;
 }
 
-+ (id)cardDeckBaseWithCardDeck:(CDXCardDeck *)cardDeck {
-    return [[[CDXCardDeckBase alloc] initWithCardDeck:cardDeck] autorelease];
-}
-
 - (void)dealloc {
     qltrace();
     [cardDeck unlinkBase];

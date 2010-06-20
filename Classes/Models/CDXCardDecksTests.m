@@ -40,7 +40,7 @@
     CDXCardDecks *cardDecks = [[[CDXCardDecks alloc] init] autorelease];
     STAssertEquals([cardDecks cardDecksCount], (NSUInteger)0, nil);
     
-    CDXCardDeck *cardDeck = [[CDXCardDeck alloc] init];
+    CDXCardDeckHolder *cardDeck = [[CDXCardDeckHolder alloc] init];
     cardDeck.name = @"Text";
     [cardDecks addCardDeck:cardDeck];
     [cardDeck release];
@@ -53,7 +53,7 @@
     CDXCardDecks *cardDecks = [[[CDXCardDecks alloc] init] autorelease];
     STAssertEquals([cardDecks cardDecksCount], (NSUInteger)0, nil);
     
-    CDXCardDeck *cardDeck1 = [[CDXCardDeck alloc] init];
+    CDXCardDeckHolder *cardDeck1 = [[CDXCardDeckHolder alloc] init];
     cardDeck1.name = @"Text 1";
     [cardDecks insertCardDeck:cardDeck1 atIndex:10];
     [cardDeck1 release];
@@ -61,7 +61,7 @@
     STAssertEquals([cardDecks cardDecksCount], (NSUInteger)1, nil);
     STAssertEqualObjects([[cardDecks cardDeckAtIndex:0] name], @"Text 1", nil);
     
-    CDXCardDeck *cardDeck2 = [[CDXCardDeck alloc] init];
+    CDXCardDeckHolder *cardDeck2 = [[CDXCardDeckHolder alloc] init];
     cardDeck2.name = @"Text 2";
     [cardDecks insertCardDeck:cardDeck2 atIndex:0];
     [cardDeck2 release];
@@ -75,17 +75,17 @@
     CDXCardDecks *cardDecks = [[[CDXCardDecks alloc] init] autorelease];
     STAssertEquals([cardDecks cardDecksCount], (NSUInteger)0, nil);
     
-    CDXCardDeck *cardDeck1 = [[CDXCardDeck alloc] init];
+    CDXCardDeckHolder *cardDeck1 = [[CDXCardDeckHolder alloc] init];
     cardDeck1.name = @"Text 1";
     [cardDecks addCardDeck:cardDeck1];
     [cardDeck1 release];
     
-    CDXCardDeck *cardDeck2 = [[CDXCardDeck alloc] init];
+    CDXCardDeckHolder *cardDeck2 = [[CDXCardDeckHolder alloc] init];
     cardDeck2.name = @"Text 2";
     [cardDecks addCardDeck:cardDeck2];
     [cardDeck2 release];
     
-    CDXCardDeck *cardDeck3 = [[CDXCardDeck alloc] init];
+    CDXCardDeckHolder *cardDeck3 = [[CDXCardDeckHolder alloc] init];
     cardDeck3.name = @"Text 3";
     [cardDecks addCardDeck:cardDeck3];
     [cardDeck3 release];

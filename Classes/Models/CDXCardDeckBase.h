@@ -57,7 +57,6 @@
 
 - (id)init;
 - (id)initWithCardDeck:(CDXCardDeck *)cardDeck;
-+ (id)cardDeckBaseWithCardDeck:(CDXCardDeck *)cardDeck;
 
 - (void)linkBase:(CDXCardDeckBase *)base;
 - (void)unlinkBase;

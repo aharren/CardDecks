@@ -194,7 +194,7 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
     qltrace();
-    CDXCardDeckBase *deck = [cardDecks cardDeckAtIndex:fromIndexPath.row];
+    CDXCardDeckHolder *deck = [cardDecks cardDeckAtIndex:fromIndexPath.row];
     [deck retain];
     [cardDecks removeCardDeckAtIndex:fromIndexPath.row];
     [cardDecks insertCardDeck:deck atIndex:toIndexPath.row];
@@ -204,7 +204,7 @@
 
 - (IBAction)addButtonPressedDelayed {
     qltrace();
-    CDXCardDeckBase *deck = [cardDecks cardDeckWithDefaults];
+    CDXCardDeckHolder *deck = [cardDecks cardDeckWithDefaults];
     [deck.cardDeck updateStorageObjectDeferred:NO];
     
     [cardDecks addCardDeck:deck];
@@ -244,10 +244,10 @@
 }
 
 - (void)processPendingCardDeckAdd {
-    CDXCardDeckBase *base = [cardDecks popPendingCardDeckAdd];
-    if (base != nil) {
+    CDXCardDeckHolder *deck = [cardDecks popPendingCardDeckAdd];
+    if (deck != nil) {
         NSUInteger row = (lastCardDeckIndex < [cardDecks cardDecksCount]) ? lastCardDeckIndex : 0;
-        [cardDecks insertCardDeck:base atIndex:row];
+        [cardDecks insertCardDeck:deck atIndex:row];
         [cardDecks updateStorageObjectDeferred:YES];
         NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:1];
         [viewTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];

@@ -27,31 +27,43 @@
 #import "CDXStorage.h"
 
 
+@interface CDXCardDeckHolder : CDXCardDeckBase {
+    
+}
+
+- (id)init;
+- (id)initWithCardDeck:(CDXCardDeck *)cardDeck;
+
++ (id)cardDeckHolderWithCardDeck:(CDXCardDeck *)cardDeck;
+
+@end
+
+
 @interface CDXCardDecks : NSObject<CDXStorageObject> {
     
 @protected
     NSString *file;
-    CDXCardDeckBase *cardDeckDefaults;
+    CDXCardDeckHolder *cardDeckDefaults;
     NSMutableArray *cardDecks;
     
     NSMutableArray *pendingCardDeckAdds;
 }
 
 @property (nonatomic, copy) NSString *file;
-@property (nonatomic, retain) CDXCardDeckBase *cardDeckDefaults;
+@property (nonatomic, retain) CDXCardDeckHolder *cardDeckDefaults;
 
 - (NSUInteger)cardDecksCount;
-- (CDXCardDeckBase *)cardDeckAtIndex:(NSUInteger)index;
-- (void)addCardDeck:(CDXCardDeckBase *)cardDeck;
-- (void)insertCardDeck:(CDXCardDeckBase *)cardDeck atIndex:(NSUInteger)index;
+- (CDXCardDeckHolder *)cardDeckAtIndex:(NSUInteger)index;
+- (void)addCardDeck:(CDXCardDeckHolder *)cardDeck;
+- (void)insertCardDeck:(CDXCardDeckHolder *)cardDeck atIndex:(NSUInteger)index;
 - (void)removeCardDeckAtIndex:(NSUInteger)index;
-- (NSUInteger)indexOfCardDeck:(CDXCardDeckBase *)cardDeck;
+- (NSUInteger)indexOfCardDeck:(CDXCardDeckHolder *)cardDeck;
 
-- (CDXCardDeckBase *)cardDeckWithDefaults;
+- (CDXCardDeckHolder *)cardDeckWithDefaults;
 
-- (void)addPendingCardDeckAdd:(CDXCardDeckBase *)cardDeck;
+- (void)addPendingCardDeckAdd:(CDXCardDeckHolder *)cardDeck;
 - (BOOL)hasPendingCardDeckAdds;
-- (CDXCardDeckBase *)popPendingCardDeckAdd;
+- (CDXCardDeckHolder *)popPendingCardDeckAdd;
 
 + (CDXCardDecks *)cardDecksFromStorageObjectNamed:(NSString *)file version:(NSUInteger *)version;
 - (void)updateStorageObjectDeferred:(BOOL)deferred;

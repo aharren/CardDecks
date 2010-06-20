@@ -112,17 +112,17 @@
         CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"0%2C%20...%2C%2010,ffffff,000000&0&1&2&3&4&5&6&7&8&9&10"];
         deck.file = @"File1";
         deck.thumbnailColor = nil;
-        [decks addCardDeck:deck];
+        [decks addCardDeck:[CDXCardDeckHolder cardDeckHolderWithCardDeck:deck]];
     }
     {
         CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Estimation%201,000000,f0f0f0&0&1&2&4&8&16&32&64"];
         deck.file = @"File2";
-        [decks addCardDeck:deck];
+        [decks addCardDeck:[CDXCardDeckHolder cardDeckHolderWithCardDeck:deck]];
     }
     {
         CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Estimation%202,000044,ffffff&XXS&XS&S&M&L&XL&XXL"];
         deck.file = @"File3";
-        [decks addCardDeck:deck];
+        [decks addCardDeck:[CDXCardDeckHolder cardDeckHolderWithCardDeck:deck]];
     }
     
     decks.cardDeckDefaults.name = @"*NEW CARD DECK*";
@@ -159,7 +159,7 @@
     CDXCardDecks *decks = [[[CDXCardDecks alloc] init] autorelease];
     {
         CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"0%2C%20...%2C%2010,ffffff,000000&0&1&2&3&4&5&6&7&8&9&10"];
-        [decks addCardDeck:deck];
+        [decks addCardDeck:[CDXCardDeckHolder cardDeckHolderWithCardDeck:deck]];
     }
     
     NSDictionary *dictionary = [CDXCardDecksDictionarySerializer dictionaryFromCardDecks:decks];

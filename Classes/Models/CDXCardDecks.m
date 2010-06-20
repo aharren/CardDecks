@@ -31,12 +31,42 @@
 #define ql_component lcl_cModel
 
 
+@implementation CDXCardDeckHolder
+
+- (id)init {
+    qltrace();
+    if ((self = [super init])) {
+    }
+    return self;
+}
+
+- (id)initWithCardDeck:(CDXCardDeck *)aCardDeck {
+    qltrace();
+    if ((self = [super initWithCardDeck:aCardDeck])) {
+    }
+    return self;
+}
+
+- (void)dealloc {
+    qltrace();
+    [super dealloc];
+}
+
++ (id)cardDeckHolderWithCardDeck:(CDXCardDeck *)cardDeck {
+    qltrace();
+    return [[[CDXCardDeckHolder alloc] initWithCardDeck:cardDeck] autorelease];
+}
+
+@end
+
+
 @implementation CDXCardDecks
 
 @synthesize file;
 @synthesize cardDeckDefaults;
 
 - (id)init {
+    qltrace();
     if ((self = [super init])) {
         ivar_assign(cardDeckDefaults, [[CDXCardDeck alloc] init]);
         ivar_assign(cardDecks, [[NSMutableArray alloc] init]);
@@ -46,6 +76,7 @@
 }
 
 - (void)dealloc {
+    qltrace();
     ivar_release_and_clear(file);
     ivar_release_and_clear(cardDeckDefaults);
     ivar_release_and_clear(cardDecks);
@@ -53,7 +84,7 @@
     [super dealloc];
 }
 
-- (CDXCardDeckBase *)cardDeckDefaults {
+- (CDXCardDeckHolder *)cardDeckDefaults {
     qltrace();
     CDXCardDeck *deck = cardDeckDefaults.cardDeck;
     if (deck == nil) {
@@ -68,15 +99,15 @@
     return [cardDecks count];
 }
 
-- (CDXCardDeckBase *)cardDeckAtIndex:(NSUInteger)index {
-    return (CDXCardDeckBase *)[cardDecks objectAtIndex:index];
+- (CDXCardDeckHolder *)cardDeckAtIndex:(NSUInteger)index {
+    return (CDXCardDeckHolder *)[cardDecks objectAtIndex:index];
 }
 
-- (void)addCardDeck:(CDXCardDeckBase *)cardDeck {
+- (void)addCardDeck:(CDXCardDeckHolder *)cardDeck {
     [cardDecks addObject:cardDeck];
 }
 
-- (void)insertCardDeck:(CDXCardDeckBase *)cardDeck atIndex:(NSUInteger)index {
+- (void)insertCardDeck:(CDXCardDeckHolder *)cardDeck atIndex:(NSUInteger)index {
     if (index >= [cardDecks count]) {
         [cardDecks addObject:cardDeck];
     } else {
@@ -88,7 +119,7 @@
     [cardDecks removeObjectAtIndex:index];
 }
 
-- (NSUInteger)indexOfCardDeck:(CDXCardDeckBase *)cardDeck {
+- (NSUInteger)indexOfCardDeck:(CDXCardDeckHolder *)cardDeck {
     NSUInteger index = [cardDecks indexOfObject:cardDeck];
     if (index != NSNotFound) {
         return index;
@@ -96,11 +127,11 @@
     return 0;
 }
 
-- (CDXCardDeckBase *)cardDeckWithDefaults {
-    return [[[CDXCardDeckBase alloc] initWithCardDeck:[[cardDeckDefaults.cardDeck copy] autorelease]] autorelease];
+- (CDXCardDeckHolder *)cardDeckWithDefaults {
+    return [[[CDXCardDeckHolder alloc] initWithCardDeck:[[cardDeckDefaults.cardDeck copy] autorelease]] autorelease];
 }
 
-- (void)addPendingCardDeckAdd:(CDXCardDeckBase *)aCardDeck {
+- (void)addPendingCardDeckAdd:(CDXCardDeckHolder *)aCardDeck {
     [pendingCardDeckAdds addObject:aCardDeck];
 }
 
@@ -108,11 +139,11 @@
     return [pendingCardDeckAdds count] != 0;
 }
 
-- (CDXCardDeckBase *)popPendingCardDeckAdd {
+- (CDXCardDeckHolder *)popPendingCardDeckAdd {
     if (![self hasPendingCardDeckAdds]) {
         return nil;
     } else {
-        CDXCardDeckBase *object = (CDXCardDeckBase *)[pendingCardDeckAdds objectAtIndex:0];
+        CDXCardDeckHolder *object = (CDXCardDeckHolder *)[pendingCardDeckAdds objectAtIndex:0];
         [object retain];
         [pendingCardDeckAdds removeObjectAtIndex:0];
         [object autorelease];

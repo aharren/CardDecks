@@ -49,7 +49,7 @@
     for (NSDictionary *deckDictionary in deckDictionaries) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         
-        CDXCardDeckBase *dDeck = [[[CDXCardDeckBase alloc] init] autorelease];
+        CDXCardDeckHolder *dDeck = [[[CDXCardDeckHolder alloc] init] autorelease];
         
         dDeck.name = [CDXDictionarySerializerUtils stringFromDictionary:deckDictionary forKey:@"Name" defaultsTo:@""];
         dDeck.file = [CDXDictionarySerializerUtils stringFromDictionary:deckDictionary forKey:@"File" defaultsTo:@""];
@@ -62,8 +62,8 @@
     return dDecks;
 }
 
-+ (CDXCardDeckBase *)cardDeckBaseFromVersion2Dictionary:(NSDictionary *)dictionary {
-    CDXCardDeckBase *deck = [[[CDXCardDeckBase alloc] init] autorelease];
++ (CDXCardDeckHolder *)cardDeckHolderFromVersion2Dictionary:(NSDictionary *)dictionary {
+    CDXCardDeckHolder *deck = [[[CDXCardDeckHolder alloc] init] autorelease];
     
     deck.name = [CDXDictionarySerializerUtils stringFromDictionary:dictionary forKey:@"name" defaultsTo:@""];
     deck.description = [CDXDictionarySerializerUtils stringFromDictionary:dictionary forKey:@"description" defaultsTo:@""];
@@ -86,7 +86,7 @@
     if (deckDefaultsDictionary != nil) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         
-        CDXCardDeckBase *deck = [CDXCardDecksDictionarySerializer cardDeckBaseFromVersion2Dictionary:deckDefaultsDictionary];
+        CDXCardDeckHolder *deck = [CDXCardDecksDictionarySerializer cardDeckHolderFromVersion2Dictionary:deckDefaultsDictionary];
         decks.cardDeckDefaults = deck;
         
         [pool release];
@@ -96,7 +96,7 @@
     for (NSDictionary *deckDictionary in deckDictionaries) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         
-        CDXCardDeckBase *deck = [CDXCardDecksDictionarySerializer cardDeckBaseFromVersion2Dictionary:deckDictionary];
+        CDXCardDeckHolder *deck = [CDXCardDecksDictionarySerializer cardDeckHolderFromVersion2Dictionary:deckDictionary];
         [decks addCardDeck:deck];
         
         [pool release];

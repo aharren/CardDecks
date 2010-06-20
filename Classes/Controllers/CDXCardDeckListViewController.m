@@ -311,8 +311,8 @@
             CDXCardDeck *deck = [[cardDeck copy] autorelease];
             deck.name = [deck.name stringByAppendingString:@" - Copy"];
             [deck updateStorageObjectDeferred:NO];
-            CDXCardDeckBase *base = [CDXCardDeckBase cardDeckBaseWithCardDeck:deck];
-            [cardDeckViewContext.cardDecks addPendingCardDeckAdd:base];
+            CDXCardDeckHolder *holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
+            [cardDeckViewContext.cardDecks addPendingCardDeckAdd:holder];
             [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES];
             break;
         }
