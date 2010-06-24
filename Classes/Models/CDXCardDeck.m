@@ -129,11 +129,14 @@
     NSMutableString *d = [[[NSMutableString alloc] initWithCapacity:100] autorelease];
     BOOL first = YES;
     for (CDXCard *card in cards) {
-        if (!first) {
-            [d appendString:@", "];
+        NSString *text = card.text;
+        if (![text isEqualToString:@""]) {
+            if (!first) {
+                [d appendString:@", "];
+            }
+            [d appendString:text];
+            first = NO;
         }
-        [d appendString:card.text];
-        first = NO;
         if ([d length] >= 60) {
             break;
         }
