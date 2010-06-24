@@ -40,6 +40,7 @@
 }
 
 - (void)dealloc {
+    qltrace();
     ivar_release_and_clear(viewTableView);
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(editButton);
@@ -59,6 +60,7 @@
 }
 
 - (void)viewDidLoad {
+    qltrace();
     [super viewDidLoad];
     UINavigationItem *navigationItem = self.navigationItem;
     navigationItem.title = titleText;
@@ -89,6 +91,7 @@
 }
 
 - (void)viewDidUnload {
+    qltrace();
     ivar_release_and_clear(viewTableView);
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(editButton);
@@ -107,6 +110,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    qltrace();
     [super viewWillAppear:animated];
     [self performBlockingSelectorEnd];
     [viewTableView reloadData];
@@ -114,6 +118,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    qltrace();
     [super viewWillDisappear:animated];
     [self performBlockingSelectorEnd];
 }
