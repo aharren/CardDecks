@@ -104,7 +104,11 @@
                 cell.detailTextLabel.text = @"NO CARDS";
             } else {
                 cell.textLabel.textColor = tableCellTextTextColor;
-                cell.detailTextLabel.text = deck.description;
+                NSString *description = deck.description;
+                if ([@"" isEqualToString:description]) {
+                    description = @" ";
+                }
+                cell.detailTextLabel.text = description;
             }
             
             return cell;
