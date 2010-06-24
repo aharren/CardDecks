@@ -103,7 +103,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationItem.title = @"";
-    self.navigationItem.rightBarButtonItem = (([cardDeck cardsCount] > 1) && !editingDefaults) ? viewButtonsUpDownBarButtonItem : nil;
+    self.navigationItem.rightBarButtonItem = editingDefaults ? nil : viewButtonsUpDownBarButtonItem;
     
     [self showCardAtIndex:cardDeckViewContext.currentCardIndex];
     [text becomeFirstResponder];
