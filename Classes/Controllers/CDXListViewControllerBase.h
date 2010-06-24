@@ -31,6 +31,7 @@
 @protected
     IBOutlet UITableView *viewTableView;
     IBOutlet UIToolbar *viewToolbar;
+    CGPoint viewTableViewContentOffset;
     IBOutlet UIBarButtonItem *editButton;
     
     UIActivityIndicatorView *activityIndicator;

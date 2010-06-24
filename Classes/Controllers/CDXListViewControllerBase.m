@@ -115,12 +115,14 @@
     [self performBlockingSelectorEnd];
     [viewTableView reloadData];
     [self updateToolbarButtons];
+    viewTableView.contentOffset = viewTableViewContentOffset;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     qltrace();
     [super viewWillDisappear:animated];
     [self performBlockingSelectorEnd];
+    viewTableViewContentOffset = viewTableView.contentOffset;
 }
 
 - (void)setUserInteractionEnabled:(BOOL)enabled {
