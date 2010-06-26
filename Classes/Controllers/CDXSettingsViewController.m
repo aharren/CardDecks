@@ -115,6 +115,7 @@
     [super viewWillAppear:animated];
     [self.tableView reloadData];
     self.tableView.tableHeaderView = [settings titleView];
+    self.navigationItem.title = [settings title];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
