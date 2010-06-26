@@ -46,6 +46,8 @@
 		E047CEF7119369430024A022 /* CDXAppWindowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E047CEF6119369430024A022 /* CDXAppWindowManager.m */; };
 		E04B448A11B0441600DDBD33 /* CDXAppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E04B448911B0441600DDBD33 /* CDXAppSettings.m */; };
 		E04B44C011B04C0800DDBD33 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E04B44BF11B04C0800DDBD33 /* Settings.bundle */; };
+		E0602B4F11D54FC80075F439 /* Icon-Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0602B4E11D54FC80075F439 /* Icon-Settings@2x.png */; };
+		E0602B6911D550AD0075F439 /* Toolbar-Down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0602B6711D550AD0075F439 /* Toolbar-Down@2x.png */; };
 		E0620AEF11BA7F22006AABD2 /* Toolbar-Shuffle.png in Resources */ = {isa = PBXBuildFile; fileRef = E0620AEE11BA7F22006AABD2 /* Toolbar-Shuffle.png */; };
 		E0620B3111BA82BC006AABD2 /* Toolbar-Sort.png in Resources */ = {isa = PBXBuildFile; fileRef = E0620B3011BA82BC006AABD2 /* Toolbar-Sort.png */; };
 		E0620CF611BA9EA3006AABD2 /* CDXAppWindowNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0620CF511BA9EA3006AABD2 /* CDXAppWindowNoticeView.m */; };
@@ -61,6 +63,7 @@
 		E07CDED311BC1D4C008D7E8F /* CDXCardDeckDictionarySerializerTestsDeck2.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E07CDED211BC1D4C008D7E8F /* CDXCardDeckDictionarySerializerTestsDeck2.CardDeck.plist */; };
 		E07CDF0F11BC2146008D7E8F /* CDXCardDeckDictionarySerializerTestsDeck3.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E07CDF0E11BC2146008D7E8F /* CDXCardDeckDictionarySerializerTestsDeck3.CardDeck.plist */; };
 		E0805B4B11A85C6600199172 /* CDXCardDeckViewContext.m in Sources */ = {isa = PBXBuildFile; fileRef = E0805B4A11A85C6600199172 /* CDXCardDeckViewContext.m */; };
+		E084954B11D4034100489C15 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E084954A11D4034100489C15 /* Icon@2x.png */; };
 		E09AC62511B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09AC62311B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib */; };
 		E09AC62611B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09AC62411B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib */; };
 		E09AC6FD11B7E75100C96E25 /* CDXColorKeyboardExtensionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09AC6FC11B7E75100C96E25 /* CDXColorKeyboardExtensionView.xib */; };
@@ -75,7 +78,6 @@
 		E0A1C15E11A83F0D00911848 /* Toolbar-Up.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A1C15C11A83F0D00911848 /* Toolbar-Up.png */; };
 		E0BEE1F7117BA68D002F62A7 /* CDXCardsStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */; };
 		E0C51F14119DA03000D75D0E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C51F13119DA03000D75D0E /* Default.png */; };
-		E0C51FB4119DB05000D75D0E /* Toolbar-Add.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C51FB3119DB05000D75D0E /* Toolbar-Add.png */; };
 		E0C51FB6119DB12500D75D0E /* Toolbar-Edit-Reorder.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C51FB5119DB12500D75D0E /* Toolbar-Edit-Reorder.png */; };
 		E0CCC70E1170DA0A0040D222 /* Icon-Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CCC70C1170DA0A0040D222 /* Icon-Settings.png */; };
 		E0CCC70F1170DA0A0040D222 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CCC70D1170DA0A0040D222 /* Icon.png */; };
@@ -83,8 +85,19 @@
 		E0CCC7401170DC600040D222 /* CDXCardDeckCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0CCC73F1170DC600040D222 /* CDXCardDeckCardViewController.m */; };
 		E0CCC9041170E9420040D222 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0CCC9031170E9420040D222 /* QuartzCore.framework */; };
 		E0D01AED1170EF9200004856 /* CDXImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D01AEC1170EF9200004856 /* CDXImageFactory.m */; };
+		E0D1E50C11D5F22E00C8B1C4 /* Toolbar-Up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E50B11D5F22E00C8B1C4 /* Toolbar-Up@2x.png */; };
+		E0D1E53C11D5FA0900C8B1C4 /* Toolbar-Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E53B11D5FA0900C8B1C4 /* Toolbar-Settings@2x.png */; };
+		E0D1E59F11D602E600C8B1C4 /* Toolbar-Edit-Reorder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E59E11D602E600C8B1C4 /* Toolbar-Edit-Reorder@2x.png */; };
+		E0D1E5A811D608DE00C8B1C4 /* Toolbar-Shuffle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5A711D608DE00C8B1C4 /* Toolbar-Shuffle@2x.png */; };
+		E0D1E5B611D60B7E00C8B1C4 /* Toolbar-Sort@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5B511D60B7E00C8B1C4 /* Toolbar-Sort@2x.png */; };
+		E0D1E5CF11D6129000C8B1C4 /* Notice-Shuffle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5CD11D6129000C8B1C4 /* Notice-Shuffle@2x.png */; };
+		E0D1E5D011D6129000C8B1C4 /* Notice-Sort@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5CE11D6129000C8B1C4 /* Notice-Sort@2x.png */; };
+		E0D1E5E011D62CA700C8B1C4 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5DE11D62CA700C8B1C4 /* Default@2x.png */; };
+		E0D1E5E111D62CA700C8B1C4 /* StatusBarDefault@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5DF11D62CA700C8B1C4 /* StatusBarDefault@2x.png */; };
 		E0D8C7FE1172255F00356C2C /* lcl.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D8C7FD1172255F00356C2C /* lcl.m */; };
 		E0D909281172275D00AD50DA /* CDXLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D909271172275D00AD50DA /* CDXLogger.m */; };
+		E0DD7D6511D6302B00ED23B6 /* Logo-Prerendered@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0DD7D6411D6302B00ED23B6 /* Logo-Prerendered@2x.png */; };
+		E0DD7D9311D63A1D00ED23B6 /* Cell-Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0DD7D9211D63A1D00ED23B6 /* Cell-Logo@2x.png */; };
 		E0DDD81011B26807004CECCB /* CDXListViewControllerBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DDD80F11B26807004CECCB /* CDXListViewControllerBase.m */; };
 		E0EB6E71117233E400F41F7A /* CDXCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0EB6E70117233E400F41F7A /* CDXCardView.xib */; };
 		E0EB6E7C1172343600F41F7A /* CDXCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EB6E7B1172343600F41F7A /* CDXCardView.m */; };
@@ -100,7 +113,6 @@
 		E0F2B3F7119563910092D11B /* CDXCardsStackSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */; };
 		E0F7A50A11B158DA00CD786B /* CDXKeyboardExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */; };
 		E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */; };
-		E0F7A71A11B17B3700CD786B /* Toolbar-Bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A71911B17B3700CD786B /* Toolbar-Bottom.png */; };
 		E0FAC00B11C024CD00CDA558 /* CDXDictionarySerializerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FAC00A11C024CD00CDA558 /* CDXDictionarySerializerUtils.m */; };
 		E0FAC00C11C024CD00CDA558 /* CDXDictionarySerializerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FAC00A11C024CD00CDA558 /* CDXDictionarySerializerUtils.m */; };
 		E0FAC02611C0268000CDA558 /* CDXCardDecksDictionarySerializerTestsDecks1.CardDeckList.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0FAC02511C0268000CDA558 /* CDXCardDecksDictionarySerializerTestsDecks1.CardDeckList.plist */; };
@@ -177,6 +189,8 @@
 		E04B448811B0441600DDBD33 /* CDXAppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppSettings.h; path = Classes/Models/CDXAppSettings.h; sourceTree = "<group>"; };
 		E04B448911B0441600DDBD33 /* CDXAppSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppSettings.m; path = Classes/Models/CDXAppSettings.m; sourceTree = "<group>"; };
 		E04B44BF11B04C0800DDBD33 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		E0602B4E11D54FC80075F439 /* Icon-Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Settings@2x.png"; path = "Images/Icon-Settings@2x.png"; sourceTree = "<group>"; };
+		E0602B6711D550AD0075F439 /* Toolbar-Down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Down@2x.png"; path = "Images/Toolbars/Toolbar-Down@2x.png"; sourceTree = "<group>"; };
 		E0620AEE11BA7F22006AABD2 /* Toolbar-Shuffle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Shuffle.png"; path = "Images/Toolbars/Toolbar-Shuffle.png"; sourceTree = "<group>"; };
 		E0620B3011BA82BC006AABD2 /* Toolbar-Sort.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Sort.png"; path = "Images/Toolbars/Toolbar-Sort.png"; sourceTree = "<group>"; };
 		E0620CF411BA9EA3006AABD2 /* CDXAppWindowNoticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppWindowNoticeView.h; path = Classes/CDXAppWindowNoticeView.h; sourceTree = "<group>"; };
@@ -196,6 +210,7 @@
 		E07CDF0E11BC2146008D7E8F /* CDXCardDeckDictionarySerializerTestsDeck3.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = CDXCardDeckDictionarySerializerTestsDeck3.CardDeck.plist; path = Classes/Serializers/CDXCardDeckDictionarySerializerTestsDeck3.CardDeck.plist; sourceTree = "<group>"; };
 		E0805B4911A85C6600199172 /* CDXCardDeckViewContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckViewContext.h; path = Classes/Models/CDXCardDeckViewContext.h; sourceTree = "<group>"; };
 		E0805B4A11A85C6600199172 /* CDXCardDeckViewContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckViewContext.m; path = Classes/Models/CDXCardDeckViewContext.m; sourceTree = "<group>"; };
+		E084954A11D4034100489C15 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Images/Icon@2x.png"; sourceTree = "<group>"; };
 		E09AC62311B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXSymbolsKeyboardExtensionTableViewCellA.xib; path = UserInterfaces/CDXSymbolsKeyboardExtensionTableViewCellA.xib; sourceTree = "<group>"; };
 		E09AC62411B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXSymbolsKeyboardExtensionTableViewCellB.xib; path = UserInterfaces/CDXSymbolsKeyboardExtensionTableViewCellB.xib; sourceTree = "<group>"; };
 		E09AC6FC11B7E75100C96E25 /* CDXColorKeyboardExtensionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXColorKeyboardExtensionView.xib; path = UserInterfaces/CDXColorKeyboardExtensionView.xib; sourceTree = "<group>"; };
@@ -216,7 +231,6 @@
 		E0BEE1F5117BA68D002F62A7 /* CDXCardsStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsStackView.h; path = Classes/Views/CDXCardsStackView.h; sourceTree = "<group>"; };
 		E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsStackView.m; path = Classes/Views/CDXCardsStackView.m; sourceTree = "<group>"; };
 		E0C51F13119DA03000D75D0E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Images/Default.png; sourceTree = "<group>"; };
-		E0C51FB3119DB05000D75D0E /* Toolbar-Add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Add.png"; path = "Images/Toolbars/Toolbar-Add.png"; sourceTree = "<group>"; };
 		E0C51FB5119DB12500D75D0E /* Toolbar-Edit-Reorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Edit-Reorder.png"; path = "Images/Toolbars/Toolbar-Edit-Reorder.png"; sourceTree = "<group>"; };
 		E0CCC70C1170DA0A0040D222 /* Icon-Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Settings.png"; path = "Images/Icon-Settings.png"; sourceTree = "<group>"; };
 		E0CCC70D1170DA0A0040D222 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Images/Icon.png; sourceTree = "<group>"; };
@@ -226,6 +240,15 @@
 		E0CCC9031170E9420040D222 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E0D01AEB1170EF9200004856 /* CDXImageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXImageFactory.h; path = Classes/CDXImageFactory.h; sourceTree = "<group>"; };
 		E0D01AEC1170EF9200004856 /* CDXImageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXImageFactory.m; path = Classes/CDXImageFactory.m; sourceTree = "<group>"; };
+		E0D1E50B11D5F22E00C8B1C4 /* Toolbar-Up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Up@2x.png"; path = "Images/Toolbars/Toolbar-Up@2x.png"; sourceTree = "<group>"; };
+		E0D1E53B11D5FA0900C8B1C4 /* Toolbar-Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Settings@2x.png"; path = "Images/Toolbars/Toolbar-Settings@2x.png"; sourceTree = "<group>"; };
+		E0D1E59E11D602E600C8B1C4 /* Toolbar-Edit-Reorder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Edit-Reorder@2x.png"; path = "Images/Toolbars/Toolbar-Edit-Reorder@2x.png"; sourceTree = "<group>"; };
+		E0D1E5A711D608DE00C8B1C4 /* Toolbar-Shuffle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Shuffle@2x.png"; path = "Images/Toolbars/Toolbar-Shuffle@2x.png"; sourceTree = "<group>"; };
+		E0D1E5B511D60B7E00C8B1C4 /* Toolbar-Sort@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Sort@2x.png"; path = "Images/Toolbars/Toolbar-Sort@2x.png"; sourceTree = "<group>"; };
+		E0D1E5CD11D6129000C8B1C4 /* Notice-Shuffle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Shuffle@2x.png"; path = "Images/Notices/Notice-Shuffle@2x.png"; sourceTree = "<group>"; };
+		E0D1E5CE11D6129000C8B1C4 /* Notice-Sort@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Sort@2x.png"; path = "Images/Notices/Notice-Sort@2x.png"; sourceTree = "<group>"; };
+		E0D1E5DE11D62CA700C8B1C4 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Images/Default@2x.png"; sourceTree = "<group>"; };
+		E0D1E5DF11D62CA700C8B1C4 /* StatusBarDefault@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "StatusBarDefault@2x.png"; path = "Images/StatusBarDefault@2x.png"; sourceTree = "<group>"; };
 		E0D8C7F91172255F00356C2C /* lcl_config_components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcl_config_components.h; path = Logging/lcl_config_components.h; sourceTree = "<group>"; };
 		E0D8C7FA1172255F00356C2C /* lcl_config_extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcl_config_extensions.h; path = Logging/lcl_config_extensions.h; sourceTree = "<group>"; };
 		E0D8C7FB1172255F00356C2C /* lcl_config_logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcl_config_logger.h; path = Logging/lcl_config_logger.h; sourceTree = "<group>"; };
@@ -234,6 +257,8 @@
 		E0D909261172275D00AD50DA /* CDXLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXLogger.h; path = Logging/CDXLogger.h; sourceTree = "<group>"; };
 		E0D909271172275D00AD50DA /* CDXLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXLogger.m; path = Logging/CDXLogger.m; sourceTree = "<group>"; };
 		E0D9096811722AD700AD50DA /* qlog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = qlog.h; path = Logging/qlog.h; sourceTree = "<group>"; };
+		E0DD7D6411D6302B00ED23B6 /* Logo-Prerendered@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Logo-Prerendered@2x.png"; path = "Images/Logo-Prerendered@2x.png"; sourceTree = "<group>"; };
+		E0DD7D9211D63A1D00ED23B6 /* Cell-Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell-Logo@2x.png"; path = "Images/Cells/Cell-Logo@2x.png"; sourceTree = "<group>"; };
 		E0DDD80E11B26807004CECCB /* CDXListViewControllerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXListViewControllerBase.h; path = Classes/Controllers/CDXListViewControllerBase.h; sourceTree = "<group>"; };
 		E0DDD80F11B26807004CECCB /* CDXListViewControllerBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXListViewControllerBase.m; path = Classes/Controllers/CDXListViewControllerBase.m; sourceTree = "<group>"; };
 		E0EB6E70117233E400F41F7A /* CDXCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardView.xib; path = UserInterfaces/CDXCardView.xib; sourceTree = "<group>"; };
@@ -250,7 +275,6 @@
 		E0F7A50811B158DA00CD786B /* CDXKeyboardExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXKeyboardExtensions.h; path = Classes/Keyboards/CDXKeyboardExtensions.h; sourceTree = "<group>"; };
 		E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXKeyboardExtensions.m; path = Classes/Keyboards/CDXKeyboardExtensions.m; sourceTree = "<group>"; };
 		E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = KeyboardExtensionsBackground.png; path = Images/KeyboardExtensionsBackground.png; sourceTree = "<group>"; };
-		E0F7A71911B17B3700CD786B /* Toolbar-Bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Bottom.png"; path = "Images/Toolbars/Toolbar-Bottom.png"; sourceTree = "<group>"; };
 		E0FAC00911C024CD00CDA558 /* CDXDictionarySerializerUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXDictionarySerializerUtils.h; path = Classes/Serializers/CDXDictionarySerializerUtils.h; sourceTree = "<group>"; };
 		E0FAC00A11C024CD00CDA558 /* CDXDictionarySerializerUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXDictionarySerializerUtils.m; path = Classes/Serializers/CDXDictionarySerializerUtils.m; sourceTree = "<group>"; };
 		E0FAC02511C0268000CDA558 /* CDXCardDecksDictionarySerializerTestsDecks1.CardDeckList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CDXCardDecksDictionarySerializerTestsDecks1.CardDeckList.plist; path = Classes/Serializers/CDXCardDecksDictionarySerializerTestsDecks1.CardDeckList.plist; sourceTree = "<group>"; };
@@ -388,6 +412,7 @@
 			isa = PBXGroup;
 			children = (
 				E03B105F11C3F93800591E45 /* Cell-Logo.png */,
+				E0DD7D9211D63A1D00ED23B6 /* Cell-Logo@2x.png */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -487,7 +512,9 @@
 			isa = PBXGroup;
 			children = (
 				E0620D5311BAA61A006AABD2 /* Notice-Shuffle.png */,
+				E0D1E5CD11D6129000C8B1C4 /* Notice-Shuffle@2x.png */,
 				E0620D5411BAA61A006AABD2 /* Notice-Sort.png */,
+				E0D1E5CE11D6129000C8B1C4 /* Notice-Sort@2x.png */,
 			);
 			name = Notices;
 			sourceTree = "<group>";
@@ -496,13 +523,17 @@
 			isa = PBXGroup;
 			children = (
 				E0620B3011BA82BC006AABD2 /* Toolbar-Sort.png */,
+				E0D1E5B511D60B7E00C8B1C4 /* Toolbar-Sort@2x.png */,
 				E0620AEE11BA7F22006AABD2 /* Toolbar-Shuffle.png */,
-				E0F7A71911B17B3700CD786B /* Toolbar-Bottom.png */,
+				E0D1E5A711D608DE00C8B1C4 /* Toolbar-Shuffle@2x.png */,
 				E070CF5A119FF13800626F34 /* Toolbar-Settings.png */,
+				E0D1E53B11D5FA0900C8B1C4 /* Toolbar-Settings@2x.png */,
 				E0C51FB5119DB12500D75D0E /* Toolbar-Edit-Reorder.png */,
-				E0C51FB3119DB05000D75D0E /* Toolbar-Add.png */,
+				E0D1E59E11D602E600C8B1C4 /* Toolbar-Edit-Reorder@2x.png */,
 				E0A1C15C11A83F0D00911848 /* Toolbar-Up.png */,
+				E0D1E50B11D5F22E00C8B1C4 /* Toolbar-Up@2x.png */,
 				E0A1C15B11A83F0D00911848 /* Toolbar-Down.png */,
+				E0602B6711D550AD0075F439 /* Toolbar-Down@2x.png */,
 			);
 			name = Toolbars;
 			sourceTree = "<group>";
@@ -515,10 +546,15 @@
 				E0C51F87119DAC5F00D75D0E /* Toolbars */,
 				E0620D5211BAA606006AABD2 /* Notices */,
 				E0C51F13119DA03000D75D0E /* Default.png */,
+				E0D1E5DE11D62CA700C8B1C4 /* Default@2x.png */,
 				E0620F8A119E950D00234667 /* StatusBarDefault.png */,
+				E0D1E5DF11D62CA700C8B1C4 /* StatusBarDefault@2x.png */,
 				E0CCC70C1170DA0A0040D222 /* Icon-Settings.png */,
+				E0602B4E11D54FC80075F439 /* Icon-Settings@2x.png */,
 				E0CCC70D1170DA0A0040D222 /* Icon.png */,
+				E084954A11D4034100489C15 /* Icon@2x.png */,
 				E03B113D11C415CB00591E45 /* Logo-Prerendered.png */,
+				E0DD7D6411D6302B00ED23B6 /* Logo-Prerendered@2x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -633,7 +669,6 @@
 				E0CCC73A1170DC120040D222 /* CDXCardDeckCardView.xib in Resources */,
 				E0EB6E71117233E400F41F7A /* CDXCardView.xib in Resources */,
 				E0C51F14119DA03000D75D0E /* Default.png in Resources */,
-				E0C51FB4119DB05000D75D0E /* Toolbar-Add.png in Resources */,
 				E0C51FB6119DB12500D75D0E /* Toolbar-Edit-Reorder.png in Resources */,
 				E0620F8B119E950D00234667 /* StatusBarDefault.png in Resources */,
 				E070CF5B119FF13800626F34 /* Toolbar-Settings.png in Resources */,
@@ -642,7 +677,6 @@
 				E0A1C15E11A83F0D00911848 /* Toolbar-Up.png in Resources */,
 				E04B44C011B04C0800DDBD33 /* Settings.bundle in Resources */,
 				E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */,
-				E0F7A71A11B17B3700CD786B /* Toolbar-Bottom.png in Resources */,
 				E09FCDF311B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib in Resources */,
 				E09AC62511B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib in Resources */,
 				E09AC62611B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib in Resources */,
@@ -656,6 +690,20 @@
 				E03B106011C3F93800591E45 /* Cell-Logo.png in Resources */,
 				E03B10B911C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib in Resources */,
 				E03B113E11C415CB00591E45 /* Logo-Prerendered.png in Resources */,
+				E084954B11D4034100489C15 /* Icon@2x.png in Resources */,
+				E0602B4F11D54FC80075F439 /* Icon-Settings@2x.png in Resources */,
+				E0602B6911D550AD0075F439 /* Toolbar-Down@2x.png in Resources */,
+				E0D1E50C11D5F22E00C8B1C4 /* Toolbar-Up@2x.png in Resources */,
+				E0D1E53C11D5FA0900C8B1C4 /* Toolbar-Settings@2x.png in Resources */,
+				E0D1E59F11D602E600C8B1C4 /* Toolbar-Edit-Reorder@2x.png in Resources */,
+				E0D1E5A811D608DE00C8B1C4 /* Toolbar-Shuffle@2x.png in Resources */,
+				E0D1E5B611D60B7E00C8B1C4 /* Toolbar-Sort@2x.png in Resources */,
+				E0D1E5CF11D6129000C8B1C4 /* Notice-Shuffle@2x.png in Resources */,
+				E0D1E5D011D6129000C8B1C4 /* Notice-Sort@2x.png in Resources */,
+				E0D1E5E011D62CA700C8B1C4 /* Default@2x.png in Resources */,
+				E0D1E5E111D62CA700C8B1C4 /* StatusBarDefault@2x.png in Resources */,
+				E0DD7D6511D6302B00ED23B6 /* Logo-Prerendered@2x.png in Resources */,
+				E0DD7D9311D63A1D00ED23B6 /* Cell-Logo@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
