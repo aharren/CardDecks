@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDeckCardViewController.h
+// CDXIndexDotsView.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,37 +23,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXCardDeck.h"
-#import "CDXCardDeckViewContext.h"
-#import "CDXCardsViewProtocols.h"
-#import "CDXAppWindowProtocols.h"
-#import "CDXIndexDotsView.h"
 
-
-@interface CDXCardDeckCardViewController : UIViewController<CDXAppWindowViewController, CDXCardsViewDelegate, CDXCardsViewDataSource> {
+@interface CDXIndexDotsView : UIView {
     
 @protected
-    CDXCardDeckViewContext *cardDeckViewContext;
-    CDXCardDeck *cardDeck;
+    NSUInteger numberOfPages;
+    NSUInteger currentPage;
+    BOOL invisibleByDefault;
     
-    UIView<CDXCardsViewView> *cardsView;
+    NSUInteger firstVisiblePage;
+    NSUInteger lastVisiblePage;
     
-    BOOL userInteractionEnabled;
-    UIView *imageView;
-    
-    IBOutlet CDXIndexDotsView *indexDotsView;
-    NSUInteger pageControlJumpPagesCount;
-    NSUInteger pageControlJumpPages[5];
+    UIImage *imageDot;
+    UIImage *imageDotHighlighted;
 }
 
-- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
+@property (nonatomic, assign) NSUInteger numberOfPages;
+@property (nonatomic, readonly) NSUInteger currentPage;
+@property (nonatomic, assign) BOOL invisibleByDefault;
 
-- (IBAction)pageControlLeftButtonPressed;
-- (IBAction)pageControlRightButtonPressed;
-- (IBAction)pageControlJumpLeftButtonPressed;
-- (IBAction)pageControlJumpRightButtonPressed;
-
-- (IBAction)shuffleButtonPressed;
+- (void)setCurrentPage:(NSUInteger)currentPage animated:(BOOL)animated;
 
 @end
 

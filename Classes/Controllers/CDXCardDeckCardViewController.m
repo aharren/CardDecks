@@ -35,13 +35,9 @@
 #define ql_component lcl_cController
 
 
-@interface CDXCardDeckCardViewController (PageControl)
+@interface CDXCardDeckCardViewController (indexDotsView)
 
-#define CDXCardDeckCardViewControllerPageControlAlphaHidden  0
-#define CDXCardDeckCardViewControllerPageControlAlphaVisible 0.9
-
-- (void)configurePageControl;
-- (void)flashPageControl;
+- (void)configureIndexDotsViewAndButtons;
 
 @end
 
@@ -62,7 +58,7 @@
     qltrace();
     ivar_release_and_clear(cardDeckViewContext);
     ivar_release_and_clear(cardDeck);
-    ivar_release_and_clear(pageControl);
+    ivar_release_and_clear(indexDotsView);
     ivar_release_and_clear(cardsView);
     ivar_release_and_clear(imageView);
     [super dealloc];
@@ -124,12 +120,12 @@
     qltrace();
     [super viewDidLoad];
     [self configureView];
-    [self configurePageControl];
+    [self configureIndexDotsViewAndButtons];
 }
 
 - (void)viewDidUnload {
     qltrace();
-    ivar_release_and_clear(pageControl);
+    ivar_release_and_clear(indexDotsView);
     ivar_release_and_clear(cardsView);
     ivar_release_and_clear(imageView);
     [super viewDidUnload];
@@ -188,8 +184,7 @@
 
 - (void)cardsViewDelegateCurrentCardIndexHasChangedTo:(NSUInteger)index {
     cardDeckViewContext.currentCardIndex = index;
-    pageControl.currentPage = index;
-    [self flashPageControl];
+    [indexDotsView setCurrentPage:index animated:YES];
 }
 
 - (BOOL)canBecomeFirstResponder {
@@ -221,13 +216,13 @@
     [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" timeInterval:0.8];
 }
 
-- (void)configurePageControl {
+- (void)configureIndexDotsViewAndButtons {
     const NSUInteger pageCount = [cardDeck cardsCount];
     
-    pageControl.alpha = cardDeck.wantsPageControl ? CDXCardDeckCardViewControllerPageControlAlphaVisible : CDXCardDeckCardViewControllerPageControlAlphaHidden;
-    pageControl.numberOfPages = pageCount;
-    pageControl.currentPage = cardDeckViewContext.currentCardIndex;
-    pageControl.userInteractionEnabled = NO;
+    indexDotsView.userInteractionEnabled = NO;
+    indexDotsView.invisibleByDefault = !cardDeck.wantsPageControl;
+    indexDotsView.numberOfPages = pageCount;
+    [indexDotsView setCurrentPage:cardDeckViewContext.currentCardIndex animated:NO];
     
     // configure the page jump pages
     if (pageCount <= 1) {
@@ -253,19 +248,6 @@
         pageControlJumpPages[3] = pageCount - pageControlJumpPages[1] - 1;
         pageControlJumpPages[4] = MAX(1, pageCount) - 1;
     }
-}
-
-- (void)flashPageControl {
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    if (!cardDeck.wantsPageControl) {
-        pageControl.alpha = CDXCardDeckCardViewControllerPageControlAlphaVisible;
-        pageControl.alpha = CDXCardDeckCardViewControllerPageControlAlphaHidden;
-    } else {
-        pageControl.alpha = CDXCardDeckCardViewControllerPageControlAlphaHidden;
-        pageControl.alpha = CDXCardDeckCardViewControllerPageControlAlphaVisible;
-    }
-    [UIView commitAnimations];
 }
 
 - (IBAction)pageControlLeftButtonPressed {
