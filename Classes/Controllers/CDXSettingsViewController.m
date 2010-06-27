@@ -137,6 +137,12 @@
             self.navigationItem.rightBarButtonItem = doneButton;
             self.navigationItem.leftBarButtonItem = nil;
         }
+        self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc]
+                                                  initWithTitle:@"Settings"
+                                                  style:UIBarButtonItemStylePlain
+                                                  target:nil
+                                                  action:nil]
+                                                 autorelease];
     }
 }
 
