@@ -58,7 +58,7 @@
         ivar_assign(cards, [[NSMutableArray alloc] init]);
         wantsPageControl = YES;
         wantsPageJumps = YES;
-        wantsAutoRotate = YES;
+        wantsAutoRotate = NO;
         wantsShakeShuffle = YES;
         groupSize = CDXCardDeckGroupSizeDefault;
         displayStyle = CDXCardDeckDisplayStyleDefault;
