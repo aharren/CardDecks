@@ -47,7 +47,7 @@ static const CDXSetting settings[] = {
     { CDXCardDeckSettingsDeckDisplayStyle, CDXSettingTypeEnumeration, @"Deck Style" },
     { CDXCardDeckSettingsCornerStyle, CDXSettingTypeEnumeration, @"Corner Style" },
     { CDXCardDeckSettingsPageControl, CDXSettingTypeBoolean, @"Index Dots" },
-    { CDXCardDeckSettingsPageJumps, CDXSettingTypeBoolean, @"Index Jumps" },
+    { CDXCardDeckSettingsPageJumps, CDXSettingTypeBoolean, @"Index Touches" },
     { CDXCardDeckSettingsAutoRotate, CDXSettingTypeBoolean, @"Auto Rotate" },
     { CDXCardDeckSettingsShakeShuffle, CDXSettingTypeBoolean, @"Shake Shuffle" },
     { 0, 0, @"" }
@@ -61,8 +61,8 @@ typedef struct {
 
 static const CDXCardDeckSettingGroup groups[] = {
     { @"", 2, CDXCardDeckSettingsName },
-    { @"Appearance", 4, CDXCardDeckSettingsDeckDisplayStyle },
-    { @"Events", 2, CDXCardDeckSettingsAutoRotate },
+    { @"Style", 3, CDXCardDeckSettingsDeckDisplayStyle },
+    { @"Events", 3, CDXCardDeckSettingsPageJumps },
     { @"", 0, 0 }
 };
 
