@@ -32,20 +32,9 @@
 
 @implementation CDXCardView
 
-- (id)init {
-    qltrace();
-    if ((self = [super init])) {
-        ivar_assign(cardText, [[UILabel alloc] init]);
-        cardText.numberOfLines = 0;
-        cardText.lineBreakMode = UILineBreakModeClip;
-        cardText.textAlignment = UITextAlignmentCenter;
-        cardText.baselineAdjustment = 0;
-        cardText.minimumFontSize = 1;
-        cardText.adjustsFontSizeToFitWidth = NO;
-        [self addSubview:cardText];
-        self.userInteractionEnabled = NO;
-    }
-    return self;
+- (void)dealloc {
+    ivar_release_and_clear(cardText);
+    [super dealloc];
 }
 
 - (CDXCardOrientation)cardOrientationForDeviceOrientation:(UIDeviceOrientation)deviceOrientation {
@@ -101,6 +90,19 @@
 }
 
 - (void)setCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation {
+    if (!cardText) {
+        qltrace();
+        ivar_assign(cardText, [[UILabel alloc] init]);
+        cardText.numberOfLines = 0;
+        cardText.lineBreakMode = UILineBreakModeClip;
+        cardText.textAlignment = UITextAlignmentCenter;
+        cardText.baselineAdjustment = 0;
+        cardText.minimumFontSize = 1;
+        cardText.adjustsFontSizeToFitWidth = NO;
+        [self addSubview:cardText];
+        self.userInteractionEnabled = NO;
+    }
+    
     // calculate orientation
     CDXCardOrientation cardOrientation = card.orientation + [self cardOrientationForDeviceOrientation:deviceOrientation];
     cardOrientation %= CDXCardOrientationCount;
@@ -150,11 +152,6 @@
     
     // set alpha
     self.alpha = 1.0;
-}
-
-- (void)dealloc {
-    ivar_release_and_clear(cardText);
-    [super dealloc];
 }
 
 @end
