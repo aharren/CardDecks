@@ -31,32 +31,42 @@
 @synthesize numberOfPages;
 @synthesize currentPage;
 @synthesize invisibleByDefault;
+@synthesize style;
 
 #define CDXIndexDotsViewAlphaVisible 1
 #define CDXIndexDotsViewAlphaInvisible 0
 
-#define CDXIndexDotsViewDotAlpha 0.6
+#define CDXIndexDotsViewDotAlphaWhite 0.7
+#define CDXIndexDotsViewDotAlphaBlack 0.25
 #define CDXIndexDotsViewDotAlphaHightlighted 1
 
 #define CDXIndexDotsViewDotDistance 16
 #define CDXIndexDotsViewDotWidth 6
-
-- (void)didMoveToSuperview {
-    qltrace(@": %@", self.superview);
-    [super didMoveToSuperview];
-    if (self.superview == nil) {
-        return;
-    }
-    
-    ivar_assign_and_retain(imageDot, [UIImage imageNamed:@"IndexDotGray.png"]);
-    ivar_assign_and_retain(imageDotHighlighted, [UIImage imageNamed:@"IndexDotWhite.png"]);
-}
 
 - (void)dealloc {
     qltrace();
     ivar_release_and_clear(imageDot);
     ivar_release_and_clear(imageDotHighlighted);
     [super dealloc];
+}
+
+- (void)setStyle:(CDXIndexDotsViewStyle)newStyle {
+    style = newStyle;
+    switch (style) {
+        default:
+        case CDXIndexDotsViewStyleLight:
+            ivar_assign_and_retain(imageDot, [UIImage imageNamed:@"IndexDotGray.png"]);
+            imageDotAlpha = CDXIndexDotsViewDotAlphaWhite;
+            ivar_assign_and_retain(imageDotHighlighted, [UIImage imageNamed:@"IndexDotWhite.png"]);
+            imageDotAlphaHighlighted = CDXIndexDotsViewDotAlphaHightlighted;
+            break;
+        case CDXIndexDotsViewStyleDark:
+            ivar_assign_and_retain(imageDot, [UIImage imageNamed:@"IndexDotGray.png"]);
+            imageDotAlpha = CDXIndexDotsViewDotAlphaBlack;
+            ivar_assign_and_retain(imageDotHighlighted, [UIImage imageNamed:@"IndexDotBlack.png"]);
+            imageDotAlphaHighlighted = CDXIndexDotsViewDotAlphaHightlighted;
+            break;
+    }
 }
 
 - (void)setNumberOfPages:(NSUInteger)newNumberOfPages {
@@ -79,7 +89,7 @@
         UIImageView *view = [[UIImageView alloc] initWithImage:imageDot highlightedImage:imageDotHighlighted];
         view.frame = CGRectMake(left + i * CDXIndexDotsViewDotDistance + CDXIndexDotsViewDotWidth/2, 0, CDXIndexDotsViewDotWidth, CDXIndexDotsViewDotWidth);
         view.highlighted = NO;
-        view.alpha = CDXIndexDotsViewDotAlpha;
+        view.alpha = imageDotAlpha;
         [self addSubview:view];
         [view release];
     }
@@ -89,13 +99,13 @@
     if (currentPage >= firstVisiblePage && currentPage <= lastVisiblePage) {
         UIImageView *view = [[self subviews] objectAtIndex:currentPage-firstVisiblePage];
         view.highlighted = NO;
-        view.alpha = CDXIndexDotsViewDotAlpha;
+        view.alpha = imageDotAlpha;
     }
     currentPage = newCurrentPage;
     if (currentPage >= firstVisiblePage && currentPage <= lastVisiblePage) {
         UIImageView *view = [[self subviews] objectAtIndex:currentPage-firstVisiblePage];
         view.highlighted = YES;
-        view.alpha = CDXIndexDotsViewDotAlphaHightlighted;
+        view.alpha = imageDotAlphaHighlighted;
     }
     
     if (animated && invisibleByDefault) {

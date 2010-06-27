@@ -135,6 +135,7 @@
     
     deck.displayStyle = CDXCardDeckDisplayStyleStack;
     deck.cornerStyle = CDXCardCornerStyleRounded;
+    deck.pageControlStyle = CDXCardDeckPageControlStyleDark;
     
     CDXCard *card;
     card = [deck cardWithDefaults];

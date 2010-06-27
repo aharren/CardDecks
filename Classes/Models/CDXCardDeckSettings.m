@@ -35,6 +35,7 @@ enum {
     CDXCardDeckSettingsDeckDisplayStyle,
     CDXCardDeckSettingsCornerStyle,
     CDXCardDeckSettingsPageControl,
+    CDXCardDeckSettingsPageControlStyle,
     CDXCardDeckSettingsPageJumps,
     CDXCardDeckSettingsAutoRotate,
     CDXCardDeckSettingsShakeShuffle,
@@ -47,6 +48,7 @@ static const CDXSetting settings[] = {
     { CDXCardDeckSettingsDeckDisplayStyle, CDXSettingTypeEnumeration, @"Deck Style" },
     { CDXCardDeckSettingsCornerStyle, CDXSettingTypeEnumeration, @"Corner Style" },
     { CDXCardDeckSettingsPageControl, CDXSettingTypeBoolean, @"Index Dots" },
+    { CDXCardDeckSettingsPageControlStyle, CDXSettingTypeEnumeration, @"Index Style" },
     { CDXCardDeckSettingsPageJumps, CDXSettingTypeBoolean, @"Index Touches" },
     { CDXCardDeckSettingsAutoRotate, CDXSettingTypeBoolean, @"Auto Rotate" },
     { CDXCardDeckSettingsShakeShuffle, CDXSettingTypeBoolean, @"Shake Shuffle" },
@@ -61,7 +63,7 @@ typedef struct {
 
 static const CDXCardDeckSettingGroup groups[] = {
     { @"", 2, CDXCardDeckSettingsName },
-    { @"Style", 3, CDXCardDeckSettingsDeckDisplayStyle },
+    { @"Appearance", 4, CDXCardDeckSettingsDeckDisplayStyle },
     { @"Events", 3, CDXCardDeckSettingsPageJumps },
     { @"", 0, 0 }
 };
@@ -149,6 +151,8 @@ static const CDXCardDeckSettingGroup groups[] = {
             return (NSUInteger)cardDeck.displayStyle;
         case CDXCardDeckSettingsCornerStyle:
             return (NSUInteger)cardDeck.cornerStyle;
+        case CDXCardDeckSettingsPageControlStyle:
+            return cardDeck.pageControlStyle;
         case CDXCardDeckSettingsGroupSize:
             return cardDeck.groupSize;
     }
@@ -163,6 +167,9 @@ static const CDXCardDeckSettingGroup groups[] = {
             break;
         case CDXCardDeckSettingsCornerStyle:
             cardDeck.cornerStyle = value;
+            break;
+        case CDXCardDeckSettingsPageControlStyle:
+            cardDeck.pageControlStyle = value;
             break;
         case CDXCardDeckSettingsGroupSize:
             cardDeck.groupSize = value;
@@ -179,6 +186,8 @@ static const CDXCardDeckSettingGroup groups[] = {
             return (NSUInteger)CDXCardDeckDisplayStyleCount;
         case CDXCardDeckSettingsCornerStyle:
             return (NSUInteger)CDXCardCornerStyleCount;
+        case CDXCardDeckSettingsPageControlStyle:
+            return (NSUInteger)CDXCardDeckPageControlStyleCount;
         case CDXCardDeckSettingsGroupSize:
             return (NSUInteger)CDXCardDeckGroupSizeCount;
     }
@@ -205,6 +214,14 @@ static const CDXCardDeckSettingGroup groups[] = {
                     return @"Rounded";
                 case CDXCardCornerStyleCornered:
                     return @"Cornered";
+            }
+        case CDXCardDeckSettingsPageControlStyle:
+            switch (value) {
+                default:
+                case CDXCardDeckPageControlStyleLight:
+                    return @"Light";
+                case CDXCardDeckPageControlStyleDark:
+                    return @"Dark";
             }
         case CDXCardDeckSettingsGroupSize: {
             if (value == CDXCardDeckGroupSizeNoGroups) {

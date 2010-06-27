@@ -45,6 +45,14 @@ typedef enum {
 } CDXCardDeckGroupSize;
 
 
+typedef enum {
+    CDXCardDeckPageControlStyleLight = 0,
+    CDXCardDeckPageControlStyleDark = 1,
+    CDXCardDeckPageControlStyleCount,
+    CDXCardDeckPageControlStyleDefault = CDXCardDeckPageControlStyleLight
+} CDXCardDeckPageControlStyle;
+
+
 @interface CDXCardDeck : CDXCardDeckBase<NSCopying, CDXStorageObject> {
     
 @protected
@@ -60,6 +68,7 @@ typedef enum {
     
     CDXCardDeckDisplayStyle displayStyle;
     CDXCardCornerStyle cornerStyle;
+    CDXCardDeckPageControlStyle pageControlStyle;
     
     BOOL isShuffled;
     NSMutableArray *shuffleIndexes;
@@ -85,6 +94,8 @@ typedef enum {
 
 @property (nonatomic, assign) CDXCardDeckDisplayStyle displayStyle;
 @property (nonatomic, assign) CDXCardCornerStyle cornerStyle;
+@property (nonatomic, assign) CDXCardDeckPageControlStyle pageControlStyle;
+
 - (void)setFontSize:(CGFloat)fontSize;
 - (void)setOrientation:(CDXCardOrientation)orientation;
 - (void)setTextColor:(CDXColor *)textColor;

@@ -41,6 +41,7 @@
 @synthesize groupSize;
 @synthesize displayStyle;
 @synthesize cornerStyle;
+@synthesize pageControlStyle;
 @synthesize isShuffled;
 @synthesize shuffleIndexes;
 
@@ -62,6 +63,7 @@
         groupSize = CDXCardDeckGroupSizeDefault;
         displayStyle = CDXCardDeckDisplayStyleDefault;
         cornerStyle = CDXCardCornerStyleRounded;
+        pageControlStyle = CDXCardDeckPageControlStyleDefault;
         isShuffled = NO;
         shuffleIndexes = nil;
     }
@@ -90,6 +92,7 @@
     copy.groupSize = groupSize;
     copy.displayStyle = displayStyle;
     copy.cornerStyle = cornerStyle;
+    copy.pageControlStyle = pageControlStyle;
     for (CDXCard *card in cards) {
         [copy addCard:[[card copyWithZone:zone] autorelease]];
     }

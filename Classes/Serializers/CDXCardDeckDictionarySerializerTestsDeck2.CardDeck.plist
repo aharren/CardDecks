@@ -54,6 +54,8 @@
 	<integer>0</integer>
 	<key>file</key>
 	<string>Deck:File</string>
+	<key>pageControlStyle</key>
+	<integer>0</integer>
 	<key>groupSize</key>
 	<integer>0</integer>
 	<key>isShuffled</key>

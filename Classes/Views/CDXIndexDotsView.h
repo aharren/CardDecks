@@ -24,23 +24,33 @@
 // THE SOFTWARE.
 
 
+typedef enum {
+    CDXIndexDotsViewStyleLight = 0,
+    CDXIndexDotsViewStyleDark = 1
+} CDXIndexDotsViewStyle;
+
+
 @interface CDXIndexDotsView : UIView {
     
 @protected
     NSUInteger numberOfPages;
     NSUInteger currentPage;
     BOOL invisibleByDefault;
+    CDXIndexDotsViewStyle style;
     
     NSUInteger firstVisiblePage;
     NSUInteger lastVisiblePage;
     
     UIImage *imageDot;
     UIImage *imageDotHighlighted;
+    CGFloat imageDotAlpha;
+    CGFloat imageDotAlphaHighlighted;
 }
 
 @property (nonatomic, assign) NSUInteger numberOfPages;
 @property (nonatomic, readonly) NSUInteger currentPage;
 @property (nonatomic, assign) BOOL invisibleByDefault;
+@property (nonatomic, assign) CDXIndexDotsViewStyle style;
 
 - (void)setCurrentPage:(NSUInteger)currentPage animated:(BOOL)animated;
 

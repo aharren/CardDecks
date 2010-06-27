@@ -221,6 +221,7 @@
     
     indexDotsView.userInteractionEnabled = NO;
     indexDotsView.invisibleByDefault = !cardDeck.wantsPageControl;
+    indexDotsView.style = (CDXIndexDotsViewStyle)cardDeck.pageControlStyle;
     indexDotsView.numberOfPages = pageCount;
     [indexDotsView setCurrentPage:cardDeckViewContext.currentCardIndex animated:NO];
     

@@ -54,6 +54,8 @@
 	<integer>1</integer>
 	<key>file</key>
 	<string>Deck:FileReverse</string>
+	<key>pageControlStyle</key>
+	<integer>1</integer>
 	<key>groupSize</key>
 	<integer>4</integer>
 	<key>isShuffled</key>
