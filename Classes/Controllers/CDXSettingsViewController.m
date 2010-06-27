@@ -26,6 +26,7 @@
 #import "CDXSettingsViewController.h"
 #import "CDXKeyboardExtensions.h"
 #import "CDXSymbolsKeyboardExtension.h"
+#import "CDXAppSettings.h"
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -96,6 +97,7 @@
     
 @protected
     NSObject<CDXSettings> *settings;
+    BOOL isRootView;
     
 }
 
@@ -104,11 +106,16 @@
 
 @implementation CDXSettingsMainViewController
 
-- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings {
+- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings isRootView:(BOOL)aIsRootView {
     if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
         ivar_assign(settings, aSettings);
+        isRootView = aIsRootView;
     }
     return self;
+}
+
+- (IBAction)closeButtonPressed {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -116,6 +123,21 @@
     [self.tableView reloadData];
     self.tableView.tableHeaderView = [settings titleView];
     self.navigationItem.title = [settings title];
+    if (isRootView) {
+        UIBarButtonItem* doneButton = [[[UIBarButtonItem alloc]
+                                        initWithTitle:@"Done"
+                                        style:UIBarButtonItemStyleDone
+                                        target:self
+                                        action:@selector(closeButtonPressed)]
+                                       autorelease];
+        if ([[CDXAppSettings sharedAppSettings] doneButtonOnLeftSide]) {
+            self.navigationItem.leftBarButtonItem = doneButton;
+            self.navigationItem.rightBarButtonItem = nil;
+        } else {
+            self.navigationItem.rightBarButtonItem = doneButton;
+            self.navigationItem.leftBarButtonItem = nil;
+        }
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -284,7 +306,7 @@
         case CDXSettingTypeSettings: {
             NSObject<CDXSettings> *s = [settings settingsSettingsForSettingWithTag:setting.tag];
             if (s != nil) {
-                UITableViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:s] autorelease];
+                UITableViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:s isRootView:NO] autorelease];
                 [[self navigationController] pushViewController:vc animated:YES];
             }
             break;
@@ -307,20 +329,7 @@
 - (id)initWithSettings:(NSObject<CDXSettings> *)aSettings {
     if ((self = [super init])) {
         ivar_assign_and_retain(settings, aSettings);
-        UITableViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:settings] autorelease];
-        vc.title = [settings title];
-        vc.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
-                                                 initWithTitle:@"Done"
-                                                 style:UIBarButtonItemStyleDone
-                                                 target:self
-                                                 action:@selector(closeButtonPressed)]
-                                                autorelease];
-        vc.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc]
-                                                initWithTitle:@"Settings"
-                                                style:UIBarButtonItemStylePlain
-                                                target:nil
-                                                action:nil]
-                                               autorelease];
+        UITableViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:settings isRootView:YES] autorelease];
         [self pushViewController:vc animated:NO];
     }
     return self;
@@ -329,10 +338,6 @@
 - (void)dealloc {
     ivar_release_and_clear(settings);
     [super dealloc];
-}
-
-- (IBAction)closeButtonPressed {
-    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

@@ -35,7 +35,5 @@
 
 - (id)initWithSettings:(NSObject<CDXSettings> *)settings;
 
-- (IBAction)closeButtonPressed;
-
 @end
 

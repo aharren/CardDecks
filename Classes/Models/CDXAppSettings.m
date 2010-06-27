@@ -33,6 +33,7 @@
 enum {
     CDXAppSettingsAbout,
     CDXAppSettingsIdleTimer,
+    CDXAppSettingsDoneButtonOnLeftSide,
     CDXAppSettingsAllKeyboardSymbols,
     CDXAppSettingsCount
 };
@@ -40,6 +41,7 @@ enum {
 static const CDXSetting settings[] = {
     { CDXAppSettingsAbout, CDXSettingTypeSettings, @"About Card Decks" },
     { CDXAppSettingsIdleTimer, CDXSettingTypeBoolean, @"Idle Timer" },
+    { CDXAppSettingsDoneButtonOnLeftSide, CDXSettingTypeEnumeration, @"Done Button" },
     { CDXAppSettingsAllKeyboardSymbols, CDXSettingTypeBoolean, @"Full Symbol Table" },
     { 0, 0, @"" }
 };
@@ -47,6 +49,7 @@ static const CDXSetting settings[] = {
 static NSString *settingsUserDefaultsKeys[] = {
     nil,
     @"IdleTimer",
+    @"DoneButtonOnLeftSide",
     @"AllKeyboardSymbols",
     nil
 };
@@ -60,6 +63,7 @@ typedef struct {
 static const CDXAppSettingGroup groups[] = {
     { @"", 1, CDXAppSettingsAbout },
     { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
+    { @"User Interface", 1, CDXAppSettingsDoneButtonOnLeftSide },
     { @"Keyboards", 1, CDXAppSettingsAllKeyboardSymbols },
     { @"", 0, 0 }
 };
@@ -88,6 +92,10 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
 
 - (BOOL)enableAllKeyboardSymbols {
     return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsAllKeyboardSymbols] defaults:NO];
+}
+
+- (BOOL)doneButtonOnLeftSide {
+    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsDoneButtonOnLeftSide] defaults:NO];
 }
 
 - (NSString *)title {
@@ -138,18 +146,46 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
 }
 
 - (NSUInteger)enumerationValueForSettingWithTag:(NSUInteger)tag {
-    return 0;
+    switch (tag) {
+        default:
+            return 0;
+        case CDXAppSettingsDoneButtonOnLeftSide:
+            return [self doneButtonOnLeftSide] ? 0 : 1;
+    }
 }
 
-- (void)setEnumerationValue:(NSUInteger)value  forSettingWithTag:(NSUInteger)tag {
+- (void)setEnumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag {
+    switch (tag) {
+        default:
+            break;
+        case CDXAppSettingsDoneButtonOnLeftSide:
+            [CDXAppSettings setUserDefaultsBooleanValue:(value ? NO : YES) forKey:settingsUserDefaultsKeys[tag]];
+            break;
+    }
 }
 
 - (NSUInteger)enumerationValuesCountForSettingWithTag:(NSUInteger)tag {
-    return 0;
+    switch (tag) {
+        default:
+            return 0;
+        case CDXAppSettingsDoneButtonOnLeftSide:
+            return 2;
+    }
 }
 
 - (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag {
-    return @"";
+    switch (tag) {
+        default:
+            return @"";
+        case CDXAppSettingsDoneButtonOnLeftSide:
+            switch (value) {
+                default:
+                case 0:
+                    return @"On Left Side";
+                case 1:
+                    return @"On Right Side";
+            }
+    }
 }
 
 - (NSString *)textValueForSettingWithTag:(NSUInteger)tag {
