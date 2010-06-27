@@ -89,7 +89,7 @@
     }
 }
 
-- (void)setCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation {
+- (void)setCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation preview:(BOOL)preview {
     if (!cardText) {
         qltrace();
         ivar_assign(cardText, [[UILabel alloc] init]);
@@ -140,14 +140,17 @@
     borderLayer.borderColor = [[UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:0.3] CGColor];
     borderLayer.borderWidth = 1;
     
-    switch (card.cornerStyle) {
-        default:
-        case CDXCardCornerStyleRounded:
-            borderLayer.cornerRadius = 20.0 * scale;
-            break;
-        case CDXCardCornerStyleCornered:
-            borderLayer.cornerRadius = 3.0 * scale;
-            break;
+    borderLayer.cornerRadius = 0;
+    if (!preview) {
+        switch (card.cornerStyle) {
+            default:
+            case CDXCardCornerStyleRounded:
+                borderLayer.cornerRadius = 20.0 * scale;
+                break;
+            case CDXCardCornerStyleCornered:
+                borderLayer.cornerRadius = 3.0 * scale;
+                break;
+        }
     }
     
     // set alpha

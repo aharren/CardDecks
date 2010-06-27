@@ -56,7 +56,7 @@ static CGImageRef CDXImageFactoryCreateScreenImage(void) {
     if (!cardView) {
         [self initCardView];
     }
-    [cardView setCard:card size:(CGSize)size deviceOrientation:deviceOrientation];
+    [cardView setCard:card size:(CGSize)size deviceOrientation:deviceOrientation preview:NO];
     return [self imageForView:cardView size:size];
 }
 
