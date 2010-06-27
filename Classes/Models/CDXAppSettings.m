@@ -73,7 +73,7 @@ static const CDXAppSettingGroup groups[] = {
 
 synthesize_singleton(sharedAppSettings, CDXAppSettings);
 
-+ (BOOL)userDefaultsBooleanValueForKey:(NSString *)key defaults:(BOOL)defaults {
++ (BOOL)userDefaultsBooleanValueForKey:(NSString *)key defaultsTo:(BOOL)defaults {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if ([userDefaults objectForKey:key] == nil) {
         return defaults;
@@ -87,15 +87,15 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
 }
 
 - (BOOL)enableIdleTimer {
-    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsIdleTimer] defaults:NO];
+    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsIdleTimer] defaultsTo:NO];
 }
 
 - (BOOL)enableAllKeyboardSymbols {
-    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsAllKeyboardSymbols] defaults:NO];
+    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsAllKeyboardSymbols] defaultsTo:NO];
 }
 
 - (BOOL)doneButtonOnLeftSide {
-    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsDoneButtonOnLeftSide] defaults:NO];
+    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsDoneButtonOnLeftSide] defaultsTo:NO];
 }
 
 - (NSString *)title {
