@@ -45,6 +45,7 @@ typedef enum {
 #define CDXCardFontSizeAutomatic ((CGFloat) 0.0)
 #define CDXCardFontSizeMax       ((CGFloat) 400.0)
 
+#define CDXCardFontSizeCacheSize 2
 
 @interface CDXCard : NSObject<NSCopying> {
     
@@ -55,6 +56,10 @@ typedef enum {
     CDXCardOrientation orientation;
     CDXCardCornerStyle cornerStyle;
     CGFloat fontSize;
+    
+    NSUInteger fontSizeCacheNextIndex;
+    CGSize fontSizeCacheSize[CDXCardFontSizeCacheSize];
+    CGFloat fontSizeCacheFontSize[CDXCardFontSizeCacheSize];
 }
 
 @property (nonatomic, copy) NSString *text;

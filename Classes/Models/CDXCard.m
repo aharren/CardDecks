@@ -67,20 +67,36 @@
     return copy;
 }
 
+- (void)invalidateFontSizeCache {
+    fontSizeCacheNextIndex = 0;
+}
+
 - (void)setText:(NSString *)aText {
+    [self invalidateFontSizeCache];
     // canonicalize linebreaks to \n
     ivar_assign_and_copy(text, [aText stringByReplacingOccurrencesOfString:@"\r" withString:@"\n"]);
 }
 
 - (void)setFontSize:(CGFloat)aFontSize {
+    [self invalidateFontSizeCache];
     fontSize = floor(aFontSize <= 0.0 ? 0.0 - aFontSize : aFontSize);
     fontSize = fontSize < CDXCardFontSizeMax ? fontSize : CDXCardFontSizeMax;
 }
 
 - (CGFloat)fontSizeConstrainedToSize:(CGSize)size {
+    qltrace(@"%3.0f x %3.0f", size.width, size.height);
     if (fontSize != CDXCardFontSizeAutomatic) {
+        qltrace(@"fixed: %3.0f", fontSize);
         return fontSize;
     } else {
+        for (NSUInteger i = 0; i < fontSizeCacheNextIndex; i++) {
+            if (fontSizeCacheSize[i].height == size.height &&
+                fontSizeCacheSize[i].width == size.width) {
+                CGFloat cachedFontSize = fontSizeCacheFontSize[i];
+                qltrace("cached: %3.0f index: %d", cachedFontSize, i);
+                return cachedFontSize;
+            }
+        }
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         NSArray *textLines = [text componentsSeparatedByString:@"\n"];
         NSUInteger textLinesCount = [textLines count];
@@ -116,9 +132,19 @@
             
             minlineFontSize = MIN(minlineFontSize, lineFontSize);
         }
-        
+        minlineFontSize = floor(minlineFontSize);
         [pool release];
-        return floor(minlineFontSize);
+        
+        if (fontSizeCacheNextIndex < CDXCardFontSizeCacheSize) {
+            fontSizeCacheFontSize[fontSizeCacheNextIndex] = minlineFontSize;
+            fontSizeCacheSize[fontSizeCacheNextIndex] = size;
+            qltrace(@"calculated: %3.0f index: %d", minlineFontSize, fontSizeCacheNextIndex);
+            fontSizeCacheNextIndex++;
+        } else {
+            qltrace(@"calculated: %3.0f", minlineFontSize);
+        }
+        
+        return minlineFontSize;
     }
 }
 
