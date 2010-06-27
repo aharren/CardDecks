@@ -44,6 +44,14 @@
 @end
 
 
+@protocol CDXKeyboardExtensionResponder
+
+@optional
+- (void)keyboardExtensionResponderExtensionBecameActiveAtIndex:(NSUInteger)index;
+
+@end
+
+
 @protocol CDXKeyboardExtensionResponderWithActions
 
 @required

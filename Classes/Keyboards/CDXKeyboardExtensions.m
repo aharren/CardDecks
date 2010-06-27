@@ -310,6 +310,12 @@ static float keyboardExtensionsOsVersion;
         NSObject<CDXKeyboardExtensionResponderWithActions> *r = (NSObject<CDXKeyboardExtensionResponderWithActions> *)responder;
         toolbarActionButton.enabled = [r keyboardExtensionResponderHasActionsForExtensionAtIndex:tag];
     }
+    
+    if ([responder conformsToProtocol:@protocol(CDXKeyboardExtensionResponder)] &&
+        [responder respondsToSelector:@selector(keyboardExtensionResponderExtensionBecameActiveAtIndex:)]) {
+        NSObject<CDXKeyboardExtensionResponder> *r = (NSObject<CDXKeyboardExtensionResponder> *)responder;
+        [r keyboardExtensionResponderExtensionBecameActiveAtIndex:tag];
+    }
 }
 
 - (void)deactivateKeyboardExtension:(NSObject<CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag {
