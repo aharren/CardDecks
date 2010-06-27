@@ -84,7 +84,7 @@
     }
 }
 
-- (id)initWithCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation {
+- (void)setCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation {
     // calculate orientation
     CDXCardOrientation cardOrientation = card.orientation + [self cardOrientationForDeviceOrientation:deviceOrientation];
     cardOrientation %= CDXCardOrientationCount;
@@ -134,32 +134,6 @@
     
     // set alpha
     self.alpha = 1.0;
-    
-    return self;
-}
-
-- (id)initWithThumbnailCard:(CDXCard *)card size:(CGSize)size {
-    // set size
-    self.frame = CGRectMake(0, 0, size.width, size.height);
-    
-    // update text
-    cardText.text = @"";
-    
-    // update background
-    cardText.backgroundColor = card ? [card.backgroundColor uiColor] : [UIColor whiteColor];
-    
-    // update border
-    self.clipsToBounds = YES;
-    self.backgroundColor = [UIColor blackColor];
-    CALayer *borderLayer = self.layer;
-    borderLayer.borderColor = card ? [[UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:0.3] CGColor] : nil;
-    borderLayer.borderWidth = 1;
-    borderLayer.cornerRadius = 0;
-    
-    // set alpha
-    self.alpha = card ? 1.0 : 0.0;
-    
-    return self;
 }
 
 - (void)dealloc {
