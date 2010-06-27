@@ -115,14 +115,14 @@
     [self performBlockingSelectorEnd];
     [viewTableView reloadData];
     [self updateToolbarButtons];
-    viewTableView.contentOffset = viewTableViewContentOffset;
+    viewTableView.contentOffset = CGPointMake(0, MAX(0, viewTableViewContentOffsetY));
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     qltrace();
     [super viewWillDisappear:animated];
     [self performBlockingSelectorEnd];
-    viewTableViewContentOffset = viewTableView.contentOffset;
+    viewTableViewContentOffsetY = viewTableView.contentOffset.y;
 }
 
 - (void)setUserInteractionEnabled:(BOOL)enabled {
