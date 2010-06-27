@@ -33,6 +33,7 @@
 enum {
     CDXAppSettingsAbout,
     CDXAppSettingsIdleTimer,
+    CDXAppSettingsCardDeckQuickOpen,
     CDXAppSettingsDoneButtonOnLeftSide,
     CDXAppSettingsAllKeyboardSymbols,
     CDXAppSettingsCount
@@ -41,6 +42,7 @@ enum {
 static const CDXSetting settings[] = {
     { CDXAppSettingsAbout, CDXSettingTypeSettings, @"About Card Decks" },
     { CDXAppSettingsIdleTimer, CDXSettingTypeBoolean, @"Idle Timer" },
+    { CDXAppSettingsCardDeckQuickOpen, CDXSettingTypeBoolean, @"Quick Open" },
     { CDXAppSettingsDoneButtonOnLeftSide, CDXSettingTypeEnumeration, @"Done Button" },
     { CDXAppSettingsAllKeyboardSymbols, CDXSettingTypeBoolean, @"Full Symbol Table" },
     { 0, 0, @"" }
@@ -49,6 +51,7 @@ static const CDXSetting settings[] = {
 static NSString *settingsUserDefaultsKeys[] = {
     nil,
     @"IdleTimer",
+    @"CardDeckQuickOpen",
     @"DoneButtonOnLeftSide",
     @"AllKeyboardSymbols",
     nil
@@ -63,7 +66,7 @@ typedef struct {
 static const CDXAppSettingGroup groups[] = {
     { @"", 1, CDXAppSettingsAbout },
     { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
-    { @"User Interface", 1, CDXAppSettingsDoneButtonOnLeftSide },
+    { @"User Interface", 2, CDXAppSettingsCardDeckQuickOpen },
     { @"Keyboards", 1, CDXAppSettingsAllKeyboardSymbols },
     { @"", 0, 0 }
 };
@@ -92,6 +95,10 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
 
 - (BOOL)enableAllKeyboardSymbols {
     return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsAllKeyboardSymbols] defaultsTo:NO];
+}
+
+- (BOOL)cardDeckQuickOpen {
+    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsCardDeckQuickOpen] defaultsTo:NO];
 }
 
 - (BOOL)doneButtonOnLeftSide {
@@ -131,6 +138,8 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
             return [self enableIdleTimer];
         case CDXAppSettingsAllKeyboardSymbols:
             return [self enableAllKeyboardSymbols];
+        case CDXAppSettingsCardDeckQuickOpen:
+            return [self cardDeckQuickOpen];
     }
 }
 
@@ -140,6 +149,7 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
             break;
         case CDXAppSettingsIdleTimer:
         case CDXAppSettingsAllKeyboardSymbols:
+        case CDXAppSettingsCardDeckQuickOpen:
             [CDXAppSettings setUserDefaultsBooleanValue:value forKey:settingsUserDefaultsKeys[tag]];
             break;
     }

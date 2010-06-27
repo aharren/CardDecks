@@ -50,11 +50,14 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    qltrace();
+    cardDeckQuickOpen = [[CDXAppSettings sharedAppSettings] cardDeckQuickOpen];
     [super viewWillAppear:animated];
     [CDXStorage drainAllDeferredActions];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    qltrace();
     [super viewDidAppear:animated];
     if ([cardDecks hasPendingCardDeckAdds]) {
         [self performBlockingSelector:@selector(processPendingCardDeckAdd) withObject:nil];
@@ -87,9 +90,9 @@
                 cell.textLabel.font = tableCellTextFont;
                 cell.detailTextLabel.font = tableCellDetailTextFont;
                 cell.detailTextLabel.textColor = tableCellDetailTextTextColor;
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             }
+            cell.accessoryType = cardDeckQuickOpen ? UITableViewCellAccessoryDetailDisclosureButton : UITableViewCellAccessoryDisclosureIndicator;
             
             CDXCardDeckBase *deck = [cardDecks cardDeckAtIndex:indexPath.row];
             NSString *name = deck.name;
@@ -154,6 +157,23 @@
     [self performBlockingSelectorEnd];
 }
 
+- (void)pushCardDeckCardViewControllerWithCardDeckBase:(CDXCardDeckBase *)deckBase {
+    if (deckBase == nil) {
+        return;
+    }
+    
+    CDXCardDeck *deck = deckBase.cardDeck;
+    if (deck != nil && [deck cardsCount] != 0) {
+        CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
+        CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:context] autorelease];
+        [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+    }
+    NSIndexPath *indexPath = [viewTableView indexPathForSelectedRow];
+    [viewTableView deselectRowAtIndexPath:indexPath animated:YES];
+    lastCardDeckIndex = indexPath.row;
+    [self performBlockingSelectorEnd];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     BOOL deselectRow = YES;
     switch (indexPath.section) {
@@ -162,8 +182,13 @@
             break;
         }
         case 1: {
-            [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckBase:)
-                               withObject:[cardDecks cardDeckAtIndex:indexPath.row]];
+            if (cardDeckQuickOpen) {
+                [self performBlockingSelector:@selector(pushCardDeckCardViewControllerWithCardDeckBase:)
+                                   withObject:[cardDecks cardDeckAtIndex:indexPath.row]];
+            } else {
+                [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckBase:)
+                                   withObject:[cardDecks cardDeckAtIndex:indexPath.row]];
+            }
             deselectRow = NO;
             break;
         }
@@ -181,6 +206,11 @@
     if (deselectRow) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckBase:)
+                       withObject:[cardDecks cardDeckAtIndex:indexPath.row]];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
