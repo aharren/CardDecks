@@ -49,8 +49,7 @@ static CGImageRef CDXImageFactoryCreateScreenImage(void) {
 }
 
 - (void)initCardView {
-    ivar_release_and_clear(cardView);
-    [[NSBundle mainBundle] loadNibNamed:@"CDXCardView" owner:self options:nil];
+    ivar_assign(cardView, [[CDXCardView alloc] init]);
 }
 
 - (UIImage *)imageForCard:(CDXCard *)card size:(CGSize)size deviceOrientation:(UIDeviceOrientation)deviceOrientation {

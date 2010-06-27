@@ -104,7 +104,6 @@
 		E0DD7FC311D680DB00ED23B6 /* IndexDotGray.png in Resources */ = {isa = PBXBuildFile; fileRef = E0DD7FC111D680DB00ED23B6 /* IndexDotGray.png */; };
 		E0DD7FC411D680DB00ED23B6 /* IndexDotWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = E0DD7FC211D680DB00ED23B6 /* IndexDotWhite.png */; };
 		E0DDD81011B26807004CECCB /* CDXListViewControllerBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DDD80F11B26807004CECCB /* CDXListViewControllerBase.m */; };
-		E0EB6E71117233E400F41F7A /* CDXCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0EB6E70117233E400F41F7A /* CDXCardView.xib */; };
 		E0EB6E7C1172343600F41F7A /* CDXCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EB6E7B1172343600F41F7A /* CDXCardView.m */; };
 		E0EB6F4E11723D1A00F41F7A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0EB6F4D11723D1A00F41F7A /* CoreGraphics.framework */; };
 		E0EB6FD1117240AF00F41F7A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0CCC9031170E9420040D222 /* QuartzCore.framework */; };
@@ -272,7 +271,6 @@
 		E0DD7FC211D680DB00ED23B6 /* IndexDotWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IndexDotWhite.png; path = Images/IndexDotWhite.png; sourceTree = "<group>"; };
 		E0DDD80E11B26807004CECCB /* CDXListViewControllerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXListViewControllerBase.h; path = Classes/Controllers/CDXListViewControllerBase.h; sourceTree = "<group>"; };
 		E0DDD80F11B26807004CECCB /* CDXListViewControllerBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXListViewControllerBase.m; path = Classes/Controllers/CDXListViewControllerBase.m; sourceTree = "<group>"; };
-		E0EB6E70117233E400F41F7A /* CDXCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardView.xib; path = UserInterfaces/CDXCardView.xib; sourceTree = "<group>"; };
 		E0EB6E7A1172343600F41F7A /* CDXCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardView.h; path = Classes/Views/CDXCardView.h; sourceTree = "<group>"; };
 		E0EB6E7B1172343600F41F7A /* CDXCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardView.m; path = Classes/Views/CDXCardView.m; sourceTree = "<group>"; };
 		E0EB6F4D11723D1A00F41F7A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -484,7 +482,6 @@
 				E03BA38511674C3300FE7924 /* MainWindow.xib */,
 				E0620D0011BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib */,
 				E03B10B811C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib */,
-				E0EB6E70117233E400F41F7A /* CDXCardView.xib */,
 				E0CCC7391170DC120040D222 /* CDXCardDeckCardView.xib */,
 				E0A1C00211A82C5600911848 /* CDXCardDeckCardEditView.xib */,
 				E02320F8117093870043D6CF /* CDXCardDeckListView.xib */,
@@ -684,7 +681,6 @@
 				E0CCC70E1170DA0A0040D222 /* Icon-Settings.png in Resources */,
 				E0CCC70F1170DA0A0040D222 /* Icon.png in Resources */,
 				E0CCC73A1170DC120040D222 /* CDXCardDeckCardView.xib in Resources */,
-				E0EB6E71117233E400F41F7A /* CDXCardView.xib in Resources */,
 				E0C51F14119DA03000D75D0E /* Default.png in Resources */,
 				E0C51FB6119DB12500D75D0E /* Toolbar-Edit-Reorder.png in Resources */,
 				E0620F8B119E950D00234667 /* StatusBarDefault.png in Resources */,

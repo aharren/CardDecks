@@ -32,6 +32,22 @@
 
 @implementation CDXCardView
 
+- (id)init {
+    qltrace();
+    if ((self = [super init])) {
+        ivar_assign(cardText, [[UILabel alloc] init]);
+        cardText.numberOfLines = 0;
+        cardText.lineBreakMode = UILineBreakModeClip;
+        cardText.textAlignment = UITextAlignmentCenter;
+        cardText.baselineAdjustment = 0;
+        cardText.minimumFontSize = 1;
+        cardText.adjustsFontSizeToFitWidth = NO;
+        [self addSubview:cardText];
+        self.userInteractionEnabled = NO;
+    }
+    return self;
+}
+
 - (CDXCardOrientation)cardOrientationForDeviceOrientation:(UIDeviceOrientation)deviceOrientation {
     // map the given device orientation to a card orientation
     switch (deviceOrientation) {
@@ -102,11 +118,11 @@
     
     // set size
     self.frame = CGRectMake(0, 0, size.width, size.height);
+    cardText.frame = self.frame;
     
     // update text
     CGFloat fontSize = [card fontSizeConstrainedToSize:[self sizeForCardOrientation:cardOrientation size:size]];
     cardText.bounds = CGRectMake(0, 0, 1024, 1024);
-    cardText.numberOfLines = 0;
     cardText.font = [UIFont systemFontOfSize:fontSize];
     cardText.text = text;
     cardText.textColor = [card.textColor uiColor];
