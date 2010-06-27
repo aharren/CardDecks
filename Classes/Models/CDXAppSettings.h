@@ -35,6 +35,7 @@ declare_singleton(sharedAppSettings, CDXAppSettings);
 - (BOOL)enableIdleTimer;
 - (BOOL)enableAllKeyboardSymbols;
 - (BOOL)cardDeckQuickOpen;
+- (NSUInteger)closeTapCount;
 - (BOOL)doneButtonOnLeftSide;
 
 @end

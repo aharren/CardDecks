@@ -34,6 +34,7 @@ enum {
     CDXAppSettingsAbout,
     CDXAppSettingsIdleTimer,
     CDXAppSettingsCardDeckQuickOpen,
+    CDXAppSettingsCloseTapCount,
     CDXAppSettingsDoneButtonOnLeftSide,
     CDXAppSettingsAllKeyboardSymbols,
     CDXAppSettingsCount
@@ -43,6 +44,7 @@ static const CDXSetting settings[] = {
     { CDXAppSettingsAbout, CDXSettingTypeSettings, @"About Card Decks" },
     { CDXAppSettingsIdleTimer, CDXSettingTypeBoolean, @"Idle Timer" },
     { CDXAppSettingsCardDeckQuickOpen, CDXSettingTypeBoolean, @"Quick Open" },
+    { CDXAppSettingsCloseTapCount, CDXSettingTypeEnumeration, @"Close Gesture" },
     { CDXAppSettingsDoneButtonOnLeftSide, CDXSettingTypeEnumeration, @"Done Button" },
     { CDXAppSettingsAllKeyboardSymbols, CDXSettingTypeBoolean, @"Full Symbol Table" },
     { 0, 0, @"" }
@@ -52,6 +54,7 @@ static NSString *settingsUserDefaultsKeys[] = {
     nil,
     @"IdleTimer",
     @"CardDeckQuickOpen",
+    @"CloseTapCount",
     @"DoneButtonOnLeftSide",
     @"AllKeyboardSymbols",
     nil
@@ -66,7 +69,7 @@ typedef struct {
 static const CDXAppSettingGroup groups[] = {
     { @"", 1, CDXAppSettingsAbout },
     { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
-    { @"User Interface", 2, CDXAppSettingsCardDeckQuickOpen },
+    { @"User Interface", 3, CDXAppSettingsCardDeckQuickOpen },
     { @"Keyboards", 1, CDXAppSettingsAllKeyboardSymbols },
     { @"", 0, 0 }
 };
@@ -89,6 +92,19 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
     [userDefaults setBool:value forKey:key];
 }
 
++ (NSInteger)userDefaultsIntegerValueForKey:(NSString *)key defaultsTo:(NSInteger)defaults {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if ([userDefaults objectForKey:key] == nil) {
+        return defaults;
+    }
+    return [userDefaults integerForKey:key];
+}
+
++ (void)setUserDefaultsIntegerValue:(NSInteger)value forKey:(NSString *)key {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setInteger:value forKey:key];
+}
+
 - (BOOL)enableIdleTimer {
     return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsIdleTimer] defaultsTo:NO];
 }
@@ -99,6 +115,15 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
 
 - (BOOL)cardDeckQuickOpen {
     return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsCardDeckQuickOpen] defaultsTo:NO];
+}
+
+- (NSUInteger)closeTapCount {
+    NSUInteger value = [CDXAppSettings userDefaultsIntegerValueForKey:settingsUserDefaultsKeys[CDXAppSettingsCloseTapCount] defaultsTo:2];
+    if (value >= 1 && value <= 2) {
+        return value;
+    } else {
+        return 2;
+    }
 }
 
 - (BOOL)doneButtonOnLeftSide {
@@ -159,6 +184,8 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
     switch (tag) {
         default:
             return 0;
+        case CDXAppSettingsCloseTapCount:
+            return [self closeTapCount] - 1;
         case CDXAppSettingsDoneButtonOnLeftSide:
             return [self doneButtonOnLeftSide] ? 0 : 1;
     }
@@ -167,6 +194,9 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
 - (void)setEnumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag {
     switch (tag) {
         default:
+            break;
+        case CDXAppSettingsCloseTapCount:
+            [CDXAppSettings setUserDefaultsIntegerValue:(value + 1) forKey:settingsUserDefaultsKeys[tag]];
             break;
         case CDXAppSettingsDoneButtonOnLeftSide:
             [CDXAppSettings setUserDefaultsBooleanValue:(value ? NO : YES) forKey:settingsUserDefaultsKeys[tag]];
@@ -178,6 +208,8 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
     switch (tag) {
         default:
             return 0;
+        case CDXAppSettingsCloseTapCount:
+            return 2;
         case CDXAppSettingsDoneButtonOnLeftSide:
             return 2;
     }
@@ -187,6 +219,14 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
     switch (tag) {
         default:
             return @"";
+        case CDXAppSettingsCloseTapCount:
+            switch (value) {
+                default:
+                case 0:
+                    return @"Single Tap";
+                case 1:
+                    return @"Double Tap";
+            }
         case CDXAppSettingsDoneButtonOnLeftSide:
             switch (value) {
                 default:

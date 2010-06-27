@@ -44,6 +44,8 @@
     IBOutlet CDXIndexDotsView *indexDotsView;
     NSUInteger pageControlJumpPagesCount;
     NSUInteger pageControlJumpPages[5];
+    
+    NSUInteger closeTapCount;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;

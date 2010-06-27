@@ -50,6 +50,7 @@
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
         ivar_assign_and_retain(cardDeck, cardDeckViewContext.cardDeck);
         self.wantsFullScreenLayout = YES;
+        closeTapCount = [[CDXAppSettings sharedAppSettings] closeTapCount];
     }
     return self;
 }
@@ -177,7 +178,7 @@
 - (void)cardsViewDelegateTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     qltrace();
     UITouch *touch = [touches anyObject];
-    if ([touch tapCount] == 2) {
+    if ([touch tapCount] == closeTapCount) {
         [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES];
     }
 }
