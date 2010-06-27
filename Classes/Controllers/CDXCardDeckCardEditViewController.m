@@ -43,6 +43,8 @@
 
 - (void)dealloc {
     ivar_release_and_clear(text);
+    ivar_release_and_clear(cardViewScrollView);
+    ivar_release_and_clear(cardView);
     ivar_release_and_clear(viewButtonsUpDownBarButtonItem);
     ivar_release_and_clear(viewButtonsUpDown);
     ivar_release_and_clear(cardDeckViewContext);
@@ -58,10 +60,13 @@
     }
 }
 
-- (void)showCardColors {
+- (void)updateCardPreview {
     CDXCard *card = [self currentCard];
     text.textColor = [card.textColor uiColor];
     text.backgroundColor = [card.backgroundColor uiColor];
+    [cardView setCard:[self currentCard] size:cardViewSize deviceOrientation:UIDeviceOrientationPortrait preview:YES];
+    cardViewScrollView.contentSize = cardViewSize;
+    cardViewScrollView.contentOffset = CGPointMake(0, MAX(0, (cardViewSize.height - cardViewScrollView.frame.size.height) / 2));
 }
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex {
@@ -74,7 +79,22 @@
         
         self.navigationItem.title = [NSString stringWithFormat:@"%d of %d", cardIndex+1, [cardDeck cardsCount]];
     }
-    [self showCardColors];
+    [self updateCardPreview];
+}
+
+- (void)showCardView:(BOOL)show {
+    if (!cardViewScrollView.hidden == show) {
+        return;
+    }
+    if (show) {
+        text.hidden = YES;
+        cardViewScrollView.hidden = NO;
+        [self currentCard].text = text.text;
+        [self updateCardPreview];
+    } else {
+        text.hidden = NO;
+        cardViewScrollView.hidden = YES;
+    }
 }
 
 - (void)finishCardModification {
@@ -89,10 +109,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    cardViewSize = [[UIScreen mainScreen] bounds].size;
 }
 
 - (void)viewDidUnload {
     ivar_release_and_clear(text);
+    ivar_release_and_clear(cardViewScrollView);
+    ivar_release_and_clear(cardView);
     ivar_release_and_clear(viewButtonsUpDownBarButtonItem);
     ivar_release_and_clear(viewButtonsUpDown);
     [super viewDidUnload];
@@ -105,6 +128,7 @@
     
     [self showCardAtIndex:cardDeckViewContext.currentCardIndex];
     [text becomeFirstResponder];
+    [self showCardView:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -137,6 +161,10 @@
                            [CDXTextKeyboardExtension sharedtextKeyboardExtension],
                            nil];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
+}
+
+- (void)keyboardExtensionResponderExtensionBecameActiveAtIndex:(NSUInteger)index {
+    [self showCardView:(index == 1 || index == 2)];
 }
 
 - (BOOL)keyboardExtensionResponderHasActionsForExtensionAtIndex:(NSUInteger)index {
@@ -254,7 +282,7 @@
         default:
             break;
     }
-    [self showCardColors];
+    [self updateCardPreview];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] refreshKeyboardExtensions];
 }
 
@@ -264,7 +292,7 @@
 
 - (void)colorKeyboardExtensionSetTextColor:(CDXColor *)color {
     [self currentCard].textColor = color;
-    [self showCardColors];
+    [self updateCardPreview];
 }
 
 - (CDXColor *)colorKeyboardExtensionBackgroundColor {
@@ -273,7 +301,7 @@
 
 - (void)colorKeyboardExtensionSetBackgroundColor:(CDXColor *)color {
     [self currentCard].backgroundColor = color;
-    [self showCardColors];
+    [self updateCardPreview];
 }
 
 - (CDXCardOrientation)textKeyboardExtensionCardOrientation {
@@ -282,6 +310,7 @@
 
 - (void)textKeyboardExtensionSetCardOrientation:(CDXCardOrientation)cardOrientation {
     [self currentCard].orientation = cardOrientation;
+    [self updateCardPreview];
 }
 
 - (CGFloat)textKeyboardExtensionFontSize {
@@ -290,6 +319,7 @@
 
 - (void)textKeyboardExtensionSetFontSize:(CGFloat)fontSize {
     [self currentCard].fontSize = fontSize;
+    [self updateCardPreview];
 }
 
 - (void)paste:(id)sender {
