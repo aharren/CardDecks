@@ -223,6 +223,7 @@
                 [cellText addTarget:self action:@selector(textValueChanged:) forControlEvents:UIControlEventEditingDidEndOnExit];
                 cellText.clearButtonMode = UITextFieldViewModeWhileEditing;
                 cellText.textColor = cell.detailTextLabel.textColor;
+                cellText.returnKeyType = UIReturnKeyDone;
                 cell.accessoryView = cellText;
             } else {
                 cellText = (UITextField *)cell.accessoryView;
