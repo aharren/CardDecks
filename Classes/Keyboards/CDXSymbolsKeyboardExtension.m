@@ -245,6 +245,7 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     { 0x2000, 0x206F       , @"General Punctuation" },
     { 0x25A0, 0x25A0 + 12*7, @"Geometric Shapes" },
     { 0x0370, 0x03FF       , @"Greek and Coptic" },
+    { 0x0080 + 4*7, 0x00FF , @"Latin-1 Supplement" },
     { 0x2100, 0x214F       , @"Letterlike Symbols" },
     { 0x2200, 0x22FF       , @"Mathematical Operators" },
     { 0x2600, 0x2600 + 16*7, @"Miscellaneous Symbols" },
