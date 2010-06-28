@@ -66,7 +66,6 @@
     text.backgroundColor = [card.backgroundColor uiColor];
     [cardView setCard:[self currentCard] size:cardViewSize deviceOrientation:UIDeviceOrientationPortrait preview:YES];
     cardViewScrollView.contentSize = cardViewSize;
-    cardViewScrollView.contentOffset = CGPointMake(0, MAX(0, (cardViewSize.height - cardViewScrollView.frame.size.height) / 2));
 }
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex {
@@ -82,10 +81,12 @@
         self.navigationItem.title = @"Defaults";
     }
     [self updateCardPreview];
+    cardViewScrollView.contentOffset = CGPointMake(0, MAX(0, (cardViewSize.height - cardViewScrollView.frame.size.height) / 2));
 }
 
 - (void)showCardView:(BOOL)show {
     if (!cardViewScrollView.hidden == show) {
+        cardViewScrollView.contentOffset = CGPointMake(0, MAX(0, (cardViewSize.height - cardViewScrollView.frame.size.height) / 2));
         return;
     }
     if (show) {
