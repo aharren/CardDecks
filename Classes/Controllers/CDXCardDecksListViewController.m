@@ -287,6 +287,7 @@
         [viewTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
         [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
         [viewTableView deselectRowAtIndexPath:path animated:YES];
+        [self updateToolbarButtons];
     }
     
     if ([cardDecks hasPendingCardDeckAdds]) {
