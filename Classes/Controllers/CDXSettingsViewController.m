@@ -309,6 +309,13 @@
             [[self navigationController] pushViewController:vc animated:YES];
             break;
         }
+        case CDXSettingTypeText: {
+            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            if ([cell.accessoryView isKindOfClass:[UITextField class]]) {
+                UITextField *cellText = (UITextField *)cell.accessoryView;
+                [cellText becomeFirstResponder];
+            }
+        }
         case CDXSettingTypeSettings: {
             NSObject<CDXSettings> *s = [settings settingsSettingsForSettingWithTag:setting.tag];
             if (s != nil) {
