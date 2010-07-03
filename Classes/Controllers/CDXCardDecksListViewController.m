@@ -153,7 +153,6 @@
     }
     NSIndexPath *indexPath = [viewTableView indexPathForSelectedRow];
     [viewTableView deselectRowAtIndexPath:indexPath animated:YES];
-    lastCardDeckIndex = indexPath.row;
     [self performBlockingSelectorEnd];
 }
 
@@ -170,7 +169,6 @@
     }
     NSIndexPath *indexPath = [viewTableView indexPathForSelectedRow];
     [viewTableView deselectRowAtIndexPath:indexPath animated:YES];
-    lastCardDeckIndex = indexPath.row;
     [self performBlockingSelectorEnd];
 }
 
@@ -182,6 +180,8 @@
             break;
         }
         case 1: {
+            lastCardDeckIndex = indexPath.row;
+            deselectRow = NO;
             if (cardDeckQuickOpen) {
                 [self performBlockingSelector:@selector(pushCardDeckCardViewControllerWithCardDeckBase:)
                                    withObject:[cardDecks cardDeckAtIndex:indexPath.row]];
@@ -189,15 +189,14 @@
                 [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckBase:)
                                    withObject:[cardDecks cardDeckAtIndex:indexPath.row]];
             }
-            deselectRow = NO;
             break;
         }
         case 2: {
             switch (indexPath.row) {
                 default:
                 case 0: {
-                    [self defaultsButtonPressed];
                     deselectRow = NO;
+                    [self defaultsButtonPressed];
                     break;
                 }
             }
@@ -209,6 +208,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    lastCardDeckIndex = indexPath.row;
     [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckBase:)
                        withObject:[cardDecks cardDeckAtIndex:indexPath.row]];
 }
