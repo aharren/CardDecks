@@ -86,6 +86,8 @@ static float keyboardExtensionsOsVersion;
     CGRect keyboardBounds;
     CGPoint keyboardAnimationStartPoint;
     CGPoint keyboardAnimationEndPoint;
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
     
     // get animation information for the keyboard
     double keyboardAnimationDuration;
@@ -103,6 +105,14 @@ static float keyboardExtensionsOsVersion;
         keyboardBounds.origin = CGPointMake(0, 0);
         keyboardBounds.size = CGSizeMake(MAX(keyboardAnimationStartFrame.size.width, keyboardAnimationEndFrame.size.width),
                                          MAX(keyboardAnimationStartFrame.size.height, keyboardAnimationEndFrame.size.height));
+        qltrace(@"start: %3f %3f", keyboardAnimationStartPoint.x, keyboardAnimationStartPoint.y);
+        qltrace(@"end  : %3f %3f", keyboardAnimationEndPoint.x, keyboardAnimationEndPoint.y);
+        BOOL offScreenNew = keyboardAnimationEndFrame.origin.x < 0 || keyboardAnimationEndFrame.origin.x >= screenWidth;
+        if (offScreenNew && offScreen) {
+            // already off-screen
+            return;
+        }
+        offScreen = offScreenNew;
     } else {
         qltrace(@"KeyboardBounds");
         [[notification.userInfo valueForKey:UIKeyboardBoundsUserInfoKey] getValue:&keyboardBounds];
@@ -130,7 +140,6 @@ static float keyboardExtensionsOsVersion;
     CGRect toolbarFrameAnimationEnd = toolbarFrame;
     toolbarFrameAnimationEnd.origin.y = keyboardAnimationEndPoint.y - keyboardBounds.size.height/2 - toolbarFrame.size.height;
     toolbarFrameAnimationEnd.origin.x = keyboardAnimationEndPoint.x - keyboardBounds.size.width/2;
-    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
     if (toolbarFrameAnimationStart.origin.y >= screenHeight - toolbarFrame.size.height) {
         toolbarFrameAnimationStart.origin.y = screenHeight;
     }

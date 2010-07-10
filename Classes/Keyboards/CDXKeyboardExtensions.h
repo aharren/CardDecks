@@ -76,6 +76,7 @@
     
     BOOL enabled;
     BOOL visible;
+    BOOL offScreen;
     
     NSInteger activeExtensionTag;
     NSArray *keyboardExtensions;
