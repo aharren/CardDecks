@@ -82,6 +82,7 @@ static float keyboardExtensionsOsVersion;
 }
 
 - (void)setToolbarHidden:(BOOL)hidden notification:(NSNotification *)notification {
+    qltrace(@"hidden %d", hidden);
     CGRect keyboardBounds;
     CGPoint keyboardAnimationStartPoint;
     CGPoint keyboardAnimationEndPoint;
@@ -171,18 +172,22 @@ static float keyboardExtensionsOsVersion;
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
+    qltrace();
     [self setToolbarHidden:NO notification:notification];
 }
 
 - (void)keyboardDidShow:(NSNotification *)notification {
+    qltrace();
     visible = YES;
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
+    qltrace();
     [self setToolbarHidden:YES notification:notification];
 }
 
 - (void)keyboardDidHide:(NSNotification *)notification {
+    qltrace();
     [toolbar removeFromSuperview];
     visible = NO;
 }
