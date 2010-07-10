@@ -59,9 +59,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     qltrace();
     [super viewDidAppear:animated];
-    if ([cardDecks hasPendingCardDeckAdds]) {
-        [self performBlockingSelector:@selector(processPendingCardDeckAdd) withObject:nil];
-    }
+    [self processPendingCardDeckAdds];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -277,7 +275,7 @@
     [self presentModalViewController:vc animated:YES];
 }
 
-- (void)processPendingCardDeckAdd {
+- (void)processSinglePendingCardDeckAdd {
     CDXCardDeckHolder *deck = [cardDecks popPendingCardDeckAdd];
     if (deck != nil) {
         NSUInteger row = (lastCardDeckIndex < [cardDecks cardDecksCount]) ? lastCardDeckIndex : 0;
@@ -291,10 +289,16 @@
     }
     
     if ([cardDecks hasPendingCardDeckAdds]) {
-        [self performBlockingSelector:@selector(processPendingCardDeckAdd) withObject:nil];
+        [self performBlockingSelector:@selector(processSinglePendingCardDeckAdd) withObject:nil];
     } else {
         [CDXStorage drainAllDeferredActions];
         [self performBlockingSelectorEnd];
+    }
+}
+
+- (void)processPendingCardDeckAdds {
+    if ([cardDecks hasPendingCardDeckAdds]) {
+        [self performBlockingSelector:@selector(processSinglePendingCardDeckAdd) withObject:nil];
     }
 }
 

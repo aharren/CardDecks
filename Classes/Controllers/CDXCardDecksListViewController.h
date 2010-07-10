@@ -37,6 +37,8 @@
 
 - (id)initWithCardDecks:(CDXCardDecks *)cardDecks;
 
+- (void)processPendingCardDeckAdds;
+
 - (IBAction)addButtonPressed;
 - (IBAction)defaultsButtonPressed;
 - (IBAction)settingsButtonPressed;

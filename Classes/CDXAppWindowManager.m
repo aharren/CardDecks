@@ -123,6 +123,8 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
             [UIView setAnimationDelegate:self];
             [UIView setAnimationWillStartSelector:@selector(popFullScreenViewControllerAnimationWillStart:context:)];
             [UIView setAnimationDidStopSelector:@selector(popFullScreenViewControllerAnimationDidStop:finished:context:)];
+        } else {
+            [self popFullScreenViewControllerAnimationDidStop:nil finished:nil context:NULL];
         }
         
         [fullScreenViewController.view removeFromSuperview];
@@ -136,6 +138,13 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     } else {
         [navigationController popViewControllerAnimated:animated];
     }
+}
+
+- (void)popToInitialViewController {
+    if (fullScreenViewController != nil) {
+        [self popViewControllerAnimated:NO];
+    }
+    [navigationController popToRootViewControllerAnimated:NO];
 }
 
 - (void)makeWindowKeyAndVisible {
