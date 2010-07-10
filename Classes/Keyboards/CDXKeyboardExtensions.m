@@ -130,11 +130,12 @@ static float keyboardExtensionsOsVersion;
     CGRect toolbarFrameAnimationEnd = toolbarFrame;
     toolbarFrameAnimationEnd.origin.y = keyboardAnimationEndPoint.y - keyboardBounds.size.height/2 - toolbarFrame.size.height;
     toolbarFrameAnimationEnd.origin.x = keyboardAnimationEndPoint.x - keyboardBounds.size.width/2;
-    if (toolbarFrameAnimationStart.origin.y >= 480 - toolbarFrame.size.height) {
-        toolbarFrameAnimationStart.origin.y = 480;
+    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+    if (toolbarFrameAnimationStart.origin.y >= screenHeight - toolbarFrame.size.height) {
+        toolbarFrameAnimationStart.origin.y = screenHeight;
     }
-    if (toolbarFrameAnimationEnd.origin.y >= 480 - toolbarFrame.size.height) {
-        toolbarFrameAnimationEnd.origin.y = 480;
+    if (toolbarFrameAnimationEnd.origin.y >= screenHeight - toolbarFrame.size.height) {
+        toolbarFrameAnimationEnd.origin.y = screenHeight;
     }
     
     // now, animate and position the toolbar
