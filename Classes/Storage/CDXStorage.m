@@ -42,8 +42,13 @@ static NSMutableArray *storageDeferredRemoves = nil;
     storageDeferredRemoves = [[NSMutableArray alloc] init];
 }
 
-+ (NSDictionary *)readDictionaryFromFile:(NSString *)file {
-    qltrace(@"file %@", file);
++ (NSDictionary *)readDictionaryFromFile:(NSString *)file suffix:(NSString *)suffix {
+    qltrace(@"file %@ suffix %@", file, suffix);
+    
+    // add suffix
+    if (suffix != nil) {
+        file = [file stringByAppendingString:suffix];
+    }
     
     // create the file name
     NSString *fileName = [NSString stringWithFormat:@"%@.plist", file];
@@ -73,8 +78,31 @@ static NSMutableArray *storageDeferredRemoves = nil;
     return nil;
 }
 
++ (NSDictionary *)readDictionaryFromFile:(NSString *)file {
+    qltrace(@"file %@", file);
+    
+    NSDictionary *dictionary = nil;
+    
+    // first, try with .2 suffix
+    dictionary = [CDXStorage readDictionaryFromFile:file suffix:@".2"];
+    if (dictionary != nil) {
+        return dictionary;
+    }
+    
+    // second, try without suffix
+    dictionary = [CDXStorage readDictionaryFromFile:file suffix:nil];
+    if (dictionary != nil) {
+        return dictionary;
+    }
+    
+    return nil;
+}
+
 + (void)writeDictionary:(NSDictionary *)dictionary toFile:(NSString *)file {
     qltrace(@"file %@", file);
+    
+    // we always store with .2 suffix
+    file = [file stringByAppendingFormat:@".2"];
     
     NSString *fileName = [NSString stringWithFormat:@"%@.plist", file];
     
