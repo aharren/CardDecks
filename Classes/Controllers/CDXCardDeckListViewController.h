@@ -26,9 +26,10 @@
 #import "CDXCardDeck.h"
 #import "CDXCardDeckViewContext.h"
 #import "CDXListViewControllerBase.h"
+#import <MessageUI/MFMailComposeViewController.h>
 
 
-@interface CDXCardDeckListViewController : CDXListViewControllerBase<UIActionSheetDelegate> {
+@interface CDXCardDeckListViewController : CDXListViewControllerBase<UIActionSheetDelegate, MFMailComposeViewControllerDelegate> {
     
 @protected
     CDXCardDeckViewContext *cardDeckViewContext;
@@ -46,6 +47,8 @@
 - (IBAction)settingsButtonPressed;
 - (IBAction)shuffleButtonPressed;
 - (IBAction)actionButtonPressed;
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error;
 
 @end
 

@@ -29,6 +29,8 @@
 #import "CDXSettingsViewController.h"
 #import "CDXImageFactory.h"
 #import "CDXCardDecks.h"
+#import "CDXCardDeckURLSerializer.h"
+#import "CDXAppSettings.h"
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -305,8 +307,25 @@
     switch (buttonIndex) {
         default:
             break;
-        case 0:
+        case 0: {
+            NSString *body = [@"carddecks2:///2/add?" stringByAppendingString:[CDXCardDeckURLSerializer version2StringFromCardDeck:cardDeck]];
+            if ([[CDXAppSettings sharedAppSettings] useMailApplication] || ![MFMailComposeViewController canSendMail]) {
+                NSString *urlString = [NSString stringWithFormat:@"mailto:?&subject=%@&body=%@",
+                                       [[cardDeck.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+                                        stringByReplacingOccurrencesOfString:@"&" withString:@"%26"],
+                                       [[body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+                                        stringByReplacingOccurrencesOfString:@"&" withString:@"%26"]];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+            } else {
+                MFMailComposeViewController *vc = [[[MFMailComposeViewController alloc] init] autorelease];
+                [vc setMailComposeDelegate:self];
+                [vc setSubject:cardDeck.name];
+                [vc setMessageBody:body isHTML:NO];
+                [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:NO];
+                [self presentModalViewController:vc animated:YES];
+            }
             break;
+        }
         case 1: {
             CDXCardDeck *deck = [[cardDeck copy] autorelease];
             deck.name = [deck.name stringByAppendingString:@" - Copy"];
@@ -317,6 +336,11 @@
             break;
         }
     }
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+    [controller dismissModalViewControllerAnimated:YES];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
 }
 
 @end

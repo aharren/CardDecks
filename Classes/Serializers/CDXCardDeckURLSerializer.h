@@ -30,14 +30,18 @@
     
 }
 
-// Deserializes the given string into a CDXCardDeck instance.
-//
+// Deserializes the given URL string into a CDXCardDeck instance.
 // Format:
 //   string := <deck>[&<card>[&<card>[...]]]
 //   deck   := <name>[,[<text-color>][,[<background-color>][,[<orientation>]]]]
 //   card   := <text>[,[<text-color>][,[<background-color>][,[<orientation>]]]]
-//
 + (CDXCardDeck *)cardDeckFromVersion1String:(NSString *)string;
+// Format:
+//   ...
++ (CDXCardDeck *)cardDeckFromVersion2String:(NSString *)string;
+
+// Serializes the given CDXCardDeck instance into an URL string.
++ (NSString *)version2StringFromCardDeck:(CDXCardDeck *)cardDeck;
 
 @end
 

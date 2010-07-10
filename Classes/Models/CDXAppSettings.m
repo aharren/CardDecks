@@ -36,6 +36,7 @@ enum {
     CDXAppSettingsCardDeckQuickOpen,
     CDXAppSettingsCloseTapCount,
     CDXAppSettingsDoneButtonOnLeftSide,
+    CDXAppSettingsUseMailApplication,
     CDXAppSettingsAllKeyboardSymbols,
     CDXAppSettingsCount
 };
@@ -46,7 +47,8 @@ static const CDXSetting settings[] = {
     { CDXAppSettingsCardDeckQuickOpen, CDXSettingTypeBoolean, @"Quick Open" },
     { CDXAppSettingsCloseTapCount, CDXSettingTypeEnumeration, @"Close Gesture" },
     { CDXAppSettingsDoneButtonOnLeftSide, CDXSettingTypeEnumeration, @"Done Button" },
-    { CDXAppSettingsAllKeyboardSymbols, CDXSettingTypeBoolean, @"Full Symbol Table" },
+    { CDXAppSettingsUseMailApplication, CDXSettingTypeBoolean, @"Use Mail Application" },
+    { CDXAppSettingsAllKeyboardSymbols, CDXSettingTypeBoolean, @"Full Symbol Keyboard" },
     { 0, 0, @"" }
 };
 
@@ -56,6 +58,7 @@ static NSString *settingsUserDefaultsKeys[] = {
     @"CardDeckQuickOpen",
     @"CloseTapCount",
     @"DoneButtonOnLeftSide",
+    @"UseMailApplication",
     @"AllKeyboardSymbols",
     nil
 };
@@ -69,8 +72,7 @@ typedef struct {
 static const CDXAppSettingGroup groups[] = {
     { @"", 1, CDXAppSettingsAbout },
     { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
-    { @"User Interface", 3, CDXAppSettingsCardDeckQuickOpen },
-    { @"Keyboards", 1, CDXAppSettingsAllKeyboardSymbols },
+    { @"User Interface", 5, CDXAppSettingsCardDeckQuickOpen },
     { @"", 0, 0 }
 };
 
@@ -130,6 +132,10 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
     return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsDoneButtonOnLeftSide] defaultsTo:NO];
 }
 
+- (BOOL)useMailApplication {
+    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsUseMailApplication] defaultsTo:NO];
+}
+
 - (NSString *)title {
     return @"Settings";
 }
@@ -165,6 +171,8 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
             return [self enableAllKeyboardSymbols];
         case CDXAppSettingsCardDeckQuickOpen:
             return [self cardDeckQuickOpen];
+        case CDXAppSettingsUseMailApplication:
+            return [self useMailApplication];
     }
 }
 
@@ -175,6 +183,7 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
         case CDXAppSettingsIdleTimer:
         case CDXAppSettingsAllKeyboardSymbols:
         case CDXAppSettingsCardDeckQuickOpen:
+        case CDXAppSettingsUseMailApplication:
             [CDXAppSettings setUserDefaultsBooleanValue:value forKey:settingsUserDefaultsKeys[tag]];
             break;
     }

@@ -132,5 +132,13 @@
     return dDeck;
 }
 
++ (CDXCardDeck *)cardDeckFromVersion2String:(NSString *)string {
+    return [[[CDXCardDeck alloc] init] autorelease];
+}
+
++ (NSString *)version2StringFromCardDeck:(CDXCardDeck *)cardDeck {
+    return @"carddeck";
+}
+
 @end
 
