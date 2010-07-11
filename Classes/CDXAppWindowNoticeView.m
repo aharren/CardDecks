@@ -48,7 +48,12 @@
     CALayer *borderLayer = background.layer;
     borderLayer.borderWidth = 0;
     borderLayer.cornerRadius = 9.0;
-}    
+    
+    CGFloat width = 156;
+    CGFloat height = 156;
+    CGRect bounds = [UIScreen mainScreen].bounds;
+    self.frame = CGRectMake((bounds.size.width - width)/2, (bounds.size.height - height)/2 + 18, width, height);
+}
 
 
 - (void)hideAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
