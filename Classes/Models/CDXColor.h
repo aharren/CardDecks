@@ -39,7 +39,6 @@
 @property (nonatomic, readonly) uint8_t blue;
 @property (nonatomic, readonly) uint8_t alpha;
 
-- (NSString *)rgbString;
 - (NSString *)rgbaString;
 - (UIColor *)uiColor;
 

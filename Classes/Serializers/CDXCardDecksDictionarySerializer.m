@@ -132,7 +132,9 @@
     NSUInteger decksCount = [cardDecks cardDecksCount];
     NSMutableArray *decks = [NSMutableArray arrayWithCapacity:decksCount];
     for (NSUInteger i=0; i < decksCount; i++) {
+        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         [decks addObject:[CDXCardDecksDictionarySerializer version2DictionaryFromCardDeckBase:[cardDecks cardDeckAtIndex:i]]];
+        [pool release];
     }
     [dictionary setObject:decks forKey:@"cardDecks"];
     

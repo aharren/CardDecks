@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDeckURLSerializer.h
+// CDXURLSerializerUtils.h
 //
 //
 // Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
@@ -23,31 +23,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXCardDeck.h"
 
+@interface CDXURLSerializerUtils : NSObject {
 
-@interface CDXCardDeckURLSerializer : NSObject {
-    
 }
 
-// Deserializes the given URL string into a CDXCardDeck instance.
-// Format:
-//   string := <deck>[&<card>[&<card>[...]]]
-//   deck   := <name>[,[<text-color>][,[<background-color>][,[<orientation>]]]]
-//   card   := <text>[,[<text-color>][,[<background-color>][,[<orientation>]]]]
-+ (CDXCardDeck *)cardDeckFromVersion1String:(NSString *)string;
-// Format:
-//   string := <deck>&<default-card>[&<card>[...]]
-//   deck   := <name>[,<setting>[,<setting>[...]]]
-//   card   := <text>[,[<text-color>][,[<background-color>][,[<orientation>][,[<font-size>]]]]]
-+ (CDXCardDeck *)cardDeckFromVersion2String:(NSString *)string;
-
-// Serializes the given CDXCardDeck instance into an URL string.
-// Format:
-//   string := <deck>&<default-card>[&<card>[...]]
-//   deck   := <name>[,<setting>[,<setting>[...]]]
-//   card   := <text>[,[<text-color>][,[<background-color>][,[<orientation>][,[<font-size>]]]]]
-+ (NSString *)version2StringFromCardDeck:(CDXCardDeck *)cardDeck;
++ (NSString *)stringByAddingURLEscapes:(NSString *)string;
++ (NSString *)stringByReplacingURLEscapes:(NSString *)string;
 
 @end
 

@@ -54,12 +54,8 @@ static CDXColor *colorBlack = nil;
     colorBlack->alpha = 255;
 }
 
-- (NSString *)rgbString {
-    return [NSString stringWithFormat:@"%02x%02x%02x", red, green, blue];
-}
-
 - (NSString *)rgbaString {
-    return [NSString stringWithFormat:@"%02x%02x%02x%02x", red, green, blue, alpha] ;
+    return [NSString stringWithFormat:@"%02x%02x%02x%02x", red, green, blue, alpha];
 }
 
 - (UIColor *)uiColor {
