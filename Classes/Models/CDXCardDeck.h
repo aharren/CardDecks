@@ -33,7 +33,7 @@ typedef enum {
     CDXCardDeckDisplayStyleStack,
     CDXCardDeckDisplayStyleSwipeStack,
     CDXCardDeckDisplayStyleCount,
-    CDXCardDeckDisplayStyleDefault = 0
+    CDXCardDeckDisplayStyleDefault = CDXCardDeckDisplayStyleSideBySide
 } CDXCardDeckDisplayStyle;
 
 
@@ -41,7 +41,7 @@ typedef enum {
     CDXCardDeckGroupSizeNoGroups = 0,
     CDXCardDeckGroupSizeMax = 12,
     CDXCardDeckGroupSizeCount,
-    CDXCardDeckGroupSizeDefault = 0
+    CDXCardDeckGroupSizeDefault = CDXCardDeckGroupSizeNoGroups
 } CDXCardDeckGroupSize;
 
 

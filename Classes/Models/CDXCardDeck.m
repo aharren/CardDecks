@@ -62,7 +62,7 @@
         wantsShakeShuffle = YES;
         groupSize = CDXCardDeckGroupSizeDefault;
         displayStyle = CDXCardDeckDisplayStyleDefault;
-        cornerStyle = CDXCardCornerStyleRounded;
+        cornerStyle = CDXCardCornerStyleDefault;
         pageControlStyle = CDXCardDeckPageControlStyleDefault;
         isShuffled = NO;
         shuffleIndexes = nil;
@@ -236,6 +236,30 @@
 
 - (CDXCard *)cardWithDefaults {
     return [[cardDefaults copy] autorelease];
+}
+
+- (void)setGroupSize:(CDXCardDeckGroupSize)aGroupSize {
+    if (aGroupSize >= 0 && aGroupSize <= CDXCardDeckGroupSizeMax) {
+        groupSize = aGroupSize;
+    } else {
+        groupSize = CDXCardDeckGroupSizeNoGroups;
+    }
+}
+
+- (void)setDisplayStyle:(CDXCardDeckDisplayStyle)aDisplayStyle {
+    if (aDisplayStyle >= 0 && aDisplayStyle < CDXCardDeckDisplayStyleCount) {
+        displayStyle = aDisplayStyle;
+    } else {
+        displayStyle = CDXCardDeckDisplayStyleDefault;
+    }
+}
+
+- (void)setPageControlStyle:(CDXCardDeckPageControlStyle)aPageControlStyle {
+    if (aPageControlStyle >= 0 && aPageControlStyle < CDXCardDeckPageControlStyleCount) {
+        pageControlStyle = aPageControlStyle;
+    } else {
+        pageControlStyle = CDXCardDeckPageControlStyleDefault;
+    }
 }
 
 - (void)setCornerStyle:(CDXCardCornerStyle)aCornerStyle {
