@@ -354,5 +354,51 @@
     STAssertEqualObjects([deck cardAtIndex:1], card3s, nil);
 }
 
+- (void)testGroupSize {
+    CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
+    
+    STAssertEquals(deck.groupSize, CDXCardDeckGroupSizeDefault, nil);
+    deck.groupSize = -1;
+    STAssertEquals(deck.groupSize, CDXCardDeckGroupSizeDefault, nil);
+    deck.groupSize = 0;
+    STAssertEquals(deck.groupSize, CDXCardDeckGroupSizeNoGroups, nil);
+    deck.groupSize = 3;
+    STAssertEquals(deck.groupSize, 3, nil);
+    deck.groupSize = 12;
+    STAssertEquals(deck.groupSize, CDXCardDeckGroupSizeMax, nil);
+    deck.groupSize = 13;
+    STAssertEquals(deck.groupSize, CDXCardDeckGroupSizeNoGroups, nil);
+}
+
+- (void)testDisplayStyle {
+    CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
+    
+    STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleDefault, nil);
+    deck.displayStyle = -1;
+    STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleDefault, nil);
+    deck.displayStyle = 0;
+    STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleDefault, nil);
+    deck.displayStyle = 1;
+    STAssertEquals(deck.displayStyle, 1, nil);
+    deck.displayStyle = 2;
+    STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleCount-1, nil);
+    deck.displayStyle = 3;
+    STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleDefault, nil);
+}
+
+- (void)testPageControlStyle {
+    CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
+    
+    STAssertEquals(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault, nil);
+    deck.pageControlStyle = -1;
+    STAssertEquals(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault, nil);
+    deck.pageControlStyle = 0;
+    STAssertEquals(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault, nil);
+    deck.pageControlStyle = 1;
+    STAssertEquals(deck.pageControlStyle, CDXCardDeckPageControlStyleCount-1, nil);
+    deck.pageControlStyle = 2;
+    STAssertEquals(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault, nil);
+}
+
 @end
 
