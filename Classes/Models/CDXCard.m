@@ -44,6 +44,9 @@
         ivar_assign_and_copy(text, @"");
         ivar_assign_and_retain(textColor, [CDXColor colorWhite]);
         ivar_assign_and_retain(backgroundColor, [CDXColor colorBlack]);
+        orientation = CDXCardOrientationDefault;
+        cornerStyle = CDXCardCornerStyleDefault;
+        fontSize = CDXCardFontSizeDefault;
     }
     return self;
 }
@@ -80,9 +83,25 @@
     ivar_assign_and_copy(text, [aText stringByReplacingOccurrencesOfString:@"\r" withString:@"\n"]);
 }
 
+- (void)setCornerStyle:(CDXCardCornerStyle)aCornerStyle {
+    if (aCornerStyle >= 0 && aCornerStyle < CDXCardCornerStyleCount) {
+        cornerStyle = aCornerStyle;
+    } else {
+        cornerStyle = CDXCardCornerStyleDefault;
+    }
+}
+
+- (void)setOrientation:(CDXCardOrientation)aOrientation {
+    if (aOrientation >= 0 && aOrientation < CDXCardOrientationCount) {
+        orientation = aOrientation;
+    } else {
+        orientation = CDXCardOrientationDefault;
+    }
+}
+
 - (void)setFontSize:(CGFloat)aFontSize {
     [self invalidateFontSizeCache];
-    fontSize = floor(aFontSize <= 0.0 ? 0.0 - aFontSize : aFontSize);
+    fontSize = floor(fabs(aFontSize));
     fontSize = fontSize < CDXCardFontSizeMax ? fontSize : CDXCardFontSizeMax;
 }
 

@@ -31,19 +31,22 @@ typedef enum {
     CDXCardOrientationRight = 1,
     CDXCardOrientationDown  = 2,
     CDXCardOrientationLeft  = 3,
-    CDXCardOrientationCount
+    CDXCardOrientationCount,
+    CDXCardOrientationDefault = CDXCardOrientationUp
 } CDXCardOrientation;
 
 
 typedef enum {
     CDXCardCornerStyleRounded = 0,
     CDXCardCornerStyleCornered,
-    CDXCardCornerStyleCount
+    CDXCardCornerStyleCount,
+    CDXCardCornerStyleDefault = CDXCardCornerStyleRounded
 } CDXCardCornerStyle;
 
 
 #define CDXCardFontSizeAutomatic ((CGFloat) 0.0)
 #define CDXCardFontSizeMax       ((CGFloat) 400.0)
+#define CDXCardFontSizeDefault   CDXCardFontSizeAutomatic
 
 #define CDXCardFontSizeCacheSize 2
 
