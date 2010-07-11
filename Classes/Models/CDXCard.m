@@ -84,19 +84,11 @@
 }
 
 - (void)setCornerStyle:(CDXCardCornerStyle)aCornerStyle {
-    if (aCornerStyle >= 0 && aCornerStyle < CDXCardCornerStyleCount) {
-        cornerStyle = aCornerStyle;
-    } else {
-        cornerStyle = CDXCardCornerStyleDefault;
-    }
+    ivar_enum_assign(cornerStyle, CDXCardCornerStyle, aCornerStyle);
 }
 
 - (void)setOrientation:(CDXCardOrientation)aOrientation {
-    if (aOrientation >= 0 && aOrientation < CDXCardOrientationCount) {
-        orientation = aOrientation;
-    } else {
-        orientation = CDXCardOrientationDefault;
-    }
+    ivar_enum_assign(orientation, CDXCardOrientation, aOrientation);
 }
 
 - (void)setFontSize:(CGFloat)aFontSize {

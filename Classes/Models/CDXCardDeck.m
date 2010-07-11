@@ -239,27 +239,15 @@
 }
 
 - (void)setGroupSize:(CDXCardDeckGroupSize)aGroupSize {
-    if (aGroupSize >= 0 && aGroupSize <= CDXCardDeckGroupSizeMax) {
-        groupSize = aGroupSize;
-    } else {
-        groupSize = CDXCardDeckGroupSizeNoGroups;
-    }
+    ivar_enum_assign(groupSize, CDXCardDeckGroupSize, aGroupSize);
 }
 
 - (void)setDisplayStyle:(CDXCardDeckDisplayStyle)aDisplayStyle {
-    if (aDisplayStyle >= 0 && aDisplayStyle < CDXCardDeckDisplayStyleCount) {
-        displayStyle = aDisplayStyle;
-    } else {
-        displayStyle = CDXCardDeckDisplayStyleDefault;
-    }
+    ivar_enum_assign(displayStyle, CDXCardDeckDisplayStyle, aDisplayStyle);
 }
 
 - (void)setPageControlStyle:(CDXCardDeckPageControlStyle)aPageControlStyle {
-    if (aPageControlStyle >= 0 && aPageControlStyle < CDXCardDeckPageControlStyleCount) {
-        pageControlStyle = aPageControlStyle;
-    } else {
-        pageControlStyle = CDXCardDeckPageControlStyleDefault;
-    }
+    ivar_enum_assign(pageControlStyle, CDXCardDeckPageControlStyle, aPageControlStyle);
 }
 
 - (void)setCornerStyle:(CDXCardCornerStyle)aCornerStyle {

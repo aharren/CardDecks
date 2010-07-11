@@ -75,6 +75,15 @@
         }                                                                      \
     }                                                                          \
 
+#define ivar_enum_assign(_ivar, _type, _value)                                 \
+    {                                                                          \
+        if (_value >= 0 && _value < _type##Count) {                            \
+            _ivar = _value;                                                    \
+        } else {                                                               \
+            _ivar = _type##Default;                                            \
+        }                                                                      \
+    }                                                                          \
+
 #define declare_singleton(_name, _class)                                       \
     + (_class *)_name;                                                         \
 
