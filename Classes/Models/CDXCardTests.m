@@ -80,5 +80,37 @@
     [card release];
 }
 
+- (void)testCornerStyle {
+    CDXCard *card = [[CDXCard alloc] init];
+    
+    STAssertEquals(card.cornerStyle, CDXCardCornerStyleDefault, nil);
+    card.cornerStyle = -1;
+    STAssertEquals(card.cornerStyle, CDXCardCornerStyleDefault, nil);
+    card.cornerStyle = 0;
+    STAssertEquals(card.cornerStyle, CDXCardCornerStyleDefault, nil);
+    card.cornerStyle = 1;
+    STAssertEquals(card.cornerStyle, CDXCardCornerStyleCount-1, nil);
+    card.cornerStyle = 2;
+    STAssertEquals(card.cornerStyle, CDXCardCornerStyleDefault, nil);
+}
+
+- (void)testOrientation {
+    CDXCard *card = [[CDXCard alloc] init];
+    
+    STAssertEquals(card.orientation, CDXCardOrientationDefault, nil);
+    card.orientation = -1;
+    STAssertEquals(card.orientation, CDXCardOrientationDefault, nil);
+    card.orientation = 0;
+    STAssertEquals(card.orientation, CDXCardOrientationDefault, nil);
+    card.orientation = 1;
+    STAssertEquals(card.orientation, 1, nil);
+    card.orientation = 2;
+    STAssertEquals(card.orientation, 2, nil);
+    card.orientation = 3;
+    STAssertEquals(card.orientation, CDXCardOrientationCount-1, nil);
+    card.orientation = 4;
+    STAssertEquals(card.orientation, CDXCardOrientationDefault, nil);
+}
+
 @end
 
