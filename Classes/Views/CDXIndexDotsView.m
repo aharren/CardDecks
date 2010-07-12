@@ -77,7 +77,7 @@
     NSUInteger numberOfVisiblePages;
     if (numberOfPages > maxNumberOfVisiblePages) {
         firstVisiblePage = (numberOfPages - maxNumberOfVisiblePages) / 2;
-        lastVisiblePage = (numberOfPages - firstVisiblePage) - 1;
+        lastVisiblePage = firstVisiblePage + maxNumberOfVisiblePages - 1;
         numberOfVisiblePages = maxNumberOfVisiblePages;
     } else {
         firstVisiblePage = 0;
