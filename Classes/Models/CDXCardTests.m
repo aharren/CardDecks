@@ -72,11 +72,11 @@
     card.fontSize = 0.0;
     STAssertEquals([card fontSize], (CGFloat)0.0, nil);
     card.fontSize = 1000.0;
-    STAssertEquals([card fontSize], (CGFloat)400.0, nil);
-    card.fontSize = 401.0;
-    STAssertEquals([card fontSize], (CGFloat)400.0, nil);
-    card.fontSize = 399.0;
-    STAssertEquals([card fontSize], (CGFloat)399.0, nil);
+    STAssertEquals([card fontSize], (CGFloat)100.0, nil);
+    card.fontSize = 101.0;
+    STAssertEquals([card fontSize], (CGFloat)100.0, nil);
+    card.fontSize = 99.5;
+    STAssertEquals([card fontSize], (CGFloat)99.0, nil);
     [card release];
 }
 

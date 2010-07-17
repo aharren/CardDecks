@@ -47,8 +47,10 @@ typedef enum {
 
 
 #define CDXCardFontSizeAutomatic ((CGFloat) 0.0)
-#define CDXCardFontSizeMax       ((CGFloat) 400.0)
+#define CDXCardFontSizeMax       ((CGFloat) 100.0)
 #define CDXCardFontSizeDefault   CDXCardFontSizeAutomatic
+
+#define CDXCardFontSizeScale     ((CGFloat) 5)
 
 #define CDXCardFontSizeCacheSize 2
 
