@@ -35,6 +35,8 @@ typedef enum {
     CDXCardOrientationDefault = CDXCardOrientationUp
 } CDXCardOrientation;
 
+#define CDXCardOrientationIsPortrait(o) ((o) == CDXCardOrientationUp || (o) == CDXCardOrientationDown)
+
 
 typedef enum {
     CDXCardCornerStyleRounded = 0,

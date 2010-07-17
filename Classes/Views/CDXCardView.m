@@ -104,8 +104,8 @@
     }
     
     // calculate orientation
-    CDXCardOrientation cardOrientation = card.orientation + [self cardOrientationForDeviceOrientation:deviceOrientation];
-    cardOrientation %= CDXCardOrientationCount;
+    const CDXCardOrientation cardOrientation = card.orientation;
+    const CDXCardOrientation cardDisplayOrientation = (cardOrientation + [self cardOrientationForDeviceOrientation:deviceOrientation]) % CDXCardOrientationCount;
     
     // get text
     NSString *text = card.text;
@@ -123,12 +123,17 @@
     cardText.frame = self.frame;
     
     // update text
-    CGFloat fontSize = [card fontSizeConstrainedToSize:[self sizeForCardOrientation:cardOrientation size:size]];
+    CGFloat fontSize = [card fontSizeConstrainedToSize:[self sizeForCardOrientation:cardDisplayOrientation size:size]];
+    if (card.fontSize != CDXCardFontSizeAutomatic) {
+        if (CDXCardOrientationIsPortrait(cardOrientation) != CDXCardOrientationIsPortrait(cardDisplayOrientation)) {
+            fontSize = fontSize * size.width / size.height;
+        }
+    }
     cardText.bounds = CGRectMake(0, 0, 1024, 1024);
     cardText.font = [UIFont systemFontOfSize:fontSize];
     cardText.text = text;
     cardText.textColor = [card.textColor uiColor];
-    cardText.transform = [CDXCardView transformForCardOrientation:cardOrientation];
+    cardText.transform = [CDXCardView transformForCardOrientation:cardDisplayOrientation];
     
     // update background
     cardText.backgroundColor = [card.backgroundColor uiColor];
