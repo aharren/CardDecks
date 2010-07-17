@@ -68,7 +68,7 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.6];
-    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:window cache:NO];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:window cache:YES];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationWillStartSelector:@selector(pushFullScreenViewControllerAnimationWillStart:context:)];
@@ -89,7 +89,7 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
             navigationView.userInteractionEnabled = NO;
             [navigationView removeFromSuperview];
             [window addSubview:screenshotView];
-            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:screenshotView afterDelay:0.0001];
+            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:screenshotView afterDelay:0.001];
         } else {
             [navigationView removeFromSuperview];
             [window addSubview:fullScreenViewController.view];
