@@ -79,6 +79,11 @@
 		E0A1C00311A82C5600911848 /* CDXCardDeckCardEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0A1C00211A82C5600911848 /* CDXCardDeckCardEditView.xib */; };
 		E0A1C15D11A83F0D00911848 /* Toolbar-Down.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A1C15B11A83F0D00911848 /* Toolbar-Down.png */; };
 		E0A1C15E11A83F0D00911848 /* Toolbar-Up.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A1C15C11A83F0D00911848 /* Toolbar-Up.png */; };
+		E0A483C811F2FC7400A6ECC8 /* 0-10.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0A483C111F2FC7400A6ECC8 /* 0-10.CardDeck.plist */; };
+		E0A483C911F2FC7400A6ECC8 /* 15-0.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0A483C211F2FC7400A6ECC8 /* 15-0.CardDeck.plist */; };
+		E0A483CA11F2FC7400A6ECC8 /* 60-0.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0A483C311F2FC7400A6ECC8 /* 60-0.CardDeck.plist */; };
+		E0A483CD11F2FC7400A6ECC8 /* RedYellowGreen.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0A483C611F2FC7400A6ECC8 /* RedYellowGreen.CardDeck.plist */; };
+		E0A483CE11F2FC7400A6ECC8 /* YesNoPerhaps.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0A483C711F2FC7400A6ECC8 /* YesNoPerhaps.CardDeck.plist */; };
 		E0BCCAB311E8C09200A84185 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BCCAB211E8C09200A84185 /* MessageUI.framework */; };
 		E0BEE1F7117BA68D002F62A7 /* CDXCardsStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */; };
 		E0C51F14119DA03000D75D0E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C51F13119DA03000D75D0E /* Default.png */; };
@@ -238,6 +243,11 @@
 		E0A1C00211A82C5600911848 /* CDXCardDeckCardEditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardDeckCardEditView.xib; path = UserInterfaces/CDXCardDeckCardEditView.xib; sourceTree = "<group>"; };
 		E0A1C15B11A83F0D00911848 /* Toolbar-Down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Down.png"; path = "Images/Toolbars/Toolbar-Down.png"; sourceTree = "<group>"; };
 		E0A1C15C11A83F0D00911848 /* Toolbar-Up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Up.png"; path = "Images/Toolbars/Toolbar-Up.png"; sourceTree = "<group>"; };
+		E0A483C111F2FC7400A6ECC8 /* 0-10.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "0-10.CardDeck.plist"; path = "Templates/0-10.CardDeck.plist"; sourceTree = "<group>"; };
+		E0A483C211F2FC7400A6ECC8 /* 15-0.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "15-0.CardDeck.plist"; path = "Templates/15-0.CardDeck.plist"; sourceTree = "<group>"; };
+		E0A483C311F2FC7400A6ECC8 /* 60-0.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "60-0.CardDeck.plist"; path = "Templates/60-0.CardDeck.plist"; sourceTree = "<group>"; };
+		E0A483C611F2FC7400A6ECC8 /* RedYellowGreen.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RedYellowGreen.CardDeck.plist; path = Templates/RedYellowGreen.CardDeck.plist; sourceTree = "<group>"; };
+		E0A483C711F2FC7400A6ECC8 /* YesNoPerhaps.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = YesNoPerhaps.CardDeck.plist; path = Templates/YesNoPerhaps.CardDeck.plist; sourceTree = "<group>"; };
 		E0BCCAB211E8C09200A84185 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = iphoneos3.0/System/Library/Frameworks/MessageUI.framework; sourceTree = "<group>"; };
 		E0BE980F11A1CF0000F30C50 /* CDXSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXSettings.h; path = Classes/Models/CDXSettings.h; sourceTree = "<group>"; };
 		E0BEE1F5117BA68D002F62A7 /* CDXCardsStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsStackView.h; path = Classes/Views/CDXCardsStackView.h; sourceTree = "<group>"; };
@@ -340,6 +350,7 @@
 				E03BA33A11674A2200FE7924 /* Other Sources */,
 				E03BA38311674C1000FE7924 /* User Interfaces */,
 				E0CCC70A1170D9D50040D222 /* Images */,
+				E0A483C011F2FC5F00A6ECC8 /* Templates */,
 				E03BA23F1167475000FE7924 /* Info.plist */,
 				E002B4FB116760650072C409 /* Tests-Info.plist */,
 				E03BA26E1167488000FE7924 /* Frameworks */,
@@ -540,6 +551,18 @@
 			name = Notices;
 			sourceTree = "<group>";
 		};
+		E0A483C011F2FC5F00A6ECC8 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				E0A483C111F2FC7400A6ECC8 /* 0-10.CardDeck.plist */,
+				E0A483C211F2FC7400A6ECC8 /* 15-0.CardDeck.plist */,
+				E0A483C311F2FC7400A6ECC8 /* 60-0.CardDeck.plist */,
+				E0A483C611F2FC7400A6ECC8 /* RedYellowGreen.CardDeck.plist */,
+				E0A483C711F2FC7400A6ECC8 /* YesNoPerhaps.CardDeck.plist */,
+			);
+			name = Templates;
+			sourceTree = "<group>";
+		};
 		E0C51F87119DAC5F00D75D0E /* Toolbars */ = {
 			isa = PBXGroup;
 			children = (
@@ -735,6 +758,11 @@
 				E0CFA5FE11D68D0600FF686F /* IndexDotWhite@2x.png in Resources */,
 				E04D945311D77EA500A4DA59 /* IndexDotBlack.png in Resources */,
 				E04D945411D77EA500A4DA59 /* IndexDotBlack@2x.png in Resources */,
+				E0A483C811F2FC7400A6ECC8 /* 0-10.CardDeck.plist in Resources */,
+				E0A483C911F2FC7400A6ECC8 /* 15-0.CardDeck.plist in Resources */,
+				E0A483CA11F2FC7400A6ECC8 /* 60-0.CardDeck.plist in Resources */,
+				E0A483CD11F2FC7400A6ECC8 /* RedYellowGreen.CardDeck.plist in Resources */,
+				E0A483CE11F2FC7400A6ECC8 /* YesNoPerhaps.CardDeck.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

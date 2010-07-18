@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Cards</key>
+	<array>
+		<dict>
+			<key>Text</key>
+			<string>60</string>
+			<key>TextColor</key>
+			<string>000000</string>
+			<key>BackgroundColor</key>
+			<string>00ff00</string>
+		</dict>
+		<dict>
+			<key>Text</key>
+			<string>45</string>
+			<key>TextColor</key>
+			<string>000000</string>
+			<key>BackgroundColor</key>
+			<string>00ff00</string>
+		</dict>
+		<dict>
+			<key>Text</key>
+			<string>30</string>
+			<key>TextColor</key>
+			<string>000000</string>
+			<key>BackgroundColor</key>
+			<string>00ff00</string>
+		</dict>
+		<dict>
+			<key>Text</key>
+			<string>15</string>
+			<key>TextColor</key>
+			<string>000000</string>
+			<key>BackgroundColor</key>
+			<string>ffff00</string>
+		</dict>
+		<dict>
+			<key>Text</key>
+			<string>10</string>
+			<key>TextColor</key>
+			<string>000000</string>
+			<key>BackgroundColor</key>
+			<string>ff0000</string>
+		</dict>
+		<dict>
+			<key>Text</key>
+			<string>5</string>
+			<key>TextColor</key>
+			<string>000000</string>
+			<key>BackgroundColor</key>
+			<string>ff0000</string>
+		</dict>
+		<dict>
+			<key>Text</key>
+			<string>0</string>
+			<key>TextColor</key>
+			<string>ff0000</string>
+			<key>BackgroundColor</key>
+			<string>000000</string>
+		</dict>
+  </array>
+</dict>
+</plist>

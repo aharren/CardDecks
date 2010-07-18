@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Cards</key>
+	<array>
+		<dict>
+			<key>Text</key>
+			<string>YES</string>
+			<key>TextColor</key>
+			<string>00ff00</string>
+			<key>BackgroundColor</key>
+			<string>000000</string>
+		</dict>
+		<dict>
+			<key>Text</key>
+			<string>NO</string>
+			<key>TextColor</key>
+			<string>ff0000</string>
+			<key>BackgroundColor</key>
+			<string>000000</string>
+		</dict>
+		<dict>
+			<key>Text</key>
+			<string>PERHAPS</string>
+			<key>TextColor</key>
+			<string>ffff00</string>
+			<key>BackgroundColor</key>
+			<string>000000</string>
+		</dict>
+    </array>
+</dict>
+</plist>
