@@ -29,5 +29,9 @@
 			<string>00ff00</string>
 		</dict>
 	</array>
+	<key>Name</key>
+	<string>Red, Yellow, Green</string>
+	<key>File</key>
+	<string>RedYellowGreen.CardDeck</string>
 </dict>
 </plist>
