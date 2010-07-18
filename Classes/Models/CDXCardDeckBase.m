@@ -78,6 +78,27 @@
     [super dealloc];
 }
 
+- (void)setName:(NSString *)aName {
+    if (!aName) {
+        aName = @"";
+    }
+    ivar_assign_and_copy(name, aName);
+}
+
+- (void)setDescription:(NSString *)aDescription {
+    if (!aDescription) {
+        aDescription = @"";
+    }
+    ivar_assign_and_copy(description, aDescription);
+}
+
+- (void)setFile:(NSString *)aFile {
+    if (!aFile) {
+        aFile = @"";
+    }
+    ivar_assign_and_copy(file, aFile);
+}
+
 - (NSUInteger)cardsCount {
     return cardsCount;
 }
