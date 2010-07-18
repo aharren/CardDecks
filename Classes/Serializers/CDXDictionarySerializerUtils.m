@@ -64,5 +64,11 @@
     }
 }
 
++ (void)dictionary:(NSMutableDictionary *)dictionary setObject:(NSObject *)object forKey:(NSString *)key {
+    if (object) {
+        [dictionary setObject:object forKey:key];
+    }
+}
+
 @end
 

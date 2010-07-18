@@ -112,14 +112,14 @@
 + (NSDictionary *)version2DictionaryFromCardDeckBase:(CDXCardDeckBase *)cardDeck {
     NSMutableDictionary *dictionary = [[[NSMutableDictionary alloc] init] autorelease];
     
-    [dictionary setObject:cardDeck.name forKey:@"name"];
-    [dictionary setObject:cardDeck.description forKey:@"description"];
-    [dictionary setObject:cardDeck.file forKey:@"file"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:cardDeck.name forKey:@"name"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:cardDeck.description forKey:@"description"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:cardDeck.file forKey:@"file"];
     
     if (cardDeck.thumbnailColor != nil) {
-        [dictionary setObject:[cardDeck.thumbnailColor rgbaString] forKey:@"thumbnailColor"];
+        [CDXDictionarySerializerUtils dictionary:dictionary setObject:[cardDeck.thumbnailColor rgbaString] forKey:@"thumbnailColor"];
     }
-    [dictionary setObject:[NSNumber numberWithUnsignedInteger:[cardDeck cardsCount]] forKey:@"cardsCount"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:[cardDeck cardsCount]] forKey:@"cardsCount"];
     
     return dictionary;
 }
@@ -127,7 +127,7 @@
 + (NSDictionary *)version2DictionaryFromCardDecks:(CDXCardDecks *)cardDecks {
     NSMutableDictionary *dictionary = [[[NSMutableDictionary alloc] init] autorelease];
     
-    [dictionary setObject:[CDXCardDecksDictionarySerializer version2DictionaryFromCardDeckBase:cardDecks.cardDeckDefaults] forKey:@"cardDeckDefaults"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[CDXCardDecksDictionarySerializer version2DictionaryFromCardDeckBase:cardDecks.cardDeckDefaults] forKey:@"cardDeckDefaults"];
     
     NSUInteger decksCount = [cardDecks cardDecksCount];
     NSMutableArray *decks = [NSMutableArray arrayWithCapacity:decksCount];
@@ -136,9 +136,9 @@
         [decks addObject:[CDXCardDecksDictionarySerializer version2DictionaryFromCardDeckBase:[cardDecks cardDeckAtIndex:i]]];
         [pool release];
     }
-    [dictionary setObject:decks forKey:@"cardDecks"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:decks forKey:@"cardDecks"];
     
-    [dictionary setObject:[NSNumber numberWithUnsignedInteger:2] forKey:@"VERSION"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:2] forKey:@"VERSION"];
     return dictionary;
 }
 

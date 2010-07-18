@@ -34,5 +34,7 @@
 
 + (NSDictionary *)dictionaryFromDictionary:(NSDictionary *)dictionary forKey:(NSString *)key defaultsTo:(NSDictionary *)defaultValue;
 
++ (void)dictionary:(NSMutableDictionary *)dictionary setObject:(NSObject *)object forKey:(NSString *)key;
+
 @end
 
