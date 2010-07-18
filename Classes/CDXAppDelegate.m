@@ -168,13 +168,24 @@
     NSUInteger version = 0;
     CDXCardDecks *decks = [CDXCardDecks cardDecksFromStorageObjectNamed:@"Main.CardDecksList" version:&version];
     if (decks == nil) {
+        // main list not found, create a new one
         version = 0;
         decks = [[[CDXCardDecks alloc] init] autorelease];
         decks.file = @"Main.CardDecksList";
     }
     
     if (version < 2) {
+        // old version, migrate existing card decks with details
+        const NSUInteger decksCount = [decks cardDecksCount];
+        for (NSUInteger i = 0; i < decksCount; i++) {
+            NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+            CDXCardDeckHolder *holder = [decks cardDeckAtIndex:i];
+            holder.cardDeck;
+            [pool release];
+        }
+        // add new default card decks
         [self addDefaultCardDecks:decks];
+        // save the list
         [decks updateStorageObjectDeferred:NO];
     }
     
