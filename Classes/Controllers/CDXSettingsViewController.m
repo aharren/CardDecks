@@ -53,6 +53,12 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tableView.tableHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 6)] autorelease];
+    self.tableView.tableHeaderView.backgroundColor = [UIColor clearColor];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -122,6 +128,10 @@
     [super viewWillAppear:animated];
     [self.tableView reloadData];
     self.tableView.tableHeaderView = [settings titleView];
+    if (!self.tableView.tableHeaderView) {
+        self.tableView.tableHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 6)] autorelease];
+        self.tableView.tableHeaderView.backgroundColor = [UIColor clearColor];
+    }
     self.navigationItem.title = [settings title];
     if (isRootView) {
         UIBarButtonItem* doneButton = [[[UIBarButtonItem alloc]
