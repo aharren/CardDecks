@@ -25,6 +25,7 @@
 
 #import "CDXAppWindowManager.h"
 #import "CDXImageFactory.h"
+#import "CDXDevice.h"
 
 #undef ql_component
 #define ql_component lcl_cApplication
@@ -148,6 +149,9 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 }
 
 - (void)makeWindowKeyAndVisible {
+    const CDXDeviceType deviceType = [CDXDevice sharedDevice].deviceType;
+    statusBarView.hidden = !(deviceType == CDXDeviceTypeiPhone || deviceType == CDXDeviceTypeiPodTouch);
+
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
     [window addSubview:navigationView];
