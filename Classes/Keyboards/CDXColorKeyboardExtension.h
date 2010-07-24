@@ -69,9 +69,11 @@ declare_singleton(sharedColorKeyboardExtension, CDXColorKeyboardExtension);
     IBOutlet UISlider *colorChooserRGBSliderRed;
     IBOutlet UISlider *colorChooserRGBSliderGreen;
     IBOutlet UISlider *colorChooserRGBSliderBlue;
+    IBOutlet UISlider *colorChooserRGBSliderAlpha;
     IBOutlet UILabel *colorChooserRGBSliderRedLabel;
     IBOutlet UILabel *colorChooserRGBSliderGreenLabel;
     IBOutlet UILabel *colorChooserRGBSliderBlueLabel;
+    IBOutlet UILabel *colorChooserRGBSliderAlphaLabel;
     
 }
 

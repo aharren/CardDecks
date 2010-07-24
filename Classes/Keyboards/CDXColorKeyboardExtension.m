@@ -105,9 +105,11 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     ivar_release_and_clear(colorChooserRGBSliderRed);
     ivar_release_and_clear(colorChooserRGBSliderGreen);
     ivar_release_and_clear(colorChooserRGBSliderBlue);
+    ivar_release_and_clear(colorChooserRGBSliderAlpha);
     ivar_release_and_clear(colorChooserRGBSliderRedLabel);
     ivar_release_and_clear(colorChooserRGBSliderGreenLabel);
     ivar_release_and_clear(colorChooserRGBSliderBlueLabel);
+    ivar_release_and_clear(colorChooserRGBSliderAlphaLabel);
     [super dealloc];
 }
 
@@ -127,9 +129,11 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     ivar_release_and_clear(colorChooserRGBSliderRed);
     ivar_release_and_clear(colorChooserRGBSliderGreen);
     ivar_release_and_clear(colorChooserRGBSliderBlue);
+    ivar_release_and_clear(colorChooserRGBSliderAlpha);
     ivar_release_and_clear(colorChooserRGBSliderRedLabel);
     ivar_release_and_clear(colorChooserRGBSliderGreenLabel);
     ivar_release_and_clear(colorChooserRGBSliderBlueLabel);
+    ivar_release_and_clear(colorChooserRGBSliderAlphaLabel);
     [super viewDidUnload];
 }
 
@@ -157,16 +161,18 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     return [CDXColor colorWithRed:colorChooserRGBSliderRed.value
                             green:colorChooserRGBSliderGreen.value
                              blue:colorChooserRGBSliderBlue.value
-                            alpha:255];
+                            alpha:colorChooserRGBSliderAlpha.value];
 }
 
 - (void)setColorChooserRGBSliderValues:(CDXColor *)color {
     colorChooserRGBSliderRed.value = color.red;
     colorChooserRGBSliderGreen.value = color.green;
     colorChooserRGBSliderBlue.value = color.blue;
+    colorChooserRGBSliderAlpha.value = color.alpha;
     colorChooserRGBSliderRedLabel.text = [NSString stringWithFormat:@"%02X", color.red];
     colorChooserRGBSliderGreenLabel.text = [NSString stringWithFormat:@"%02X", color.green];
     colorChooserRGBSliderBlueLabel.text = [NSString stringWithFormat:@"%02X", color.blue];
+    colorChooserRGBSliderAlphaLabel.text = [NSString stringWithFormat:@"%02X", color.alpha];
 }
 
 - (void)updateView {
