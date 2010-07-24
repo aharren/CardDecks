@@ -48,7 +48,7 @@ static const CDXSetting settings[] = {
     { CDXAppSettingsCloseTapCount, CDXSettingTypeEnumeration, @"Close Gesture" },
     { CDXAppSettingsDoneButtonOnLeftSide, CDXSettingTypeEnumeration, @"Done Button" },
     { CDXAppSettingsUseMailApplication, CDXSettingTypeBoolean, @"Use Mail Application" },
-    { CDXAppSettingsAllKeyboardSymbols, CDXSettingTypeBoolean, @"Full Symbol Keyboard" },
+    { CDXAppSettingsAllKeyboardSymbols, CDXSettingTypeBoolean, @"All Unicode Symbols" },
     { 0, 0, @"" }
 };
 
