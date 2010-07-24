@@ -41,8 +41,19 @@ static CGImageRef CDXImageFactoryCreateScreenImage(void) {
     return UIGetScreenImage();
 }
 
+static void CDXGraphicsBeginImageContextNativeScale(CGSize size) {
+    extern void UIGraphicsBeginImageContextWithOptions(CGSize size, BOOL opaque, CGFloat scale);
+    
+    UIScreen *mainScreen = [UIScreen mainScreen];
+    if (UIGraphicsBeginImageContextWithOptions == NULL || ![mainScreen respondsToSelector:@selector(scale)]) {
+        UIGraphicsBeginImageContext(size);
+    } else {
+        UIGraphicsBeginImageContextWithOptions(size, NO, [mainScreen scale]);
+    }
+}
+
 - (UIImage *)imageForView:(UIView *)view size:(CGSize)size {
-    UIGraphicsBeginImageContext(size);
+    CDXGraphicsBeginImageContextNativeScale(size);
     [view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
