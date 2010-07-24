@@ -23,6 +23,7 @@
 		E02320C6117091920043D6CF /* CDXCardDecksListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E02320C5117091920043D6CF /* CDXCardDecksListViewController.m */; };
 		E02320F7117093720043D6CF /* CDXCardDeckListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E02320F6117093720043D6CF /* CDXCardDeckListViewController.m */; };
 		E02320F9117093870043D6CF /* CDXCardDeckListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E02320F8117093870043D6CF /* CDXCardDeckListView.xib */; };
+		E023ACEC11F4D3B10051B1E2 /* CDXDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = E023ACEB11F4D3B10051B1E2 /* CDXDevice.m */; };
 		E0260A3611BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0260A3511BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m */; };
 		E0260A3711BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0260A3511BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m */; };
 		E0260A3A11BC02F800FCAB34 /* CDXCardDeckDictionarySerializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0260A3811BC02F800FCAB34 /* CDXCardDeckDictionarySerializerTests.m */; };
@@ -171,6 +172,8 @@
 		E02320F5117093720043D6CF /* CDXCardDeckListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckListViewController.h; path = Classes/Controllers/CDXCardDeckListViewController.h; sourceTree = "<group>"; };
 		E02320F6117093720043D6CF /* CDXCardDeckListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckListViewController.m; path = Classes/Controllers/CDXCardDeckListViewController.m; sourceTree = "<group>"; };
 		E02320F8117093870043D6CF /* CDXCardDeckListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardDeckListView.xib; path = UserInterfaces/CDXCardDeckListView.xib; sourceTree = "<group>"; };
+		E023ACEA11F4D3B10051B1E2 /* CDXDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXDevice.h; path = Classes/CDXDevice.h; sourceTree = "<group>"; };
+		E023ACEB11F4D3B10051B1E2 /* CDXDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXDevice.m; path = Classes/CDXDevice.m; sourceTree = "<group>"; };
 		E0260A3411BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckDictionarySerializer.h; path = Classes/Serializers/CDXCardDeckDictionarySerializer.h; sourceTree = "<group>"; };
 		E0260A3511BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckDictionarySerializer.m; path = Classes/Serializers/CDXCardDeckDictionarySerializer.m; sourceTree = "<group>"; };
 		E0260A3811BC02F800FCAB34 /* CDXCardDeckDictionarySerializerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckDictionarySerializerTests.m; path = Classes/Serializers/CDXCardDeckDictionarySerializerTests.m; sourceTree = "<group>"; };
@@ -480,6 +483,8 @@
 				E002B8CB1168D6B70072C409 /* Controllers */,
 				E002B8CC1168D6CA0072C409 /* Views */,
 				E0F7A50711B158C600CD786B /* Keyboards */,
+				E023ACEA11F4D3B10051B1E2 /* CDXDevice.h */,
+				E023ACEB11F4D3B10051B1E2 /* CDXDevice.m */,
 				E03BA38711674CBF00FE7924 /* CDXAppDelegate.h */,
 				E03BA38811674CBF00FE7924 /* CDXAppDelegate.m */,
 				E034181A1195CD9F00007FF7 /* CDXAppWindowProtocols.h */,
@@ -840,6 +845,7 @@
 				E03B10A311C3FC4300591E45 /* CDXAppAboutSettings.m in Sources */,
 				E0DD7E6B11D65CEA00ED23B6 /* CDXIndexDotsView.m in Sources */,
 				E03E6C9411E8E2120086BA9C /* CDXURLSerializerUtils.m in Sources */,
+				E023ACEC11F4D3B10051B1E2 /* CDXDevice.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
