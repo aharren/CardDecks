@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXImageFactory.h"
+#import "CDXDevice.h"
 #include <QuartzCore/QuartzCore.h>
 
 #undef ql_component
@@ -89,16 +90,17 @@ static CGImageRef CDXImageFactoryCreateScreenImage(void) {
 }
 
 - (UIImage *)imageForScreen {
-#if TARGET_IPHONE_SIMULATOR
-    CGRect bounds = [UIScreen mainScreen].bounds;
-    UIView *window = [CDXAppWindowManager sharedAppWindowManager].window;
-    return [self imageForView:window size:bounds.size];
-#else
-    CGImageRef cgImage = CDXImageFactoryCreateScreenImage();
-    UIImage *image = [UIImage imageWithCGImage:cgImage];
-    CGImageRelease(cgImage);
-    return image;
-#endif
+    const CDXDeviceType deviceType = [CDXDevice sharedDevice].deviceType;
+    if (deviceType == CDXDeviceTypeiPhone || deviceType == CDXDeviceTypeiPodTouch) {
+        CGImageRef cgImage = CDXImageFactoryCreateScreenImage();
+        UIImage *image = [UIImage imageWithCGImage:cgImage];
+        CGImageRelease(cgImage);
+        return image;
+    } else {
+        CGRect bounds = [UIScreen mainScreen].bounds;
+        UIView *window = [CDXAppWindowManager sharedAppWindowManager].window;
+        return [self imageForView:window size:bounds.size];
+    }
 }
 
 @end
