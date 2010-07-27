@@ -99,6 +99,48 @@
 @end
 
 
+@interface CDXSettingsHTMLTextViewController : UIViewController {
+    
+@protected
+    NSObject<CDXSettings> *settings;
+    CDXSetting setting;
+    
+    UIWebView *viewWebView;
+}
+
+@end
+
+
+@implementation CDXSettingsHTMLTextViewController
+
+- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings setting:(CDXSetting)aSetting {
+    if ((self = [super init])) {
+        ivar_assign(settings, aSettings);
+        setting = aSetting;
+    }
+    return self;
+}
+
+- (void)dealloc {
+    ivar_release_and_clear(viewWebView);
+    [super dealloc];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    ivar_assign(viewWebView, [[UIWebView alloc] init]);
+    [viewWebView loadHTMLString:[settings htmlTextValueForSettingWithTag:setting.tag] baseURL:nil];
+    self.view = viewWebView;
+}
+
+- (void)viewDidUnload {
+    ivar_release_and_clear(viewWebView);
+    [super viewDidUnload];
+}
+
+@end
+
+
 @interface CDXSettingsMainViewController : UITableViewController {
     
 @protected
@@ -206,6 +248,7 @@
     static NSString *reuseIdentifierText = @"TextCell";
     static NSString *reuseIdentifierSettings = @"SettingsCell";
     static NSString *reuseIdentifierURLAction = @"URLActionCell";
+    static NSString *reuseIdentifierHTMLText = @"HTMLTextCell";
     
     CDXSetting setting = [settings settingAtIndex:indexPath.row inGroup:indexPath.section];
     
@@ -298,6 +341,18 @@
             cell.textLabel.text = setting.label;
             return cell;
         }
+        case CDXSettingTypeHTMLText: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierHTMLText];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierHTMLText] autorelease];
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            } else {
+            }
+            cell.selectionStyle = self.tableView.scrollEnabled ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
+            cell.tag = setting.tag;
+            cell.textLabel.text = setting.label;
+            return cell;
+        }
     }
 }
 
@@ -339,6 +394,12 @@
             if (url != nil) {
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
             }
+            break;
+        }
+        case CDXSettingTypeHTMLText: {
+            UITableViewController *vc = [[[CDXSettingsHTMLTextViewController alloc] initWithSettings:settings setting:setting] autorelease];
+            vc.title = setting.label;
+            [[self navigationController] pushViewController:vc animated:YES];
             break;
         }
     }

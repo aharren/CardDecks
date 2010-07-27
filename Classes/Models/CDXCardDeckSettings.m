@@ -267,5 +267,9 @@ static const CDXCardDeckSettingGroup groups[] = {
     return nil;
 }
 
+- (NSString *)htmlTextValueForSettingWithTag:(NSUInteger)tag {
+    return nil;
+}
+
 @end
 

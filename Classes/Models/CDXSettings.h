@@ -30,6 +30,7 @@ typedef enum {
     CDXSettingTypeText,
     CDXSettingTypeSettings,
     CDXSettingTypeURLAction,
+    CDXSettingTypeHTMLText,
     CDXSettingTypeCount
 } CDXSettingType;
 
@@ -67,6 +68,8 @@ typedef struct {
 - (NSObject<CDXSettings> *)settingsSettingsForSettingWithTag:(NSUInteger)tag;
 
 - (NSString *)urlActionURLForSettingWithTag:(NSUInteger)tag;
+
+- (NSString *)htmlTextValueForSettingWithTag:(NSUInteger)tag;
 
 @end
 

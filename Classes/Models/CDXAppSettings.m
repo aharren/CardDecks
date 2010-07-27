@@ -280,5 +280,9 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
     return nil;
 }
 
+- (NSString *)htmlTextValueForSettingWithTag:(NSUInteger)tag {
+    return nil;
+}
+
 @end
 
