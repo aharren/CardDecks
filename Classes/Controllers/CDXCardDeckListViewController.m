@@ -300,7 +300,7 @@
                                    otherButtonTitles:@"Email Deck", @"Duplicate Deck", nil]
                                   autorelease];
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-    [actionSheet showInView:self.view];
+    [actionSheet showInView:[CDXAppWindowManager sharedAppWindowManager].window];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {

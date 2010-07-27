@@ -214,7 +214,7 @@
     }
     if (sheet) {
         sheet.tag = index;
-        [sheet showInView:self.view];
+        [sheet showInView:[CDXAppWindowManager sharedAppWindowManager].window];
     }
 }
 
