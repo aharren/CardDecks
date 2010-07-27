@@ -33,12 +33,14 @@
 enum {
     CDXAppAboutSettingsFeedback,
     CDXAppAboutSettingsSite,
+    CDXAppAboutSettingsLegal,
     CDXAppAboutSettingsCount
 };
 
 static const CDXSetting settings[] = {
     { CDXAppAboutSettingsFeedback, CDXSettingTypeURLAction, @"Feedback" },
     { CDXAppAboutSettingsSite, CDXSettingTypeURLAction, @"0xc0.de/CardDecks" },
+    { CDXAppAboutSettingsLegal, CDXSettingTypeHTMLText, @"Legal" },
     { 0, 0, @"" }
 };
 
@@ -50,6 +52,7 @@ typedef struct {
 
 static const CDXAppSettingGroup groups[] = {
     { @"", 2, CDXAppAboutSettingsFeedback },
+    { @"", 1, CDXAppAboutSettingsLegal },
     { @"", 0, 0 }
 };
 
@@ -151,7 +154,18 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
 }
 
 - (NSString *)htmlTextValueForSettingWithTag:(NSUInteger)tag {
-    return nil;
+    switch (tag) {
+        default:
+            return nil;
+            break;
+        case CDXAppAboutSettingsLegal: {
+            NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks2.app"];
+            NSString *path = [folder stringByAppendingPathComponent:@"Legal.html"];
+            NSString *text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+            return text;
+            break;
+        }
+    }
 }
 
 @end

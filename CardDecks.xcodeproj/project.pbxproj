@@ -32,6 +32,7 @@
 		E032F1521169DB5D0033980C /* CDXCardDecks.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1301169D9FB0033980C /* CDXCardDecks.m */; };
 		E032F1541169DB790033980C /* CDXCardDecksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1531169DB790033980C /* CDXCardDecksTests.m */; };
 		E032F1681169DDC10033980C /* CDXCardDecksListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E032F1671169DDC10033980C /* CDXCardDecksListView.xib */; };
+		E0331B8E11FC3F18008B8E2F /* Legal.html in Resources */ = {isa = PBXBuildFile; fileRef = E0331B8D11FC3F18008B8E2F /* Legal.html */; };
 		E03B106011C3F93800591E45 /* Cell-Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E03B105F11C3F93800591E45 /* Cell-Logo.png */; };
 		E03B10A311C3FC4300591E45 /* CDXAppAboutSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E03B10A211C3FC4300591E45 /* CDXAppAboutSettings.m */; };
 		E03B10B911C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E03B10B811C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib */; };
@@ -182,6 +183,7 @@
 		E032F1301169D9FB0033980C /* CDXCardDecks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDecks.m; path = Classes/Models/CDXCardDecks.m; sourceTree = "<group>"; };
 		E032F1531169DB790033980C /* CDXCardDecksTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDecksTests.m; path = Classes/Models/CDXCardDecksTests.m; sourceTree = "<group>"; };
 		E032F1671169DDC10033980C /* CDXCardDecksListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardDecksListView.xib; path = UserInterfaces/CDXCardDecksListView.xib; sourceTree = "<group>"; };
+		E0331B8D11FC3F18008B8E2F /* Legal.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Legal.html; sourceTree = "<group>"; };
 		E034181A1195CD9F00007FF7 /* CDXAppWindowProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppWindowProtocols.h; path = Classes/CDXAppWindowProtocols.h; sourceTree = "<group>"; };
 		E03B103011C3F4A300591E45 /* CDXApplicationVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDXApplicationVersion.h; sourceTree = "<group>"; };
 		E03B105F11C3F93800591E45 /* Cell-Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell-Logo.png"; path = "Images/Cells/Cell-Logo.png"; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 				E0A483C011F2FC5F00A6ECC8 /* Templates */,
 				E03BA23F1167475000FE7924 /* Info.plist */,
 				E002B4FB116760650072C409 /* Tests-Info.plist */,
+				E0331B8D11FC3F18008B8E2F /* Legal.html */,
 				E03BA26E1167488000FE7924 /* Frameworks */,
 				E00DD48811662E5500D4215E /* Products */,
 			);
@@ -768,6 +771,7 @@
 				E0A483CA11F2FC7400A6ECC8 /* 60-0.CardDeck.plist in Resources */,
 				E0A483CD11F2FC7400A6ECC8 /* RedYellowGreen.CardDeck.plist in Resources */,
 				E0A483CE11F2FC7400A6ECC8 /* YesNoPerhaps.CardDeck.plist in Resources */,
+				E0331B8E11FC3F18008B8E2F /* Legal.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
