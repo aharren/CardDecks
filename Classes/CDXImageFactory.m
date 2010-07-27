@@ -104,7 +104,12 @@ static void CDXGraphicsBeginImageContextNativeScale(CGSize size) {
     const CDXDeviceType deviceType = [CDXDevice sharedDevice].deviceType;
     if (deviceType == CDXDeviceTypeiPhone || deviceType == CDXDeviceTypeiPodTouch) {
         CGImageRef cgImage = CDXImageFactoryCreateScreenImage();
-        UIImage *image = [UIImage imageWithCGImage:cgImage];
+        UIImage *image;
+        if ([UIImage respondsToSelector:@selector(imageWithCGImage:scale:orientation:)]) {
+            image = [UIImage imageWithCGImage:cgImage scale:[[UIScreen mainScreen] scale] orientation:UIImageOrientationUp];
+        } else {
+            image = [UIImage imageWithCGImage:cgImage];
+        }
         CGImageRelease(cgImage);
         return image;
     } else {
