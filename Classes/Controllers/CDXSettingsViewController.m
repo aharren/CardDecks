@@ -290,7 +290,7 @@
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierURLAction];
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierURLAction] autorelease];
-                cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             } else {
             }
             cell.selectionStyle = self.tableView.scrollEnabled ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
