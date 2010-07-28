@@ -48,7 +48,7 @@
         cardDeck = nil;
         ivar_assign_and_copy(name, @"");
         ivar_assign_and_copy(description, @"");
-        ivar_assign_and_copy(file, @"");
+        ivar_assign_and_copy(file, [CDXStorage fileWithSuffix:@".CardDeck"]);
     }
     return self;
 }
@@ -60,7 +60,7 @@
         cardDeck = aCardDeck;
         ivar_assign_and_copy(name, @"");
         ivar_assign_and_copy(description, @"");
-        ivar_assign_and_copy(file, @"");
+        ivar_assign_and_copy(file, [CDXStorage fileWithSuffix:@".CardDeck"]);
         
         [cardDeck linkBase:self];
     }
@@ -93,8 +93,8 @@
 }
 
 - (void)setFile:(NSString *)aFile {
-    if (!aFile) {
-        aFile = @"";
+    if (!aFile || [aFile isEqualToString:@""]) {
+        aFile = [CDXStorage fileWithSuffix:@".CardDeck"];
     }
     ivar_assign_and_copy(file, aFile);
 }
