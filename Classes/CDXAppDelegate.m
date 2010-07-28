@@ -236,8 +236,8 @@
         [cardDecks addPendingCardDeckAdd:holder];
         [appWindowManager popToInitialViewController];
         UIViewController *vc = [appWindowManager visibleViewController];
-        if ([vc respondsToSelector:@selector(processPendingCardDeckAdds)]) {
-            [vc performSelector:@selector(processPendingCardDeckAdds)];
+        if ([vc respondsToSelector:@selector(processPendingCardDeckAddsAtTopDelayed)]) {
+            [vc performSelector:@selector(processPendingCardDeckAddsAtTopDelayed)];
         }
     }
     

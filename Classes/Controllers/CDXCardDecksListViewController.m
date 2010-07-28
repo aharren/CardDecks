@@ -302,5 +302,15 @@
     }
 }
 
+- (void)processPendingCardDeckAddsAtTopDelayed {
+    qltrace();
+    lastCardDeckIndex = 0;
+    [self setEditing:NO animated:YES];
+    if ([cardDecks cardDecksCount] > 0) {
+        [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+    }
+    [self performSelector:@selector(processPendingCardDeckAdds) withObject:nil afterDelay:0.5];
+}
+
 @end
 
