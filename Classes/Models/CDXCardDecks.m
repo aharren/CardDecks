@@ -91,6 +91,7 @@
         CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
         deck.file = cardDeckDefaults.file;
         [deck updateStorageObjectDeferred:NO];
+        [self updateStorageObjectDeferred:YES];
     }
     return cardDeckDefaults;
 }
