@@ -34,6 +34,8 @@
 static NSMutableArray *storageDeferredUpdates = nil;
 static NSMutableArray *storageDeferredRemoves = nil;
 
+#define CDXStorageDot2Suffix @".2"
+
 @implementation CDXStorage
 
 + (void)initialize {
@@ -42,16 +44,19 @@ static NSMutableArray *storageDeferredRemoves = nil;
     storageDeferredRemoves = [[NSMutableArray alloc] init];
 }
 
-+ (NSDictionary *)readDictionaryFromFile:(NSString *)file suffix:(NSString *)suffix {
-    qltrace(@"file %@ suffix %@", file, suffix);
-    
++ (NSString *)fileNameFromFile:(NSString *)file suffix:(NSString *)suffix {
     // add suffix
     if (suffix != nil) {
         file = [file stringByAppendingString:suffix];
     }
     
-    // create the file name
-    NSString *fileName = [NSString stringWithFormat:@"%@.plist", file];
+    return [NSString stringWithFormat:@"%@.plist", file];
+}
+
++ (NSDictionary *)readDictionaryFromFile:(NSString *)file suffix:(NSString *)suffix {
+    qltrace(@"file %@ suffix %@", file, suffix);
+    
+    NSString *fileName = [CDXStorage fileNameFromFile:file suffix:suffix];
     
     // first, look in 'Documents' folder
     {
@@ -84,7 +89,7 @@ static NSMutableArray *storageDeferredRemoves = nil;
     NSDictionary *dictionary = nil;
     
     // first, try with .2 suffix
-    dictionary = [CDXStorage readDictionaryFromFile:file suffix:@".2"];
+    dictionary = [CDXStorage readDictionaryFromFile:file suffix:CDXStorageDot2Suffix];
     if (dictionary != nil) {
         return dictionary;
     }
@@ -102,9 +107,7 @@ static NSMutableArray *storageDeferredRemoves = nil;
     qltrace(@"file %@", file);
     
     // we always store with .2 suffix
-    file = [file stringByAppendingFormat:@".2"];
-    
-    NSString *fileName = [NSString stringWithFormat:@"%@.plist", file];
+    NSString *fileName = [CDXStorage fileNameFromFile:file suffix:CDXStorageDot2Suffix];
     
     // update file in 'Documents' folder
     NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
@@ -114,10 +117,10 @@ static NSMutableArray *storageDeferredRemoves = nil;
     [dictionary writeToFile:path atomically:YES];        
 }
 
-+ (void)removeFile:(NSString *)file {
-    qltrace(@"file %@", file);
++ (void)removeFile:(NSString *)file  suffix:(NSString *)suffix {
+    qltrace(@"file %@ suffix %@", file, suffix);
     
-    NSString *fileName = [NSString stringWithFormat:@"%@.plist", file];
+    NSString *fileName = [CDXStorage fileNameFromFile:file suffix:suffix];
     
     // remove file in 'Documents' folder
     NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
@@ -127,10 +130,21 @@ static NSMutableArray *storageDeferredRemoves = nil;
     [[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
 }
 
-+ (BOOL)existsFile:(NSString *)file {
++ (void)removeFile:(NSString *)file {
     qltrace(@"file %@", file);
     
-    NSString *fileName = [NSString stringWithFormat:@"%@.plist", file];
+    // first, remove file with .2 suffix
+    [CDXStorage removeFile:file suffix:CDXStorageDot2Suffix];
+    
+    // second, remove file without suffix
+    [CDXStorage removeFile:file suffix:nil];
+}
+
++ (BOOL)existsFile:(NSString *)file  suffix:(NSString *)suffix {
+    qltrace(@"file %@ suffix %@", file, suffix);
+    
+    NSString *fileName = [CDXStorage fileNameFromFile:file suffix:suffix];
+    
     // first, look in 'Documents' folder
     {
         NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
@@ -149,6 +163,22 @@ static NSMutableArray *storageDeferredRemoves = nil;
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
             return YES;
         }
+    }
+    
+    return NO;
+}
+
++ (BOOL)existsFile:(NSString *)file {
+    qltrace(@"file %@", file);
+    
+    // first, try with .2 suffix
+    if ([CDXStorage existsFile:file suffix:CDXStorageDot2Suffix]) {
+        return YES;
+    }
+    
+    // second, try without suffix
+    if ([CDXStorage existsFile:file suffix:nil]) {
+        return YES;
     }
     
     return NO;
