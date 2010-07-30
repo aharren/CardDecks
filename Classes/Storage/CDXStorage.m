@@ -71,7 +71,7 @@ static NSMutableArray *storageDeferredRemoves = nil;
     
     // second, look in application bundle
     {
-        NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks2.app"];
+        NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];
         NSString *path = [folder stringByAppendingPathComponent:fileName];
         qltrace(@"path2 %@", path);
         NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:path];
@@ -157,7 +157,7 @@ static NSMutableArray *storageDeferredRemoves = nil;
     
     // second, look in application bundle
     {
-        NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks2.app"];
+        NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];
         NSString *path = [folder stringByAppendingPathComponent:fileName];
         qltrace(@"path2 %@", path);
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {

@@ -308,7 +308,7 @@
         default:
             break;
         case 0: {
-            NSString *body = [@"carddecks2:///2/add?" stringByAppendingString:[CDXCardDeckURLSerializer version2StringFromCardDeck:cardDeck]];
+            NSString *body = [@"carddecks:///2/add?" stringByAppendingString:[CDXCardDeckURLSerializer version2StringFromCardDeck:cardDeck]];
             if ([[CDXAppSettings sharedAppSettings] useMailApplication] || ![MFMailComposeViewController canSendMail]) {
                 NSString *urlString = [NSString stringWithFormat:@"mailto:?&subject=%@&body=%@",
                                        [[cardDeck.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]

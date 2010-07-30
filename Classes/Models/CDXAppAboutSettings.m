@@ -159,7 +159,7 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
             return nil;
             break;
         case CDXAppAboutSettingsLegal: {
-            NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks2.app"];
+            NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];
             NSString *path = [folder stringByAppendingPathComponent:@"Legal.html"];
             NSString *text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
             return text;
