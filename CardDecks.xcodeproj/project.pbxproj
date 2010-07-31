@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E00288C51204B2590011C66E /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = E00288C31204B2590011C66E /* Icon-72.png */; };
+		E00288C61204B2590011C66E /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E00288C41204B2590011C66E /* Icon-72@2x.png */; };
 		E002B5951167613A0072C409 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2711167488B00FE7924 /* Foundation.framework */; };
 		E002B5E3116761410072C409 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2731167489600FE7924 /* UIKit.framework */; };
 		E002B62D116762300072C409 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E002B627116762260072C409 /* SenTestingKit.framework */; };
@@ -151,6 +153,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E00288C31204B2590011C66E /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "Images/Icon-72.png"; sourceTree = "<group>"; };
+		E00288C41204B2590011C66E /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "Images/Icon-72@2x.png"; sourceTree = "<group>"; };
 		E002B449116754350072C409 /* CardDecks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardDecks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E002B4FA116760650072C409 /* Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E002B4FB116760650072C409 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
@@ -611,6 +615,8 @@
 				E0602B4E11D54FC80075F439 /* Icon-Settings@2x.png */,
 				E0CCC70D1170DA0A0040D222 /* Icon.png */,
 				E084954A11D4034100489C15 /* Icon@2x.png */,
+				E00288C31204B2590011C66E /* Icon-72.png */,
+				E00288C41204B2590011C66E /* Icon-72@2x.png */,
 				E03B113D11C415CB00591E45 /* Logo-Prerendered.png */,
 				E0DD7D6411D6302B00ED23B6 /* Logo-Prerendered@2x.png */,
 			);
@@ -772,6 +778,8 @@
 				E0A483CD11F2FC7400A6ECC8 /* RedYellowGreen.CardDeck.plist in Resources */,
 				E0A483CE11F2FC7400A6ECC8 /* YesNoPerhaps.CardDeck.plist in Resources */,
 				E0331B8E11FC3F18008B8E2F /* Legal.html in Resources */,
+				E00288C51204B2590011C66E /* Icon-72.png in Resources */,
+				E00288C61204B2590011C66E /* Icon-72@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
