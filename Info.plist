@@ -12,8 +12,7 @@
 	<string>Icon.png</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>Icon.png</string>
-		<string>Icon@2x.png</string>
+		<string>Icon</string>
 	</array>
 	<key>CFBundleIdentifier</key>
 	<string>0xc0.de.CardDecks</string>
