@@ -82,7 +82,7 @@
     
     deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Faces,00ff00,000000&%e2%98%ba&%e2%98%b9,ff0000"];
     deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
-    deck.wantsAutoRotate = NO;
+    deck.wantsAutoRotate = YES;
     deck.wantsShakeShuffle = YES;
     deck.wantsPageJumps = NO;
     deck.wantsPageControl = NO;
@@ -95,7 +95,7 @@
     deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
     [deck cardAtIndex:0].fontSize = 150.0/5.0;
     [deck cardAtIndex:1].fontSize = 150.0/5.0;
-    deck.wantsAutoRotate = NO;
+    deck.wantsAutoRotate = YES;
     deck.wantsShakeShuffle = YES;
     deck.wantsPageJumps = YES;
     deck.pageControlStyle = CDXCardDeckPageControlStyleLight;
