@@ -32,7 +32,7 @@
     
 }
 
-- (void)showImageNamed:(NSString *)name timeInterval:(NSTimeInterval)timeInterval window:(UIWindow *)window;
+- (void)showImageNamed:(NSString *)name timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation window:(UIWindow *)window;
 
 @end
 

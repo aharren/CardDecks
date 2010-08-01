@@ -214,7 +214,7 @@
 
     [cardsView invalidateDataSourceCaches];
     [cardsView showCardAtIndex:0];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" timeInterval:0.8];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" timeInterval:0.8 orientation:[cardsView deviceOrientation]];
 }
 
 - (void)configureIndexDotsViewAndButtons {

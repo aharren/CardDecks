@@ -70,9 +70,8 @@
     [UIView commitAnimations];
 }
 
-- (void)showImageNamed:(NSString *)name timeInterval:(NSTimeInterval)timeInterval window:(UIWindow *)window {
+- (void)showImageNamed:(NSString *)name timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation window:(UIWindow *)window {
     [window addSubview:self];
-    UIDeviceOrientation orientation = [[CDXAppWindowManager sharedAppWindowManager] deviceOrientation];
     imageView.transform = [CDXAppWindowManager transformForDeviceOrientation:orientation];
     imageView.image = [UIImage imageNamed:name];
     [self performSelector:@selector(hide:) withObject:self afterDelay:timeInterval];

@@ -176,9 +176,9 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     }
 }
 
-- (void)showNoticeWithImageNamed:(NSString *)name timeInterval:(NSTimeInterval)timeInterval {
+- (void)showNoticeWithImageNamed:(NSString *)name timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation {
     [[NSBundle mainBundle] loadNibNamed:@"CDXAppWindowNoticeView" owner:self options:nil];
-    [noticeView showImageNamed:name timeInterval:timeInterval window:window];
+    [noticeView showImageNamed:name timeInterval:timeInterval orientation:orientation window:window];
     ivar_release_and_clear(noticeView);
 }
 

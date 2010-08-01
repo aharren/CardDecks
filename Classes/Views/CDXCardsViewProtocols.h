@@ -56,6 +56,7 @@
 - (NSUInteger)currentCardIndex;
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation;
 - (void)setDeviceOrientation:(UIDeviceOrientation)orientation;
+- (UIDeviceOrientation)deviceOrientation;
 
 @end
 
