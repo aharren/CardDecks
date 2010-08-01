@@ -446,7 +446,7 @@
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
    
     NSString *string2 = [CDXCardDeckURLSerializer version2StringFromCardDeck:deck];
-    STAssertEqualObjects(string2, @"card%20deck,g0,d0,c0,id1,is0,it1,r0,s1&defaults,331122ff,000000ff,u,3&card%201,111214ff,,,7&card%202,102141ff,65644432,r", nil);
+    STAssertEqualObjects(string2, @"card%20deck,g0,d0,c0,id1,is0,it1,r1,s1&defaults,331122ff,000000ff,u,3&card%201,111214ff,,,7&card%202,102141ff,65644432,r", nil);
 }
 
 - (void)testVersion2StringFromCardDeckSettings0 {
