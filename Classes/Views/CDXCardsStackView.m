@@ -141,7 +141,7 @@
     if (self.superview == nil) {
         return;
     }
-
+    
     [cardImages clear];
     [self showCardAtIndex:currentCardIndex tellDelegate:NO];
 }
@@ -195,6 +195,9 @@
         default:
             // there was no scroll direction, nothing to do
             break;
+        case CDXCardsStackViewScrollViewDirectionIgnore:
+            // nothing to do
+            break;
         case CDXCardsStackViewScrollViewDirectionRightIn:
             if (x <= 0) {
                 // the top left card was completely moved to the right
@@ -229,22 +232,18 @@
     CGFloat x = scrollView.contentOffset.x;
     CGFloat width = scrollViewPageWidth;
     
-    if (currentCardIndex == 0 && x <= width) {
-        // we can't scroll the topmost card to the right
-        scrollView.contentOffset = CGPointMake(width, 0);
-        return;
-    }
-    
-    if (currentCardIndex == cardsCount-1 && x >= width) {
-        // we can't scroll the bottommost card to the left
-        scrollView.contentOffset = CGPointMake(width, 0);
-        return;
-    }
-    
     switch (scrollViewDirection) {
         case CDXCardsStackViewScrollViewDirectionNone:
         default:
-            if (x < width) {
+            if (currentCardIndex == 0 && x <= width) {
+                // we can't scroll the topmost card to the right
+                scrollViewDirection = CDXCardsStackViewScrollViewDirectionIgnore;
+                scrollView.contentOffset = CGPointMake(width, 0);
+            } else if (currentCardIndex == cardsCount-1 && x >= width) {
+                // we can't scroll the bottommost card to the left
+                scrollViewDirection = CDXCardsStackViewScrollViewDirectionIgnore;
+                scrollView.contentOffset = CGPointMake(width, 0);
+            } else if (x < width) {
                 // scroll to the right which moves the top left card in
                 scrollViewDirection = CDXCardsStackViewScrollViewDirectionRightIn;
                 cardViewsView[CDXCardsStackViewCardViewsTopRight].hidden = YES;
@@ -255,6 +254,10 @@
                 cardViewsView[CDXCardsStackViewCardViewsTopRight].hidden = NO;
                 cardViewsView[CDXCardsStackViewCardViewsMiddle].hidden = YES;
             }
+            break;
+        case CDXCardsStackViewScrollViewDirectionIgnore:
+            // reset scroll position
+            scrollView.contentOffset = CGPointMake(width, 0);
             break;
         case CDXCardsStackViewScrollViewDirectionRightIn:
             // there are no restrictions when scrolling to the right

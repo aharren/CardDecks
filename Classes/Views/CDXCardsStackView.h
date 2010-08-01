@@ -45,6 +45,7 @@ enum {
 
 enum {
     CDXCardsStackViewScrollViewDirectionNone = 0,
+    CDXCardsStackViewScrollViewDirectionIgnore,
     CDXCardsStackViewScrollViewDirectionRightIn,
     CDXCardsStackViewScrollViewDirectionLeftOut
 };
