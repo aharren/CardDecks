@@ -129,8 +129,8 @@
     
     deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Estimation%20Sizes,000000,ffffff&XXS&XS&S&M&L&XL&XXL&%e2%88%9e&NEED%0aCOFFEE"];
     deck.displayStyle = CDXCardDeckDisplayStyleStack;
-    [deck setFontSize:180.0/5.0];
-    deck.cardDefaults.fontSize = 180.0/5.0;
+    [deck setFontSize:165.0/5.0];
+    deck.cardDefaults.fontSize = 165.0/5.0;
     [deck cardAtIndex:[deck cardsCount]-1].fontSize = 114.0/5.0;
     [deck cardAtIndex:[deck cardsCount]-1].orientation = CDXCardOrientationLeft;
     deck.wantsAutoRotate = NO;
