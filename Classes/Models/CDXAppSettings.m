@@ -120,7 +120,7 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
 }
 
 - (NSUInteger)closeTapCount {
-    NSUInteger value = [CDXAppSettings userDefaultsIntegerValueForKey:settingsUserDefaultsKeys[CDXAppSettingsCloseTapCount] defaultsTo:2];
+    NSUInteger value = [CDXAppSettings userDefaultsIntegerValueForKey:settingsUserDefaultsKeys[CDXAppSettingsCloseTapCount] defaultsTo:1];
     if (value >= 1 && value <= 2) {
         return value;
     } else {
