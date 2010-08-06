@@ -231,15 +231,16 @@
 - (void)scrollViewDidScroll {
     CGFloat x = scrollView.contentOffset.x;
     CGFloat width = scrollViewPageWidth;
+    qltrace(": %f %d", x, scrollViewDirection);
     
     switch (scrollViewDirection) {
         case CDXCardsStackViewScrollViewDirectionNone:
         default:
-            if (currentCardIndex == 0 && x <= width) {
+            if (currentCardIndex == 0 && x < width) {
                 // we can't scroll the topmost card to the right
                 scrollViewDirection = CDXCardsStackViewScrollViewDirectionIgnore;
                 scrollView.contentOffset = CGPointMake(width, 0);
-            } else if (currentCardIndex == cardsCount-1 && x >= width) {
+            } else if (currentCardIndex == cardsCount-1 && x > width) {
                 // we can't scroll the bottommost card to the left
                 scrollViewDirection = CDXCardsStackViewScrollViewDirectionIgnore;
                 scrollView.contentOffset = CGPointMake(width, 0);
