@@ -35,13 +35,14 @@ synthesize_singleton(sharedDevice, CDXDevice);
 - (id)init {
     if ((self = [super init])) {
         NSString *deviceModel = [[UIDevice currentDevice] model];
-        if ([deviceModel hasSuffix:@"Simulator"]) {
+        deviceModel = [deviceModel lowercaseString];
+        if ([deviceModel hasSuffix:@"simulator"]) {
             deviceType = CDXDeviceTypeSimulator;
-        } else if ([deviceModel isEqualToString:@"iPhone"]) {
+        } else if ([deviceModel isEqualToString:@"iphone"]) {
             deviceType = CDXDeviceTypeiPhone;
-        } else if ([deviceModel isEqualToString:@"iPod Touch"]) {
+        } else if ([deviceModel isEqualToString:@"ipod touch"]) {
             deviceType = CDXDeviceTypeiPodTouch;
-        } else if ([deviceModel isEqualToString:@"iPad"]) {
+        } else if ([deviceModel isEqualToString:@"ipad"]) {
             deviceType = CDXDeviceTypeiPad;
         }
         qltrace(@"%@ %d", deviceModel, deviceType);
