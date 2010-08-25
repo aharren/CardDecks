@@ -35,12 +35,6 @@
 
 synthesize_singleton(sharedImageFactory, CDXImageFactory);
 
-static CGImageRef CDXImageFactoryCreateScreenImage(void) {
-    extern CGImageRef UIGetScreenImage(void);
-    
-    return UIGetScreenImage();
-}
-
 static void CDXGraphicsBeginImageContextNativeScale(CGSize size) {
     extern void UIGraphicsBeginImageContextWithOptions(CGSize size, BOOL opaque, CGFloat scale);
     
@@ -101,22 +95,9 @@ static void CDXGraphicsBeginImageContextNativeScale(CGSize size) {
 }
 
 - (UIImage *)imageForScreen {
-    const CDXDeviceType deviceType = [CDXDevice sharedDevice].deviceType;
-    if (deviceType == CDXDeviceTypeiPhone || deviceType == CDXDeviceTypeiPodTouch) {
-        CGImageRef cgImage = CDXImageFactoryCreateScreenImage();
-        UIImage *image;
-        if ([UIImage respondsToSelector:@selector(imageWithCGImage:scale:orientation:)]) {
-            image = [UIImage imageWithCGImage:cgImage scale:[[UIScreen mainScreen] scale] orientation:UIImageOrientationUp];
-        } else {
-            image = [UIImage imageWithCGImage:cgImage];
-        }
-        CGImageRelease(cgImage);
-        return image;
-    } else {
-        CGRect bounds = [UIScreen mainScreen].bounds;
-        UIView *window = [CDXAppWindowManager sharedAppWindowManager].window;
-        return [self imageForView:window size:bounds.size];
-    }
+    CGRect bounds = [UIScreen mainScreen].bounds;
+    UIView *window = [CDXAppWindowManager sharedAppWindowManager].window;
+    return [self imageForView:window size:bounds.size];
 }
 
 @end
