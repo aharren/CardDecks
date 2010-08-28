@@ -1,9 +1,9 @@
 //
 //
-// lcl_config_components.h -- LibComponentLogging Core
+// lcl_config_components.h
 //
 //
-// Copyright (c) 2008-2009 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,27 +24,15 @@
 // THE SOFTWARE.
 
 
-_lcl_component(CDXMain,                         "carddecks.main",                   "Card Decks/Main")
-_lcl_component(CDXAppDelegate,                  "carddecks.main",                   "Card Decks/App Delegate")
+_lcl_component(Main,            "main",         "Main")
 
-_lcl_component(CDXStorage,                      "carddecks.storage",                "Card Decks/Storage")
+_lcl_component(Application,     "application",  "AppDelegate")
 
-_lcl_component(CDXCard,                         "carddecks.model.card",             "Card Decks/Models/Card")
-_lcl_component(CDXCardDeck,                     "carddecks.model.carddeck",         "Card Decks/Models/Card Deck")
-_lcl_component(CDXCardDeckList,                 "carddecks.model.carddecklist",     "Card Decks/Models/Card Deck List")
+_lcl_component(Storage,         "storage",      "Storage")
+_lcl_component(Cache,           "cache",        "Cache")
+_lcl_component(Image,           "image",        "Image")
 
-_lcl_component(CDXCardViewController,           "carddecks.view.cardview",          "Card Decks/Views/Card View")
-_lcl_component(CDXCardEditViewController,       "carddecks.view.cardeditview",      "Card Decks/Views/Card Edit View")
-_lcl_component(CDXCardDeckViewController,       "carddecks.view.carddeckview",      "Card Decks/Views/Card Deck View")
-_lcl_component(CDXCardDeckEditViewController,   "carddecks.view.carddeckeditview",  "Card Decks/Views/Card Deck Edit View")
-_lcl_component(CDXCardDeckListViewController,   "carddecks.view.carddecklistview",  "Card Decks/Views/Card Deck List View")
-
-_lcl_component(CDXInfoOverviewViewController,   "carddecks.info.overview",          "Card Decks/Info")
-
-_lcl_component(CDXKeyboardExtensions,           "carddecks.kbext",                  "Card Decks/Keyboard Extensions/Main")
-_lcl_component(CDXColorKeyboardExtension,       "carddecks.kbext.color",            "Card Decks/Keyboard Extensions/Color")
-_lcl_component(CDXSymbolsKeyboardExtension,     "carddecks.kbext.symbols",          "Card Decks/Keyboard Extensions/Symbols")
-_lcl_component(CDXLayoutKeyboardExtension,      "carddecks.kbext.layout",           "Card Decks/Keyboard Extensions/Layout")
-
-_lcl_component(CDXSettingsViewController,       "carddecks.settings.view",          "Card Decks/Settings")
+_lcl_component(Controller,      "controller",   "Controller")
+_lcl_component(Model,           "model",        "Model")
+_lcl_component(View,            "view",         "View")
 

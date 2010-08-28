@@ -28,6 +28,10 @@
 			<key>BackgroundColor</key>
 			<string>000000</string>
 		</dict>
-    </array>
+	</array>
+	<key>Name</key>
+	<string>Yes, No, Perhaps</string>
+	<key>File</key>
+	<string>YesNoPerhaps.CardDeck</string>
 </dict>
 </plist>

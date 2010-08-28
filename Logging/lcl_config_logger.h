@@ -3,7 +3,7 @@
 // lcl_config_logger.h
 //
 //
-// Copyright (c) 2008-2009 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,5 @@
 // THE SOFTWARE.
 
 
-// A very simple logger, which writes to stderr.
-#define _lcl_logger(_component, _level, _format, ...)                          \
-    {                                                                          \
-        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];            \
-        fprintf(stderr, "%s\n",                                                \
-                [[NSString stringWithFormat:_format, ##__VA_ARGS__]            \
-                 UTF8String]);                                                 \
-        [pool release];                                                        \
-    }
+#import "CDXLogger.h"
 

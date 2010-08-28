@@ -36,6 +36,10 @@
 			<key>BackgroundColor</key>
 			<string>000000</string>
 		</dict>
-  </array>
+	</array>
+	<key>Name</key>
+	<string>15, 10, 5, 0</string>
+	<key>File</key>
+	<string>15-0.CardDeck</string>
 </dict>
 </plist>
