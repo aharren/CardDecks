@@ -127,7 +127,13 @@
     dDeck.wantsPageControl = [CDXDictionarySerializerUtils boolFromDictionary:dictionary forKey:@"wantsPageControl" defaultsTo:dDeck.wantsPageControl];
     dDeck.wantsPageJumps = [CDXDictionarySerializerUtils boolFromDictionary:dictionary forKey:@"wantsPageJumps" defaultsTo:dDeck.wantsPageJumps];
     dDeck.wantsAutoRotate = [CDXDictionarySerializerUtils boolFromDictionary:dictionary forKey:@"wantsAutoRotate" defaultsTo:dDeck.wantsAutoRotate];
-    dDeck.wantsShakeShuffle = [CDXDictionarySerializerUtils boolFromDictionary:dictionary forKey:@"wantsShakeShuffle" defaultsTo:dDeck.wantsShakeShuffle];
+    if ([CDXDictionarySerializerUtils dictionary:dictionary hasBoolForKey:@"wantsShakeShuffle"]) {
+        // version 2a: wantsShakeShuffle
+        dDeck.shakeAction = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"wantsShakeShuffle" defaultsTo:dDeck.shakeAction];
+    } else {
+        // version 2b: shakeAction
+        dDeck.shakeAction = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"shakeAction" defaultsTo:dDeck.shakeAction];
+    }
     
     dDeck.groupSize = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"groupSize" defaultsTo:dDeck.groupSize];
     dDeck.displayStyle = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"displayStyle" defaultsTo:dDeck.displayStyle];
@@ -189,7 +195,9 @@
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithBool:cardDeck.wantsPageControl] forKey:@"wantsPageControl"];
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithBool:cardDeck.wantsPageJumps] forKey:@"wantsPageJumps"];
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithBool:cardDeck.wantsAutoRotate] forKey:@"wantsAutoRotate"];
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithBool:cardDeck.wantsShakeShuffle] forKey:@"wantsShakeShuffle"];
+    // version 2a: wantsShakeShuffle
+    // version 2b: shakeAction
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:cardDeck.shakeAction] forKey:@"shakeAction"];
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:cardDeck.groupSize] forKey:@"groupSize"];
     
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:cardDeck.displayStyle] forKey:@"displayStyle"];

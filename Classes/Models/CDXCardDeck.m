@@ -37,7 +37,7 @@
 @synthesize wantsPageControl;
 @synthesize wantsPageJumps;
 @synthesize wantsAutoRotate;
-@synthesize wantsShakeShuffle;
+@synthesize shakeAction;
 @synthesize groupSize;
 @synthesize displayStyle;
 @synthesize cornerStyle;
@@ -59,7 +59,7 @@
         wantsPageControl = YES;
         wantsPageJumps = YES;
         wantsAutoRotate = YES;
-        wantsShakeShuffle = YES;
+        shakeAction = CDXCardDeckShakeActionDefault;
         groupSize = CDXCardDeckGroupSizeDefault;
         displayStyle = CDXCardDeckDisplayStyleDefault;
         cornerStyle = CDXCardCornerStyleDefault;
@@ -88,7 +88,7 @@
     copy.wantsPageControl = wantsPageControl;
     copy.wantsPageJumps = wantsPageJumps;
     copy.wantsAutoRotate = wantsAutoRotate;
-    copy.wantsShakeShuffle = wantsShakeShuffle;
+    copy.shakeAction = shakeAction;
     copy.groupSize = groupSize;
     copy.displayStyle = displayStyle;
     copy.cornerStyle = cornerStyle;
@@ -236,6 +236,10 @@
 
 - (CDXCard *)cardWithDefaults {
     return [[cardDefaults copy] autorelease];
+}
+
+- (void)setShakeAction:(CDXCardDeckShakeAction)aShakeAction {
+    ivar_enum_assign(shakeAction, CDXCardDeckShakeAction, aShakeAction);
 }
 
 - (void)setGroupSize:(CDXCardDeckGroupSize)aGroupSize {

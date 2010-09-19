@@ -46,7 +46,7 @@
     deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Weather,000000,ffff00&%e2%98%80,ff0000&%e2%98%81,ffffff,0000ff&%e2%98%82,000000,aaaaaa&%e2%98%83,000000,ffffff"];
     deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
     deck.wantsAutoRotate = NO;
-    deck.wantsShakeShuffle = YES;
+    deck.shakeAction = CDXCardDeckShakeActionRandom;
     deck.wantsPageJumps = NO;
     deck.wantsPageControl = NO;
     deck.pageControlStyle = CDXCardDeckPageControlStyleDark;
@@ -59,7 +59,7 @@
     [deck setFontSize:280.0/5.0];
     deck.cardDefaults.fontSize = 280.0/5.0;
     deck.wantsAutoRotate = NO;
-    deck.wantsShakeShuffle = YES;
+    deck.shakeAction = CDXCardDeckShakeActionRandom;
     deck.wantsPageJumps = NO;
     deck.wantsPageControl = NO;
     deck.pageControlStyle = CDXCardDeckPageControlStyleLight;
@@ -72,7 +72,7 @@
     [deck setFontSize:100.0/5.0];
     deck.cardDefaults.fontSize = 100.0/5.0;
     deck.wantsAutoRotate = NO;
-    deck.wantsShakeShuffle = YES;
+    deck.shakeAction = CDXCardDeckShakeActionRandom;
     deck.wantsPageJumps = YES;
     deck.wantsPageControl = NO;
     deck.pageControlStyle = CDXCardDeckPageControlStyleDark;
@@ -83,7 +83,7 @@
     deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Faces,00ff00,000000&%e2%98%ba&%e2%98%b9,ff0000"];
     deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
     deck.wantsAutoRotate = YES;
-    deck.wantsShakeShuffle = YES;
+    deck.shakeAction = CDXCardDeckShakeActionRandom;
     deck.wantsPageJumps = NO;
     deck.wantsPageControl = NO;
     deck.pageControlStyle = CDXCardDeckPageControlStyleLight;
@@ -96,7 +96,7 @@
     [deck cardAtIndex:0].fontSize = 150.0/5.0;
     [deck cardAtIndex:1].fontSize = 150.0/5.0;
     deck.wantsAutoRotate = YES;
-    deck.wantsShakeShuffle = YES;
+    deck.shakeAction = CDXCardDeckShakeActionRandom;
     deck.wantsPageJumps = YES;
     deck.pageControlStyle = CDXCardDeckPageControlStyleLight;
     [deck updateStorageObjectDeferred:NO];
@@ -108,7 +108,7 @@
     [deck setFontSize:240.0/5.0];
     deck.cardDefaults.fontSize = 240.0/5.0;
     deck.wantsAutoRotate = NO;
-    deck.wantsShakeShuffle = NO;
+    deck.shakeAction = CDXCardDeckShakeActionNone;
     deck.wantsPageJumps = NO;
     deck.pageControlStyle = CDXCardDeckPageControlStyleLight;
     [deck updateStorageObjectDeferred:NO];
@@ -120,7 +120,7 @@
     [deck setFontSize:240.0/5.0];
     deck.cardDefaults.fontSize = 240.0/5.0;
     deck.wantsAutoRotate = NO;
-    deck.wantsShakeShuffle = NO;
+    deck.shakeAction = CDXCardDeckShakeActionNone;
     deck.wantsPageJumps = NO;
     deck.pageControlStyle = CDXCardDeckPageControlStyleDark;
     [deck updateStorageObjectDeferred:NO];
@@ -134,7 +134,7 @@
     [deck cardAtIndex:[deck cardsCount]-1].fontSize = 114.0/5.0;
     [deck cardAtIndex:[deck cardsCount]-1].orientation = CDXCardOrientationLeft;
     deck.wantsAutoRotate = NO;
-    deck.wantsShakeShuffle = NO;
+    deck.shakeAction = CDXCardDeckShakeActionNone;
     deck.pageControlStyle = CDXCardDeckPageControlStyleDark;
     [deck updateStorageObjectDeferred:NO];
     holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
@@ -148,7 +148,7 @@
     [deck cardAtIndex:[deck cardsCount]-1].fontSize = 114.0/5.0;
     [deck cardAtIndex:[deck cardsCount]-1].orientation = CDXCardOrientationLeft;
     deck.wantsAutoRotate = NO;
-    deck.wantsShakeShuffle = NO;
+    deck.shakeAction = CDXCardDeckShakeActionNone;
     deck.pageControlStyle = CDXCardDeckPageControlStyleDark;
     [deck updateStorageObjectDeferred:NO];
     holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
@@ -160,7 +160,7 @@
     deck.cardDefaults.fontSize = 300.0/5.0;
     deck.wantsPageControl = YES;
     deck.wantsAutoRotate = YES;
-    deck.wantsShakeShuffle = NO;
+    deck.shakeAction = CDXCardDeckShakeActionNone;
     deck.cornerStyle = CDXCardCornerStyleCornered;
     [deck updateStorageObjectDeferred:NO];
     holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];

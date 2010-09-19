@@ -383,7 +383,7 @@
     STAssertEquals(deck.pageControlStyle, 0, nil);
     STAssertEquals(deck.wantsPageJumps, NO, nil);
     STAssertEquals(deck.wantsAutoRotate, NO, nil);
-    STAssertEquals(deck.wantsShakeShuffle, NO, nil);
+    STAssertEquals(deck.shakeAction, 0, nil);
 }
 
 - (void)testCardDeckFromVersion2StringSettings1 {
@@ -400,7 +400,7 @@
     STAssertEquals(deck.pageControlStyle, 1, nil);
     STAssertEquals(deck.wantsPageJumps, YES, nil);
     STAssertEquals(deck.wantsAutoRotate, YES, nil);
-    STAssertEquals(deck.wantsShakeShuffle, YES, nil);
+    STAssertEquals(deck.shakeAction, 1, nil);
 }
 
 - (void)testCardDeckFromVersion2StringSettings01 {
@@ -417,7 +417,7 @@
     STAssertEquals(deck.pageControlStyle, 0, nil);
     STAssertEquals(deck.wantsPageJumps, YES, nil);
     STAssertEquals(deck.wantsAutoRotate, NO, nil);
-    STAssertEquals(deck.wantsShakeShuffle, YES, nil);
+    STAssertEquals(deck.shakeAction, 1, nil);
 }
 
 - (void)testCardDeckFromVersion2StringSettings10 {
@@ -434,7 +434,7 @@
     STAssertEquals(deck.pageControlStyle, 1, nil);
     STAssertEquals(deck.wantsPageJumps, NO, nil);
     STAssertEquals(deck.wantsAutoRotate, YES, nil);
-    STAssertEquals(deck.wantsShakeShuffle, NO, nil);
+    STAssertEquals(deck.shakeAction, 0, nil);
 }
 
 - (void)testVersion2StringFromCardDeckCards {

@@ -28,6 +28,11 @@
 
 @implementation CDXDictionarySerializerUtils
 
++ (BOOL)dictionary:(NSDictionary *)dictionary hasBoolForKey:(NSString *)key {
+    NSObject *object = [dictionary objectForKey:key];
+    return (object != nil && [object isKindOfClass:[NSNumber class]]);
+}
+
 + (NSString *)stringFromDictionary:(NSDictionary *)dictionary forKey:(NSString *)key defaultsTo:(NSString *)defaultValue {
     NSObject *object = [dictionary objectForKey:key];
     if (object == nil || ![object isKindOfClass:[NSString class]]) {

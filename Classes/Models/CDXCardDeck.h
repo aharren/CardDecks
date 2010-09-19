@@ -29,6 +29,15 @@
 
 
 typedef enum {
+    CDXCardDeckShakeActionNone = 0,
+    CDXCardDeckShakeActionShuffle,
+    CDXCardDeckShakeActionRandom,
+    CDXCardDeckShakeActionCount,
+    CDXCardDeckShakeActionDefault = CDXCardDeckShakeActionShuffle
+} CDXCardDeckShakeAction;
+
+
+typedef enum {
     CDXCardDeckDisplayStyleSideBySide = 0,
     CDXCardDeckDisplayStyleStack,
     CDXCardDeckDisplayStyleSwipeStack,
@@ -63,7 +72,7 @@ typedef enum {
     BOOL wantsPageControl;
     BOOL wantsPageJumps;
     BOOL wantsAutoRotate;
-    BOOL wantsShakeShuffle;
+    CDXCardDeckShakeAction shakeAction;
     CDXCardDeckGroupSize groupSize;
     
     CDXCardDeckDisplayStyle displayStyle;
@@ -89,7 +98,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL wantsPageControl;
 @property (nonatomic, assign) BOOL wantsPageJumps;
 @property (nonatomic, assign) BOOL wantsAutoRotate;
-@property (nonatomic, assign) BOOL wantsShakeShuffle;
+@property (nonatomic, assign) CDXCardDeckShakeAction shakeAction;
 @property (nonatomic, assign) CDXCardDeckGroupSize groupSize;
 
 @property (nonatomic, assign) CDXCardDeckDisplayStyle displayStyle;
