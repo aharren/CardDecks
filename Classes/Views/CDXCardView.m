@@ -142,7 +142,7 @@
     self.clipsToBounds = YES;
     self.backgroundColor = [UIColor blackColor];
     CALayer *borderLayer = self.layer;
-    borderLayer.borderColor = [[UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:0.3] CGColor];
+    borderLayer.borderColor = [[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.1] CGColor];
     borderLayer.borderWidth = 1;
     
     borderLayer.cornerRadius = 0;
