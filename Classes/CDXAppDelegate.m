@@ -255,6 +255,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     qltrace();
+    [appWindowManager dismissModalViewControllerAnimated:NO];
     [CDXStorage drainAllDeferredActions];
 }
 

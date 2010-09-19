@@ -54,6 +54,7 @@ declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 - (void)makeWindowKeyAndVisible;
 - (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation;
 + (CGAffineTransform)transformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation;
+- (void)dismissModalViewControllerAnimated:(BOOL)animated;
 
 @end
 

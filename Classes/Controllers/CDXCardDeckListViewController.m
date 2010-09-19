@@ -52,12 +52,14 @@
     ivar_release_and_clear(cardDeck);
     ivar_release_and_clear(shuffleButton);
     ivar_release_and_clear(actionButton);
+    ivar_release_and_clear(activeActionSheet);
     [super dealloc];
 }
 
 - (void)viewDidUnload {
     ivar_release_and_clear(shuffleButton);
     ivar_release_and_clear(actionButton);
+    ivar_release_and_clear(activeActionSheet);
     [super viewDidUnload];
 }
 
@@ -301,9 +303,12 @@
                                   autorelease];
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     [actionSheet showInView:[CDXAppWindowManager sharedAppWindowManager].window];
+    ivar_assign_and_retain(activeActionSheet, actionSheet);
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    qltrace();
+    ivar_release_and_clear(activeActionSheet);
     switch (buttonIndex) {
         default:
             break;
@@ -341,6 +346,14 @@
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
     [controller dismissModalViewControllerAnimated:YES];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
+}
+
+- (void)dismissModalViewControllerAnimated:(BOOL)animated {
+    qltrace();
+    [super dismissModalViewControllerAnimated:animated];
+    if (activeActionSheet != nil) {
+        [activeActionSheet dismissWithClickedButtonIndex:[activeActionSheet cancelButtonIndex] animated:animated];
+    }
 }
 
 @end

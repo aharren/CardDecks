@@ -47,6 +47,8 @@
     CDXCardDeck *cardDeck;
     
     BOOL editingDefaults;
+    
+    UIActionSheet *activeActionSheet;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext editDefaults:(BOOL)editDefaults;

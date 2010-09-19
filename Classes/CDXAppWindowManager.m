@@ -203,5 +203,10 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     return CGAffineTransformRotate(CGAffineTransformIdentity, transformAngle);
 }
 
+- (void)dismissModalViewControllerAnimated:(BOOL)animated {
+    qltrace();
+    [[self visibleViewController] dismissModalViewControllerAnimated:animated];
+}
+
 @end
 
