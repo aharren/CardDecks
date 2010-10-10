@@ -93,7 +93,11 @@
     if (show) {
         text.hidden = YES;
         cardViewScrollView.hidden = NO;
-        [self currentCard].text = text.text;
+        NSString *cardText = text.text;
+        if (cardText == nil || [cardText length] == 0) {
+            cardText = @"TEXT";
+        }
+        [self currentCard].text = cardText;
         [self updateCardPreview];
     } else {
         text.hidden = NO;
