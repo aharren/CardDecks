@@ -325,7 +325,7 @@
                 MFMailComposeViewController *vc = [[[MFMailComposeViewController alloc] init] autorelease];
                 [vc setMailComposeDelegate:self];
                 [vc setSubject:cardDeck.name];
-                [vc setMessageBody:body isHTML:NO];
+                [vc setMessageBody:[body stringByAppendingString:@" "] isHTML:NO];
                 [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:NO];
                 [self presentModalViewController:vc animated:YES];
             }
