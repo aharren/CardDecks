@@ -223,13 +223,13 @@
     
     [cardsView invalidateDataSourceCaches];
     [cardsView showCardAtIndex:0];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.8 orientation:[cardsView deviceOrientation]];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
 }
 
 - (IBAction)randomButtonPressed {
     NSUInteger newIndex = (((double)arc4random() / 0x100000000) * [cardDeck cardsCount]);
     [cardsView showCardAtIndex:newIndex];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"random" timeInterval:0.8 orientation:[cardsView deviceOrientation]];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"random" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
 }
 
 - (void)configureIndexDotsViewAndButtons {
