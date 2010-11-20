@@ -116,7 +116,7 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
 }
 
 - (BOOL)cardDeckQuickOpen {
-    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsCardDeckQuickOpen] defaultsTo:NO];
+    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsCardDeckQuickOpen] defaultsTo:YES];
 }
 
 - (NSUInteger)closeTapCount {
