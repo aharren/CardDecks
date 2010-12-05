@@ -176,9 +176,9 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     }
 }
 
-- (void)showNoticeWithImageNamed:(NSString *)name timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation {
+- (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation {
     [[NSBundle mainBundle] loadNibNamed:@"CDXAppWindowNoticeView" owner:self options:nil];
-    [noticeView showImageNamed:name timeInterval:timeInterval orientation:orientation window:window];
+    [noticeView showImageNamed:name text:text timeInterval:timeInterval orientation:orientation window:window];
     ivar_release_and_clear(noticeView);
 }
 
@@ -201,6 +201,11 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     }
     
     return CGAffineTransformRotate(CGAffineTransformIdentity, transformAngle);
+}
+
+- (void)dismissModalViewControllerAnimated:(BOOL)animated {
+    qltrace();
+    [[self visibleViewController] dismissModalViewControllerAnimated:animated];
 }
 
 @end

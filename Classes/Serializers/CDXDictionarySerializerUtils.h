@@ -28,6 +28,8 @@
     
 }
 
++ (BOOL)dictionary:(NSDictionary *)dictionary hasBoolForKey:(NSString *)key;
+
 + (NSString *)stringFromDictionary:(NSDictionary *)dictionary forKey:(NSString *)key defaultsTo:(NSString *)defaultValue;
 + (BOOL)boolFromDictionary:(NSDictionary *)dictionary forKey:(NSString *)key defaultsTo:(BOOL)defaultValue;
 + (NSUInteger)unsignedIntegerFromDictionary:(NSDictionary *)dictionary forKey:(NSString *)key defaultsTo:(NSUInteger)defaultValue;

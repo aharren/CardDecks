@@ -52,12 +52,14 @@
     ivar_release_and_clear(cardDeck);
     ivar_release_and_clear(shuffleButton);
     ivar_release_and_clear(actionButton);
+    ivar_release_and_clear(activeActionSheet);
     [super dealloc];
 }
 
 - (void)viewDidUnload {
     ivar_release_and_clear(shuffleButton);
     ivar_release_and_clear(actionButton);
+    ivar_release_and_clear(activeActionSheet);
     [super viewDidUnload];
 }
 
@@ -73,7 +75,7 @@
     [super viewDidAppear:animated];
     if ([cardDeck isShuffled]) {
         if (!viewWasAlreadyVisible) {
-            [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" timeInterval:0.8 orientation:UIDeviceOrientationFaceUp];
+            [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp];
         }
     }
     viewWasAlreadyVisible = YES;
@@ -280,10 +282,10 @@
 - (IBAction)shuffleButtonPressed {
     if ([cardDeck isShuffled]) {
         [cardDeck sort];
-        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" timeInterval:0.8 orientation:UIDeviceOrientationFaceUp];
+        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" text:@"sort" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp];
     } else {
         [cardDeck shuffle];
-        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" timeInterval:0.8 orientation:UIDeviceOrientationFaceUp];
+        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp];
     }
     [cardDeck updateStorageObjectDeferred:YES];
     
@@ -301,9 +303,12 @@
                                   autorelease];
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     [actionSheet showInView:[CDXAppWindowManager sharedAppWindowManager].window];
+    ivar_assign_and_retain(activeActionSheet, actionSheet);
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    qltrace();
+    ivar_release_and_clear(activeActionSheet);
     switch (buttonIndex) {
         default:
             break;
@@ -320,7 +325,7 @@
                 MFMailComposeViewController *vc = [[[MFMailComposeViewController alloc] init] autorelease];
                 [vc setMailComposeDelegate:self];
                 [vc setSubject:cardDeck.name];
-                [vc setMessageBody:body isHTML:NO];
+                [vc setMessageBody:[body stringByAppendingString:@" "] isHTML:NO];
                 [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:NO];
                 [self presentModalViewController:vc animated:YES];
             }
@@ -341,6 +346,14 @@
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
     [controller dismissModalViewControllerAnimated:YES];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
+}
+
+- (void)dismissModalViewControllerAnimated:(BOOL)animated {
+    qltrace();
+    [super dismissModalViewControllerAnimated:animated];
+    if (activeActionSheet != nil) {
+        [activeActionSheet dismissWithClickedButtonIndex:[activeActionSheet cancelButtonIndex] animated:animated];
+    }
 }
 
 @end

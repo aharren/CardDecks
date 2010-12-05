@@ -38,7 +38,7 @@ enum {
     CDXCardDeckSettingsPageControlStyle,
     CDXCardDeckSettingsPageJumps,
     CDXCardDeckSettingsAutoRotate,
-    CDXCardDeckSettingsShakeShuffle,
+    CDXCardDeckSettingsShakeAction,
     CDXCardDeckSettingsCount
 };
 
@@ -51,7 +51,7 @@ static const CDXSetting settings[] = {
     { CDXCardDeckSettingsPageControlStyle, CDXSettingTypeEnumeration, @"Index Style" },
     { CDXCardDeckSettingsPageJumps, CDXSettingTypeBoolean, @"Index Touches" },
     { CDXCardDeckSettingsAutoRotate, CDXSettingTypeBoolean, @"Auto Rotate" },
-    { CDXCardDeckSettingsShakeShuffle, CDXSettingTypeBoolean, @"Shake Shuffle" },
+    { CDXCardDeckSettingsShakeAction, CDXSettingTypeEnumeration, @"Shake" },
     { 0, 0, @"" }
 };
 
@@ -118,8 +118,6 @@ static const CDXCardDeckSettingGroup groups[] = {
             return cardDeck.wantsPageJumps;
         case CDXCardDeckSettingsAutoRotate:
             return cardDeck.wantsAutoRotate;
-        case CDXCardDeckSettingsShakeShuffle:
-            return cardDeck.wantsShakeShuffle;
     }
 }
 
@@ -135,9 +133,6 @@ static const CDXCardDeckSettingGroup groups[] = {
             break;
         case CDXCardDeckSettingsAutoRotate:
             cardDeck.wantsAutoRotate = value;
-            break;
-        case CDXCardDeckSettingsShakeShuffle:
-            cardDeck.wantsShakeShuffle = value;
             break;
     }
     [cardDeck updateStorageObjectDeferred:YES];
@@ -155,6 +150,8 @@ static const CDXCardDeckSettingGroup groups[] = {
             return cardDeck.pageControlStyle;
         case CDXCardDeckSettingsGroupSize:
             return cardDeck.groupSize;
+        case CDXCardDeckSettingsShakeAction:
+            return cardDeck.shakeAction;
     }
 }
 
@@ -174,6 +171,9 @@ static const CDXCardDeckSettingGroup groups[] = {
         case CDXCardDeckSettingsGroupSize:
             cardDeck.groupSize = value;
             break;
+        case CDXCardDeckSettingsShakeAction:
+            cardDeck.shakeAction = value;
+            break;
     }
     [cardDeck updateStorageObjectDeferred:YES];
 }
@@ -190,6 +190,8 @@ static const CDXCardDeckSettingGroup groups[] = {
             return (NSUInteger)CDXCardDeckPageControlStyleCount;
         case CDXCardDeckSettingsGroupSize:
             return (NSUInteger)CDXCardDeckGroupSizeCount;
+        case CDXCardDeckSettingsShakeAction:
+            return (NSUInteger)CDXCardDeckShakeActionCount;
     }
 }
 
@@ -230,6 +232,17 @@ static const CDXCardDeckSettingGroup groups[] = {
                 return @"1 Card";
             } else {
                 return [NSString stringWithFormat:@"%d Cards", value];
+            }
+        }
+        case CDXCardDeckSettingsShakeAction: {
+            switch (value) {
+                default:
+                case CDXCardDeckShakeActionNone:
+                    return @"Off";
+                case CDXCardDeckShakeActionShuffle:
+                    return @"Shuffle";
+                case CDXCardDeckShakeActionRandom:
+                    return @"Random";
             }
         }
     }

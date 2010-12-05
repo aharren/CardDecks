@@ -52,8 +52,9 @@ declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 - (void)popViewControllerAnimated:(BOOL)animated;
 - (void)popToInitialViewController;
 - (void)makeWindowKeyAndVisible;
-- (void)showNoticeWithImageNamed:(NSString *)name timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation;
+- (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation;
 + (CGAffineTransform)transformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation;
+- (void)dismissModalViewControllerAnimated:(BOOL)animated;
 
 @end
 

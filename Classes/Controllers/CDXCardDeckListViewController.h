@@ -38,6 +38,8 @@
     IBOutlet UIBarButtonItem *shuffleButton;
     IBOutlet UIBarButtonItem *actionButton;
     BOOL viewWasAlreadyVisible;
+    
+    UIActionSheet *activeActionSheet;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;

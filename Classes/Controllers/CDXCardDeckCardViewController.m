@@ -199,8 +199,17 @@
     }
     
     // shake event received, shuffle the deck
-    if (event.type == UIEventSubtypeMotionShake && cardDeck.wantsShakeShuffle) {
-        [self shuffleButtonPressed];
+    if (event.type == UIEventSubtypeMotionShake) {
+        switch (cardDeck.shakeAction) {
+            case CDXCardDeckShakeActionShuffle:
+                [self shuffleButtonPressed];
+                break;
+            case CDXCardDeckShakeActionRandom:
+                [self randomButtonPressed];
+                break;
+            default:
+                break;
+        }
     }
     
     if ([super respondsToSelector:@selector(motionEnded:withEvent:)]) {
@@ -211,10 +220,16 @@
 - (IBAction)shuffleButtonPressed {
     [cardDeck shuffle];
     [cardDeck updateStorageObjectDeferred:YES];
-
+    
     [cardsView invalidateDataSourceCaches];
     [cardsView showCardAtIndex:0];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" timeInterval:0.8 orientation:[cardsView deviceOrientation]];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
+}
+
+- (IBAction)randomButtonPressed {
+    NSUInteger newIndex = (((double)arc4random() / 0x100000000) * [cardDeck cardsCount]);
+    [cardsView showCardAtIndex:newIndex];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"random" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
 }
 
 - (void)configureIndexDotsViewAndButtons {

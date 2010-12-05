@@ -160,7 +160,7 @@
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.editing ? UITableViewCellEditingStyleNone : UITableViewCellEditingStyleDelete;
+    return self.editing ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleDelete;
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {

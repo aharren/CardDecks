@@ -49,6 +49,7 @@
     ivar_release_and_clear(viewButtonsUpDown);
     ivar_release_and_clear(cardDeckViewContext);
     ivar_release_and_clear(cardDeck);
+    ivar_release_and_clear(activeActionSheet);
     [super dealloc];
 }
 
@@ -92,7 +93,11 @@
     if (show) {
         text.hidden = YES;
         cardViewScrollView.hidden = NO;
-        [self currentCard].text = text.text;
+        NSString *cardText = text.text;
+        if (cardText == nil || [cardText length] == 0) {
+            cardText = @"TEXT";
+        }
+        [self currentCard].text = cardText;
         [self updateCardPreview];
     } else {
         text.hidden = NO;
@@ -121,6 +126,7 @@
     ivar_release_and_clear(cardView);
     ivar_release_and_clear(viewButtonsUpDownBarButtonItem);
     ivar_release_and_clear(viewButtonsUpDown);
+    ivar_release_and_clear(activeActionSheet);
     [super viewDidUnload];
 }
 
@@ -215,11 +221,13 @@
     if (sheet) {
         sheet.tag = index;
         [sheet showInView:[CDXAppWindowManager sharedAppWindowManager].window];
+        ivar_assign_and_retain(activeActionSheet, sheet);
     }
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     qltrace();
+    ivar_release_and_clear(activeActionSheet);
     CDXCard *card = [self currentCard];
     switch (actionSheet.tag) {
         case 1:
@@ -333,6 +341,14 @@
             [view paste:nil];
             return;
         }
+    }
+}
+
+- (void)dismissModalViewControllerAnimated:(BOOL)animated {
+    qltrace();
+    [super dismissModalViewControllerAnimated:animated];
+    if (activeActionSheet != nil) {
+        [activeActionSheet dismissWithClickedButtonIndex:[activeActionSheet cancelButtonIndex] animated:animated];
     }
 }
 

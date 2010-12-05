@@ -227,8 +227,6 @@
 
 - (void)textStartedEditing:(UITextField *)cellText {
     qltrace();
-    self.tableView.scrollEnabled = NO;
-    [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
     NSArray *extensions = [NSArray arrayWithObjects:
                            [CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension],
                            nil];
@@ -237,7 +235,6 @@
 
 - (void)textValueChanged:(UITextField *)cellText {
     qltrace();
-    self.tableView.scrollEnabled = YES;
     [settings setTextValue:cellText.text forSettingWithTag:cellText.tag];
 }
 
@@ -285,7 +282,7 @@
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             } else {
             }
-            cell.selectionStyle = self.tableView.scrollEnabled ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
+            cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             cell.tag = setting.tag;
             cell.textLabel.text = setting.label;
             NSUInteger enumValue = [settings enumerationValueForSettingWithTag:setting.tag];
@@ -323,7 +320,7 @@
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             } else {
             }
-            cell.selectionStyle = self.tableView.scrollEnabled ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
+            cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             cell.tag = setting.tag;
             cell.textLabel.text = setting.label;
             cell.imageView.image = [settings settingsImageForSettingWithTag:setting.tag];
@@ -336,7 +333,7 @@
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             } else {
             }
-            cell.selectionStyle = self.tableView.scrollEnabled ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
+            cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             cell.tag = setting.tag;
             cell.textLabel.text = setting.label;
             return cell;
@@ -348,7 +345,7 @@
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             } else {
             }
-            cell.selectionStyle = self.tableView.scrollEnabled ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
+            cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             cell.tag = setting.tag;
             cell.textLabel.text = setting.label;
             return cell;
@@ -358,10 +355,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    if (!self.tableView.scrollEnabled) {
-        return;
-    }
     
     CDXSetting setting = [settings settingAtIndex:indexPath.row inGroup:indexPath.section];
     switch (setting.type) {

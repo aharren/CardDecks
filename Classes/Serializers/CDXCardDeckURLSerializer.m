@@ -151,7 +151,7 @@
             } else if ([sSetting hasPrefix:@"r"]) {
                 dDeck.wantsAutoRotate = [[sSetting substringFromIndex:1] intValue] ? YES : NO;
             } else if ([sSetting hasPrefix:@"s"]) {
-                dDeck.wantsShakeShuffle = [[sSetting substringFromIndex:1] intValue] ? YES : NO;
+                dDeck.shakeAction = [[sSetting substringFromIndex:1] intValue];
             }
         }
     }
@@ -215,7 +215,9 @@
                       (NSUInteger)cardDeck.pageControlStyle,
                       cardDeck.wantsPageJumps ? 1 : 0,
                       cardDeck.wantsAutoRotate ? 1 : 0,
-                      cardDeck.wantsShakeShuffle ? 1 : 0];
+                      // version 2a: s0, s1
+                      // version 2b: s0, s1, s2
+                      (NSUInteger)cardDeck.shakeAction];
     [parts addObject:deck];
     
     CDXCard *cardDefaults = [cardDeck cardDefaults];
