@@ -90,8 +90,8 @@
 		E0A6C71E124604750086A6ED /* CDXCardDeckDictionarySerializerTestsDeck2b1.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0A6C703124603A10086A6ED /* CDXCardDeckDictionarySerializerTestsDeck2b1.CardDeck.plist */; };
 		E0A6C71F124604750086A6ED /* CDXCardDeckDictionarySerializerTestsDeck2a2.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E07CDF0E11BC2146008D7E8F /* CDXCardDeckDictionarySerializerTestsDeck2a2.CardDeck.plist */; };
 		E0A6C720124604750086A6ED /* CDXCardDeckDictionarySerializerTestsDeck2b2.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0A6C704124603A10086A6ED /* CDXCardDeckDictionarySerializerTestsDeck2b2.CardDeck.plist */; };
-		E0BCCAB311E8C09200A84185 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BCCAB211E8C09200A84185 /* MessageUI.framework */; };
 		E0BEE1F7117BA68D002F62A7 /* CDXCardsStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */; };
+		E0C3BBB4132EBE8200604881 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0D9E159132EBA1E001435D0 /* MessageUI.framework */; };
 		E0C51F14119DA03000D75D0E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C51F13119DA03000D75D0E /* Default.png */; };
 		E0C51FB6119DB12500D75D0E /* Toolbar-Edit-Reorder.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C51FB5119DB12500D75D0E /* Toolbar-Edit-Reorder.png */; };
 		E0CCC70E1170DA0A0040D222 /* Icon-Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CCC70C1170DA0A0040D222 /* Icon-Settings.png */; };
@@ -262,7 +262,6 @@
 		E0A483C711F2FC7400A6ECC8 /* YesNoPerhaps.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = YesNoPerhaps.CardDeck.plist; path = Templates/YesNoPerhaps.CardDeck.plist; sourceTree = "<group>"; };
 		E0A6C703124603A10086A6ED /* CDXCardDeckDictionarySerializerTestsDeck2b1.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CDXCardDeckDictionarySerializerTestsDeck2b1.CardDeck.plist; path = Classes/Serializers/CDXCardDeckDictionarySerializerTestsDeck2b1.CardDeck.plist; sourceTree = "<group>"; };
 		E0A6C704124603A10086A6ED /* CDXCardDeckDictionarySerializerTestsDeck2b2.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CDXCardDeckDictionarySerializerTestsDeck2b2.CardDeck.plist; path = Classes/Serializers/CDXCardDeckDictionarySerializerTestsDeck2b2.CardDeck.plist; sourceTree = "<group>"; };
-		E0BCCAB211E8C09200A84185 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = iphoneos3.0/System/Library/Frameworks/MessageUI.framework; sourceTree = "<group>"; };
 		E0BE980F11A1CF0000F30C50 /* CDXSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXSettings.h; path = Classes/Models/CDXSettings.h; sourceTree = "<group>"; };
 		E0BEE1F5117BA68D002F62A7 /* CDXCardsStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsStackView.h; path = Classes/Views/CDXCardsStackView.h; sourceTree = "<group>"; };
 		E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsStackView.m; path = Classes/Views/CDXCardsStackView.m; sourceTree = "<group>"; };
@@ -295,6 +294,7 @@
 		E0D909261172275D00AD50DA /* CDXLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXLogger.h; path = Logging/CDXLogger.h; sourceTree = "<group>"; };
 		E0D909271172275D00AD50DA /* CDXLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXLogger.m; path = Logging/CDXLogger.m; sourceTree = "<group>"; };
 		E0D9096811722AD700AD50DA /* qlog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = qlog.h; path = Logging/qlog.h; sourceTree = "<group>"; };
+		E0D9E159132EBA1E001435D0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		E0DD7D6411D6302B00ED23B6 /* Logo-Prerendered@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Logo-Prerendered@2x.png"; path = "Images/Logo-Prerendered@2x.png"; sourceTree = "<group>"; };
 		E0DD7D9211D63A1D00ED23B6 /* Cell-Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell-Logo@2x.png"; path = "Images/Cells/Cell-Logo@2x.png"; sourceTree = "<group>"; };
 		E0DD7E6911D65CEA00ED23B6 /* CDXIndexDotsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXIndexDotsView.h; path = Classes/Views/CDXIndexDotsView.h; sourceTree = "<group>"; };
@@ -337,7 +337,7 @@
 				E03BA2741167489600FE7924 /* UIKit.framework in Frameworks */,
 				E0CCC9041170E9420040D222 /* QuartzCore.framework in Frameworks */,
 				E0EB6F4E11723D1A00F41F7A /* CoreGraphics.framework in Frameworks */,
-				E0BCCAB311E8C09200A84185 /* MessageUI.framework in Frameworks */,
+				E0C3BBB4132EBE8200604881 /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,12 +466,12 @@
 		E03BA26E1167488000FE7924 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E0D9E159132EBA1E001435D0 /* MessageUI.framework */,
 				E0EB6F4D11723D1A00F41F7A /* CoreGraphics.framework */,
 				E03BA2711167488B00FE7924 /* Foundation.framework */,
 				E03BA2731167489600FE7924 /* UIKit.framework */,
 				E002B627116762260072C409 /* SenTestingKit.framework */,
 				E0CCC9031170E9420040D222 /* QuartzCore.framework */,
-				E0BCCAB211E8C09200A84185 /* MessageUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -936,7 +936,7 @@
 				PRODUCT_NAME = CardDecks;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos4.2;
+				SDKROOT = iphoneos4.3;
 			};
 			name = Debug;
 		};
@@ -959,7 +959,7 @@
 				PRODUCT_NAME = CardDecks;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos4.2;
+				SDKROOT = iphoneos4.3;
 			};
 			name = Release;
 		};
@@ -971,9 +971,10 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos4.3;
 			};
 			name = Debug;
 		};
@@ -985,8 +986,9 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos4.3;
 			};
 			name = Release;
 		};
@@ -1019,6 +1021,8 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = Tests;
 				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos4.3;
+				TEST_AFTER_BUILD = YES;
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -1051,6 +1055,8 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = Tests;
 				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos4.3;
+				TEST_AFTER_BUILD = YES;
 				WRAPPER_EXTENSION = octest;
 				ZERO_LINK = NO;
 			};
@@ -1082,6 +1088,8 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = Tests;
 				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos4.3;
+				TEST_AFTER_BUILD = YES;
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Distribution;
@@ -1094,8 +1102,9 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos4.3;
 			};
 			name = Distribution;
 		};
@@ -1118,7 +1127,7 @@
 				PRODUCT_NAME = CardDecks;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos4.2;
+				SDKROOT = iphoneos4.3;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Distribution;
