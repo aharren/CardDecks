@@ -36,14 +36,8 @@
 synthesize_singleton(sharedImageFactory, CDXImageFactory);
 
 static void CDXGraphicsBeginImageContextNativeScale(CGSize size) {
-    extern void UIGraphicsBeginImageContextWithOptions(CGSize size, BOOL opaque, CGFloat scale);
-    
     UIScreen *mainScreen = [UIScreen mainScreen];
-    if (UIGraphicsBeginImageContextWithOptions == NULL || ![mainScreen respondsToSelector:@selector(scale)]) {
-        UIGraphicsBeginImageContext(size);
-    } else {
-        UIGraphicsBeginImageContextWithOptions(size, NO, [mainScreen scale]);
-    }
+    UIGraphicsBeginImageContextWithOptions(size, NO, [mainScreen scale]);
 }
 
 - (UIImage *)imageForView:(UIView *)view size:(CGSize)size {
