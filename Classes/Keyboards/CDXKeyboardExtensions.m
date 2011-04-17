@@ -92,34 +92,27 @@ static float keyboardExtensionsOsVersion;
     // get animation information for the keyboard
     double keyboardAnimationDuration;
     [[notification.userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&keyboardAnimationDuration];
-    if (keyboardExtensionsOsVersion >= 3.2) {
-        qltrace(@"FrameBegin");
-        CGRect keyboardAnimationStartFrame;
-        [[notification.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue:&keyboardAnimationStartFrame];
-        CGRect keyboardAnimationEndFrame;
-        [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardAnimationEndFrame];
-        keyboardAnimationEndPoint.x = keyboardAnimationEndFrame.origin.x + keyboardAnimationEndFrame.size.width / 2;
-        keyboardAnimationEndPoint.y = keyboardAnimationEndFrame.origin.y + keyboardAnimationEndFrame.size.height / 2;
-        keyboardAnimationStartPoint.x = keyboardAnimationStartFrame.origin.x + keyboardAnimationStartFrame.size.width / 2;
-        keyboardAnimationStartPoint.y = keyboardAnimationStartFrame.origin.y + keyboardAnimationStartFrame.size.height / 2;
-        keyboardBounds.origin = CGPointMake(0, 0);
-        keyboardBounds.size = CGSizeMake(MAX(keyboardAnimationStartFrame.size.width, keyboardAnimationEndFrame.size.width),
-                                         MAX(keyboardAnimationStartFrame.size.height, keyboardAnimationEndFrame.size.height));
-        qltrace(@"start: %3f %3f", keyboardAnimationStartPoint.x, keyboardAnimationStartPoint.y);
-        qltrace(@"end  : %3f %3f", keyboardAnimationEndPoint.x, keyboardAnimationEndPoint.y);
-        BOOL offScreenNew = keyboardAnimationEndFrame.origin.x < 0 || keyboardAnimationEndFrame.origin.x >= screenWidth;
-        if (offScreenNew && offScreen) {
-            // already off-screen
-            return;
-        }
-        offScreen = offScreenNew;
-    } else {
-        qltrace(@"KeyboardBounds");
-        [[notification.userInfo valueForKey:UIKeyboardBoundsUserInfoKey] getValue:&keyboardBounds];
-        [[notification.userInfo valueForKey:UIKeyboardCenterBeginUserInfoKey] getValue:&keyboardAnimationStartPoint];
-        [[notification.userInfo valueForKey:UIKeyboardCenterEndUserInfoKey] getValue:&keyboardAnimationEndPoint];
+    qltrace(@"FrameBegin");
+    CGRect keyboardAnimationStartFrame;
+    [[notification.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue:&keyboardAnimationStartFrame];
+    CGRect keyboardAnimationEndFrame;
+    [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardAnimationEndFrame];
+    keyboardAnimationEndPoint.x = keyboardAnimationEndFrame.origin.x + keyboardAnimationEndFrame.size.width / 2;
+    keyboardAnimationEndPoint.y = keyboardAnimationEndFrame.origin.y + keyboardAnimationEndFrame.size.height / 2;
+    keyboardAnimationStartPoint.x = keyboardAnimationStartFrame.origin.x + keyboardAnimationStartFrame.size.width / 2;
+    keyboardAnimationStartPoint.y = keyboardAnimationStartFrame.origin.y + keyboardAnimationStartFrame.size.height / 2;
+    keyboardBounds.origin = CGPointMake(0, 0);
+    keyboardBounds.size = CGSizeMake(MAX(keyboardAnimationStartFrame.size.width, keyboardAnimationEndFrame.size.width),
+                                     MAX(keyboardAnimationStartFrame.size.height, keyboardAnimationEndFrame.size.height));
+    qltrace(@"start: %3f %3f", keyboardAnimationStartPoint.x, keyboardAnimationStartPoint.y);
+    qltrace(@"end  : %3f %3f", keyboardAnimationEndPoint.x, keyboardAnimationEndPoint.y);
+    BOOL offScreenNew = keyboardAnimationEndFrame.origin.x < 0 || keyboardAnimationEndFrame.origin.x >= screenWidth;
+    if (offScreenNew && offScreen) {
+        // already off-screen
+        return;
     }
-    
+    offScreen = offScreenNew;
+
     // animate the toolbar?
     BOOL keyboardAnimationHasYDistance = keyboardAnimationStartPoint.y != keyboardAnimationEndPoint.y;
     BOOL keyboardAnimationHasXDistance = keyboardAnimationStartPoint.x != keyboardAnimationEndPoint.x;
