@@ -43,7 +43,7 @@ static float keyboardExtensionsOsVersion;
         ivar_assign_and_retain(toolbarKeyboardButton, [self toolbarButtonWithTitle:@"abc"]);
         ivar_assign(toolbarActionButton, [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
                                                                                        target:self
-                                                                                       action:@selector(toolbarActionButtonPressed)]);
+                                                                                       action:@selector(toolbarActionButtonPressed:)]);
         ivar_assign_and_retain(backgroundColor, [UIColor colorWithPatternImage:[UIImage imageNamed:@"KeyboardExtensionsBackground.png"]]);
         enabled = NO;
         visible = NO;
@@ -357,11 +357,12 @@ static float keyboardExtensionsOsVersion;
     [self activateKeyboardExtension:[self keyboardExtensionByTag:eventExtensionTag] tag:eventExtensionTag];
 }
 
-- (void)toolbarActionButtonPressed {
+- (void)toolbarActionButtonPressed:(id)sender {
+    UIBarButtonItem *toolbarButton = (UIBarButtonItem *)sender;
     if ([responder conformsToProtocol:@protocol(CDXKeyboardExtensionResponderWithActions)]) {
         NSObject<CDXKeyboardExtensionResponderWithActions> *r = (NSObject<CDXKeyboardExtensionResponderWithActions> *)responder;
         if ([r keyboardExtensionResponderHasActionsForExtensionAtIndex:activeExtensionTag]) {
-            [r keyboardExtensionResponderRunActionsForExtensionAtIndex:activeExtensionTag];
+            [r keyboardExtensionResponderRunActionsForExtensionAtIndex:activeExtensionTag barButtonItem:(UIBarButtonItem *)toolbarButton];
         }
     }
 }

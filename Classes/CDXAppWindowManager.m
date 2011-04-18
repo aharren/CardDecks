@@ -208,5 +208,13 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     [[self visibleViewController] dismissModalViewControllerAnimated:animated];
 }
 
+- (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem {
+    if ([CDXDevice sharedDevice].deviceUIIdiom == CDXDeviceUIIdiomPhone) {
+        [actionSheet showInView:[CDXAppWindowManager sharedAppWindowManager].window];
+    } else {
+        [actionSheet showFromBarButtonItem:barButtonItem animated:NO];
+    }
+}
+
 @end
 

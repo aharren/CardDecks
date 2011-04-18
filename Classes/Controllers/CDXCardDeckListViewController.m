@@ -293,6 +293,13 @@
     [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
 }
 
+- (void)dismissActionSheet {
+    if (activeActionSheet != nil) {
+        [activeActionSheet dismissWithClickedButtonIndex:[activeActionSheet cancelButtonIndex] animated:NO];
+        ivar_release_and_clear(activeActionSheet);
+    }
+}
+
 - (IBAction)actionButtonPressed {
     UIActionSheet *actionSheet = [[[UIActionSheet alloc]
                                    initWithTitle:nil
@@ -302,7 +309,12 @@
                                    otherButtonTitles:@"Email Deck", @"Duplicate Deck", nil]
                                   autorelease];
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-    [actionSheet showInView:[CDXAppWindowManager sharedAppWindowManager].window];
+    if (activeActionSheet != nil) {
+        [self dismissActionSheet];
+        // don't open a new sheet, just closed the same one
+        return;
+    }
+    [[CDXAppWindowManager sharedAppWindowManager] showActionSheet:actionSheet fromBarButtonItem:actionButton];
     ivar_assign_and_retain(activeActionSheet, actionSheet);
 }
 
@@ -351,9 +363,7 @@
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
     qltrace();
     [super dismissModalViewControllerAnimated:animated];
-    if (activeActionSheet != nil) {
-        [activeActionSheet dismissWithClickedButtonIndex:[activeActionSheet cancelButtonIndex] animated:animated];
-    }
+    [self dismissActionSheet];
 }
 
 @end

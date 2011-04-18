@@ -55,6 +55,7 @@ declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 - (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation;
 + (CGAffineTransform)transformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation;
 - (void)dismissModalViewControllerAnimated:(BOOL)animated;
+- (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem;
 
 @end
 
