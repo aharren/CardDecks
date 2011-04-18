@@ -33,14 +33,21 @@ typedef enum {
     CDXDeviceTypeCount
 } CDXDeviceType;
 
+typedef enum {
+    CDXDeviceUIIdiomPhone = 0,
+    CDXDeviceUIIdiomPad = 1,
+} CDXDeviceUIIdiom;
+
 @interface CDXDevice : NSObject {
     
 @protected
     CDXDeviceType deviceType;
+    CDXDeviceUIIdiom deviceUIIdiom;
     
 }
 
 @property (nonatomic, readonly) CDXDeviceType deviceType;
+@property (nonatomic, readonly) CDXDeviceUIIdiom deviceUIIdiom;
 
 declare_singleton(sharedDevice, CDXDevice);
 
