@@ -97,10 +97,10 @@
     fontSize = fontSize < CDXCardFontSizeMax ? fontSize : CDXCardFontSizeMax;
 }
 
-- (CGFloat)fontSizeConstrainedToSize:(CGSize)size {
+- (CGFloat)fontSizeConstrainedToSize:(CGSize)size scale:(CGFloat)scale {
     qltrace(@"%3.0f x %3.0f", size.width, size.height);
     if (fontSize != CDXCardFontSizeAutomatic) {
-        CGFloat fixedFontSize = floor(fontSize * CDXCardFontSizeScale);
+        CGFloat fixedFontSize = floor(fontSize * CDXCardFontSizeScale * scale);
         qltrace(@"fixed: %3.0f", fixedFontSize);
         return fixedFontSize;
     } else {
@@ -117,7 +117,7 @@
         NSUInteger textLinesCount = [textLines count];
         size.height = size.height / textLinesCount;
         
-        CGFloat minlineFontSize = CDXCardFontSizeMax * CDXCardFontSizeScale;
+        CGFloat minlineFontSize = CDXCardFontSizeMax * CDXCardFontSizeScale * scale;
         UIFont *font = [UIFont systemFontOfSize:floor(minlineFontSize)];
         
         // calculate the minimal font size based on all text lines
