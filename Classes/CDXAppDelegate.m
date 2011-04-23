@@ -183,7 +183,7 @@
         for (NSUInteger i = 0; i < decksCount; i++) {
             NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
             CDXCardDeckHolder *holder = [decks cardDeckAtIndex:i];
-            holder.cardDeck;
+            [holder linkCardDeck];
             [pool release];
         }
         // add new default card decks

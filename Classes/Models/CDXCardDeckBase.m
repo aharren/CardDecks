@@ -113,6 +113,13 @@
     base = nil;
 }
 
+- (void)linkCardDeck {
+    if (cardDeck == nil) {
+        cardDeck = [CDXCardDeck cardDeckFromStorageObjectNamed:file];
+        [cardDeck linkBase:self];
+    }
+}
+
 - (void)unlinkCardDeck {
     qltrace();
     cardDeck = nil;
@@ -121,8 +128,7 @@
 - (CDXCardDeck *)cardDeck {
     qltrace();
     if (cardDeck == nil) {
-        cardDeck = [CDXCardDeck cardDeckFromStorageObjectNamed:file];
-        [cardDeck linkBase:self];
+        [self linkCardDeck];
     }
     return cardDeck;
 }
