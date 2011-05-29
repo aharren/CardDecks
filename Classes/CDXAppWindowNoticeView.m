@@ -73,7 +73,7 @@
 
 - (void)showImageNamed:(NSString *)name text:(NSString *)aText timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation window:(UIWindow *)window {
     [window addSubview:self];
-    imageView.transform = [CDXAppWindowManager transformForDeviceOrientation:orientation];
+    self.transform = [CDXAppWindowManager transformForDeviceOrientation:orientation];
     imageView.image = [UIImage imageNamed:name];
     text.text = aText;
     [self performSelector:@selector(hide:) withObject:self afterDelay:timeInterval];
