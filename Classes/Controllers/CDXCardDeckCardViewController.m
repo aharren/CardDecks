@@ -65,7 +65,20 @@
     [super dealloc];
 }
 
+- (void)setActionsViewHidden:(BOOL)hidden animated:(BOOL)animated {
+    if (animated) {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.3];
+    }
+    actionsView.alpha = hidden ? 0 : 1;
+    if (animated) {
+        [UIView commitAnimations];
+    }
+}
+
 - (void)configureView {
+    [self setActionsViewHidden:YES animated:NO];
+    
     [cardsView removeFromSuperview];
     ivar_release_and_clear(cardsView);
     
@@ -129,6 +142,7 @@
     ivar_release_and_clear(indexDotsView);
     ivar_release_and_clear(cardsView);
     ivar_release_and_clear(imageView);
+    ivar_release_and_clear(actionsView);
     [super viewDidUnload];
 }
 
@@ -232,6 +246,15 @@
     [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"random" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
 }
 
+- (IBAction)sortButtonPressed {
+    [cardDeck sort];
+    [cardDeck updateStorageObjectDeferred:YES];
+    
+    [cardsView invalidateDataSourceCaches];
+    [cardsView showCardAtIndex:0];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" text:@"sort" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
+}
+
 - (void)configureIndexDotsViewAndButtons {
     const NSUInteger pageCount = [cardDeck cardsCount];
     
@@ -315,6 +338,14 @@
             break;
         }
     }
+}
+
+- (IBAction)toggleActionsViewButtonPressed {
+    [self setActionsViewHidden:(actionsView.alpha == 0 ? NO : YES) animated:YES];
+}
+
+- (IBAction)dismissActionsViewButtonPressed {
+    [self setActionsViewHidden:YES animated:YES];
 }
 
 @end

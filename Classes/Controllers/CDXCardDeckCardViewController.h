@@ -45,6 +45,8 @@
     NSUInteger pageControlJumpPagesCount;
     NSUInteger pageControlJumpPages[5];
     
+    IBOutlet UIView *actionsView;
+    
     NSUInteger closeTapCount;
 }
 
@@ -57,6 +59,10 @@
 
 - (IBAction)shuffleButtonPressed;
 - (IBAction)randomButtonPressed;
+- (IBAction)sortButtonPressed;
+
+- (IBAction)toggleActionsViewButtonPressed;
+- (IBAction)dismissActionsViewButtonPressed;
 
 @end
 
