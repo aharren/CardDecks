@@ -301,27 +301,39 @@
     }
 }
 
-- (IBAction)shuffleButtonPressed {
+- (void)shuffleButtonPressedDelayed {
     [cardDeck shuffle];
     [cardDeck updateStorageObjectDeferred:YES];
     
     [cardsView invalidateDataSourceCaches];
     [cardsView showCardAtIndex:0];
+}
+
+- (IBAction)shuffleButtonPressed {
+    [self performSelector:@selector(shuffleButtonPressedDelayed) withObject:nil afterDelay:0.001];
     [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:deviceOrientation];
 }
 
-- (IBAction)randomButtonPressed {
+- (void)randomButtonPressedDelayed {
     NSUInteger newIndex = (((double)arc4random() / 0x100000000) * [cardDeck cardsCount]);
     [cardsView showCardAtIndex:newIndex];
+}
+
+- (IBAction)randomButtonPressed {
+    [self performSelector:@selector(randomButtonPressedDelayed) withObject:nil afterDelay:0.001];
     [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"random" timeInterval:0.4 orientation:deviceOrientation];
 }
 
-- (IBAction)sortButtonPressed {
+- (void)sortButtonPressedDelayed {
     [cardDeck sort];
     [cardDeck updateStorageObjectDeferred:YES];
     
     [cardsView invalidateDataSourceCaches];
     [cardsView showCardAtIndex:0];
+}
+
+- (IBAction)sortButtonPressed {
+    [self performSelector:@selector(sortButtonPressedDelayed) withObject:nil afterDelay:0.001];
     [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" text:@"sort" timeInterval:0.4 orientation:deviceOrientation];
 }
 
