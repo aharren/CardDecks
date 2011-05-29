@@ -35,6 +35,49 @@
 #define ql_component lcl_cController
 
 
+@interface CDXCardDeckCardViewControllerTimer : NSObject {
+    
+@protected
+    unsigned int timerId;
+    unsigned int timerType;
+    NSTimeInterval timerInterval;
+}
+
+@property (readonly, nonatomic) unsigned int timerId;
+@property (readonly, nonatomic) unsigned int timerType;
+@property (readonly, nonatomic) NSTimeInterval timerInterval;
+
+@end
+
+
+@implementation CDXCardDeckCardViewControllerTimer
+
+@synthesize timerId;
+@synthesize timerType;
+@synthesize timerInterval;
+
+- (id)initWithTimerId:(unsigned int)tid timerType:(unsigned int)ttype {
+    qltrace();
+    if ((self = [super init])) {
+        timerId = tid;
+        timerType = ttype;
+        switch (timerType) {
+            case 1:
+                timerInterval = 5;
+                break;
+            case 2:
+                timerInterval = 1;
+                break;
+            default:
+                timerInterval = 0.1;
+        }
+    }
+    return self;
+}
+
+@end
+
+
 @interface CDXCardDeckCardViewController (indexDotsView)
 
 - (void)configureIndexDotsViewAndButtons;
@@ -62,6 +105,11 @@
     ivar_release_and_clear(indexDotsView);
     ivar_release_and_clear(cardsView);
     ivar_release_and_clear(imageView);
+    ivar_release_and_clear(actionsViewShuffleButton);
+    ivar_release_and_clear(actionsViewSortButton);
+    ivar_release_and_clear(actionsViewPlayButton);
+    ivar_release_and_clear(actionsViewPlay2Button);
+    ivar_release_and_clear(actionsViewStopButton);
     [super dealloc];
 }
 
@@ -74,6 +122,14 @@
     if (animated) {
         [UIView commitAnimations];
     }
+}
+
+- (void)configureActionsView:(UIDeviceOrientation)orientation {
+    CGAffineTransform transform = [CDXAppWindowManager transformForDeviceOrientation:orientation];
+    actionsViewShuffleButton.transform = transform;
+    actionsViewSortButton.transform = transform;
+    actionsViewPlayButton.transform = transform;
+    actionsViewPlay2Button.transform = transform;
 }
 
 - (void)configureView {
@@ -133,6 +189,8 @@
             [self.view insertSubview:imageView atIndex:0];
         }
     }
+    
+    [self configureActionsView:[[CDXAppWindowManager sharedAppWindowManager] deviceOrientation]];
 }
 
 - (void)viewDidLoad {
@@ -148,6 +206,11 @@
     ivar_release_and_clear(cardsView);
     ivar_release_and_clear(imageView);
     ivar_release_and_clear(actionsView);
+    ivar_release_and_clear(actionsViewShuffleButton);
+    ivar_release_and_clear(actionsViewSortButton);
+    ivar_release_and_clear(actionsViewPlayButton);
+    ivar_release_and_clear(actionsViewPlay2Button);
+    ivar_release_and_clear(actionsViewStopButton);
     [super viewDidUnload];
 }
 
@@ -180,6 +243,7 @@
                 break;
         }
     }
+    [self configureActionsView:orientation];
 }
 
 - (NSUInteger)cardsViewDataSourceCardsCount {
@@ -351,6 +415,44 @@
 
 - (IBAction)dismissActionsViewButtonPressed {
     [self setActionsViewHidden:YES animated:YES];
+}
+
+- (void)timerAction:(id)object {
+    qltrace();
+    CDXCardDeckCardViewControllerTimer *timer = (CDXCardDeckCardViewControllerTimer *)object;
+    if (timer.timerId == currentTimerId && [self.view superview] != nil) {
+        NSUInteger currentCardIndex = [cardsView currentCardIndex];
+        switch (timer.timerType) {
+            case 1:
+                currentCardIndex = (currentCardIndex + 1) % [cardDeck cardsCount];
+                [cardsView showCardAtIndex:currentCardIndex];
+                [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
+                break;
+            case 2:
+                currentCardIndex = (currentCardIndex + 1) % [cardDeck cardsCount];
+                [cardsView showCardAtIndex:currentCardIndex];
+                [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+- (IBAction)playButtonPressed {
+    currentTimerId++;
+    CDXCardDeckCardViewControllerTimer *timer = [[[CDXCardDeckCardViewControllerTimer alloc] initWithTimerId:currentTimerId timerType:1] autorelease];
+    [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
+}
+
+- (IBAction)play2ButtonPressed {
+    currentTimerId++;
+    CDXCardDeckCardViewControllerTimer *timer = [[[CDXCardDeckCardViewControllerTimer alloc] initWithTimerId:currentTimerId timerType:2] autorelease];
+    [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
+}
+
+- (IBAction)stopButtonPressed {
+    currentTimerId++;
 }
 
 @end

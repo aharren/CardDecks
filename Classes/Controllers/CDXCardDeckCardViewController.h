@@ -46,8 +46,15 @@
     NSUInteger pageControlJumpPages[5];
     
     IBOutlet UIView *actionsView;
-    
+    IBOutlet UIButton *actionsViewShuffleButton;
+    IBOutlet UIButton *actionsViewSortButton;
+    IBOutlet UIButton *actionsViewPlayButton;
+    IBOutlet UIButton *actionsViewPlay2Button;
+    IBOutlet UIButton *actionsViewStopButton;
+
     NSUInteger closeTapCount;
+    
+    unsigned int currentTimerId;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
@@ -63,6 +70,10 @@
 
 - (IBAction)toggleActionsViewButtonPressed;
 - (IBAction)dismissActionsViewButtonPressed;
+
+- (IBAction)playButtonPressed;
+- (IBAction)play2ButtonPressed;
+- (IBAction)stopButtonPressed;
 
 @end
 
