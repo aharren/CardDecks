@@ -90,7 +90,7 @@
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Copyright (c) 2009-2010 Arne Harren &lt;ah@0xc0.de&gt;</string>
+						<string key="IBUIText">Copyright (c) 2009-2011 Arne Harren &lt;ah@0xc0.de&gt;</string>
 						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Helvetica</string>
 							<double key="NSSize">12</double>
