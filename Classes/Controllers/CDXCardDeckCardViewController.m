@@ -124,8 +124,8 @@
     }
 }
 
-- (void)configureActionsView:(UIDeviceOrientation)orientation {
-    CGAffineTransform transform = [CDXAppWindowManager transformForDeviceOrientation:orientation];
+- (void)configureActionsView {
+    CGAffineTransform transform = [CDXAppWindowManager transformForDeviceOrientation:deviceOrientation];
     actionsViewShuffleButton.transform = transform;
     actionsViewSortButton.transform = transform;
     actionsViewPlayButton.transform = transform;
@@ -141,10 +141,8 @@
     [imageView removeFromSuperview];
     ivar_release_and_clear(imageView);
     
-    UIDeviceOrientation deviceOrientation = UIDeviceOrientationPortrait;
-    if (cardDeck.wantsAutoRotate) {
-        deviceOrientation = [[CDXAppWindowManager sharedAppWindowManager] deviceOrientation];
-    }
+    deviceOrientation = [[CDXAppWindowManager sharedAppWindowManager] deviceOrientation];
+    UIDeviceOrientation orientation = cardDeck.wantsAutoRotate ? deviceOrientation : UIDeviceOrientationPortrait;
     
     if (userInteractionEnabled) {
         qltrace(@"card");
@@ -165,7 +163,7 @@
         ivar_assign_and_retain(cardsView, v);
         [v setViewDelegate:self];
         [v setViewDataSource:self];
-        [v setDeviceOrientation:deviceOrientation];
+        [v setDeviceOrientation:orientation];
         [self.view insertSubview:v atIndex:0];
         
         // receive shake events as first responder
@@ -173,7 +171,7 @@
         
         // show that the deck is shuffled
         if ([cardDeck isShuffled]) {
-            [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp];
+            [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:deviceOrientation];
         }
     } else {
         qltrace(@"image");
@@ -184,13 +182,13 @@
             UIImage *image = [[CDXImageFactory sharedImageFactory]
                               imageForCard:card
                               size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
-                              deviceOrientation:deviceOrientation];
+                              deviceOrientation:orientation];
             ivar_assign(imageView, [[UIImageView alloc] initWithImage:image]);
             [self.view insertSubview:imageView atIndex:0];
         }
     }
     
-    [self configureActionsView:[[CDXAppWindowManager sharedAppWindowManager] deviceOrientation]];
+    [self configureActionsView];
 }
 
 - (void)viewDidLoad {
@@ -231,6 +229,8 @@
 }
 
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
+    deviceOrientation = orientation;
+    
     if (cardDeck.wantsAutoRotate) {
         switch (orientation) {
             default:
@@ -243,7 +243,8 @@
                 break;
         }
     }
-    [self configureActionsView:orientation];
+
+    [self configureActionsView];
 }
 
 - (NSUInteger)cardsViewDataSourceCardsCount {
@@ -306,13 +307,13 @@
     
     [cardsView invalidateDataSourceCaches];
     [cardsView showCardAtIndex:0];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:deviceOrientation];
 }
 
 - (IBAction)randomButtonPressed {
     NSUInteger newIndex = (((double)arc4random() / 0x100000000) * [cardDeck cardsCount]);
     [cardsView showCardAtIndex:newIndex];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"random" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"random" timeInterval:0.4 orientation:deviceOrientation];
 }
 
 - (IBAction)sortButtonPressed {
@@ -321,7 +322,7 @@
     
     [cardsView invalidateDataSourceCaches];
     [cardsView showCardAtIndex:0];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" text:@"sort" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" text:@"sort" timeInterval:0.4 orientation:deviceOrientation];
 }
 
 - (void)configureIndexDotsViewAndButtons {
@@ -443,19 +444,19 @@
     currentTimerId++;
     CDXCardDeckCardViewControllerTimer *timer = [[[CDXCardDeckCardViewControllerTimer alloc] initWithTimerId:currentTimerId timerType:1] autorelease];
     [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play.png" text:@"play" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play.png" text:@"play" timeInterval:0.4 orientation:deviceOrientation];
 }
 
 - (IBAction)play2ButtonPressed {
     currentTimerId++;
     CDXCardDeckCardViewControllerTimer *timer = [[[CDXCardDeckCardViewControllerTimer alloc] initWithTimerId:currentTimerId timerType:2] autorelease];
     [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play2.png" text:@"fast play" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play2.png" text:@"fast play" timeInterval:0.4 orientation:deviceOrientation];
 }
 
 - (IBAction)stopButtonPressed {
     currentTimerId++;
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Stop.png" text:@"stop" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Stop.png" text:@"stop" timeInterval:0.4 orientation:deviceOrientation];
 }
 
 @end

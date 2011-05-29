@@ -36,6 +36,8 @@
     CDXCardDeckViewContext *cardDeckViewContext;
     CDXCardDeck *cardDeck;
     
+    UIDeviceOrientation deviceOrientation;
+    
     UIView<CDXCardsViewView> *cardsView;
     
     BOOL userInteractionEnabled;
