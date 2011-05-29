@@ -114,6 +114,11 @@
         
         // receive shake events as first responder
         [self becomeFirstResponder];
+        
+        // show that the deck is shuffled
+        if ([cardDeck isShuffled]) {
+            [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp];
+        }
     } else {
         qltrace(@"image");
         
