@@ -443,16 +443,19 @@
     currentTimerId++;
     CDXCardDeckCardViewControllerTimer *timer = [[[CDXCardDeckCardViewControllerTimer alloc] initWithTimerId:currentTimerId timerType:1] autorelease];
     [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play.png" text:@"play" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
 }
 
 - (IBAction)play2ButtonPressed {
     currentTimerId++;
     CDXCardDeckCardViewControllerTimer *timer = [[[CDXCardDeckCardViewControllerTimer alloc] initWithTimerId:currentTimerId timerType:2] autorelease];
     [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play2.png" text:@"fast play" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
 }
 
 - (IBAction)stopButtonPressed {
     currentTimerId++;
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Stop.png" text:@"stop" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
 }
 
 @end
