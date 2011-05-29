@@ -42,6 +42,7 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     if ((self = [super init])) {
         ivar_assign(navigationController, [[UINavigationController alloc] init]);
         navigationController.toolbarHidden = NO;
+        deviceOrientation = UIDeviceOrientationPortrait;
         
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
@@ -165,6 +166,15 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     UIDeviceOrientation newDeviceOrientation = [[UIDevice currentDevice] orientation];
     if (newDeviceOrientation == deviceOrientation) {
         return;
+    }
+    switch (newDeviceOrientation) {
+        case UIDeviceOrientationPortrait:
+        case UIDeviceOrientationLandscapeLeft:
+        case UIDeviceOrientationPortraitUpsideDown:
+        case UIDeviceOrientationLandscapeRight:
+            break;
+        default:
+            return;
     }
     qltrace();
     
