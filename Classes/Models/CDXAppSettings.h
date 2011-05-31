@@ -37,6 +37,7 @@ declare_singleton(sharedAppSettings, CDXAppSettings);
 - (BOOL)cardDeckQuickOpen;
 - (NSUInteger)closeTapCount;
 - (BOOL)doneButtonOnLeftSide;
+- (BOOL)actionButtonsOnLeftSide;
 - (BOOL)useMailApplication;
 
 @end

@@ -36,6 +36,7 @@ enum {
     CDXAppSettingsCardDeckQuickOpen,
     CDXAppSettingsCloseTapCount,
     CDXAppSettingsDoneButtonOnLeftSide,
+    CDXAppSettingsActionButtonsOnLeftSide,
     CDXAppSettingsUseMailApplication,
     CDXAppSettingsAllKeyboardSymbols,
     CDXAppSettingsCount
@@ -47,6 +48,7 @@ static const CDXSetting settings[] = {
     { CDXAppSettingsCardDeckQuickOpen, CDXSettingTypeBoolean, @"Quick Open" },
     { CDXAppSettingsCloseTapCount, CDXSettingTypeEnumeration, @"Close Gesture" },
     { CDXAppSettingsDoneButtonOnLeftSide, CDXSettingTypeEnumeration, @"Done Button" },
+    { CDXAppSettingsActionButtonsOnLeftSide, CDXSettingTypeEnumeration, @"Action Buttons" },
     { CDXAppSettingsUseMailApplication, CDXSettingTypeBoolean, @"Use Mail Application" },
     { CDXAppSettingsAllKeyboardSymbols, CDXSettingTypeBoolean, @"All Unicode Symbols" },
     { 0, 0, @"" }
@@ -58,6 +60,7 @@ static NSString *settingsUserDefaultsKeys[] = {
     @"CardDeckQuickOpen",
     @"CloseTapCount",
     @"DoneButtonOnLeftSide",
+    @"ActionButtonsOnLeftSide",
     @"UseMailApplication",
     @"AllKeyboardSymbols",
     nil
@@ -72,7 +75,7 @@ typedef struct {
 static const CDXAppSettingGroup groups[] = {
     { @"", 1, CDXAppSettingsAbout },
     { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
-    { @"User Interface", 5, CDXAppSettingsCardDeckQuickOpen },
+    { @"User Interface", 6, CDXAppSettingsCardDeckQuickOpen },
     { @"", 0, 0 }
 };
 
@@ -130,6 +133,10 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
 
 - (BOOL)doneButtonOnLeftSide {
     return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsDoneButtonOnLeftSide] defaultsTo:NO];
+}
+
+- (BOOL)actionButtonsOnLeftSide {
+    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsActionButtonsOnLeftSide] defaultsTo:YES];
 }
 
 - (BOOL)useMailApplication {
@@ -197,6 +204,8 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
             return [self closeTapCount] - 1;
         case CDXAppSettingsDoneButtonOnLeftSide:
             return [self doneButtonOnLeftSide] ? 0 : 1;
+        case CDXAppSettingsActionButtonsOnLeftSide:
+            return [self actionButtonsOnLeftSide] ? 0 : 1;
     }
 }
 
@@ -208,6 +217,7 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
             [CDXAppSettings setUserDefaultsIntegerValue:(value + 1) forKey:settingsUserDefaultsKeys[tag]];
             break;
         case CDXAppSettingsDoneButtonOnLeftSide:
+        case CDXAppSettingsActionButtonsOnLeftSide:
             [CDXAppSettings setUserDefaultsBooleanValue:(value ? NO : YES) forKey:settingsUserDefaultsKeys[tag]];
             break;
     }
@@ -220,6 +230,7 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
         case CDXAppSettingsCloseTapCount:
             return 2;
         case CDXAppSettingsDoneButtonOnLeftSide:
+        case CDXAppSettingsActionButtonsOnLeftSide:
             return 2;
     }
 }
@@ -237,6 +248,7 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
                     return @"Double Tap";
             }
         case CDXAppSettingsDoneButtonOnLeftSide:
+        case CDXAppSettingsActionButtonsOnLeftSide:
             switch (value) {
                 default:
                 case 0:

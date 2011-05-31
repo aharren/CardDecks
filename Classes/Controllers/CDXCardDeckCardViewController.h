@@ -48,6 +48,7 @@
     NSUInteger pageControlJumpPages[5];
     
     IBOutlet UIView *actionsView;
+    IBOutlet UIView *actionsViewButtonsView;
     IBOutlet UIButton *actionsViewShuffleButton;
     IBOutlet UIButton *actionsViewSortButton;
     IBOutlet UIButton *actionsViewPlayButton;
