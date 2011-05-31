@@ -52,7 +52,7 @@
 						<reference key="NSNextKeyView" ref="992200469"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
+							<bytes key="NSWhite">MC4xAA</bytes>
 						</object>
 						<float key="IBUIAlpha">0.55000001192092896</float>
 						<int key="IBUIContentMode">4</int>
