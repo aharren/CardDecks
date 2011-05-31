@@ -124,12 +124,20 @@
     }
 }
 
-- (void)configureActionsView {
+- (void)configureActionsViewAnimated:(BOOL)animated {
+    if (animated) {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.3];
+    }
     CGAffineTransform transform = [CDXAppWindowManager transformForDeviceOrientation:deviceOrientation];
     actionsViewShuffleButton.transform = transform;
     actionsViewSortButton.transform = transform;
     actionsViewPlayButton.transform = transform;
     actionsViewPlay2Button.transform = transform;
+    actionsViewStopButton.transform = transform;
+    if (animated) {
+        [UIView commitAnimations];
+    }
 }
 
 - (void)configureView {
@@ -188,7 +196,7 @@
         }
     }
     
-    [self configureActionsView];
+    [self configureActionsViewAnimated:NO];
 }
 
 - (void)viewDidLoad {
@@ -244,7 +252,7 @@
         }
     }
 
-    [self configureActionsView];
+    [self configureActionsViewAnimated:YES];
 }
 
 - (NSUInteger)cardsViewDataSourceCardsCount {
