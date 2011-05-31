@@ -35,8 +35,8 @@ enum {
     CDXAppSettingsIdleTimer,
     CDXAppSettingsCardDeckQuickOpen,
     CDXAppSettingsCloseTapCount,
-    CDXAppSettingsDoneButtonOnLeftSide,
     CDXAppSettingsActionButtonsOnLeftSide,
+    CDXAppSettingsDoneButtonOnLeftSide,
     CDXAppSettingsUseMailApplication,
     CDXAppSettingsAllKeyboardSymbols,
     CDXAppSettingsCount
@@ -47,8 +47,8 @@ static const CDXSetting settings[] = {
     { CDXAppSettingsIdleTimer, CDXSettingTypeBoolean, @"Idle Timer" },
     { CDXAppSettingsCardDeckQuickOpen, CDXSettingTypeBoolean, @"Quick Open" },
     { CDXAppSettingsCloseTapCount, CDXSettingTypeEnumeration, @"Close Gesture" },
-    { CDXAppSettingsDoneButtonOnLeftSide, CDXSettingTypeEnumeration, @"Done Button" },
     { CDXAppSettingsActionButtonsOnLeftSide, CDXSettingTypeEnumeration, @"Action Buttons" },
+    { CDXAppSettingsDoneButtonOnLeftSide, CDXSettingTypeEnumeration, @"Done Button" },
     { CDXAppSettingsUseMailApplication, CDXSettingTypeBoolean, @"Use Mail Application" },
     { CDXAppSettingsAllKeyboardSymbols, CDXSettingTypeBoolean, @"All Unicode Symbols" },
     { 0, 0, @"" }
@@ -59,8 +59,8 @@ static NSString *settingsUserDefaultsKeys[] = {
     @"IdleTimer",
     @"CardDeckQuickOpen",
     @"CloseTapCount",
-    @"DoneButtonOnLeftSide",
     @"ActionButtonsOnLeftSide",
+    @"DoneButtonOnLeftSide",
     @"UseMailApplication",
     @"AllKeyboardSymbols",
     nil
