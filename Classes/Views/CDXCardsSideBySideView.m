@@ -113,7 +113,7 @@
     [cardImages clear];
 }
 
-- (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate {
+- (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate updateScrollView:(BOOL)updateScrollView {
     NSUInteger viewIndex = 0;
     for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
         if (cardViewsCardIndex[i] == cardIndex+1) {
@@ -133,14 +133,16 @@
     }
     
     currentCardIndex = cardIndex;
-    scrollView.contentOffset = CGPointMake(scrollViewPageWidth * cardIndex, 0);
+    if (updateScrollView) {
+        scrollView.contentOffset = CGPointMake(scrollViewPageWidth * cardIndex, 0);
+    }
     if (tellDelegate) {
         [viewDelegate cardsViewDelegateCurrentCardIndexHasChangedTo:currentCardIndex];
     }
 }
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex {
-    [self showCardAtIndex:cardIndex tellDelegate:YES];
+    [self showCardAtIndex:cardIndex tellDelegate:YES updateScrollView:YES];
 }
 
 - (void)scrollToCardIndex:(NSUInteger)cardIndex {
@@ -162,7 +164,7 @@
     }
 
     [self invalidateDataSourceCaches];
-    [self showCardAtIndex:currentCardIndex tellDelegate:NO];
+    [self showCardAtIndex:currentCardIndex  tellDelegate:NO updateScrollView:YES];
 }
 
 - (void)didMoveToSuperview {
@@ -200,15 +202,17 @@
 }
 
 - (void)scrollViewDidEndDecelerating {
+    qltrace("%f", scrollView.contentOffset.x);
     const CGFloat contentOffsetX = scrollView.contentOffset.x;
     const NSUInteger newCardIndex = contentOffsetX / scrollViewPageWidth;
     
     if (currentCardIndex != newCardIndex) {
-        [self showCardAtIndex:newCardIndex];
+        [self showCardAtIndex:newCardIndex tellDelegate:YES updateScrollView:YES];
     }
 }
 
 - (void)scrollViewDidScroll {
+    qltrace("%f", scrollView.contentOffset.x);
     const CGFloat width = scrollViewPageWidth;
     
     const CGFloat contentOffsetX = scrollView.contentOffset.x;
@@ -225,7 +229,7 @@
     const NSUInteger newCardIndex = contentOffsetXDiff > 0 ? (contentOffsetX / width) : ((contentOffsetX + width-1) / width);
     
     if (currentCardIndex != newCardIndex) {
-        [self showCardAtIndex:newCardIndex];
+        [self showCardAtIndex:newCardIndex tellDelegate:YES updateScrollView:NO];
     }
 }
 
