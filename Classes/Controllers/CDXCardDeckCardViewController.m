@@ -455,10 +455,6 @@
         NSUInteger currentCardIndex = [cardsView currentCardIndex];
         switch (timer.timerType) {
             case 1:
-                currentCardIndex = (currentCardIndex + 1) % [cardDeck cardsCount];
-                [cardsView showCardAtIndex:currentCardIndex];
-                [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
-                break;
             case 2:
                 currentCardIndex = (currentCardIndex + 1) % [cardDeck cardsCount];
                 [cardsView showCardAtIndex:currentCardIndex];
