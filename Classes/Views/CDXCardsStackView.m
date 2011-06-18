@@ -86,9 +86,8 @@
     UIImageView *view = cardViewsView[viewIndex];
     
     if (cardIndex >= cardsCount) {
-        view.image = nil;
-        view.hidden = YES;
-        return;
+        cardIndex += cardsCount;
+        cardIndex %= cardsCount;
     }
     
     UIImage *image = [cardImages objectWithKey:cardIndex];
@@ -102,7 +101,6 @@
         qltrace(@": X> %d", cardIndex);
     }
     view.image = image;
-    view.hidden = NO;
 }
 
 - (void)invalidateDataSourceCaches {
@@ -110,15 +108,15 @@
 }
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate {
-    [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsTopLeft cardIndex:cardIndex-1];
+    [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsTopLeft cardIndex:(cardIndex+cardsCount-1) % cardsCount];
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsTopRight cardIndex:cardIndex];
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsMiddle cardIndex:cardIndex];
-    [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsBottom cardIndex:cardIndex+1];
+    [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsBottom cardIndex:(cardIndex+1) % cardsCount];
     
     [cardImages clear];
-    [cardImages addObject:cardViewsView[CDXCardsStackViewCardViewsTopLeft].image withKey:cardIndex-1];
+    [cardImages addObject:cardViewsView[CDXCardsStackViewCardViewsTopLeft].image withKey:(cardIndex+cardsCount-1) % cardsCount];
     [cardImages addObject:cardViewsView[CDXCardsStackViewCardViewsTopRight].image withKey:cardIndex];
-    [cardImages addObject:cardViewsView[CDXCardsStackViewCardViewsBottom].image withKey:cardIndex+1];
+    [cardImages addObject:cardViewsView[CDXCardsStackViewCardViewsBottom].image withKey:(cardIndex+1) % cardsCount];
     
     currentCardIndex = cardIndex;
     scrollView.contentOffset = CGPointMake(scrollViewPageWidth, 0);
@@ -142,7 +140,7 @@
         return;
     }
     
-    [cardImages clear];
+    [self invalidateDataSourceCaches];
     [self showCardAtIndex:currentCardIndex tellDelegate:NO];
 }
 

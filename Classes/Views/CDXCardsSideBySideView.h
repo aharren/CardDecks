@@ -25,13 +25,14 @@
 
 #import "CDXCardDeck.h"
 #import "CDXCardsViewBase.h"
+#import "CDXObjectCache.h"
 
 
 @class CDXCardsSideBySideViewScrollView;
 @class CDXCardsSideBySideViewScrollViewDelegate;
 
 enum {
-    CDXCardsSideBySideViewCardViewsSize = 5
+    CDXCardsSideBySideViewCardViewsSize = 3
 };
 
 @interface CDXCardsSideBySideView : CDXCardsViewBase<CDXCardsViewView> {
@@ -40,6 +41,8 @@ enum {
     CDXCardsSideBySideViewScrollView *scrollView;
     CDXCardsSideBySideViewScrollViewDelegate *scrollViewDelegate;
     CGFloat scrollViewPageWidth;
+    
+    CDXObjectCache *cardImages;
     
     UIImageView *cardViewsView[CDXCardsSideBySideViewCardViewsSize];
     NSUInteger cardViewsCardIndex[CDXCardsSideBySideViewCardViewsSize];

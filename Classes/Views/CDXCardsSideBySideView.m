@@ -81,8 +81,10 @@
 
 - (void)configureCardViewsViewAtIndex:(NSUInteger)viewIndex cardIndex:(NSUInteger)cardIndex {
     if (cardIndex >= cardsCount) {
-        return;
+        cardIndex += cardsCount;
+        cardIndex %= cardsCount;
     }
+    
     viewIndex += CDXCardsSideBySideViewCardViewsSize;
     viewIndex %= CDXCardsSideBySideViewCardViewsSize;
     if (cardViewsCardIndex[viewIndex] == cardIndex+1) {
@@ -91,10 +93,16 @@
     }
     cardViewsCardIndex[viewIndex] = cardIndex+1;
     UIImageView *view = cardViewsView[viewIndex];
-    UIImage *image = [[CDXImageFactory sharedImageFactory]
-                      imageForCard:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex]
-                      size:cardViewsSize
-                      deviceOrientation:deviceOrientation];
+    UIImage *image = [cardImages objectWithKey:cardIndex];
+    if (image != nil) {
+        qltrace(@": => %d", cardIndex);
+    } else {
+        image = [[CDXImageFactory sharedImageFactory]
+                 imageForCard:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex]
+                 size:cardViewsSize
+                 deviceOrientation:deviceOrientation];
+        qltrace(@": X> %d", cardIndex);
+    }
     view.frame = CGRectMake(scrollViewPageWidth * cardIndex + cardViewsBorder, 0, cardViewsSize.width, cardViewsSize.height);
     view.image = image;
     qltrace(@": %d X> %d", viewIndex, cardIndex);
@@ -102,9 +110,10 @@
 
 - (void)invalidateDataSourceCaches {
     ivar_array_set(cardViewsCardIndex, CDXCardsSideBySideViewCardViewsSize, 0);
+    [cardImages clear];
 }
 
-- (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate cached:(BOOL)cached {
+- (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate {
     NSUInteger viewIndex = 0;
     for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
         if (cardViewsCardIndex[i] == cardIndex+1) {
@@ -112,14 +121,15 @@
             break;
         }
     }
-
-    if (!cached) {
-        ivar_array_set(cardViewsCardIndex, CDXCardsSideBySideViewCardViewsSize, 0);
-    }
     
     qltrace(@": %d %d", cardIndex, viewIndex);
     for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
-        [self configureCardViewsViewAtIndex:viewIndex-CDXCardsSideBySideViewCardViewsSize/2+i cardIndex:cardIndex-CDXCardsSideBySideViewCardViewsSize/2+i];
+        [self configureCardViewsViewAtIndex:viewIndex-CDXCardsSideBySideViewCardViewsSize/2+i cardIndex:(cardIndex+cardsCount-CDXCardsSideBySideViewCardViewsSize/2+i)%cardsCount];
+    }
+    
+    [cardImages clear];
+    for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
+        [cardImages addObject:cardViewsView[i].image withKey:cardViewsCardIndex[i]+1];
     }
     
     currentCardIndex = cardIndex;
@@ -130,7 +140,7 @@
 }
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex {
-    [self showCardAtIndex:cardIndex tellDelegate:YES cached:YES];
+    [self showCardAtIndex:cardIndex tellDelegate:YES];
 }
 
 - (void)scrollToCardIndex:(NSUInteger)cardIndex {
@@ -151,7 +161,8 @@
         return;
     }
 
-    [self showCardAtIndex:currentCardIndex tellDelegate:NO cached:NO];
+    [self invalidateDataSourceCaches];
+    [self showCardAtIndex:currentCardIndex tellDelegate:NO];
 }
 
 - (void)didMoveToSuperview {
