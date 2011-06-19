@@ -60,6 +60,7 @@
         scrollView.delegate = scrollViewDelegate;
         scrollViewDelegate.cardsSideBySideView = self;
 
+        ivar_assign(cardImages, [[CDXObjectCache alloc] initWithSize:CDXCardsSideBySideViewCardViewsSize]);
         ivar_array_assign(cardViewsView, CDXCardsSideBySideViewCardViewsSize, [[UIImageView alloc] initWithImage:nil]);
         
         [self addSubview:scrollView];
@@ -75,6 +76,7 @@
     qltrace();
     ivar_release_and_clear(scrollView);
     ivar_release_and_clear(scrollViewDelegate);
+    ivar_release_and_clear(cardImages);
     ivar_array_release_and_clear(cardViewsView, CDXCardsSideBySideViewCardViewsSize);
     [super dealloc];
 }
@@ -129,7 +131,7 @@
     
     [cardImages clear];
     for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
-        [cardImages addObject:cardViewsView[i].image withKey:cardViewsCardIndex[i]+1];
+        [cardImages addObject:cardViewsView[i].image withKey:cardViewsCardIndex[i]-1];
     }
     
     currentCardIndex = cardIndex;
