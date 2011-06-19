@@ -60,7 +60,7 @@
         scrollView.delegate = scrollViewDelegate;
         scrollViewDelegate.cardsStackView = self;
         
-        ivar_assign(cardImages, [[CDXObjectCache alloc] initWithSize:3]);
+        ivar_assign(cardImages, [[CDXObjectCache alloc] initWithSize:CDXCardsStackViewCardImagesSize]);
         ivar_array_assign(cardViewsView, CDXCardsStackViewCardViewsSize, [[UIImageView alloc] initWithImage:nil]);
         
         [self addSubview:cardViewsView[CDXCardsStackViewCardViewsBottom]];
