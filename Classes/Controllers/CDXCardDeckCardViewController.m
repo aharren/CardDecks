@@ -3,7 +3,7 @@
 // CDXCardDeckCardViewController.m
 //
 //
-// Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2011 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +35,49 @@
 #define ql_component lcl_cController
 
 
+@interface CDXCardDeckCardViewControllerTimer : NSObject {
+    
+@protected
+    unsigned int timerId;
+    unsigned int timerType;
+    NSTimeInterval timerInterval;
+}
+
+@property (readonly, nonatomic) unsigned int timerId;
+@property (readonly, nonatomic) unsigned int timerType;
+@property (readonly, nonatomic) NSTimeInterval timerInterval;
+
+@end
+
+
+@implementation CDXCardDeckCardViewControllerTimer
+
+@synthesize timerId;
+@synthesize timerType;
+@synthesize timerInterval;
+
+- (id)initWithTimerId:(unsigned int)tid timerType:(unsigned int)ttype {
+    qltrace();
+    if ((self = [super init])) {
+        timerId = tid;
+        timerType = ttype;
+        switch (timerType) {
+            case 1:
+                timerInterval = 5;
+                break;
+            case 2:
+                timerInterval = 1;
+                break;
+            default:
+                timerInterval = 0.1;
+        }
+    }
+    return self;
+}
+
+@end
+
+
 @interface CDXCardDeckCardViewController (indexDotsView)
 
 - (void)configureIndexDotsViewAndButtons;
@@ -62,20 +105,53 @@
     ivar_release_and_clear(indexDotsView);
     ivar_release_and_clear(cardsView);
     ivar_release_and_clear(imageView);
+    ivar_release_and_clear(actionsViewShuffleButton);
+    ivar_release_and_clear(actionsViewSortButton);
+    ivar_release_and_clear(actionsViewPlayButton);
+    ivar_release_and_clear(actionsViewPlay2Button);
+    ivar_release_and_clear(actionsViewStopButton);
+    ivar_release_and_clear(actionsViewButtonsView);
     [super dealloc];
 }
 
+- (void)setActionsViewHidden:(BOOL)hidden animated:(BOOL)animated {
+    if (animated) {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.3];
+    }
+    actionsView.alpha = hidden ? 0 : 1;
+    if (animated) {
+        [UIView commitAnimations];
+    }
+}
+
+- (void)configureActionsViewAnimated:(BOOL)animated {
+    if (animated) {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.3];
+    }
+    CGAffineTransform transform = [CDXAppWindowManager transformForDeviceOrientation:deviceOrientation];
+    actionsViewShuffleButton.transform = transform;
+    actionsViewSortButton.transform = transform;
+    actionsViewPlayButton.transform = transform;
+    actionsViewPlay2Button.transform = transform;
+    actionsViewStopButton.transform = transform;
+    if (animated) {
+        [UIView commitAnimations];
+    }
+}
+
 - (void)configureView {
+    [self setActionsViewHidden:YES animated:NO];
+    
     [cardsView removeFromSuperview];
     ivar_release_and_clear(cardsView);
     
     [imageView removeFromSuperview];
     ivar_release_and_clear(imageView);
     
-    UIDeviceOrientation deviceOrientation = UIDeviceOrientationPortrait;
-    if (cardDeck.wantsAutoRotate) {
-        deviceOrientation = [[CDXAppWindowManager sharedAppWindowManager] deviceOrientation];
-    }
+    deviceOrientation = [[CDXAppWindowManager sharedAppWindowManager] deviceOrientation];
+    UIDeviceOrientation orientation = cardDeck.wantsAutoRotate ? deviceOrientation : UIDeviceOrientationPortrait;
     
     if (userInteractionEnabled) {
         qltrace(@"card");
@@ -96,11 +172,16 @@
         ivar_assign_and_retain(cardsView, v);
         [v setViewDelegate:self];
         [v setViewDataSource:self];
-        [v setDeviceOrientation:deviceOrientation];
+        [v setDeviceOrientation:orientation];
         [self.view insertSubview:v atIndex:0];
         
         // receive shake events as first responder
         [self becomeFirstResponder];
+        
+        // show that the deck is shuffled
+        if ([cardDeck isShuffled]) {
+            [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:deviceOrientation];
+        }
     } else {
         qltrace(@"image");
         
@@ -110,11 +191,21 @@
             UIImage *image = [[CDXImageFactory sharedImageFactory]
                               imageForCard:card
                               size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
-                              deviceOrientation:deviceOrientation];
+                              deviceOrientation:orientation];
             ivar_assign(imageView, [[UIImageView alloc] initWithImage:image]);
             [self.view insertSubview:imageView atIndex:0];
         }
     }
+
+    // configure the action buttons bar
+    CGRect frame = actionsViewButtonsView.frame;
+    if ([[CDXAppSettings sharedAppSettings] actionButtonsOnLeftSide]) {
+        frame.origin = CGPointMake(15, 0);
+    } else {
+        frame.origin = CGPointMake(self.view.frame.size.width - frame.size.width - 15, 0);
+    }
+    actionsViewButtonsView.frame = frame;
+    [self configureActionsViewAnimated:NO];
 }
 
 - (void)viewDidLoad {
@@ -129,6 +220,13 @@
     ivar_release_and_clear(indexDotsView);
     ivar_release_and_clear(cardsView);
     ivar_release_and_clear(imageView);
+    ivar_release_and_clear(actionsView);
+    ivar_release_and_clear(actionsViewButtonsView);
+    ivar_release_and_clear(actionsViewShuffleButton);
+    ivar_release_and_clear(actionsViewSortButton);
+    ivar_release_and_clear(actionsViewPlayButton);
+    ivar_release_and_clear(actionsViewPlay2Button);
+    ivar_release_and_clear(actionsViewStopButton);
     [super viewDidUnload];
 }
 
@@ -149,6 +247,8 @@
 }
 
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
+    deviceOrientation = orientation;
+    
     if (cardDeck.wantsAutoRotate) {
         switch (orientation) {
             default:
@@ -161,6 +261,8 @@
                 break;
         }
     }
+
+    [self configureActionsViewAnimated:YES];
 }
 
 - (NSUInteger)cardsViewDataSourceCardsCount {
@@ -217,19 +319,40 @@
     }
 }
 
-- (IBAction)shuffleButtonPressed {
+- (void)shuffleButtonPressedDelayed {
     [cardDeck shuffle];
     [cardDeck updateStorageObjectDeferred:YES];
     
     [cardsView invalidateDataSourceCaches];
     [cardsView showCardAtIndex:0];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
+}
+
+- (IBAction)shuffleButtonPressed {
+    [self performSelector:@selector(shuffleButtonPressedDelayed) withObject:nil afterDelay:0.001];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:deviceOrientation];
+}
+
+- (void)randomButtonPressedDelayed {
+    NSUInteger newIndex = (((double)arc4random() / 0x100000000) * [cardDeck cardsCount]);
+    [cardsView showCardAtIndex:newIndex];
 }
 
 - (IBAction)randomButtonPressed {
-    NSUInteger newIndex = (((double)arc4random() / 0x100000000) * [cardDeck cardsCount]);
-    [cardsView showCardAtIndex:newIndex];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"random" timeInterval:0.4 orientation:[cardsView deviceOrientation]];
+    [self performSelector:@selector(randomButtonPressedDelayed) withObject:nil afterDelay:0.001];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"random" timeInterval:0.4 orientation:deviceOrientation];
+}
+
+- (void)sortButtonPressedDelayed {
+    [cardDeck sort];
+    [cardDeck updateStorageObjectDeferred:YES];
+    
+    [cardsView invalidateDataSourceCaches];
+    [cardsView showCardAtIndex:0];
+}
+
+- (IBAction)sortButtonPressed {
+    [self performSelector:@selector(sortButtonPressedDelayed) withObject:nil afterDelay:0.001];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" text:@"sort" timeInterval:0.4 orientation:deviceOrientation];
 }
 
 - (void)configureIndexDotsViewAndButtons {
@@ -315,6 +438,51 @@
             break;
         }
     }
+}
+
+- (IBAction)toggleActionsViewButtonPressed {
+    [self setActionsViewHidden:(actionsView.alpha == 0 ? NO : YES) animated:YES];
+}
+
+- (IBAction)dismissActionsViewButtonPressed {
+    [self setActionsViewHidden:YES animated:YES];
+}
+
+- (void)timerAction:(id)object {
+    qltrace();
+    CDXCardDeckCardViewControllerTimer *timer = (CDXCardDeckCardViewControllerTimer *)object;
+    if (timer.timerId == currentTimerId && [self.view superview] != nil) {
+        NSUInteger currentCardIndex = [cardsView currentCardIndex];
+        switch (timer.timerType) {
+            case 1:
+            case 2:
+                currentCardIndex = (currentCardIndex + 1) % [cardDeck cardsCount];
+                [cardsView showCardAtIndex:currentCardIndex];
+                [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+- (IBAction)playButtonPressed {
+    currentTimerId++;
+    CDXCardDeckCardViewControllerTimer *timer = [[[CDXCardDeckCardViewControllerTimer alloc] initWithTimerId:currentTimerId timerType:1] autorelease];
+    [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play.png" text:@"play" timeInterval:0.4 orientation:deviceOrientation];
+}
+
+- (IBAction)play2ButtonPressed {
+    currentTimerId++;
+    CDXCardDeckCardViewControllerTimer *timer = [[[CDXCardDeckCardViewControllerTimer alloc] initWithTimerId:currentTimerId timerType:2] autorelease];
+    [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play2.png" text:@"fast play" timeInterval:0.4 orientation:deviceOrientation];
+}
+
+- (IBAction)stopButtonPressed {
+    currentTimerId++;
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Stop.png" text:@"stop" timeInterval:0.4 orientation:deviceOrientation];
 }
 
 @end

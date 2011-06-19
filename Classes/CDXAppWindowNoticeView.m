@@ -3,7 +3,7 @@
 // CDXAppWindowNoticeView.m
 //
 //
-// Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2011 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -73,7 +73,7 @@
 
 - (void)showImageNamed:(NSString *)name text:(NSString *)aText timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation window:(UIWindow *)window {
     [window addSubview:self];
-    imageView.transform = [CDXAppWindowManager transformForDeviceOrientation:orientation];
+    self.transform = [CDXAppWindowManager transformForDeviceOrientation:orientation];
     imageView.image = [UIImage imageNamed:name];
     text.text = aText;
     [self performSelector:@selector(hide:) withObject:self afterDelay:timeInterval];
