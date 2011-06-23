@@ -36,14 +36,12 @@
 @synthesize window;
 @synthesize deviceOrientation;
 
-synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
+synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 
 - (id)init {
+    qltrace();
     if ((self = [super init])) {
-        ivar_assign(navigationController, [[UINavigationController alloc] init]);
-        navigationController.toolbarHidden = NO;
         deviceOrientation = UIDeviceOrientationPortrait;
-        
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
@@ -51,6 +49,120 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 }
 
 - (UIViewController *)visibleViewController {
+    qltrace();
+    return nil;
+}
+
+- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
+    qltrace();
+}
+
+- (void)popViewControllerAnimated:(BOOL)animated {
+    qltrace();
+}
+
+- (void)popToInitialViewController {
+    qltrace();
+}
+
+- (void)makeWindowKeyAndVisible {
+    qltrace();
+}
+
+- (void)deviceOrientationDidChange:(NSNotification *)notification {
+    UIDeviceOrientation newDeviceOrientation = [[UIDevice currentDevice] orientation];
+    if (newDeviceOrientation == deviceOrientation) {
+        return;
+    }
+    switch (newDeviceOrientation) {
+        case UIDeviceOrientationPortrait:
+        case UIDeviceOrientationLandscapeLeft:
+        case UIDeviceOrientationPortraitUpsideDown:
+        case UIDeviceOrientationLandscapeRight:
+            break;
+        default:
+            return;
+    }
+    qltrace();
+    
+    deviceOrientation = newDeviceOrientation;
+    
+    UIViewController *vc = [self visibleViewController];
+    if ([vc conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
+        [(UIViewController<CDXAppWindowViewController> *)vc deviceOrientationDidChange:newDeviceOrientation];
+    }
+}
+
+- (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation {
+    qltrace();
+    [[NSBundle mainBundle] loadNibNamed:@"CDXAppWindowNoticeView" owner:self options:nil];
+    [noticeView showImageNamed:name text:text timeInterval:timeInterval orientation:orientation window:window];
+    ivar_release_and_clear(noticeView);
+}
+
+- (void)dismissModalViewControllerAnimated:(BOOL)animated {
+    qltrace();
+    [[self visibleViewController] dismissModalViewControllerAnimated:animated];
+}
+
+- (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem {
+    qltrace();
+}
+
++ (CGAffineTransform)transformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation {
+    CGFloat transformAngle;
+    switch (deviceOrientation) {
+        case UIDeviceOrientationPortrait:
+        default:
+            transformAngle = 0;
+            break;
+        case UIDeviceOrientationLandscapeLeft:
+            transformAngle = M_PI_2;
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            transformAngle = M_PI;
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            transformAngle = -M_PI_2;
+            break;
+    }
+    
+    return CGAffineTransformRotate(CGAffineTransformIdentity, transformAngle);
+}
+
+@end
+
+
+@interface CDXAppWindowManagerPhone : CDXAppWindowManager {
+    
+@protected
+    IBOutlet UIView *navigationView;
+    IBOutlet UIView *statusBarView;
+    
+    UINavigationController *navigationController;
+    UIViewController<CDXAppWindowViewController> *fullScreenViewController;
+}
+
+@end
+
+
+@implementation CDXAppWindowManagerPhone
+
+synthesize_singleton_initialization(sharedAppWindowManager, CDXAppWindowManager);
+
+synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
+
+- (id)init {
+    qltrace();
+    if ((self = [super init])) {
+        ivar_assign(navigationController, [[UINavigationController alloc] init]);
+        navigationController.toolbarHidden = NO;
+    }
+    return self;
+}
+
+- (UIViewController *)visibleViewController {
+    qltrace();
     if (fullScreenViewController != nil) {
         return fullScreenViewController;
     } else {
@@ -59,13 +171,16 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 }
 
 - (void)pushFullScreenViewControllerAnimationWillStart:(NSString *)animationID context:(void *)context {
+    qltrace();
 }
 
 - (void)pushFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
+    qltrace();
     [fullScreenViewController setUserInteractionEnabled:YES];
 }
 
 - (void)pushFullScreenViewControllerAnimatedAndRemoveView:(UIView *)view {
+    qltrace();
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
     [UIView beginAnimations:nil context:NULL];
@@ -83,6 +198,7 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 }
 
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
+    qltrace();
     if ([viewController wantsFullScreenLayout]) {
         ivar_assign_and_retain(fullScreenViewController, viewController);
         [fullScreenViewController setUserInteractionEnabled:!animated];
@@ -103,15 +219,18 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 }
 
 - (void)popFullScreenViewControllerAnimationWillStart:(NSString *)animationID context:(void *)context {
+    qltrace();
 }
 
 - (void)popFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
+    qltrace();
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     navigationController.view.frame = [[UIScreen mainScreen] applicationFrame];
     navigationView.userInteractionEnabled = YES;
 }
 
 - (void)popViewControllerAnimated:(BOOL)animated {
+    qltrace();
     if (fullScreenViewController != nil) {
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
         [fullScreenViewController setUserInteractionEnabled:NO];
@@ -143,6 +262,7 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 }
 
 - (void)popToInitialViewController {
+    qltrace();
     if (fullScreenViewController != nil) {
         [self popViewControllerAnimated:NO];
     }
@@ -150,9 +270,10 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
 }
 
 - (void)makeWindowKeyAndVisible {
+    qltrace();
     const CDXDeviceType deviceType = [CDXDevice sharedDevice].deviceType;
     statusBarView.hidden = !(deviceType == CDXDeviceTypeiPhone || deviceType == CDXDeviceTypeiPodTouch);
-
+    
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
     [window addSubview:navigationView];
@@ -162,68 +283,9 @@ synthesize_singleton(sharedAppWindowManager, CDXAppWindowManager);
     [window makeKeyAndVisible];
 }
 
-- (void)deviceOrientationDidChange:(NSNotification *)notification {
-    UIDeviceOrientation newDeviceOrientation = [[UIDevice currentDevice] orientation];
-    if (newDeviceOrientation == deviceOrientation) {
-        return;
-    }
-    switch (newDeviceOrientation) {
-        case UIDeviceOrientationPortrait:
-        case UIDeviceOrientationLandscapeLeft:
-        case UIDeviceOrientationPortraitUpsideDown:
-        case UIDeviceOrientationLandscapeRight:
-            break;
-        default:
-            return;
-    }
-    qltrace();
-    
-    deviceOrientation = newDeviceOrientation;
-    
-    UIViewController *vc = [self visibleViewController];
-    if ([vc conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
-        [(UIViewController<CDXAppWindowViewController> *)vc deviceOrientationDidChange:newDeviceOrientation];
-    }
-}
-
-- (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation {
-    [[NSBundle mainBundle] loadNibNamed:@"CDXAppWindowNoticeView" owner:self options:nil];
-    [noticeView showImageNamed:name text:text timeInterval:timeInterval orientation:orientation window:window];
-    ivar_release_and_clear(noticeView);
-}
-
-+ (CGAffineTransform)transformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation {
-    CGFloat transformAngle;
-    switch (deviceOrientation) {
-        case UIDeviceOrientationPortrait:
-        default:
-            transformAngle = 0;
-            break;
-        case UIDeviceOrientationLandscapeLeft:
-            transformAngle = M_PI_2;
-            break;
-        case UIDeviceOrientationPortraitUpsideDown:
-            transformAngle = M_PI;
-            break;
-        case UIDeviceOrientationLandscapeRight:
-            transformAngle = -M_PI_2;
-            break;
-    }
-    
-    return CGAffineTransformRotate(CGAffineTransformIdentity, transformAngle);
-}
-
-- (void)dismissModalViewControllerAnimated:(BOOL)animated {
-    qltrace();
-    [[self visibleViewController] dismissModalViewControllerAnimated:animated];
-}
-
 - (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem {
-    if ([CDXDevice sharedDevice].deviceUIIdiom == CDXDeviceUIIdiomPhone) {
-        [actionSheet showInView:[CDXAppWindowManager sharedAppWindowManager].window];
-    } else {
-        [actionSheet showFromBarButtonItem:barButtonItem animated:NO];
-    }
+    qltrace();
+    [actionSheet showInView:window];
 }
 
 @end
