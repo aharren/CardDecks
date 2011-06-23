@@ -290,3 +290,56 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
 
 @end
 
+
+@interface CDXAppWindowManagerPad : CDXAppWindowManager {
+    
+@protected
+}
+
+@end
+
+
+@implementation CDXAppWindowManagerPad
+
+synthesize_singleton_initialization(sharedAppWindowManager, CDXAppWindowManager);
+
+synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
+
+- (id)init {
+    qltrace();
+    if ((self = [super init])) {
+    }
+    return self;
+}
+
+- (UIViewController *)visibleViewController {
+    qltrace();
+    return nil;
+}
+
+- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
+    qltrace();
+}
+
+- (void)popViewControllerAnimated:(BOOL)animated {
+    qltrace();
+}
+
+- (void)popToInitialViewController {
+    qltrace();
+}
+
+- (void)makeWindowKeyAndVisible {
+    qltrace();
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    
+    [window makeKeyAndVisible];
+}
+
+- (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem {
+    qltrace();
+    [actionSheet showFromBarButtonItem:barButtonItem animated:NO];
+}
+
+@end
+
