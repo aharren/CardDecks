@@ -85,21 +85,34 @@
     }                                                                          \
 
 #define declare_singleton(_name, _class)                                       \
+                                                                               \
     + (_class *)_name;                                                         \
 
 #define synthesize_singleton(_name, _class)                                    \
                                                                                \
+    synthesize_singleton_definition(_name, _class)                             \
+                                                                               \
+    synthesize_singleton_initialization(_name, _class)                         \
+                                                                               \
+    synthesize_singleton_methods(_name, _class)                                \
+
+#define synthesize_singleton_definition(_name, _class)                         \
+                                                                               \
     static _class *_name = nil;                                                \
+                                                                               \
+    + (_class *)_name {                                                        \
+        return _name;                                                          \
+    }                                                                          \
+
+#define synthesize_singleton_initialization(_name, _class)                     \
                                                                                \
     + (void)initialize {                                                       \
         if (!_name) {                                                          \
             _name = [[super allocWithZone:nil] init];                          \
         }                                                                      \
     }                                                                          \
-                                                                               \
-    + (_class *)_name {                                                        \
-        return _name;                                                          \
-    }                                                                          \
+
+#define synthesize_singleton_methods(_name, _class)                            \
                                                                                \
     + (id)allocWithZone:(NSZone *)zone {                                       \
         return [_name retain];                                                 \
