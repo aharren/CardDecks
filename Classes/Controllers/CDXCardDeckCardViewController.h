@@ -3,7 +3,7 @@
 // CDXCardDeckCardViewController.h
 //
 //
-// Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2011 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +36,8 @@
     CDXCardDeckViewContext *cardDeckViewContext;
     CDXCardDeck *cardDeck;
     
+    UIDeviceOrientation deviceOrientation;
+    
     UIView<CDXCardsViewView> *cardsView;
     
     BOOL userInteractionEnabled;
@@ -45,7 +47,17 @@
     NSUInteger pageControlJumpPagesCount;
     NSUInteger pageControlJumpPages[5];
     
+    IBOutlet UIView *actionsView;
+    IBOutlet UIView *actionsViewButtonsView;
+    IBOutlet UIButton *actionsViewShuffleButton;
+    IBOutlet UIButton *actionsViewSortButton;
+    IBOutlet UIButton *actionsViewPlayButton;
+    IBOutlet UIButton *actionsViewPlay2Button;
+    IBOutlet UIButton *actionsViewStopButton;
+
     NSUInteger closeTapCount;
+    
+    unsigned int currentTimerId;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
@@ -57,6 +69,14 @@
 
 - (IBAction)shuffleButtonPressed;
 - (IBAction)randomButtonPressed;
+- (IBAction)sortButtonPressed;
+
+- (IBAction)toggleActionsViewButtonPressed;
+- (IBAction)dismissActionsViewButtonPressed;
+
+- (IBAction)playButtonPressed;
+- (IBAction)play2ButtonPressed;
+- (IBAction)stopButtonPressed;
 
 @end
 

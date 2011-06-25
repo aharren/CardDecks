@@ -3,7 +3,7 @@
 // CDXApplicationVersion.h
 //
 //
-// Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2011 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 // Definition of version information (major, minor, etc.).
 #define CDXApplicationVersionMajor  2
 #define CDXApplicationVersionMinor  0
-#define CDXApplicationVersionBuild  2
+#define CDXApplicationVersionBuild  3
 #define CDXApplicationVersionSuffix ""
 
 // NSString with complete version information (<major>.<minor>.<build><suffix>).

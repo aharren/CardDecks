@@ -3,7 +3,7 @@
 // CDXCardsStackSwipeView.m
 //
 //
-// Copyright (c) 2009-2010 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2011 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -55,9 +55,8 @@
     UIImageView *view = cardViewsView[viewIndex];
     
     if (cardIndex >= cardsCount) {
-        view.image = nil;
-        view.hidden = YES;
-        return;
+        cardIndex += cardsCount;
+        cardIndex %= cardsCount;
     }
     
     UIImage *image = [cardImages objectWithKey:cardIndex];
@@ -71,7 +70,6 @@
         qltrace(@": X> %d", cardIndex);
     }
     view.image = image;
-    view.hidden = NO;
 }
 
 - (void)invalidateDataSourceCaches {
@@ -79,9 +77,9 @@
 }
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate {
-    [self configureCardViewsViewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft cardIndex:cardIndex-1];
+    [self configureCardViewsViewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft cardIndex:(cardIndex+cardsCount-1) % cardsCount];
     [self configureCardViewsViewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle cardIndex:cardIndex];
-    [self configureCardViewsViewAtIndex:CDXCardsStackSwipeViewCardViewsBottom cardIndex:cardIndex+1];
+    [self configureCardViewsViewAtIndex:CDXCardsStackSwipeViewCardViewsBottom cardIndex:(cardIndex+1) % cardsCount];
     
     CGRect frame = self.frame;
     frame.origin.x = -cardViewsSize.width;
@@ -90,9 +88,9 @@
     cardViewsView[CDXCardsStackSwipeViewCardViewsBottom].frame = self.frame;
     
     [cardImages clear];
-    [cardImages addObject:cardViewsView[CDXCardsStackSwipeViewCardViewsTopLeft].image withKey:cardIndex-1];
+    [cardImages addObject:cardViewsView[CDXCardsStackSwipeViewCardViewsTopLeft].image withKey:(cardIndex+cardsCount-1) % cardsCount];
     [cardImages addObject:cardViewsView[CDXCardsStackSwipeViewCardViewsMiddle].image withKey:cardIndex];
-    [cardImages addObject:cardViewsView[CDXCardsStackSwipeViewCardViewsBottom].image withKey:cardIndex+1];
+    [cardImages addObject:cardViewsView[CDXCardsStackSwipeViewCardViewsBottom].image withKey:(cardIndex+1) % cardsCount];
     
     currentCardIndex = cardIndex;
     if (tellDelegate) {
@@ -115,7 +113,7 @@
         return;
     }
 
-    [cardImages clear];
+    [self invalidateDataSourceCaches];
     [self showCardAtIndex:currentCardIndex tellDelegate:NO];
 }
 
