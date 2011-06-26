@@ -298,9 +298,100 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
 @end
 
 
+@interface CDXLeftRightSplitViewController : UIViewController {
+    
+@protected
+    UIViewController *leftViewController;
+    UIViewController *rightViewController;
+}
+
+- (void)setLeftViewController:(UIViewController *)viewController;
+- (void)setRightViewController:(UIViewController *)viewController;
+
+@end
+
+
+@implementation CDXLeftRightSplitViewController
+
+- (void)dealloc {
+    ivar_release_and_clear(leftViewController);
+    ivar_release_and_clear(rightViewController);
+    [super dealloc];
+}
+
+- (void)setLeftViewController:(UIViewController *)viewController {
+    qltrace();
+    ivar_assign_and_retain(leftViewController, viewController);
+    [self.view addSubview:leftViewController.view];
+}
+
+- (void)setRightViewController:(UIViewController *)viewController {
+    qltrace();
+    ivar_assign_and_retain(rightViewController, viewController);
+    [self.view addSubview:rightViewController.view];
+}
+
+- (void)layoutViewControllerViews {
+    qltrace();
+    leftViewController.view.frame = CGRectMake(0, 0, 320, 1004);
+    rightViewController.view.frame = CGRectMake(320, 0, 768-320, 1004);
+}
+
+- (void)viewDidLoad {
+    qltrace();
+    [super viewDidLoad];
+    [leftViewController viewDidLoad];
+    [rightViewController viewDidLoad];
+}
+
+- (void)viewDidUnload {
+    qltrace();
+    [leftViewController viewDidUnload];
+    [rightViewController viewDidUnload];
+    [super viewDidUnload];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    qltrace();
+    [super viewWillAppear:animated];
+    [leftViewController viewWillAppear:animated];
+    [rightViewController viewWillAppear:animated];
+    [self layoutViewControllerViews];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    qltrace();
+    [leftViewController viewDidAppear:animated];
+    [rightViewController viewDidAppear:animated];
+    [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    qltrace();
+    [super viewWillDisappear:animated];
+    [leftViewController viewWillDisappear:animated];
+    [rightViewController viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    qltrace();
+    [leftViewController viewDidDisappear:animated];
+    [rightViewController viewDidDisappear:animated];
+    [super viewDidDisappear:animated];
+}
+
+@end
+
+
 @interface CDXAppWindowManagerPad : CDXAppWindowManager {
     
 @protected
+    CDXLeftRightSplitViewController* splitViewController;
+    
+    UINavigationController *leftNavigationController;
+    UINavigationController *rightNavigationController;
+    
+    UIViewController<CDXAppWindowViewController> * initialViewController;
 }
 
 @end
@@ -315,6 +406,15 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
 - (id)init {
     qltrace();
     if ((self = [super init])) {
+        ivar_assign(splitViewController, [[CDXLeftRightSplitViewController alloc] init]);
+        ivar_assign(leftNavigationController, [[UINavigationController alloc] init]);
+        [leftNavigationController setToolbarHidden:NO];
+        [leftNavigationController setNavigationBarHidden:NO];
+        [splitViewController setLeftViewController:leftNavigationController];
+        ivar_assign(rightNavigationController, [[UINavigationController alloc] init]);
+        [rightNavigationController setToolbarHidden:NO];
+        [rightNavigationController setNavigationBarHidden:NO];
+        [splitViewController setRightViewController:rightNavigationController];
     }
     return self;
 }
@@ -326,10 +426,23 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
 
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
     qltrace();
+    if (initialViewController == nil) {
+        ivar_assign_and_retain(initialViewController, viewController);
+        [leftNavigationController pushViewController:viewController animated:NO];
+    } else {
+        if ([viewController wantsFullScreenLayout]) {
+            [self pushFullScreenViewController:viewController animated:animated];
+        } else {
+            [rightNavigationController setViewControllers:[NSArray arrayWithObject:viewController] animated:animated];
+        }
+    }
 }
 
 - (void)popViewControllerAnimated:(BOOL)animated {
     qltrace();
+    if (fullScreenViewController != nil) {
+        [self popFullScreenViewControllerAnimated:animated];
+    }
 }
 
 - (void)popToInitialViewController {
@@ -339,6 +452,10 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
 - (void)makeWindowKeyAndVisible {
     qltrace();
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    
+    [window addSubview:navigationView];
+    navigationView.frame = [[UIScreen mainScreen] bounds];
+    [navigationView addSubview:splitViewController.view];
     
     [window makeKeyAndVisible];
 }
