@@ -104,6 +104,7 @@
 		E0CCC7401170DC600040D222 /* CDXCardDeckCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0CCC73F1170DC600040D222 /* CDXCardDeckCardViewController.m */; };
 		E0CCC9041170E9420040D222 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0CCC9031170E9420040D222 /* QuartzCore.framework */; };
 		E0CDB1F913B793550079B722 /* CDXCardDeckListPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0CDB1F813B793550079B722 /* CDXCardDeckListPadViewController.m */; };
+		E0CDB1FE13B7B3FD0079B722 /* Default~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CDB1FD13B7B3FD0079B722 /* Default~ipad.png */; };
 		E0CFA5FC11D68CF800FF686F /* IndexDotGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CFA5FB11D68CF800FF686F /* IndexDotGray@2x.png */; };
 		E0CFA5FE11D68D0600FF686F /* IndexDotWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CFA5FD11D68D0600FF686F /* IndexDotWhite@2x.png */; };
 		E0D01AED1170EF9200004856 /* CDXImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D01AEC1170EF9200004856 /* CDXImageFactory.m */; };
@@ -297,6 +298,7 @@
 		E0CCC9031170E9420040D222 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E0CDB1F713B793550079B722 /* CDXCardDeckListPadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckListPadViewController.h; path = Classes/Controllers/CDXCardDeckListPadViewController.h; sourceTree = "<group>"; };
 		E0CDB1F813B793550079B722 /* CDXCardDeckListPadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckListPadViewController.m; path = Classes/Controllers/CDXCardDeckListPadViewController.m; sourceTree = "<group>"; };
+		E0CDB1FD13B7B3FD0079B722 /* Default~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default~ipad.png"; path = "Images/Default~ipad.png"; sourceTree = "<group>"; };
 		E0CFA5FB11D68CF800FF686F /* IndexDotGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IndexDotGray@2x.png"; path = "Images/IndexDotGray@2x.png"; sourceTree = "<group>"; };
 		E0CFA5FD11D68D0600FF686F /* IndexDotWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IndexDotWhite@2x.png"; path = "Images/IndexDotWhite@2x.png"; sourceTree = "<group>"; };
 		E0D01AEB1170EF9200004856 /* CDXImageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXImageFactory.h; path = Classes/CDXImageFactory.h; sourceTree = "<group>"; };
@@ -672,6 +674,7 @@
 				E0620D5211BAA606006AABD2 /* Notices */,
 				E0C51F13119DA03000D75D0E /* Default.png */,
 				E0D1E5DE11D62CA700C8B1C4 /* Default@2x.png */,
+				E0CDB1FD13B7B3FD0079B722 /* Default~ipad.png */,
 				E0620F8A119E950D00234667 /* StatusBarDefault.png */,
 				E0D1E5DF11D62CA700C8B1C4 /* StatusBarDefault@2x.png */,
 				E0CCC70C1170DA0A0040D222 /* Icon-Settings.png */,
@@ -862,6 +865,7 @@
 				E0AE1DF713B39C3100959FC7 /* MainWindow-iPad.xib in Resources */,
 				E022CDF413B63E5D000FE10A /* CDXCardDecksListPadView.xib in Resources */,
 				E03B803A13B7918F00941540 /* CDXCardDeckListPadView.xib in Resources */,
+				E0CDB1FE13B7B3FD0079B722 /* Default~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
