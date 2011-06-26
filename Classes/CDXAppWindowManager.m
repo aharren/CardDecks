@@ -130,17 +130,95 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     return CGAffineTransformRotate(CGAffineTransformIdentity, transformAngle);
 }
 
+- (void)pushFullScreenViewControllerAnimationWillStart:(NSString *)animationID context:(void *)context {
+    qltrace();
+}
+
+- (void)pushFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
+    qltrace();
+    [fullScreenViewController setUserInteractionEnabled:YES];
+}
+
+- (void)pushFullScreenViewControllerAnimatedAndRemoveView:(UIView *)view {
+    qltrace();
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.6];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:window cache:YES];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationWillStartSelector:@selector(pushFullScreenViewControllerAnimationWillStart:context:)];
+    [UIView setAnimationDidStopSelector:@selector(pushFullScreenViewControllerAnimationDidStop:finished:context:)];
+    
+    [view removeFromSuperview];
+    [window addSubview:fullScreenViewController.view];
+    
+    [UIView commitAnimations];
+}
+
+- (void)pushFullScreenViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
+    ivar_assign_and_retain(fullScreenViewController, viewController);
+    [fullScreenViewController setUserInteractionEnabled:!animated];
+    if (animated) {
+        UIImageView *screenshotView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForScreen]] autorelease];
+        navigationView.userInteractionEnabled = NO;
+        [navigationView removeFromSuperview];
+        [window addSubview:screenshotView];
+        [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:screenshotView afterDelay:0.001];
+    } else {
+        [navigationView removeFromSuperview];
+        [window addSubview:fullScreenViewController.view];
+    }
+}
+
+- (void)popFullScreenViewControllerAnimationWillStart:(NSString *)animationID context:(void *)context {
+    qltrace();
+}
+
+- (void)popFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
+    qltrace();
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    navigationView.frame = [[UIScreen mainScreen] bounds];
+    navigationView.userInteractionEnabled = YES;
+}
+
+- (void)popFullScreenViewControllerAnimated:(BOOL)animated {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    [fullScreenViewController setUserInteractionEnabled:NO];
+    navigationView.frame = [[UIScreen mainScreen] bounds];
+    
+    if (animated) {
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.6];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:window cache:YES];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationWillStartSelector:@selector(popFullScreenViewControllerAnimationWillStart:context:)];
+        [UIView setAnimationDidStopSelector:@selector(popFullScreenViewControllerAnimationDidStop:finished:context:)];
+    } else {
+        [self popFullScreenViewControllerAnimationDidStop:nil finished:nil context:NULL];
+    }
+    
+    [fullScreenViewController.view removeFromSuperview];
+    [window addSubview:navigationView];
+    
+    if (animated) {
+        [UIView commitAnimations];
+    }
+    
+    ivar_release_and_clear(fullScreenViewController);
+}
+
 @end
 
 
 @interface CDXAppWindowManagerPhone : CDXAppWindowManager {
     
 @protected
-    IBOutlet UIView *navigationView;
     IBOutlet UIView *statusBarView;
     
     UINavigationController *navigationController;
-    UIViewController<CDXAppWindowViewController> *fullScreenViewController;
 }
 
 @end
@@ -170,92 +248,21 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
     }
 }
 
-- (void)pushFullScreenViewControllerAnimationWillStart:(NSString *)animationID context:(void *)context {
-    qltrace();
-}
-
-- (void)pushFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    qltrace();
-    [fullScreenViewController setUserInteractionEnabled:YES];
-}
-
-- (void)pushFullScreenViewControllerAnimatedAndRemoveView:(UIView *)view {
-    qltrace();
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.6];
-    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:window cache:YES];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationWillStartSelector:@selector(pushFullScreenViewControllerAnimationWillStart:context:)];
-    [UIView setAnimationDidStopSelector:@selector(pushFullScreenViewControllerAnimationDidStop:finished:context:)];
-    
-    [view removeFromSuperview];
-    [window addSubview:fullScreenViewController.view];
-    
-    [UIView commitAnimations];
-}
 
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
     qltrace();
     if ([viewController wantsFullScreenLayout]) {
-        ivar_assign_and_retain(fullScreenViewController, viewController);
-        [fullScreenViewController setUserInteractionEnabled:!animated];
-        if (animated) {
-            UIImageView *screenshotView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForScreen]] autorelease];
-            navigationView.userInteractionEnabled = NO;
-            [navigationView removeFromSuperview];
-            [window addSubview:screenshotView];
-            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:screenshotView afterDelay:0.001];
-        } else {
-            [navigationView removeFromSuperview];
-            [window addSubview:fullScreenViewController.view];
-        }
+        [self pushFullScreenViewController:viewController animated:animated];
     } else {
         [navigationController pushViewController:viewController animated:animated];
         navigationController.view.frame = [[UIScreen mainScreen] applicationFrame];
     }
 }
 
-- (void)popFullScreenViewControllerAnimationWillStart:(NSString *)animationID context:(void *)context {
-    qltrace();
-}
-
-- (void)popFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    qltrace();
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    navigationController.view.frame = [[UIScreen mainScreen] applicationFrame];
-    navigationView.userInteractionEnabled = YES;
-}
-
 - (void)popViewControllerAnimated:(BOOL)animated {
     qltrace();
     if (fullScreenViewController != nil) {
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
-        [fullScreenViewController setUserInteractionEnabled:NO];
-        navigationView.frame = [[UIScreen mainScreen] bounds];
-        
-        if (animated) {
-            [UIView beginAnimations:nil context:NULL];
-            [UIView setAnimationDuration:0.6];
-            [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:window cache:YES];
-            [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-            [UIView setAnimationDelegate:self];
-            [UIView setAnimationWillStartSelector:@selector(popFullScreenViewControllerAnimationWillStart:context:)];
-            [UIView setAnimationDidStopSelector:@selector(popFullScreenViewControllerAnimationDidStop:finished:context:)];
-        } else {
-            [self popFullScreenViewControllerAnimationDidStop:nil finished:nil context:NULL];
-        }
-        
-        [fullScreenViewController.view removeFromSuperview];
-        [window addSubview:navigationView];
-        
-        if (animated) {
-            [UIView commitAnimations];
-        }
-        
-        ivar_release_and_clear(fullScreenViewController);
+        [self popFullScreenViewControllerAnimated:animated];
     } else {
         [navigationController popViewControllerAnimated:animated];
     }

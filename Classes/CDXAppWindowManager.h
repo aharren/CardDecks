@@ -31,9 +31,12 @@
     
 @protected
     IBOutlet UIWindow *window;
+    IBOutlet UIView *navigationView;
     
     IBOutlet CDXAppWindowNoticeView *noticeView;
-
+    
+    UIViewController<CDXAppWindowViewController> *fullScreenViewController;
+    
     UIDeviceOrientation deviceOrientation;
 }
 
