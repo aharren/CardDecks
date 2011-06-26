@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXListViewControllerBase.h"
+#import "CDXDevice.h"
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -73,6 +74,9 @@
     
     ivar_assign(activityIndicator, [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]);
     activityIndicator.hidesWhenStopped = YES;
+    if ([[CDXDevice sharedDevice] deviceUIIdiom] == CDXDeviceUIIdiomPad) {
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    }
     navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
                                           initWithCustomView:activityIndicator]
                                          autorelease];
