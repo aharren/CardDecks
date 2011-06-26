@@ -36,6 +36,8 @@
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         ivar_assign_and_copy(titleText, aTitleText);
         ivar_assign_and_copy(backButtonText, aBackButtonText);
+        ivar_assign_and_retain(reuseIdentifierSection1, @"Section1Cell");
+        ivar_assign_and_retain(reuseIdentifierSection2, @"Section2Cell");
     }
     return self;
 }
@@ -57,6 +59,8 @@
     ivar_release_and_clear(tableCellBackgroundColorAltGroup);
     ivar_release_and_clear(titleText);
     ivar_release_and_clear(backButtonText);
+    ivar_release_and_clear(reuseIdentifierSection1);
+    ivar_release_and_clear(reuseIdentifierSection2);
     [super dealloc];
 }
 

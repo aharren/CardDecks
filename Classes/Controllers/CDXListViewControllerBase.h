@@ -50,6 +50,9 @@
     
     NSString *titleText;
     NSString *backButtonText;
+    
+    NSString *reuseIdentifierSection1;
+    NSString *reuseIdentifierSection2;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)titleText backButtonText:(NSString *)backButtonText;

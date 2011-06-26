@@ -30,6 +30,8 @@
     
 @protected
     IBOutlet UIView *viewTableViewContainer;
+
+    UIImage *tableCellBackgroundImage;
 }
 
 - (id)initWithCardDecks:(CDXCardDecks *)cardDecks;

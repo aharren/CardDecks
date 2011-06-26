@@ -88,6 +88,21 @@ static void CDXGraphicsBeginImageContextNativeScale(CGSize size) {
     return image;
 }
 
+- (UIImage *)imageForLinearGradientWithTopColor:(CDXColor *)topColor bottomColor:(CDXColor *)bottomColor height:(CGFloat)height {
+    UIGraphicsBeginImageContext(CGSizeMake(1, height));
+    CGContextRef cgContext = UIGraphicsGetCurrentContext();
+    
+    const void *colorRefs[2] = { [[topColor uiColor] CGColor], [[bottomColor uiColor] CGColor] };
+    CFArrayRef cgColors = CFArrayCreate(kCFAllocatorDefault, colorRefs, 2, &kCFTypeArrayCallBacks);
+    CGGradientRef cgGradient = CGGradientCreateWithColors(NULL, cgColors, NULL);
+    CGContextDrawLinearGradient(cgContext, cgGradient, CGPointMake(0, 0), CGPointMake(0, height), 0);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    CFRelease(cgGradient);
+    CFRelease(cgColors);
+    UIGraphicsEndImageContext();
+    return image;
+}
+
 - (UIImage *)imageForScreen {
     CGRect bounds = [UIScreen mainScreen].bounds;
     UIView *window = [CDXAppWindowManager sharedAppWindowManager].window;

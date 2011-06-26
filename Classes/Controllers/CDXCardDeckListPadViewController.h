@@ -32,6 +32,8 @@
     IBOutlet UIView *viewTableViewContainer;
     IBOutlet UIView *viewTopLeftCornerView;
     IBOutlet UINavigationItem *navigationItem;
+    
+    UIImage *tableCellBackgroundImage;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;

@@ -41,6 +41,8 @@ declare_singleton(sharedImageFactory, CDXImageFactory);
 
 - (UIImage *)imageForColor:(CDXColor *)color size:(CGSize)size;
 
+- (UIImage *)imageForLinearGradientWithTopColor:(CDXColor *)topColor bottomColor:(CDXColor *)bottomColor height:(CGFloat)height;
+
 - (UIImage *)imageForScreen;
 
 @end

@@ -78,10 +78,8 @@
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *reuseIdentifierSection1 = @"Section1Cell";
-    static NSString *reuseIdentifierSection2 = @"Section2Cell";
-    switch (indexPath.section) {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
+    switch (section) {
         default:
         case 0:
             return nil;
@@ -95,7 +93,30 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             }
             cell.accessoryType = cardDeckQuickOpen ? UITableViewCellAccessoryDetailDisclosureButton : UITableViewCellAccessoryDisclosureIndicator;
-            
+            return cell;
+        }
+        case 2: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection2];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
+                cell.textLabel.font = tableCellTextFontAction;
+                cell.textLabel.textAlignment = UITextAlignmentCenter;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+            }
+            cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
+            return cell;
+        }
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        default:
+        case 0:
+            return nil;
+        case 1: {
+            UITableViewCell *cell = [self tableView:tableView cellForSection:indexPath.section];
             CDXCardDeckBase *deck = [cardDecks cardDeckAtIndex:indexPath.row];
             NSString *name = deck.name;
             if ([@"" isEqualToString:name]) {
@@ -119,16 +140,7 @@
             return cell;
         }
         case 2: {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection2];
-            if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
-                cell.textLabel.font = tableCellTextFontAction;
-                cell.textLabel.textAlignment = UITextAlignmentCenter;
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                cell.selectionStyle = UITableViewCellSelectionStyleGray;
-            }
-            
-            cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
+            UITableViewCell *cell = [self tableView:tableView cellForSection:indexPath.section];
             switch (indexPath.row) {
                 default:
                 case 0: {

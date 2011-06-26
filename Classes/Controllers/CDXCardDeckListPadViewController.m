@@ -48,6 +48,7 @@
     ivar_release_and_clear(viewTableViewContainer);
     ivar_release_and_clear(viewTopLeftCornerView);
     ivar_release_and_clear(navigationItem);
+    ivar_release_and_clear(tableCellBackgroundImage);
     [super dealloc];
 }
 
@@ -56,9 +57,14 @@
     [super viewDidLoad];
     
     viewTableViewContainer.layer.cornerRadius = 6;
+    viewTableView.backgroundView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff] height:1024]] autorelease];
+    
     viewTopLeftCornerView.layer.cornerRadius = 6;
     
     navigationItem.title = cardDeck.name;
+    
+    ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf7 green:0xf7 blue:0xf7 alpha:0xff] height:44]);
+    ivar_assign_and_retain(tableCellBackgroundColorAction, [UIColor clearColor]);
 }
 
 - (void)viewDidUnload {
@@ -66,7 +72,48 @@
     ivar_release_and_clear(viewTableViewContainer);
     ivar_release_and_clear(viewTopLeftCornerView);
     ivar_release_and_clear(navigationItem);
+    ivar_release_and_clear(tableCellBackgroundImage);
     [super viewDidUnload];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
+    UIColor *clearColor = [UIColor clearColor];
+    cell.textLabel.backgroundColor = clearColor;
+    cell.detailTextLabel.backgroundColor = clearColor;
+    cell.backgroundColor = clearColor;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
+    switch (section) {
+        case 0:
+            return nil;
+        case 1: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection1];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifierSection1] autorelease];
+                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.backgroundView	= [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+            }
+            return cell;
+        }
+        case 2: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection2];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
+                cell.textLabel.font = tableCellTextFontAction;
+                cell.textLabel.textAlignment = UITextAlignmentCenter;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.backgroundView	= [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+            }
+            cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
+            return cell;
+        }
+        default:
+            return nil;
+    }
 }
 
 @end
