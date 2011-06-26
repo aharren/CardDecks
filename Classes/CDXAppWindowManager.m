@@ -333,8 +333,8 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
 
 - (void)layoutViewControllerViews {
     qltrace();
-    leftViewController.view.frame = CGRectMake(0, 0, 320, 1004);
-    rightViewController.view.frame = CGRectMake(320, 0, 768-320, 1004);
+    leftViewController.view.frame = CGRectMake(0, 0, 346, 1004);
+    rightViewController.view.frame = CGRectMake(346, 0, 768-346, 1004);
 }
 
 - (void)viewDidLoad {
@@ -408,12 +408,12 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
     if ((self = [super init])) {
         ivar_assign(splitViewController, [[CDXLeftRightSplitViewController alloc] init]);
         ivar_assign(leftNavigationController, [[UINavigationController alloc] init]);
-        [leftNavigationController setToolbarHidden:NO];
-        [leftNavigationController setNavigationBarHidden:NO];
+        [leftNavigationController setToolbarHidden:YES];
+        [leftNavigationController setNavigationBarHidden:YES];
         [splitViewController setLeftViewController:leftNavigationController];
         ivar_assign(rightNavigationController, [[UINavigationController alloc] init]);
-        [rightNavigationController setToolbarHidden:NO];
-        [rightNavigationController setNavigationBarHidden:NO];
+        [rightNavigationController setToolbarHidden:YES];
+        [rightNavigationController setNavigationBarHidden:YES];
         [splitViewController setRightViewController:rightNavigationController];
     }
     return self;

@@ -1,6 +1,6 @@
 //
 //
-// CDXCardDecksListViewController.h
+// CDXCardDeckListPadViewController.h
 //
 //
 // Copyright (c) 2009-2011 Arne Harren <ah@0xc0.de>
@@ -23,27 +23,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXCardDecks.h"
-#import "CDXListViewControllerBase.h"
+#import "CDXCardDeckListViewController.h"
 
 
-@interface CDXCardDecksListViewController : CDXListViewControllerBase {
+@interface CDXCardDeckListPadViewController : CDXCardDeckListViewController {
     
 @protected
-    CDXCardDecks *cardDecks;
-    NSUInteger lastCardDeckIndex;
-    BOOL cardDeckQuickOpen;
+    IBOutlet UIView *viewTableViewContainer;
+    IBOutlet UIView *viewTopLeftCornerView;
+    IBOutlet UINavigationItem *navigationItem;
 }
 
-- (id)initWithCardDecks:(CDXCardDecks *)cardDecks nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
-- (id)initWithCardDecks:(CDXCardDecks *)cardDecks;
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
 
-- (void)processPendingCardDeckAdds;
-- (void)processPendingCardDeckAddsAtTopDelayed;
-
-- (IBAction)addButtonPressed;
-- (IBAction)defaultsButtonPressed;
-- (IBAction)settingsButtonPressed;
 
 @end
 

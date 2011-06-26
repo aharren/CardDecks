@@ -42,6 +42,7 @@
     UIActionSheet *activeActionSheet;
 }
 
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
 
 - (IBAction)addButtonPressed;

@@ -38,13 +38,17 @@
 
 @implementation CDXCardDeckListViewController
 
-- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super initWithNibName:@"CDXCardDeckListView" bundle:nil titleText:aCardDeckViewContext.cardDeck.name backButtonText:@"Cards"])) {
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil titleText:aCardDeckViewContext.cardDeck.name backButtonText:@"Cards"])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
         ivar_assign_and_retain(cardDeck, aCardDeckViewContext.cardDeck);
         viewWasAlreadyVisible = NO;
     }
     return self;
+}
+
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
+    return [self initWithCardDeckViewContext:aCardDeckViewContext nibName:@"CDXCardDeckListView" bundle:nil];
 }
 
 - (void)dealloc {

@@ -37,11 +37,15 @@
 
 @implementation CDXCardDecksListViewController
 
-- (id)initWithCardDecks:(CDXCardDecks *)decks {
-    if ((self = [super initWithNibName:@"CDXCardDecksListView" bundle:nil titleText:@"Card Decks" backButtonText:@"Decks"])) {
+- (id)initWithCardDecks:(CDXCardDecks *)decks nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil titleText:@"Card Decks" backButtonText:@"Decks"])) {
         ivar_assign_and_retain(cardDecks, decks);
     }
     return self;
+}
+
+- (id)initWithCardDecks:(CDXCardDecks *)decks {
+    return [self initWithCardDecks:decks nibName:@"CDXCardDecksListView" bundle:nil];
 }
 
 - (void)dealloc {
