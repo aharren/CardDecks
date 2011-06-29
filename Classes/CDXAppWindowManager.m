@@ -421,7 +421,11 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
 
 - (UIViewController *)visibleViewController {
     qltrace();
-    return nil;
+    if (fullScreenViewController != nil) {
+        return fullScreenViewController;
+    } else {
+        return initialViewController;
+    }
 }
 
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
