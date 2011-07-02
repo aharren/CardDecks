@@ -100,6 +100,11 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     ivar_release_and_clear(noticeView);
 }
 
+- (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    qltrace();
+    [[self visibleViewController] presentModalViewController:viewController animated:animated];
+}
+
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
     qltrace();
     [[self visibleViewController] dismissModalViewControllerAnimated:animated];
@@ -462,6 +467,16 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
     [navigationView addSubview:splitViewController.view];
     
     [window makeKeyAndVisible];
+}
+
+- (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    qltrace();
+    [splitViewController presentModalViewController:viewController animated:animated];
+}
+
+- (void)dismissModalViewControllerAnimated:(BOOL)animated {
+    qltrace();
+    [splitViewController dismissModalViewControllerAnimated:animated];
 }
 
 - (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem {
