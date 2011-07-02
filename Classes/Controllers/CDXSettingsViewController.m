@@ -27,6 +27,7 @@
 #import "CDXKeyboardExtensions.h"
 #import "CDXSymbolsKeyboardExtension.h"
 #import "CDXAppSettings.h"
+#import "CDXDevice.h"
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -175,7 +176,7 @@
         self.tableView.tableHeaderView.backgroundColor = [UIColor clearColor];
     }
     self.navigationItem.title = [settings title];
-    if (isRootView) {
+    if (isRootView && [[CDXDevice sharedDevice] deviceUIIdiom] != CDXDeviceUIIdiomPad) {
         UIBarButtonItem* doneButton = [[[UIBarButtonItem alloc]
                                         initWithTitle:@"Done"
                                         style:UIBarButtonItemStyleDone

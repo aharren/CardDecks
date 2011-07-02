@@ -288,7 +288,7 @@
     qltrace();
     CDXAppSettings *settings = [CDXAppSettings sharedAppSettings];
     CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsButton animated:YES];
 }
 
 - (void)processSinglePendingCardDeckAdd {

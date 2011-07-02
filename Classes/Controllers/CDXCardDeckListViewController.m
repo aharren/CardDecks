@@ -68,6 +68,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    qltrace();
     [super viewWillAppear:animated];
     self.navigationItem.title = cardDeckViewContext.cardDeck.name;
     if ([viewTableView numberOfRowsInSection:1] != 0) {
@@ -76,6 +77,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    qltrace();
     [super viewDidAppear:animated];
     if ([cardDeck isShuffled]) {
         if (!viewWasAlreadyVisible) {
@@ -294,7 +296,7 @@
     qltrace();
     CDXCardDeckSettings *settings = [[[CDXCardDeckSettings alloc] initWithCardDeck:cardDeck] autorelease];
     CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsButton animated:YES];
 }
 
 - (IBAction)shuffleButtonPressed {

@@ -100,7 +100,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     ivar_release_and_clear(noticeView);
 }
 
-- (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated {
+- (void)presentModalViewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem animated:(BOOL)animated {
     qltrace();
     [[self visibleViewController] presentModalViewController:viewController animated:animated];
 }
@@ -388,7 +388,7 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
 @end
 
 
-@interface CDXAppWindowManagerPad : CDXAppWindowManager {
+@interface CDXAppWindowManagerPad : CDXAppWindowManager<UIPopoverControllerDelegate> {
     
 @protected
     CDXLeftRightSplitViewController* splitViewController;
@@ -397,6 +397,8 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
     UINavigationController *rightNavigationController;
     
     UIViewController<CDXAppWindowViewController> * initialViewController;
+    
+    UIPopoverController *modalViewControllerContainer;
 }
 
 @end
@@ -469,14 +471,33 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
     [window makeKeyAndVisible];
 }
 
-- (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated {
+- (void)presentModalViewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem animated:(BOOL)animated {
     qltrace();
-    [splitViewController presentModalViewController:viewController animated:animated];
+    if (modalViewControllerContainer != nil) {
+        [modalViewControllerContainer dismissPopoverAnimated:animated];
+        [splitViewController viewDidAppear:NO];
+        ivar_release_and_clear(modalViewControllerContainer);
+        return;
+    }
+    
+    ivar_assign(modalViewControllerContainer, [[UIPopoverController alloc] initWithContentViewController:viewController]);
+    modalViewControllerContainer.delegate = self;
+
+    [modalViewControllerContainer presentPopoverFromBarButtonItem:barButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:animated];
+}
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    qltrace();
+    ivar_release_and_clear(modalViewControllerContainer);
+    [splitViewController viewDidAppear:NO];
 }
 
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
     qltrace();
     [splitViewController dismissModalViewControllerAnimated:animated];
+    [modalViewControllerContainer dismissPopoverAnimated:animated];
+    [splitViewController viewDidAppear:NO];
+    ivar_release_and_clear(modalViewControllerContainer);
 }
 
 - (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem {

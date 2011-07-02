@@ -33,6 +33,7 @@
     IBOutlet UIToolbar *viewToolbar;
     CGFloat viewTableViewContentOffsetY;
     IBOutlet UIBarButtonItem *editButton;
+    IBOutlet UIBarButtonItem *settingsButton;
     
     UIActivityIndicatorView *activityIndicator;
     

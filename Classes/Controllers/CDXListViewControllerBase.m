@@ -47,6 +47,7 @@
     ivar_release_and_clear(viewTableView);
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(editButton);
+    ivar_release_and_clear(settingsButton);
     ivar_release_and_clear(tableCellTextFont);
     ivar_release_and_clear(tableCellTextFontAction);
     ivar_release_and_clear(tableCellTextTextColor);
@@ -103,6 +104,7 @@
     ivar_release_and_clear(viewTableView);
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(editButton);
+    ivar_release_and_clear(settingsButton);
     ivar_release_and_clear(activityIndicator);
     ivar_release_and_clear(tableCellTextFont);
     ivar_release_and_clear(tableCellTextFontAction);
