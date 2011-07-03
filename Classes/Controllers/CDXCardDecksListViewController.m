@@ -227,13 +227,17 @@
                        withObject:[cardDecks cardDeckAtIndex:indexPath.row]];
 }
 
+- (void)deleteCardDeckAtIndex:(NSUInteger)index {
+    CDXCardDeckBase *deck = [cardDecks cardDeckAtIndex:index];
+    [CDXStorage removeStorageObject:deck.cardDeck deferred:NO];
+    
+    [cardDecks removeCardDeckAtIndex:index];
+    [cardDecks updateStorageObjectDeferred:NO];
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        CDXCardDeckBase *deck = [cardDecks cardDeckAtIndex:indexPath.row];
-        [CDXStorage removeStorageObject:deck.cardDeck deferred:NO];
-        
-        [cardDecks removeCardDeckAtIndex:indexPath.row];
-        [cardDecks updateStorageObjectDeferred:NO];
+        [self deleteCardDeckAtIndex:indexPath.row];
         
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self updateToolbarButtons];

@@ -128,6 +128,15 @@
     }
 }
 
+- (void)deleteCardDeckAtIndex:(NSUInteger)index {
+    CDXCardDeckBase *deck = [cardDecks cardDeckAtIndex:index];
+    if (deck == currentCardDeck) {
+        ivar_release_and_clear(currentCardDeck);
+        [[CDXAppWindowManager sharedAppWindowManager] popToInitialViewController];
+    }
+    [super deleteCardDeckAtIndex:index];
+}
+
 - (void)pushCardDeckListViewControllerWithCardDeckBase:(CDXCardDeckBase *)deckBase {
     qltrace();
     if (deckBase == nil) {

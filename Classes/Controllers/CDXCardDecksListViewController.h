@@ -45,5 +45,7 @@
 - (IBAction)defaultsButtonPressed;
 - (IBAction)settingsButtonPressed;
 
+- (void)deleteCardDeckAtIndex:(NSUInteger)index;
+
 @end
 
