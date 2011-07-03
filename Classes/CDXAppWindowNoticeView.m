@@ -52,7 +52,7 @@
     
     CGFloat width = 156;
     CGFloat height = 156;
-    CGRect bounds = [UIScreen mainScreen].bounds;
+    CGRect bounds = self.superview.bounds;
     self.frame = CGRectMake((bounds.size.width - width)/2, (bounds.size.height - height)/2 + 18, width, height);
 }
 
@@ -71,8 +71,8 @@
     [UIView commitAnimations];
 }
 
-- (void)showImageNamed:(NSString *)name text:(NSString *)aText timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation window:(UIWindow *)window {
-    [window addSubview:self];
+- (void)showImageNamed:(NSString *)name text:(NSString *)aText timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation view:(UIView *)view {
+    [view addSubview:self];
     self.transform = [CDXAppWindowManager transformForDeviceOrientation:orientation];
     imageView.image = [UIImage imageNamed:name];
     text.text = aText;

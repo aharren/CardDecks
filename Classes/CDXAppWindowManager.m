@@ -93,10 +93,10 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     }
 }
 
-- (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation {
+- (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation view:(UIView*)viewOrNil {
     qltrace();
     [[NSBundle mainBundle] loadNibNamed:@"CDXAppWindowNoticeView" owner:self options:nil];
-    [noticeView showImageNamed:name text:text timeInterval:timeInterval orientation:orientation window:window];
+    [noticeView showImageNamed:name text:text timeInterval:timeInterval orientation:orientation view:viewOrNil != nil ? viewOrNil : window];
     ivar_release_and_clear(noticeView);
 }
 
