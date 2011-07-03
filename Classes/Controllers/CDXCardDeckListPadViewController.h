@@ -34,6 +34,7 @@
     IBOutlet UINavigationItem *navigationItem;
     
     UIImage *tableCellBackgroundImage;
+    UIImage *tableCellBackgroundImageAlt;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
