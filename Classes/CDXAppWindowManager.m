@@ -396,7 +396,8 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
     UINavigationController *leftNavigationController;
     UINavigationController *rightNavigationController;
     
-    UIViewController<CDXAppWindowViewController> * initialViewController;
+    UIViewController<CDXAppWindowViewController> * initialLeftViewController;
+    UIViewController<CDXAppWindowViewController> * initialRightViewController;
     
     UIPopoverController *modalViewControllerContainer;
 }
@@ -431,20 +432,25 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
     if (fullScreenViewController != nil) {
         return fullScreenViewController;
     } else {
-        return initialViewController;
+        return initialLeftViewController;
     }
 }
 
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
     qltrace();
-    if (initialViewController == nil) {
-        ivar_assign_and_retain(initialViewController, viewController);
+    if (initialLeftViewController == nil) {
+        ivar_assign_and_retain(initialLeftViewController, viewController);
         [leftNavigationController pushViewController:viewController animated:NO];
     } else {
         if ([viewController wantsFullScreenLayout]) {
             [self pushFullScreenViewController:viewController animated:animated];
         } else {
-            [rightNavigationController setViewControllers:[NSArray arrayWithObject:viewController] animated:NO];
+            if (initialRightViewController == nil) {
+                ivar_assign_and_retain(initialRightViewController, viewController);
+                [rightNavigationController setViewControllers:[NSArray arrayWithObject:viewController] animated:NO];
+            } else {
+                [rightNavigationController setViewControllers:[NSArray arrayWithObjects:initialRightViewController, viewController, nil] animated:NO];
+            }
         }
     }
 }
@@ -453,11 +459,17 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
     qltrace();
     if (fullScreenViewController != nil) {
         [self popFullScreenViewControllerAnimated:animated];
+    } else {
+        [rightNavigationController popToRootViewControllerAnimated:NO];
     }
 }
 
 - (void)popToInitialViewController {
     qltrace();
+    if (fullScreenViewController != nil) {
+        [self popViewControllerAnimated:NO];
+    }
+    [rightNavigationController popToRootViewControllerAnimated:NO];
 }
 
 - (void)makeWindowKeyAndVisible {
