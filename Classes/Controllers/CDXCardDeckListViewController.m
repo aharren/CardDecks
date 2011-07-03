@@ -56,6 +56,7 @@
     ivar_release_and_clear(cardDeck);
     ivar_release_and_clear(shuffleButton);
     ivar_release_and_clear(actionButton);
+    ivar_release_and_clear(addButton);
     ivar_release_and_clear(activeActionSheet);
     [super dealloc];
 }
@@ -63,6 +64,7 @@
 - (void)viewDidUnload {
     ivar_release_and_clear(shuffleButton);
     ivar_release_and_clear(actionButton);
+    ivar_release_and_clear(addButton);
     ivar_release_and_clear(activeActionSheet);
     [super viewDidUnload];
 }

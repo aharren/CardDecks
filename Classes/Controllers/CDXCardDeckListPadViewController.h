@@ -32,6 +32,8 @@
     IBOutlet UIView *viewTableViewContainer;
     IBOutlet UINavigationItem *navigationItem;
     
+    IBOutlet UIView *viewNoTableView;
+    
     UIImage *tableCellBackgroundImage;
     UIImage *tableCellBackgroundImageAlt;
 }

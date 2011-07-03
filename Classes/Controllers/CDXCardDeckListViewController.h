@@ -37,6 +37,7 @@
     
     IBOutlet UIBarButtonItem *shuffleButton;
     IBOutlet UIBarButtonItem *actionButton;
+    IBOutlet UIBarButtonItem *addButton;
     BOOL viewWasAlreadyVisible;
     
     UIActionSheet *activeActionSheet;

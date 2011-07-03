@@ -47,6 +47,7 @@
 - (void)dealloc {
     ivar_release_and_clear(viewTableViewContainer);
     ivar_release_and_clear(navigationItem);
+    ivar_release_and_clear(viewNoTableView);
     ivar_release_and_clear(tableCellBackgroundImage);
     ivar_release_and_clear(tableCellBackgroundImageAlt);
     [super dealloc];
@@ -59,6 +60,8 @@
     viewTableViewContainer.layer.cornerRadius = 6;
     viewTableView.backgroundView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff] height:1024]] autorelease];
     
+    viewTableView.hidden = cardDeck == nil;
+    viewNoTableView.hidden = !viewTableView.hidden;
     navigationItem.title = cardDeck.name;
     
     ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf9 green:0xf9 blue:0xf9 alpha:0xff] height:44]);
@@ -70,9 +73,21 @@
     qltrace();
     ivar_release_and_clear(viewTableViewContainer);
     ivar_release_and_clear(navigationItem);
+    ivar_release_and_clear(viewNoTableView);
     ivar_release_and_clear(tableCellBackgroundImage);
     ivar_release_and_clear(tableCellBackgroundImageAlt);
     [super viewDidUnload];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (!viewNoTableView.hidden) {
+        settingsButton.enabled = YES;
+        actionButton.enabled = YES;
+        shuffleButton.enabled = YES;
+        editButton.enabled = YES;
+        addButton.enabled = YES;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

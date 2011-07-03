@@ -27,6 +27,7 @@
 #import "CDXCardDeckURLSerializer.h"
 #import "CDXCardDecksListViewController.h"
 #import "CDXCardDecksListPadViewController.h"
+#import "CDXCardDeckListPadViewController.h"
 #import "CDXKeyboardExtensions.h"
 #import "CDXDictionarySerializerUtils.h"
 #import "CDXCardDecks.h"
@@ -204,14 +205,16 @@
     
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
     
-    UIViewController *vc = nil;
     if ([[CDXDevice sharedDevice] deviceUIIdiom] == CDXDeviceUIIdiomPhone) {
-        vc = [[[CDXCardDecksListViewController alloc] initWithCardDecks:cardDecks] autorelease];
+        UIViewController *vc = [[[CDXCardDecksListViewController alloc] initWithCardDecks:cardDecks] autorelease];
+        [appWindowManager pushViewController:vc animated:NO];
     } else {
-        vc = [[[CDXCardDecksListPadViewController alloc] initWithCardDecks:cardDecks] autorelease];
+        UIViewController *vcl = [[[CDXCardDecksListPadViewController alloc] initWithCardDecks:cardDecks] autorelease];
+        [appWindowManager pushViewController:vcl animated:NO];
+        UIViewController *vcr = [[[CDXCardDeckListPadViewController alloc] initWithCardDeckViewContext:nil] autorelease];
+        [appWindowManager pushViewController:vcr animated:NO];
     }
     
-    [appWindowManager pushViewController:vc animated:NO];
     [appWindowManager makeWindowKeyAndVisible];
 }
 
