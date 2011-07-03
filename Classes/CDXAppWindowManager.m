@@ -444,7 +444,7 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
         if ([viewController wantsFullScreenLayout]) {
             [self pushFullScreenViewController:viewController animated:animated];
         } else {
-            [rightNavigationController setViewControllers:[NSArray arrayWithObject:viewController] animated:animated];
+            [rightNavigationController setViewControllers:[NSArray arrayWithObject:viewController] animated:NO];
         }
     }
 }
