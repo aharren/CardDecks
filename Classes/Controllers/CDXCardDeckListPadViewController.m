@@ -63,7 +63,7 @@
     
     navigationItem.title = cardDeck.name;
     
-    ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf7 green:0xf7 blue:0xf7 alpha:0xff] height:44]);
+    ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf9 green:0xf9 blue:0xf9 alpha:0xff] height:44]);
     ivar_assign_and_retain(tableCellBackgroundColorAction, [UIColor clearColor]);
 }
 
