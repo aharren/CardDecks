@@ -47,6 +47,8 @@
 - (void)dealloc {
     ivar_release_and_clear(viewTableViewContainer);
     ivar_release_and_clear(tableCellBackgroundImage);
+    ivar_release_and_clear(tableCellBackgroundImageAlt);
+    ivar_release_and_clear(currentCardDeck);
     [super dealloc];
 }
 
@@ -58,6 +60,7 @@
     viewTableView.backgroundView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff] height:1024]] autorelease];
     
     ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf9 green:0xf9 blue:0xf9 alpha:0xff] height:44]);
+    ivar_assign_and_retain(tableCellBackgroundImageAlt, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff] bottomColor:[CDXColor colorWithRed:0xe9 green:0xe9 blue:0xe9 alpha:0xff] height:44]);
     ivar_assign_and_retain(tableCellBackgroundColorAction, [UIColor clearColor]);
 }
 
@@ -65,6 +68,7 @@
     qltrace();
     ivar_release_and_clear(viewTableViewContainer);
     ivar_release_and_clear(tableCellBackgroundImage);
+    ivar_release_and_clear(tableCellBackgroundImageAlt);
     [super viewDidUnload];
 }
 
@@ -79,6 +83,17 @@
     cell.textLabel.backgroundColor = clearColor;
     cell.detailTextLabel.backgroundColor = clearColor;
     cell.backgroundColor = clearColor;
+    BOOL selected = NO;
+    if (indexPath.section == 1) {
+        selected = [cardDecks cardDeckAtIndex:indexPath.row] == currentCardDeck;
+    } else if (indexPath.section == 2) {
+        selected = cardDecks.cardDeckDefaults == currentCardDeck;
+    }
+    if (selected) {
+        cell.backgroundView	= [[[UIImageView alloc] initWithImage:tableCellBackgroundImageAlt] autorelease];
+    } else {
+        cell.backgroundView	= [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
@@ -91,7 +106,7 @@
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifierSection1] autorelease];
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.backgroundView	= [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
-                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             return cell;
         }
@@ -103,7 +118,7 @@
                 cell.textLabel.textAlignment = UITextAlignmentCenter;
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.backgroundView	= [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
-                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
             return cell;
@@ -114,6 +129,7 @@
 }
 
 - (void)pushCardDeckListViewControllerWithCardDeckBase:(CDXCardDeckBase *)deckBase {
+    qltrace();
     if (deckBase == nil) {
         return;
     }
@@ -123,9 +139,13 @@
         CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
         CDXCardDeckListPadViewController *vc = [[[CDXCardDeckListPadViewController alloc] initWithCardDeckViewContext:context] autorelease];
         [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+        
+        ivar_assign_and_retain(currentCardDeck, deckBase);
+        [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+        [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
     }
     NSIndexPath *indexPath = [viewTableView indexPathForSelectedRow];
-    [viewTableView deselectRowAtIndexPath:indexPath animated:YES];
+    [viewTableView deselectRowAtIndexPath:indexPath animated:NO];
     [self performBlockingSelectorEnd];
 }
 
