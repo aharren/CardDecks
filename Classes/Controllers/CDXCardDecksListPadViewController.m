@@ -72,9 +72,28 @@
     [super viewDidUnload];
 }
 
+- (void)updateNotificationForCardDeck:(id)object {
+    qltrace();
+    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+    [cardDecks updateStorageObjectDeferred:YES];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
+    qltrace();
     [super viewWillAppear:animated];
     cardDeckQuickOpen = NO;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    qltrace();
+    [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationForCardDeck:) name:CDXCardDeckUpdateNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    qltrace();
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewWillDisappear:animated];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
