@@ -173,8 +173,8 @@
 - (CDXCardDecks *)cardDecks {
     NSUInteger version = 0;
     CDXCardDecks *decks = [CDXCardDecks cardDecksFromStorageObjectNamed:@"Main.CardDecksList" version:&version];
-    if (decks == nil) {
-        // main list not found, create a new one
+    if (decks == nil || [decks cardDecksCount] == 0) {
+        // main list not found or empty, create a new one
         version = 0;
         decks = [[[CDXCardDecks alloc] init] autorelease];
         decks.file = @"Main.CardDecksList";
