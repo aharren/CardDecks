@@ -36,6 +36,8 @@
     
     UIImage *tableCellBackgroundImage;
     UIImage *tableCellBackgroundImageAlt;
+
+    BOOL ignoreCardDeckUpdateNotifications;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;

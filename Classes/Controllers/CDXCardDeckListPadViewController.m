@@ -81,8 +81,10 @@
 
 - (void)updateNotificationForCardDeck:(id)object {
     qltrace();
-    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
-    self.navigationItem.title = cardDeck.name;
+    if (!ignoreCardDeckUpdateNotifications) {
+        [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+        self.navigationItem.title = cardDeck.name;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -100,11 +102,14 @@
 - (void)viewDidAppear:(BOOL)animated {
     qltrace();
     [super viewDidAppear:animated];
+    ignoreCardDeckUpdateNotifications = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationForCardDeck:) name:CDXCardDeckUpdateNotification object:cardDeck];
+    ignoreCardDeckUpdateNotifications = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     qltrace();
+    ignoreCardDeckUpdateNotifications = YES;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewWillDisappear:animated];
 }
@@ -155,6 +160,24 @@
         default:
             return nil;
     }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    ignoreCardDeckUpdateNotifications = YES;
+    [super tableView:tableView commitEditingStyle:editingStyle forRowAtIndexPath:indexPath];
+    ignoreCardDeckUpdateNotifications = NO;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+    ignoreCardDeckUpdateNotifications = YES;
+    [super tableView:tableView moveRowAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
+    ignoreCardDeckUpdateNotifications = NO;
+}
+
+- (IBAction)addButtonPressedDelayed {
+    ignoreCardDeckUpdateNotifications = YES;
+    [super addButtonPressedDelayed];
+    ignoreCardDeckUpdateNotifications = NO;
 }
 
 @end
