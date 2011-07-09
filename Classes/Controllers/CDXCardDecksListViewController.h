@@ -38,6 +38,7 @@
 - (id)initWithCardDecks:(CDXCardDecks *)cardDecks nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 - (id)initWithCardDecks:(CDXCardDecks *)cardDecks;
 
+- (void)processSinglePendingCardDeckAdd;
 - (void)processPendingCardDeckAdds;
 - (void)processPendingCardDeckAddsAtTopDelayed;
 

@@ -461,6 +461,8 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
         [self popFullScreenViewControllerAnimated:animated];
     } else {
         [rightNavigationController popToRootViewControllerAnimated:NO];
+        [initialLeftViewController viewWillAppear:NO];
+        [initialLeftViewController viewDidAppear:NO];
     }
 }
 
@@ -470,6 +472,8 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
         [self popViewControllerAnimated:NO];
     }
     [rightNavigationController popToRootViewControllerAnimated:NO];
+    [initialLeftViewController viewWillAppear:NO];
+    [initialLeftViewController viewDidAppear:NO];
 }
 
 - (void)makeWindowKeyAndVisible {
