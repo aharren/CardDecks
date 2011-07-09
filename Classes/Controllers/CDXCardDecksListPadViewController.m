@@ -180,5 +180,12 @@
     [self performBlockingSelectorEnd];
 }
 
+- (void)processPendingCardDeckAddsAtTopDelayed {
+    [[CDXAppWindowManager sharedAppWindowManager] popToInitialViewController];
+    ivar_release_and_clear(currentCardDeck);
+    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+    [super processPendingCardDeckAddsAtTopDelayed];
+}
+
 @end
 
