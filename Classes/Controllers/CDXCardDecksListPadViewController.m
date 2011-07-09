@@ -161,6 +161,9 @@
     if (deckBase == nil) {
         return;
     }
+    if (deckBase == currentCardDeck) {
+        return;
+    }
     
     CDXCardDeck *deck = deckBase.cardDeck;
     if (deck != nil) {
