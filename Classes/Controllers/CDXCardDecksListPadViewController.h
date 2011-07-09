@@ -30,6 +30,7 @@
     
 @protected
     IBOutlet UIView *viewTableViewContainer;
+    IBOutlet UINavigationItem *viewNavigationItem;
     
     CDXCardDeckHolder *currentCardDeck;
 

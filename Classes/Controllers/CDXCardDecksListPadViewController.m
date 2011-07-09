@@ -46,6 +46,7 @@
 
 - (void)dealloc {
     ivar_release_and_clear(viewTableViewContainer);
+    ivar_release_and_clear(viewNavigationItem);
     ivar_release_and_clear(tableCellBackgroundImage);
     ivar_release_and_clear(tableCellBackgroundImageAlt);
     ivar_release_and_clear(currentCardDeck);
@@ -62,11 +63,15 @@
     ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf9 green:0xf9 blue:0xf9 alpha:0xff] height:44]);
     ivar_assign_and_retain(tableCellBackgroundImageAlt, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff] bottomColor:[CDXColor colorWithRed:0xe9 green:0xe9 blue:0xe9 alpha:0xff] height:44]);
     ivar_assign_and_retain(tableCellBackgroundColorAction, [UIColor clearColor]);
+    
+    // steal the activity indicator
+    viewNavigationItem.rightBarButtonItem = self.navigationItem.rightBarButtonItem;
 }
 
 - (void)viewDidUnload {
     qltrace();
     ivar_release_and_clear(viewTableViewContainer);
+    ivar_release_and_clear(viewNavigationItem);
     ivar_release_and_clear(tableCellBackgroundImage);
     ivar_release_and_clear(tableCellBackgroundImageAlt);
     [super viewDidUnload];
