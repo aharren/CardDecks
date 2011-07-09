@@ -74,8 +74,10 @@
 
 - (void)updateNotificationForCardDeck:(id)object {
     qltrace();
-    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
-    [cardDecks updateStorageObjectDeferred:YES];
+    if (!ignoreCardDeckUpdateNotifications) {
+        [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+        [cardDecks updateStorageObjectDeferred:YES];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -87,11 +89,14 @@
 - (void)viewDidAppear:(BOOL)animated {
     qltrace();
     [super viewDidAppear:animated];
+    ignoreCardDeckUpdateNotifications = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationForCardDeck:) name:CDXCardDeckUpdateNotification object:nil];
+    ignoreCardDeckUpdateNotifications = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     qltrace();
+    ignoreCardDeckUpdateNotifications = YES;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewWillDisappear:animated];
 }
@@ -148,12 +153,14 @@
 }
 
 - (void)deleteCardDeckAtIndex:(NSUInteger)index {
+    ignoreCardDeckUpdateNotifications = YES;
     CDXCardDeckBase *deck = [cardDecks cardDeckAtIndex:index];
     if (deck == currentCardDeck) {
         ivar_release_and_clear(currentCardDeck);
         [[CDXAppWindowManager sharedAppWindowManager] popToInitialViewController];
     }
     [super deleteCardDeckAtIndex:index];
+    ignoreCardDeckUpdateNotifications = NO;
 }
 
 - (void)pushCardDeckListViewControllerWithCardDeckBase:(CDXCardDeckBase *)deckBase {
