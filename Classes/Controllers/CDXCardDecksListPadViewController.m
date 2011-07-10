@@ -88,8 +88,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     qltrace();
     [super viewWillAppear:animated];
-    ivar_release_and_clear(currentCardDeck);
-    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+    if (!ignoreCardDeckUpdateNotifications) {
+        ivar_release_and_clear(currentCardDeck);
+        [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+    }
     cardDeckQuickOpen = NO;
 }
 
