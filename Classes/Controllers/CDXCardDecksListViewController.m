@@ -155,32 +155,30 @@
 }
 
 - (void)pushCardDeckListViewControllerWithCardDeckBase:(CDXCardDeckBase *)deckBase {
-    if (deckBase == nil) {
-        return;
+    if (deckBase != nil) {
+        CDXCardDeck *deck = deckBase.cardDeck;
+        if (deck != nil) {
+            CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
+            CDXCardDeckListViewController *vc = [[[CDXCardDeckListViewController alloc] initWithCardDeckViewContext:context] autorelease];
+            [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+        }
     }
     
-    CDXCardDeck *deck = deckBase.cardDeck;
-    if (deck != nil) {
-        CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
-        CDXCardDeckListViewController *vc = [[[CDXCardDeckListViewController alloc] initWithCardDeckViewContext:context] autorelease];
-        [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
-    }
     NSIndexPath *indexPath = [viewTableView indexPathForSelectedRow];
     [viewTableView deselectRowAtIndexPath:indexPath animated:YES];
     [self performBlockingSelectorEnd];
 }
 
 - (void)pushCardDeckCardViewControllerWithCardDeckBase:(CDXCardDeckBase *)deckBase {
-    if (deckBase == nil) {
-        return;
+    if (deckBase != nil) {
+        CDXCardDeck *deck = deckBase.cardDeck;
+        if (deck != nil && [deck cardsCount] != 0) {
+            CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
+            CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:context] autorelease];
+            [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+        }
     }
     
-    CDXCardDeck *deck = deckBase.cardDeck;
-    if (deck != nil && [deck cardsCount] != 0) {
-        CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
-        CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:context] autorelease];
-        [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
-    }
     NSIndexPath *indexPath = [viewTableView indexPathForSelectedRow];
     [viewTableView deselectRowAtIndexPath:indexPath animated:YES];
     [self performBlockingSelectorEnd];

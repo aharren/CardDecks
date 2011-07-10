@@ -172,23 +172,19 @@
 
 - (void)pushCardDeckListViewControllerWithCardDeckBase:(CDXCardDeckBase *)deckBase {
     qltrace();
-    if (deckBase == nil) {
-        return;
-    }
-    if (deckBase == currentCardDeck) {
-        return;
+    if (deckBase != nil && deckBase != currentCardDeck) {
+        CDXCardDeck *deck = deckBase.cardDeck;
+        if (deck != nil) {
+            CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
+            CDXCardDeckListPadViewController *vc = [[[CDXCardDeckListPadViewController alloc] initWithCardDeckViewContext:context] autorelease];
+            [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+            
+            ivar_assign_and_retain(currentCardDeck, deckBase);
+            [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+            [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+        }
     }
     
-    CDXCardDeck *deck = deckBase.cardDeck;
-    if (deck != nil) {
-        CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
-        CDXCardDeckListPadViewController *vc = [[[CDXCardDeckListPadViewController alloc] initWithCardDeckViewContext:context] autorelease];
-        [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
-        
-        ivar_assign_and_retain(currentCardDeck, deckBase);
-        [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
-        [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
-    }
     NSIndexPath *indexPath = [viewTableView indexPathForSelectedRow];
     [viewTableView deselectRowAtIndexPath:indexPath animated:NO];
     [self performBlockingSelectorEnd];
