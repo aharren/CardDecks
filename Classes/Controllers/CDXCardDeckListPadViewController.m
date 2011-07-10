@@ -112,6 +112,7 @@
     ignoreCardDeckUpdateNotifications = YES;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewWillDisappear:animated];
+    [CDXStorage drainAllDeferredActions];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
