@@ -138,6 +138,8 @@
 		E0F2B34611955B730092D11B /* lcl.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D8C7FD1172255F00356C2C /* lcl.m */; };
 		E0F2B3C11195617A0092D11B /* CDXCardsViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3C01195617A0092D11B /* CDXCardsViewBase.m */; };
 		E0F2B3F7119563910092D11B /* CDXCardsStackSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */; };
+		E0F3AEDB13EED59B00B253ED /* CDXCardDeckCardEditPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F3AEDA13EED59B00B253ED /* CDXCardDeckCardEditPadViewController.m */; };
+		E0F3AEE013EEDA5800B253ED /* CDXCardDeckCardEditPadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0F3AEDF13EEDA5800B253ED /* CDXCardDeckCardEditPadView.xib */; };
 		E0F7A50A11B158DA00CD786B /* CDXKeyboardExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */; };
 		E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */; };
 		E0FAC00B11C024CD00CDA558 /* CDXDictionarySerializerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FAC00A11C024CD00CDA558 /* CDXDictionarySerializerUtils.m */; };
@@ -341,6 +343,9 @@
 		E0F2B3C01195617A0092D11B /* CDXCardsViewBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsViewBase.m; path = Classes/Views/CDXCardsViewBase.m; sourceTree = "<group>"; };
 		E0F2B3F5119563910092D11B /* CDXCardsStackSwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsStackSwipeView.h; path = Classes/Views/CDXCardsStackSwipeView.h; sourceTree = "<group>"; };
 		E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsStackSwipeView.m; path = Classes/Views/CDXCardsStackSwipeView.m; sourceTree = "<group>"; };
+		E0F3AED913EED59B00B253ED /* CDXCardDeckCardEditPadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckCardEditPadViewController.h; path = Classes/Controllers/CDXCardDeckCardEditPadViewController.h; sourceTree = "<group>"; };
+		E0F3AEDA13EED59B00B253ED /* CDXCardDeckCardEditPadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckCardEditPadViewController.m; path = Classes/Controllers/CDXCardDeckCardEditPadViewController.m; sourceTree = "<group>"; };
+		E0F3AEDF13EEDA5800B253ED /* CDXCardDeckCardEditPadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CDXCardDeckCardEditPadView.xib; path = UserInterfaces/CDXCardDeckCardEditPadView.xib; sourceTree = "<group>"; };
 		E0F7A50811B158DA00CD786B /* CDXKeyboardExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXKeyboardExtensions.h; path = Classes/Keyboards/CDXKeyboardExtensions.h; sourceTree = "<group>"; };
 		E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXKeyboardExtensions.m; path = Classes/Keyboards/CDXKeyboardExtensions.m; sourceTree = "<group>"; };
 		E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = KeyboardExtensionsBackground.png; path = Images/KeyboardExtensionsBackground.png; sourceTree = "<group>"; };
@@ -451,6 +456,8 @@
 				E0CCC73F1170DC600040D222 /* CDXCardDeckCardViewController.m */,
 				E0A1BFFF11A82BE100911848 /* CDXCardDeckCardEditViewController.h */,
 				E0A1C00011A82BE100911848 /* CDXCardDeckCardEditViewController.m */,
+				E0F3AED913EED59B00B253ED /* CDXCardDeckCardEditPadViewController.h */,
+				E0F3AEDA13EED59B00B253ED /* CDXCardDeckCardEditPadViewController.m */,
 				E0DDD80E11B26807004CECCB /* CDXListViewControllerBase.h */,
 				E0DDD80F11B26807004CECCB /* CDXListViewControllerBase.m */,
 				E02320F5117093720043D6CF /* CDXCardDeckListViewController.h */,
@@ -565,6 +572,7 @@
 				E03B10B811C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib */,
 				E0CCC7391170DC120040D222 /* CDXCardDeckCardView.xib */,
 				E0A1C00211A82C5600911848 /* CDXCardDeckCardEditView.xib */,
+				E0F3AEDF13EEDA5800B253ED /* CDXCardDeckCardEditPadView.xib */,
 				E02320F8117093870043D6CF /* CDXCardDeckListView.xib */,
 				E03B803913B7918F00941540 /* CDXCardDeckListPadView.xib */,
 				E032F1671169DDC10033980C /* CDXCardDecksListView.xib */,
@@ -869,6 +877,7 @@
 				E022CDF413B63E5D000FE10A /* CDXCardDecksListPadView.xib in Resources */,
 				E03B803A13B7918F00941540 /* CDXCardDeckListPadView.xib in Resources */,
 				E0CDB1FE13B7B3FD0079B722 /* Default~ipad.png in Resources */,
+				E0F3AEE013EEDA5800B253ED /* CDXCardDeckCardEditPadView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -951,6 +960,7 @@
 				E023ACEC11F4D3B10051B1E2 /* CDXDevice.m in Sources */,
 				E022CDF813B64218000FE10A /* CDXCardDecksListPadViewController.m in Sources */,
 				E0CDB1F913B793550079B722 /* CDXCardDeckListPadViewController.m in Sources */,
+				E0F3AEDB13EED59B00B253ED /* CDXCardDeckCardEditPadViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

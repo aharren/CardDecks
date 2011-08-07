@@ -31,14 +31,20 @@
 
 @implementation CDXCardDeckCardEditViewController
 
-- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext editDefaults:(BOOL)editDefaults {
-    if ((self = [super initWithNibName:@"CDXCardDeckCardEditView" bundle:nil])) {
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext editDefaults:(BOOL)editDefaults nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
         ivar_assign_and_retain(cardDeck, cardDeckViewContext.cardDeck);
         self.hidesBottomBarWhenPushed = YES;
+        cardViewUsePreview = YES;
+        textUpdateColors = YES;
         editingDefaults = editDefaults;
     }
     return self;
+}
+
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext editDefaults:(BOOL)editDefaults {
+    return [self initWithCardDeckViewContext:aCardDeckViewContext editDefaults:editDefaults nibName:@"CDXCardDeckCardEditView" bundle:nil];
 }
 
 - (void)dealloc {
@@ -62,10 +68,12 @@
 }
 
 - (void)updateCardPreview {
-    CDXCard *card = [self currentCard];
-    text.textColor = [card.textColor uiColor];
-    text.backgroundColor = [card.backgroundColor uiColor];
-    [cardView setCard:[self currentCard] size:cardViewSize deviceOrientation:UIDeviceOrientationPortrait preview:YES];
+    if (textUpdateColors) {
+        CDXCard *card = [self currentCard];
+        text.textColor = [card.textColor uiColor];
+        text.backgroundColor = [card.backgroundColor uiColor];
+    }
+    [cardView setCard:[self currentCard] size:cardViewSize deviceOrientation:UIDeviceOrientationPortrait preview:cardViewUsePreview];
     cardViewScrollView.contentSize = cardViewSize;
 }
 

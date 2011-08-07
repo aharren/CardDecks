@@ -294,9 +294,11 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
 
 - (void)reset {
     [self popToRootViewControllerAnimated:NO];
-    CDXSymbolsKeyboardExtensionTableViewController *tvc = (CDXSymbolsKeyboardExtensionTableViewController *)[[self viewControllers] objectAtIndex:0];
-    [[tvc tableView] reloadData];
-    [[tvc tableView] scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    if ([[self viewControllers] count] > 0) {
+        CDXSymbolsKeyboardExtensionTableViewController *tvc = (CDXSymbolsKeyboardExtensionTableViewController *)[[self viewControllers] objectAtIndex:0];
+        [[tvc tableView] reloadData];
+        [[tvc tableView] scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    }
 }
 
 @end

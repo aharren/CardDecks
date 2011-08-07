@@ -39,6 +39,8 @@
     IBOutlet UIScrollView *cardViewScrollView;
     IBOutlet CDXCardView *cardView;
     CGSize cardViewSize;
+    BOOL cardViewUsePreview;
+    BOOL textUpdateColors;
     
     IBOutlet UIBarButtonItem *viewButtonsUpDownBarButtonItem;
     IBOutlet UISegmentedControl *viewButtonsUpDown;
@@ -51,7 +53,11 @@
     UIActionSheet *activeActionSheet;
 }
 
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext editDefaults:(BOOL)editDefaults nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext editDefaults:(BOOL)editDefaults;
+
+- (CDXCard *)currentCard;
+- (void)updateCardPreview;
 
 - (IBAction)upDownButtonPressed;
 

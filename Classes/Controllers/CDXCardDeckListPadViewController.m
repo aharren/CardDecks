@@ -26,6 +26,7 @@
 #import "CDXCardDeckListPadViewController.h"
 #import "CDXCardDeckCardViewController.h"
 #import "CDXCardDeckListViewController.h"
+#import "CDXCardDeckCardEditPadViewController.h"
 #import "CDXImageFactory.h"
 #import "CDXAppSettings.h"
 #import "CDXSettingsViewController.h"
@@ -179,6 +180,18 @@
     ignoreCardDeckUpdateNotifications = YES;
     [super addButtonPressedDelayed];
     ignoreCardDeckUpdateNotifications = NO;
+}
+
+- (void)pushCardDeckEditViewController {
+    CDXCardDeckCardEditPadViewController *vc = [[[CDXCardDeckCardEditPadViewController alloc] initWithCardDeckViewContext:cardDeckViewContext editDefaults:NO] autorelease];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc animated:YES];
+    [self performBlockingSelectorEnd];
+}
+
+- (void)pushCardDeckEditViewControllerForDefaults {
+    CDXCardDeckCardEditPadViewController *vc = [[[CDXCardDeckCardEditPadViewController alloc] initWithCardDeckViewContext:cardDeckViewContext editDefaults:YES] autorelease];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc animated:YES];
+    [self performBlockingSelectorEnd];
 }
 
 @end
