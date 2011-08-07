@@ -116,10 +116,7 @@
     }
     
     // scaling
-    CGFloat scale = MIN(size.width, size.height) / 320.0;
-    if (scale > 1) {
-        scale = scale * 0.95;
-    }
+    CGFloat scale = size.height / 480.0;
     
     // set size
     self.frame = CGRectMake(0, 0, size.width, size.height);
