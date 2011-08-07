@@ -142,6 +142,7 @@
 		E0F3AEE013EEDA5800B253ED /* CDXCardDeckCardEditPadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0F3AEDF13EEDA5800B253ED /* CDXCardDeckCardEditPadView.xib */; };
 		E0F3AEE613EF005400B253ED /* KeyboardExtensionsBackground~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F3AEE513EF005400B253ED /* KeyboardExtensionsBackground~ipad.png */; };
 		E0F3AEE913EF03BA00B253ED /* CDXColorKeyboardExtensionView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0F3AEE713EF03B900B253ED /* CDXColorKeyboardExtensionView~ipad.xib */; };
+		E0F3AEEA13EF03BA00B253ED /* CDXTextKeyboardExtensionView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0F3AEE813EF03BA00B253ED /* CDXTextKeyboardExtensionView~ipad.xib */; };
 		E0F7A50A11B158DA00CD786B /* CDXKeyboardExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */; };
 		E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */; };
 		E0FAC00B11C024CD00CDA558 /* CDXDictionarySerializerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FAC00A11C024CD00CDA558 /* CDXDictionarySerializerUtils.m */; };
@@ -350,6 +351,7 @@
 		E0F3AEDF13EEDA5800B253ED /* CDXCardDeckCardEditPadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CDXCardDeckCardEditPadView.xib; path = UserInterfaces/CDXCardDeckCardEditPadView.xib; sourceTree = "<group>"; };
 		E0F3AEE513EF005400B253ED /* KeyboardExtensionsBackground~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "KeyboardExtensionsBackground~ipad.png"; path = "Images/KeyboardExtensionsBackground~ipad.png"; sourceTree = "<group>"; };
 		E0F3AEE713EF03B900B253ED /* CDXColorKeyboardExtensionView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "CDXColorKeyboardExtensionView~ipad.xib"; path = "UserInterfaces/CDXColorKeyboardExtensionView~ipad.xib"; sourceTree = "<group>"; };
+		E0F3AEE813EF03BA00B253ED /* CDXTextKeyboardExtensionView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "CDXTextKeyboardExtensionView~ipad.xib"; path = "UserInterfaces/CDXTextKeyboardExtensionView~ipad.xib"; sourceTree = "<group>"; };
 		E0F7A50811B158DA00CD786B /* CDXKeyboardExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXKeyboardExtensions.h; path = Classes/Keyboards/CDXKeyboardExtensions.h; sourceTree = "<group>"; };
 		E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXKeyboardExtensions.m; path = Classes/Keyboards/CDXKeyboardExtensions.m; sourceTree = "<group>"; };
 		E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = KeyboardExtensionsBackground.png; path = Images/KeyboardExtensionsBackground.png; sourceTree = "<group>"; };
@@ -584,6 +586,7 @@
 				E09AC6FC11B7E75100C96E25 /* CDXColorKeyboardExtensionView.xib */,
 				E0F3AEE713EF03B900B253ED /* CDXColorKeyboardExtensionView~ipad.xib */,
 				E09AC84411B7F95C00C96E25 /* CDXTextKeyboardExtensionView.xib */,
+				E0F3AEE813EF03BA00B253ED /* CDXTextKeyboardExtensionView~ipad.xib */,
 				E09FCDF211B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib */,
 				E09AC62311B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib */,
 				E09AC62411B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib */,
@@ -886,6 +889,7 @@
 				E0F3AEE013EEDA5800B253ED /* CDXCardDeckCardEditPadView.xib in Resources */,
 				E0F3AEE613EF005400B253ED /* KeyboardExtensionsBackground~ipad.png in Resources */,
 				E0F3AEE913EF03BA00B253ED /* CDXColorKeyboardExtensionView~ipad.xib in Resources */,
+				E0F3AEEA13EF03BA00B253ED /* CDXTextKeyboardExtensionView~ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
