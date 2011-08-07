@@ -206,12 +206,12 @@
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
     
     if ([[CDXDevice sharedDevice] deviceUIIdiom] == CDXDeviceUIIdiomPhone) {
-        UIViewController *vc = [[[CDXCardDecksListViewController alloc] initWithCardDecks:cardDecks] autorelease];
+        UIViewController<CDXAppWindowViewController> *vc = [[[CDXCardDecksListViewController alloc] initWithCardDecks:cardDecks] autorelease];
         [appWindowManager pushViewController:vc animated:NO];
     } else {
-        UIViewController *vcl = [[[CDXCardDecksListPadViewController alloc] initWithCardDecks:cardDecks] autorelease];
+        UIViewController<CDXAppWindowViewController> *vcl = [[[CDXCardDecksListPadViewController alloc] initWithCardDecks:cardDecks] autorelease];
         [appWindowManager pushViewController:vcl animated:NO];
-        UIViewController *vcr = [[[CDXCardDeckListPadViewController alloc] initWithCardDeckViewContext:nil] autorelease];
+        UIViewController<CDXAppWindowViewController> *vcr = [[[CDXCardDeckListPadViewController alloc] initWithCardDeckViewContext:nil] autorelease];
         [appWindowManager pushViewController:vcr animated:NO];
     }
     
