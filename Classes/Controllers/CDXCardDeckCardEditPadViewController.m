@@ -39,9 +39,19 @@
     return self;
 }
 
+- (void)dealloc {
+    ivar_release_and_clear(navigationItem);
+    [super dealloc];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     cardViewSize = CGSizeMake(320, 480);
+}
+
+- (void)viewDidUnload {
+    ivar_release_and_clear(navigationItem);
+    [super viewDidUnload];
 }
 
 - (IBAction)closeButtonPressed {
