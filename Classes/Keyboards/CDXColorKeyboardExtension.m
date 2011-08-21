@@ -153,7 +153,7 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     button.enabled = NO;
     [self.view addSubview:view];
     CGRect frame = view.frame;
-    frame.origin.y = toolbar.frame.origin.y + toolbar.frame.size.height;
+    frame.origin.y = toolbar.frame.origin.y + toolbar.frame.size.height + 1;
     view.frame = frame;
 }
 
