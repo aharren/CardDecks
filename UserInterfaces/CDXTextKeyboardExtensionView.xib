@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">768</int>
-		<string key="IBDocument.SystemVersion">10J869</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1306</string>
-		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.SystemVersion">11B26</string>
+		<string key="IBDocument.InterfaceBuilderVersion">1617</string>
+		<string key="IBDocument.AppKitVersion">1138</string>
+		<string key="IBDocument.HIToolboxVersion">566.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">301</string>
+			<string key="NS.object.0">534</string>
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -50,6 +50,7 @@
 						<string key="NSFrame">{{0, 58}, {320, 56}}</string>
 						<reference key="NSSuperview" ref="175091622"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="260141429"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAxIDEgMC44AA</bytes>
@@ -73,6 +74,7 @@
 						<string key="NSFrame">{{0, 115}, {320, 100}}</string>
 						<reference key="NSSuperview" ref="175091622"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAxIDEgMC44AA</bytes>
@@ -93,6 +95,7 @@
 						<string key="NSFrame">{{62, 76}, {210, 23}}</string>
 						<reference key="NSSuperview" ref="175091622"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="815370593"/>
 						<object class="NSColor" key="IBUIBackgroundColor" id="846514106">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAxIDEgMAA</bytes>
@@ -112,6 +115,7 @@
 						<string key="NSFrame">{{15, 76}, {50, 21}}</string>
 						<reference key="NSSuperview" ref="175091622"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="636963041"/>
 						<reference key="IBUIBackgroundColor" ref="846514106"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -135,6 +139,7 @@
 						<string key="NSFrame">{{0, 1}, {65, 56}}</string>
 						<reference key="NSSuperview" ref="175091622"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="913622861"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAxIDEgMC44AA</bytes>
@@ -155,6 +160,7 @@
 						<string key="NSFrame">{{270, 1}, {50, 56}}</string>
 						<reference key="NSSuperview" ref="175091622"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="71703624"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAxIDEgMC44AA</bytes>
@@ -175,6 +181,7 @@
 						<string key="NSFrame">{{15, 19}, {50, 21}}</string>
 						<reference key="NSSuperview" ref="175091622"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="114240922"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAxIDEgMAA</bytes>
@@ -197,6 +204,7 @@
 						<string key="NSFrame">{{277, 75}, {30, 21}}</string>
 						<reference key="NSSuperview" ref="175091622"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="453978141"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAxIDEgMAA</bytes>
@@ -220,6 +228,7 @@
 						<string key="NSFrame">{{117, 1}, {50, 56}}</string>
 						<reference key="NSSuperview" ref="175091622"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="520011273"/>
 						<object class="NSColor" key="IBUIBackgroundColor" id="9898598">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAxIDEgMC44AA</bytes>
@@ -234,7 +243,7 @@
 							<double key="NSSize">18</double>
 							<int key="NSfFlags">16</int>
 						</object>
-						<string key="IBUINormalTitle">▲</string>
+						<string key="IBUINormalTitle">△</string>
 						<object class="NSColor" key="IBUIHighlightedTitleColor" id="27653798">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
@@ -251,6 +260,7 @@
 						<string key="NSFrame">{{66, 1}, {50, 56}}</string>
 						<reference key="NSSuperview" ref="175091622"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="107187647"/>
 						<reference key="IBUIBackgroundColor" ref="9898598"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -259,7 +269,7 @@
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<reference key="IBUIFont" ref="648260462"/>
-						<string key="IBUINormalTitle">◀</string>
+						<string key="IBUINormalTitle">◁</string>
 						<reference key="IBUIHighlightedTitleColor" ref="27653798"/>
 						<reference key="IBUINormalTitleColor" ref="387873789"/>
 						<reference key="IBUINormalTitleShadowColor" ref="175253065"/>
@@ -270,6 +280,7 @@
 						<string key="NSFrame">{{219, 1}, {50, 56}}</string>
 						<reference key="NSSuperview" ref="175091622"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="112195875"/>
 						<reference key="IBUIBackgroundColor" ref="9898598"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -278,7 +289,7 @@
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<reference key="IBUIFont" ref="648260462"/>
-						<string key="IBUINormalTitle">▼</string>
+						<string key="IBUINormalTitle">▽</string>
 						<reference key="IBUIHighlightedTitleColor" ref="27653798"/>
 						<reference key="IBUINormalTitleColor" ref="387873789"/>
 						<reference key="IBUINormalTitleShadowColor" ref="175253065"/>
@@ -289,6 +300,7 @@
 						<string key="NSFrame">{{168, 1}, {50, 56}}</string>
 						<reference key="NSSuperview" ref="175091622"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="666931769"/>
 						<reference key="IBUIBackgroundColor" ref="9898598"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -297,7 +309,7 @@
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<reference key="IBUIFont" ref="648260462"/>
-						<string key="IBUINormalTitle">▶</string>
+						<string key="IBUINormalTitle">▷</string>
 						<reference key="IBUIHighlightedTitleColor" ref="27653798"/>
 						<reference key="IBUINormalTitleColor" ref="387873789"/>
 						<reference key="IBUINormalTitleShadowColor" ref="175253065"/>
@@ -308,6 +320,7 @@
 						<string key="NSFrame">{{270, 6}, {50, 46}}</string>
 						<reference key="NSSuperview" ref="175091622"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="23202537"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAxIDEgMAA</bytes>
@@ -328,6 +341,7 @@
 				<string key="NSFrameSize">{320, 215}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView" ref="317719410"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
 					<bytes key="NSRGB">MC4yMDAwMDAwMDMgMC4yMDAwMDAwMDMgMC4yMDAwMDAwMDMAA</bytes>
@@ -517,13 +531,13 @@
 						<reference key="parent" ref="175091622"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">40</int>
-						<reference key="object" ref="453978141"/>
+						<int key="objectID">46</int>
+						<reference key="object" ref="112195875"/>
 						<reference key="parent" ref="175091622"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">46</int>
-						<reference key="object" ref="112195875"/>
+						<int key="objectID">40</int>
+						<reference key="object" ref="453978141"/>
 						<reference key="parent" ref="175091622"/>
 					</object>
 				</object>
@@ -533,12 +547,13 @@
 				<object class="NSArray" key="dict.sortedKeys">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>-1.CustomClassName</string>
+					<string>-1.IBPluginDependency</string>
 					<string>-2.CustomClassName</string>
+					<string>-2.IBPluginDependency</string>
 					<string>20.IBPluginDependency</string>
 					<string>21.IBPluginDependency</string>
 					<string>22.IBPluginDependency</string>
 					<string>23.IBPluginDependency</string>
-					<string>3.IBEditorWindowLastContentRect</string>
 					<string>3.IBPluginDependency</string>
 					<string>33.IBPluginDependency</string>
 					<string>34.IBPluginDependency</string>
@@ -553,12 +568,13 @@
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>CDXTextKeyboardExtensionViewController</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>UIResponder</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{209, 141}, {320, 215}}</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -681,6 +697,6 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<string key="IBCocoaTouchPluginVersion">301</string>
+		<string key="IBCocoaTouchPluginVersion">534</string>
 	</data>
 </archive>

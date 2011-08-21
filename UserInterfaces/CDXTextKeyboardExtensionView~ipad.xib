@@ -243,7 +243,7 @@
 							<double key="NSSize">18</double>
 							<int key="NSfFlags">16</int>
 						</object>
-						<string key="IBUINormalTitle">▲</string>
+						<string key="IBUINormalTitle">△</string>
 						<object class="NSColor" key="IBUIHighlightedTitleColor" id="27653798">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
@@ -269,7 +269,7 @@
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<reference key="IBUIFont" ref="648260462"/>
-						<string key="IBUINormalTitle">◀</string>
+						<string key="IBUINormalTitle">◁</string>
 						<reference key="IBUIHighlightedTitleColor" ref="27653798"/>
 						<reference key="IBUINormalTitleColor" ref="387873789"/>
 						<reference key="IBUINormalTitleShadowColor" ref="175253065"/>
@@ -289,7 +289,7 @@
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<reference key="IBUIFont" ref="648260462"/>
-						<string key="IBUINormalTitle">▼</string>
+						<string key="IBUINormalTitle">▽</string>
 						<reference key="IBUIHighlightedTitleColor" ref="27653798"/>
 						<reference key="IBUINormalTitleColor" ref="387873789"/>
 						<reference key="IBUINormalTitleShadowColor" ref="175253065"/>
@@ -309,7 +309,7 @@
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<reference key="IBUIFont" ref="648260462"/>
-						<string key="IBUINormalTitle">▶</string>
+						<string key="IBUINormalTitle">▷</string>
 						<reference key="IBUIHighlightedTitleColor" ref="27653798"/>
 						<reference key="IBUINormalTitleColor" ref="387873789"/>
 						<reference key="IBUINormalTitleShadowColor" ref="175253065"/>
