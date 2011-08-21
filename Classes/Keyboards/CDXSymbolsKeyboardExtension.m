@@ -44,7 +44,7 @@ synthesize_singleton(sharedSymbolsKeyboardExtension, CDXSymbolsKeyboardExtension
 }
 
 - (NSString *)keyboardExtensionTitle {
-    return @"\u2713\u2717";
+    return @"sym";
 }
 
 - (UIView *)keyboardExtensionView {
