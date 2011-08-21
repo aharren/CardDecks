@@ -83,7 +83,7 @@
     [super viewDidAppear:animated];
     if ([cardDeck isShuffled]) {
         if (!viewWasAlreadyVisible) {
-            [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:viewTableView];
+            [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:self.view];
         }
     }
     viewWasAlreadyVisible = YES;
@@ -304,10 +304,10 @@
 - (IBAction)shuffleButtonPressed {
     if ([cardDeck isShuffled]) {
         [cardDeck sort];
-        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" text:@"sort" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:viewTableView];
+        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" text:@"sort" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:self.view];
     } else {
         [cardDeck shuffle];
-        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:viewTableView];
+        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:self.view];
     }
     [cardDeck updateStorageObjectDeferred:YES];
     
