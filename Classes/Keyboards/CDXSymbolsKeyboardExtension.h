@@ -102,11 +102,21 @@ typedef struct {
 @interface CDXSymbolsKeyboardExtensionTableViewController : UIViewController {
     
 @protected
-    IBOutlet UITableView *tableView;
-    IBOutlet UIButton *backButton;
-    
     IBOutlet CDXSymbolsKeyboardExtensionTableViewCellA *loadedTableViewCellA;
     IBOutlet CDXSymbolsKeyboardExtensionTableViewCellB *loadedTableViewCellB;
+    
+}
+
+- (void)reset;
+
+@end
+
+
+@interface CDXSymbolsKeyboardExtensionTablePhoneViewController : CDXSymbolsKeyboardExtensionTableViewController {
+    
+@protected
+    IBOutlet UITableView *tableView;
+    IBOutlet UIButton *backButton;
     
     CDXSymbolsKeyboardExtensionBlockStruct *block;
 }
@@ -114,8 +124,18 @@ typedef struct {
 - (id)initWithBlock:(CDXSymbolsKeyboardExtensionBlockStruct *)block;
 - (IBAction)backButtonPressed;
 
-- (UITableView *)tableView;
-
 @end
 
+
+@interface CDXSymbolsKeyboardExtensionTablePadViewController : CDXSymbolsKeyboardExtensionTableViewController {
+    
+@protected
+    IBOutlet UITableView *listTableView;
+    IBOutlet UITableView *blockTableView;
+    
+    CDXSymbolsKeyboardExtensionBlockStruct *currentBlock;
+    NSUInteger currentBlockIndex;
+}
+
+@end
 

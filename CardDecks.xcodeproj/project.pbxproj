@@ -22,6 +22,7 @@
 		E002B7021168942F0072C409 /* CDXCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B7001168942F0072C409 /* CDXCardDeck.m */; };
 		E002B704116894980072C409 /* CDXCardDeckTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B703116894980072C409 /* CDXCardDeckTests.m */; };
 		E0150074117A1E4900C3BF63 /* CDXCardsSideBySideView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0150073117A1E4900C3BF63 /* CDXCardsSideBySideView.m */; };
+		E022635D140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E022635C140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib */; };
 		E022CDF413B63E5D000FE10A /* CDXCardDecksListPadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E022CDF313B63E5D000FE10A /* CDXCardDecksListPadView.xib */; };
 		E022CDF813B64218000FE10A /* CDXCardDecksListPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E022CDF713B64218000FE10A /* CDXCardDecksListPadViewController.m */; };
 		E02320C6117091920043D6CF /* CDXCardDecksListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E02320C5117091920043D6CF /* CDXCardDecksListViewController.m */; };
@@ -67,6 +68,7 @@
 		E0620D5511BAA61A006AABD2 /* Notice-Shuffle.png in Resources */ = {isa = PBXBuildFile; fileRef = E0620D5311BAA61A006AABD2 /* Notice-Shuffle.png */; };
 		E0620D5611BAA61A006AABD2 /* Notice-Sort.png in Resources */ = {isa = PBXBuildFile; fileRef = E0620D5411BAA61A006AABD2 /* Notice-Sort.png */; };
 		E0620F8B119E950D00234667 /* StatusBarDefault.png in Resources */ = {isa = PBXBuildFile; fileRef = E0620F8A119E950D00234667 /* StatusBarDefault.png */; };
+		E06B37DF1401668000D57C37 /* CDXSymbolsKeyboardExtensionTableViewCellB~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E06B37DE1401668000D57C37 /* CDXSymbolsKeyboardExtensionTableViewCellB~ipad.xib */; };
 		E070CF5B119FF13800626F34 /* Toolbar-Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = E070CF5A119FF13800626F34 /* Toolbar-Settings.png */; };
 		E070CF8911A08B9600626F34 /* CDXSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E070CF8811A08B9600626F34 /* CDXSettingsViewController.m */; };
 		E070CFA911A08D4400626F34 /* CDXCardDeckSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E070CFA811A08D4400626F34 /* CDXCardDeckSettings.m */; };
@@ -200,6 +202,7 @@
 		E0150072117A1E4900C3BF63 /* CDXCardsSideBySideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsSideBySideView.h; path = Classes/Views/CDXCardsSideBySideView.h; sourceTree = "<group>"; };
 		E0150073117A1E4900C3BF63 /* CDXCardsSideBySideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsSideBySideView.m; path = Classes/Views/CDXCardsSideBySideView.m; sourceTree = "<group>"; };
 		E0150132117A245900C3BF63 /* CDXCardsViewProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsViewProtocols.h; path = Classes/Views/CDXCardsViewProtocols.h; sourceTree = "<group>"; };
+		E022635C140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CDXSymbolsKeyboardExtensionTablePadView.xib; path = UserInterfaces/CDXSymbolsKeyboardExtensionTablePadView.xib; sourceTree = "<group>"; };
 		E022CDF313B63E5D000FE10A /* CDXCardDecksListPadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CDXCardDecksListPadView.xib; path = UserInterfaces/CDXCardDecksListPadView.xib; sourceTree = "<group>"; };
 		E022CDF613B64218000FE10A /* CDXCardDecksListPadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDecksListPadViewController.h; path = Classes/Controllers/CDXCardDecksListPadViewController.h; sourceTree = "<group>"; };
 		E022CDF713B64218000FE10A /* CDXCardDecksListPadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDecksListPadViewController.m; path = Classes/Controllers/CDXCardDecksListPadViewController.m; sourceTree = "<group>"; };
@@ -258,6 +261,7 @@
 		E0620D5311BAA61A006AABD2 /* Notice-Shuffle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Shuffle.png"; path = "Images/Notices/Notice-Shuffle.png"; sourceTree = "<group>"; };
 		E0620D5411BAA61A006AABD2 /* Notice-Sort.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Sort.png"; path = "Images/Notices/Notice-Sort.png"; sourceTree = "<group>"; };
 		E0620F8A119E950D00234667 /* StatusBarDefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StatusBarDefault.png; path = Images/StatusBarDefault.png; sourceTree = "<group>"; };
+		E06B37DE1401668000D57C37 /* CDXSymbolsKeyboardExtensionTableViewCellB~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "CDXSymbolsKeyboardExtensionTableViewCellB~ipad.xib"; path = "UserInterfaces/CDXSymbolsKeyboardExtensionTableViewCellB~ipad.xib"; sourceTree = "<group>"; };
 		E070CF5A119FF13800626F34 /* Toolbar-Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Settings.png"; path = "Images/Toolbars/Toolbar-Settings.png"; sourceTree = "<group>"; };
 		E070CF8711A08B9600626F34 /* CDXSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXSettingsViewController.h; path = Classes/Controllers/CDXSettingsViewController.h; sourceTree = "<group>"; };
 		E070CF8811A08B9600626F34 /* CDXSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXSettingsViewController.m; path = Classes/Controllers/CDXSettingsViewController.m; sourceTree = "<group>"; };
@@ -594,6 +598,8 @@
 				E09FCDF211B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib */,
 				E09AC62311B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib */,
 				E09AC62411B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib */,
+				E06B37DE1401668000D57C37 /* CDXSymbolsKeyboardExtensionTableViewCellB~ipad.xib */,
+				E022635C140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib */,
 			);
 			name = "User Interfaces";
 			sourceTree = "<group>";
@@ -898,6 +904,8 @@
 				E0F3AEEA13EF03BA00B253ED /* CDXTextKeyboardExtensionView~ipad.xib in Resources */,
 				E043F1761400EFC900DE0567 /* Toolbar-Left.png in Resources */,
 				E043F1771400EFC900DE0567 /* Toolbar-Left@2x.png in Resources */,
+				E022635D140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib in Resources */,
+				E06B37DF1401668000D57C37 /* CDXSymbolsKeyboardExtensionTableViewCellB~ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

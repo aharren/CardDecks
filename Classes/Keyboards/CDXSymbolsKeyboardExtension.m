@@ -25,6 +25,7 @@
 
 #import "CDXSymbolsKeyboardExtension.h"
 #import "CDXAppSettings.h"
+#import "CDXDevice.h"
 
 
 static BOOL symbolsUseAllSymbols = NO;
@@ -288,7 +289,12 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     
     self.navigationBar.hidden = YES;
     
-    CDXSymbolsKeyboardExtensionTableViewController *tvc = [[[CDXSymbolsKeyboardExtensionTableViewController alloc] initWithBlock:NULL] autorelease];
+    CDXSymbolsKeyboardExtensionTableViewController *tvc = nil;
+    if ([[CDXDevice sharedDevice] deviceUIIdiom] == CDXDeviceUIIdiomPhone) {
+        tvc = [[[CDXSymbolsKeyboardExtensionTablePhoneViewController alloc] initWithBlock:NULL] autorelease];
+    } else {
+        tvc = [[[CDXSymbolsKeyboardExtensionTablePadViewController alloc] init] autorelease];
+    }
     [self setViewControllers:[NSArray arrayWithObject:tvc]];
 }
 
@@ -296,8 +302,7 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     [self popToRootViewControllerAnimated:NO];
     if ([[self viewControllers] count] > 0) {
         CDXSymbolsKeyboardExtensionTableViewController *tvc = (CDXSymbolsKeyboardExtensionTableViewController *)[[self viewControllers] objectAtIndex:0];
-        [[tvc tableView] reloadData];
-        [[tvc tableView] scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        [tvc reset];
     }
 }
 
@@ -348,14 +353,15 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
 
 - (void)configureWithBlock:(CDXSymbolsKeyboardExtensionBlockStruct *)block offset:(NSInteger)offset {
     NSInteger c = block->startCode + offset;
+    NSInteger last = block->endCode;
     
-    [button1 setTitle:[NSString stringWithFormat:@"%C", (unichar)c] forState:UIControlStateNormal];
-    [button2 setTitle:[NSString stringWithFormat:@"%C", (unichar)c+1] forState:UIControlStateNormal];
-    [button3 setTitle:[NSString stringWithFormat:@"%C", (unichar)c+2] forState:UIControlStateNormal];
-    [button4 setTitle:[NSString stringWithFormat:@"%C", (unichar)c+3] forState:UIControlStateNormal];
-    [button5 setTitle:[NSString stringWithFormat:@"%C", (unichar)c+4] forState:UIControlStateNormal];
-    [button6 setTitle:[NSString stringWithFormat:@"%C", (unichar)c+5] forState:UIControlStateNormal];
-    [button7 setTitle:[NSString stringWithFormat:@"%C", (unichar)c+6] forState:UIControlStateNormal];
+    [button1 setTitle:[NSString stringWithFormat:@"%C", (unichar) ((c+0) <= last ? (c+0) : 32)] forState:UIControlStateNormal];
+    [button2 setTitle:[NSString stringWithFormat:@"%C", (unichar) ((c+1) <= last ? (c+1) : 32)] forState:UIControlStateNormal];
+    [button3 setTitle:[NSString stringWithFormat:@"%C", (unichar) ((c+2) <= last ? (c+2) : 32)] forState:UIControlStateNormal];
+    [button4 setTitle:[NSString stringWithFormat:@"%C", (unichar) ((c+3) <= last ? (c+3) : 32)] forState:UIControlStateNormal];
+    [button5 setTitle:[NSString stringWithFormat:@"%C", (unichar) ((c+4) <= last ? (c+4) : 32)] forState:UIControlStateNormal];
+    [button6 setTitle:[NSString stringWithFormat:@"%C", (unichar) ((c+5) <= last ? (c+5) : 32)] forState:UIControlStateNormal];
+    [button7 setTitle:[NSString stringWithFormat:@"%C", (unichar) ((c+6) <= last ? (c+6) : 32)] forState:UIControlStateNormal];
 }
 
 @end
@@ -363,16 +369,7 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
 
 @implementation CDXSymbolsKeyboardExtensionTableViewController
 
-- (id)initWithBlock:(CDXSymbolsKeyboardExtensionBlockStruct *)aBlock {
-    if ((self = [super initWithNibName:@"CDXSymbolsKeyboardExtensionTableView" bundle:nil])) {
-        block = aBlock;
-    }
-    return self;
-}
-
 - (void)dealloc {
-    ivar_release_and_clear(tableView);
-    ivar_release_and_clear(backButton);
     ivar_release_and_clear(loadedTableViewCellA);
     ivar_release_and_clear(loadedTableViewCellB);
     [super dealloc];
@@ -384,10 +381,36 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
 }
 
 - (void)viewDidUnload {
-    ivar_release_and_clear(tableView);
-    ivar_release_and_clear(backButton);
     ivar_release_and_clear(loadedTableViewCellA);
     ivar_release_and_clear(loadedTableViewCellB);
+    [super viewDidUnload];
+}
+
+- (void)reset {
+    
+}
+
+@end
+
+
+@implementation CDXSymbolsKeyboardExtensionTablePhoneViewController
+
+- (id)initWithBlock:(CDXSymbolsKeyboardExtensionBlockStruct *)aBlock {
+    if ((self = [super initWithNibName:@"CDXSymbolsKeyboardExtensionTableView" bundle:nil])) {
+        block = aBlock;
+    }
+    return self;
+}
+
+- (void)dealloc {
+    ivar_release_and_clear(tableView);
+    ivar_release_and_clear(backButton);
+    [super dealloc];
+}
+
+- (void)viewDidUnload {
+    ivar_release_and_clear(tableView);
+    ivar_release_and_clear(backButton);
     [super viewDidUnload];
 }
 
@@ -448,7 +471,7 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     if (block == NULL) {
-        CDXSymbolsKeyboardExtensionTableViewController *tvc = [[[CDXSymbolsKeyboardExtensionTableViewController alloc] initWithBlock:[CDXSymbolsKeyboardExtensionBlocks blockByIndex:indexPath.row]] autorelease]; 
+        CDXSymbolsKeyboardExtensionTablePhoneViewController *tvc = [[[CDXSymbolsKeyboardExtensionTablePhoneViewController alloc] initWithBlock:[CDXSymbolsKeyboardExtensionBlocks blockByIndex:indexPath.row]] autorelease]; 
         [self.navigationController pushViewController:tvc animated:YES];
     }
 }
@@ -461,4 +484,106 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)reset {
+    [tableView reloadData];
+    [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+}
+
 @end
+
+
+@implementation CDXSymbolsKeyboardExtensionTablePadViewController
+
+- (id)init {
+    if ((self = [super initWithNibName:@"CDXSymbolsKeyboardExtensionTablePadView" bundle:nil])) {
+        currentBlockIndex = 0;
+        currentBlock = [CDXSymbolsKeyboardExtensionBlocks blockByIndex:currentBlockIndex];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    ivar_release_and_clear(listTableView);
+    ivar_release_and_clear(blockTableView);
+    [super dealloc];
+}
+
+- (void)viewDidUnload {
+    ivar_release_and_clear(listTableView);
+    ivar_release_and_clear(blockTableView);
+    [super viewDidUnload];
+}
+
+- (void)setCurrentBlock:(NSUInteger)index {
+    currentBlockIndex = index;
+    currentBlock = [CDXSymbolsKeyboardExtensionBlocks blockByIndex:currentBlockIndex];
+    [blockTableView reloadData];
+    [blockTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    blockTableView.scrollEnabled = (((currentBlock->endCode - currentBlock->startCode) + 6) / 7) > 6;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (tableView == listTableView) {
+        return [CDXSymbolsKeyboardExtensionBlocks count];
+    } else {
+        return MAX(7, ((currentBlock->endCode - currentBlock->startCode) + 6) / 7);
+    }
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView == listTableView) {
+        if (indexPath.row == currentBlockIndex) {
+            cell.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
+        } else {
+            cell.backgroundColor = [UIColor clearColor];
+        }
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView == listTableView) {
+        CDXSymbolsKeyboardExtensionTableViewCellA *cell = (CDXSymbolsKeyboardExtensionTableViewCellA *)[tableView dequeueReusableCellWithIdentifier:@"CDXSymbolsKeyboardExtensionTableViewCellA"];
+        if (cell == nil) {
+            [[NSBundle mainBundle] loadNibNamed:@"CDXSymbolsKeyboardExtensionTableViewCellA" owner:self options:nil];
+            cell = loadedTableViewCellA;
+            ivar_release_and_clear(loadedTableViewCellA);
+            NSAssert([@"CDXSymbolsKeyboardExtensionTableViewCellA" isEqualToString:[cell reuseIdentifier]], @"reuseIdentifier must match");
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        [cell configureWithBlock:[CDXSymbolsKeyboardExtensionBlocks blockByIndex:indexPath.row]];
+        return cell;
+    } else {
+        CDXSymbolsKeyboardExtensionTableViewCellB *cell = (CDXSymbolsKeyboardExtensionTableViewCellB *)[tableView dequeueReusableCellWithIdentifier:@"CDXSymbolsKeyboardExtensionTableViewCellB"];
+        if (cell == nil) {
+            [[NSBundle mainBundle] loadNibNamed:@"CDXSymbolsKeyboardExtensionTableViewCellB" owner:self options:nil];
+            cell = loadedTableViewCellB;
+            ivar_release_and_clear(loadedTableViewCellB);
+            NSAssert([@"CDXSymbolsKeyboardExtensionTableViewCellB" isEqualToString:[cell reuseIdentifier]], @"reuseIdentifier must match");
+            cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        }
+        [cell configureWithBlock:currentBlock offset:indexPath.row * 7];
+        return cell;
+    }}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+    if (tableView == listTableView) {
+        [self setCurrentBlock:indexPath.row];
+        [listTableView reloadData];
+    }
+}
+
+- (void)reset {
+    [listTableView reloadData];
+    [listTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    [self setCurrentBlock:0];
+}
+
+@end
+
