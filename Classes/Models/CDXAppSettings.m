@@ -75,7 +75,10 @@ typedef struct {
 static const CDXAppSettingGroup groups[] = {
     { @"", 1, CDXAppSettingsAbout },
     { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
-    { @"User Interface", 6, CDXAppSettingsCardDeckQuickOpen },
+    { @"Card Deck", 3, CDXAppSettingsCardDeckQuickOpen },
+    { @"User Interface", 1, CDXAppSettingsDoneButtonOnLeftSide },
+    { @"Integration", 1, CDXAppSettingsUseMailApplication },
+    { @"Keyboard", 1, CDXAppSettingsAllKeyboardSymbols },
     { @"", 0, 0 }
 };
 
