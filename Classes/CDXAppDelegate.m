@@ -46,6 +46,7 @@
     deck = decks.cardDeckDefaults.cardDeck;
     [deck updateStorageObjectDeferred:NO];
     
+    /*
     deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Weather,000000,ffff00&%e2%98%80,ff0000&%e2%98%81,ffffff,0000ff&%e2%98%82,000000,aaaaaa&%e2%98%83,000000,ffffff"];
     deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
     deck.wantsAutoRotate = NO;
@@ -56,6 +57,7 @@
     [deck updateStorageObjectDeferred:NO];
     holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
     [decks addPendingCardDeckAdd:holder];
+    */
     
     deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Dice,ffffff,000000&%e2%91%a0&%e2%91%a1&%e2%91%a2&%e2%91%a3&%e2%91%a4&%e2%91%a5"];
     deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
