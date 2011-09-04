@@ -45,8 +45,8 @@
     UIColor *tableCellTextTextColorActionInactive;
     UIFont *tableCellDetailTextFont;
     UIColor *tableCellDetailTextTextColor;
-    UIColor *tableCellBackgroundColorAction;
-    UIColor *tableCellBackgroundColorAltGroup;
+    UIImage *tableCellBackgroundImage;
+    UIImage *tableCellBackgroundImageAlt;
     CGSize tableCellImageSize;
     
     NSString *titleText;
@@ -59,6 +59,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)titleText backButtonText:(NSString *)backButtonText;
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section;
 
 - (void)updateToolbarButtons;
 - (IBAction)editButtonPressed;

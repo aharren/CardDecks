@@ -90,6 +90,7 @@
                 cell.textLabel.font = tableCellTextFont;
                 cell.detailTextLabel.font = tableCellDetailTextFont;
                 cell.detailTextLabel.textColor = tableCellDetailTextTextColor;
+                cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             }
             cell.accessoryType = cardDeckQuickOpen ? UITableViewCellAccessoryDetailDisclosureButton : UITableViewCellAccessoryDisclosureIndicator;
@@ -102,6 +103,7 @@
                 cell.textLabel.font = tableCellTextFontAction;
                 cell.textLabel.textAlignment = UITextAlignmentCenter;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
             }
             cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;

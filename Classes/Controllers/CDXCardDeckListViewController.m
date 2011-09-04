@@ -106,7 +106,9 @@
     if (indexPath.section == 1) {
         NSUInteger groupSize = [cardDeck groupSize];
         if (groupSize > 0 && (indexPath.row / groupSize) % 2 == 0) {
-            cell.backgroundColor = tableCellBackgroundColorAltGroup;
+            cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImageAlt] autorelease];
+        } else {
+            cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
         }
     }
 }
@@ -124,6 +126,7 @@
                 cell.textLabel.font = tableCellTextFont;
                 cell.textLabel.textColor = tableCellTextTextColor;
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             }
             return cell;
@@ -135,6 +138,7 @@
                 cell.textLabel.font = tableCellTextFontAction;
                 cell.textLabel.textAlignment = UITextAlignmentCenter;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
             }
             cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;

@@ -25,6 +25,7 @@
 
 #import "CDXListViewControllerBase.h"
 #import "CDXDevice.h"
+#import "CDXImageFactory.h"
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -56,8 +57,8 @@
     ivar_release_and_clear(tableCellTextTextColorActionInactive);
     ivar_release_and_clear(tableCellDetailTextFont);
     ivar_release_and_clear(tableCellDetailTextTextColor);
-    ivar_release_and_clear(tableCellBackgroundColorAction);
-    ivar_release_and_clear(tableCellBackgroundColorAltGroup);
+    ivar_release_and_clear(tableCellBackgroundImage);
+    ivar_release_and_clear(tableCellBackgroundImageAlt);
     ivar_release_and_clear(titleText);
     ivar_release_and_clear(backButtonText);
     ivar_release_and_clear(reuseIdentifierSection1);
@@ -94,9 +95,13 @@
     ivar_assign_and_retain(tableCellTextTextColorActionInactive, [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]);
     ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:12]);
     ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor lightGrayColor]);
-    ivar_assign_and_retain(tableCellBackgroundColorAction, [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1.0]);
-    ivar_assign_and_retain(tableCellBackgroundColorAltGroup, [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1]);
+    CGFloat rowHeight = viewTableView.rowHeight;
+    ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xfa green:0xfa blue:0xfa alpha:0xff] height:rowHeight]);
+    ivar_assign_and_retain(tableCellBackgroundImageAlt, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff] bottomColor:[CDXColor colorWithRed:0xea green:0xea blue:0xea alpha:0xff] height:rowHeight]);
     tableCellImageSize = CGSizeMake(10, 10);
+
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    viewTableView.backgroundView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:screenHeight]] autorelease];
 }
 
 - (void)viewDidUnload {
@@ -114,8 +119,8 @@
     ivar_release_and_clear(tableCellTextTextColorActionInactive);
     ivar_release_and_clear(tableCellDetailTextFont);
     ivar_release_and_clear(tableCellDetailTextTextColor);
-    ivar_release_and_clear(tableCellBackgroundColorAction);
-    ivar_release_and_clear(tableCellBackgroundColorAltGroup);
+    ivar_release_and_clear(tableCellBackgroundImage);
+    ivar_release_and_clear(tableCellBackgroundImageAlt);
     [super viewDidUnload];
 }
 
@@ -150,15 +155,14 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case 1:
-            break;
-        default:
-        case 0:
-        case 2:
-            cell.backgroundColor = tableCellBackgroundColorAction;
-            break;
-    }
+    UIColor *clearColor = [UIColor clearColor];
+    cell.textLabel.backgroundColor = clearColor;
+    cell.detailTextLabel.backgroundColor = clearColor;
+    cell.backgroundColor = clearColor;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
+    return nil;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

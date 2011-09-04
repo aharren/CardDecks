@@ -34,9 +34,6 @@
     
     IBOutlet UIView *viewNoTableView;
     
-    UIImage *tableCellBackgroundImage;
-    UIImage *tableCellBackgroundImageAlt;
-
     BOOL ignoreCardDeckUpdateNotifications;
 }
 

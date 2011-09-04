@@ -47,8 +47,6 @@
 - (void)dealloc {
     ivar_release_and_clear(viewTableViewContainer);
     ivar_release_and_clear(viewNavigationItem);
-    ivar_release_and_clear(tableCellBackgroundImage);
-    ivar_release_and_clear(tableCellBackgroundImageAlt);
     ivar_release_and_clear(currentCardDeck);
     [super dealloc];
 }
@@ -58,11 +56,6 @@
     [super viewDidLoad];
     
     viewTableViewContainer.layer.cornerRadius = 6;
-    viewTableView.backgroundView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff] height:1024]] autorelease];
-    
-    ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf9 green:0xf9 blue:0xf9 alpha:0xff] height:44]);
-    ivar_assign_and_retain(tableCellBackgroundImageAlt, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff] bottomColor:[CDXColor colorWithRed:0xe9 green:0xe9 blue:0xe9 alpha:0xff] height:44]);
-    ivar_assign_and_retain(tableCellBackgroundColorAction, [UIColor clearColor]);
     
     // steal the activity indicator
     viewNavigationItem.rightBarButtonItem = self.navigationItem.rightBarButtonItem;
@@ -72,8 +65,6 @@
     qltrace();
     ivar_release_and_clear(viewTableViewContainer);
     ivar_release_and_clear(viewNavigationItem);
-    ivar_release_and_clear(tableCellBackgroundImage);
-    ivar_release_and_clear(tableCellBackgroundImageAlt);
     [super viewDidUnload];
 }
 
@@ -112,10 +103,6 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
-    UIColor *clearColor = [UIColor clearColor];
-    cell.textLabel.backgroundColor = clearColor;
-    cell.detailTextLabel.backgroundColor = clearColor;
-    cell.backgroundColor = clearColor;
     BOOL selected = NO;
     if (indexPath.section == 1) {
         selected = [cardDecks cardDeckAtIndex:indexPath.row] == currentCardDeck;
@@ -130,35 +117,10 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
-    switch (section) {
-        case 0:
-            return nil;
-        case 1: {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection1];
-            if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifierSection1] autorelease];
-                cell.accessoryType = UITableViewCellAccessoryNone;
-                cell.backgroundView	= [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            return cell;
-        }
-        case 2: {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection2];
-            if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
-                cell.textLabel.font = tableCellTextFontAction;
-                cell.textLabel.textAlignment = UITextAlignmentCenter;
-                cell.accessoryType = UITableViewCellAccessoryNone;
-                cell.backgroundView	= [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
-            return cell;
-        }
-        default:
-            return nil;
-    }
+    UITableViewCell *cell = [super tableView:tableView cellForSection:section];
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
 }
 
 - (void)deleteCardDeckAtIndex:(NSUInteger)index {

@@ -33,9 +33,6 @@
     IBOutlet UINavigationItem *viewNavigationItem;
     
     CDXCardDeckHolder *currentCardDeck;
-
-    UIImage *tableCellBackgroundImage;
-    UIImage *tableCellBackgroundImageAlt;
     
     BOOL ignoreCardDeckUpdateNotifications;
 }
