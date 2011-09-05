@@ -197,13 +197,12 @@
             lastCardDeckIndex = indexPath.row;
             deselectRow = NO;
             CDXCardDeckBase *deckBase = [cardDecks cardDeckAtIndex:indexPath.row];
-            CDXCardDeck *deck = deckBase.cardDeck;
-            if (cardDeckQuickOpen && [deck cardsCount] != 0) {
+            if (cardDeckQuickOpen) {
                 [self performBlockingSelector:@selector(pushCardDeckCardViewControllerWithCardDeckBase:)
-                                   withObject:deck];
+                                   withObject:deckBase];
             } else {
                 [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckBase:)
-                                   withObject:deck];
+                                   withObject:deckBase];
             }
             break;
         }
