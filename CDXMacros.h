@@ -104,12 +104,16 @@
         return _name;                                                          \
     }                                                                          \
 
+#define synthesize_singleton_initialization_allocate(_name, _class)            \
+                                                                               \
+    if (!_name) {                                                              \
+        _name = [[super allocWithZone:nil] init];                              \
+    }                                                                          \
+
 #define synthesize_singleton_initialization(_name, _class)                     \
                                                                                \
     + (void)initialize {                                                       \
-        if (!_name) {                                                          \
-            _name = [[super allocWithZone:nil] init];                          \
-        }                                                                      \
+        synthesize_singleton_initialization_allocate(_name, _class);           \
     }                                                                          \
 
 #define synthesize_singleton_methods(_name, _class)                            \
