@@ -88,14 +88,19 @@ static void CDXGraphicsBeginImageContextNativeScale(CGSize size) {
     return image;
 }
 
-- (UIImage *)imageForLinearGradientWithTopColor:(CDXColor *)topColor bottomColor:(CDXColor *)bottomColor height:(CGFloat)height {
+- (UIImage *)imageForLinearGradientWithTopColor:(CDXColor *)topColor bottomColor:(CDXColor *)bottomColor height:(CGFloat)height base:(CGFloat)base {
     UIGraphicsBeginImageContext(CGSizeMake(1, height));
     CGContextRef cgContext = UIGraphicsGetCurrentContext();
     
+    base = fabs(base);
+    if (base > 0) {
+        CGContextSetFillColorWithColor(cgContext, [[topColor uiColor] CGColor]);
+        CGContextFillRect(cgContext, CGRectMake(0, 0, 1, height));
+    }
     const void *colorRefs[2] = { [[topColor uiColor] CGColor], [[bottomColor uiColor] CGColor] };
     CFArrayRef cgColors = CFArrayCreate(kCFAllocatorDefault, colorRefs, 2, &kCFTypeArrayCallBacks);
     CGGradientRef cgGradient = CGGradientCreateWithColors(NULL, cgColors, NULL);
-    CGContextDrawLinearGradient(cgContext, cgGradient, CGPointMake(0, 0), CGPointMake(0, height), 0);
+    CGContextDrawLinearGradient(cgContext, cgGradient, CGPointMake(0, height * base), CGPointMake(0, height), 0);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     CFRelease(cgGradient);
     CFRelease(cgColors);
