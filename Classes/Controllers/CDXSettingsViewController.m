@@ -363,7 +363,7 @@
             break;
         }
         case CDXSettingTypeEnumeration: {
-            UITableViewController *vc = [[[CDXSettingsEnumerationViewController alloc] initWithSettings:settings setting:setting] autorelease];
+            UIViewController *vc = [[[CDXSettingsEnumerationViewController alloc] initWithSettings:settings setting:setting] autorelease];
             vc.title = setting.label;
             [[self navigationController] pushViewController:vc animated:YES];
             break;
@@ -378,7 +378,7 @@
         case CDXSettingTypeSettings: {
             NSObject<CDXSettings> *s = [settings settingsSettingsForSettingWithTag:setting.tag];
             if (s != nil) {
-                UITableViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:s isRootView:NO] autorelease];
+                UIViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:s isRootView:NO] autorelease];
                 [[self navigationController] pushViewController:vc animated:YES];
             }
             break;
@@ -391,7 +391,7 @@
             break;
         }
         case CDXSettingTypeHTMLText: {
-            UITableViewController *vc = [[[CDXSettingsHTMLTextViewController alloc] initWithSettings:settings setting:setting] autorelease];
+            UIViewController *vc = [[[CDXSettingsHTMLTextViewController alloc] initWithSettings:settings setting:setting] autorelease];
             vc.title = setting.label;
             [[self navigationController] pushViewController:vc animated:YES];
             break;
