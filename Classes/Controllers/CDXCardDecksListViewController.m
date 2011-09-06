@@ -156,9 +156,9 @@
     }
 }
 
-- (void)pushCardDeckListViewControllerWithCardDeckBase:(CDXCardDeckBase *)deckBase {
-    if (deckBase != nil) {
-        CDXCardDeck *deck = deckBase.cardDeck;
+- (void)pushCardDeckListViewControllerWithCardDeckHolder:(CDXCardDeckHolder *)deckHolder {
+    if (deckHolder != nil) {
+        CDXCardDeck *deck = deckHolder.cardDeck;
         if (deck != nil) {
             CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
             CDXCardDeckListViewController *vc = [[[CDXCardDeckListViewController alloc] initWithCardDeckViewContext:context] autorelease];
@@ -171,9 +171,9 @@
     [self performBlockingSelectorEnd];
 }
 
-- (void)pushCardDeckCardViewControllerWithCardDeckBase:(CDXCardDeckBase *)deckBase {
-    if (deckBase != nil) {
-        CDXCardDeck *deck = deckBase.cardDeck;
+- (void)pushCardDeckCardViewControllerWithCardDeckHolder:(CDXCardDeckHolder *)deckHolder {
+    if (deckHolder != nil) {
+        CDXCardDeck *deck = deckHolder.cardDeck;
         if (deck != nil && [deck cardsCount] != 0) {
             CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
             CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:context] autorelease];
@@ -196,13 +196,13 @@
         case 1: {
             lastCardDeckIndex = indexPath.row;
             deselectRow = NO;
-            CDXCardDeckBase *deckBase = [cardDecks cardDeckAtIndex:indexPath.row];
+            CDXCardDeckHolder *deckHolder = [cardDecks cardDeckAtIndex:indexPath.row];
             if (cardDeckQuickOpen) {
-                [self performBlockingSelector:@selector(pushCardDeckCardViewControllerWithCardDeckBase:)
-                                   withObject:deckBase];
+                [self performBlockingSelector:@selector(pushCardDeckCardViewControllerWithCardDeckHolder:)
+                                   withObject:deckHolder];
             } else {
-                [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckBase:)
-                                   withObject:deckBase];
+                [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckHolder:)
+                                   withObject:deckHolder];
             }
             break;
         }
@@ -224,7 +224,7 @@
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     lastCardDeckIndex = indexPath.row;
-    [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckBase:)
+    [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckHolder:)
                        withObject:[cardDecks cardDeckAtIndex:indexPath.row]];
 }
 
@@ -285,7 +285,7 @@
 
 - (IBAction)defaultsButtonPressed {
     qltrace();
-    [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckBase:)
+    [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckHolder:)
                        withObject:cardDecks.cardDeckDefaults];
 }
 

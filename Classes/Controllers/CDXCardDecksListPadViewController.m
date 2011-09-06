@@ -134,16 +134,16 @@
     ignoreCardDeckUpdateNotifications = NO;
 }
 
-- (void)pushCardDeckListViewControllerWithCardDeckBase:(CDXCardDeckBase *)deckBase {
+- (void)pushCardDeckListViewControllerWithCardDeckHolder:(CDXCardDeckHolder *)deckHolder {
     qltrace();
-    if (deckBase != nil && deckBase != currentCardDeck) {
-        CDXCardDeck *deck = deckBase.cardDeck;
+    if (deckHolder != nil && deckHolder != currentCardDeck) {
+        CDXCardDeck *deck = deckHolder.cardDeck;
         if (deck != nil) {
             CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
             CDXCardDeckListPadViewController *vc = [[[CDXCardDeckListPadViewController alloc] initWithCardDeckViewContext:context] autorelease];
             [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
             
-            ivar_assign_and_retain(currentCardDeck, deckBase);
+            ivar_assign_and_retain(currentCardDeck, deckHolder);
             [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
             [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
         }
