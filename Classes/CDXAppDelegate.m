@@ -85,7 +85,7 @@
     holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
     [decks addPendingCardDeckAdd:holder];
     
-    deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Faces,00ff00,000000&%e2%98%ba&%e2%98%b9,ff0000"];
+    deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Faces,00ff00,000000&%e2%98%bb&%e2%98%b9,ff0000"];
     deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
     deck.wantsAutoRotate = YES;
     deck.shakeAction = CDXCardDeckShakeActionRandom;
