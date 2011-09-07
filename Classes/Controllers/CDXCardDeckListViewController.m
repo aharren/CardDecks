@@ -365,7 +365,7 @@
                 [vc setSubject:cardDeck.name];
                 [vc setMessageBody:[body stringByAppendingString:@" "] isHTML:NO];
                 [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:NO];
-                [self presentModalViewController:vc animated:YES];
+                [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc animated:YES];
             }
             break;
         }
