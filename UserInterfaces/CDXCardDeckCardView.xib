@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1024</int>
-		<string key="IBDocument.SystemVersion">10J869</string>
+		<string key="IBDocument.SystemVersion">10K540</string>
 		<string key="IBDocument.InterfaceBuilderVersion">1306</string>
-		<string key="IBDocument.AppKitVersion">1038.35</string>
+		<string key="IBDocument.AppKitVersion">1038.36</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -272,7 +272,7 @@
 									</object>
 									<object class="IBUIButton" id="740537088">
 										<reference key="NSNextResponder" ref="279753352"/>
-										<int key="NSvFlags">292</int>
+										<int key="NSvFlags">268</int>
 										<string key="NSFrame">{{0, 310}, {50, 50}}</string>
 										<reference key="NSSuperview" ref="279753352"/>
 										<reference key="NSWindow"/>
@@ -301,7 +301,7 @@
 									</object>
 									<object class="IBUIButton" id="173923380">
 										<reference key="NSNextResponder" ref="279753352"/>
-										<int key="NSvFlags">292</int>
+										<int key="NSvFlags">268</int>
 										<string key="NSFrame">{{0, 360}, {50, 50}}</string>
 										<reference key="NSSuperview" ref="279753352"/>
 										<reference key="NSWindow"/>
@@ -330,7 +330,7 @@
 									</object>
 									<object class="IBUIButton" id="683221755">
 										<reference key="NSNextResponder" ref="279753352"/>
-										<int key="NSvFlags">292</int>
+										<int key="NSvFlags">268</int>
 										<string key="NSFrame">{{0, 410}, {50, 50}}</string>
 										<reference key="NSSuperview" ref="279753352"/>
 										<reference key="NSWindow"/>

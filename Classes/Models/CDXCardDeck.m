@@ -110,6 +110,10 @@
     }
 }
 
+- (void)sendUpdateNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:CDXCardDeckUpdateNotification object:self];
+}
+
 - (void)updateBase {
     if (!base) {
         return;
@@ -120,6 +124,8 @@
     base.description = description;
     base.cardsCount = cardsCount;
     base.thumbnailColor = thumbnailColor;
+    
+    [self sendUpdateNotification];
 }
 
 - (void)linkBase:(CDXCardDeckBase *)aBase {
@@ -244,6 +250,7 @@
 
 - (void)setGroupSize:(CDXCardDeckGroupSize)aGroupSize {
     ivar_enum_assign(groupSize, CDXCardDeckGroupSize, aGroupSize);
+    [self sendUpdateNotification];
 }
 
 - (void)setDisplayStyle:(CDXCardDeckDisplayStyle)aDisplayStyle {

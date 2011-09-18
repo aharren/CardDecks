@@ -1,6 +1,6 @@
 //
 //
-// CDXDevice.h
+// CDXCardDecksListPadViewController.h
 //
 //
 // Copyright (c) 2009-2011 Arne Harren <ah@0xc0.de>
@@ -23,33 +23,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import "CDXCardDecksListViewController.h"
 
-typedef enum {
-    CDXDeviceTypeUnknown = 0,
-    CDXDeviceTypeSimulator,
-    CDXDeviceTypeiPhone,
-    CDXDeviceTypeiPodTouch,
-    CDXDeviceTypeiPad,
-    CDXDeviceTypeCount
-} CDXDeviceType;
 
-typedef enum {
-    CDXDeviceUIIdiomPhone = 0,
-    CDXDeviceUIIdiomPad = 1,
-} CDXDeviceUIIdiom;
-
-@interface CDXDevice : NSObject {
+@interface CDXCardDecksListPadViewController : CDXCardDecksListViewController {
     
 @protected
-    CDXDeviceType deviceType;
-    CDXDeviceUIIdiom deviceUIIdiom;
+    IBOutlet UIView *viewTableViewContainer;
+    IBOutlet UINavigationItem *viewNavigationItem;
     
+    CDXCardDeckHolder *currentCardDeck;
+    
+    BOOL ignoreCardDeckUpdateNotifications;
 }
 
-@property (nonatomic, readonly) CDXDeviceType deviceType;
-@property (nonatomic, readonly) CDXDeviceUIIdiom deviceUIIdiom;
-
-declare_singleton(sharedDevice, CDXDevice);
+- (id)initWithCardDecks:(CDXCardDecks *)cardDecks;
 
 @end
 

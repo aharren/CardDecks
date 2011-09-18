@@ -180,7 +180,7 @@
         
         // show that the deck is shuffled
         if ([cardDeck isShuffled]) {
-            [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:deviceOrientation];
+            [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:deviceOrientation view:self.view];
         }
     } else {
         qltrace(@"image");
@@ -329,7 +329,7 @@
 
 - (IBAction)shuffleButtonPressed {
     [self performSelector:@selector(shuffleButtonPressedDelayed) withObject:nil afterDelay:0.001];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:deviceOrientation];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:deviceOrientation view:self.view];
 }
 
 - (void)randomButtonPressedDelayed {
@@ -339,7 +339,7 @@
 
 - (IBAction)randomButtonPressed {
     [self performSelector:@selector(randomButtonPressedDelayed) withObject:nil afterDelay:0.001];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"random" timeInterval:0.4 orientation:deviceOrientation];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"random" timeInterval:0.4 orientation:deviceOrientation view:self.view];
 }
 
 - (void)sortButtonPressedDelayed {
@@ -352,7 +352,7 @@
 
 - (IBAction)sortButtonPressed {
     [self performSelector:@selector(sortButtonPressedDelayed) withObject:nil afterDelay:0.001];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" text:@"sort" timeInterval:0.4 orientation:deviceOrientation];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" text:@"sort" timeInterval:0.4 orientation:deviceOrientation view:self.view];
 }
 
 - (void)configureIndexDotsViewAndButtons {
@@ -470,19 +470,19 @@
     currentTimerId++;
     CDXCardDeckCardViewControllerTimer *timer = [[[CDXCardDeckCardViewControllerTimer alloc] initWithTimerId:currentTimerId timerType:1] autorelease];
     [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play.png" text:@"play" timeInterval:0.4 orientation:deviceOrientation];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play.png" text:@"play" timeInterval:0.4 orientation:deviceOrientation view:self.view];
 }
 
 - (IBAction)play2ButtonPressed {
     currentTimerId++;
     CDXCardDeckCardViewControllerTimer *timer = [[[CDXCardDeckCardViewControllerTimer alloc] initWithTimerId:currentTimerId timerType:2] autorelease];
     [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play2.png" text:@"fast play" timeInterval:0.4 orientation:deviceOrientation];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play2.png" text:@"fast play" timeInterval:0.4 orientation:deviceOrientation view:self.view];
 }
 
 - (IBAction)stopButtonPressed {
     currentTimerId++;
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Stop.png" text:@"stop" timeInterval:0.4 orientation:deviceOrientation];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Stop.png" text:@"stop" timeInterval:0.4 orientation:deviceOrientation view:self.view];
 }
 
 @end

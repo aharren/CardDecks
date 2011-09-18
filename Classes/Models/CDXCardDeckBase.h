@@ -60,6 +60,7 @@
 
 - (void)linkBase:(CDXCardDeckBase *)base;
 - (void)unlinkBase;
+- (void)linkCardDeck;
 - (void)unlinkCardDeck;
 
 @end

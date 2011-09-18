@@ -1,6 +1,6 @@
 //
 //
-// CDXDevice.h
+// CDXCardDeckCardEditPadViewController.m
 //
 //
 // Copyright (c) 2009-2011 Arne Harren <ah@0xc0.de>
@@ -23,33 +23,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import "CDXCardDeckCardEditPadViewController.h"
 
-typedef enum {
-    CDXDeviceTypeUnknown = 0,
-    CDXDeviceTypeSimulator,
-    CDXDeviceTypeiPhone,
-    CDXDeviceTypeiPodTouch,
-    CDXDeviceTypeiPad,
-    CDXDeviceTypeCount
-} CDXDeviceType;
+#undef ql_component
+#define ql_component lcl_cController
 
-typedef enum {
-    CDXDeviceUIIdiomPhone = 0,
-    CDXDeviceUIIdiomPad = 1,
-} CDXDeviceUIIdiom;
 
-@interface CDXDevice : NSObject {
-    
-@protected
-    CDXDeviceType deviceType;
-    CDXDeviceUIIdiom deviceUIIdiom;
-    
+@implementation CDXCardDeckCardEditPadViewController
+
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext editDefaults:(BOOL)editDefaults {
+    if ((self = [super initWithCardDeckViewContext:aCardDeckViewContext editDefaults:editDefaults nibName:@"CDXCardDeckCardEditPadView" bundle:nil])) {
+        cardViewUsePreview = NO;
+        textUpdateColors = NO;
+    }
+    return self;
 }
 
-@property (nonatomic, readonly) CDXDeviceType deviceType;
-@property (nonatomic, readonly) CDXDeviceUIIdiom deviceUIIdiom;
+- (void)dealloc {
+    ivar_release_and_clear(navigationItem);
+    [super dealloc];
+}
 
-declare_singleton(sharedDevice, CDXDevice);
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    cardViewSize = CGSizeMake(320, 480);
+}
+
+- (void)viewDidUnload {
+    ivar_release_and_clear(navigationItem);
+    [super viewDidUnload];
+}
+
+- (IBAction)closeButtonPressed {
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+    NSString *cardText = text.text;
+    [self currentCard].text = cardText;
+    [self updateCardPreview];
+}
 
 @end
 

@@ -33,6 +33,7 @@
     IBOutlet UIToolbar *viewToolbar;
     CGFloat viewTableViewContentOffsetY;
     IBOutlet UIBarButtonItem *editButton;
+    IBOutlet UIBarButtonItem *settingsButton;
     
     UIActivityIndicatorView *activityIndicator;
     
@@ -44,17 +45,21 @@
     UIColor *tableCellTextTextColorActionInactive;
     UIFont *tableCellDetailTextFont;
     UIColor *tableCellDetailTextTextColor;
-    UIColor *tableCellBackgroundColorAction;
-    UIColor *tableCellBackgroundColorAltGroup;
+    UIImage *tableCellBackgroundImage;
+    UIImage *tableCellBackgroundImageAlt;
     CGSize tableCellImageSize;
     
     NSString *titleText;
     NSString *backButtonText;
+    
+    NSString *reuseIdentifierSection1;
+    NSString *reuseIdentifierSection2;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)titleText backButtonText:(NSString *)backButtonText;
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section;
 
 - (void)updateToolbarButtons;
 - (IBAction)editButtonPressed;

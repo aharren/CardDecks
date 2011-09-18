@@ -29,12 +29,14 @@
 @implementation CDXDevice
 
 @synthesize deviceType;
+@synthesize deviceUIIdiom;
 
 synthesize_singleton(sharedDevice, CDXDevice);
 
 - (id)init {
     if ((self = [super init])) {
-        NSString *deviceModel = [[UIDevice currentDevice] model];
+        UIDevice* device = [UIDevice currentDevice];
+        NSString *deviceModel = [device model];
         deviceModel = [deviceModel lowercaseString];
         if ([deviceModel hasSuffix:@"simulator"]) {
             deviceType = CDXDeviceTypeSimulator;
@@ -45,7 +47,13 @@ synthesize_singleton(sharedDevice, CDXDevice);
         } else if ([deviceModel isEqualToString:@"ipad"]) {
             deviceType = CDXDeviceTypeiPad;
         }
-        qltrace(@"%@ %d", deviceModel, deviceType);
+        UIUserInterfaceIdiom userInterfaceIdiom = [device userInterfaceIdiom];
+        if (userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            deviceUIIdiom = CDXDeviceUIIdiomPad;
+        } else {
+            deviceUIIdiom = CDXDeviceUIIdiomPhone;
+        }
+        qltrace(@"%@ %d %d", deviceModel, deviceType, deviceUIIdiom);
     }
     return self;
 }

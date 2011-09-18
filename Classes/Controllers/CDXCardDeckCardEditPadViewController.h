@@ -1,6 +1,6 @@
 //
 //
-// CDXDevice.h
+// CDXCardDeckCardEditPadViewController.h
 //
 //
 // Copyright (c) 2009-2011 Arne Harren <ah@0xc0.de>
@@ -23,33 +23,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import "CDXCardDeckCardEditViewController.h"
 
-typedef enum {
-    CDXDeviceTypeUnknown = 0,
-    CDXDeviceTypeSimulator,
-    CDXDeviceTypeiPhone,
-    CDXDeviceTypeiPodTouch,
-    CDXDeviceTypeiPad,
-    CDXDeviceTypeCount
-} CDXDeviceType;
 
-typedef enum {
-    CDXDeviceUIIdiomPhone = 0,
-    CDXDeviceUIIdiomPad = 1,
-} CDXDeviceUIIdiom;
-
-@interface CDXDevice : NSObject {
+@interface CDXCardDeckCardEditPadViewController : CDXCardDeckCardEditViewController {
     
 @protected
-    CDXDeviceType deviceType;
-    CDXDeviceUIIdiom deviceUIIdiom;
-    
+    IBOutlet UINavigationItem *navigationItem;
 }
 
-@property (nonatomic, readonly) CDXDeviceType deviceType;
-@property (nonatomic, readonly) CDXDeviceUIIdiom deviceUIIdiom;
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext editDefaults:(BOOL)editDefaults;
 
-declare_singleton(sharedDevice, CDXDevice);
+- (IBAction)closeButtonPressed;
 
 @end
 

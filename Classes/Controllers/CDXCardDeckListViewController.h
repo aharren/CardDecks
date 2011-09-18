@@ -37,11 +37,13 @@
     
     IBOutlet UIBarButtonItem *shuffleButton;
     IBOutlet UIBarButtonItem *actionButton;
+    IBOutlet UIBarButtonItem *addButton;
     BOOL viewWasAlreadyVisible;
     
     UIActionSheet *activeActionSheet;
 }
 
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
 
 - (IBAction)addButtonPressed;
@@ -51,6 +53,10 @@
 - (IBAction)actionButtonPressed;
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error;
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath;
+- (IBAction)addButtonPressedDelayed;
 
 @end
 

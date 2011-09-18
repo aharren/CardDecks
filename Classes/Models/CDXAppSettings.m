@@ -25,6 +25,7 @@
 
 #import "CDXAppSettings.h"
 #import "CDXAppAboutSettings.h"
+#import "CDXDevice.h"
 
 #undef ql_component
 #define ql_component lcl_cModel
@@ -72,17 +73,40 @@ typedef struct {
     unsigned int firstIndex;
 } CDXAppSettingGroup;
 
-static const CDXAppSettingGroup groups[] = {
+static const CDXAppSettingGroup groupsPhone[] = {
     { @"", 1, CDXAppSettingsAbout },
     { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
-    { @"User Interface", 6, CDXAppSettingsCardDeckQuickOpen },
+    { @"Card Deck", 3, CDXAppSettingsCardDeckQuickOpen },
+    { @"User Interface", 1, CDXAppSettingsDoneButtonOnLeftSide },
+    { @"Integration", 1, CDXAppSettingsUseMailApplication },
+    { @"Keyboard", 1, CDXAppSettingsAllKeyboardSymbols },
     { @"", 0, 0 }
 };
 
+static const CDXAppSettingGroup groupsPad[] = {
+    { @"", 1, CDXAppSettingsAbout },
+    { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
+    { @"Card Deck", 2, CDXAppSettingsCloseTapCount },
+    { @"Integration", 1, CDXAppSettingsUseMailApplication },
+    { @"Keyboard", 1, CDXAppSettingsAllKeyboardSymbols },
+    { @"", 0, 0 }
+};
+
+static const CDXAppSettingGroup* groups = groupsPhone;
+static size_t numberOfGroups = (sizeof(groupsPhone) / sizeof(CDXAppSettingGroup)) - 1;
 
 @implementation CDXAppSettings
 
-synthesize_singleton(sharedAppSettings, CDXAppSettings);
+synthesize_singleton_definition(sharedAppSettings, CDXAppSettings);
+synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
+
++ (void)initialize {
+    synthesize_singleton_initialization_allocate(sharedAppSettings, CDXAppSettings);
+    if ([[CDXDevice sharedDevice] deviceUIIdiom] == CDXDeviceUIIdiomPad) {
+        groups = groupsPad;
+        numberOfGroups = (sizeof(groupsPad) / sizeof(CDXAppSettingGroup)) - 1;
+    }
+}
 
 + (BOOL)userDefaultsBooleanValueForKey:(NSString *)key defaultsTo:(BOOL)defaults {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -152,7 +176,7 @@ synthesize_singleton(sharedAppSettings, CDXAppSettings);
 }
 
 - (NSUInteger)numberOfGroups {
-    return (sizeof(groups) / sizeof(CDXAppSettingGroup)) - 1;
+    return numberOfGroups;
 }
 
 - (NSString *)titleForGroup:(NSUInteger)group {

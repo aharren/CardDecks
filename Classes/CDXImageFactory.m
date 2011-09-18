@@ -36,14 +36,8 @@
 synthesize_singleton(sharedImageFactory, CDXImageFactory);
 
 static void CDXGraphicsBeginImageContextNativeScale(CGSize size) {
-    extern void UIGraphicsBeginImageContextWithOptions(CGSize size, BOOL opaque, CGFloat scale);
-    
     UIScreen *mainScreen = [UIScreen mainScreen];
-    if (UIGraphicsBeginImageContextWithOptions == NULL || ![mainScreen respondsToSelector:@selector(scale)]) {
-        UIGraphicsBeginImageContext(size);
-    } else {
-        UIGraphicsBeginImageContextWithOptions(size, NO, [mainScreen scale]);
-    }
+    UIGraphicsBeginImageContextWithOptions(size, NO, [mainScreen scale]);
 }
 
 - (UIImage *)imageForView:(UIView *)view size:(CGSize)size {
@@ -90,6 +84,26 @@ static void CDXGraphicsBeginImageContextNativeScale(CGSize size) {
     };
     CGContextStrokeLineSegments(cgContext, cgPoints, 8);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+- (UIImage *)imageForLinearGradientWithTopColor:(CDXColor *)topColor bottomColor:(CDXColor *)bottomColor height:(CGFloat)height base:(CGFloat)base {
+    UIGraphicsBeginImageContext(CGSizeMake(1, height));
+    CGContextRef cgContext = UIGraphicsGetCurrentContext();
+    
+    base = fabs(base);
+    if (base > 0) {
+        CGContextSetFillColorWithColor(cgContext, [[topColor uiColor] CGColor]);
+        CGContextFillRect(cgContext, CGRectMake(0, 0, 1, height));
+    }
+    const void *colorRefs[2] = { [[topColor uiColor] CGColor], [[bottomColor uiColor] CGColor] };
+    CFArrayRef cgColors = CFArrayCreate(kCFAllocatorDefault, colorRefs, 2, &kCFTypeArrayCallBacks);
+    CGGradientRef cgGradient = CGGradientCreateWithColors(NULL, cgColors, NULL);
+    CGContextDrawLinearGradient(cgContext, cgGradient, CGPointMake(0, height * base), CGPointMake(0, height), 0);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    CFRelease(cgGradient);
+    CFRelease(cgColors);
     UIGraphicsEndImageContext();
     return image;
 }

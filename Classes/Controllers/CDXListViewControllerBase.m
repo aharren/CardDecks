@@ -24,6 +24,8 @@
 // THE SOFTWARE.
 
 #import "CDXListViewControllerBase.h"
+#import "CDXDevice.h"
+#import "CDXImageFactory.h"
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -35,6 +37,8 @@
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         ivar_assign_and_copy(titleText, aTitleText);
         ivar_assign_and_copy(backButtonText, aBackButtonText);
+        ivar_assign_and_retain(reuseIdentifierSection1, @"Section1Cell");
+        ivar_assign_and_retain(reuseIdentifierSection2, @"Section2Cell");
     }
     return self;
 }
@@ -44,6 +48,7 @@
     ivar_release_and_clear(viewTableView);
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(editButton);
+    ivar_release_and_clear(settingsButton);
     ivar_release_and_clear(tableCellTextFont);
     ivar_release_and_clear(tableCellTextFontAction);
     ivar_release_and_clear(tableCellTextTextColor);
@@ -52,10 +57,12 @@
     ivar_release_and_clear(tableCellTextTextColorActionInactive);
     ivar_release_and_clear(tableCellDetailTextFont);
     ivar_release_and_clear(tableCellDetailTextTextColor);
-    ivar_release_and_clear(tableCellBackgroundColorAction);
-    ivar_release_and_clear(tableCellBackgroundColorAltGroup);
+    ivar_release_and_clear(tableCellBackgroundImage);
+    ivar_release_and_clear(tableCellBackgroundImageAlt);
     ivar_release_and_clear(titleText);
     ivar_release_and_clear(backButtonText);
+    ivar_release_and_clear(reuseIdentifierSection1);
+    ivar_release_and_clear(reuseIdentifierSection2);
     [super dealloc];
 }
 
@@ -73,6 +80,9 @@
     
     ivar_assign(activityIndicator, [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]);
     activityIndicator.hidesWhenStopped = YES;
+    if ([[CDXDevice sharedDevice] deviceUIIdiom] == CDXDeviceUIIdiomPad) {
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    }
     navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
                                           initWithCustomView:activityIndicator]
                                          autorelease];
@@ -80,14 +90,18 @@
     ivar_assign_and_retain(tableCellTextFont, [UIFont boldSystemFontOfSize:18]);
     ivar_assign_and_retain(tableCellTextFontAction, [UIFont boldSystemFontOfSize:11]);
     ivar_assign_and_retain(tableCellTextTextColor, [UIColor blackColor]);
-    ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor lightGrayColor]);
-    ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor lightGrayColor]);
+    ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor grayColor]);
+    ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor grayColor]);
     ivar_assign_and_retain(tableCellTextTextColorActionInactive, [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]);
     ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:12]);
-    ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor lightGrayColor]);
-    ivar_assign_and_retain(tableCellBackgroundColorAction, [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1.0]);
-    ivar_assign_and_retain(tableCellBackgroundColorAltGroup, [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1]);
+    ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor grayColor]);
+    CGFloat rowHeight = viewTableView.rowHeight;
+    ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:rowHeight base:0.75]);
+    ivar_assign_and_retain(tableCellBackgroundImageAlt, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff] bottomColor:[CDXColor colorWithRed:0xe8 green:0xe8 blue:0xe8 alpha:0xff] height:rowHeight base:0.75]);
     tableCellImageSize = CGSizeMake(10, 10);
+
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    viewTableView.backgroundView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:screenHeight base:0.0]] autorelease];
 }
 
 - (void)viewDidUnload {
@@ -95,6 +109,7 @@
     ivar_release_and_clear(viewTableView);
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(editButton);
+    ivar_release_and_clear(settingsButton);
     ivar_release_and_clear(activityIndicator);
     ivar_release_and_clear(tableCellTextFont);
     ivar_release_and_clear(tableCellTextFontAction);
@@ -104,8 +119,8 @@
     ivar_release_and_clear(tableCellTextTextColorActionInactive);
     ivar_release_and_clear(tableCellDetailTextFont);
     ivar_release_and_clear(tableCellDetailTextTextColor);
-    ivar_release_and_clear(tableCellBackgroundColorAction);
-    ivar_release_and_clear(tableCellBackgroundColorAltGroup);
+    ivar_release_and_clear(tableCellBackgroundImage);
+    ivar_release_and_clear(tableCellBackgroundImageAlt);
     [super viewDidUnload];
 }
 
@@ -140,15 +155,14 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case 1:
-            break;
-        default:
-        case 0:
-        case 2:
-            cell.backgroundColor = tableCellBackgroundColorAction;
-            break;
-    }
+    UIColor *clearColor = [UIColor clearColor];
+    cell.textLabel.backgroundColor = clearColor;
+    cell.detailTextLabel.backgroundColor = clearColor;
+    cell.backgroundColor = clearColor;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
+    return nil;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

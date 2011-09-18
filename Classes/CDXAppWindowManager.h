@@ -32,12 +32,10 @@
 @protected
     IBOutlet UIWindow *window;
     IBOutlet UIView *navigationView;
-    IBOutlet UIView *statusBarView;
     
     IBOutlet CDXAppWindowNoticeView *noticeView;
-
+    
     UIViewController<CDXAppWindowViewController> *fullScreenViewController;
-    UINavigationController *navigationController;
     
     UIDeviceOrientation deviceOrientation;
 }
@@ -52,9 +50,13 @@ declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 - (void)popViewControllerAnimated:(BOOL)animated;
 - (void)popToInitialViewController;
 - (void)makeWindowKeyAndVisible;
-- (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation;
-+ (CGAffineTransform)transformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation;
+- (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation view:(UIView*)viewOrNil;
+- (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated;
+- (void)presentModalViewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem animated:(BOOL)animated;
 - (void)dismissModalViewControllerAnimated:(BOOL)animated;
+- (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem;
+
++ (CGAffineTransform)transformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation;
 
 @end
 

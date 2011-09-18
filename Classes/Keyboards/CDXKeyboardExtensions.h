@@ -56,7 +56,7 @@
 
 @required
 - (BOOL)keyboardExtensionResponderHasActionsForExtensionAtIndex:(NSUInteger)index;
-- (void)keyboardExtensionResponderRunActionsForExtensionAtIndex:(NSUInteger)index;
+- (void)keyboardExtensionResponderRunActionsForExtensionAtIndex:(NSUInteger)index barButtonItem:(UIBarButtonItem *)barButtonItem;
 
 @end
 
@@ -98,7 +98,7 @@ declare_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
 - (void)deactivateKeyboardExtension:(NSObject<CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag;
 
 - (void)toolbarButtonPressed:(id)sender;
-- (void)toolbarActionButtonPressed;
+- (void)toolbarActionButtonPressed:(id)sender;
 - (UIBarButtonItem *)toolbarButtonWithTitle:(NSString *)title;
 
 - (UIColor *)backgroundColor;

@@ -35,14 +35,18 @@
     BOOL cardDeckQuickOpen;
 }
 
+- (id)initWithCardDecks:(CDXCardDecks *)cardDecks nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 - (id)initWithCardDecks:(CDXCardDecks *)cardDecks;
 
+- (void)processSinglePendingCardDeckAdd;
 - (void)processPendingCardDeckAdds;
 - (void)processPendingCardDeckAddsAtTopDelayed;
 
 - (IBAction)addButtonPressed;
 - (IBAction)defaultsButtonPressed;
 - (IBAction)settingsButtonPressed;
+
+- (void)deleteCardDeckAtIndex:(NSUInteger)index;
 
 @end
 

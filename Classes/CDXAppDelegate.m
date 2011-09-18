@@ -26,9 +26,12 @@
 #import "CDXAppDelegate.h"
 #import "CDXCardDeckURLSerializer.h"
 #import "CDXCardDecksListViewController.h"
+#import "CDXCardDecksListPadViewController.h"
+#import "CDXCardDeckListPadViewController.h"
 #import "CDXKeyboardExtensions.h"
 #import "CDXDictionarySerializerUtils.h"
 #import "CDXCardDecks.h"
+#import "CDXDevice.h"
 
 #undef ql_component
 #define ql_component lcl_cApplication
@@ -43,6 +46,7 @@
     deck = decks.cardDeckDefaults.cardDeck;
     [deck updateStorageObjectDeferred:NO];
     
+    /*
     deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Weather,000000,ffff00&%e2%98%80,ff0000&%e2%98%81,ffffff,0000ff&%e2%98%82,000000,aaaaaa&%e2%98%83,000000,ffffff"];
     deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
     deck.wantsAutoRotate = NO;
@@ -53,6 +57,7 @@
     [deck updateStorageObjectDeferred:NO];
     holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
     [decks addPendingCardDeckAdd:holder];
+    */
     
     deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Dice,ffffff,000000&%e2%91%a0&%e2%91%a1&%e2%91%a2&%e2%91%a3&%e2%91%a4&%e2%91%a5"];
     deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
@@ -80,7 +85,7 @@
     holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
     [decks addPendingCardDeckAdd:holder];
     
-    deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Faces,00ff00,000000&%e2%98%ba&%e2%98%b9,ff0000"];
+    deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Faces,00ff00,000000&%e2%98%bb&%e2%98%b9,ff0000"];
     deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
     deck.wantsAutoRotate = YES;
     deck.shakeAction = CDXCardDeckShakeActionRandom;
@@ -170,8 +175,8 @@
 - (CDXCardDecks *)cardDecks {
     NSUInteger version = 0;
     CDXCardDecks *decks = [CDXCardDecks cardDecksFromStorageObjectNamed:@"Main.CardDecksList" version:&version];
-    if (decks == nil) {
-        // main list not found, create a new one
+    if (decks == nil || [decks cardDecksCount] == 0) {
+        // main list not found or empty, create a new one
         version = 0;
         decks = [[[CDXCardDecks alloc] init] autorelease];
         decks.file = @"Main.CardDecksList";
@@ -183,7 +188,7 @@
         for (NSUInteger i = 0; i < decksCount; i++) {
             NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
             CDXCardDeckHolder *holder = [decks cardDeckAtIndex:i];
-            holder.cardDeck;
+            [holder linkCardDeck];
             [pool release];
         }
         // add new default card decks
@@ -202,9 +207,16 @@
     
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
     
-    CDXCardDecksListViewController *vc = [[[CDXCardDecksListViewController alloc] initWithCardDecks:cardDecks] autorelease];
+    if ([[CDXDevice sharedDevice] deviceUIIdiom] == CDXDeviceUIIdiomPhone) {
+        UIViewController<CDXAppWindowViewController> *vc = [[[CDXCardDecksListViewController alloc] initWithCardDecks:cardDecks] autorelease];
+        [appWindowManager pushViewController:vc animated:NO];
+    } else {
+        UIViewController<CDXAppWindowViewController> *vcl = [[[CDXCardDecksListPadViewController alloc] initWithCardDecks:cardDecks] autorelease];
+        [appWindowManager pushViewController:vcl animated:NO];
+        UIViewController<CDXAppWindowViewController> *vcr = [[[CDXCardDeckListPadViewController alloc] initWithCardDeckViewContext:nil] autorelease];
+        [appWindowManager pushViewController:vcr animated:NO];
+    }
     
-    [appWindowManager pushViewController:vc animated:NO];
     [appWindowManager makeWindowKeyAndVisible];
 }
 

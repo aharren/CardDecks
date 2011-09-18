@@ -31,14 +31,20 @@
 
 @implementation CDXCardDeckCardEditViewController
 
-- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext editDefaults:(BOOL)editDefaults {
-    if ((self = [super initWithNibName:@"CDXCardDeckCardEditView" bundle:nil])) {
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext editDefaults:(BOOL)editDefaults nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
         ivar_assign_and_retain(cardDeck, cardDeckViewContext.cardDeck);
         self.hidesBottomBarWhenPushed = YES;
+        cardViewUsePreview = YES;
+        textUpdateColors = YES;
         editingDefaults = editDefaults;
     }
     return self;
+}
+
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext editDefaults:(BOOL)editDefaults {
+    return [self initWithCardDeckViewContext:aCardDeckViewContext editDefaults:editDefaults nibName:@"CDXCardDeckCardEditView" bundle:nil];
 }
 
 - (void)dealloc {
@@ -62,10 +68,12 @@
 }
 
 - (void)updateCardPreview {
-    CDXCard *card = [self currentCard];
-    text.textColor = [card.textColor uiColor];
-    text.backgroundColor = [card.backgroundColor uiColor];
-    [cardView setCard:[self currentCard] size:cardViewSize deviceOrientation:UIDeviceOrientationPortrait preview:YES];
+    if (textUpdateColors) {
+        CDXCard *card = [self currentCard];
+        text.textColor = [card.textColor uiColor];
+        text.backgroundColor = [card.backgroundColor uiColor];
+    }
+    [cardView setCard:[self currentCard] size:cardViewSize deviceOrientation:UIDeviceOrientationPortrait preview:cardViewUsePreview];
     cardViewScrollView.contentSize = cardViewSize;
 }
 
@@ -172,16 +180,29 @@
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
 }
 
+- (void)dismissActionSheet {
+    if (activeActionSheet != nil) {
+        [activeActionSheet dismissWithClickedButtonIndex:[activeActionSheet cancelButtonIndex] animated:NO];
+        ivar_release_and_clear(activeActionSheet);
+    }
+}
+
 - (void)keyboardExtensionResponderExtensionBecameActiveAtIndex:(NSUInteger)index {
     [self showCardView:(index == 1 || index == 2)];
+    [self dismissActionSheet];
 }
 
 - (BOOL)keyboardExtensionResponderHasActionsForExtensionAtIndex:(NSUInteger)index {
     return index == 1 || index == 2;
 }
 
-- (void)keyboardExtensionResponderRunActionsForExtensionAtIndex:(NSUInteger)index {
+- (void)keyboardExtensionResponderRunActionsForExtensionAtIndex:(NSUInteger)index barButtonItem:(UIBarButtonItem *)barButtonItem {
     qltrace();
+    if (activeActionSheet != nil) {
+        [self dismissActionSheet];
+        // don't open a new sheet, just closed the same one
+        return;
+    }
     UIActionSheet *sheet = nil;
     if (editingDefaults) {
         index = -index;
@@ -220,7 +241,7 @@
     }
     if (sheet) {
         sheet.tag = index;
-        [sheet showInView:[CDXAppWindowManager sharedAppWindowManager].window];
+        [[CDXAppWindowManager sharedAppWindowManager] showActionSheet:sheet fromBarButtonItem:barButtonItem];
         ivar_assign_and_retain(activeActionSheet, sheet);
     }
 }
@@ -347,9 +368,7 @@
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
     qltrace();
     [super dismissModalViewControllerAnimated:animated];
-    if (activeActionSheet != nil) {
-        [activeActionSheet dismissWithClickedButtonIndex:[activeActionSheet cancelButtonIndex] animated:animated];
-    }
+    [self dismissActionSheet];
 }
 
 @end

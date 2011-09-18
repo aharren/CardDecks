@@ -62,6 +62,9 @@ typedef enum {
 } CDXCardDeckPageControlStyle;
 
 
+#define CDXCardDeckUpdateNotification @"CDXCardDeckUpdateNotification"
+
+
 @interface CDXCardDeck : CDXCardDeckBase<NSCopying, CDXStorageObject> {
     
 @protected

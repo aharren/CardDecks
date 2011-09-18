@@ -116,20 +116,20 @@
     }
     
     // scaling
-    CGFloat scale = MIN(size.width, size.height) / 320.0;
+    CGFloat scale = size.height / 480.0;
     
     // set size
     self.frame = CGRectMake(0, 0, size.width, size.height);
     cardText.frame = self.frame;
     
     // update text
-    CGFloat fontSize = [card fontSizeConstrainedToSize:[self sizeForCardOrientation:cardDisplayOrientation size:size]];
+    CGFloat fontSize = [card fontSizeConstrainedToSize:[self sizeForCardOrientation:cardDisplayOrientation size:size] scale:scale];
     if (card.fontSize != CDXCardFontSizeAutomatic) {
         if (CDXCardOrientationIsPortrait(cardOrientation) != CDXCardOrientationIsPortrait(cardDisplayOrientation)) {
             fontSize = fontSize * size.width / size.height;
         }
     }
-    cardText.bounds = CGRectMake(0, 0, 1024, 1024);
+    cardText.bounds = CGRectMake(0, 0, 1024 * scale, 1024 * scale);
     cardText.font = [UIFont systemFontOfSize:fontSize];
     cardText.text = text;
     cardText.textColor = [card.textColor uiColor];

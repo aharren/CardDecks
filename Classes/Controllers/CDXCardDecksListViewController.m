@@ -37,11 +37,15 @@
 
 @implementation CDXCardDecksListViewController
 
-- (id)initWithCardDecks:(CDXCardDecks *)decks {
-    if ((self = [super initWithNibName:@"CDXCardDecksListView" bundle:nil titleText:@"Card Decks" backButtonText:@"Decks"])) {
+- (id)initWithCardDecks:(CDXCardDecks *)decks nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil titleText:@"Card Decks" backButtonText:@"Decks"])) {
         ivar_assign_and_retain(cardDecks, decks);
     }
     return self;
+}
+
+- (id)initWithCardDecks:(CDXCardDecks *)decks {
+    return [self initWithCardDecks:decks nibName:@"CDXCardDecksListView" bundle:nil];
 }
 
 - (void)dealloc {
@@ -74,10 +78,8 @@
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *reuseIdentifierSection1 = @"Section1Cell";
-    static NSString *reuseIdentifierSection2 = @"Section2Cell";
-    switch (indexPath.section) {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
+    switch (section) {
         default:
         case 0:
             return nil;
@@ -88,10 +90,35 @@
                 cell.textLabel.font = tableCellTextFont;
                 cell.detailTextLabel.font = tableCellDetailTextFont;
                 cell.detailTextLabel.textColor = tableCellDetailTextTextColor;
+                cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             }
             cell.accessoryType = cardDeckQuickOpen ? UITableViewCellAccessoryDetailDisclosureButton : UITableViewCellAccessoryDisclosureIndicator;
-            
+            return cell;
+        }
+        case 2: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection2];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
+                cell.textLabel.font = tableCellTextFontAction;
+                cell.textLabel.textAlignment = UITextAlignmentCenter;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+            }
+            cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
+            return cell;
+        }
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        default:
+        case 0:
+            return nil;
+        case 1: {
+            UITableViewCell *cell = [self tableView:tableView cellForSection:indexPath.section];
             CDXCardDeckBase *deck = [cardDecks cardDeckAtIndex:indexPath.row];
             NSString *name = deck.name;
             if ([@"" isEqualToString:name]) {
@@ -115,16 +142,7 @@
             return cell;
         }
         case 2: {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection2];
-            if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
-                cell.textLabel.font = tableCellTextFontAction;
-                cell.textLabel.textAlignment = UITextAlignmentCenter;
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                cell.selectionStyle = UITableViewCellSelectionStyleGray;
-            }
-            
-            cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
+            UITableViewCell *cell = [self tableView:tableView cellForSection:indexPath.section];
             switch (indexPath.row) {
                 default:
                 case 0: {
@@ -138,33 +156,31 @@
     }
 }
 
-- (void)pushCardDeckListViewControllerWithCardDeckBase:(CDXCardDeckBase *)deckBase {
-    if (deckBase == nil) {
-        return;
+- (void)pushCardDeckListViewControllerWithCardDeckHolder:(CDXCardDeckHolder *)deckHolder {
+    if (deckHolder != nil) {
+        CDXCardDeck *deck = deckHolder.cardDeck;
+        if (deck != nil) {
+            CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
+            CDXCardDeckListViewController *vc = [[[CDXCardDeckListViewController alloc] initWithCardDeckViewContext:context] autorelease];
+            [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+        }
     }
     
-    CDXCardDeck *deck = deckBase.cardDeck;
-    if (deck != nil) {
-        CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
-        CDXCardDeckListViewController *vc = [[[CDXCardDeckListViewController alloc] initWithCardDeckViewContext:context] autorelease];
-        [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
-    }
     NSIndexPath *indexPath = [viewTableView indexPathForSelectedRow];
     [viewTableView deselectRowAtIndexPath:indexPath animated:YES];
     [self performBlockingSelectorEnd];
 }
 
-- (void)pushCardDeckCardViewControllerWithCardDeckBase:(CDXCardDeckBase *)deckBase {
-    if (deckBase == nil) {
-        return;
+- (void)pushCardDeckCardViewControllerWithCardDeckHolder:(CDXCardDeckHolder *)deckHolder {
+    if (deckHolder != nil) {
+        CDXCardDeck *deck = deckHolder.cardDeck;
+        if (deck != nil && [deck cardsCount] != 0) {
+            CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
+            CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:context] autorelease];
+            [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+        }
     }
     
-    CDXCardDeck *deck = deckBase.cardDeck;
-    if (deck != nil && [deck cardsCount] != 0) {
-        CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
-        CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:context] autorelease];
-        [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
-    }
     NSIndexPath *indexPath = [viewTableView indexPathForSelectedRow];
     [viewTableView deselectRowAtIndexPath:indexPath animated:YES];
     [self performBlockingSelectorEnd];
@@ -180,12 +196,13 @@
         case 1: {
             lastCardDeckIndex = indexPath.row;
             deselectRow = NO;
+            CDXCardDeckHolder *deckHolder = [cardDecks cardDeckAtIndex:indexPath.row];
             if (cardDeckQuickOpen) {
-                [self performBlockingSelector:@selector(pushCardDeckCardViewControllerWithCardDeckBase:)
-                                   withObject:[cardDecks cardDeckAtIndex:indexPath.row]];
+                [self performBlockingSelector:@selector(pushCardDeckCardViewControllerWithCardDeckHolder:)
+                                   withObject:deckHolder];
             } else {
-                [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckBase:)
-                                   withObject:[cardDecks cardDeckAtIndex:indexPath.row]];
+                [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckHolder:)
+                                   withObject:deckHolder];
             }
             break;
         }
@@ -207,17 +224,21 @@
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     lastCardDeckIndex = indexPath.row;
-    [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckBase:)
+    [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckHolder:)
                        withObject:[cardDecks cardDeckAtIndex:indexPath.row]];
+}
+
+- (void)deleteCardDeckAtIndex:(NSUInteger)index {
+    CDXCardDeckBase *deck = [cardDecks cardDeckAtIndex:index];
+    [CDXStorage removeStorageObject:deck.cardDeck deferred:NO];
+    
+    [cardDecks removeCardDeckAtIndex:index];
+    [cardDecks updateStorageObjectDeferred:NO];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        CDXCardDeckBase *deck = [cardDecks cardDeckAtIndex:indexPath.row];
-        [CDXStorage removeStorageObject:deck.cardDeck deferred:NO];
-        
-        [cardDecks removeCardDeckAtIndex:indexPath.row];
-        [cardDecks updateStorageObjectDeferred:NO];
+        [self deleteCardDeckAtIndex:indexPath.row];
         
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self updateToolbarButtons];
@@ -264,7 +285,7 @@
 
 - (IBAction)defaultsButtonPressed {
     qltrace();
-    [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckBase:)
+    [self performBlockingSelector:@selector(pushCardDeckListViewControllerWithCardDeckHolder:)
                        withObject:cardDecks.cardDeckDefaults];
 }
 
@@ -272,7 +293,7 @@
     qltrace();
     CDXAppSettings *settings = [CDXAppSettings sharedAppSettings];
     CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings] autorelease];
-    [self presentModalViewController:vc animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsButton animated:YES];
 }
 
 - (void)processSinglePendingCardDeckAdd {

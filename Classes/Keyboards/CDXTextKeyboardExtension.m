@@ -62,16 +62,16 @@ synthesize_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
     switch (orientation) {
         default:
         case CDXCardOrientationUp:
-            orientationText = @"\u25B2";
+            orientationText = @"\u25B3";
             break;
         case CDXCardOrientationRight:
-            orientationText = @"\u25B6";
+            orientationText = @"\u25B7";
             break;
         case CDXCardOrientationDown:
-            orientationText = @"\u25BC";
+            orientationText = @"\u25BD";
             break;
         case CDXCardOrientationLeft:
-            orientationText = @"\u25C0";
+            orientationText = @"\u25C1";
             break;
     }
     

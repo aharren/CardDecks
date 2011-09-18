@@ -38,8 +38,8 @@
 
 @implementation CDXCardDeckListViewController
 
-- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super initWithNibName:@"CDXCardDeckListView" bundle:nil titleText:aCardDeckViewContext.cardDeck.name backButtonText:@"Cards"])) {
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil titleText:aCardDeckViewContext.cardDeck.name backButtonText:@"Cards"])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
         ivar_assign_and_retain(cardDeck, aCardDeckViewContext.cardDeck);
         viewWasAlreadyVisible = NO;
@@ -47,11 +47,16 @@
     return self;
 }
 
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
+    return [self initWithCardDeckViewContext:aCardDeckViewContext nibName:@"CDXCardDeckListView" bundle:nil];
+}
+
 - (void)dealloc {
     ivar_release_and_clear(cardDeckViewContext);
     ivar_release_and_clear(cardDeck);
     ivar_release_and_clear(shuffleButton);
     ivar_release_and_clear(actionButton);
+    ivar_release_and_clear(addButton);
     ivar_release_and_clear(activeActionSheet);
     [super dealloc];
 }
@@ -59,11 +64,13 @@
 - (void)viewDidUnload {
     ivar_release_and_clear(shuffleButton);
     ivar_release_and_clear(actionButton);
+    ivar_release_and_clear(addButton);
     ivar_release_and_clear(activeActionSheet);
     [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    qltrace();
     [super viewWillAppear:animated];
     self.navigationItem.title = cardDeckViewContext.cardDeck.name;
     if ([viewTableView numberOfRowsInSection:1] != 0) {
@@ -72,10 +79,11 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    qltrace();
     [super viewDidAppear:animated];
     if ([cardDeck isShuffled]) {
         if (!viewWasAlreadyVisible) {
-            [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp];
+            [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:self.view];
         }
     }
     viewWasAlreadyVisible = YES;
@@ -98,15 +106,15 @@
     if (indexPath.section == 1) {
         NSUInteger groupSize = [cardDeck groupSize];
         if (groupSize > 0 && (indexPath.row / groupSize) % 2 == 0) {
-            cell.backgroundColor = tableCellBackgroundColorAltGroup;
+            cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImageAlt] autorelease];
+        } else {
+            cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
         }
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *reuseIdentifierSection1 = @"Section1Cell";
-    static NSString *reuseIdentifierSection2 = @"Section2Cell";
-    switch (indexPath.section) {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
+    switch (section) {
         default:
         case 0: {
             return nil;
@@ -118,12 +126,9 @@
                 cell.textLabel.font = tableCellTextFont;
                 cell.textLabel.textColor = tableCellTextTextColor;
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             }
-            
-            CDXCard *card = [cardDeck cardAtIndex:indexPath.row];
-            cell.textLabel.text = card.text;
-            cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForColor:card.backgroundColor size:tableCellImageSize];
             return cell;
         }
         case 2: {
@@ -133,9 +138,30 @@
                 cell.textLabel.font = tableCellTextFontAction;
                 cell.textLabel.textAlignment = UITextAlignmentCenter;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
             }
-            
+            cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
+            return cell;
+        }
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        default:
+        case 0: {
+            return nil;
+        }
+        case 1: {
+            UITableViewCell *cell = [self tableView:tableView cellForSection:indexPath.section];
+            CDXCard *card = [cardDeck cardAtIndex:indexPath.row];
+            cell.textLabel.text = card.text;
+            cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForColor:card.backgroundColor size:tableCellImageSize];
+            return cell;
+        }
+        case 2: {
+            UITableViewCell *cell = [self tableView:tableView cellForSection:indexPath.section];
             cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
             switch (indexPath.row) {
                 default:
@@ -276,21 +302,28 @@
     qltrace();
     CDXCardDeckSettings *settings = [[[CDXCardDeckSettings alloc] initWithCardDeck:cardDeck] autorelease];
     CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings] autorelease];
-    [self presentModalViewController:vc animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsButton animated:YES];
 }
 
 - (IBAction)shuffleButtonPressed {
     if ([cardDeck isShuffled]) {
         [cardDeck sort];
-        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" text:@"sort" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp];
+        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" text:@"sort" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:self.view];
     } else {
         [cardDeck shuffle];
-        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp];
+        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:self.view];
     }
     [cardDeck updateStorageObjectDeferred:YES];
     
     [self updateShuffleButton];
     [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (void)dismissActionSheet {
+    if (activeActionSheet != nil) {
+        [activeActionSheet dismissWithClickedButtonIndex:[activeActionSheet cancelButtonIndex] animated:NO];
+        ivar_release_and_clear(activeActionSheet);
+    }
 }
 
 - (IBAction)actionButtonPressed {
@@ -302,7 +335,12 @@
                                    otherButtonTitles:@"Email Deck", @"Duplicate Deck", nil]
                                   autorelease];
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-    [actionSheet showInView:[CDXAppWindowManager sharedAppWindowManager].window];
+    if (activeActionSheet != nil) {
+        [self dismissActionSheet];
+        // don't open a new sheet, just closed the same one
+        return;
+    }
+    [[CDXAppWindowManager sharedAppWindowManager] showActionSheet:actionSheet fromBarButtonItem:actionButton];
     ivar_assign_and_retain(activeActionSheet, actionSheet);
 }
 
@@ -327,7 +365,7 @@
                 [vc setSubject:cardDeck.name];
                 [vc setMessageBody:[body stringByAppendingString:@" "] isHTML:NO];
                 [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:NO];
-                [self presentModalViewController:vc animated:YES];
+                [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc animated:YES];
             }
             break;
         }
@@ -351,9 +389,7 @@
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
     qltrace();
     [super dismissModalViewControllerAnimated:animated];
-    if (activeActionSheet != nil) {
-        [activeActionSheet dismissWithClickedButtonIndex:[activeActionSheet cancelButtonIndex] animated:animated];
-    }
+    [self dismissActionSheet];
 }
 
 @end
