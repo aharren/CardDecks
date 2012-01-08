@@ -239,6 +239,7 @@
         
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self updateToolbarButtons];
+        [viewTableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.2];
     }
 }
 
