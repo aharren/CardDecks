@@ -236,9 +236,16 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 
 @implementation CDXAppWindowManagerPhone
 
-synthesize_singleton_initialization(sharedAppWindowManager, CDXAppWindowManager);
+synthesize_singleton_definition(sharedAppWindowManagerPhone, CDXAppWindowManagerPhone);
 
-synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
++ (void)initialize {
+    synthesize_singleton_initialization_allocate(sharedAppWindowManagerPhone, CDXAppWindowManagerPhone);
+    if (!sharedAppWindowManager) {
+        sharedAppWindowManager = sharedAppWindowManagerPhone;
+    }
+}
+
+synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPhone);
 
 - (id)init {
     qltrace();
@@ -412,9 +419,16 @@ synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
 
 @implementation CDXAppWindowManagerPad
 
-synthesize_singleton_initialization(sharedAppWindowManager, CDXAppWindowManager);
+synthesize_singleton_definition(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
 
-synthesize_singleton_methods(sharedAppWindowManager, CDXAppWindowManager);
++ (void)initialize {
+    synthesize_singleton_initialization_allocate(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
+    if (!sharedAppWindowManager) {
+        sharedAppWindowManager = sharedAppWindowManagerPad;
+    }
+}
+
+synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
 
 - (id)init {
     qltrace();
