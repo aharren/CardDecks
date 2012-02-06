@@ -81,6 +81,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     qltrace();
     [super viewDidAppear:animated];
+    self.navigationItem.title = cardDeckViewContext.cardDeck.name;
     if ([cardDeck isShuffled]) {
         if (!viewWasAlreadyVisible) {
             [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:self.view];
