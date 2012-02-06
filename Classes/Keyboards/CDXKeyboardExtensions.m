@@ -142,6 +142,7 @@ static float keyboardExtensionsOsVersion;
     
     // now, animate and position the toolbar
     if (animated) {
+        [UIView setAnimationsEnabled:YES];
         [toolbar setFrame:toolbarFrameAnimationStart];
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:keyboardAnimationDuration];
