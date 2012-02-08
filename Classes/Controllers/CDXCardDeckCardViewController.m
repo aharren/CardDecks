@@ -55,13 +55,13 @@
 @synthesize cardIndex;
 @synthesize timerType;
 
-- (id)initWithCardIndex:(NSUInteger)index timerType:(unsigned int)type {
+- (id)initWithCardIndex:(NSUInteger)index timerInterval:(NSTimeInterval)interval timerType:(unsigned int)type {
     qltrace();
     if ((self = [super init])) {
         double timerFactor = (type == 0) ? 1.0 : (1.0/5.0);
         cardIndex = index;
         timerStart = [NSDate timeIntervalSinceReferenceDate];
-        timerExpiration = timerStart + (5.0 * timerFactor);
+        timerExpiration = timerStart + (interval * timerFactor);
         timerType = type;
     }
     return self;
@@ -215,17 +215,22 @@
     timerSignalView.hidden = (int)([NSDate timeIntervalSinceReferenceDate] * blinkFactor) % 2 == 0;
 }
 
-- (void)installTimerWithCardIndex:(NSUInteger)cardIndex timerType:(unsigned int)timerType {
-    qltrace();
-    timerSignalView.backgroundColor = [[[cardDeck cardAtIndex:cardIndex] textColor] uiColor];
-    ivar_assign(currentTimer, [[CDXCardDeckCardViewControllerTimer alloc] initWithCardIndex:cardIndex timerType:timerType]);
-    [self performTimerCallbackDelayed];
-}
-
 - (void)uninstallTimer {
     qltrace();
     timerSignalView.hidden = YES;
     ivar_release_and_clear(currentTimer);
+}
+
+- (void)installTimerWithCardIndex:(NSUInteger)cardIndex timerType:(unsigned int)timerType {
+    qltrace();
+    CDXCard* card = [cardDeck cardAtIndex:cardIndex];
+    if (card.timerInterval != CDXCardTimerIntervalOff) {
+        timerSignalView.backgroundColor = [[card textColor] uiColor];
+        ivar_assign(currentTimer, [[CDXCardDeckCardViewControllerTimer alloc] initWithCardIndex:cardIndex timerInterval:card.timerInterval timerType:timerType]);
+        [self performTimerCallbackDelayed];
+    } else {
+        [self uninstallTimer];
+    }
 }
 
 - (void)viewDidLoad {
