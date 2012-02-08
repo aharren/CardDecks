@@ -30,6 +30,8 @@
 #import "CDXIndexDotsView.h"
 
 
+@class CDXCardDeckCardViewControllerTimer;
+
 @interface CDXCardDeckCardViewController : UIViewController<CDXAppWindowViewController, CDXCardsViewDelegate, CDXCardsViewDataSource> {
     
 @protected
@@ -56,8 +58,9 @@
     IBOutlet UIButton *actionsViewStopButton;
 
     NSUInteger closeTapCount;
-    
-    unsigned int currentTimerId;
+
+    IBOutlet UIView *timerSignalView;
+    CDXCardDeckCardViewControllerTimer *currentTimer;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;

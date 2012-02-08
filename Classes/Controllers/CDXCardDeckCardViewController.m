@@ -38,41 +38,41 @@
 @interface CDXCardDeckCardViewControllerTimer : NSObject {
     
 @protected
-    unsigned int timerId;
+    NSUInteger cardIndex;
+    NSTimeInterval timerStart;
+    NSTimeInterval timerExpiration;
     unsigned int timerType;
-    NSTimeInterval timerInterval;
 }
 
-@property (readonly, nonatomic) unsigned int timerId;
+@property (readonly, nonatomic) NSUInteger cardIndex;
 @property (readonly, nonatomic) unsigned int timerType;
-@property (readonly, nonatomic) NSTimeInterval timerInterval;
 
 @end
 
 
 @implementation CDXCardDeckCardViewControllerTimer
 
-@synthesize timerId;
+@synthesize cardIndex;
 @synthesize timerType;
-@synthesize timerInterval;
 
-- (id)initWithTimerId:(unsigned int)tid timerType:(unsigned int)ttype {
+- (id)initWithCardIndex:(NSUInteger)index timerType:(unsigned int)type {
     qltrace();
     if ((self = [super init])) {
-        timerId = tid;
-        timerType = ttype;
-        switch (timerType) {
-            case 1:
-                timerInterval = 5;
-                break;
-            case 2:
-                timerInterval = 1;
-                break;
-            default:
-                timerInterval = 0.1;
-        }
+        double timerFactor = (type == 0) ? 1.0 : (1.0/5.0);
+        cardIndex = index;
+        timerStart = [NSDate timeIntervalSinceReferenceDate];
+        timerExpiration = timerStart + (5.0 * timerFactor);
+        timerType = type;
     }
     return self;
+}
+
+- (void)dealloc {
+    qltrace();
+}
+
+- (BOOL)isExpired {
+    return [NSDate timeIntervalSinceReferenceDate] > timerExpiration;
 }
 
 @end
@@ -111,6 +111,7 @@
     ivar_release_and_clear(actionsViewPlay2Button);
     ivar_release_and_clear(actionsViewStopButton);
     ivar_release_and_clear(actionsViewButtonsView);
+    ivar_release_and_clear(timerSignalView);
     [super dealloc];
 }
 
@@ -208,11 +209,31 @@
     [self configureActionsViewAnimated:NO];
 }
 
+- (void)performTimerCallbackDelayed {
+    [self performSelector:@selector(timerCallback:) withObject:currentTimer afterDelay:0.01];
+    int blinkFactor = (currentTimer.timerType == 0) ? 2 : 4;
+    timerSignalView.hidden = (int)([NSDate timeIntervalSinceReferenceDate] * blinkFactor) % 2 == 0;
+}
+
+- (void)installTimerWithCardIndex:(NSUInteger)cardIndex timerType:(unsigned int)timerType {
+    qltrace();
+    timerSignalView.backgroundColor = [[[cardDeck cardAtIndex:cardIndex] textColor] uiColor];
+    ivar_assign(currentTimer, [[CDXCardDeckCardViewControllerTimer alloc] initWithCardIndex:cardIndex timerType:timerType]);
+    [self performTimerCallbackDelayed];
+}
+
+- (void)uninstallTimer {
+    qltrace();
+    timerSignalView.hidden = YES;
+    ivar_release_and_clear(currentTimer);
+}
+
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
     [self configureView];
     [self configureIndexDotsViewAndButtons];
+    timerSignalView.hidden = YES;
 }
 
 - (void)viewDidUnload {
@@ -227,6 +248,7 @@
     ivar_release_and_clear(actionsViewPlayButton);
     ivar_release_and_clear(actionsViewPlay2Button);
     ivar_release_and_clear(actionsViewStopButton);
+    ivar_release_and_clear(timerSignalView);
     [super viewDidUnload];
 }
 
@@ -237,6 +259,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self resignFirstResponder];
+    [self uninstallTimer];
 }
 
 - (void)setUserInteractionEnabled:(BOOL)enabled {
@@ -288,6 +311,9 @@
 - (void)cardsViewDelegateCurrentCardIndexHasChangedTo:(NSUInteger)index {
     cardDeckViewContext.currentCardIndex = index;
     [indexDotsView setCurrentPage:index animated:YES];
+    if (currentTimer) {
+        [self installTimerWithCardIndex:index timerType:currentTimer.timerType];
+    }
 }
 
 - (BOOL)canBecomeFirstResponder {
@@ -448,40 +474,35 @@
     [self setActionsViewHidden:YES animated:YES];
 }
 
-- (void)timerAction:(id)object {
-    qltrace();
+- (void)timerCallback:(id)object {
     CDXCardDeckCardViewControllerTimer *timer = (CDXCardDeckCardViewControllerTimer *)object;
-    if (timer.timerId == currentTimerId && [self.view superview] != nil) {
-        NSUInteger currentCardIndex = [cardsView currentCardIndex];
-        switch (timer.timerType) {
-            case 1:
-            case 2:
-                currentCardIndex = (currentCardIndex + 1) % [cardDeck cardsCount];
-                [cardsView showCardAtIndex:currentCardIndex];
-                [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
-                break;
-            default:
-                break;
-        }
+    if (timer != currentTimer || timer.cardIndex != [cardsView currentCardIndex] || [self.view superview] == nil) {
+        qltrace("invalid timer");
+        return;
     }
+    
+    if (![timer isExpired]) {
+        [self performTimerCallbackDelayed];
+        return;
+    }
+    
+    qltrace("timer expired");
+    NSUInteger newCardIndex = ([cardsView currentCardIndex] + 1) % [cardDeck cardsCount];
+    [cardsView showCardAtIndex:newCardIndex];
 }
 
 - (IBAction)playButtonPressed {
-    currentTimerId++;
-    CDXCardDeckCardViewControllerTimer *timer = [[[CDXCardDeckCardViewControllerTimer alloc] initWithTimerId:currentTimerId timerType:1] autorelease];
-    [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
+    [self installTimerWithCardIndex:[cardsView currentCardIndex] timerType:0];
     [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play.png" text:@"play" timeInterval:0.4 orientation:deviceOrientation view:self.view];
 }
 
 - (IBAction)play2ButtonPressed {
-    currentTimerId++;
-    CDXCardDeckCardViewControllerTimer *timer = [[[CDXCardDeckCardViewControllerTimer alloc] initWithTimerId:currentTimerId timerType:2] autorelease];
-    [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
+    [self installTimerWithCardIndex:[cardsView currentCardIndex] timerType:1];
     [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play2.png" text:@"fast play" timeInterval:0.4 orientation:deviceOrientation view:self.view];
 }
 
 - (IBAction)stopButtonPressed {
-    currentTimerId++;
+    [self uninstallTimer];
     [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Stop.png" text:@"stop" timeInterval:0.4 orientation:deviceOrientation view:self.view];
 }
 
