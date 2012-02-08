@@ -292,9 +292,10 @@
     "&card%208,040404,080808,d"
     "&card%209,050505,090909,l"
     "&card%20a,,,l"
-    "&card%20b,,,x";
+    "&card%20b,,,x"
+    "&card%20a,,,";
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
-    STAssertEquals([deck cardsCount], (NSUInteger)11, nil);
+    STAssertEquals([deck cardsCount], (NSUInteger)12, nil);
     
     CDXCard *defaults = deck.cardDefaults;
     STAssertEquals((int)defaults.orientation, (int)CDXCardOrientationUp, nil);
@@ -309,6 +310,7 @@
     STAssertEquals((int)[deck cardAtIndex:8].orientation, (int)CDXCardOrientationLeft, nil);
     STAssertEquals((int)[deck cardAtIndex:9].orientation, (int)CDXCardOrientationLeft, nil);
     STAssertEquals((int)[deck cardAtIndex:10].orientation, (int)CDXCardOrientationUp, nil);
+    STAssertEquals((int)[deck cardAtIndex:11].orientation, (int)CDXCardOrientationUp, nil);
 }
 
 - (void)testCardDeckFromVersion1StringOrientationDefaultOrientationDown {
@@ -324,9 +326,10 @@
     "&card%208,040404,080808,d"
     "&card%209,050505,090909,l"
     "&card%20a,,,l"
-    "&card%20b,,,x";
+    "&card%20b,,,x"
+    "&card%20a,,,";
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
-    STAssertEquals([deck cardsCount], (NSUInteger)11, nil);
+    STAssertEquals([deck cardsCount], (NSUInteger)12, nil);
     
     CDXCard *defaults = deck.cardDefaults;
     STAssertEquals((int)defaults.orientation, (int)CDXCardOrientationDown, nil);
@@ -341,6 +344,7 @@
     STAssertEquals((int)[deck cardAtIndex:8].orientation, (int)CDXCardOrientationLeft, nil);
     STAssertEquals((int)[deck cardAtIndex:9].orientation, (int)CDXCardOrientationLeft, nil);
     STAssertEquals((int)[deck cardAtIndex:10].orientation, (int)CDXCardOrientationUp, nil);
+    STAssertEquals((int)[deck cardAtIndex:11].orientation, (int)CDXCardOrientationDown, nil);
 }
 
 - (void)testCardDeckFromVersion2StringCards {
@@ -370,6 +374,82 @@
     STAssertEqualObjects([[deck cardAtIndex:1] backgroundColor], [CDXColor colorWithRed:0x65 green:0x64 blue:0x44 alpha:0x32], nil);
     STAssertEquals((int)[deck cardAtIndex:1].orientation, (int)CDXCardOrientationUp, nil);
     STAssertEquals((int)[deck cardAtIndex:1].fontSize, (int)5, nil);
+}
+
+- (void)testCardDeckFromVersion2StringFontSize {
+    NSString *string = @""
+    "card%20deck"
+    "&defaults,331122,000000,u,3"
+    "&card%201,111214"
+    "&card%202,102141,65644432,d,5"
+    "&card%203,102141,65644432,u,,";
+    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
+    
+    STAssertEqualObjects(deck.name, @"card deck", nil);
+    CDXCard *defaults = deck.cardDefaults;
+    STAssertEqualObjects(defaults.text, @"defaults", nil);
+    STAssertEqualObjects([defaults textColor], [CDXColor colorWithRed:0x33 green:0x11 blue:0x22 alpha:0xff], nil);
+    STAssertEqualObjects([defaults backgroundColor], [CDXColor colorWithRed:0x00 green:0x00 blue:0x00 alpha:0xff], nil);
+    STAssertEquals((int)defaults.orientation, (int)CDXCardOrientationUp, nil);
+    STAssertEquals((int)defaults.fontSize, (int)3, nil);
+    
+    STAssertEqualObjects([deck cardAtIndex:0].text, @"card 1", nil);
+    STAssertEqualObjects([[deck cardAtIndex:0] textColor], [CDXColor colorWithRed:0x11 green:0x12 blue:0x14 alpha:0xff], nil);
+    STAssertEqualObjects([[deck cardAtIndex:0] backgroundColor], [CDXColor colorWithRed:0x00 green:0x00 blue:0x00 alpha:0xff], nil);
+    STAssertEquals((int)[deck cardAtIndex:0].orientation, (int)CDXCardOrientationUp, nil);
+    STAssertEquals((int)[deck cardAtIndex:0].fontSize, (int)3, nil);
+    
+    STAssertEqualObjects([deck cardAtIndex:1].text, @"card 2", nil);
+    STAssertEqualObjects([[deck cardAtIndex:1] textColor], [CDXColor colorWithRed:0x10 green:0x21 blue:0x41 alpha:0xff], nil);
+    STAssertEqualObjects([[deck cardAtIndex:1] backgroundColor], [CDXColor colorWithRed:0x65 green:0x64 blue:0x44 alpha:0x32], nil);
+    STAssertEquals((int)[deck cardAtIndex:1].orientation, (int)CDXCardOrientationDown, nil);
+    STAssertEquals((int)[deck cardAtIndex:1].fontSize, (int)5, nil);
+    
+    STAssertEqualObjects([deck cardAtIndex:2].text, @"card 3", nil);
+    STAssertEqualObjects([[deck cardAtIndex:2] textColor], [CDXColor colorWithRed:0x10 green:0x21 blue:0x41 alpha:0xff], nil);
+    STAssertEqualObjects([[deck cardAtIndex:2] backgroundColor], [CDXColor colorWithRed:0x65 green:0x64 blue:0x44 alpha:0x32], nil);
+    STAssertEquals((int)[deck cardAtIndex:2].orientation, (int)CDXCardOrientationUp, nil);
+    STAssertEquals((int)[deck cardAtIndex:2].fontSize, (int)3, nil);
+}
+
+- (void)testCardDeckFromVersion2StringTimerInterval {
+    NSString *string = @""
+    "card%20deck"
+    "&defaults,331122,000000,u,3,30"
+    "&card%201,111214"
+    "&card%202,102141,65644432,d,5,13"
+    "&card%203,102141,65644432,u,,,";
+    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
+    
+    STAssertEqualObjects(deck.name, @"card deck", nil);
+    CDXCard *defaults = deck.cardDefaults;
+    STAssertEqualObjects(defaults.text, @"defaults", nil);
+    STAssertEqualObjects([defaults textColor], [CDXColor colorWithRed:0x33 green:0x11 blue:0x22 alpha:0xff], nil);
+    STAssertEqualObjects([defaults backgroundColor], [CDXColor colorWithRed:0x00 green:0x00 blue:0x00 alpha:0xff], nil);
+    STAssertEquals((int)defaults.orientation, (int)CDXCardOrientationUp, nil);
+    STAssertEquals((int)defaults.fontSize, (int)3, nil);
+    STAssertEquals(defaults.timerInterval, (NSTimeInterval)30, nil);
+    
+    STAssertEqualObjects([deck cardAtIndex:0].text, @"card 1", nil);
+    STAssertEqualObjects([[deck cardAtIndex:0] textColor], [CDXColor colorWithRed:0x11 green:0x12 blue:0x14 alpha:0xff], nil);
+    STAssertEqualObjects([[deck cardAtIndex:0] backgroundColor], [CDXColor colorWithRed:0x00 green:0x00 blue:0x00 alpha:0xff], nil);
+    STAssertEquals((int)[deck cardAtIndex:0].orientation, (int)CDXCardOrientationUp, nil);
+    STAssertEquals((int)[deck cardAtIndex:0].fontSize, (int)3, nil);
+    STAssertEquals([deck cardAtIndex:0].timerInterval, (NSTimeInterval)30, nil);
+    
+    STAssertEqualObjects([deck cardAtIndex:1].text, @"card 2", nil);
+    STAssertEqualObjects([[deck cardAtIndex:1] textColor], [CDXColor colorWithRed:0x10 green:0x21 blue:0x41 alpha:0xff], nil);
+    STAssertEqualObjects([[deck cardAtIndex:1] backgroundColor], [CDXColor colorWithRed:0x65 green:0x64 blue:0x44 alpha:0x32], nil);
+    STAssertEquals((int)[deck cardAtIndex:1].orientation, (int)CDXCardOrientationDown, nil);
+    STAssertEquals((int)[deck cardAtIndex:1].fontSize, (int)5, nil);
+    STAssertEquals([deck cardAtIndex:1].timerInterval, (NSTimeInterval)13, nil);
+    
+    STAssertEqualObjects([deck cardAtIndex:2].text, @"card 3", nil);
+    STAssertEqualObjects([[deck cardAtIndex:2] textColor], [CDXColor colorWithRed:0x10 green:0x21 blue:0x41 alpha:0xff], nil);
+    STAssertEqualObjects([[deck cardAtIndex:2] backgroundColor], [CDXColor colorWithRed:0x65 green:0x64 blue:0x44 alpha:0x32], nil);
+    STAssertEquals((int)[deck cardAtIndex:2].orientation, (int)CDXCardOrientationUp, nil);
+    STAssertEquals((int)[deck cardAtIndex:2].fontSize, (int)3, nil);
+    STAssertEquals([deck cardAtIndex:2].timerInterval, (NSTimeInterval)30, nil);
 }
 
 - (void)testCardDeckFromVersion2StringSettings0 {

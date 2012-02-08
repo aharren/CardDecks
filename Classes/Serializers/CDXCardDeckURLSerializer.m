@@ -48,15 +48,24 @@
         }
         // [,[<orientation>] ...
         if ([sCardParts count] >= 4) {
-            dCard.orientation = [CDXCard cardOrientationFromString:(NSString *)[sCardParts objectAtIndex:3]];
+            NSString *value = (NSString *)[sCardParts objectAtIndex:3];
+            if ([value length] != 0) {
+                dCard.orientation = [CDXCard cardOrientationFromString:value];
+            }
         }
         // [,[<font-size>] ...
         if ([sCardParts count] >= 5 && version >= 2) {
-            dCard.fontSize = (CGFloat)[(NSString *)[sCardParts objectAtIndex:4] intValue];
+            NSString *value = (NSString *)[sCardParts objectAtIndex:4];
+            if ([value length] != 0) {
+                dCard.fontSize = (CGFloat)[value intValue];
+            }
         }
         // [,[<timer-interval>] ...
         if ([sCardParts count] >= 6 && version >= 2) {
-            dCard.timerInterval = (NSTimeInterval)[(NSString *)[sCardParts objectAtIndex:5] intValue];
+            NSString *value = (NSString *)[sCardParts objectAtIndex:5];
+            if ([value length] != 0) {
+                dCard.timerInterval = (NSTimeInterval)[value intValue];
+            }
         }
         
         return dCard;
