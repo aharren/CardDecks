@@ -16,6 +16,8 @@
 		<string>Defaults:TextReverse</string>
 		<key>textColor</key>
 		<string>52345678</string>
+		<key>timerInterval</key>
+		<integer>10</integer>
 	</dict>
 	<key>cards</key>
 	<array>
@@ -32,6 +34,8 @@
 			<string>Card1:TextReverse</string>
 			<key>textColor</key>
 			<string>12345678</string>
+			<key>timerInterval</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>backgroundColor</key>
@@ -46,6 +50,8 @@
 			<string>Card2:TextReverse</string>
 			<key>textColor</key>
 			<string>32345678</string>
+			<key>timerInterval</key>
+			<integer>2</integer>
 		</dict>
 	</array>
 	<key>cornerStyle</key>

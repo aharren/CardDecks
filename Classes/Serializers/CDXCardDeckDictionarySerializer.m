@@ -108,6 +108,7 @@
     card.orientation = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"orientation" defaultsTo:card.orientation];
     card.cornerStyle = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"cornerStyle" defaultsTo:card.cornerStyle];
     card.fontSize = (CGFloat)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"fontSize" defaultsTo:(NSUInteger)card.fontSize];
+    card.timerInterval = (CGFloat)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"timerInterval" defaultsTo:(NSUInteger)card.timerInterval];
     
     return card;
 }
@@ -173,6 +174,7 @@
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:card.orientation] forKey:@"orientation"];
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:card.cornerStyle] forKey:@"cornerStyle"];
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:(NSUInteger)card.fontSize] forKey:@"fontSize"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:(NSUInteger)card.timerInterval] forKey:@"timerInterval"];
     
     return dictionary;
 }
