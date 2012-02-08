@@ -47,6 +47,32 @@
     [card release];
 }
 
+- (void)testCopy {
+    CDXCard *card = [[CDXCard alloc] init];
+    card.text = @"TEXT";
+    STAssertEqualObjects([card text], @"TEXT", nil);
+    card.textColor = [CDXColor colorBlack];
+    STAssertEquals([card textColor], [CDXColor colorBlack], nil);
+    card.backgroundColor = [CDXColor colorWhite];
+    STAssertEquals([card backgroundColor], [CDXColor colorWhite], nil);
+    card.orientation = CDXCardOrientationLeft;
+    STAssertEquals((int)[card orientation], (int)CDXCardOrientationLeft, nil);
+    card.fontSize = 3.0;
+    STAssertEquals([card fontSize], (CGFloat)3.0, nil);
+    card.timerInterval = 15.0;
+    STAssertEquals([card timerInterval], (NSTimeInterval)15.0, nil);
+
+    [card autorelease];
+    card = [card copy];
+    STAssertEqualObjects([card text], @"TEXT", nil);
+    STAssertEquals([card textColor], [CDXColor colorBlack], nil);
+    STAssertEquals([card backgroundColor], [CDXColor colorWhite], nil);
+    STAssertEquals((int)[card orientation], (int)CDXCardOrientationLeft, nil);
+    STAssertEquals([card fontSize], (CGFloat)3.0, nil);
+    STAssertEquals([card timerInterval], (NSTimeInterval)15.0, nil);
+    [card release];
+}
+
 - (void)testTextCanonicalizedLinebreaks {
     CDXCard *card = [[CDXCard alloc] init];
     card.text = @"1 2 \r 3 4 \n 5 6";
