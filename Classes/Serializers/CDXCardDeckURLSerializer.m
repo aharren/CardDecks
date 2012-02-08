@@ -54,6 +54,10 @@
         if ([sCardParts count] >= 5 && version >= 2) {
             dCard.fontSize = (CGFloat)[(NSString *)[sCardParts objectAtIndex:4] intValue];
         }
+        // [,[<timer-interval>] ...
+        if ([sCardParts count] >= 6 && version >= 2) {
+            dCard.timerInterval = (NSTimeInterval)[(NSString *)[sCardParts objectAtIndex:5] intValue];
+        }
         
         return dCard;
     }
@@ -156,7 +160,7 @@
         }
     }
     
-    // default-card := <text>[,[<text-color>][,[<background-color>][,[<orientation>][,[<font-size>]]]]]
+    // default-card := <text>[,[<text-color>][,[<background-color>][,[<orientation>][,[<font-size>][,[<timer-interval>]]]]]]
     if ([sParts count] >= 1) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         NSString *sCard = (NSString *)[sParts objectAtIndex:1];
@@ -167,7 +171,7 @@
         [pool release];
     }
     
-    // card := <text>[,[<text-color>][,[<background-color>][,[<orientation>][,[<font-size>]]]]]
+    // card := <text>[,[<text-color>][,[<background-color>][,[<orientation>][,[<font-size>][,[<timer-interval>]]]]]]
     for (NSUInteger i = 2; i < [sParts count]; i++) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         NSString *sCard = (NSString *)[sParts objectAtIndex:i];
@@ -190,16 +194,20 @@
     BOOL orientationIsNotDefault = !cardDefaults || orientation != cardDefaults.orientation;
     CGFloat fontSize = card.fontSize;
     BOOL fontSizeIsNotDefault = !cardDefaults || fontSize != cardDefaults.fontSize;
-    NSString *string =  [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@",
+    NSTimeInterval timerInterval = card.timerInterval;
+    BOOL timerIntervalIsNotDefault = !cardDefaults || timerInterval != cardDefaults.timerInterval;
+    NSString *string =  [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",
                          [CDXURLSerializerUtils stringByAddingURLEscapes:card.text],
-                         (textColorIsNotDefault || backgroundColorIsNotDefault || orientationIsNotDefault || fontSizeIsNotDefault) ? @"," : @"",
+                         (textColorIsNotDefault || backgroundColorIsNotDefault || orientationIsNotDefault || fontSizeIsNotDefault || timerIntervalIsNotDefault) ? @"," : @"",
                          (textColorIsNotDefault) ? [textColor rgbaString] : @"",
-                         (backgroundColorIsNotDefault || orientationIsNotDefault || fontSizeIsNotDefault) ? @"," : @"",
+                         (backgroundColorIsNotDefault || orientationIsNotDefault || fontSizeIsNotDefault || timerIntervalIsNotDefault) ? @"," : @"",
                          (backgroundColorIsNotDefault) ? [backgroundColor rgbaString]  : @"",
-                         (orientationIsNotDefault || fontSizeIsNotDefault) ? @"," : @"",
+                         (orientationIsNotDefault || fontSizeIsNotDefault || timerIntervalIsNotDefault) ? @"," : @"",
                          (orientationIsNotDefault) ? [CDXCard stringFromCardOrientation:orientation] : @"",
-                         (fontSizeIsNotDefault) ? @"," : @"",
-                         (fontSizeIsNotDefault) ? [NSString stringWithFormat:@"%d", (NSUInteger)fontSize] : @""];
+                         (fontSizeIsNotDefault || timerIntervalIsNotDefault) ? @"," : @"",
+                         (fontSizeIsNotDefault) ? [NSString stringWithFormat:@"%d", (NSUInteger)fontSize] : @"",
+                         (timerIntervalIsNotDefault) ? @"," : @"",
+                         (timerIntervalIsNotDefault) ? [NSString stringWithFormat:@"%d", (NSUInteger)timerInterval] : @""];
     return string;
 }
 
