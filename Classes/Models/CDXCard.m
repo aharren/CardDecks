@@ -37,6 +37,7 @@
 @synthesize orientation;
 @synthesize cornerStyle;
 @synthesize fontSize;
+@synthesize timerInterval;
 
 - (id)init {
     qltrace();
@@ -47,6 +48,7 @@
         orientation = CDXCardOrientationDefault;
         cornerStyle = CDXCardCornerStyleDefault;
         fontSize = CDXCardFontSizeDefault;
+        timerInterval = CDXCardTimerIntervalDefault;
     }
     return self;
 }
@@ -67,6 +69,7 @@
     copy.orientation = orientation;
     copy.cornerStyle = cornerStyle;
     copy.fontSize = fontSize;
+    copy.timerInterval = timerInterval;
     return copy;
 }
 
@@ -95,6 +98,18 @@
     [self invalidateFontSizeCache];
     fontSize = floor(fabs(aFontSize));
     fontSize = fontSize < CDXCardFontSizeMax ? fontSize : CDXCardFontSizeMax;
+}
+
+- (void)setTimerInterval:(NSTimeInterval)aTimerInterval {
+    if (aTimerInterval == CDXCardTimerIntervalOff) {
+        timerInterval = CDXCardTimerIntervalOff;
+    } else if (aTimerInterval < CDXCardTimerIntervalMin) {
+        timerInterval = CDXCardTimerIntervalMin;
+    } else if (aTimerInterval > CDXCardTimerIntervalMax) {
+        timerInterval = CDXCardTimerIntervalMax;
+    } else {
+        timerInterval = floor(aTimerInterval);
+    }
 }
 
 - (CGFloat)fontSizeConstrainedToSize:(CGSize)size scale:(CGFloat)scale {
