@@ -176,6 +176,7 @@
                            [CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension],
                            [CDXColorKeyboardExtension sharedColorKeyboardExtension],
                            [CDXTextKeyboardExtension sharedtextKeyboardExtension],
+                           [CDXTimerKeyboardExtension sharedTimerKeyboardExtension],
                            nil];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
 }
@@ -188,7 +189,7 @@
 }
 
 - (void)keyboardExtensionResponderExtensionBecameActiveAtIndex:(NSUInteger)index {
-    [self showCardView:(index == 1 || index == 2)];
+    [self showCardView:(index == 1 || index == 2 || index == 3)];
     [self dismissActionSheet];
 }
 
@@ -352,6 +353,14 @@
 - (void)textKeyboardExtensionSetFontSize:(CGFloat)fontSize {
     [self currentCard].fontSize = fontSize;
     [self updateCardPreview];
+}
+
+- (NSTimeInterval)timerKeyboardExtensionTimerInterval {
+    return [self currentCard].timerInterval;
+}
+
+- (void)timerKeyboardExtensionSetTimerInterval:(NSTimeInterval)interval {
+    [self currentCard].timerInterval = interval;
 }
 
 - (void)paste:(id)sender {
