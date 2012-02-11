@@ -31,11 +31,14 @@
 
 @synthesize deviceType;
 @synthesize deviceUIIdiom;
+@synthesize useReducedGraphicsEffects;
 
 synthesize_singleton(sharedDevice, CDXDevice);
 
 - (id)init {
     if ((self = [super init])) {
+        CGFloat deviceScreenScale = [[UIScreen mainScreen] scale];
+        useReducedGraphicsEffects = NO;
         UIDevice* device = [UIDevice currentDevice];
         NSString *deviceModel = [device model];
         deviceModel = [deviceModel lowercaseString];
@@ -43,8 +46,10 @@ synthesize_singleton(sharedDevice, CDXDevice);
             deviceType = CDXDeviceTypeSimulator;
         } else if ([deviceModel isEqualToString:@"iphone"]) {
             deviceType = CDXDeviceTypeiPhone;
+            useReducedGraphicsEffects = (deviceScreenScale <= 1.0);
         } else if ([deviceModel isEqualToString:@"ipod touch"]) {
             deviceType = CDXDeviceTypeiPodTouch;
+            useReducedGraphicsEffects = (deviceScreenScale <= 1.0);
         } else if ([deviceModel isEqualToString:@"ipad"]) {
             deviceType = CDXDeviceTypeiPad;
         }

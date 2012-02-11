@@ -48,6 +48,7 @@ typedef enum {
 
 @property (nonatomic, readonly) CDXDeviceType deviceType;
 @property (nonatomic, readonly) CDXDeviceUIIdiom deviceUIIdiom;
+@property (nonatomic, readonly) BOOL useReducedGraphicsEffects;
 
 - (void)vibrate;
 
