@@ -259,6 +259,18 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [[UIApplication sharedApplication] setIdleTimerDisabled:![[CDXAppSettings sharedAppSettings] enableIdleTimer]];
+
+    switch (cardDeck.autoPlay) {
+        case CDXCardDeckAutoPlayPlay:
+            [self playButtonPressed];
+            break;
+        case CDXCardDeckAutoPlayPlay2:
+            [self play2ButtonPressed];
+            break;
+        case CDXCardDeckAutoPlayOff:
+        default:
+            break;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
