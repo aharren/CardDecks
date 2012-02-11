@@ -30,6 +30,7 @@
 #import "CDXImageFactory.h"
 #import "CDXAppSettings.h"
 #import "CDXStorage.h"
+#import "CDXDevice.h"
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -230,6 +231,7 @@
         [self performTimerCallbackDelayed];
     } else {
         [self stopButtonPressed];
+        [[CDXDevice sharedDevice] vibrate];
     }
 }
 
