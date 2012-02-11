@@ -259,20 +259,12 @@
     [super viewDidUnload];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    cardsViewShowsFirstCard = YES;
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [[UIApplication sharedApplication] setIdleTimerDisabled:![[CDXAppSettings sharedAppSettings] enableIdleTimer]];
-
-    switch (cardDeck.autoPlay) {
-        case CDXCardDeckAutoPlayPlay:
-            [self playButtonPressed];
-            break;
-        case CDXCardDeckAutoPlayPlay2:
-            [self play2ButtonPressed];
-            break;
-        case CDXCardDeckAutoPlayOff:
-        default:
-            break;
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -328,6 +320,23 @@
 }
 
 - (void)cardsViewDelegateCurrentCardIndexHasChangedTo:(NSUInteger)index {
+    if (cardsViewShowsFirstCard) {
+        cardsViewShowsFirstCard = NO;
+        
+        // handle auto-play
+        switch (cardDeck.autoPlay) {
+            case CDXCardDeckAutoPlayPlay:
+                [self playButtonPressed];
+                break;
+            case CDXCardDeckAutoPlayPlay2:
+                [self play2ButtonPressed];
+                break;
+            case CDXCardDeckAutoPlayOff:
+            default:
+                break;
+        }
+    }
+    
     cardDeckViewContext.currentCardIndex = index;
     [indexDotsView setCurrentPage:index animated:YES];
     if (currentTimer) {

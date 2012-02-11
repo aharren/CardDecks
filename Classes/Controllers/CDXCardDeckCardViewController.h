@@ -41,6 +41,7 @@
     UIDeviceOrientation deviceOrientation;
     
     UIView<CDXCardsViewView> *cardsView;
+    BOOL cardsViewShowsFirstCard;
     
     BOOL userInteractionEnabled;
     UIView *imageView;
