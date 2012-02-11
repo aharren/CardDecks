@@ -229,7 +229,7 @@
         ivar_assign(currentTimer, [[CDXCardDeckCardViewControllerTimer alloc] initWithCardIndex:cardIndex timerInterval:card.timerInterval timerType:timerType]);
         [self performTimerCallbackDelayed];
     } else {
-        [self uninstallTimer];
+        [self stopButtonPressed];
     }
 }
 
