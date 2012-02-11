@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXDevice.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 
 @implementation CDXDevice
@@ -56,6 +57,10 @@ synthesize_singleton(sharedDevice, CDXDevice);
         qltrace(@"%@ %d %d", deviceModel, deviceType, deviceUIIdiom);
     }
     return self;
+}
+
+- (void)vibrate {
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 }
 
 @end

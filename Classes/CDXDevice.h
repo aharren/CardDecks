@@ -49,6 +49,8 @@ typedef enum {
 @property (nonatomic, readonly) CDXDeviceType deviceType;
 @property (nonatomic, readonly) CDXDeviceUIIdiom deviceUIIdiom;
 
+- (void)vibrate;
+
 declare_singleton(sharedDevice, CDXDevice);
 
 @end
