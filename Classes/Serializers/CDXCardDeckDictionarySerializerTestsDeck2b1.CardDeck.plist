@@ -64,6 +64,8 @@
 	<integer>0</integer>
 	<key>groupSize</key>
 	<integer>0</integer>
+	<key>autoPlay</key>
+	<integer>1</integer>
 	<key>isShuffled</key>
 	<false/>
 	<key>name</key>

@@ -140,6 +140,7 @@
     dDeck.displayStyle = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"displayStyle" defaultsTo:dDeck.displayStyle];
     dDeck.cornerStyle = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"cornerStyle" defaultsTo:dDeck.cornerStyle];
     dDeck.pageControlStyle = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"pageControlStyle" defaultsTo:dDeck.pageControlStyle];
+    dDeck.autoPlay = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"autoPlay" defaultsTo:dDeck.autoPlay];
     
     NSArray *cardDictionaries = (NSArray *)[dictionary objectForKey:@"cards"];
     for (NSDictionary *cardDictionary in cardDictionaries) {
@@ -205,6 +206,7 @@
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:cardDeck.displayStyle] forKey:@"displayStyle"];
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:cardDeck.cornerStyle] forKey:@"cornerStyle"];
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:cardDeck.pageControlStyle] forKey:@"pageControlStyle"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:cardDeck.autoPlay] forKey:@"autoPlay"];
     
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithBool:cardDeck.isShuffled] forKey:@"isShuffled"];
     if (cardDeck.isShuffled) {

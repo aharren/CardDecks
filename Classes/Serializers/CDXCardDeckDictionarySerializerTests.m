@@ -90,6 +90,8 @@
     deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
     deck.cornerStyle = CDXCardCornerStyleCornered;
     
+    deck.autoPlay = CDXCardDeckAutoPlayPlay;
+    
     CDXCard *card;
     card = [deck cardWithDefaults];
     card.text = @"Card1:Text";
@@ -190,6 +192,8 @@
     STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleSideBySide, nil);
     STAssertEquals(deck.cornerStyle, CDXCardCornerStyleCornered, nil);
     
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
+    
     STAssertEquals([deck cardsCount], (NSUInteger)2, nil);
     
     CDXCard *card;
@@ -235,6 +239,8 @@
     
     STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleStack, nil);
     STAssertEquals(deck.cornerStyle, CDXCardCornerStyleRounded, nil);
+    
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
     
     STAssertEquals([deck cardsCount], (NSUInteger)2, nil);
     
@@ -282,6 +288,8 @@
     STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleSideBySide, nil);
     STAssertEquals(deck.cornerStyle, CDXCardCornerStyleCornered, nil);
     
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayPlay, nil);
+    
     STAssertEquals([deck cardsCount], (NSUInteger)2, nil);
     
     CDXCard *card;
@@ -327,6 +335,8 @@
     
     STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleStack, nil);
     STAssertEquals(deck.cornerStyle, CDXCardCornerStyleRounded, nil);
+    
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
     
     STAssertEquals([deck cardsCount], (NSUInteger)2, nil);
     
@@ -402,7 +412,7 @@
     STAssertEqualObjects([[deck2 cardAtIndex:1] description], [card2s description], nil);
     STAssertEqualObjects([[deck2 cardAtIndex:2] description], [card3s description], nil);
     
-     // shuffle indexes should be mutable
+    // shuffle indexes should be mutable
     [deck2 removeCardAtIndex:1];
     STAssertEqualObjects([[deck2 cardAtIndex:0] description], [card1s description], nil);
     STAssertEqualObjects([[deck2 cardAtIndex:1] description], [card3s description], nil);
@@ -419,7 +429,7 @@
     dictionary = [self dictionaryFromFile:@"CDXCardDeckDictionarySerializerTestsDeck2a1.CardDeck.plist"];
     deck = [CDXCardDeckDictionarySerializer cardDeckFromDictionary:dictionary];
     STAssertEqualObjects([deck name], @"Deck:Name", nil);
-
+    
     dictionary = [self dictionaryFromFile:@"CDXCardDeckDictionarySerializerTestsDeck2b1.CardDeck.plist"];
     deck = [CDXCardDeckDictionarySerializer cardDeckFromDictionary:dictionary];
     STAssertEqualObjects([deck name], @"Deck:Name", nil);
