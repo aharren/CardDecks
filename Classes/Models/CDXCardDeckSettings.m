@@ -39,6 +39,7 @@ enum {
     CDXCardDeckSettingsPageJumps,
     CDXCardDeckSettingsAutoRotate,
     CDXCardDeckSettingsShakeAction,
+    CDXCardDeckSettingsAutoPlay,
     CDXCardDeckSettingsCount
 };
 
@@ -52,6 +53,7 @@ static const CDXSetting settings[] = {
     { CDXCardDeckSettingsPageJumps, CDXSettingTypeBoolean, @"Index Touches" },
     { CDXCardDeckSettingsAutoRotate, CDXSettingTypeBoolean, @"Auto Rotate" },
     { CDXCardDeckSettingsShakeAction, CDXSettingTypeEnumeration, @"Shake" },
+    { CDXCardDeckSettingsAutoPlay, CDXSettingTypeEnumeration, @"Auto Play" },
     { 0, 0, @"" }
 };
 
@@ -64,7 +66,7 @@ typedef struct {
 static const CDXCardDeckSettingGroup groups[] = {
     { @"", 2, CDXCardDeckSettingsName },
     { @"Appearance", 4, CDXCardDeckSettingsDeckDisplayStyle },
-    { @"Events", 3, CDXCardDeckSettingsPageJumps },
+    { @"Events", 4, CDXCardDeckSettingsPageJumps },
     { @"", 0, 0 }
 };
 
@@ -152,6 +154,8 @@ static const CDXCardDeckSettingGroup groups[] = {
             return cardDeck.groupSize;
         case CDXCardDeckSettingsShakeAction:
             return cardDeck.shakeAction;
+        case CDXCardDeckSettingsAutoPlay:
+            return cardDeck.autoPlay;
     }
 }
 
@@ -174,6 +178,9 @@ static const CDXCardDeckSettingGroup groups[] = {
         case CDXCardDeckSettingsShakeAction:
             cardDeck.shakeAction = value;
             break;
+        case CDXCardDeckSettingsAutoPlay:
+            cardDeck.autoPlay = value;
+            break;
     }
     [cardDeck updateStorageObjectDeferred:YES];
 }
@@ -192,6 +199,8 @@ static const CDXCardDeckSettingGroup groups[] = {
             return (NSUInteger)CDXCardDeckGroupSizeCount;
         case CDXCardDeckSettingsShakeAction:
             return (NSUInteger)CDXCardDeckShakeActionCount;
+        case CDXCardDeckSettingsAutoPlay:
+            return (NSUInteger)CDXCardDeckAutoPlayCount;
     }
 }
 
@@ -243,6 +252,17 @@ static const CDXCardDeckSettingGroup groups[] = {
                     return @"Shuffle";
                 case CDXCardDeckShakeActionRandom:
                     return @"Random";
+            }
+        }
+        case CDXCardDeckSettingsAutoPlay: {
+            switch (value) {
+                default:
+                case CDXCardDeckShakeActionNone:
+                    return @"Off";
+                case CDXCardDeckShakeActionShuffle:
+                    return @"Play";
+                case CDXCardDeckShakeActionRandom:
+                    return @"Fast Play";
             }
         }
     }
