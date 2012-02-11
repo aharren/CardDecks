@@ -61,6 +61,14 @@ typedef enum {
     CDXCardDeckPageControlStyleDefault = CDXCardDeckPageControlStyleLight
 } CDXCardDeckPageControlStyle;
 
+typedef enum {
+    CDXCardDeckAutoPlayOff = 0,
+    CDXCardDeckAutoPlayPlay,
+    CDXCardDeckAutoPlayPlay2,
+    CDXCardDeckAutoPlayCount,
+    CDXCardDeckAutoPlayDefault = CDXCardDeckAutoPlayOff
+} CDXCardDeckAutoPlay;
+
 
 #define CDXCardDeckUpdateNotification @"CDXCardDeckUpdateNotification"
 
@@ -76,6 +84,7 @@ typedef enum {
     BOOL wantsPageJumps;
     BOOL wantsAutoRotate;
     CDXCardDeckShakeAction shakeAction;
+    CDXCardDeckAutoPlay autoPlay;
     CDXCardDeckGroupSize groupSize;
     
     CDXCardDeckDisplayStyle displayStyle;
@@ -107,6 +116,7 @@ typedef enum {
 @property (nonatomic, assign) CDXCardDeckDisplayStyle displayStyle;
 @property (nonatomic, assign) CDXCardCornerStyle cornerStyle;
 @property (nonatomic, assign) CDXCardDeckPageControlStyle pageControlStyle;
+@property (nonatomic, assign) CDXCardDeckAutoPlay autoPlay;
 
 - (void)setFontSize:(CGFloat)fontSize;
 - (void)setOrientation:(CDXCardOrientation)orientation;

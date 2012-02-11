@@ -400,5 +400,21 @@
     STAssertEquals(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault, nil);
 }
 
+- (void)testAutoPlay {
+    CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
+    
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
+    deck.autoPlay = -1;
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
+    deck.autoPlay = 0;
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
+    deck.autoPlay = 1;
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayPlay, nil);
+    deck.autoPlay = 2;
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayPlay2, nil);
+    deck.autoPlay = 3;
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
+}
+
 @end
 

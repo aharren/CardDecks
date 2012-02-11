@@ -42,6 +42,7 @@
 @synthesize displayStyle;
 @synthesize cornerStyle;
 @synthesize pageControlStyle;
+@synthesize autoPlay;
 @synthesize isShuffled;
 @synthesize shuffleIndexes;
 
@@ -64,6 +65,7 @@
         displayStyle = CDXCardDeckDisplayStyleDefault;
         cornerStyle = CDXCardCornerStyleDefault;
         pageControlStyle = CDXCardDeckPageControlStyleDefault;
+        autoPlay = CDXCardDeckAutoPlayDefault;
         isShuffled = NO;
         shuffleIndexes = nil;
     }
@@ -93,6 +95,7 @@
     copy.displayStyle = displayStyle;
     copy.cornerStyle = cornerStyle;
     copy.pageControlStyle = pageControlStyle;
+    copy.autoPlay = autoPlay;
     for (CDXCard *card in cards) {
         [copy addCard:[[card copyWithZone:zone] autorelease]];
     }
@@ -259,6 +262,10 @@
 
 - (void)setPageControlStyle:(CDXCardDeckPageControlStyle)aPageControlStyle {
     ivar_enum_assign(pageControlStyle, CDXCardDeckPageControlStyle, aPageControlStyle);
+}
+
+- (void)setAutoPlay:(CDXCardDeckAutoPlay)aAutoPlay {
+    ivar_enum_assign(autoPlay, CDXCardDeckAutoPlay, aAutoPlay);
 }
 
 - (void)setCornerStyle:(CDXCardCornerStyle)aCornerStyle {
