@@ -122,6 +122,7 @@ typedef enum {
 - (void)setOrientation:(CDXCardOrientation)orientation;
 - (void)setTextColor:(CDXColor *)textColor;
 - (void)setBackgroundColor:(CDXColor *)backgroundColor;
+- (void)setTimerInterval:(NSTimeInterval)timerInterval;
 
 @property (nonatomic, readonly) BOOL isShuffled;
 @property (nonatomic, copy) NSMutableArray *shuffleIndexes;

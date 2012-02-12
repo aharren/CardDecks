@@ -305,6 +305,13 @@
     [self updateFields];
 }
 
+- (void)setTimerInterval:(NSTimeInterval)timerInterval {
+    for (CDXCard *card in cards) {
+        card.timerInterval = timerInterval;
+    }
+    cardDefaults.timerInterval = timerInterval;
+}
+
 - (void)setShuffleIndexes:(NSMutableArray *)indexes {
     ivar_assign(shuffleIndexes, [indexes mutableCopy]); // unchecked
     isShuffled = YES;
