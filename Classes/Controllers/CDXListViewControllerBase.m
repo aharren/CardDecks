@@ -93,7 +93,7 @@
     ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor grayColor]);
     ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor grayColor]);
     ivar_assign_and_retain(tableCellTextTextColorActionInactive, [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]);
-    ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:12]);
+    ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:10]);
     ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor grayColor]);
     if (![[CDXDevice sharedDevice] useReducedGraphicsEffects]) {
         CGFloat rowHeight = viewTableView.rowHeight;
