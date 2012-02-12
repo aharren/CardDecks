@@ -40,7 +40,20 @@ synthesize_singleton(sharedTimerKeyboardExtension, CDXTimerKeyboardExtension);
 }
 
 - (NSString *)keyboardExtensionTitle {
-    return @"tmr";
+    NSUInteger minutes = 0;
+    NSUInteger seconds = 0;
+    NSObject *responder = [[CDXKeyboardExtensions sharedKeyboardExtensions] responder];
+    if ([responder conformsToProtocol:@protocol(CDXTimerKeyboardExtensionResponder)]) {
+        NSObject <CDXTimerKeyboardExtensionResponder> *r = (NSObject <CDXTimerKeyboardExtensionResponder> *)responder;
+        NSTimeInterval timer = [r timerKeyboardExtensionTimerInterval];
+        minutes = ((NSUInteger)timer) / 60;
+        seconds = ((NSUInteger)timer) % 60;
+    }
+    if (minutes == 0 && seconds == 0) {
+        return @"\u25a0";
+    } else {
+        return [NSString stringWithFormat:@"%02u:%02u", minutes, seconds];
+    }
 }
 
 - (UIView *)keyboardExtensionView {
@@ -144,6 +157,8 @@ synthesize_singleton(sharedTimerKeyboardExtension, CDXTimerKeyboardExtension);
         NSObject <CDXTimerKeyboardExtensionResponder> *r = (NSObject <CDXTimerKeyboardExtensionResponder> *)responder;
         [r timerKeyboardExtensionSetTimerInterval:(NSTimeInterval)(minutes * 60 + seconds)];
     }
+    
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] refreshKeyboardExtensions];
 }
 
 @end
