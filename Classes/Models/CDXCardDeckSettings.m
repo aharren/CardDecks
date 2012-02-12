@@ -257,12 +257,12 @@ static const CDXCardDeckSettingGroup groups[] = {
         case CDXCardDeckSettingsAutoPlay: {
             switch (value) {
                 default:
-                case CDXCardDeckShakeActionNone:
+                case CDXCardDeckAutoPlayOff:
                     return @"Off";
-                case CDXCardDeckShakeActionShuffle:
-                    return @"Play";
-                case CDXCardDeckShakeActionRandom:
-                    return @"Fast Play";
+                case CDXCardDeckAutoPlayPlay:
+                    return @"Play 1x";
+                case CDXCardDeckAutoPlayPlay2:
+                    return @"Play 5x";
             }
         }
     }

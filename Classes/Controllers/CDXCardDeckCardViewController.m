@@ -521,12 +521,12 @@
 
 - (IBAction)playButtonPressed {
     [self installTimerWithCardIndex:[cardsView currentCardIndex] timerType:0];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play.png" text:@"play" timeInterval:0.4 orientation:deviceOrientation view:self.view];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play.png" text:@"play 1x" timeInterval:0.4 orientation:deviceOrientation view:self.view];
 }
 
 - (IBAction)play2ButtonPressed {
     [self installTimerWithCardIndex:[cardsView currentCardIndex] timerType:1];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play2.png" text:@"fast play" timeInterval:0.4 orientation:deviceOrientation view:self.view];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play2.png" text:@"play 5x" timeInterval:0.4 orientation:deviceOrientation view:self.view];
 }
 
 - (IBAction)stopButtonPressed {
