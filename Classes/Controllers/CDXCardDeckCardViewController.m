@@ -70,6 +70,7 @@
 
 - (void)dealloc {
     qltrace();
+    [super dealloc];
 }
 
 - (BOOL)isExpired {
