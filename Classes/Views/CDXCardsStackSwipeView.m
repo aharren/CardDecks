@@ -134,7 +134,7 @@
         cardViewsView[i].frame = frame;
     }
     
-    [self showCardAtIndex:currentCardIndex tellDelegate:NO];
+    [self showCardAtIndex:currentCardIndex];
 }
 
 - (void)touchAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
