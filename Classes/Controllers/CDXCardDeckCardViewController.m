@@ -281,6 +281,21 @@
     }
 }
 
+- (void)applicationWillEnterForeground {
+    if (currentTimer) {
+        // signal to the user that the current timer is no longer active
+        [self stopButtonPressed];
+    }
+}
+
+- (void)applicationDidEnterBackground {
+    if (currentTimer) {
+        // install a new timer object to make current timer invalid, e.g. to
+        // avoid unexpected card changes when we come back
+        ivar_assign(currentTimer, [[CDXCardDeckCardViewControllerTimer alloc] initWithCardIndex:0 timerInterval:0 timerType:0]);
+    }
+}
+
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
     deviceOrientation = orientation;
     
