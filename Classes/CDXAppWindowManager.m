@@ -115,6 +115,28 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     [[self visibleViewController] dismissModalViewControllerAnimated:animated];
 }
 
+- (void)applicationWillEnterForeground {
+    qltrace();
+    UIViewController* vc = [self visibleViewController];
+    if ([vc conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
+        UIViewController <CDXAppWindowViewController> *c = (UIViewController <CDXAppWindowViewController> *)vc;
+        if ([c respondsToSelector:@selector(applicationWillEnterForeground)]) {
+            [c applicationWillEnterForeground];
+        }
+    }
+}
+
+- (void)applicationDidEnterBackground {
+    qltrace();
+    UIViewController* vc = [self visibleViewController];
+    if ([vc conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
+        UIViewController <CDXAppWindowViewController> *c = (UIViewController <CDXAppWindowViewController> *)vc;
+        if ([c respondsToSelector:@selector(applicationDidEnterBackground)]) {
+            [c applicationDidEnterBackground];
+        }
+    }
+}
+
 - (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem {
     qltrace();
 }

@@ -265,9 +265,15 @@
     [CDXStorage drainAllDeferredActions];
 }
 
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    qltrace();
+    [appWindowManager applicationWillEnterForeground];
+}
+
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     qltrace();
     [appWindowManager dismissModalViewControllerAnimated:NO];
+    [appWindowManager applicationDidEnterBackground];
     [CDXStorage drainAllDeferredActions];
 }
 

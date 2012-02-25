@@ -30,5 +30,9 @@
 - (void)setUserInteractionEnabled:(BOOL)enabled;
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation;
 
+@optional
+- (void)applicationWillEnterForeground;
+- (void)applicationDidEnterBackground;
+
 @end
 
