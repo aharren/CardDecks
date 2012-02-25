@@ -467,11 +467,12 @@
     STAssertEquals(deck.wantsPageJumps, NO, nil);
     STAssertEquals(deck.wantsAutoRotate, NO, nil);
     STAssertEquals(deck.shakeAction, 0, nil);
+    STAssertEquals(deck.autoPlay, 0, nil);
 }
 
 - (void)testCardDeckFromVersion2StringSettings1 {
     NSString *string = @""
-    "card%20deck,g1,d1,c1,id1,is1,it1,r1,s1"
+    "card%20deck,g1,d1,c1,id1,is1,it1,r1,s1,ap1"
     "&";
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
     
@@ -484,11 +485,12 @@
     STAssertEquals(deck.wantsPageJumps, YES, nil);
     STAssertEquals(deck.wantsAutoRotate, YES, nil);
     STAssertEquals(deck.shakeAction, 1, nil);
+    STAssertEquals(deck.autoPlay, 1, nil);
 }
 
 - (void)testCardDeckFromVersion2StringSettings01 {
     NSString *string = @""
-    "card%20deck,g0,d1,c0,id1,is0,it1,r0,s1"
+    "card%20deck,g0,d1,c0,id1,is0,it1,r0,s1,ap0"
     "&";
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
     
@@ -501,11 +503,12 @@
     STAssertEquals(deck.wantsPageJumps, YES, nil);
     STAssertEquals(deck.wantsAutoRotate, NO, nil);
     STAssertEquals(deck.shakeAction, 1, nil);
+    STAssertEquals(deck.autoPlay, 0, nil);
 }
 
 - (void)testCardDeckFromVersion2StringSettings10 {
     NSString *string = @""
-    "card%20deck,g1,d0,c1,id0,is1,it0,r1,s0"
+    "card%20deck,g1,d0,c1,id0,is1,it0,r1,s0,ap1"
     "&";
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
     
@@ -518,6 +521,7 @@
     STAssertEquals(deck.wantsPageJumps, NO, nil);
     STAssertEquals(deck.wantsAutoRotate, YES, nil);
     STAssertEquals(deck.shakeAction, 0, nil);
+    STAssertEquals(deck.autoPlay, 1, nil);
 }
 
 - (void)testVersion2StringFromCardDeckCards {
@@ -529,47 +533,47 @@
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
    
     NSString *string2 = [CDXCardDeckURLSerializer version2StringFromCardDeck:deck];
-    STAssertEqualObjects(string2, @"card%20deck,g0,d0,c0,id1,is0,it1,r1,s1&defaults,331122ff,000000ff,u,3,5&card%201,111214ff,,,7&card%202,102141ff,65644432,r", nil);
+    STAssertEqualObjects(string2, @"card%20deck,g0,d0,c0,id1,is0,it1,r1,s1,ap0&defaults,331122ff,000000ff,u,3,5&card%201,111214ff,,,7&card%202,102141ff,65644432,r", nil);
 }
 
 - (void)testVersion2StringFromCardDeckSettings0 {
     NSString *string = @""
-    "card%20deck,g0,d0,c0,id0,is0,it0,r0,s0"
+    "card%20deck,g0,d0,c0,id0,is0,it0,r0,s0,ap0"
     "&";
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
     
     NSString *string2 = [CDXCardDeckURLSerializer version2StringFromCardDeck:deck];
-    STAssertEqualObjects(string2, @"card%20deck,g0,d0,c0,id0,is0,it0,r0,s0&,000000ff,ffffffff,u,0,5", nil);
+    STAssertEqualObjects(string2, @"card%20deck,g0,d0,c0,id0,is0,it0,r0,s0,ap0&,000000ff,ffffffff,u,0,5", nil);
 }
 
 - (void)testVersion2StringFromCardDeckSettings1 {
     NSString *string = @""
-    "card%21deck,g1,d1,c1,id1,is1,it1,r1,s1"
+    "card%21deck,g1,d1,c1,id1,is1,it1,r1,s1,ap1"
     "&";
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
     
     NSString *string2 = [CDXCardDeckURLSerializer version2StringFromCardDeck:deck];
-    STAssertEqualObjects(string2, @"card%21deck,g1,d1,c1,id1,is1,it1,r1,s1&,000000ff,ffffffff,u,0,5", nil);
+    STAssertEqualObjects(string2, @"card%21deck,g1,d1,c1,id1,is1,it1,r1,s1,ap1&,000000ff,ffffffff,u,0,5", nil);
 }
 
 - (void)testVersion2StringFromCardDeckSettings01 {
     NSString *string = @""
-    "card%21deck,g0,d1,c0,id1,is0,it1,r0,s1"
+    "card%21deck,g0,d1,c0,id1,is0,it1,r0,s1,ap0"
     "&";
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
     
     NSString *string2 = [CDXCardDeckURLSerializer version2StringFromCardDeck:deck];
-    STAssertEqualObjects(string2, @"card%21deck,g0,d1,c0,id1,is0,it1,r0,s1&,000000ff,ffffffff,u,0,5", nil);
+    STAssertEqualObjects(string2, @"card%21deck,g0,d1,c0,id1,is0,it1,r0,s1,ap0&,000000ff,ffffffff,u,0,5", nil);
 }
 
 - (void)testVersion2StringFromCardDeckSettings10 {
     NSString *string = @""
-    "card%21deck,g1,d0,c1,id0,is1,it0,r1,s0"
+    "card%21deck,g1,d0,c1,id0,is1,it0,r1,s0,ap1"
     "&";
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
     
     NSString *string2 = [CDXCardDeckURLSerializer version2StringFromCardDeck:deck];
-    STAssertEqualObjects(string2, @"card%21deck,g1,d0,c1,id0,is1,it0,r1,s0&,000000ff,ffffffff,u,0,5", nil);
+    STAssertEqualObjects(string2, @"card%21deck,g1,d0,c1,id0,is1,it0,r1,s0,ap1&,000000ff,ffffffff,u,0,5", nil);
 }
 
 @end

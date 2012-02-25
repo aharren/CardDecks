@@ -165,6 +165,8 @@
                 dDeck.wantsAutoRotate = [[sSetting substringFromIndex:1] intValue] ? YES : NO;
             } else if ([sSetting hasPrefix:@"s"]) {
                 dDeck.shakeAction = [[sSetting substringFromIndex:1] intValue];
+            } else if ([sSetting hasPrefix:@"ap"]) {
+                dDeck.autoPlay = [[sSetting substringFromIndex:2] intValue];
             }
         }
     }
@@ -223,7 +225,7 @@
 + (NSString *)version2StringFromCardDeck:(CDXCardDeck *)cardDeck {
     NSMutableArray *parts = [[[NSMutableArray alloc] initWithCapacity:2 + [cardDeck cardsCount]] autorelease];
     
-    NSString *deck = [NSString stringWithFormat:@"%@,g%d,d%d,c%d,id%d,is%d,it%d,r%d,s%d",
+    NSString *deck = [NSString stringWithFormat:@"%@,g%d,d%d,c%d,id%d,is%d,it%d,r%d,s%d,ap%d",
                       [CDXURLSerializerUtils stringByAddingURLEscapes:cardDeck.name],
                       (NSUInteger)cardDeck.groupSize,
                       (NSUInteger)cardDeck.displayStyle,
@@ -234,7 +236,9 @@
                       cardDeck.wantsAutoRotate ? 1 : 0,
                       // version 2a: s0, s1
                       // version 2b: s0, s1, s2
-                      (NSUInteger)cardDeck.shakeAction];
+                      (NSUInteger)cardDeck.shakeAction,
+                      // version 2c: ap0, ap1, ap2
+                      (NSUInteger)cardDeck.autoPlay];
     [parts addObject:deck];
     
     CDXCard *cardDefaults = [cardDeck cardDefaults];
