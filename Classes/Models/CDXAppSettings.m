@@ -30,9 +30,13 @@
 #undef ql_component
 #define ql_component lcl_cModel
 
+#undef  CDXAppSettingsShowInternals
+//#define CDXAppSettingsShowInternals
+
 
 enum {
     CDXAppSettingsAbout,
+    CDXAppSettingsMigrationState,
     CDXAppSettingsIdleTimer,
     CDXAppSettingsCardDeckQuickOpen,
     CDXAppSettingsCloseTapCount,
@@ -45,6 +49,7 @@ enum {
 
 static const CDXSetting settings[] = {
     { CDXAppSettingsAbout, CDXSettingTypeSettings, @"About Card Decks" },
+    { CDXAppSettingsMigrationState, CDXSettingTypeEnumeration, @"Migration State" },
     { CDXAppSettingsIdleTimer, CDXSettingTypeBoolean, @"Idle Timer" },
     { CDXAppSettingsCardDeckQuickOpen, CDXSettingTypeBoolean, @"Quick Open" },
     { CDXAppSettingsCloseTapCount, CDXSettingTypeEnumeration, @"Close Gesture" },
@@ -57,6 +62,7 @@ static const CDXSetting settings[] = {
 
 static NSString *settingsUserDefaultsKeys[] = {
     nil,
+    @"MigrationState",
     @"IdleTimer",
     @"CardDeckQuickOpen",
     @"CloseTapCount",
@@ -75,6 +81,9 @@ typedef struct {
 
 static const CDXAppSettingGroup groupsPhone[] = {
     { @"", 1, CDXAppSettingsAbout },
+#ifdef CDXAppSettingsShowInternals
+    { @"Internals", 1, CDXAppSettingsMigrationState },
+#endif
     { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
     { @"Card Deck", 3, CDXAppSettingsCardDeckQuickOpen },
     { @"User Interface", 1, CDXAppSettingsDoneButtonOnLeftSide },
@@ -85,6 +94,9 @@ static const CDXAppSettingGroup groupsPhone[] = {
 
 static const CDXAppSettingGroup groupsPad[] = {
     { @"", 1, CDXAppSettingsAbout },
+#ifdef CDXAppSettingsShowInternals
+    { @"Internals", 1, CDXAppSettingsMigrationState },
+#endif
     { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
     { @"Card Deck", 2, CDXAppSettingsCloseTapCount },
     { @"Integration", 1, CDXAppSettingsUseMailApplication },
@@ -167,6 +179,15 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
     return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsUseMailApplication] defaultsTo:NO];
 }
 
+- (NSUInteger)migrationState {
+    NSUInteger value = [CDXAppSettings userDefaultsIntegerValueForKey:settingsUserDefaultsKeys[CDXAppSettingsMigrationState] defaultsTo:0];
+    return value;
+}
+
+- (void)setMigrationState:(NSUInteger)value {
+    [CDXAppSettings setUserDefaultsIntegerValue:value forKey:settingsUserDefaultsKeys[CDXAppSettingsMigrationState]];
+}
+
 - (NSString *)title {
     return @"Settings";
 }
@@ -224,6 +245,8 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
     switch (tag) {
         default:
             return 0;
+        case CDXAppSettingsMigrationState:
+            return [self migrationState];
         case CDXAppSettingsCloseTapCount:
             return [self closeTapCount] - 1;
         case CDXAppSettingsDoneButtonOnLeftSide:
@@ -236,6 +259,9 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
 - (void)setEnumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag {
     switch (tag) {
         default:
+            break;
+        case CDXAppSettingsMigrationState:
+            [self setMigrationState:value];
             break;
         case CDXAppSettingsCloseTapCount:
             [CDXAppSettings setUserDefaultsIntegerValue:(value + 1) forKey:settingsUserDefaultsKeys[tag]];
@@ -251,6 +277,8 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
     switch (tag) {
         default:
             return 0;
+        case CDXAppSettingsMigrationState:
+            return 2;
         case CDXAppSettingsCloseTapCount:
             return 2;
         case CDXAppSettingsDoneButtonOnLeftSide:
@@ -263,6 +291,8 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
     switch (tag) {
         default:
             return @"";
+        case CDXAppSettingsMigrationState:
+            return [NSString stringWithFormat:@"%d",value];
         case CDXAppSettingsCloseTapCount:
             switch (value) {
                 default:
