@@ -126,6 +126,7 @@
 		E0D1E5E111D62CA700C8B1C4 /* StatusBarDefault@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5DF11D62CA700C8B1C4 /* StatusBarDefault@2x.png */; };
 		E0D4B87513927A8100228167 /* Toolbar-Play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D4B87313927A8100228167 /* Toolbar-Play@2x.png */; };
 		E0D4B87613927A8100228167 /* Toolbar-Play.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D4B87413927A8100228167 /* Toolbar-Play.png */; };
+		E0D673E0151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D673DF151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib */; };
 		E0D8C7FE1172255F00356C2C /* lcl.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D8C7FD1172255F00356C2C /* lcl.m */; };
 		E0D909281172275D00AD50DA /* CDXLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D909271172275D00AD50DA /* CDXLogger.m */; };
 		E0DD7D6511D6302B00ED23B6 /* Logo-Prerendered@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0DD7D6411D6302B00ED23B6 /* Logo-Prerendered@2x.png */; };
@@ -334,6 +335,7 @@
 		E0D1E5DF11D62CA700C8B1C4 /* StatusBarDefault@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "StatusBarDefault@2x.png"; path = "Images/StatusBarDefault@2x.png"; sourceTree = "<group>"; };
 		E0D4B87313927A8100228167 /* Toolbar-Play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Play@2x.png"; path = "Images/Toolbars/Toolbar-Play@2x.png"; sourceTree = "<group>"; };
 		E0D4B87413927A8100228167 /* Toolbar-Play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Play.png"; path = "Images/Toolbars/Toolbar-Play.png"; sourceTree = "<group>"; };
+		E0D673DF151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "CDXTimerKeyboardExtensionView~ipad.xib"; path = "UserInterfaces/CDXTimerKeyboardExtensionView~ipad.xib"; sourceTree = "<group>"; };
 		E0D8C7F91172255F00356C2C /* lcl_config_components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcl_config_components.h; path = Logging/lcl_config_components.h; sourceTree = "<group>"; };
 		E0D8C7FA1172255F00356C2C /* lcl_config_extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcl_config_extensions.h; path = Logging/lcl_config_extensions.h; sourceTree = "<group>"; };
 		E0D8C7FB1172255F00356C2C /* lcl_config_logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcl_config_logger.h; path = Logging/lcl_config_logger.h; sourceTree = "<group>"; };
@@ -610,6 +612,7 @@
 				E06B37DE1401668000D57C37 /* CDXSymbolsKeyboardExtensionTableViewCellB~ipad.xib */,
 				E022635C140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib */,
 				E04E7A0C14E4716200D46037 /* CDXTimerKeyboardExtensionView.xib */,
+				E0D673DF151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib */,
 			);
 			name = "User Interfaces";
 			sourceTree = "<group>";
@@ -919,6 +922,7 @@
 				E022635D140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib in Resources */,
 				E06B37DF1401668000D57C37 /* CDXSymbolsKeyboardExtensionTableViewCellB~ipad.xib in Resources */,
 				E04E7A0D14E4716200D46037 /* CDXTimerKeyboardExtensionView.xib in Resources */,
+				E0D673E0151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
