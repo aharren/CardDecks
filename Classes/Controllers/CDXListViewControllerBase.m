@@ -156,11 +156,16 @@
     return 0;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath  marked:(BOOL)marked {
     UIColor *clearColor = [UIColor clearColor];
     cell.textLabel.backgroundColor = clearColor;
     cell.detailTextLabel.backgroundColor = clearColor;
     cell.backgroundColor = clearColor;
+    cell.backgroundView = [[[UIImageView alloc] initWithImage:marked ? tableCellBackgroundImageAlt : tableCellBackgroundImage] autorelease];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath marked:NO];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {

@@ -68,5 +68,7 @@
 - (void)performBlockingSelector:(SEL)selector withObject:(NSObject *)object;
 - (void)performBlockingSelectorEnd;
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath  marked:(BOOL)marked;
+
 @end
 

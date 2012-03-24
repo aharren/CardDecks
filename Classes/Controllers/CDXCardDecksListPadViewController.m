@@ -102,18 +102,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
     BOOL selected = NO;
     if (indexPath.section == 1) {
         selected = [cardDecks cardDeckAtIndex:indexPath.row] == currentCardDeck;
     } else if (indexPath.section == 2) {
         selected = cardDecks.cardDeckDefaults == currentCardDeck;
     }
-    if (selected) {
-        cell.backgroundView	= [[[UIImageView alloc] initWithImage:tableCellBackgroundImageAlt] autorelease];
-    } else {
-        cell.backgroundView	= [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
-    }
+    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath marked:selected];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {

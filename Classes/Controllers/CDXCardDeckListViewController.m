@@ -103,15 +103,15 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
+    BOOL otherGroup = NO;
     if (indexPath.section == 1) {
         NSUInteger groupSize = [cardDeck groupSize];
         if (groupSize > 0 && (indexPath.row / groupSize) % 2 == 0) {
-            cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImageAlt] autorelease];
-        } else {
-            cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
+            otherGroup = YES;
         }
     }
+    
+    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath marked:otherGroup];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
