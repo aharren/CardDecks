@@ -52,6 +52,7 @@ synthesize_singleton(sharedDevice, CDXDevice);
             useReducedGraphicsEffects = (deviceScreenScale <= 1.0);
         } else if ([deviceModel isEqualToString:@"ipad"]) {
             deviceType = CDXDeviceTypeiPad;
+            useReducedGraphicsEffects = (deviceScreenScale <= 1.0);
         }
         UIUserInterfaceIdiom userInterfaceIdiom = [device userInterfaceIdiom];
         if (userInterfaceIdiom == UIUserInterfaceIdiomPad) {
