@@ -25,6 +25,7 @@
 
 #import "CDXAppAboutSettings.h"
 #import "CDXApplicationVersion.h"
+#import "CDXDevice.h"
 
 #undef ql_component
 #define ql_component lcl_cModel
@@ -34,6 +35,7 @@ enum {
     CDXAppAboutSettingsFeedback,
     CDXAppAboutSettingsSite,
     CDXAppAboutSettingsLegal,
+    CDXAppAboutSettingsDeviceInfo,
     CDXAppAboutSettingsCount
 };
 
@@ -41,6 +43,7 @@ static const CDXSetting settings[] = {
     { CDXAppAboutSettingsFeedback, CDXSettingTypeURLAction, @"Feedback" },
     { CDXAppAboutSettingsSite, CDXSettingTypeURLAction, @"0xc0.de/CardDecks" },
     { CDXAppAboutSettingsLegal, CDXSettingTypeHTMLText, @"Legal" },
+    { CDXAppAboutSettingsDeviceInfo, CDXSettingTypeHTMLText, @"Device Information" },
     { 0, 0, @"" }
 };
 
@@ -53,6 +56,7 @@ typedef struct {
 static const CDXAppSettingGroup groups[] = {
     { @"", 2, CDXAppAboutSettingsFeedback },
     { @"", 1, CDXAppAboutSettingsLegal },
+    { @"", 1, CDXAppAboutSettingsDeviceInfo },
     { @"", 0, 0 }
 };
 
@@ -162,6 +166,26 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
             NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];
             NSString *path = [folder stringByAppendingPathComponent:@"Legal.html"];
             NSString *text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+            return text;
+            break;
+        }
+        case CDXAppAboutSettingsDeviceInfo: {
+            NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];
+            NSString *path = [folder stringByAppendingPathComponent:@"Template.html"];
+            NSString *text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+            
+            CDXDevice *device = [CDXDevice sharedDevice];
+            NSMutableString *content = [[[NSMutableString alloc] init] autorelease];
+            [content appendString:@"<table>"];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"model", [device deviceModel]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"machine", [device deviceMachine]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"type", [device deviceTypeString]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"ui idiom", [device deviceUIIdiomString]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%.1f</td></tr>\n", @"screen scale", [device deviceScreenScale]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"graphics effects", [device useReducedGraphicsEffects] ? @"reduced" : @"full"];
+            [content appendString:@"</table>"];
+            text = [text stringByReplacingOccurrencesOfString:@"$content$" withString:content];
+            
             return text;
             break;
         }
