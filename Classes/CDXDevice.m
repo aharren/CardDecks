@@ -24,43 +24,82 @@
 // THE SOFTWARE.
 
 #import "CDXDevice.h"
+#import "CDXMacros.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import <sys/types.h>
+#import <sys/sysctl.h>
 
 
 @implementation CDXDevice
 
+@synthesize deviceModel;
+@synthesize deviceMachine;
 @synthesize deviceType;
+@synthesize deviceTypeString;
 @synthesize deviceUIIdiom;
+@synthesize deviceUIIdiomString;
+@synthesize deviceScreenScale;
 @synthesize useReducedGraphicsEffects;
 
 synthesize_singleton(sharedDevice, CDXDevice);
 
+static NSString* CDXDeviceGetSystemInformationByName(const char* name) {
+    size_t bufferSize;
+    if (sysctlbyname(name, NULL, &bufferSize, NULL, 0) != 0) {
+        return nil;
+    }
+    
+    char *buffer = malloc(bufferSize);
+    NSString *value = nil;
+    if (sysctlbyname(name, buffer, &bufferSize, NULL, 0) == 0) {
+        value = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+    }
+    free(buffer);
+    
+    return value;
+}
+
 - (id)init {
     if ((self = [super init])) {
-        CGFloat deviceScreenScale = [[UIScreen mainScreen] scale];
+        deviceType = CDXDeviceTypeUnknown;
         useReducedGraphicsEffects = NO;
+        deviceScreenScale = [[UIScreen mainScreen] scale];
+        
         UIDevice* device = [UIDevice currentDevice];
-        NSString *deviceModel = [device model];
-        deviceModel = [deviceModel lowercaseString];
+        ivar_assign_and_copy(deviceModel, [[device model] lowercaseString]);
+        ivar_assign_and_copy(deviceMachine, [CDXDeviceGetSystemInformationByName("hw.machine") lowercaseString]);
+        
+        // set type of device
         if ([deviceModel hasSuffix:@"simulator"]) {
             deviceType = CDXDeviceTypeSimulator;
+            ivar_assign_and_copy(deviceTypeString, @"simulator");
         } else if ([deviceModel isEqualToString:@"iphone"]) {
             deviceType = CDXDeviceTypeiPhone;
-            useReducedGraphicsEffects = (deviceScreenScale <= 1.0);
+            ivar_assign_and_copy(deviceTypeString, @"iphone");
         } else if ([deviceModel isEqualToString:@"ipod touch"]) {
             deviceType = CDXDeviceTypeiPodTouch;
-            useReducedGraphicsEffects = (deviceScreenScale <= 1.0);
+            ivar_assign_and_copy(deviceTypeString, @"ipod touch");
         } else if ([deviceModel isEqualToString:@"ipad"]) {
             deviceType = CDXDeviceTypeiPad;
-            useReducedGraphicsEffects = (deviceScreenScale <= 1.0);
+            ivar_assign_and_copy(deviceTypeString, @"ipad");
+        } else {
+            deviceType = CDXDeviceTypeUnknown;
+            ivar_assign_and_copy(deviceTypeString, @"unknown");
         }
-        UIUserInterfaceIdiom userInterfaceIdiom = [device userInterfaceIdiom];
-        if (userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        // set UI idiom
+        if ([device userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             deviceUIIdiom = CDXDeviceUIIdiomPad;
+            ivar_assign_and_copy(deviceUIIdiomString, @"pad");
         } else {
             deviceUIIdiom = CDXDeviceUIIdiomPhone;
+            ivar_assign_and_copy(deviceUIIdiomString, @"phone");
         }
-        qltrace(@"%@ %d %d", deviceModel, deviceType, deviceUIIdiom);
+        
+        // use reduced graphics effects on devices with non-retina displays
+        useReducedGraphicsEffects = (deviceScreenScale <= 1.0);
+        
+        qltrace(@"%@ %@ %d %d %f %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, useReducedGraphicsEffects ? 1 : 0);
     }
     return self;
 }
