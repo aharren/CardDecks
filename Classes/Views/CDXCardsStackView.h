@@ -50,7 +50,7 @@ enum {
     CDXCardsStackViewScrollViewDirectionLeftOut
 };
 
-@interface CDXCardsStackView : CDXCardsViewBase<CDXCardsViewView> {
+@interface CDXCardsStackView : CDXCardsViewBase {
     
 @protected
     CDXCardsStackViewScrollView *scrollView;

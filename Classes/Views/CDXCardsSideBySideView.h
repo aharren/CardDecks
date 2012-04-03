@@ -35,7 +35,7 @@ enum {
     CDXCardsSideBySideViewCardViewsSize = 3
 };
 
-@interface CDXCardsSideBySideView : CDXCardsViewBase<CDXCardsViewView> {
+@interface CDXCardsSideBySideView : CDXCardsViewBase {
     
 @protected
     CDXCardsSideBySideViewScrollView *scrollView;

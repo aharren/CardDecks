@@ -143,8 +143,8 @@
     }
 }
 
-- (void)showCardAtIndex:(NSUInteger)cardIndex {
-    [self showCardAtIndex:cardIndex tellDelegate:YES updateScrollView:YES];
+- (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate {
+    [self showCardAtIndex:cardIndex tellDelegate:tellDelegate updateScrollView:YES];
 }
 
 - (void)scrollToCardIndex:(NSUInteger)cardIndex {
@@ -152,21 +152,6 @@
     frame.origin.x = scrollViewPageWidth * cardIndex;
     frame.origin.y = 0;
     [scrollView scrollRectToVisible:frame animated:NO];
-}
-
-- (NSUInteger)currentCardIndex {
-    return currentCardIndex;
-}
-
-- (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
-    qltrace();
-    deviceOrientation = orientation;
-    if (self.superview == nil) {
-        return;
-    }
-
-    [self invalidateDataSourceCaches];
-    [self showCardAtIndex:currentCardIndex  tellDelegate:NO updateScrollView:YES];
 }
 
 - (void)didMoveToSuperview {

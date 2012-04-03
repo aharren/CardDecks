@@ -26,7 +26,7 @@
 #import "CDXCardsViewProtocols.h"
 
 
-@interface CDXCardsViewBase : UIView {
+@interface CDXCardsViewBase : UIView<CDXCardsViewView> {
     
 @protected
     id<CDXCardsViewDelegate> viewDelegate;

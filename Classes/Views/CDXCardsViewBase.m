@@ -48,5 +48,32 @@
     [super dealloc];
 }
 
+- (void)showCardAtIndex:(NSUInteger)index {
+    [self showCardAtIndex:index tellDelegate:YES];
+}
+
+- (void)showCardAtIndex:(NSUInteger)index tellDelegate:(BOOL)tellDelegate {
+    
+}
+
+- (void)invalidateDataSourceCaches {
+    
+}
+
+- (NSUInteger)currentCardIndex {
+    return currentCardIndex;
+}
+
+- (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
+    qltrace();
+    deviceOrientation = orientation;
+    if (self.superview == nil) {
+        return;
+    }
+    
+    [self invalidateDataSourceCaches];
+    [self showCardAtIndex:currentCardIndex tellDelegate:NO];
+}
+
 @end
 

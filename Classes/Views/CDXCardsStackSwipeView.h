@@ -39,7 +39,7 @@ enum {
     CDXCardsStackSwipeViewCardViewsSize
 };
 
-@interface CDXCardsStackSwipeView : CDXCardsViewBase<CDXCardsViewView> {
+@interface CDXCardsStackSwipeView : CDXCardsViewBase {
     
 @protected
     CDXObjectCache *cardImages;

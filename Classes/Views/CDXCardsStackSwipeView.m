@@ -98,25 +98,6 @@
     }
 }
 
-- (void)showCardAtIndex:(NSUInteger)cardIndex {
-    [self showCardAtIndex:cardIndex tellDelegate:YES];
-}
-
-- (NSUInteger)currentCardIndex {
-    return currentCardIndex;
-}
-
-- (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
-    qltrace();
-    deviceOrientation = orientation;
-    if (self.superview == nil) {
-        return;
-    }
-
-    [self invalidateDataSourceCaches];
-    [self showCardAtIndex:currentCardIndex tellDelegate:NO];
-}
-
 - (void)didMoveToSuperview {
     qltrace(@": %@", self.superview);
     [super didMoveToSuperview];
