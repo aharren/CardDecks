@@ -1,6 +1,6 @@
 //
 //
-// CDXCardsStackView.h
+// CDXCardViewImageRendering.h
 //
 //
 // Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
@@ -23,44 +23,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import "CDXObjectCache.h"
 #import "CDXCardDeck.h"
-#import "CDXCardsViewBase.h"
-#import "CDXCardViewImageRendering.h"
 
 
-@class CDXCardsStackViewScrollView;
-@class CDXCardsStackViewScrollViewDelegate;
-
-enum {
-    CDXCardsStackViewCardViewsTopLeft = 0,
-    CDXCardsStackViewCardViewsTopRight,
-    CDXCardsStackViewCardViewsMiddle,
-    CDXCardsStackViewCardViewsBottom,
-    CDXCardsStackViewCardViewsSize
-};
-
-enum {
-    CDXCardsStackViewScrollViewDirectionNone = 0,
-    CDXCardsStackViewScrollViewDirectionIgnore,
-    CDXCardsStackViewScrollViewDirectionRightIn,
-    CDXCardsStackViewScrollViewDirectionLeftOut
-};
-
-@interface CDXCardsStackView : CDXCardsViewBase {
+@interface CDXCardViewImageRendering : NSObject {
     
 @protected
-    CDXCardsStackViewScrollView *scrollView;
-    CDXCardsStackViewScrollViewDelegate *scrollViewDelegate;
-    CGFloat scrollViewPageWidth;
-    NSUInteger scrollViewDirection;
-    
-    CDXCardViewImageRendering *cardViewRendering;
-    
-    CGFloat cardViewsBorder;
-    CGSize cardViewsSize;
+    CDXObjectCache *imageCache;
+    NSMutableArray *imageViews;
 }
 
-- (id)initWithFrame:(CGRect)rect;
+- (id)initWithSize:(NSUInteger)size;
+
+- (UIView *)viewAtIndex:(NSUInteger)index;
+
+- (UIView *)configureViewAtIndex:(NSUInteger)index viewSize:(CGSize)viewSize cardIndex:(NSUInteger)cardIndex card:(CDXCard *)card deviceOrientation:(UIDeviceOrientation)deviceOrientation;
+
+- (void)invalidateCaches;
+- (void)cacheViewAtIndex:(NSUInteger)index cardIndex:(NSUInteger)cardIndex;
 
 @end
 

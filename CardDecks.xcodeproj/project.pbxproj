@@ -34,6 +34,7 @@
 		E0260A3A11BC02F800FCAB34 /* CDXCardDeckDictionarySerializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0260A3811BC02F800FCAB34 /* CDXCardDeckDictionarySerializerTests.m */; };
 		E0260A5611BC06ED00FCAB34 /* CDXCardDeckDictionarySerializerTestsDeck1.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0260A5511BC06ED00FCAB34 /* CDXCardDeckDictionarySerializerTestsDeck1.CardDeck.plist */; };
 		E03032791528E96600F42494 /* Default@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = E03032781528E96600F42494 /* Default@2x~ipad.png */; };
+		E030327F152BA1B500F42494 /* CDXCardViewImageRendering.m in Sources */ = {isa = PBXBuildFile; fileRef = E030327E152BA1B500F42494 /* CDXCardViewImageRendering.m */; };
 		E032F1311169D9FB0033980C /* CDXCardDecks.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1301169D9FB0033980C /* CDXCardDecks.m */; };
 		E032F1521169DB5D0033980C /* CDXCardDecks.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1301169D9FB0033980C /* CDXCardDecks.m */; };
 		E032F1541169DB790033980C /* CDXCardDecksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1531169DB790033980C /* CDXCardDecksTests.m */; };
@@ -224,6 +225,8 @@
 		E0260A3811BC02F800FCAB34 /* CDXCardDeckDictionarySerializerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckDictionarySerializerTests.m; path = Classes/Serializers/CDXCardDeckDictionarySerializerTests.m; sourceTree = "<group>"; };
 		E0260A5511BC06ED00FCAB34 /* CDXCardDeckDictionarySerializerTestsDeck1.CardDeck.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CDXCardDeckDictionarySerializerTestsDeck1.CardDeck.plist; path = Classes/Serializers/CDXCardDeckDictionarySerializerTestsDeck1.CardDeck.plist; sourceTree = "<group>"; };
 		E03032781528E96600F42494 /* Default@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x~ipad.png"; path = "Images/Default@2x~ipad.png"; sourceTree = "<group>"; };
+		E030327B152BA18000F42494 /* CDXCardViewImageRendering.h */ = {isa = PBXFileReference; fileEncoding = 4; name = CDXCardViewImageRendering.h; path = Classes/Views/CDXCardViewImageRendering.h; sourceTree = "<group>"; };
+		E030327E152BA1B500F42494 /* CDXCardViewImageRendering.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardViewImageRendering.m; path = Classes/Views/CDXCardViewImageRendering.m; sourceTree = "<group>"; };
 		E032F12F1169D9FB0033980C /* CDXCardDecks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDecks.h; path = Classes/Models/CDXCardDecks.h; sourceTree = "<group>"; };
 		E032F1301169D9FB0033980C /* CDXCardDecks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDecks.m; path = Classes/Models/CDXCardDecks.m; sourceTree = "<group>"; };
 		E032F1531169DB790033980C /* CDXCardDecksTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDecksTests.m; path = Classes/Models/CDXCardDecksTests.m; sourceTree = "<group>"; };
@@ -509,6 +512,8 @@
 			children = (
 				E0EB6E7A1172343600F41F7A /* CDXCardView.h */,
 				E0EB6E7B1172343600F41F7A /* CDXCardView.m */,
+				E030327B152BA18000F42494 /* CDXCardViewImageRendering.h */,
+				E030327E152BA1B500F42494 /* CDXCardViewImageRendering.m */,
 				E0150132117A245900C3BF63 /* CDXCardsViewProtocols.h */,
 				E0F2B3BF1195617A0092D11B /* CDXCardsViewBase.h */,
 				E0F2B3C01195617A0092D11B /* CDXCardsViewBase.m */,
@@ -1015,6 +1020,7 @@
 				E0CDB1F913B793550079B722 /* CDXCardDeckListPadViewController.m in Sources */,
 				E0F3AEDB13EED59B00B253ED /* CDXCardDeckCardEditPadViewController.m in Sources */,
 				E04E7A1114E4717300D46037 /* CDXTimerKeyboardExtension.m in Sources */,
+				E030327F152BA1B500F42494 /* CDXCardViewImageRendering.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

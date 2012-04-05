@@ -35,45 +35,31 @@
 - (id)initWithFrame:(CGRect)rect {
     qltrace();
     if ((self = [super initWithFrame:rect])) {
-        ivar_assign(cardImages, [[CDXObjectCache alloc] initWithSize:CDXCardsStackSwipeViewCardImagesSize]);
-        ivar_array_assign(cardViewsView, CDXCardsStackSwipeViewCardViewsSize, [[UIImageView alloc] initWithImage:nil]);
-        [self addSubview:cardViewsView[CDXCardsStackSwipeViewCardViewsBottom]];
-        [self addSubview:cardViewsView[CDXCardsStackSwipeViewCardViewsMiddle]];
-        [self addSubview:cardViewsView[CDXCardsStackSwipeViewCardViewsTopLeft]];
+        ivar_assign(cardViewRendering, [[CDXCardViewImageRendering alloc] initWithSize:CDXCardsStackSwipeViewCardViewsSize]);
+        [self addSubview:[cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsBottom]];
+        [self addSubview:[cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle]];
+        [self addSubview:[cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft]];
     }
     return self;
 }
 
 - (void)dealloc {
     qltrace();
-    ivar_release_and_clear(cardImages);
-    ivar_array_release_and_clear(cardViewsView, CDXCardsStackSwipeViewCardViewsSize);
+    ivar_release_and_clear(cardViewRendering);
     [super dealloc];
 }
 
 - (void)configureCardViewsViewAtIndex:(NSUInteger)viewIndex cardIndex:(NSUInteger)cardIndex {
-    UIImageView *view = cardViewsView[viewIndex];
-    
     if (cardIndex >= cardsCount) {
         cardIndex += cardsCount;
         cardIndex %= cardsCount;
     }
     
-    UIImage *image = [cardImages objectWithKey:cardIndex];
-    if (image != nil) {
-        qltrace(@": => %d", cardIndex);
-    } else {
-        image = [[CDXImageFactory sharedImageFactory]
-                 imageForCard:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex]
-                 size:cardViewsSize
-                 deviceOrientation:deviceOrientation];
-        qltrace(@": X> %d", cardIndex);
-    }
-    view.image = image;
+    [cardViewRendering configureViewAtIndex:viewIndex viewSize:cardViewsSize cardIndex:cardIndex card:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex] deviceOrientation:deviceOrientation];
 }
 
 - (void)invalidateDataSourceCaches {
-    [cardImages clear];
+    [cardViewRendering invalidateCaches];
 }
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate {
@@ -83,14 +69,14 @@
     
     CGRect frame = self.frame;
     frame.origin.x = -cardViewsSize.width;
-    cardViewsView[CDXCardsStackSwipeViewCardViewsTopLeft].frame = frame;
-    cardViewsView[CDXCardsStackSwipeViewCardViewsMiddle].frame = self.frame;
-    cardViewsView[CDXCardsStackSwipeViewCardViewsBottom].frame = self.frame;
+    [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft].frame = frame;
+    [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame = self.frame;
+    [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsBottom].frame = self.frame;
     
-    [cardImages clear];
-    [cardImages addObject:cardViewsView[CDXCardsStackSwipeViewCardViewsTopLeft].image withKey:(cardIndex+cardsCount-1) % cardsCount];
-    [cardImages addObject:cardViewsView[CDXCardsStackSwipeViewCardViewsMiddle].image withKey:cardIndex];
-    [cardImages addObject:cardViewsView[CDXCardsStackSwipeViewCardViewsBottom].image withKey:(cardIndex+1) % cardsCount];
+    [cardViewRendering invalidateCaches];
+    [cardViewRendering cacheViewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft cardIndex:(cardIndex+cardsCount-1) % cardsCount];
+    [cardViewRendering cacheViewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle cardIndex:cardIndex];
+    [cardViewRendering cacheViewAtIndex:CDXCardsStackSwipeViewCardViewsBottom cardIndex:(cardIndex+1) % cardsCount];
     
     currentCardIndex = cardIndex;
     if (tellDelegate) {
@@ -112,7 +98,7 @@
     cardViewsSize.width = frame.size.width;
     cardViewsSize.height = frame.size.height;
     for (NSUInteger i = 0; i < CDXCardsStackSwipeViewCardViewsSize; i++) {
-        cardViewsView[i].frame = frame;
+        [cardViewRendering viewAtIndex:i].frame = frame;
     }
     
     [self showCardAtIndex:currentCardIndex];
@@ -163,8 +149,8 @@
                 CGFloat y = -deltay/deltax * frame.size.height;
                 frame.origin.x = -cardViewsSize.width;
                 frame.origin.y = y;
-                cardViewsView[CDXCardsStackSwipeViewCardViewsMiddle].frame = self.frame;
-                cardViewsView[CDXCardsStackSwipeViewCardViewsMiddle].frame = frame;
+                [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame = self.frame;
+                [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame = frame;
                 [UIView commitAnimations];
             }
         } else {
@@ -181,8 +167,8 @@
                 CGFloat y = -deltay/deltax * frame.size.height;
                 frame.origin.x = -cardViewsSize.width;
                 frame.origin.y = y;
-                cardViewsView[CDXCardsStackSwipeViewCardViewsTopLeft].frame = frame;
-                cardViewsView[CDXCardsStackSwipeViewCardViewsTopLeft].frame = self.frame;
+                [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft].frame = frame;
+                [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft].frame = self.frame;
                 [UIView commitAnimations];
             }
         }
