@@ -34,8 +34,7 @@
 
 - (id)initWithFrame:(CGRect)rect {
     qltrace();
-    if ((self = [super initWithFrame:rect])) {
-        ivar_assign(cardViewRendering, [[CDXCardViewImageRendering alloc] initWithSize:CDXCardsStackSwipeViewCardViewsSize]);
+    if ((self = [super initWithFrame:rect viewCount:CDXCardsStackSwipeViewCardViewsSize])) {
         [self addSubview:[cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsBottom]];
         [self addSubview:[cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle]];
         [self addSubview:[cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft]];
@@ -45,7 +44,6 @@
 
 - (void)dealloc {
     qltrace();
-    ivar_release_and_clear(cardViewRendering);
     [super dealloc];
 }
 
@@ -56,10 +54,6 @@
     }
     
     [cardViewRendering configureViewAtIndex:viewIndex viewSize:cardViewsSize cardIndex:cardIndex card:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex] deviceOrientation:deviceOrientation];
-}
-
-- (void)invalidateDataSourceCaches {
-    [cardViewRendering invalidateCaches];
 }
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate {

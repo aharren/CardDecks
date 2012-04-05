@@ -35,16 +35,23 @@
 @synthesize viewDataSource;
 @synthesize deviceOrientation;
 
-- (id)initWithFrame:(CGRect)rect {
+- (id)initWithFrame:(CGRect)rect viewCount:(NSUInteger)viewCount {
     qltrace();
     if ((self = [super initWithFrame:rect])) {
         deviceOrientation = UIDeviceOrientationPortrait;
+        
+        ivar_assign(cardViewRendering, [[CDXCardViewImageRendering alloc] initWithSize:viewCount]);
     }
     return self;
 }
 
+- (id)initWithFrame:(CGRect)rect {
+    return [self initWithFrame:rect viewCount:0];
+}
+
 - (void)dealloc {
     qltrace();
+    ivar_release_and_clear(cardViewRendering);
     [super dealloc];
 }
 
@@ -57,7 +64,7 @@
 }
 
 - (void)invalidateDataSourceCaches {
-    
+    [cardViewRendering invalidateCaches];
 }
 
 - (NSUInteger)currentCardIndex {

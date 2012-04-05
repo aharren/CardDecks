@@ -25,7 +25,6 @@
 
 #import "CDXCardDeck.h"
 #import "CDXCardsViewBase.h"
-#import "CDXCardViewImageRendering.h"
 
 
 @class CDXCardsStackViewScrollView;
@@ -53,8 +52,6 @@ enum {
     CDXCardsStackViewScrollViewDelegate *scrollViewDelegate;
     CGFloat scrollViewPageWidth;
     NSUInteger scrollViewDirection;
-    
-    CDXCardViewImageRendering *cardViewRendering;
     
     CGFloat cardViewsBorder;
     CGSize cardViewsSize;

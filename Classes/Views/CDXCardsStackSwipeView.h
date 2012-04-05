@@ -25,7 +25,6 @@
 
 #import "CDXCardDeck.h"
 #import "CDXCardsViewBase.h"
-#import "CDXCardViewImageRendering.h"
 
 
 enum {
@@ -38,8 +37,6 @@ enum {
 @interface CDXCardsStackSwipeView : CDXCardsViewBase {
     
 @protected
-    CDXCardViewImageRendering *cardViewRendering;
-    
     CGSize cardViewsSize;
     
     CGPoint touchStartPosition;

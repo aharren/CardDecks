@@ -52,15 +52,13 @@
 
 - (id)initWithFrame:(CGRect)rect {
     qltrace();
-    if ((self = [super initWithFrame:rect])) {
+    if ((self = [super initWithFrame:rect viewCount:CDXCardsSideBySideViewCardViewsSize])) {
         ivar_assign(scrollView, [[CDXCardsSideBySideViewScrollView alloc] initWithFrame:self.frame]);
         ivar_assign(scrollViewDelegate, [[CDXCardsSideBySideViewScrollViewDelegate alloc] init]);
 
         scrollView.delegate = scrollViewDelegate;
         scrollViewDelegate.cardsSideBySideView = self;
 
-        ivar_assign(cardViewRendering, [[CDXCardViewImageRendering alloc] initWithSize:CDXCardsSideBySideViewCardViewsSize]);
-        
         [self addSubview:scrollView];
 
         for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
@@ -74,7 +72,6 @@
     qltrace();
     ivar_release_and_clear(scrollView);
     ivar_release_and_clear(scrollViewDelegate);
-    ivar_release_and_clear(cardViewRendering);
     [super dealloc];
 }
 
@@ -97,8 +94,8 @@
 }
 
 - (void)invalidateDataSourceCaches {
+    [super invalidateDataSourceCaches];
     ivar_array_set(cardViewsCardIndex, CDXCardsSideBySideViewCardViewsSize, 0);
-    [cardViewRendering invalidateCaches];
 }
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate updateScrollView:(BOOL)updateScrollView {
