@@ -25,6 +25,7 @@
 
 #import "CDXCardsViewBase.h"
 #import "CDXCardViewImageRendering.h"
+#import "CDXCardViewDirectRendering.h"
 
 #undef ql_component
 #define ql_component lcl_cView
@@ -41,7 +42,13 @@
     if ((self = [super initWithFrame:rect])) {
         deviceOrientation = UIDeviceOrientationPortrait;
         
-        ivar_assign(cardViewRendering, [[CDXCardViewImageRendering alloc] initWithSize:viewCount]);
+        NSObject<CDXCardViewRendering> *viewRendering = nil;
+        if (1) {
+            viewRendering = [[CDXCardViewImageRendering alloc] initWithSize:viewCount];
+        } else {
+            viewRendering = [[CDXCardViewDirectRendering alloc] initWithSize:viewCount];
+        }
+        ivar_assign(cardViewRendering, viewRendering);
     }
     return self;
 }

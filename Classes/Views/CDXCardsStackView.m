@@ -92,6 +92,8 @@
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsMiddle cardIndex:cardIndex];
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsBottom cardIndex:(cardIndex+1) % cardsCount];
     
+    [cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsTopRight].frame = CGRectMake(cardViewsSize.width, 0, cardViewsSize.width, cardViewsSize.height);
+    
     [cardViewRendering invalidateCaches];
     [cardViewRendering cacheViewAtIndex:CDXCardsStackViewCardViewsTopLeft cardIndex:(cardIndex+cardsCount-1) % cardsCount];
     [cardViewRendering cacheViewAtIndex:CDXCardsStackViewCardViewsTopRight cardIndex:cardIndex];
