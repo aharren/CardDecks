@@ -24,7 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardsViewProtocols.h"
-#import "CDXCardViewImageRendering.h"
+#import "CDXCardViewRenderingProtocols.h"
 
 
 @interface CDXCardsViewBase : UIView<CDXCardsViewView> {
@@ -37,7 +37,7 @@
     NSUInteger currentCardIndex;
     UIDeviceOrientation deviceOrientation;
 
-    CDXCardViewImageRendering *cardViewRendering;
+    NSObject<CDXCardViewRendering> *cardViewRendering;
 }
 
 - (id)initWithFrame:(CGRect)rect viewCount:(NSUInteger)viewCount;

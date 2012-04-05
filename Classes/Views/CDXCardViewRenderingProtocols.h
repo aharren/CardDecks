@@ -1,6 +1,6 @@
 //
 //
-// CDXCardViewImageRendering.h
+// CDXCardViewRenderingProtocols.h
 //
 //
 // Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
@@ -23,16 +23,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXObjectCache.h"
-#import "CDXCardViewRenderingProtocols.h"
+#import "CDXCard.h"
 
 
-@interface CDXCardViewImageRendering : NSObject<CDXCardViewRendering> {
-    
-@protected
-    CDXObjectCache *imageCache;
-    NSMutableArray *imageViews;
-}
+@protocol CDXCardViewRendering
+
+@required
+- (id)initWithSize:(NSUInteger)size;
+
+- (UIView *)viewAtIndex:(NSUInteger)index;
+
+- (UIView *)configureViewAtIndex:(NSUInteger)index viewSize:(CGSize)viewSize cardIndex:(NSUInteger)cardIndex card:(CDXCard *)card deviceOrientation:(UIDeviceOrientation)deviceOrientation;
+
+- (void)invalidateCaches;
+- (void)cacheViewAtIndex:(NSUInteger)index cardIndex:(NSUInteger)cardIndex;
 
 @end
 

@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardsViewBase.h"
+#import "CDXCardViewImageRendering.h"
 
 #undef ql_component
 #define ql_component lcl_cView
