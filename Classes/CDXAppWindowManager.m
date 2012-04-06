@@ -193,11 +193,15 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     ivar_assign_and_retain(fullScreenViewController, viewController);
     [fullScreenViewController setUserInteractionEnabled:!animated];
     if (animated) {
-        UIImageView *screenshotView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForScreen]] autorelease];
         navigationView.userInteractionEnabled = NO;
-        [navigationView removeFromSuperview];
-        [window addSubview:screenshotView];
-        [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:screenshotView afterDelay:0.001];
+        if ([[CDXDevice sharedDevice] useImageBasedRendering]) {
+            UIImageView *screenshotView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForScreen]] autorelease];
+            [navigationView removeFromSuperview];
+            [window addSubview:screenshotView];
+            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:screenshotView afterDelay:0.001];
+        } else {
+            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:navigationView afterDelay:0.001];
+        }
     } else {
         [navigationView removeFromSuperview];
         [window addSubview:fullScreenViewController.view];
