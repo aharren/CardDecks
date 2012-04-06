@@ -56,6 +56,7 @@ typedef enum {
 @property (nonatomic, readonly) CGFloat deviceScreenScale;
 
 @property (nonatomic, readonly) BOOL useReducedGraphicsEffects;
+@property (nonatomic, readonly) BOOL useImageBasedRendering;
 
 - (void)vibrate;
 

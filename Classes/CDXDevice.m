@@ -40,6 +40,7 @@
 @synthesize deviceUIIdiomString;
 @synthesize deviceScreenScale;
 @synthesize useReducedGraphicsEffects;
+@synthesize useImageBasedRendering;
 
 synthesize_singleton(sharedDevice, CDXDevice);
 
@@ -99,7 +100,11 @@ static NSString* CDXDeviceGetSystemInformationByName(const char* name) {
         // use reduced graphics effects on devices with non-retina displays
         useReducedGraphicsEffects = (deviceScreenScale <= 1.0);
         
-        qltrace(@"%@ %@ %d %d %f %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, useReducedGraphicsEffects ? 1 : 0);
+        // use image-based rendering on devices with non-retina displays, and
+        // first-retina-generations of iPhone and iPod
+        useImageBasedRendering = (deviceScreenScale <= 1.0) || ([deviceMachine hasPrefix:@"iphone3,"]) || ([deviceMachine hasPrefix:@"ipod4,"]);
+        
+        qltrace(@"%@ %@ %d %d %f %d %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, useReducedGraphicsEffects ? 1 : 0, useImageBasedRendering ? 1 : 0);
     }
     return self;
 }

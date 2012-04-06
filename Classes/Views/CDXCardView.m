@@ -129,7 +129,11 @@
             fontSize = fontSize * size.width / size.height;
         }
     }
-    cardText.bounds = CGRectMake(0, 0, 1024 * scale, 1024 * scale);
+    if (CDXCardOrientationIsPortrait(cardDisplayOrientation)) {
+        cardText.bounds = CGRectMake(0, 0, size.width + 100, size.height + 100);
+    } else {
+        cardText.bounds = CGRectMake(0, 0, size.height + 100, size.width + 100);
+    }
     cardText.font = [UIFont systemFontOfSize:fontSize];
     cardText.text = text;
     cardText.textColor = [card.textColor uiColor];
