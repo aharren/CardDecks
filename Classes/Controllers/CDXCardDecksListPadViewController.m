@@ -131,6 +131,7 @@
 
 - (void)pushCardDeckListViewControllerWithCardDeckHolder:(CDXCardDeckHolder *)deckHolder {
     qltrace();
+    ignoreCardDeckUpdateNotifications = YES;
     if (deckHolder != nil && deckHolder != currentCardDeck) {
         CDXCardDeck *deck = deckHolder.cardDeck;
         if (deck != nil) {
@@ -147,6 +148,7 @@
     NSIndexPath *indexPath = [viewTableView indexPathForSelectedRow];
     [viewTableView deselectRowAtIndexPath:indexPath animated:NO];
     [self performBlockingSelectorEnd];
+    ignoreCardDeckUpdateNotifications = NO;
 }
 
 - (void)processSinglePendingCardDeckAdd {
