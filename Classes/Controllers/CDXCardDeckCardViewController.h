@@ -44,7 +44,7 @@
     BOOL cardsViewShowsFirstCard;
     
     BOOL userInteractionEnabled;
-    UIView *imageView;
+    UIView *initialView;
     
     IBOutlet CDXIndexDotsView *indexDotsView;
     NSUInteger pageControlJumpPagesCount;

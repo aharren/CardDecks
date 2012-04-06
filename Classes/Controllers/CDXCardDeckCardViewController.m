@@ -106,7 +106,7 @@
     ivar_release_and_clear(cardDeck);
     ivar_release_and_clear(indexDotsView);
     ivar_release_and_clear(cardsView);
-    ivar_release_and_clear(imageView);
+    ivar_release_and_clear(initialView);
     ivar_release_and_clear(actionsViewShuffleButton);
     ivar_release_and_clear(actionsViewSortButton);
     ivar_release_and_clear(actionsViewPlayButton);
@@ -150,8 +150,8 @@
     [cardsView removeFromSuperview];
     ivar_release_and_clear(cardsView);
     
-    [imageView removeFromSuperview];
-    ivar_release_and_clear(imageView);
+    [initialView removeFromSuperview];
+    ivar_release_and_clear(initialView);
     
     deviceOrientation = [[CDXAppWindowManager sharedAppWindowManager] deviceOrientation];
     UIDeviceOrientation orientation = cardDeck.wantsAutoRotate ? deviceOrientation : UIDeviceOrientationPortrait;
@@ -186,17 +186,24 @@
             [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:deviceOrientation view:self.view];
         }
     } else {
-        qltrace(@"image");
+        qltrace(@"initial");
         
         [self resignFirstResponder];
         CDXCard *card = [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex orCard:nil];
         if (card != nil) {
-            UIImage *image = [[CDXImageFactory sharedImageFactory]
-                              imageForCard:card
-                              size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
-                              deviceOrientation:orientation];
-            ivar_assign(imageView, [[UIImageView alloc] initWithImage:image]);
-            [self.view insertSubview:imageView atIndex:0];
+            CGSize viewSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
+            if ([[CDXDevice sharedDevice] useImageBasedRendering]) {
+                UIImage *image = [[CDXImageFactory sharedImageFactory]
+                                  imageForCard:card
+                                  size:viewSize
+                                  deviceOrientation:orientation];
+                ivar_assign(initialView, [[UIImageView alloc] initWithImage:image]);
+            } else {
+                CDXCardView *cardView = [[CDXCardView alloc] initWithFrame:CGRectMake(0,0, 1,1)];
+                [cardView setCard:card size:viewSize deviceOrientation:orientation preview:NO];
+                ivar_assign(initialView, cardView);
+            }
+            [self.view insertSubview:initialView atIndex:0];
         }
     }
 
@@ -248,7 +255,7 @@
     qltrace();
     ivar_release_and_clear(indexDotsView);
     ivar_release_and_clear(cardsView);
-    ivar_release_and_clear(imageView);
+    ivar_release_and_clear(initialView);
     ivar_release_and_clear(actionsView);
     ivar_release_and_clear(actionsViewButtonsView);
     ivar_release_and_clear(actionsViewShuffleButton);
