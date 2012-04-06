@@ -342,6 +342,21 @@
     }
 }
 
+- (void)handleAutoPlayDelayed {
+    self.view.userInteractionEnabled = YES;
+    switch (cardDeck.autoPlay) {
+        case CDXCardDeckAutoPlayPlay:
+            [self playButtonPressed];
+            break;
+        case CDXCardDeckAutoPlayPlay2:
+            [self play2ButtonPressed];
+            break;
+        case CDXCardDeckAutoPlayOff:
+        default:
+            break;
+    }
+}
+
 - (void)cardsViewDelegateCurrentCardIndexHasChangedTo:(NSUInteger)index {
     if (cardsViewShowsFirstCard) {
         cardsViewShowsFirstCard = NO;
@@ -349,10 +364,9 @@
         // handle auto-play
         switch (cardDeck.autoPlay) {
             case CDXCardDeckAutoPlayPlay:
-                [self playButtonPressed];
-                break;
             case CDXCardDeckAutoPlayPlay2:
-                [self play2ButtonPressed];
+                self.view.userInteractionEnabled = NO;
+                [self performSelector:@selector(handleAutoPlayDelayed) withObject:nil afterDelay:0.3];
                 break;
             case CDXCardDeckAutoPlayOff:
             default:
