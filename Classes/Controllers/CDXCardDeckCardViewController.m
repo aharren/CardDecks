@@ -213,8 +213,8 @@
 
 - (void)performTimerCallbackDelayed {
     [self performSelector:@selector(timerCallback:) withObject:currentTimer afterDelay:0.01];
-    int blinkFactor = (currentTimer.timerType == 0) ? 2 : 4;
-    timerSignalView.hidden = (int)([NSDate timeIntervalSinceReferenceDate] * blinkFactor) % 2 == 0;
+    NSTimeInterval blinkFactor = (currentTimer.timerType == 0) ? 2.0 : 4.0;
+    timerSignalView.hidden = (int)(fmod([NSDate timeIntervalSinceReferenceDate] * blinkFactor, 2.0)) == 0;
 }
 
 - (void)uninstallTimer {
