@@ -232,6 +232,7 @@
                            [CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension],
                            nil];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:cellText keyboardExtensions:extensions];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
 }
 
 - (void)textValueChanged:(UITextField *)cellText {

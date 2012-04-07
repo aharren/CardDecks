@@ -143,6 +143,7 @@
     self.navigationItem.title = @"";
     self.navigationItem.rightBarButtonItem = editingDefaults ? nil : viewButtonsUpDownBarButtonItem;
     
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
     [self showCardAtIndex:cardDeckViewContext.currentCardIndex];
     [text becomeFirstResponder];
     [self showCardView:NO];
@@ -179,6 +180,7 @@
                            [CDXTimerKeyboardExtension sharedTimerKeyboardExtension],
                            nil];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
 }
 
 - (void)dismissActionSheet {
