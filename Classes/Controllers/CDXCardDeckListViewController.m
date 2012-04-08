@@ -330,21 +330,28 @@
     }
 }
 
+typedef enum {
+    CDXCardDeckListViewControllerActionEmailDeck = 0,
+    CDXCardDeckListViewControllerActionTweekDeck,
+    CDXCardDeckListViewControllerActionDuplicateDeck,
+    CDXCardDeckListViewControllerActionCount
+} CDXCardDeckListViewControllerAction;
+
 typedef struct {
-    int action;
+    CDXCardDeckListViewControllerAction action;
     NSString *title;
 } CDXCardDeckListViewControllerActionSheetButton;
 
 static const CDXCardDeckListViewControllerActionSheetButton actionSheetButtons[2][4] = {
     {
-        { 0, @"Email Deck" },
-        { 1, @"Tweet Deck" },
-        { 2, @"Duplicate Deck" },
+        { CDXCardDeckListViewControllerActionEmailDeck, @"Email Deck" },
+        { CDXCardDeckListViewControllerActionTweekDeck, @"Tweet Deck" },
+        { CDXCardDeckListViewControllerActionDuplicateDeck, @"Duplicate Deck" },
         { -1, nil }
     },
     {
-        { 0, @"Email Deck" },
-        { 2, @"Duplicate Deck" },
+        { CDXCardDeckListViewControllerActionEmailDeck, @"Email Deck" },
+        { CDXCardDeckListViewControllerActionDuplicateDeck, @"Duplicate Deck" },
         { -1, nil },
         { -1, nil }
     }
@@ -387,7 +394,7 @@ static const CDXCardDeckListViewControllerActionSheetButton actionSheetButtons[2
     switch (actionSheetButtons[type][buttonIndex].action) {
         default:
             return;
-        case 0: {
+        case CDXCardDeckListViewControllerActionEmailDeck: {
             NSString *body = [@"carddecks:///2/add?" stringByAppendingString:[CDXCardDeckURLSerializer version2StringFromCardDeck:cardDeck]];
             if ([[CDXAppSettings sharedAppSettings] useMailApplication] || ![MFMailComposeViewController canSendMail]) {
                 NSString *urlString = [NSString stringWithFormat:@"mailto:?&subject=%@&body=%@",
@@ -406,7 +413,7 @@ static const CDXCardDeckListViewControllerActionSheetButton actionSheetButtons[2
             }
             return;
         }
-        case 1: {
+        case CDXCardDeckListViewControllerActionTweekDeck: {
             if ([[CDXDevice sharedDevice] hasTwitterIntegration]) {
                 // we don't check [TWTweetComposeViewController canSendTweet] here
                 // in order to get the 'No Twitter Accounts' system message if no
@@ -422,7 +429,7 @@ static const CDXCardDeckListViewControllerActionSheetButton actionSheetButtons[2
             }
             return;
         }
-        case 2: {
+        case CDXCardDeckListViewControllerActionDuplicateDeck: {
             CDXCardDeck *deck = [[cardDeck copy] autorelease];
             deck.name = [deck.name stringByAppendingString:@" - Copy"];
             [deck updateStorageObjectDeferred:NO];
