@@ -31,6 +31,8 @@
 #import "CDXCardDecks.h"
 #import "CDXCardDeckURLSerializer.h"
 #import "CDXAppSettings.h"
+#import "CDXDevice.h"
+#import <Twitter/Twitter.h>
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -328,14 +330,40 @@
     }
 }
 
+typedef struct {
+    int action;
+    NSString *title;
+} CDXCardDeckListViewControllerActionSheetButton;
+
+static const CDXCardDeckListViewControllerActionSheetButton actionSheetButtons[2][4] = {
+    {
+        { 0, @"Email Deck" },
+        { 1, @"Tweet Deck" },
+        { 2, @"Duplicate Deck" },
+        { -1, nil }
+    },
+    {
+        { 0, @"Email Deck" },
+        { 2, @"Duplicate Deck" },
+        { -1, nil },
+        { -1, nil }
+    }
+};
+
 - (IBAction)actionButtonPressed {
+    const int type = ([[CDXDevice sharedDevice] hasTwitterIntegration]) ? 0 : 1;
     UIActionSheet *actionSheet = [[[UIActionSheet alloc]
                                    initWithTitle:nil
                                    delegate:self
                                    cancelButtonTitle:@"Cancel"
                                    destructiveButtonTitle:nil
-                                   otherButtonTitles:@"Email Deck", @"Duplicate Deck", nil]
+                                   otherButtonTitles:
+                                   actionSheetButtons[type][0].title,
+                                   actionSheetButtons[type][1].title,
+                                   actionSheetButtons[type][2].title,
+                                   nil]
                                   autorelease];
+    actionSheet.tag = type + 1;
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     if (activeActionSheet != nil) {
         [self dismissActionSheet];
@@ -349,9 +377,16 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     qltrace();
     ivar_release_and_clear(activeActionSheet);
-    switch (buttonIndex) {
+    int type = actionSheet.tag - 1;
+    if (type != 0 && type != 1) {
+        return;
+    }
+    if (buttonIndex < 0 || buttonIndex > 3) {
+        return;
+    }
+    switch (actionSheetButtons[type][buttonIndex].action) {
         default:
-            break;
+            return;
         case 0: {
             NSString *body = [@"carddecks:///2/add?" stringByAppendingString:[CDXCardDeckURLSerializer version2StringFromCardDeck:cardDeck]];
             if ([[CDXAppSettings sharedAppSettings] useMailApplication] || ![MFMailComposeViewController canSendMail]) {
@@ -369,16 +404,32 @@
                 [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:NO];
                 [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc animated:YES];
             }
-            break;
+            return;
         }
         case 1: {
+            if ([[CDXDevice sharedDevice] hasTwitterIntegration]) {
+                // we don't check [TWTweetComposeViewController canSendTweet] here
+                // in order to get the 'No Twitter Accounts' system message if no
+                // account is configured yet
+                TWTweetComposeViewController *twc = [[[TWTweetComposeViewController alloc] init] autorelease];
+                NSString *urltext = [@"http://carddecks.protocol.0xc0.de/2/add?" stringByAppendingString:[CDXCardDeckURLSerializer version2StringFromCardDeck:cardDeck]];
+                NSURL *url = [NSURL URLWithString:urltext];
+                if ([twc addURL:url] == NO) {
+                    return;
+                }
+                [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:NO];
+                [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:twc animated:YES];
+            }
+            return;
+        }
+        case 2: {
             CDXCardDeck *deck = [[cardDeck copy] autorelease];
             deck.name = [deck.name stringByAppendingString:@" - Copy"];
             [deck updateStorageObjectDeferred:NO];
             CDXCardDeckHolder *holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
             [cardDeckViewContext.cardDecks addPendingCardDeckAdd:holder];
             [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES];
-            break;
+            return;
         }
     }
 }
