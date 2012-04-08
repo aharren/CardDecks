@@ -59,6 +59,7 @@
 		E043F1771400EFC900DE0567 /* Toolbar-Left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E043F1751400EFC900DE0567 /* Toolbar-Left@2x.png */; };
 		E047CEF7119369430024A022 /* CDXAppWindowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E047CEF6119369430024A022 /* CDXAppWindowManager.m */; };
 		E048D463152E3A1B0081B88F /* CDXCardViewDirectRendering.m in Sources */ = {isa = PBXBuildFile; fileRef = E048D462152E3A1B0081B88F /* CDXCardViewDirectRendering.m */; };
+		E048D465152F17FD0081B88F /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E048D464152F17FC0081B88F /* Twitter.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E04B448A11B0441600DDBD33 /* CDXAppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E04B448911B0441600DDBD33 /* CDXAppSettings.m */; };
 		E04D945311D77EA500A4DA59 /* IndexDotBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = E04D945111D77EA500A4DA59 /* IndexDotBlack.png */; };
 		E04D945411D77EA500A4DA59 /* IndexDotBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E04D945211D77EA500A4DA59 /* IndexDotBlack@2x.png */; };
@@ -261,6 +262,7 @@
 		E048D460152E37BB0081B88F /* CDXCardViewRenderingProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardViewRenderingProtocols.h; path = Classes/Views/CDXCardViewRenderingProtocols.h; sourceTree = "<group>"; };
 		E048D461152E3A1B0081B88F /* CDXCardViewDirectRendering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardViewDirectRendering.h; path = Classes/Views/CDXCardViewDirectRendering.h; sourceTree = "<group>"; };
 		E048D462152E3A1B0081B88F /* CDXCardViewDirectRendering.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardViewDirectRendering.m; path = Classes/Views/CDXCardViewDirectRendering.m; sourceTree = "<group>"; };
+		E048D464152F17FC0081B88F /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		E04B448811B0441600DDBD33 /* CDXAppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppSettings.h; path = Classes/Models/CDXAppSettings.h; sourceTree = "<group>"; };
 		E04B448911B0441600DDBD33 /* CDXAppSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppSettings.m; path = Classes/Models/CDXAppSettings.m; sourceTree = "<group>"; };
 		E04D945111D77EA500A4DA59 /* IndexDotBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IndexDotBlack.png; path = Images/IndexDotBlack.png; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E048D465152F17FD0081B88F /* Twitter.framework in Frameworks */,
 				E097B04414E70FD300A8F38B /* AudioToolbox.framework in Frameworks */,
 				E03BA2721167488B00FE7924 /* Foundation.framework in Frameworks */,
 				E03BA2741167489600FE7924 /* UIKit.framework in Frameworks */,
@@ -437,6 +440,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				E048D464152F17FC0081B88F /* Twitter.framework */,
 				E097B04314E70FD300A8F38B /* AudioToolbox.framework */,
 				E0D8C7F81172254B00356C2C /* Logging */,
 				E03BA34911674A2F00FE7924 /* Classes */,

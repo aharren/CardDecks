@@ -184,6 +184,7 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%.1f</td></tr>\n", @"screen scale", [device deviceScreenScale]];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"graphics effects", [device useReducedGraphicsEffects] ? @"reduced" : @"full"];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"rendering mode", [device useImageBasedRendering] ? @"image" : @"direct"];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"twitter integration", [device hasTwitterIntegration] ? @"yes" : @"no"];
             [content appendString:@"</table>"];
             text = [text stringByReplacingOccurrencesOfString:@"$content$" withString:content];
             
