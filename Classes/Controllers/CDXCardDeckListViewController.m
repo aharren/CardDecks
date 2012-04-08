@@ -29,7 +29,7 @@
 #import "CDXSettingsViewController.h"
 #import "CDXImageFactory.h"
 #import "CDXCardDecks.h"
-#import "CDXCardDeckURLSerializer.h"
+#import "CDXAppURL.h"
 #import "CDXAppSettings.h"
 #import "CDXDevice.h"
 #import <Twitter/Twitter.h>
@@ -395,19 +395,19 @@ static const CDXCardDeckListViewControllerActionSheetButton actionSheetButtons[2
         default:
             return;
         case CDXCardDeckListViewControllerActionEmailDeck: {
-            NSString *body = [@"carddecks:///2/add?" stringByAppendingString:[CDXCardDeckURLSerializer version2StringFromCardDeck:cardDeck]];
+            NSString *carddeckUrl = [CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeck];
             if ([[CDXAppSettings sharedAppSettings] useMailApplication] || ![MFMailComposeViewController canSendMail]) {
-                NSString *urlString = [NSString stringWithFormat:@"mailto:?&subject=%@&body=%@",
-                                       [[cardDeck.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
-                                        stringByReplacingOccurrencesOfString:@"&" withString:@"%26"],
-                                       [[body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
-                                        stringByReplacingOccurrencesOfString:@"&" withString:@"%26"]];
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+                NSString *mailUrl = [NSString stringWithFormat:@"mailto:?&subject=%@&body=%@",
+                                     [[cardDeck.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+                                      stringByReplacingOccurrencesOfString:@"&" withString:@"%26"],
+                                     [[carddeckUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+                                      stringByReplacingOccurrencesOfString:@"&" withString:@"%26"]];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mailUrl]];
             } else {
                 MFMailComposeViewController *vc = [[[MFMailComposeViewController alloc] init] autorelease];
                 [vc setMailComposeDelegate:self];
                 [vc setSubject:cardDeck.name];
-                [vc setMessageBody:[body stringByAppendingString:@" "] isHTML:NO];
+                [vc setMessageBody:[carddeckUrl stringByAppendingString:@" "] isHTML:NO];
                 [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:NO];
                 [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc animated:YES];
             }
@@ -419,8 +419,7 @@ static const CDXCardDeckListViewControllerActionSheetButton actionSheetButtons[2
                 // in order to get the 'No Twitter Accounts' system message if no
                 // account is configured yet
                 TWTweetComposeViewController *twc = [[[TWTweetComposeViewController alloc] init] autorelease];
-                NSString *urltext = [@"http://carddecks.protocol.0xc0.de/2/add?" stringByAppendingString:[CDXCardDeckURLSerializer version2StringFromCardDeck:cardDeck]];
-                NSURL *url = [NSURL URLWithString:urltext];
+                NSURL *url = [NSURL URLWithString:[CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:cardDeck]];
                 if ([twc addURL:url] == NO) {
                     return;
                 }

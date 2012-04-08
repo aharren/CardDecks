@@ -33,6 +33,7 @@
 #import "CDXCardDecks.h"
 #import "CDXDevice.h"
 #import "CDXAppSettings.h"
+#import "CDXAppURL.h"
 
 #undef ql_component
 #define ql_component lcl_cApplication
@@ -261,39 +262,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    qltrace();
-    if (url == nil) {
-        return NO;
-    }
-    
-    NSString *host = [url host];
-    if (!(host == nil || [@"" isEqualToString:host])) {
-        return NO;
-    }
-    
-    BOOL handled = NO;
-    NSString *path = [url path];
-    CDXCardDeck *deckToAdd = nil;
-    
-    if ([@"/add" isEqualToString:path]) {
-        deckToAdd = [CDXCardDeckURLSerializer cardDeckFromVersion1String:[url query]];
-    } else if ([@"/2/add" isEqualToString:path]) {
-        deckToAdd = [CDXCardDeckURLSerializer cardDeckFromVersion2String:[url query]];
-    }
-    
-    if (deckToAdd != nil) {
-        handled = YES;
-        [deckToAdd updateStorageObjectDeferred:YES];
-        CDXCardDeckHolder *holder =  [CDXCardDeckHolder cardDeckHolderWithCardDeck:deckToAdd];
-        [cardDecks addPendingCardDeckAdd:holder];
-        [appWindowManager popToInitialViewController];
-        UIViewController *vc = [appWindowManager visibleViewController];
-        if ([vc respondsToSelector:@selector(processPendingCardDeckAddsAtTopDelayed)]) {
-            [vc performSelector:@selector(processPendingCardDeckAddsAtTopDelayed)];
-        }
-    }
-    
-    return handled;
+    return [CDXAppURL handleOpenURL:url cardDecks:cardDecks];
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
