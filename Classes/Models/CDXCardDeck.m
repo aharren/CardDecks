@@ -97,11 +97,14 @@
     copy.pageControlStyle = pageControlStyle;
     copy.autoPlay = autoPlay;
     for (CDXCard *card in cards) {
-        [copy addCard:[[card copyWithZone:zone] autorelease]];
+        CDXCard *newcard = [card copyWithZone:zone];
+        [copy addCardInternal:newcard];
+        [newcard release];
     }
     if (isShuffled) {
         copy.shuffleIndexes = shuffleIndexes;
     }
+    [copy updateFields];
     return copy;
 }
 
@@ -190,12 +193,26 @@
     return (CDXCard *)[cards objectAtIndex:cardsIndex];
 }
 
-- (void)addCard:(CDXCard *)card {
+- (void)addCardInternal:(CDXCard *)card {
     card.cornerStyle = cornerStyle;
     [cards addObject:card];
     if (isShuffled) {
         NSUInteger cardsIndex = [cards count]-1;
         [shuffleIndexes addObject:[NSNumber numberWithUnsignedInteger:cardsIndex]];
+    }
+}
+
+- (void)addCard:(CDXCard *)card {
+    [self addCardInternal:card];
+    [self updateFields];
+}
+
+- (void)addCardsFromCardDeck:(CDXCardDeck *)deck {
+    NSUInteger count = [deck cardsCount];
+    for (NSUInteger i = 0; i < count; i++) {
+        CDXCard *newcard = [[deck cardAtCardsIndex:i] copy];
+        [self addCardInternal:newcard];
+        [newcard release];
     }
     [self updateFields];
 }
