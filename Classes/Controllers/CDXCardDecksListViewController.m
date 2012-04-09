@@ -30,6 +30,7 @@
 #import "CDXAppSettings.h"
 #import "CDXSettingsViewController.h"
 #import "CDXCardDecks.h"
+#import "CDXAppURL.h"
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -331,6 +332,61 @@
         [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionNone animated:YES];
     }
     [self performSelector:@selector(processPendingCardDeckAdds) withObject:nil afterDelay:0.5];
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    qltrace();
+    if (indexPath.section == 1 && indexPath.row < [cardDecks cardDecksCount]) {
+        if (action == @selector(copy:)) {
+            // copy is always possible
+            return YES;
+        } else if (action == @selector(paste:)) {
+            // paste is only possible if the pasteboard contains a "valid" URL
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            return [CDXAppURL mayBeCardDecksURLString:carddeckUrl];
+        }
+    }
+    return NO;
+}
+
+- (void)performAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    qltrace();
+    if (indexPath.section == 1 && indexPath.row < [cardDecks cardDecksCount]) {
+        if (action == @selector(copy:)) {
+            // copy the card deck to the pasteboard
+            CDXCardDeck* cardDeck = [cardDecks cardDeckAtIndex:indexPath.row].cardDeck;
+            NSString *carddeckUrl = [CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeck];
+            [[UIPasteboard generalPasteboard] setString:carddeckUrl];
+        } else if (action == @selector(paste:)) {
+            // paste the card deck from the pasteboard
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            if (![CDXAppURL mayBeCardDecksURLString:carddeckUrl]) {
+                return;
+            }
+            CDXCardDeck *sourceDeck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
+            if (sourceDeck == nil) {
+                return;
+            }
+            CDXCardDeck *targetDeck = [cardDecks cardDeckAtIndex:indexPath.row].cardDeck;
+            UITableViewRowAnimation animation = UITableViewRowAnimationNone;
+            if ([targetDeck cardsCount] == 0) {
+                // paste everything if the target deck is empty, e.g. a new deck
+                [targetDeck setName:sourceDeck.name];
+                [targetDeck setCardDefaults:[[[sourceDeck cardDefaults] copy] autorelease]];
+                [targetDeck setFlagsFromCardDeck:sourceDeck];
+                [targetDeck sort];
+                [targetDeck addCardsFromCardDeck:sourceDeck];
+                animation = UITableViewRowAnimationRight;
+            } else {
+                // add cards if the targe deck is not empty
+                [targetDeck addCardsFromCardDeck:sourceDeck];
+                animation = UITableViewRowAnimationLeft;
+            }
+            [targetDeck updateStorageObjectDeferred:NO];
+            [cardDecks updateStorageObjectDeferred:NO];
+            [viewTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation];
+        }
+    }
 }
 
 @end
