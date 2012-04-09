@@ -38,6 +38,7 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)aTitleText backButtonText:(NSString *)aBackButtonText {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
+        useReducedGraphicsEffects = [[CDXDevice sharedDevice] useReducedGraphicsEffects];
         ivar_assign_and_copy(titleText, aTitleText);
         ivar_assign_and_copy(backButtonText, aBackButtonText);
         ivar_assign_and_retain(reuseIdentifierSection1, @"Section1Cell");
@@ -110,7 +111,6 @@
     ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:10]);
     ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor grayColor]);
     CGFloat rowHeight = viewTableView.rowHeight;
-    BOOL useReducedGraphicsEffects = [[CDXDevice sharedDevice] useReducedGraphicsEffects];
     CGFloat base = useReducedGraphicsEffects ? 1.0 : 0.75;
     if (!useReducedGraphicsEffects) {
         ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:rowHeight base:base]);
@@ -186,11 +186,19 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath  marked:(BOOL)marked {
-    UIColor *clearColor = [UIColor clearColor];
-    cell.textLabel.backgroundColor = clearColor;
-    cell.detailTextLabel.backgroundColor = clearColor;
-    cell.backgroundColor = clearColor;
-    cell.backgroundView = [[[UIImageView alloc] initWithImage:marked ? tableCellBackgroundImageAlt : tableCellBackgroundImage] autorelease];
+    if (marked || !useReducedGraphicsEffects) {
+        UIColor *backgroundColor = [UIColor clearColor];
+        cell.textLabel.backgroundColor = backgroundColor;
+        cell.detailTextLabel.backgroundColor = backgroundColor;
+        cell.backgroundColor = backgroundColor;
+        cell.backgroundView = [[[UIImageView alloc] initWithImage:marked ? tableCellBackgroundImageAlt : tableCellBackgroundImage] autorelease];
+    } else {
+        UIColor *backgroundColor = [UIColor whiteColor];
+        cell.textLabel.backgroundColor = backgroundColor;
+        cell.detailTextLabel.backgroundColor = backgroundColor;
+        cell.backgroundColor = backgroundColor;
+        cell.backgroundView = nil;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

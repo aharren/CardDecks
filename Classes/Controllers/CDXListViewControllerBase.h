@@ -35,6 +35,8 @@ typedef enum {
 @interface CDXListViewControllerBase : UIViewController<CDXAppWindowViewController> {
     
 @protected
+    BOOL useReducedGraphicsEffects;
+
     IBOutlet UITableView *viewTableView;
     IBOutlet UIToolbar *viewToolbar;
     CGFloat viewTableViewContentOffsetY;
