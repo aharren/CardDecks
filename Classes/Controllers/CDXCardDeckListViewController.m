@@ -451,5 +451,49 @@ static const CDXCardDeckListViewControllerActionSheetButton actionSheetButtons[2
     [self dismissActionSheet];
 }
 
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    qltrace();
+    if (indexPath.section == 1 && indexPath.row < [cardDeck cardsCount]) {
+        if (action == @selector(copy:)) {
+            // copy is always possible
+            return YES;
+        } else if (action == @selector(paste:)) {
+            // paste is only possible if the pasteboard contains a "valid" URL
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            return [CDXAppURL mayBeCardDecksURLString:carddeckUrl];
+        }
+    }
+    return NO;
+}
+
+- (void)performAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    qltrace();
+    if (indexPath.section == 1 && indexPath.row < [cardDeck cardsCount]) {
+        if (action == @selector(copy:)) {
+            // copy a temporary card deck with a single card to the pasteboard
+            CDXCardDeck* tempDeck = [[[CDXCardDeck alloc] init] autorelease];
+            [tempDeck setCardDefaults:[[[cardDeck cardDefaults] copy] autorelease]];
+            [tempDeck setName:@""];
+            [tempDeck setFlagsFromCardDeck:cardDeck];
+            [tempDeck addCard:[[[cardDeck cardAtIndex:indexPath.row] copy] autorelease]];
+            NSString *carddeckUrl = [CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:tempDeck];
+            [[UIPasteboard generalPasteboard] setString:carddeckUrl];
+        } else if (action == @selector(paste:)) {
+            // paste the first card from the card deck from the pasteboard
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            if (![CDXAppURL mayBeCardDecksURLString:carddeckUrl]) {
+                return;
+            }
+            CDXCardDeck *sourceDeck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
+            if (sourceDeck == nil || [sourceDeck cardsCount] == 0) {
+                return;
+            }
+            [cardDeck replaceCardAtIndex:indexPath.row withCard:[[[sourceDeck cardAtIndex:0] copy] autorelease]];
+            [cardDeck updateStorageObjectDeferred:YES];
+            [viewTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
+        }
+    }
+}
+
 @end
 

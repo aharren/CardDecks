@@ -139,5 +139,11 @@
     [self performBlockingSelectorEnd];
 }
 
+- (void)performAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    ignoreCardDeckUpdateNotifications = YES;
+    [super performAction:action withSender:sender tableView:tableView indexPath:indexPath];
+    ignoreCardDeckUpdateNotifications = NO;
+}
+
 @end
 
