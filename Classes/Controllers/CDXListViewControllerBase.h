@@ -26,6 +26,12 @@
 #import "CDXAppWindowProtocols.h"
 
 
+typedef enum {
+    CDXListViewControllerBasePerformActionStateNone = 0,
+    CDXListViewControllerBasePerformActionStateTableView
+} CDXListViewControllerBasePerformActionState;
+
+
 @interface CDXListViewControllerBase : UIViewController<CDXAppWindowViewController> {
     
 @protected
@@ -54,6 +60,9 @@
     
     NSString *reuseIdentifierSection1;
     NSString *reuseIdentifierSection2;
+    
+    CDXListViewControllerBasePerformActionState performActionState;
+    NSIndexPath *performActionTableViewIndexPath;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)titleText backButtonText:(NSString *)backButtonText;
@@ -61,6 +70,9 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath marked:(BOOL)marked;
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section;
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
+- (void)performAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
 - (void)updateToolbarButtons;

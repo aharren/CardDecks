@@ -42,6 +42,7 @@
         ivar_assign_and_copy(backButtonText, aBackButtonText);
         ivar_assign_and_retain(reuseIdentifierSection1, @"Section1Cell");
         ivar_assign_and_retain(reuseIdentifierSection2, @"Section2Cell");
+        performActionState = CDXListViewControllerBasePerformActionStateNone;
     }
     return self;
 }
@@ -63,6 +64,7 @@
     ivar_release_and_clear(tableCellDetailTextTextColor);
     ivar_release_and_clear(tableCellBackgroundImage);
     ivar_release_and_clear(tableCellBackgroundImageAlt);
+    ivar_release_and_clear(performActionTableViewIndexPath);
 }
 
 - (void)dealloc {
@@ -118,6 +120,11 @@
     
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     viewTableView.backgroundView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:screenHeight base:0.0]] autorelease];
+    
+    UILongPressGestureRecognizer *tableViewLongPressRecogizer = [[[UILongPressGestureRecognizer alloc]
+                                                                  initWithTarget:self action:@selector(handleTableViewLongPressGesture:)]
+                                                                 autorelease];
+    [viewTableView addGestureRecognizer:tableViewLongPressRecogizer];
 }
 
 - (void)viewDidUnload {
@@ -133,6 +140,8 @@
     [viewTableView reloadData];
     [self updateToolbarButtons];
     viewTableView.contentOffset = CGPointMake(0, MAX(0, viewTableViewContentOffsetY));
+    performActionState = CDXListViewControllerBasePerformActionStateNone;
+    ivar_release_and_clear(performActionTableViewIndexPath);
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -222,6 +231,75 @@
         case 2: {
             return [NSIndexPath indexPathForRow:[self tableView:tableView numberOfRowsInSection:1]-1 inSection:1];
             break;
+        }
+    }
+}
+
+#pragma mark -
+#pragma mark Gesture
+
+- (void)handleTableViewLongPressGesture:(UILongPressGestureRecognizer *)sender {
+    qltrace(@"%@", sender);
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        // keep state
+        performActionState = CDXListViewControllerBasePerformActionStateTableView;
+        NSIndexPath *indexPath = [viewTableView indexPathForRowAtPoint:[sender locationInView:viewTableView]];
+        ivar_assign_and_retain(performActionTableViewIndexPath, indexPath);
+        
+        // show menu
+        [self becomeFirstResponder];
+        UIMenuController *menu = [UIMenuController sharedMenuController];
+        UITableViewCell *cell = [viewTableView cellForRowAtIndexPath:indexPath];
+        [menu setTargetRect:cell.frame inView:sender.view];
+        [menu setMenuVisible:YES animated:YES];
+    }
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    qltrace();
+    return NO;
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+    qltrace(@"%@", sender);
+    // dispatch to specialized canPerformAction method of sub-class
+    if (performActionState == CDXListViewControllerBasePerformActionStateTableView) {
+        if (performActionTableViewIndexPath != nil) {
+            return [self canPerformAction:action withSender:sender tableView:viewTableView indexPath:performActionTableViewIndexPath];
+        } else {
+            return NO;
+        }
+    } else {
+        return NO;
+    }
+}
+
+- (void)performAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    qltrace();
+}
+
+- (void)copy:(id)sender {
+    qltrace(@"%@", sender);
+    // dispatch to specialized performAction method of sub-class
+    if (performActionState == CDXListViewControllerBasePerformActionStateTableView) {
+        if (performActionTableViewIndexPath != nil) {
+            [self performAction:@selector(copy:) withSender:sender tableView:viewTableView indexPath:performActionTableViewIndexPath];
+            return;
+        }
+    }
+}
+
+- (void)paste:(id)sender {
+    qltrace(@"%@", sender);
+    // dispatch to specialized performAction method of sub-class
+    if (performActionState == CDXListViewControllerBasePerformActionStateTableView) {
+        if (performActionTableViewIndexPath != nil) {
+            [self performAction:@selector(paste:) withSender:sender tableView:viewTableView indexPath:performActionTableViewIndexPath];
+            return;
         }
     }
 }
