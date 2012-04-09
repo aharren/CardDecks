@@ -443,8 +443,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				E048D464152F17FC0081B88F /* Twitter.framework */,
-				E097B04314E70FD300A8F38B /* AudioToolbox.framework */,
 				E0D8C7F81172254B00356C2C /* Logging */,
 				E03BA34911674A2F00FE7924 /* Classes */,
 				E03BA33A11674A2200FE7924 /* Other Sources */,
@@ -564,6 +562,8 @@
 		E03BA26E1167488000FE7924 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E048D464152F17FC0081B88F /* Twitter.framework */,
+				E097B04314E70FD300A8F38B /* AudioToolbox.framework */,
 				E0D9E159132EBA1E001435D0 /* MessageUI.framework */,
 				E0EB6F4D11723D1A00F41F7A /* CoreGraphics.framework */,
 				E03BA2711167488B00FE7924 /* Foundation.framework */,
