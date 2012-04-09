@@ -63,6 +63,7 @@ typedef enum {
     NSString *reuseIdentifierSection1;
     NSString *reuseIdentifierSection2;
     
+    UILongPressGestureRecognizer *viewTableViewLongPressRecogizer;
     CDXListViewControllerBasePerformActionState performActionState;
     NSIndexPath *performActionTableViewIndexPath;
 }
