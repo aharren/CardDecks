@@ -33,6 +33,9 @@
 
 @implementation CDXListViewControllerBase
 
+#pragma mark -
+#pragma mark Init
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)aTitleText backButtonText:(NSString *)aBackButtonText {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         ivar_assign_and_copy(titleText, aTitleText);
@@ -43,12 +46,13 @@
     return self;
 }
 
-- (void)dealloc {
+- (void)detachViewObjects {
     qltrace();
     ivar_release_and_clear(viewTableView);
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(editButton);
     ivar_release_and_clear(settingsButton);
+    ivar_release_and_clear(activityIndicator);
     ivar_release_and_clear(tableCellTextFont);
     ivar_release_and_clear(tableCellTextFontAction);
     ivar_release_and_clear(tableCellTextTextColor);
@@ -59,12 +63,20 @@
     ivar_release_and_clear(tableCellDetailTextTextColor);
     ivar_release_and_clear(tableCellBackgroundImage);
     ivar_release_and_clear(tableCellBackgroundImageAlt);
+}
+
+- (void)dealloc {
+    qltrace();
+    [self detachViewObjects];
     ivar_release_and_clear(titleText);
     ivar_release_and_clear(backButtonText);
     ivar_release_and_clear(reuseIdentifierSection1);
     ivar_release_and_clear(reuseIdentifierSection2);
     [super dealloc];
 }
+
+#pragma mark -
+#pragma mark View
 
 - (void)viewDidLoad {
     qltrace();
@@ -110,21 +122,7 @@
 
 - (void)viewDidUnload {
     qltrace();
-    ivar_release_and_clear(viewTableView);
-    ivar_release_and_clear(viewToolbar);
-    ivar_release_and_clear(editButton);
-    ivar_release_and_clear(settingsButton);
-    ivar_release_and_clear(activityIndicator);
-    ivar_release_and_clear(tableCellTextFont);
-    ivar_release_and_clear(tableCellTextFontAction);
-    ivar_release_and_clear(tableCellTextTextColor);
-    ivar_release_and_clear(tableCellTextTextColorNoCards);
-    ivar_release_and_clear(tableCellTextTextColorAction);
-    ivar_release_and_clear(tableCellTextTextColorActionInactive);
-    ivar_release_and_clear(tableCellDetailTextFont);
-    ivar_release_and_clear(tableCellDetailTextTextColor);
-    ivar_release_and_clear(tableCellBackgroundImage);
-    ivar_release_and_clear(tableCellBackgroundImageAlt);
+    [self detachViewObjects];
     [super viewDidUnload];
 }
 
@@ -144,11 +142,31 @@
     viewTableViewContentOffsetY = viewTableView.contentOffset.y;
 }
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    if ([self isEditing] == editing) {
+        return;
+    }
+    [super setEditing:editing animated:animated];
+    [viewTableView setEditing:editing animated:animated];
+    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (void)updateToolbarButtons {
+    editButton.enabled = ([self tableView:viewTableView numberOfRowsInSection:1] != 0);
+}
+
+#pragma mark -
+#pragma mark WindowView
+
 - (void)setUserInteractionEnabled:(BOOL)enabled {
 }
 
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
 }
+
+#pragma mark -
+#pragma mark TableView
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 3;
@@ -208,28 +226,16 @@
     }
 }
 
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    if ([self isEditing] == editing) {
-        return;
-    }
-    [super setEditing:editing animated:animated];
-    [viewTableView setEditing:editing animated:animated];
-    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
-}
-
-- (void)updateToolbarButtons {
-    editButton.enabled = ([self tableView:viewTableView numberOfRowsInSection:1] != 0);
-}
+#pragma mark -
+#pragma mark Action
 
 - (IBAction)editButtonPressed {
     qltrace();
     [self setEditing:!self.editing animated:YES];
 }
 
-- (IBAction)bottomButtonPressed {
-    [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self tableView:viewTableView numberOfRowsInSection:2]-1 inSection:2] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-}
+#pragma mark -
+#pragma mark Blocking
 
 - (void)performBlockingSelector:(SEL)selector withObject:(NSObject *)object {
     [self setUserInteractionEnabled:NO];

@@ -58,17 +58,17 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)titleText backButtonText:(NSString *)backButtonText;
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath marked:(BOOL)marked;
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section;
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated;
 - (void)updateToolbarButtons;
+
 - (IBAction)editButtonPressed;
-- (IBAction)bottomButtonPressed;
 
 - (void)performBlockingSelector:(SEL)selector withObject:(NSObject *)object;
 - (void)performBlockingSelectorEnd;
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath  marked:(BOOL)marked;
 
 @end
 
