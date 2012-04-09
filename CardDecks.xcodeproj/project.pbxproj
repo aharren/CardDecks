@@ -179,6 +179,14 @@
 		E0FD05C71392D76300136B40 /* Notice-Play2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FD05C11392D76300136B40 /* Notice-Play2@2x.png */; };
 		E0FD05C81392D76300136B40 /* Notice-Stop.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FD05C21392D76300136B40 /* Notice-Stop.png */; };
 		E0FD05C91392D76300136B40 /* Notice-Stop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FD05C31392D76300136B40 /* Notice-Stop@2x.png */; };
+		E0FE4436153332A80044FE81 /* CDXAppURLTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FE4435153332A80044FE81 /* CDXAppURLTests.m */; };
+		E0FE4438153333A30044FE81 /* CDXAppURL.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DBA1811531F39B0049A26B /* CDXAppURL.m */; };
+		E0FE4439153333E80044FE81 /* CDXAppWindowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E047CEF6119369430024A022 /* CDXAppWindowManager.m */; };
+		E0FE443A153333F90044FE81 /* CDXDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = E023ACEB11F4D3B10051B1E2 /* CDXDevice.m */; };
+		E0FE443B153334060044FE81 /* CDXImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D01AEC1170EF9200004856 /* CDXImageFactory.m */; };
+		E0FE443C1533341C0044FE81 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E097B04314E70FD300A8F38B /* AudioToolbox.framework */; };
+		E0FE443D153334220044FE81 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E048D464152F17FC0081B88F /* Twitter.framework */; };
+		E0FE443E153334440044FE81 /* CDXCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EB6E7B1172343600F41F7A /* CDXCardView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -408,6 +416,7 @@
 		E0FD05C11392D76300136B40 /* Notice-Play2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Play2@2x.png"; path = "Images/Notices/Notice-Play2@2x.png"; sourceTree = "<group>"; };
 		E0FD05C21392D76300136B40 /* Notice-Stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Stop.png"; path = "Images/Notices/Notice-Stop.png"; sourceTree = "<group>"; };
 		E0FD05C31392D76300136B40 /* Notice-Stop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Stop@2x.png"; path = "Images/Notices/Notice-Stop@2x.png"; sourceTree = "<group>"; };
+		E0FE4435153332A80044FE81 /* CDXAppURLTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppURLTests.m; path = Classes/CDXAppURLTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -429,6 +438,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0FE443D153334220044FE81 /* Twitter.framework in Frameworks */,
+				E0FE443C1533341C0044FE81 /* AudioToolbox.framework in Frameworks */,
 				E0EB7021117240BD00F41F7A /* CoreGraphics.framework in Frameworks */,
 				E0EB6FD1117240AF00F41F7A /* QuartzCore.framework in Frameworks */,
 				E002B5951167613A0072C409 /* Foundation.framework in Frameworks */,
@@ -605,6 +616,7 @@
 				E0620CF511BA9EA3006AABD2 /* CDXAppWindowNoticeView.m */,
 				E0DBA1801531F3380049A26B /* CDXAppURL.h */,
 				E0DBA1811531F39B0049A26B /* CDXAppURL.m */,
+				E0FE4435153332A80044FE81 /* CDXAppURLTests.m */,
 				E0D01AEB1170EF9200004856 /* CDXImageFactory.h */,
 				E0D01AEC1170EF9200004856 /* CDXImageFactory.m */,
 				E0F2B2A9119550BC0092D11B /* CDXObjectCache.h */,
@@ -1046,6 +1058,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0FE443E153334440044FE81 /* CDXCardView.m in Sources */,
+				E0FE443B153334060044FE81 /* CDXImageFactory.m in Sources */,
+				E0FE443A153333F90044FE81 /* CDXDevice.m in Sources */,
+				E0FE4439153333E80044FE81 /* CDXAppWindowManager.m in Sources */,
 				E002B6CC116885340072C409 /* CDXColor.m in Sources */,
 				E002B6C9116885230072C409 /* CDXColorTests.m in Sources */,
 				E002B6E011688B640072C409 /* CDXCard.m in Sources */,
@@ -1069,6 +1085,8 @@
 				E0FAC13B11C0398800CDA558 /* CDXStorage.m in Sources */,
 				E0FAC1CF11C166D900CDA558 /* CDXCardDeckBaseTests.m in Sources */,
 				E03E6CA411E8E2AB0086BA9C /* CDXURLSerializerUtils.m in Sources */,
+				E0FE4438153333A30044FE81 /* CDXAppURL.m in Sources */,
+				E0FE4436153332A80044FE81 /* CDXAppURLTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
