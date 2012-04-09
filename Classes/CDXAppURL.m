@@ -52,7 +52,7 @@
     [[CDXAppWindowManager sharedAppWindowManager] popToInitialViewController];
     UIViewController *vc = [[CDXAppWindowManager sharedAppWindowManager] visibleViewController];
     if ([vc respondsToSelector:@selector(processPendingCardDeckAddsAtTopDelayed)]) {
-        [vc performSelector:@selector(processPendingCardDeckAddsAtTopDelayed)];
+        [vc performSelector:@selector(processPendingCardDeckAddsAtTopDelayed) withObject:nil afterDelay:0.01];
     }
     
     return YES;
