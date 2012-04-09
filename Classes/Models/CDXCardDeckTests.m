@@ -43,6 +43,17 @@
     STAssertEqualObjects([defaults textColor], [CDXColor colorBlack], nil);
     STAssertEqualObjects([defaults backgroundColor], [CDXColor colorWhite], nil);
     STAssertEquals((int)[defaults orientation], (int)CDXCardOrientationUp, nil);
+    
+    STAssertEquals(deck.wantsPageControl, YES, nil);
+    STAssertEquals(deck.wantsPageJumps, YES, nil);
+    STAssertEquals(deck.wantsAutoRotate, YES, nil);
+    STAssertEquals(deck.shakeAction, CDXCardDeckShakeActionDefault, nil);
+    STAssertEquals(deck.groupSize, CDXCardDeckGroupSizeDefault, nil);
+    STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleDefault, nil);
+    STAssertEquals(deck.cornerStyle, CDXCardCornerStyleDefault, nil);
+    STAssertEquals(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault, nil);
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayDefault, nil);
+    
     [deck release];
 }
 
@@ -62,6 +73,25 @@
     STAssertEqualObjects([[deck cardAtIndex:0] text], @"Text1", nil);
     STAssertEqualObjects([[deck cardAtIndex:1] text], @"Text2", nil);
     
+    STAssertEquals(deck.wantsPageControl, YES, nil);
+    deck.wantsPageControl = NO;
+    STAssertEquals(deck.wantsPageJumps, YES, nil);
+    deck.wantsPageJumps = NO;
+    STAssertEquals(deck.wantsAutoRotate, YES, nil);
+    deck.wantsAutoRotate = NO;
+    STAssertEquals(deck.shakeAction, CDXCardDeckShakeActionShuffle, nil);
+    deck.shakeAction = CDXCardDeckShakeActionRandom;
+    STAssertEquals(deck.groupSize, CDXCardDeckGroupSizeNoGroups, nil);
+    deck.groupSize = CDXCardDeckGroupSizeMax;
+    STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleSideBySide, nil);
+    deck.displayStyle = CDXCardDeckDisplayStyleStack;
+    STAssertEquals(deck.cornerStyle, CDXCardCornerStyleRounded, nil);
+    deck.cornerStyle = CDXCardCornerStyleCornered;
+    STAssertEquals(deck.pageControlStyle, CDXCardDeckPageControlStyleLight, nil);
+    deck.pageControlStyle = CDXCardDeckPageControlStyleDark;
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
+    deck.autoPlay = CDXCardDeckAutoPlayPlay;
+    
     CDXCardDeck *newdeck = [[deck copy] autorelease];
     STAssertEquals([newdeck cardsCount], (NSUInteger)2, nil);
     
@@ -74,6 +104,16 @@
     STAssertEquals([newdeck cardsCount], (NSUInteger)2, nil);
     STAssertEqualObjects([[newdeck cardAtIndex:0] text], @"Text1", nil);
     STAssertEqualObjects([[newdeck cardAtIndex:1] text], @"Text2", nil);
+    
+    STAssertEquals(newdeck.wantsPageControl, NO, nil);
+    STAssertEquals(newdeck.wantsPageJumps, NO, nil);
+    STAssertEquals(newdeck.wantsAutoRotate, NO, nil);
+    STAssertEquals(newdeck.shakeAction, CDXCardDeckShakeActionRandom, nil);
+    STAssertEquals(newdeck.groupSize, CDXCardDeckGroupSizeMax, nil);
+    STAssertEquals(newdeck.displayStyle, CDXCardDeckDisplayStyleStack, nil);
+    STAssertEquals(newdeck.cornerStyle, CDXCardCornerStyleCornered, nil);
+    STAssertEquals(newdeck.pageControlStyle, CDXCardDeckPageControlStyleDark, nil);
+    STAssertEquals(newdeck.autoPlay, CDXCardDeckAutoPlayPlay, nil);
 }
 
 - (void)testAddCard {

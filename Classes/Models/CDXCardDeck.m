@@ -87,15 +87,7 @@
     CDXCardDeck *copy = [[[self class] allocWithZone:zone] init];
     copy.cardDefaults = [[cardDefaults copyWithZone:zone] autorelease];
     copy.name = name;
-    copy.wantsPageControl = wantsPageControl;
-    copy.wantsPageJumps = wantsPageJumps;
-    copy.wantsAutoRotate = wantsAutoRotate;
-    copy.shakeAction = shakeAction;
-    copy.groupSize = groupSize;
-    copy.displayStyle = displayStyle;
-    copy.cornerStyle = cornerStyle;
-    copy.pageControlStyle = pageControlStyle;
-    copy.autoPlay = autoPlay;
+    [copy setFlagsFromCardDeck:self];
     for (CDXCard *card in cards) {
         CDXCard *newcard = [card copyWithZone:zone];
         [copy addCardInternal:newcard];
@@ -106,6 +98,18 @@
     }
     [copy updateFields];
     return copy;
+}
+
+- (void)setFlagsFromCardDeck:(CDXCardDeck *)deck {
+    wantsPageControl = deck.wantsPageControl;
+    wantsPageJumps = deck.wantsPageJumps;
+    wantsAutoRotate = deck.wantsAutoRotate;
+    shakeAction = deck.shakeAction;
+    groupSize = deck.groupSize;
+    displayStyle = deck.displayStyle;
+    cornerStyle = deck.cornerStyle;
+    pageControlStyle = deck.pageControlStyle;
+    autoPlay = deck.autoPlay;
 }
 
 - (NSUInteger)cardsIndex:(NSUInteger)index {

@@ -95,6 +95,8 @@ typedef enum {
     NSMutableArray *shuffleIndexes;
 }
 
+- (void)setFlagsFromCardDeck:(CDXCardDeck *)deck;
+
 @property (nonatomic, retain) CDXCard *cardDefaults;
 
 - (NSUInteger)cardsIndex:(NSUInteger)index;
