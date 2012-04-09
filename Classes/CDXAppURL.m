@@ -33,6 +33,7 @@
 #define CDXAppURLPath_v1_add @"/add"
 #define CDXAppURLPath_v2_add @"/2/add"
 
+#define CDXAppURLPrefix_carddecks_v1_add @"carddecks://" CDXAppURLPath_v1_add @"?"
 #define CDXAppURLPrefix_carddecks_v2_add @"carddecks://" CDXAppURLPath_v2_add @"?"
 #define CDXAppURLPrefix_http_v2_add @"http://carddecks.protocol.0xc0.de" CDXAppURLPath_v2_add @"?"
 
@@ -76,6 +77,16 @@
         return [CDXCardDeckURLSerializer cardDeckFromVersion2String:[url query]];
     }
     return nil;
+}
+
++ (BOOL)mayBeCardDecksURLString:(NSString *)urlString {
+    qltrace(@"%@", urlString);
+    if ([urlString hasPrefix:CDXAppURLPrefix_carddecks_v1_add]) {
+        return YES;
+    } else if ([urlString hasPrefix:CDXAppURLPrefix_carddecks_v2_add]) {
+        return YES;
+    }
+    return NO;
 }
 
 + (NSString *)carddecksURLStringForVersion2AddActionFromCardDeck:(CDXCardDeck *)cardDeck {

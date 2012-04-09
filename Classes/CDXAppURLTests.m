@@ -55,6 +55,21 @@
     STAssertNil(deck, nil);
 }
 
+- (void)testMayBeCardDecksURLStringVersion1 {
+    NSString *string = @"carddecks:///add?card%20deck,010203,040506&card%201&card%202";
+    STAssertTrue([CDXAppURL mayBeCardDecksURLString:string], nil);
+}
+
+- (void)testMayBeCardDecksURLStringVersion2 {
+    NSString *string = @"carddecks:///2/add?card%20deck,010203,040506&card%201&card%202";
+    STAssertTrue([CDXAppURL mayBeCardDecksURLString:string], nil);
+}
+
+- (void)testMayBeCardDecksURLStringBad {
+    NSString *string = @"carddecks:///x/add?card%20deck,010203,040506&card%201&card%202";
+    STAssertFalse([CDXAppURL mayBeCardDecksURLString:string], nil);
+}
+
 - (void)testCarddecksURLStringVersion2 {
     NSString *string = @"card%21deck,g1,d1,c1,id1,is1,it1,r1,s1,ap1&,000000ff,ffffffff,u,0,5";
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
