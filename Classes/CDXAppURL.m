@@ -41,23 +41,7 @@
 
 + (BOOL)handleOpenURL:(NSURL *)url cardDecks:(CDXCardDecks *)cardDecks {
     qltrace(@"%@", url);
-    if (url == nil) {
-        return NO;
-    }
-    
-    NSString *host = [url host];
-    if (!(host == nil || [@"" isEqualToString:host])) {
-        return NO;
-    }
-    
-    NSString *path = [url path];
-    CDXCardDeck *deckToAdd = nil;
-    if ([CDXAppURLPath_v1_add isEqualToString:path]) {
-        deckToAdd = [CDXCardDeckURLSerializer cardDeckFromVersion1String:[url query]];
-    } else if ([CDXAppURLPath_v2_add isEqualToString:path]) {
-        deckToAdd = [CDXCardDeckURLSerializer cardDeckFromVersion2String:[url query]];
-    }
-    
+    CDXCardDeck *deckToAdd = [CDXAppURL cardDeckFromURL:url];
     if (deckToAdd == nil) {
         return NO;
     }
@@ -72,6 +56,26 @@
     }
     
     return YES;
+}
+
++ (CDXCardDeck *)cardDeckFromURL:(NSURL *)url {
+    qltrace(@"%@", url);
+    if (url == nil) {
+        return nil;
+    }
+    
+    NSString *host = [url host];
+    if (!(host == nil || [@"" isEqualToString:host])) {
+        return nil;
+    }
+    
+    NSString *path = [url path];
+    if ([CDXAppURLPath_v1_add isEqualToString:path]) {
+        return [CDXCardDeckURLSerializer cardDeckFromVersion1String:[url query]];
+    } else if ([CDXAppURLPath_v2_add isEqualToString:path]) {
+        return [CDXCardDeckURLSerializer cardDeckFromVersion2String:[url query]];
+    }
+    return nil;
 }
 
 + (NSString *)carddecksURLStringForVersion2AddActionFromCardDeck:(CDXCardDeck *)cardDeck {

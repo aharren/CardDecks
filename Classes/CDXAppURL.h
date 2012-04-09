@@ -32,6 +32,8 @@
 
 + (BOOL)handleOpenURL:(NSURL *)url cardDecks:(CDXCardDecks *)cardDecks;
 
++ (CDXCardDeck *)cardDeckFromURL:(NSURL *)url;
+
 + (NSString *)carddecksURLStringForVersion2AddActionFromCardDeck:(CDXCardDeck *)cardDeck;
 + (NSString *)httpURLStringForVersion2AddActionFromCardDeck:(CDXCardDeck *)cardDeck;
 
