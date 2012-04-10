@@ -65,7 +65,7 @@
     ivar_release_and_clear(tableCellDetailTextTextColor);
     ivar_release_and_clear(tableCellBackgroundImage);
     ivar_release_and_clear(tableCellBackgroundImageAlt);
-    ivar_release_and_clear(viewTableViewLongPressRecogizer);
+    ivar_release_and_clear(viewTableViewLongPressRecognizer);
     ivar_release_and_clear(performActionTableViewIndexPath);
 }
 
@@ -122,8 +122,8 @@
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     viewTableView.backgroundView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:screenHeight base:0.0]] autorelease];
     
-    ivar_assign(viewTableViewLongPressRecogizer, [[UILongPressGestureRecognizer alloc]
-                                                  initWithTarget:self action:@selector(handleTableViewLongPressGesture:)]);
+    ivar_assign(viewTableViewLongPressRecognizer, [[UILongPressGestureRecognizer alloc]
+                                                   initWithTarget:self action:@selector(handleTableViewLongPressGesture:)]);
 }
 
 - (void)viewDidUnload {
@@ -141,7 +141,7 @@
     viewTableView.contentOffset = CGPointMake(0, MAX(0, viewTableViewContentOffsetY));
     performActionState = CDXListViewControllerBasePerformActionStateNone;
     ivar_release_and_clear(performActionTableViewIndexPath);
-    [viewTableView addGestureRecognizer:viewTableViewLongPressRecogizer];
+    [viewTableView addGestureRecognizer:viewTableViewLongPressRecognizer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -149,7 +149,7 @@
     [super viewWillDisappear:animated];
     [self performBlockingSelectorEnd];
     viewTableViewContentOffsetY = viewTableView.contentOffset.y;
-    [viewTableView removeGestureRecognizer:viewTableViewLongPressRecogizer];
+    [viewTableView removeGestureRecognizer:viewTableViewLongPressRecognizer];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -161,9 +161,9 @@
     [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
     [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
     if (editing) {
-        [viewTableView removeGestureRecognizer:viewTableViewLongPressRecogizer];
+        [viewTableView removeGestureRecognizer:viewTableViewLongPressRecognizer];
     } else {
-        [viewTableView addGestureRecognizer:viewTableViewLongPressRecogizer];
+        [viewTableView addGestureRecognizer:viewTableViewLongPressRecognizer];
     }
 }
 
