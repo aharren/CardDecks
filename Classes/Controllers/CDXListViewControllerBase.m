@@ -255,15 +255,22 @@
 - (void)handleTableViewLongPressGesture:(UILongPressGestureRecognizer *)sender {
     qltrace(@"%@", sender);
     if (sender.state == UIGestureRecognizerStateBegan) {
+        NSIndexPath *indexPath = [viewTableView indexPathForRowAtPoint:[sender locationInView:viewTableView]];
+        UITableViewCell *cell = [viewTableView cellForRowAtIndexPath:indexPath];
+        // ignore gesture if not inside the cell content
+        if (cell.accessoryType == UITableViewCellAccessoryDetailDisclosureButton) {
+            if (cell.frame.origin.x + cell.frame.size.width - 44 < [sender locationInView:cell].x) {
+                return;
+            }
+        }
+        
         // keep state
         performActionState = CDXListViewControllerBasePerformActionStateTableView;
-        NSIndexPath *indexPath = [viewTableView indexPathForRowAtPoint:[sender locationInView:viewTableView]];
         ivar_assign_and_retain(performActionTableViewIndexPath, indexPath);
         
         // show menu
         [self becomeFirstResponder];
         UIMenuController *menu = [UIMenuController sharedMenuController];
-        UITableViewCell *cell = [viewTableView cellForRowAtIndexPath:indexPath];
         [menu setTargetRect:cell.frame inView:sender.view];
         [menu setMenuVisible:YES animated:YES];
     }
