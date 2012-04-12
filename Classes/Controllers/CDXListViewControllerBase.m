@@ -181,6 +181,12 @@
 }
 
 - (void)menuControllerWillHideMenu {
+    if (performActionState == CDXListViewControllerBasePerformActionStateTableView) {
+        UITableViewCell *cell = [viewTableView cellForRowAtIndexPath:performActionTableViewIndexPath];
+        cell.selected = NO;
+    }
+    performActionState = CDXListViewControllerBasePerformActionStateNone;
+    ivar_release_and_clear(performActionTableViewIndexPath);
 }
 
 #pragma mark -
@@ -276,6 +282,9 @@
         UIMenuController *menu = [UIMenuController sharedMenuController];
         [menu setTargetRect:cell.frame inView:sender.view];
         [menu setMenuVisible:YES animated:YES];
+        
+        // keep cell selected
+        cell.selected = YES;
     }
 }
 
