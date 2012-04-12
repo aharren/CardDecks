@@ -44,6 +44,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
         deviceOrientation = UIDeviceOrientationPortrait;
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuControllerWillHideMenu:) name:UIMenuControllerWillHideMenuNotification object:nil];
     }
     return self;
 }
@@ -90,6 +91,13 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     UIViewController *vc = [self visibleViewController];
     if ([vc conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
         [(UIViewController<CDXAppWindowViewController> *)vc deviceOrientationDidChange:newDeviceOrientation];
+    }
+}
+
+- (void)menuControllerWillHideMenu:(NSNotification *)notification {
+    UIViewController *vc = [self visibleViewController];
+    if ([vc conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
+        [(UIViewController<CDXAppWindowViewController> *)vc menuControllerWillHideMenu];
     }
 }
 
@@ -530,6 +538,17 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     [navigationView addSubview:splitViewController.view];
     
     [window makeKeyAndVisible];
+}
+
+- (void)menuControllerWillHideMenu:(NSNotification *)notification {
+    UIViewController *vcleft = [leftNavigationController visibleViewController];
+    if ([vcleft conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
+        [(UIViewController<CDXAppWindowViewController> *)vcleft menuControllerWillHideMenu];
+    }
+    UIViewController *vcright = [rightNavigationController visibleViewController];
+    if ([vcright conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
+        [(UIViewController<CDXAppWindowViewController> *)vcright menuControllerWillHideMenu];
+    }
 }
 
 - (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated {

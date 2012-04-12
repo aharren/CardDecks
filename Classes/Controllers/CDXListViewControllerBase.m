@@ -180,6 +180,9 @@
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
 }
 
+- (void)menuControllerWillHideMenu {
+}
+
 #pragma mark -
 #pragma mark TableView
 

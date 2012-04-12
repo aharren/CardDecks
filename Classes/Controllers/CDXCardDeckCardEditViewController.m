@@ -166,6 +166,9 @@
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
 }
 
+- (void)menuControllerWillHideMenu {
+}
+
 - (IBAction)upDownButtonPressed {
     [self finishCardModification];
     [self showCardAtIndex:(cardDeckViewContext.currentCardIndex - 1) + (viewButtonsUpDown.selectedSegmentIndex << 1)];

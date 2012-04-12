@@ -322,6 +322,9 @@
     [self configureActionsViewAnimated:YES];
 }
 
+- (void)menuControllerWillHideMenu {
+}
+
 - (NSUInteger)cardsViewDataSourceCardsCount {
     return [cardDeck cardsCount];
 }
