@@ -33,6 +33,8 @@
     CDXCardDecks *cardDecks;
     NSUInteger lastCardDeckIndex;
     BOOL cardDeckQuickOpen;
+
+    IBOutlet UIBarButtonItem *addButton;
 }
 
 - (id)initWithCardDecks:(CDXCardDecks *)cardDecks nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;

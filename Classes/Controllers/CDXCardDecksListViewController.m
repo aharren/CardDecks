@@ -51,7 +51,13 @@
 
 - (void)dealloc {
     ivar_release_and_clear(cardDecks);
+    ivar_release_and_clear(addButton);
     [super dealloc];
+}
+
+- (void)viewDidUnload {
+    ivar_release_and_clear(addButton);
+    [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
