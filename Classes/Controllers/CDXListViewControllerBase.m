@@ -66,7 +66,9 @@
     ivar_release_and_clear(tableCellBackgroundImage);
     ivar_release_and_clear(tableCellBackgroundImageAlt);
     ivar_release_and_clear(viewTableViewLongPressRecognizer);
+    ivar_release_and_clear(viewToolbarLongPressRecognizer);
     ivar_release_and_clear(performActionTableViewIndexPath);
+    ivar_release_and_clear(performActionToolbarBarButtonItem);
 }
 
 - (void)dealloc {
@@ -124,6 +126,8 @@
     
     ivar_assign(viewTableViewLongPressRecognizer, [[UILongPressGestureRecognizer alloc]
                                                    initWithTarget:self action:@selector(handleTableViewLongPressGesture:)]);
+    ivar_assign(viewToolbarLongPressRecognizer, [[UILongPressGestureRecognizer alloc]
+                                                 initWithTarget:self action:@selector(handleToolbarLongPressGesture:)]);
 }
 
 - (void)viewDidUnload {
@@ -141,7 +145,9 @@
     viewTableView.contentOffset = CGPointMake(0, MAX(0, viewTableViewContentOffsetY));
     performActionState = CDXListViewControllerBasePerformActionStateNone;
     ivar_release_and_clear(performActionTableViewIndexPath);
+    ivar_release_and_clear(performActionToolbarBarButtonItem);
     [viewTableView addGestureRecognizer:viewTableViewLongPressRecognizer];
+    [self.navigationController.toolbar addGestureRecognizer:viewToolbarLongPressRecognizer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -150,6 +156,7 @@
     [self performBlockingSelectorEnd];
     viewTableViewContentOffsetY = viewTableView.contentOffset.y;
     [viewTableView removeGestureRecognizer:viewTableViewLongPressRecognizer];
+    [self.navigationController.toolbar removeGestureRecognizer:viewToolbarLongPressRecognizer];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -187,6 +194,7 @@
     }
     performActionState = CDXListViewControllerBasePerformActionStateNone;
     ivar_release_and_clear(performActionTableViewIndexPath);
+    ivar_release_and_clear(performActionToolbarBarButtonItem);
 }
 
 #pragma mark -
@@ -292,11 +300,47 @@
     }
 }
 
+- (void)handleToolbarLongPressGesture:(UILongPressGestureRecognizer *)sender {
+    qltrace(@"%@", sender);
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        // find the control which was touched
+        CGPoint point = [sender locationInView:sender.view];
+        for (UIView *view in [sender.view subviews]) {
+            CGRect frame = view.frame;
+            frame.origin.x -= 23;
+            frame.size.width += 46;
+            if (CGRectContainsPoint(frame, point) && ([view isKindOfClass:[UIControl class]])) {
+                // find the corresponding bar-button item
+                for (UIBarButtonItem *item in [viewToolbar items]) {
+                    if ([[(UIControl *)view allTargets] containsObject:item]) {
+                        // keep state
+                        performActionState = CDXListViewControllerBasePerformActionStateToolbar;
+                        ivar_assign_and_retain(performActionToolbarBarButtonItem, item);
+                        
+                        // show menu
+                        [self becomeFirstResponder];
+                        UIMenuController *menu = [UIMenuController sharedMenuController];
+                        [menu setTargetRect:view.frame inView:sender.view];
+                        [menu setMenuVisible:YES animated:YES];
+                        
+                        return;
+                    }
+                }
+            }
+        }
+    }
+}
+
 - (BOOL)canBecomeFirstResponder {
     return YES;
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    qltrace();
+    return NO;
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
     qltrace();
     return NO;
 }
@@ -310,12 +354,22 @@
         } else {
             return NO;
         }
+    } else if (performActionState == CDXListViewControllerBasePerformActionStateToolbar) {
+        if (performActionToolbarBarButtonItem != nil) {
+            return [self canPerformAction:action withSender:sender barButtonItem:performActionToolbarBarButtonItem];
+        } else {
+            return NO;
+        }
     } else {
         return NO;
     }
 }
 
 - (void)performAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    qltrace();
+}
+
+- (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
     qltrace();
 }
 
@@ -336,6 +390,11 @@
     if (performActionState == CDXListViewControllerBasePerformActionStateTableView) {
         if (performActionTableViewIndexPath != nil) {
             [self performAction:@selector(paste:) withSender:sender tableView:viewTableView indexPath:performActionTableViewIndexPath];
+            return;
+        }
+    } else if (performActionState == CDXListViewControllerBasePerformActionStateToolbar) {
+        if (performActionToolbarBarButtonItem != nil) {
+            [self performAction:@selector(paste:) withSender:sender barButtonItem:performActionToolbarBarButtonItem];
             return;
         }
     }

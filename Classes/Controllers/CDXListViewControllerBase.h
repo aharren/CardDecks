@@ -28,7 +28,8 @@
 
 typedef enum {
     CDXListViewControllerBasePerformActionStateNone = 0,
-    CDXListViewControllerBasePerformActionStateTableView
+    CDXListViewControllerBasePerformActionStateTableView,
+    CDXListViewControllerBasePerformActionStateToolbar
 } CDXListViewControllerBasePerformActionState;
 
 
@@ -64,8 +65,10 @@ typedef enum {
     NSString *reuseIdentifierSection2;
     
     UILongPressGestureRecognizer *viewTableViewLongPressRecognizer;
+    UILongPressGestureRecognizer *viewToolbarLongPressRecognizer;
     CDXListViewControllerBasePerformActionState performActionState;
     NSIndexPath *performActionTableViewIndexPath;
+    UIBarButtonItem *performActionToolbarBarButtonItem;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)titleText backButtonText:(NSString *)backButtonText;
@@ -76,6 +79,9 @@ typedef enum {
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
 - (void)performAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
+- (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
 - (void)updateToolbarButtons;
