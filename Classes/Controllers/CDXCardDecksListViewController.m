@@ -262,12 +262,9 @@
     [deck release];
 }
 
-- (IBAction)addButtonPressedDelayed {
+- (void)processCardDeckAddAtBottomDelayed:(CDXCardDeckHolder *)holder {
     qltrace();
-    CDXCardDeckHolder *deck = [cardDecks cardDeckWithDefaults];
-    [deck.cardDeck updateStorageObjectDeferred:NO];
-    
-    [cardDecks addCardDeck:deck];
+    [cardDecks addCardDeck:holder];
     [cardDecks updateStorageObjectDeferred:NO];
     
     NSIndexPath *path = [NSIndexPath indexPathForRow:[cardDecks cardDecksCount]-1 inSection:1];
@@ -278,16 +275,23 @@
     [self updateToolbarButtons];
 }
 
-- (IBAction)addButtonPressed {
+- (void)processCardDeckAddAtBottom:(CDXCardDeckHolder *)holder {
     if (![[viewTableView indexPathsForVisibleRows] containsObject:[NSIndexPath indexPathForRow:0 inSection:2]] ||
         [viewTableView isEditing]) {
         qltrace();
         [self setEditing:NO animated:YES];
         [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
-        [self performSelector:@selector(addButtonPressedDelayed) withObject:nil afterDelay:0.3];
+        [self performSelector:@selector(processCardDeckAddAtBottomDelayed:) withObject:holder afterDelay:0.3];
     } else {
-        [self addButtonPressedDelayed];
+        [self processCardDeckAddAtBottomDelayed:holder];
     }
+}
+
+- (IBAction)addButtonPressed {
+    qltrace();
+    CDXCardDeckHolder *holder = [cardDecks cardDeckWithDefaults];
+    [holder.cardDeck updateStorageObjectDeferred:NO];
+    [self processCardDeckAddAtBottom:holder];
 }
 
 - (IBAction)defaultsButtonPressed {
