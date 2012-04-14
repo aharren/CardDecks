@@ -272,6 +272,10 @@
                 return;
             }
         }
+        // ignore gesture if not in section 1
+        if (indexPath.section != 1) {
+            return;
+        }
         
         // keep state
         performActionState = CDXListViewControllerBasePerformActionStateTableView;
