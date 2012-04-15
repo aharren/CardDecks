@@ -399,5 +399,42 @@
     }
 }
 
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+    qltrace();
+    if (barButtonItem == addButton) {
+        if (action == @selector(paste:)) {
+            // paste is only possible if the pasteboard contains a "valid" URL
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            return [CDXAppURL mayBeCardDecksURLString:carddeckUrl];
+        } else {
+            return NO;
+        }
+    }
+    return NO;
+}
+
+- (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+    qltrace();
+    if (barButtonItem == addButton) {
+        if (action == @selector(paste:)) {
+            // paste the card deck from the pasteboard as a new card deck
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            if (![CDXAppURL mayBeCardDecksURLString:carddeckUrl]) {
+                return;
+            }
+            CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
+            if (deck == nil) {
+                return;
+            }
+            CDXCardDeckHolder *holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
+            [holder.cardDeck updateStorageObjectDeferred:NO];
+            [self processCardDeckAddAtBottom:holder];
+            return;
+        } else {
+            return;
+        }
+    }
+}
+
 @end
 
