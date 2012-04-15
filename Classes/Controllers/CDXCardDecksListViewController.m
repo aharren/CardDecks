@@ -385,11 +385,11 @@
                 [targetDeck setCardDefaults:[[[sourceDeck cardDefaults] copy] autorelease]];
                 [targetDeck setFlagsFromCardDeck:sourceDeck];
                 [targetDeck sort];
-                [targetDeck addCardsFromCardDeck:sourceDeck];
+                [targetDeck addCards:[sourceDeck removeCards]];
                 animation = UITableViewRowAnimationRight;
             } else {
                 // add cards if the targe deck is not empty
-                [targetDeck addCardsFromCardDeck:sourceDeck];
+                [targetDeck addCards:[sourceDeck removeCards]];
                 animation = UITableViewRowAnimationLeft;
             }
             [targetDeck updateStorageObjectDeferred:NO];

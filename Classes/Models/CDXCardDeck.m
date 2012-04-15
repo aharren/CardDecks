@@ -211,16 +211,6 @@
     [self updateFields];
 }
 
-- (void)addCardsFromCardDeck:(CDXCardDeck *)deck {
-    NSUInteger count = [deck cardsCount];
-    for (NSUInteger i = 0; i < count; i++) {
-        CDXCard *newcard = [[deck cardAtCardsIndex:i] copy];
-        [self addCardInternal:newcard];
-        [newcard release];
-    }
-    [self updateFields];
-}
-
 - (void)addCards:(NSArray *)array {
     for (CDXCard *card in array) {
         [self addCardInternal:card];
