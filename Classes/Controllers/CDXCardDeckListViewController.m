@@ -500,5 +500,41 @@ static const CDXCardDeckListViewControllerActionSheetButton actionSheetButtons[2
     }
 }
 
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+    qltrace();
+    if (barButtonItem == addButton) {
+        if (action == @selector(paste:)) {
+            // paste is only possible if the pasteboard contains a "valid" URL
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            return [CDXAppURL mayBeCardDecksURLString:carddeckUrl];
+        } else {
+            return NO;
+        }
+    }
+    return NO;
+}
+
+- (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+    qltrace();
+    if (barButtonItem == addButton) {
+        if (action == @selector(paste:)) {
+            // paste the first card from the card deck from the pasteboard
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            if (![CDXAppURL mayBeCardDecksURLString:carddeckUrl]) {
+                return;
+            }
+            CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
+            if (deck == nil || [deck cardsCount] == 0) {
+                return;
+            }
+            CDXCard *card = [[[deck cardAtIndex:0] copy] autorelease];
+            [self processCardAddAtBottom:card];
+            return;
+        } else {
+            return;
+        }
+    }
+}
+
 @end
 
