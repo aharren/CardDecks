@@ -34,6 +34,7 @@
 enum {
     CDXAppAboutSettingsFeedback,
     CDXAppAboutSettingsSite,
+    CDXAppAboutSettingsReleaseNotes,
     CDXAppAboutSettingsLegal,
     CDXAppAboutSettingsDeviceInfo,
     CDXAppAboutSettingsCount
@@ -42,6 +43,7 @@ enum {
 static const CDXSetting settings[] = {
     { CDXAppAboutSettingsFeedback, CDXSettingTypeURLAction, @"Feedback" },
     { CDXAppAboutSettingsSite, CDXSettingTypeURLAction, @"0xc0.de/CardDecks" },
+    { CDXAppAboutSettingsReleaseNotes, CDXSettingTypeHTMLText, @"Release Notes" },
     { CDXAppAboutSettingsLegal, CDXSettingTypeHTMLText, @"Legal" },
     { CDXAppAboutSettingsDeviceInfo, CDXSettingTypeHTMLText, @"Device Information" },
     { 0, 0, @"" }
@@ -55,7 +57,7 @@ typedef struct {
 
 static const CDXAppSettingGroup groups[] = {
     { @"", 2, CDXAppAboutSettingsFeedback },
-    { @"", 1, CDXAppAboutSettingsLegal },
+    { @"", 2, CDXAppAboutSettingsReleaseNotes },
     { @"", 1, CDXAppAboutSettingsDeviceInfo },
     { @"", 0, 0 }
 };
@@ -162,6 +164,13 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
         default:
             return nil;
             break;
+        case CDXAppAboutSettingsReleaseNotes: {
+            NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];
+            NSString *path = [folder stringByAppendingPathComponent:@"ReleaseNotes.html"];
+            NSString *text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+            return text;
+            break;
+        }
         case CDXAppAboutSettingsLegal: {
             NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];
             NSString *path = [folder stringByAppendingPathComponent:@"Legal.html"];
