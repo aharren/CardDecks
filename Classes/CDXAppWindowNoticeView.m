@@ -53,7 +53,7 @@
     CGFloat width = 156;
     CGFloat height = 156;
     CGRect bounds = self.superview.bounds;
-    self.frame = CGRectMake((bounds.size.width - width)/2, (bounds.size.height - height)/2 + 18, width, height);
+    self.frame = CGRectMake((bounds.size.width - width)/2, (bounds.size.height - height)/2, width, height);
 }
 
 
