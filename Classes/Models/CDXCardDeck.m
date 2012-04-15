@@ -247,6 +247,14 @@
     }
 }
 
+- (NSMutableArray *)removeCards {
+    NSMutableArray *array = [cards retain];
+    ivar_assign(cards, [[NSMutableArray alloc] initWithCapacity:0]);
+    [self sort];
+    [self updateFields];
+    return [array autorelease];
+}
+
 - (void)replaceCardAtIndex:(NSUInteger)index withCard:(CDXCard *)card {
     [card retain];
     NSUInteger cardsIndex = [self cardsIndex:index];
