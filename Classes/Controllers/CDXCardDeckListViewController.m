@@ -268,8 +268,8 @@
     actionButton.enabled = ([self tableView:viewTableView numberOfRowsInSection:1] != 0);
 }
 
-- (IBAction)addButtonPressedDelayed {
-    CDXCard *card = [cardDeck cardWithDefaults];
+- (void)processCardAddAtBottomDelayed:(CDXCard *)card {
+    qltrace();
     [cardDeck addCard:card];
     [cardDeckViewContext updateStorageObjectsDeferred:YES];
     
@@ -282,16 +282,22 @@
     [self updateToolbarButtons];
 }
 
-- (IBAction)addButtonPressed {
+- (void)processCardAddAtBottom:(CDXCard *)card {
     if (![[viewTableView indexPathsForVisibleRows] containsObject:[NSIndexPath indexPathForRow:0 inSection:2]] ||
         [viewTableView isEditing]) {
         qltrace();
         [self setEditing:NO animated:YES];
         [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
-        [self performSelector:@selector(addButtonPressedDelayed) withObject:nil afterDelay:0.3];
+        [self performSelector:@selector(processCardAddAtBottomDelayed:) withObject:card afterDelay:0.3];
     } else {
-        [self addButtonPressedDelayed];
+        [self processCardAddAtBottomDelayed:card];
     }
+}
+
+- (IBAction)addButtonPressed {
+    qltrace();
+    CDXCard *card = [cardDeck cardWithDefaults];
+    [self processCardAddAtBottom:card];
 }
 
 - (IBAction)defaultsButtonPressed {

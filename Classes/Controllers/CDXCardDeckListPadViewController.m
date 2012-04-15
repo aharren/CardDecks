@@ -121,9 +121,9 @@
     ignoreCardDeckUpdateNotifications = NO;
 }
 
-- (IBAction)addButtonPressedDelayed {
+- (void)processCardAddAtBottomDelayed:(CDXCard *)card {
     ignoreCardDeckUpdateNotifications = YES;
-    [super addButtonPressedDelayed];
+    [super processCardAddAtBottomDelayed:card];
     ignoreCardDeckUpdateNotifications = NO;
 }
 
