@@ -160,6 +160,36 @@
     STAssertEqualObjects([[newdeck cardAtIndex:1] text], @"Text2", nil);
 }
 
+- (void)testAddCards {
+    NSMutableArray *cards = [NSMutableArray arrayWithCapacity:0];
+    
+    CDXCard *card;
+    card = [[[CDXCard alloc] init] autorelease];
+    card.text = @"Text1";
+    [cards addObject:card];
+    card = [[[CDXCard alloc] init] autorelease];
+    card.text = @"Text2";
+    [cards addObject:card];
+    
+    STAssertEquals([cards count], (NSUInteger)2, nil);
+    STAssertEqualObjects([[cards objectAtIndex:0] text], @"Text1", nil);
+    STAssertEqualObjects([[cards objectAtIndex:1] text], @"Text2", nil);
+    
+    CDXCardDeck *newdeck = [[[CDXCardDeck alloc] init] autorelease];
+    STAssertEquals([newdeck cardsCount], (NSUInteger)0, nil);
+    [newdeck addCards:cards];
+    
+    [[cards objectAtIndex:0] setText:@"NewText1"];
+    [[cards objectAtIndex:1] setText:@"NewText2"];
+    STAssertEquals([cards count], (NSUInteger)2, nil);
+    STAssertEqualObjects([[cards objectAtIndex:0] text], @"NewText1", nil);
+    STAssertEqualObjects([[cards objectAtIndex:1] text], @"NewText2", nil);
+    
+    STAssertEquals([newdeck cardsCount], (NSUInteger)2, nil);
+    STAssertEqualObjects([[newdeck cardAtIndex:0] text], @"NewText1", nil);
+    STAssertEqualObjects([[newdeck cardAtIndex:1] text], @"NewText2", nil);
+}
+
 - (void)testRemoveCard {
     CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
     STAssertEquals([deck cardsCount], (NSUInteger)0, nil);

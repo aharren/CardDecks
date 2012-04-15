@@ -221,6 +221,13 @@
     [self updateFields];
 }
 
+- (void)addCards:(NSArray *)array {
+    for (CDXCard *card in array) {
+        [self addCardInternal:card];
+    }
+    [self updateFields];
+}
+
 - (void)removeCardAtIndex:(NSUInteger)index {
     NSUInteger cardsIndex = [self cardsIndex:index];
     [cards removeObjectAtIndex:cardsIndex];
