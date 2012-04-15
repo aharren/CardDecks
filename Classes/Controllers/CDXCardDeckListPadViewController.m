@@ -121,9 +121,9 @@
     ignoreCardDeckUpdateNotifications = NO;
 }
 
-- (void)processCardAddAtBottomDelayed:(CDXCard *)card {
+- (void)processCardAddAtBottomDelayed:(NSArray *)cards {
     ignoreCardDeckUpdateNotifications = YES;
-    [super processCardAddAtBottomDelayed:card];
+    [super processCardAddAtBottomDelayed:cards];
     ignoreCardDeckUpdateNotifications = NO;
 }
 

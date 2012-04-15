@@ -268,36 +268,51 @@
     actionButton.enabled = ([self tableView:viewTableView numberOfRowsInSection:1] != 0);
 }
 
-- (void)processCardAddAtBottomDelayed:(CDXCard *)card {
+- (void)processCardAddAtBottomDelayed:(NSArray *)cards {
     qltrace();
-    [cardDeck addCard:card];
+    if ([cards count] == 0) {
+        return;
+    }
+    
+    NSUInteger startrow = [cardDeck cardsCount];
+    [cardDeck addCards:cards];
     [cardDeckViewContext updateStorageObjectsDeferred:YES];
     
-    cardDeckViewContext.currentCardIndex = [cardDeck cardsCount]-1;
-    NSIndexPath *path = [NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:1];
-    [viewTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
+    NSMutableArray *paths = [[NSMutableArray alloc] initWithCapacity:[cards count]];
+    for (NSUInteger i = 0; i < [cards count]; i++) {
+        NSIndexPath *path = [NSIndexPath indexPathForRow:startrow+i inSection:1];
+        [paths addObject:path];
+    }
+    [viewTableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
+    for (NSUInteger i = 0; i < [paths count]; i++) {
+        NSIndexPath *path = [paths objectAtIndex:i];
+        [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
+        [viewTableView deselectRowAtIndexPath:path animated:YES];
+    }
+    [paths release];
+    
     [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
-    [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
-    [viewTableView deselectRowAtIndexPath:path animated:YES];
+    
     [self updateToolbarButtons];
 }
 
-- (void)processCardAddAtBottom:(CDXCard *)card {
+- (void)processCardAddAtBottom:(NSArray *)cards {
     if (![[viewTableView indexPathsForVisibleRows] containsObject:[NSIndexPath indexPathForRow:0 inSection:2]] ||
         [viewTableView isEditing]) {
         qltrace();
         [self setEditing:NO animated:YES];
         [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
-        [self performSelector:@selector(processCardAddAtBottomDelayed:) withObject:card afterDelay:0.3];
+        [self performSelector:@selector(processCardAddAtBottomDelayed:) withObject:cards afterDelay:0.3];
     } else {
-        [self processCardAddAtBottomDelayed:card];
+        [self processCardAddAtBottomDelayed:cards];
     }
 }
 
 - (IBAction)addButtonPressed {
     qltrace();
     CDXCard *card = [cardDeck cardWithDefaults];
-    [self processCardAddAtBottom:card];
+    NSArray *cards = [NSArray arrayWithObject:card];
+    [self processCardAddAtBottom:cards];
 }
 
 - (IBAction)defaultsButtonPressed {
@@ -518,7 +533,7 @@ static const CDXCardDeckListViewControllerActionSheetButton actionSheetButtons[2
     qltrace();
     if (barButtonItem == addButton) {
         if (action == @selector(paste:)) {
-            // paste the first card from the card deck from the pasteboard
+            // paste all cards from the card deck from the pasteboard
             NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
             if (![CDXAppURL mayBeCardDecksURLString:carddeckUrl]) {
                 return;
@@ -527,8 +542,8 @@ static const CDXCardDeckListViewControllerActionSheetButton actionSheetButtons[2
             if (deck == nil || [deck cardsCount] == 0) {
                 return;
             }
-            CDXCard *card = [[[deck cardAtIndex:0] copy] autorelease];
-            [self processCardAddAtBottom:card];
+            NSMutableArray *cards = [deck removeCards];
+            [self processCardAddAtBottom:cards];
             return;
         } else {
             return;
