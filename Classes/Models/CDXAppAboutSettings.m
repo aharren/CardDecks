@@ -174,17 +174,19 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
             NSString *path = [folder stringByAppendingPathComponent:@"Template.html"];
             NSString *text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
             
+            text = [text stringByReplacingOccurrencesOfString:@"$title$" withString:@"Device Information"];
+            
             CDXDevice *device = [CDXDevice sharedDevice];
             NSMutableString *content = [[[NSMutableString alloc] init] autorelease];
-            [content appendString:@"<table>"];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"model", [device deviceModel]];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"machine", [device deviceMachine]];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"type", [device deviceTypeString]];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"ui idiom", [device deviceUIIdiomString]];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%.1f</td></tr>\n", @"screen scale", [device deviceScreenScale]];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"graphics effects", [device useReducedGraphicsEffects] ? @"reduced" : @"full"];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"rendering mode", [device useImageBasedRendering] ? @"image" : @"direct"];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"twitter integration", [device hasTwitterIntegration] ? @"yes" : @"no"];
+            [content appendString:@"<table style=\"border-spacing:0px\">"];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Model", [device deviceModel]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Machine", [device deviceMachine]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Type", [device deviceTypeString]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"UI idiom", [device deviceUIIdiomString]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%.1f</td></tr>\n", @"Screen scale", [device deviceScreenScale]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Graphics effects", [device useReducedGraphicsEffects] ? @"reduced" : @"full"];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Rendering mode", [device useImageBasedRendering] ? @"image" : @"direct"];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Twitter integration", [device hasTwitterIntegration] ? @"yes" : @"no"];
             [content appendString:@"</table>"];
             text = [text stringByReplacingOccurrencesOfString:@"$content$" withString:content];
             
