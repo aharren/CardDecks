@@ -179,25 +179,25 @@
     CDXCardDeck *deck;
     
     // 64 Minutes Timer Hex
-    deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:@"0x40%20Minutes%20Timer,g0,d0,c0,id0,is1,it1,r0,s0,ap1&,000000ff,00ff00ff,u,28,240&0x40&0x3c&0x38&0x34&0x30&0x2c&0x28&0x24&0x20,,ffff00ff&0x1c,,ffff00ff&0x18,,ffff00ff&0x14,,ffff00ff&0x10,,ff0000ff&0x0c,,ff0000ff&0x08,,ff0000ff&0x04,ff0000ff,000000ff,,,60&0x03,ff0000ff,000000ff,,,60&0x02,ff0000ff,000000ff,,,60&0x01,ff0000ff,000000ff,,,60&0x00,ff0000ff,000000ff,,,0"];
+    deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:@"0x40%20Minutes%20Timer,g0,d0,c0,id0,is1,it1,r0,s0,ap1&,000000ff,00ff00ff,l,40,240&0x40&0x3c&0x38&0x34&0x30&0x2c&0x28&0x24&0x20,,ffff00ff&0x1c,,ffff00ff&0x18,,ffff00ff&0x14,,ffff00ff&0x10,,ff0000ff&0x0c,,ff0000ff&0x08,,ff0000ff&0x04,ff0000ff,000000ff,,,60&0x03,ff0000ff,000000ff,,,60&0x02,ff0000ff,000000ff,,,60&0x01,ff0000ff,000000ff,,,60&0x00,ff0000ff,000000ff,,,0"];
     [deck updateStorageObjectDeferred:NO];
     holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
     [decks addPendingCardDeckAdd:holder];
     
     // 16 Minutes Timer Hex
-    deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:@"0x10%20Minutes%20Timer,g0,d0,c0,id0,is1,it1,r0,s0,ap1&,000000ff,00ff00ff,u,28,60&0x10&0x0f&0x0e&0x0d&0x0c&0x0b&0x0a&0x09&0x08&0x07&0x06&0x05,,ffff00ff&0x04,,ffff00ff&0x03,,ffff00ff&0x02,,ff0000ff&0x01,,ff0000ff&0x00,ff0000ff,000000ff,,,0"];
+    deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:@"0x10%20Minutes%20Timer,g0,d0,c0,id0,is1,it1,r0,s0,ap1&,000000ff,00ff00ff,l,40,60&0x10&0x0f&0x0e&0x0d&0x0c&0x0b&0x0a&0x09&0x08&0x07&0x06&0x05,,ffff00ff&0x04,,ffff00ff&0x03,,ffff00ff&0x02,,ff0000ff&0x01,,ff0000ff&0x00,ff0000ff,000000ff,,,0"];
     [deck updateStorageObjectDeferred:NO];
     holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
     [decks addPendingCardDeckAdd:holder];
     
     // 60 Minutes Timer
-    deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:@"60%20Minutes%20Timer,g0,d0,c0,id0,is1,it1,r0,s0,ap1&,000000ff,00ff00ff,u,45,300&60&55&50&45&40&35&30,,ffff00ff&25,,ffff00ff&20,,ffff00ff&15,,ff0000ff&10,,ff0000ff&5,ff0000ff,000000ff,,,60&4,ff0000ff,000000ff,,,60&3,ff0000ff,000000ff,,,60&2,ff0000ff,000000ff,,,60&1,ff0000ff,000000ff,,,60&0,ff0000ff,000000ff,,,0"];
+    deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:@"60%20Minutes%20Timer,g0,d0,c0,id0,is1,it1,r0,s0,ap1&,000000ff,00ff00ff,l,60,300&60&55&50&45&40&35&30,,ffff00ff&25,,ffff00ff&20,,ffff00ff&15,,ff0000ff&10,,ff0000ff&5,ff0000ff,000000ff,,,60&4,ff0000ff,000000ff,,,60&3,ff0000ff,000000ff,,,60&2,ff0000ff,000000ff,,,60&1,ff0000ff,000000ff,,,60&0,ff0000ff,000000ff,,,0"];
     [deck updateStorageObjectDeferred:NO];
     holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
     [decks addPendingCardDeckAdd:holder];
     
     // 15 Minutes Timer
-    deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:@"15%20Minutes%20Timer,g0,d0,c0,id0,is1,it1,r0,s0,ap1&,000000ff,00ff00ff,u,45,60&15&14&13&12&11&10&9&8&7&6&5,,ffff00ff&4,,ffff00ff&3,,ffff00ff&2,,ff0000ff&1,,ff0000ff&0,ff0000ff,000000ff,,,0"];
+    deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:@"15%20Minutes%20Timer,g0,d0,c0,id0,is1,it1,r0,s0,ap1&,000000ff,00ff00ff,l,60,60&15&14&13&12&11&10&9&8&7&6&5,,ffff00ff&4,,ffff00ff&3,,ffff00ff&2,,ff0000ff&1,,ff0000ff&0,ff0000ff,000000ff,,,0"];
     [deck updateStorageObjectDeferred:NO];
     holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
     [decks addPendingCardDeckAdd:holder];
