@@ -113,8 +113,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
     UITableViewCell *cell = [super tableView:tableView cellForSection:section];
-    cell.accessoryType = UITableViewCellAccessoryNone;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryNone;
     return cell;
 }
 

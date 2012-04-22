@@ -100,7 +100,6 @@
                 cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             }
-            cell.accessoryType = cardDeckQuickOpen ? UITableViewCellAccessoryDetailDisclosureButton : UITableViewCellAccessoryDisclosureIndicator;
             return cell;
         }
         case 2: {
@@ -137,6 +136,7 @@
             if ([deck cardsCount] == 0) {
                 cell.textLabel.textColor = tableCellTextTextColorNoCards;
                 cell.detailTextLabel.text = @"NO CARDS";
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             } else {
                 cell.textLabel.textColor = tableCellTextTextColor;
                 NSString *description = deck.description;
@@ -144,6 +144,7 @@
                     description = @" ";
                 }
                 cell.detailTextLabel.text = description;
+                cell.accessoryType = cardDeckQuickOpen ? UITableViewCellAccessoryDetailDisclosureButton : UITableViewCellAccessoryDisclosureIndicator;
             }
             
             return cell;
@@ -204,7 +205,7 @@
             lastCardDeckIndex = indexPath.row;
             deselectRow = NO;
             CDXCardDeckHolder *deckHolder = [cardDecks cardDeckAtIndex:indexPath.row];
-            if (cardDeckQuickOpen) {
+            if (cardDeckQuickOpen && [deckHolder cardsCount] != 0) {
                 [self performBlockingSelector:@selector(pushCardDeckCardViewControllerWithCardDeckHolder:)
                                    withObject:deckHolder];
             } else {
