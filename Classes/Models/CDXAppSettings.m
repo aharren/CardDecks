@@ -168,7 +168,7 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
 }
 
 - (BOOL)doneButtonOnLeftSide {
-    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsDoneButtonOnLeftSide] defaultsTo:NO];
+    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsDoneButtonOnLeftSide] defaultsTo:YES];
 }
 
 - (BOOL)actionButtonsOnLeftSide {
