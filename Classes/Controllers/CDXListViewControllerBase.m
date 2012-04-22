@@ -307,8 +307,8 @@
         CGPoint point = [sender locationInView:sender.view];
         for (UIView *view in [sender.view subviews]) {
             CGRect frame = view.frame;
-            frame.origin.x -= 23;
-            frame.size.width += 46;
+            frame.origin.x -= 21;
+            frame.size.width += 42;
             if (CGRectContainsPoint(frame, point) && ([view isKindOfClass:[UIControl class]])) {
                 // find the corresponding bar-button item
                 for (UIBarButtonItem *item in [viewToolbar items]) {
