@@ -44,6 +44,9 @@
 - (void)processPendingCardDeckAdds;
 - (void)processPendingCardDeckAddsAtTopDelayed;
 
+- (void)processStartupCallbacks;
+- (void)showReleaseNotes;
+
 - (IBAction)addButtonPressed;
 - (IBAction)defaultsButtonPressed;
 - (IBAction)settingsButtonPressed;

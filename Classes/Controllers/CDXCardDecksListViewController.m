@@ -26,11 +26,13 @@
 #import "CDXCardDecksListViewController.h"
 #import "CDXCardDeckCardViewController.h"
 #import "CDXCardDeckListViewController.h"
+#import "CDXReleaseNotesViewController.h"
 #import "CDXImageFactory.h"
 #import "CDXAppSettings.h"
 #import "CDXSettingsViewController.h"
 #import "CDXCardDecks.h"
 #import "CDXAppURL.h"
+#import "CDXApplicationVersion.h"
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -71,6 +73,13 @@
     qltrace();
     [super viewDidAppear:animated];
     [self processPendingCardDeckAdds];
+}
+
+- (void)processStartupCallbacks {
+    if (![[[CDXAppSettings sharedAppSettings] versionState] isEqualToString:CDXApplicationVersion]) {
+        [[CDXAppSettings sharedAppSettings] setVersionState:CDXApplicationVersion];
+        [self performSelector:@selector(showReleaseNotes) withObject:nil afterDelay:0.001];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -288,6 +297,11 @@
     }
 }
 
+- (void)showReleaseNotes {
+    CDXReleaseNotesViewController *vc = [[[CDXReleaseNotesViewController alloc] init] autorelease];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsButton animated:YES];
+}
+
 - (IBAction)addButtonPressed {
     qltrace();
     CDXCardDeckHolder *holder = [cardDecks cardDeckWithDefaults];
@@ -326,12 +340,15 @@
     } else {
         [CDXStorage drainAllDeferredActions];
         [self performBlockingSelectorEnd];
+        [self processStartupCallbacks];
     }
 }
 
 - (void)processPendingCardDeckAdds {
     if ([cardDecks hasPendingCardDeckAdds]) {
         [self performBlockingSelector:@selector(processSinglePendingCardDeckAdd) withObject:nil];
+    } else {
+        [self processStartupCallbacks];
     }
 }
 

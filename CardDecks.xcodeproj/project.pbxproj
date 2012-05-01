@@ -23,6 +23,7 @@
 		E002B704116894980072C409 /* CDXCardDeckTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B703116894980072C409 /* CDXCardDeckTests.m */; };
 		E0150074117A1E4900C3BF63 /* CDXCardsSideBySideView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0150073117A1E4900C3BF63 /* CDXCardsSideBySideView.m */; };
 		E01951F6153B3CD3002CE5B2 /* ReleaseNotes.html in Resources */ = {isa = PBXBuildFile; fileRef = E01951F5153B3CD3002CE5B2 /* ReleaseNotes.html */; };
+		E01E4132154FF64300F4A8D4 /* CDXReleaseNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E4131154FF64300F4A8D4 /* CDXReleaseNotesViewController.m */; };
 		E022635D140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E022635C140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib */; };
 		E022CDF413B63E5D000FE10A /* CDXCardDecksListPadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E022CDF313B63E5D000FE10A /* CDXCardDecksListPadView.xib */; };
 		E022CDF813B64218000FE10A /* CDXCardDecksListPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E022CDF713B64218000FE10A /* CDXCardDecksListPadViewController.m */; };
@@ -222,6 +223,8 @@
 		E0150073117A1E4900C3BF63 /* CDXCardsSideBySideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsSideBySideView.m; path = Classes/Views/CDXCardsSideBySideView.m; sourceTree = "<group>"; };
 		E0150132117A245900C3BF63 /* CDXCardsViewProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsViewProtocols.h; path = Classes/Views/CDXCardsViewProtocols.h; sourceTree = "<group>"; };
 		E01951F5153B3CD3002CE5B2 /* ReleaseNotes.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ReleaseNotes.html; sourceTree = "<group>"; };
+		E01E4131154FF64300F4A8D4 /* CDXReleaseNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXReleaseNotesViewController.m; path = Classes/Controllers/CDXReleaseNotesViewController.m; sourceTree = "<group>"; };
+		E01E4133154FF65400F4A8D4 /* CDXReleaseNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXReleaseNotesViewController.h; path = Classes/Controllers/CDXReleaseNotesViewController.h; sourceTree = "<group>"; };
 		E022635C140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CDXSymbolsKeyboardExtensionTablePadView.xib; path = UserInterfaces/CDXSymbolsKeyboardExtensionTablePadView.xib; sourceTree = "<group>"; };
 		E022CDF313B63E5D000FE10A /* CDXCardDecksListPadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CDXCardDecksListPadView.xib; path = UserInterfaces/CDXCardDecksListPadView.xib; sourceTree = "<group>"; };
 		E022CDF613B64218000FE10A /* CDXCardDecksListPadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDecksListPadViewController.h; path = Classes/Controllers/CDXCardDecksListPadViewController.h; sourceTree = "<group>"; };
@@ -526,6 +529,8 @@
 				E022CDF713B64218000FE10A /* CDXCardDecksListPadViewController.m */,
 				E070CF8711A08B9600626F34 /* CDXSettingsViewController.h */,
 				E070CF8811A08B9600626F34 /* CDXSettingsViewController.m */,
+				E01E4133154FF65400F4A8D4 /* CDXReleaseNotesViewController.h */,
+				E01E4131154FF64300F4A8D4 /* CDXReleaseNotesViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1055,6 +1060,7 @@
 				E030327F152BA1B500F42494 /* CDXCardViewImageRendering.m in Sources */,
 				E048D463152E3A1B0081B88F /* CDXCardViewDirectRendering.m in Sources */,
 				E0DBA1821531F39B0049A26B /* CDXAppURL.m in Sources */,
+				E01E4132154FF64300F4A8D4 /* CDXReleaseNotesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,6 +1,6 @@
 //
 //
-// CDXAppSettings.h
+// CDXReleaseNotesViewController.h
 //
 //
 // Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
@@ -23,26 +23,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "CDXSettings.h"
 
-
-@interface CDXAppSettings : NSObject<CDXSettings> {
-    
+@interface CDXReleaseNotesViewController : UINavigationController {
 }
 
-declare_singleton(sharedAppSettings, CDXAppSettings);
-
-- (BOOL)enableIdleTimer;
-- (BOOL)enableAllKeyboardSymbols;
-- (BOOL)cardDeckQuickOpen;
-- (NSUInteger)closeTapCount;
-- (BOOL)doneButtonOnLeftSide;
-- (BOOL)actionButtonsOnLeftSide;
-- (BOOL)useMailApplication;
-- (NSUInteger)migrationState;
-- (void)setMigrationState:(NSUInteger)value;
-- (NSString *)versionState;
-- (void)setVersionState:(NSString *)value;
+- (id)init;
 
 @end
 
