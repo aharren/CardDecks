@@ -229,13 +229,14 @@
         [decks updateStorageObjectDeferred:NO];
     }
     
-    if ([[CDXAppSettings sharedAppSettings] migrationState] < 1) {
+    const NSUInteger migrationState_1 = 100;
+    if ([[CDXAppSettings sharedAppSettings] migrationState] < migrationState_1) {
         // add some new default card decks
         [self addDefaultCardDecks1:decks];
         // save the list
         [decks updateStorageObjectDeferred:NO];
         
-        [[CDXAppSettings sharedAppSettings] setMigrationState:1];
+        [[CDXAppSettings sharedAppSettings] setMigrationState:migrationState_1];
     }
     
     return decks;
