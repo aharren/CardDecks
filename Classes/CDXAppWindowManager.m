@@ -44,6 +44,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
         deviceOrientation = UIDeviceOrientationPortrait;
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuControllerWillHideMenu:) name:UIMenuControllerWillHideMenuNotification object:nil];
     }
     return self;
 }
@@ -93,6 +94,13 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     }
 }
 
+- (void)menuControllerWillHideMenu:(NSNotification *)notification {
+    UIViewController *vc = [self visibleViewController];
+    if ([vc conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
+        [(UIViewController<CDXAppWindowViewController> *)vc menuControllerWillHideMenu];
+    }
+}
+
 - (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation view:(UIView*)viewOrNil {
     qltrace();
     [[NSBundle mainBundle] loadNibNamed:@"CDXAppWindowNoticeView" owner:self options:nil];
@@ -113,6 +121,28 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
     qltrace();
     [[self visibleViewController] dismissModalViewControllerAnimated:animated];
+}
+
+- (void)applicationWillEnterForeground {
+    qltrace();
+    UIViewController* vc = [self visibleViewController];
+    if ([vc conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
+        UIViewController <CDXAppWindowViewController> *c = (UIViewController <CDXAppWindowViewController> *)vc;
+        if ([c respondsToSelector:@selector(applicationWillEnterForeground)]) {
+            [c applicationWillEnterForeground];
+        }
+    }
+}
+
+- (void)applicationDidEnterBackground {
+    qltrace();
+    UIViewController* vc = [self visibleViewController];
+    if ([vc conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
+        UIViewController <CDXAppWindowViewController> *c = (UIViewController <CDXAppWindowViewController> *)vc;
+        if ([c respondsToSelector:@selector(applicationDidEnterBackground)]) {
+            [c applicationDidEnterBackground];
+        }
+    }
 }
 
 - (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem {
@@ -171,11 +201,15 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     ivar_assign_and_retain(fullScreenViewController, viewController);
     [fullScreenViewController setUserInteractionEnabled:!animated];
     if (animated) {
-        UIImageView *screenshotView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForScreen]] autorelease];
         navigationView.userInteractionEnabled = NO;
-        [navigationView removeFromSuperview];
-        [window addSubview:screenshotView];
-        [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:screenshotView afterDelay:0.001];
+        if ([[CDXDevice sharedDevice] useImageBasedRendering]) {
+            UIImageView *screenshotView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForScreen]] autorelease];
+            [navigationView removeFromSuperview];
+            [window addSubview:screenshotView];
+            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:screenshotView afterDelay:0.001];
+        } else {
+            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:navigationView afterDelay:0.001];
+        }
     } else {
         [navigationView removeFromSuperview];
         [window addSubview:fullScreenViewController.view];
@@ -504,6 +538,17 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     [navigationView addSubview:splitViewController.view];
     
     [window makeKeyAndVisible];
+}
+
+- (void)menuControllerWillHideMenu:(NSNotification *)notification {
+    UIViewController *vcleft = [leftNavigationController visibleViewController];
+    if ([vcleft conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
+        [(UIViewController<CDXAppWindowViewController> *)vcleft menuControllerWillHideMenu];
+    }
+    UIViewController *vcright = [rightNavigationController visibleViewController];
+    if ([vcright conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
+        [(UIViewController<CDXAppWindowViewController> *)vcright menuControllerWillHideMenu];
+    }
 }
 
 - (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated {

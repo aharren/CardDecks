@@ -48,11 +48,24 @@
         }
         // [,[<orientation>] ...
         if ([sCardParts count] >= 4) {
-            dCard.orientation = [CDXCard cardOrientationFromString:(NSString *)[sCardParts objectAtIndex:3]];
+            NSString *value = (NSString *)[sCardParts objectAtIndex:3];
+            if ([value length] != 0) {
+                dCard.orientation = [CDXCard cardOrientationFromString:value];
+            }
         }
         // [,[<font-size>] ...
         if ([sCardParts count] >= 5 && version >= 2) {
-            dCard.fontSize = (CGFloat)[(NSString *)[sCardParts objectAtIndex:4] intValue];
+            NSString *value = (NSString *)[sCardParts objectAtIndex:4];
+            if ([value length] != 0) {
+                dCard.fontSize = (CGFloat)[value intValue];
+            }
+        }
+        // [,[<timer-interval>] ...
+        if ([sCardParts count] >= 6 && version >= 2) {
+            NSString *value = (NSString *)[sCardParts objectAtIndex:5];
+            if ([value length] != 0) {
+                dCard.timerInterval = (NSTimeInterval)[value intValue];
+            }
         }
         
         return dCard;
@@ -152,11 +165,13 @@
                 dDeck.wantsAutoRotate = [[sSetting substringFromIndex:1] intValue] ? YES : NO;
             } else if ([sSetting hasPrefix:@"s"]) {
                 dDeck.shakeAction = [[sSetting substringFromIndex:1] intValue];
+            } else if ([sSetting hasPrefix:@"ap"]) {
+                dDeck.autoPlay = [[sSetting substringFromIndex:2] intValue];
             }
         }
     }
     
-    // default-card := <text>[,[<text-color>][,[<background-color>][,[<orientation>][,[<font-size>]]]]]
+    // default-card := <text>[,[<text-color>][,[<background-color>][,[<orientation>][,[<font-size>][,[<timer-interval>]]]]]]
     if ([sParts count] >= 1) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         NSString *sCard = (NSString *)[sParts objectAtIndex:1];
@@ -167,7 +182,7 @@
         [pool release];
     }
     
-    // card := <text>[,[<text-color>][,[<background-color>][,[<orientation>][,[<font-size>]]]]]
+    // card := <text>[,[<text-color>][,[<background-color>][,[<orientation>][,[<font-size>][,[<timer-interval>]]]]]]
     for (NSUInteger i = 2; i < [sParts count]; i++) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         NSString *sCard = (NSString *)[sParts objectAtIndex:i];
@@ -190,23 +205,27 @@
     BOOL orientationIsNotDefault = !cardDefaults || orientation != cardDefaults.orientation;
     CGFloat fontSize = card.fontSize;
     BOOL fontSizeIsNotDefault = !cardDefaults || fontSize != cardDefaults.fontSize;
-    NSString *string =  [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@",
+    NSTimeInterval timerInterval = card.timerInterval;
+    BOOL timerIntervalIsNotDefault = !cardDefaults || timerInterval != cardDefaults.timerInterval;
+    NSString *string =  [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",
                          [CDXURLSerializerUtils stringByAddingURLEscapes:card.text],
-                         (textColorIsNotDefault || backgroundColorIsNotDefault || orientationIsNotDefault || fontSizeIsNotDefault) ? @"," : @"",
+                         (textColorIsNotDefault || backgroundColorIsNotDefault || orientationIsNotDefault || fontSizeIsNotDefault || timerIntervalIsNotDefault) ? @"," : @"",
                          (textColorIsNotDefault) ? [textColor rgbaString] : @"",
-                         (backgroundColorIsNotDefault || orientationIsNotDefault || fontSizeIsNotDefault) ? @"," : @"",
+                         (backgroundColorIsNotDefault || orientationIsNotDefault || fontSizeIsNotDefault || timerIntervalIsNotDefault) ? @"," : @"",
                          (backgroundColorIsNotDefault) ? [backgroundColor rgbaString]  : @"",
-                         (orientationIsNotDefault || fontSizeIsNotDefault) ? @"," : @"",
+                         (orientationIsNotDefault || fontSizeIsNotDefault || timerIntervalIsNotDefault) ? @"," : @"",
                          (orientationIsNotDefault) ? [CDXCard stringFromCardOrientation:orientation] : @"",
-                         (fontSizeIsNotDefault) ? @"," : @"",
-                         (fontSizeIsNotDefault) ? [NSString stringWithFormat:@"%d", (NSUInteger)fontSize] : @""];
+                         (fontSizeIsNotDefault || timerIntervalIsNotDefault) ? @"," : @"",
+                         (fontSizeIsNotDefault) ? [NSString stringWithFormat:@"%d", (NSUInteger)fontSize] : @"",
+                         (timerIntervalIsNotDefault) ? @"," : @"",
+                         (timerIntervalIsNotDefault) ? [NSString stringWithFormat:@"%d", (NSUInteger)timerInterval] : @""];
     return string;
 }
 
 + (NSString *)version2StringFromCardDeck:(CDXCardDeck *)cardDeck {
     NSMutableArray *parts = [[[NSMutableArray alloc] initWithCapacity:2 + [cardDeck cardsCount]] autorelease];
     
-    NSString *deck = [NSString stringWithFormat:@"%@,g%d,d%d,c%d,id%d,is%d,it%d,r%d,s%d",
+    NSString *deck = [NSString stringWithFormat:@"%@,g%d,d%d,c%d,id%d,is%d,it%d,r%d,s%d,ap%d",
                       [CDXURLSerializerUtils stringByAddingURLEscapes:cardDeck.name],
                       (NSUInteger)cardDeck.groupSize,
                       (NSUInteger)cardDeck.displayStyle,
@@ -217,7 +236,9 @@
                       cardDeck.wantsAutoRotate ? 1 : 0,
                       // version 2a: s0, s1
                       // version 2b: s0, s1, s2
-                      (NSUInteger)cardDeck.shakeAction];
+                      (NSUInteger)cardDeck.shakeAction,
+                      // version 2c: ap0, ap1, ap2
+                      (NSUInteger)cardDeck.autoPlay];
     [parts addObject:deck];
     
     CDXCard *cardDefaults = [cardDeck cardDefaults];

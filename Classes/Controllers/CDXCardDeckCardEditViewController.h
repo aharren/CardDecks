@@ -29,10 +29,11 @@
 #import "CDXColorKeyboardExtension.h"
 #import "CDXTextKeyboardExtension.h"
 #import "CDXSymbolsKeyboardExtension.h"
+#import "CDXTimerKeyboardExtension.h"
 #import "CDXCardView.h"
 
 
-@interface CDXCardDeckCardEditViewController : UIViewController<CDXAppWindowViewController, UIActionSheetDelegate, CDXKeyboardExtensionResponder, CDXKeyboardExtensionResponderWithActions, CDXColorKeyboardExtensionResponder, CDXTextKeyboardExtensionResponder> {
+@interface CDXCardDeckCardEditViewController : UIViewController<CDXAppWindowViewController, UIActionSheetDelegate, CDXKeyboardExtensionResponder, CDXKeyboardExtensionResponderWithActions, CDXColorKeyboardExtensionResponder, CDXTextKeyboardExtensionResponder, CDXTimerKeyboardExtensionResponder> {
     
 @protected
     IBOutlet UITextView *text;

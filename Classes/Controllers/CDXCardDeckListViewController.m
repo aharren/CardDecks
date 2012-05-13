@@ -29,8 +29,10 @@
 #import "CDXSettingsViewController.h"
 #import "CDXImageFactory.h"
 #import "CDXCardDecks.h"
-#import "CDXCardDeckURLSerializer.h"
+#import "CDXAppURL.h"
 #import "CDXAppSettings.h"
+#import "CDXDevice.h"
+#import <Twitter/Twitter.h>
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -103,15 +105,15 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
+    BOOL otherGroup = NO;
     if (indexPath.section == 1) {
         NSUInteger groupSize = [cardDeck groupSize];
         if (groupSize > 0 && (indexPath.row / groupSize) % 2 == 0) {
-            cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImageAlt] autorelease];
-        } else {
-            cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
+            otherGroup = YES;
         }
     }
+    
+    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath marked:otherGroup];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
@@ -240,7 +242,6 @@
         
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self updateToolbarButtons];
-        [viewTableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.2];
     }
 }
 
@@ -267,30 +268,51 @@
     actionButton.enabled = ([self tableView:viewTableView numberOfRowsInSection:1] != 0);
 }
 
-- (IBAction)addButtonPressedDelayed {
-    CDXCard *card = [cardDeck cardWithDefaults];
-    [cardDeck addCard:card];
+- (void)processCardAddAtBottomDelayed:(NSArray *)cards {
+    qltrace();
+    if ([cards count] == 0) {
+        return;
+    }
+    
+    NSUInteger startrow = [cardDeck cardsCount];
+    [cardDeck addCards:cards];
     [cardDeckViewContext updateStorageObjectsDeferred:YES];
     
-    cardDeckViewContext.currentCardIndex = [cardDeck cardsCount]-1;
-    NSIndexPath *path = [NSIndexPath indexPathForRow:cardDeckViewContext.currentCardIndex inSection:1];
-    [viewTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
+    NSMutableArray *paths = [[NSMutableArray alloc] initWithCapacity:[cards count]];
+    for (NSUInteger i = 0; i < [cards count]; i++) {
+        NSIndexPath *path = [NSIndexPath indexPathForRow:startrow+i inSection:1];
+        [paths addObject:path];
+    }
+    [viewTableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
+    for (NSUInteger i = 0; i < [paths count]; i++) {
+        NSIndexPath *path = [paths objectAtIndex:i];
+        [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
+        [viewTableView deselectRowAtIndexPath:path animated:YES];
+    }
+    [paths release];
+    
     [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
-    [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
-    [viewTableView deselectRowAtIndexPath:path animated:YES];
+    
     [self updateToolbarButtons];
 }
 
-- (IBAction)addButtonPressed {
+- (void)processCardAddAtBottom:(NSArray *)cards {
     if (![[viewTableView indexPathsForVisibleRows] containsObject:[NSIndexPath indexPathForRow:0 inSection:2]] ||
         [viewTableView isEditing]) {
         qltrace();
         [self setEditing:NO animated:YES];
         [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
-        [self performSelector:@selector(addButtonPressedDelayed) withObject:nil afterDelay:0.3];
+        [self performSelector:@selector(processCardAddAtBottomDelayed:) withObject:cards afterDelay:0.3];
     } else {
-        [self addButtonPressedDelayed];
+        [self processCardAddAtBottomDelayed:cards];
     }
+}
+
+- (IBAction)addButtonPressed {
+    qltrace();
+    CDXCard *card = [cardDeck cardWithDefaults];
+    NSArray *cards = [NSArray arrayWithObject:card];
+    [self processCardAddAtBottom:cards];
 }
 
 - (IBAction)defaultsButtonPressed {
@@ -328,14 +350,47 @@
     }
 }
 
+typedef enum {
+    CDXCardDeckListViewControllerActionEmailDeck = 0,
+    CDXCardDeckListViewControllerActionTweekDeck,
+    CDXCardDeckListViewControllerActionDuplicateDeck,
+    CDXCardDeckListViewControllerActionCount
+} CDXCardDeckListViewControllerAction;
+
+typedef struct {
+    CDXCardDeckListViewControllerAction action;
+    NSString *title;
+} CDXCardDeckListViewControllerActionSheetButton;
+
+static const CDXCardDeckListViewControllerActionSheetButton actionSheetButtons[2][4] = {
+    {
+        { CDXCardDeckListViewControllerActionEmailDeck, @"Email Deck" },
+        { CDXCardDeckListViewControllerActionTweekDeck, @"Tweet Deck" },
+        { CDXCardDeckListViewControllerActionDuplicateDeck, @"Duplicate Deck" },
+        { -1, nil }
+    },
+    {
+        { CDXCardDeckListViewControllerActionEmailDeck, @"Email Deck" },
+        { CDXCardDeckListViewControllerActionDuplicateDeck, @"Duplicate Deck" },
+        { -1, nil },
+        { -1, nil }
+    }
+};
+
 - (IBAction)actionButtonPressed {
+    const int type = ([[CDXDevice sharedDevice] hasTwitterIntegration]) ? 0 : 1;
     UIActionSheet *actionSheet = [[[UIActionSheet alloc]
                                    initWithTitle:nil
                                    delegate:self
                                    cancelButtonTitle:@"Cancel"
                                    destructiveButtonTitle:nil
-                                   otherButtonTitles:@"Email Deck", @"Duplicate Deck", nil]
+                                   otherButtonTitles:
+                                   actionSheetButtons[type][0].title,
+                                   actionSheetButtons[type][1].title,
+                                   actionSheetButtons[type][2].title,
+                                   nil]
                                   autorelease];
+    actionSheet.tag = type + 1;
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     if (activeActionSheet != nil) {
         [self dismissActionSheet];
@@ -349,36 +404,58 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     qltrace();
     ivar_release_and_clear(activeActionSheet);
-    switch (buttonIndex) {
+    int type = actionSheet.tag - 1;
+    if (type != 0 && type != 1) {
+        return;
+    }
+    if (buttonIndex < 0 || buttonIndex > 3) {
+        return;
+    }
+    switch (actionSheetButtons[type][buttonIndex].action) {
         default:
-            break;
-        case 0: {
-            NSString *body = [@"carddecks:///2/add?" stringByAppendingString:[CDXCardDeckURLSerializer version2StringFromCardDeck:cardDeck]];
+            return;
+        case CDXCardDeckListViewControllerActionEmailDeck: {
+            NSString *carddeckUrl = [CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeck];
             if ([[CDXAppSettings sharedAppSettings] useMailApplication] || ![MFMailComposeViewController canSendMail]) {
-                NSString *urlString = [NSString stringWithFormat:@"mailto:?&subject=%@&body=%@",
-                                       [[cardDeck.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
-                                        stringByReplacingOccurrencesOfString:@"&" withString:@"%26"],
-                                       [[body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
-                                        stringByReplacingOccurrencesOfString:@"&" withString:@"%26"]];
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+                NSString *mailUrl = [NSString stringWithFormat:@"mailto:?&subject=%@&body=%@",
+                                     [[cardDeck.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+                                      stringByReplacingOccurrencesOfString:@"&" withString:@"%26"],
+                                     [[carddeckUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+                                      stringByReplacingOccurrencesOfString:@"&" withString:@"%26"]];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mailUrl]];
             } else {
                 MFMailComposeViewController *vc = [[[MFMailComposeViewController alloc] init] autorelease];
                 [vc setMailComposeDelegate:self];
                 [vc setSubject:cardDeck.name];
-                [vc setMessageBody:[body stringByAppendingString:@" "] isHTML:NO];
+                [vc setMessageBody:[carddeckUrl stringByAppendingString:@" "] isHTML:NO];
                 [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:NO];
                 [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc animated:YES];
             }
-            break;
+            return;
         }
-        case 1: {
+        case CDXCardDeckListViewControllerActionTweekDeck: {
+            if ([[CDXDevice sharedDevice] hasTwitterIntegration]) {
+                // we don't check [TWTweetComposeViewController canSendTweet] here
+                // in order to get the 'No Twitter Accounts' system message if no
+                // account is configured yet
+                TWTweetComposeViewController *twc = [[[TWTweetComposeViewController alloc] init] autorelease];
+                NSURL *url = [NSURL URLWithString:[CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:cardDeck]];
+                if ([twc addURL:url] == NO) {
+                    return;
+                }
+                [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:NO];
+                [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:twc animated:YES];
+            }
+            return;
+        }
+        case CDXCardDeckListViewControllerActionDuplicateDeck: {
             CDXCardDeck *deck = [[cardDeck copy] autorelease];
             deck.name = [deck.name stringByAppendingString:@" - Copy"];
             [deck updateStorageObjectDeferred:NO];
             CDXCardDeckHolder *holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
             [cardDeckViewContext.cardDecks addPendingCardDeckAdd:holder];
             [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES];
-            break;
+            return;
         }
     }
 }
@@ -392,6 +469,86 @@
     qltrace();
     [super dismissModalViewControllerAnimated:animated];
     [self dismissActionSheet];
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    qltrace();
+    if (indexPath.section == 1 && indexPath.row < [cardDeck cardsCount]) {
+        if (action == @selector(copy:)) {
+            // copy is always possible
+            return YES;
+        } else if (action == @selector(paste:)) {
+            // paste is only possible if the pasteboard contains a "valid" URL
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            return [CDXAppURL mayBeCardDecksURLString:carddeckUrl];
+        }
+    }
+    return NO;
+}
+
+- (void)performAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    qltrace();
+    if (indexPath.section == 1 && indexPath.row < [cardDeck cardsCount]) {
+        if (action == @selector(copy:)) {
+            // copy a temporary card deck with a single card to the pasteboard
+            CDXCardDeck* tempDeck = [[[CDXCardDeck alloc] init] autorelease];
+            [tempDeck setCardDefaults:[[[cardDeck cardDefaults] copy] autorelease]];
+            [tempDeck setName:@""];
+            [tempDeck setFlagsFromCardDeck:cardDeck];
+            [tempDeck addCard:[[[cardDeck cardAtIndex:indexPath.row] copy] autorelease]];
+            NSString *carddeckUrl = [CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:tempDeck];
+            [[UIPasteboard generalPasteboard] setString:carddeckUrl];
+        } else if (action == @selector(paste:)) {
+            // paste the first card from the card deck from the pasteboard
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            if (![CDXAppURL mayBeCardDecksURLString:carddeckUrl]) {
+                return;
+            }
+            CDXCardDeck *sourceDeck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
+            if (sourceDeck == nil || [sourceDeck cardsCount] == 0) {
+                return;
+            }
+            [cardDeck replaceCardAtIndex:indexPath.row withCard:[[[sourceDeck cardAtIndex:0] copy] autorelease]];
+            [cardDeck updateStorageObjectDeferred:YES];
+            [viewTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
+        }
+    }
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+    qltrace();
+    if (barButtonItem == addButton) {
+        if (action == @selector(paste:)) {
+            // paste is only possible if the pasteboard contains a "valid" URL
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            return [CDXAppURL mayBeCardDecksURLString:carddeckUrl];
+        } else {
+            return NO;
+        }
+    }
+    return NO;
+}
+
+- (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+    qltrace();
+    if (barButtonItem == addButton) {
+        if (action == @selector(paste:)) {
+            // paste all cards from the card deck from the pasteboard
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            if (![CDXAppURL mayBeCardDecksURLString:carddeckUrl]) {
+                return;
+            }
+            CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
+            if (deck == nil || [deck cardsCount] == 0) {
+                return;
+            }
+            NSMutableArray *cards = [deck removeCards];
+            [self processCardAddAtBottom:cards];
+            return;
+        } else {
+            return;
+        }
+    }
 }
 
 @end

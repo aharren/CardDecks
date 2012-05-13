@@ -24,7 +24,6 @@
 // THE SOFTWARE.
 
 #import "CDXCardsSideBySideView.h"
-#import "CDXImageFactory.h"
 
 #undef ql_component
 #define ql_component lcl_cView
@@ -53,20 +52,17 @@
 
 - (id)initWithFrame:(CGRect)rect {
     qltrace();
-    if ((self = [super initWithFrame:rect])) {
+    if ((self = [super initWithFrame:rect viewCount:CDXCardsSideBySideViewCardViewsSize])) {
         ivar_assign(scrollView, [[CDXCardsSideBySideViewScrollView alloc] initWithFrame:self.frame]);
         ivar_assign(scrollViewDelegate, [[CDXCardsSideBySideViewScrollViewDelegate alloc] init]);
 
         scrollView.delegate = scrollViewDelegate;
         scrollViewDelegate.cardsSideBySideView = self;
 
-        ivar_assign(cardImages, [[CDXObjectCache alloc] initWithSize:CDXCardsSideBySideViewCardViewsSize]);
-        ivar_array_assign(cardViewsView, CDXCardsSideBySideViewCardViewsSize, [[UIImageView alloc] initWithImage:nil]);
-        
         [self addSubview:scrollView];
 
         for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
-            [scrollView addSubview:cardViewsView[i]];
+            [scrollView addSubview:[cardViewRendering viewAtIndex:i]];
         }
     }
     return self;
@@ -76,8 +72,6 @@
     qltrace();
     ivar_release_and_clear(scrollView);
     ivar_release_and_clear(scrollViewDelegate);
-    ivar_release_and_clear(cardImages);
-    ivar_array_release_and_clear(cardViewsView, CDXCardsSideBySideViewCardViewsSize);
     [super dealloc];
 }
 
@@ -94,25 +88,14 @@
         return;
     }
     cardViewsCardIndex[viewIndex] = cardIndex+1;
-    UIImageView *view = cardViewsView[viewIndex];
-    UIImage *image = [cardImages objectWithKey:cardIndex];
-    if (image != nil) {
-        qltrace(@": => %d", cardIndex);
-    } else {
-        image = [[CDXImageFactory sharedImageFactory]
-                 imageForCard:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex]
-                 size:cardViewsSize
-                 deviceOrientation:deviceOrientation];
-        qltrace(@": X> %d", cardIndex);
-    }
+    
+    UIView *view = [cardViewRendering configureViewAtIndex:viewIndex viewSize:cardViewsSize cardIndex:cardIndex card:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex] deviceOrientation:deviceOrientation];
     view.frame = CGRectMake(scrollViewPageWidth * cardIndex + cardViewsBorder, 0, cardViewsSize.width, cardViewsSize.height);
-    view.image = image;
-    qltrace(@": %d X> %d", viewIndex, cardIndex);
 }
 
 - (void)invalidateDataSourceCaches {
+    [super invalidateDataSourceCaches];
     ivar_array_set(cardViewsCardIndex, CDXCardsSideBySideViewCardViewsSize, 0);
-    [cardImages clear];
 }
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate updateScrollView:(BOOL)updateScrollView {
@@ -129,9 +112,9 @@
         [self configureCardViewsViewAtIndex:viewIndex-CDXCardsSideBySideViewCardViewsSize/2+i cardIndex:(cardIndex+cardsCount-CDXCardsSideBySideViewCardViewsSize/2+i)%cardsCount];
     }
     
-    [cardImages clear];
+    [cardViewRendering invalidateCaches];
     for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
-        [cardImages addObject:cardViewsView[i].image withKey:cardViewsCardIndex[i]-1];
+        [cardViewRendering cacheViewAtIndex:i cardIndex:cardViewsCardIndex[i]-1];
     }
     
     currentCardIndex = cardIndex;
@@ -143,8 +126,8 @@
     }
 }
 
-- (void)showCardAtIndex:(NSUInteger)cardIndex {
-    [self showCardAtIndex:cardIndex tellDelegate:YES updateScrollView:YES];
+- (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate {
+    [self showCardAtIndex:cardIndex tellDelegate:tellDelegate updateScrollView:YES];
 }
 
 - (void)scrollToCardIndex:(NSUInteger)cardIndex {
@@ -152,21 +135,6 @@
     frame.origin.x = scrollViewPageWidth * cardIndex;
     frame.origin.y = 0;
     [scrollView scrollRectToVisible:frame animated:NO];
-}
-
-- (NSUInteger)currentCardIndex {
-    return currentCardIndex;
-}
-
-- (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
-    qltrace();
-    deviceOrientation = orientation;
-    if (self.superview == nil) {
-        return;
-    }
-
-    [self invalidateDataSourceCaches];
-    [self showCardAtIndex:currentCardIndex  tellDelegate:NO updateScrollView:YES];
 }
 
 - (void)didMoveToSuperview {

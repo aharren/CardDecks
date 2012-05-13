@@ -43,6 +43,33 @@
     STAssertEquals([card backgroundColor], [CDXColor colorBlack], nil);
     STAssertEquals((int)[card orientation], (int)CDXCardOrientationUp, nil);
     STAssertEquals([card fontSize], CDXCardFontSizeAutomatic, nil);
+    STAssertEquals([card timerInterval], CDXCardTimerIntervalDefault, nil);
+    [card release];
+}
+
+- (void)testCopy {
+    CDXCard *card = [[CDXCard alloc] init];
+    card.text = @"TEXT";
+    STAssertEqualObjects([card text], @"TEXT", nil);
+    card.textColor = [CDXColor colorBlack];
+    STAssertEquals([card textColor], [CDXColor colorBlack], nil);
+    card.backgroundColor = [CDXColor colorWhite];
+    STAssertEquals([card backgroundColor], [CDXColor colorWhite], nil);
+    card.orientation = CDXCardOrientationLeft;
+    STAssertEquals((int)[card orientation], (int)CDXCardOrientationLeft, nil);
+    card.fontSize = 3.0;
+    STAssertEquals([card fontSize], (CGFloat)3.0, nil);
+    card.timerInterval = 15.0;
+    STAssertEquals([card timerInterval], (NSTimeInterval)15.0, nil);
+
+    [card autorelease];
+    card = [card copy];
+    STAssertEqualObjects([card text], @"TEXT", nil);
+    STAssertEquals([card textColor], [CDXColor colorBlack], nil);
+    STAssertEquals([card backgroundColor], [CDXColor colorWhite], nil);
+    STAssertEquals((int)[card orientation], (int)CDXCardOrientationLeft, nil);
+    STAssertEquals([card fontSize], (CGFloat)3.0, nil);
+    STAssertEquals([card timerInterval], (NSTimeInterval)15.0, nil);
     [card release];
 }
 
@@ -110,6 +137,27 @@
     STAssertEquals(card.orientation, CDXCardOrientationCount-1, nil);
     card.orientation = 4;
     STAssertEquals(card.orientation, CDXCardOrientationDefault, nil);
+}
+
+- (void)testTimerInterval {
+    CDXCard *card = [[CDXCard alloc] init];
+    card.timerInterval = -10.0;
+    STAssertEquals([card timerInterval], CDXCardTimerIntervalMin, nil);
+    card.timerInterval = 0.0;
+    STAssertEquals([card timerInterval], CDXCardTimerIntervalOff, nil);
+    card.timerInterval = 0.5;
+    STAssertEquals([card timerInterval], CDXCardTimerIntervalMin, nil);
+    card.timerInterval = 1.0;
+    STAssertEquals([card timerInterval], (NSTimeInterval)1, nil);
+    card.timerInterval = 10.0;
+    STAssertEquals([card timerInterval], (NSTimeInterval)10, nil);
+    card.timerInterval = 3599.0;
+    STAssertEquals([card timerInterval], (NSTimeInterval)3599, nil);
+    card.timerInterval = 3600.0;
+    STAssertEquals([card timerInterval], CDXCardTimerIntervalMax, nil);
+    card.timerInterval = 3601.0;
+    STAssertEquals([card timerInterval], CDXCardTimerIntervalMax, nil);
+    [card release];
 }
 
 @end

@@ -26,10 +26,13 @@
 #import "CDXCardDecksListViewController.h"
 #import "CDXCardDeckCardViewController.h"
 #import "CDXCardDeckListViewController.h"
+#import "CDXReleaseNotesViewController.h"
 #import "CDXImageFactory.h"
 #import "CDXAppSettings.h"
 #import "CDXSettingsViewController.h"
 #import "CDXCardDecks.h"
+#import "CDXAppURL.h"
+#import "CDXApplicationVersion.h"
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -50,7 +53,13 @@
 
 - (void)dealloc {
     ivar_release_and_clear(cardDecks);
+    ivar_release_and_clear(addButton);
     [super dealloc];
+}
+
+- (void)viewDidUnload {
+    ivar_release_and_clear(addButton);
+    [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -64,6 +73,13 @@
     qltrace();
     [super viewDidAppear:animated];
     [self processPendingCardDeckAdds];
+}
+
+- (void)processStartupCallbacks {
+    if (![[[CDXAppSettings sharedAppSettings] versionState] isEqualToString:CDXApplicationVersion]) {
+        [[CDXAppSettings sharedAppSettings] setVersionState:CDXApplicationVersion];
+        [self performSelector:@selector(showReleaseNotes) withObject:nil afterDelay:0.001];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -93,7 +109,6 @@
                 cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             }
-            cell.accessoryType = cardDeckQuickOpen ? UITableViewCellAccessoryDetailDisclosureButton : UITableViewCellAccessoryDisclosureIndicator;
             return cell;
         }
         case 2: {
@@ -130,6 +145,7 @@
             if ([deck cardsCount] == 0) {
                 cell.textLabel.textColor = tableCellTextTextColorNoCards;
                 cell.detailTextLabel.text = @"NO CARDS";
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             } else {
                 cell.textLabel.textColor = tableCellTextTextColor;
                 NSString *description = deck.description;
@@ -137,6 +153,7 @@
                     description = @" ";
                 }
                 cell.detailTextLabel.text = description;
+                cell.accessoryType = cardDeckQuickOpen ? UITableViewCellAccessoryDetailDisclosureButton : UITableViewCellAccessoryDisclosureIndicator;
             }
             
             return cell;
@@ -197,7 +214,7 @@
             lastCardDeckIndex = indexPath.row;
             deselectRow = NO;
             CDXCardDeckHolder *deckHolder = [cardDecks cardDeckAtIndex:indexPath.row];
-            if (cardDeckQuickOpen) {
+            if (cardDeckQuickOpen && [deckHolder cardsCount] != 0) {
                 [self performBlockingSelector:@selector(pushCardDeckCardViewControllerWithCardDeckHolder:)
                                    withObject:deckHolder];
             } else {
@@ -255,12 +272,9 @@
     [deck release];
 }
 
-- (IBAction)addButtonPressedDelayed {
+- (void)processCardDeckAddAtBottomDelayed:(CDXCardDeckHolder *)holder {
     qltrace();
-    CDXCardDeckHolder *deck = [cardDecks cardDeckWithDefaults];
-    [deck.cardDeck updateStorageObjectDeferred:NO];
-    
-    [cardDecks addCardDeck:deck];
+    [cardDecks addCardDeck:holder];
     [cardDecks updateStorageObjectDeferred:NO];
     
     NSIndexPath *path = [NSIndexPath indexPathForRow:[cardDecks cardDecksCount]-1 inSection:1];
@@ -271,16 +285,28 @@
     [self updateToolbarButtons];
 }
 
-- (IBAction)addButtonPressed {
+- (void)processCardDeckAddAtBottom:(CDXCardDeckHolder *)holder {
     if (![[viewTableView indexPathsForVisibleRows] containsObject:[NSIndexPath indexPathForRow:0 inSection:2]] ||
         [viewTableView isEditing]) {
         qltrace();
         [self setEditing:NO animated:YES];
         [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
-        [self performSelector:@selector(addButtonPressedDelayed) withObject:nil afterDelay:0.3];
+        [self performSelector:@selector(processCardDeckAddAtBottomDelayed:) withObject:holder afterDelay:0.3];
     } else {
-        [self addButtonPressedDelayed];
+        [self processCardDeckAddAtBottomDelayed:holder];
     }
+}
+
+- (void)showReleaseNotes {
+    CDXReleaseNotesViewController *vc = [[[CDXReleaseNotesViewController alloc] init] autorelease];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsButton animated:YES];
+}
+
+- (IBAction)addButtonPressed {
+    qltrace();
+    CDXCardDeckHolder *holder = [cardDecks cardDeckWithDefaults];
+    [holder.cardDeck updateStorageObjectDeferred:NO];
+    [self processCardDeckAddAtBottom:holder];
 }
 
 - (IBAction)defaultsButtonPressed {
@@ -314,12 +340,15 @@
     } else {
         [CDXStorage drainAllDeferredActions];
         [self performBlockingSelectorEnd];
+        [self processStartupCallbacks];
     }
 }
 
 - (void)processPendingCardDeckAdds {
     if ([cardDecks hasPendingCardDeckAdds]) {
         [self performBlockingSelector:@selector(processSinglePendingCardDeckAdd) withObject:nil];
+    } else {
+        [self processStartupCallbacks];
     }
 }
 
@@ -331,6 +360,98 @@
         [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionNone animated:YES];
     }
     [self performSelector:@selector(processPendingCardDeckAdds) withObject:nil afterDelay:0.5];
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    qltrace();
+    if (indexPath.section == 1 && indexPath.row < [cardDecks cardDecksCount]) {
+        if (action == @selector(copy:)) {
+            // copy is always possible
+            return YES;
+        } else if (action == @selector(paste:)) {
+            // paste is only possible if the pasteboard contains a "valid" URL
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            return [CDXAppURL mayBeCardDecksURLString:carddeckUrl];
+        }
+    }
+    return NO;
+}
+
+- (void)performAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    qltrace();
+    if (indexPath.section == 1 && indexPath.row < [cardDecks cardDecksCount]) {
+        if (action == @selector(copy:)) {
+            // copy the card deck to the pasteboard
+            CDXCardDeck* cardDeck = [cardDecks cardDeckAtIndex:indexPath.row].cardDeck;
+            NSString *carddeckUrl = [CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeck];
+            [[UIPasteboard generalPasteboard] setString:carddeckUrl];
+        } else if (action == @selector(paste:)) {
+            // paste the card deck from the pasteboard
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            if (![CDXAppURL mayBeCardDecksURLString:carddeckUrl]) {
+                return;
+            }
+            CDXCardDeck *sourceDeck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
+            if (sourceDeck == nil) {
+                return;
+            }
+            CDXCardDeck *targetDeck = [cardDecks cardDeckAtIndex:indexPath.row].cardDeck;
+            UITableViewRowAnimation animation = UITableViewRowAnimationNone;
+            if ([targetDeck cardsCount] == 0) {
+                // paste everything if the target deck is empty, e.g. a new deck
+                [targetDeck setName:sourceDeck.name];
+                [targetDeck setCardDefaults:[[[sourceDeck cardDefaults] copy] autorelease]];
+                [targetDeck setFlagsFromCardDeck:sourceDeck];
+                [targetDeck sort];
+                [targetDeck addCards:[sourceDeck removeCards]];
+                animation = UITableViewRowAnimationRight;
+            } else {
+                // add cards if the targe deck is not empty
+                [targetDeck addCards:[sourceDeck removeCards]];
+                animation = UITableViewRowAnimationLeft;
+            }
+            [targetDeck updateStorageObjectDeferred:NO];
+            [cardDecks updateStorageObjectDeferred:NO];
+            [viewTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation];
+        }
+    }
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+    qltrace();
+    if (barButtonItem == addButton) {
+        if (action == @selector(paste:)) {
+            // paste is only possible if the pasteboard contains a "valid" URL
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            return [CDXAppURL mayBeCardDecksURLString:carddeckUrl];
+        } else {
+            return NO;
+        }
+    }
+    return NO;
+}
+
+- (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+    qltrace();
+    if (barButtonItem == addButton) {
+        if (action == @selector(paste:)) {
+            // paste the card deck from the pasteboard as a new card deck
+            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
+            if (![CDXAppURL mayBeCardDecksURLString:carddeckUrl]) {
+                return;
+            }
+            CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
+            if (deck == nil) {
+                return;
+            }
+            CDXCardDeckHolder *holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
+            [holder.cardDeck updateStorageObjectDeferred:NO];
+            [self processCardDeckAddAtBottom:holder];
+            return;
+        } else {
+            return;
+        }
+    }
 }
 
 @end

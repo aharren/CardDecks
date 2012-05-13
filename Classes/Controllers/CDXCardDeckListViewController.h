@@ -56,7 +56,8 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath;
-- (IBAction)addButtonPressedDelayed;
+
+- (void)processCardAddAtBottomDelayed:(NSArray *)cards;
 
 @end
 

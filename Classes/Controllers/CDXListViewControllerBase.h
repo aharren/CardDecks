@@ -26,9 +26,18 @@
 #import "CDXAppWindowProtocols.h"
 
 
+typedef enum {
+    CDXListViewControllerBasePerformActionStateNone = 0,
+    CDXListViewControllerBasePerformActionStateTableView,
+    CDXListViewControllerBasePerformActionStateToolbar
+} CDXListViewControllerBasePerformActionState;
+
+
 @interface CDXListViewControllerBase : UIViewController<CDXAppWindowViewController> {
     
 @protected
+    BOOL useReducedGraphicsEffects;
+
     IBOutlet UITableView *viewTableView;
     IBOutlet UIToolbar *viewToolbar;
     CGFloat viewTableViewContentOffsetY;
@@ -54,16 +63,31 @@
     
     NSString *reuseIdentifierSection1;
     NSString *reuseIdentifierSection2;
+    
+    UILongPressGestureRecognizer *viewTableViewLongPressRecognizer;
+    UILongPressGestureRecognizer *viewToolbarLongPressRecognizer;
+    CDXListViewControllerBasePerformActionState performActionState;
+    NSIndexPath *performActionTableViewIndexPath;
+    UIBarButtonItem *performActionToolbarBarButtonItem;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)titleText backButtonText:(NSString *)backButtonText;
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath marked:(BOOL)marked;
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
+- (void)performAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
+- (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated;
 - (void)updateToolbarButtons;
+
 - (IBAction)editButtonPressed;
-- (IBAction)bottomButtonPressed;
 
 - (void)performBlockingSelector:(SEL)selector withObject:(NSObject *)object;
 - (void)performBlockingSelectorEnd;

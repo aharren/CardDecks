@@ -61,6 +61,14 @@ typedef enum {
     CDXCardDeckPageControlStyleDefault = CDXCardDeckPageControlStyleLight
 } CDXCardDeckPageControlStyle;
 
+typedef enum {
+    CDXCardDeckAutoPlayOff = 0,
+    CDXCardDeckAutoPlayPlay,
+    CDXCardDeckAutoPlayPlay2,
+    CDXCardDeckAutoPlayCount,
+    CDXCardDeckAutoPlayDefault = CDXCardDeckAutoPlayOff
+} CDXCardDeckAutoPlay;
+
 
 #define CDXCardDeckUpdateNotification @"CDXCardDeckUpdateNotification"
 
@@ -76,6 +84,7 @@ typedef enum {
     BOOL wantsPageJumps;
     BOOL wantsAutoRotate;
     CDXCardDeckShakeAction shakeAction;
+    CDXCardDeckAutoPlay autoPlay;
     CDXCardDeckGroupSize groupSize;
     
     CDXCardDeckDisplayStyle displayStyle;
@@ -86,6 +95,8 @@ typedef enum {
     NSMutableArray *shuffleIndexes;
 }
 
+- (void)setFlagsFromCardDeck:(CDXCardDeck *)deck;
+
 @property (nonatomic, retain) CDXCard *cardDefaults;
 
 - (NSUInteger)cardsIndex:(NSUInteger)index;
@@ -94,7 +105,9 @@ typedef enum {
 - (CDXCard *)cardAtIndex:(NSUInteger)index;
 - (CDXCard *)cardAtIndex:(NSUInteger)index orCard:(CDXCard *)card;
 - (void)addCard:(CDXCard *)card;
+- (void)addCards:(NSArray *)array;
 - (void)removeCardAtIndex:(NSUInteger)index;
+- (NSMutableArray *)removeCards;
 - (void)replaceCardAtIndex:(NSUInteger)index withCard:(CDXCard *)card;
 - (void)moveCardAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
 
@@ -107,11 +120,13 @@ typedef enum {
 @property (nonatomic, assign) CDXCardDeckDisplayStyle displayStyle;
 @property (nonatomic, assign) CDXCardCornerStyle cornerStyle;
 @property (nonatomic, assign) CDXCardDeckPageControlStyle pageControlStyle;
+@property (nonatomic, assign) CDXCardDeckAutoPlay autoPlay;
 
 - (void)setFontSize:(CGFloat)fontSize;
 - (void)setOrientation:(CDXCardOrientation)orientation;
 - (void)setTextColor:(CDXColor *)textColor;
 - (void)setBackgroundColor:(CDXColor *)backgroundColor;
+- (void)setTimerInterval:(NSTimeInterval)timerInterval;
 
 @property (nonatomic, readonly) BOOL isShuffled;
 @property (nonatomic, copy) NSMutableArray *shuffleIndexes;

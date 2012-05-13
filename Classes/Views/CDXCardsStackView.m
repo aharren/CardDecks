@@ -53,22 +53,19 @@
 
 - (id)initWithFrame:(CGRect)rect {
     qltrace();
-    if ((self = [super initWithFrame:rect])) {
+    if ((self = [super initWithFrame:rect viewCount:CDXCardsStackViewCardViewsSize])) {
         ivar_assign(scrollView, [[CDXCardsStackViewScrollView alloc] initWithFrame:self.frame]);
         ivar_assign(scrollViewDelegate, [[CDXCardsStackViewScrollViewDelegate alloc] init]);
         
         scrollView.delegate = scrollViewDelegate;
         scrollViewDelegate.cardsStackView = self;
         
-        ivar_assign(cardImages, [[CDXObjectCache alloc] initWithSize:CDXCardsStackViewCardImagesSize]);
-        ivar_array_assign(cardViewsView, CDXCardsStackViewCardViewsSize, [[UIImageView alloc] initWithImage:nil]);
-        
-        [self addSubview:cardViewsView[CDXCardsStackViewCardViewsBottom]];
-        [self addSubview:cardViewsView[CDXCardsStackViewCardViewsMiddle]];
+        [self addSubview:[cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsBottom]];
+        [self addSubview:[cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsMiddle]];
         [self addSubview:scrollView];
         
-        [scrollView addSubview:cardViewsView[CDXCardsStackViewCardViewsTopLeft]];
-        [scrollView addSubview:cardViewsView[CDXCardsStackViewCardViewsTopRight]];
+        [scrollView addSubview:[cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsTopLeft]];
+        [scrollView addSubview:[cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsTopRight]];
     }
     return self;
 }
@@ -77,34 +74,16 @@
     qltrace();
     ivar_release_and_clear(scrollView);
     ivar_release_and_clear(scrollViewDelegate);
-    ivar_release_and_clear(cardImages);
-    ivar_array_release_and_clear(cardViewsView, CDXCardsStackViewCardViewsSize);
     [super dealloc];
 }
 
 - (void)configureCardViewsViewAtIndex:(NSUInteger)viewIndex cardIndex:(NSUInteger)cardIndex {
-    UIImageView *view = cardViewsView[viewIndex];
-    
     if (cardIndex >= cardsCount) {
         cardIndex += cardsCount;
         cardIndex %= cardsCount;
     }
-    
-    UIImage *image = [cardImages objectWithKey:cardIndex];
-    if (image != nil) {
-        qltrace(@": => %d", cardIndex);
-    } else {
-        image = [[CDXImageFactory sharedImageFactory]
-                 imageForCard:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex]
-                 size:cardViewsSize
-                 deviceOrientation:deviceOrientation];
-        qltrace(@": X> %d", cardIndex);
-    }
-    view.image = image;
-}
 
-- (void)invalidateDataSourceCaches {
-    [cardImages clear];
+    [cardViewRendering configureViewAtIndex:viewIndex viewSize:cardViewsSize cardIndex:cardIndex card:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex] deviceOrientation:deviceOrientation];
 }
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate {
@@ -113,35 +92,18 @@
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsMiddle cardIndex:cardIndex];
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsBottom cardIndex:(cardIndex+1) % cardsCount];
     
-    [cardImages clear];
-    [cardImages addObject:cardViewsView[CDXCardsStackViewCardViewsTopLeft].image withKey:(cardIndex+cardsCount-1) % cardsCount];
-    [cardImages addObject:cardViewsView[CDXCardsStackViewCardViewsTopRight].image withKey:cardIndex];
-    [cardImages addObject:cardViewsView[CDXCardsStackViewCardViewsBottom].image withKey:(cardIndex+1) % cardsCount];
+    [cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsTopRight].frame = CGRectMake(cardViewsSize.width, 0, cardViewsSize.width, cardViewsSize.height);
+    
+    [cardViewRendering invalidateCaches];
+    [cardViewRendering cacheViewAtIndex:CDXCardsStackViewCardViewsTopLeft cardIndex:(cardIndex+cardsCount-1) % cardsCount];
+    [cardViewRendering cacheViewAtIndex:CDXCardsStackViewCardViewsTopRight cardIndex:cardIndex];
+    [cardViewRendering cacheViewAtIndex:CDXCardsStackViewCardViewsBottom cardIndex:(cardIndex+1) % cardsCount];
     
     currentCardIndex = cardIndex;
     scrollView.contentOffset = CGPointMake(scrollViewPageWidth, 0);
     if (tellDelegate) {
         [viewDelegate cardsViewDelegateCurrentCardIndexHasChangedTo:currentCardIndex];
     }
-}
-
-- (void)showCardAtIndex:(NSUInteger)cardIndex {
-    [self showCardAtIndex:cardIndex tellDelegate:YES];
-}
-
-- (NSUInteger)currentCardIndex {
-    return currentCardIndex;
-}
-
-- (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
-    qltrace();
-    deviceOrientation = orientation;
-    if (self.superview == nil) {
-        return;
-    }
-    
-    [self invalidateDataSourceCaches];
-    [self showCardAtIndex:currentCardIndex tellDelegate:NO];
 }
 
 - (void)didMoveToSuperview {
@@ -169,9 +131,9 @@
     scrollView.bounces = NO;
     
     for (NSUInteger i = 0; i < CDXCardsStackViewCardViewsSize; i++) {
-        cardViewsView[i].frame = CGRectMake(0, 0, cardViewsSize.width, cardViewsSize.height);
+        [cardViewRendering viewAtIndex:i].frame = CGRectMake(0, 0, cardViewsSize.width, cardViewsSize.height);
     }
-    cardViewsView[CDXCardsStackViewCardViewsTopRight].frame = CGRectMake(cardViewsSize.width, 0, cardViewsSize.width, cardViewsSize.height);
+    [cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsTopRight].frame = CGRectMake(cardViewsSize.width, 0, cardViewsSize.width, cardViewsSize.height);
     
     [self showCardAtIndex:currentCardIndex];
 }
@@ -245,13 +207,13 @@
             } else if (x < width) {
                 // scroll to the right which moves the top left card in
                 scrollViewDirection = CDXCardsStackViewScrollViewDirectionRightIn;
-                cardViewsView[CDXCardsStackViewCardViewsTopRight].hidden = YES;
-                cardViewsView[CDXCardsStackViewCardViewsMiddle].hidden = NO;
+                [cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsTopRight].hidden = YES;
+                [cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsMiddle].hidden = NO;
             } else if (x > width) {
                 // scroll to the left which moves the top right card out
                 scrollViewDirection = CDXCardsStackViewScrollViewDirectionLeftOut;
-                cardViewsView[CDXCardsStackViewCardViewsTopRight].hidden = NO;
-                cardViewsView[CDXCardsStackViewCardViewsMiddle].hidden = YES;
+                [cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsTopRight].hidden = NO;
+                [cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsMiddle].hidden = YES;
             }
             break;
         case CDXCardsStackViewScrollViewDirectionIgnore:

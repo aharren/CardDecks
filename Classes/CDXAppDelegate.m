@@ -32,6 +32,8 @@
 #import "CDXDictionarySerializerUtils.h"
 #import "CDXCardDecks.h"
 #import "CDXDevice.h"
+#import "CDXAppSettings.h"
+#import "CDXAppURL.h"
 
 #undef ql_component
 #define ql_component lcl_cApplication
@@ -172,6 +174,36 @@
     [decks addPendingCardDeckAdd:holder];
 }
 
+- (void)addDefaultCardDecks1:(CDXCardDecks *)decks {
+    CDXCardDeckHolder *holder;
+    CDXCardDeck *deck;
+    
+    // 64 Minutes Timer Hex
+    deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:@"0x40%20Minutes%20Timer,g0,d0,c0,id0,is1,it1,r0,s0,ap1&,000000ff,00ff00ff,l,40,240&0x40&0x3c&0x38&0x34&0x30&0x2c&0x28&0x24&0x20,,ffff00ff&0x1c,,ffff00ff&0x18,,ffff00ff&0x14,,ffff00ff&0x10,,ff0000ff&0x0c,,ff0000ff&0x08,,ff0000ff&0x04,ff0000ff,000000ff,,,60&0x03,ff0000ff,000000ff,,,60&0x02,ff0000ff,000000ff,,,60&0x01,ff0000ff,000000ff,,,60&0x00,ff0000ff,000000ff,,,0"];
+    [deck updateStorageObjectDeferred:NO];
+    holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
+    [decks addPendingCardDeckAdd:holder];
+    
+    // 16 Minutes Timer Hex
+    deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:@"0x10%20Minutes%20Timer,g0,d0,c0,id0,is1,it1,r0,s0,ap1&,000000ff,00ff00ff,l,40,60&0x10&0x0f&0x0e&0x0d&0x0c&0x0b&0x0a&0x09&0x08&0x07&0x06&0x05,,ffff00ff&0x04,,ffff00ff&0x03,,ffff00ff&0x02,,ff0000ff&0x01,,ff0000ff&0x00,ff0000ff,000000ff,,,0"];
+    [deck updateStorageObjectDeferred:NO];
+    holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
+    [decks addPendingCardDeckAdd:holder];
+    
+    // 60 Minutes Timer
+    deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:@"60%20Minutes%20Timer,g0,d0,c0,id0,is1,it1,r0,s0,ap1&,000000ff,00ff00ff,l,60,300&60&55&50&45&40&35&30,,ffff00ff&25,,ffff00ff&20,,ffff00ff&15,,ff0000ff&10,,ff0000ff&5,ff0000ff,000000ff,,,60&4,ff0000ff,000000ff,,,60&3,ff0000ff,000000ff,,,60&2,ff0000ff,000000ff,,,60&1,ff0000ff,000000ff,,,60&0,ff0000ff,000000ff,,,0"];
+    [deck updateStorageObjectDeferred:NO];
+    holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
+    [decks addPendingCardDeckAdd:holder];
+    
+    // 15 Minutes Timer
+    deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:@"15%20Minutes%20Timer,g0,d0,c0,id0,is1,it1,r0,s0,ap1&,000000ff,00ff00ff,l,60,60&15&14&13&12&11&10&9&8&7&6&5,,ffff00ff&4,,ffff00ff&3,,ffff00ff&2,,ff0000ff&1,,ff0000ff&0,ff0000ff,000000ff,,,0"];
+    [deck updateStorageObjectDeferred:NO];
+    holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
+    [decks addPendingCardDeckAdd:holder];
+    
+}
+
 - (CDXCardDecks *)cardDecks {
     NSUInteger version = 0;
     CDXCardDecks *decks = [CDXCardDecks cardDecksFromStorageObjectNamed:@"Main.CardDecksList" version:&version];
@@ -195,6 +227,16 @@
         [self addDefaultCardDecks:decks];
         // save the list
         [decks updateStorageObjectDeferred:NO];
+    }
+    
+    const NSUInteger migrationState_1 = 100;
+    if ([[CDXAppSettings sharedAppSettings] migrationState] < migrationState_1) {
+        // add some new default card decks
+        [self addDefaultCardDecks1:decks];
+        // save the list
+        [decks updateStorageObjectDeferred:NO];
+        
+        [[CDXAppSettings sharedAppSettings] setMigrationState:migrationState_1];
     }
     
     return decks;
@@ -221,39 +263,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    qltrace();
-    if (url == nil) {
-        return NO;
-    }
-    
-    NSString *host = [url host];
-    if (!(host == nil || [@"" isEqualToString:host])) {
-        return NO;
-    }
-    
-    BOOL handled = NO;
-    NSString *path = [url path];
-    CDXCardDeck *deckToAdd = nil;
-    
-    if ([@"/add" isEqualToString:path]) {
-        deckToAdd = [CDXCardDeckURLSerializer cardDeckFromVersion1String:[url query]];
-    } else if ([@"/2/add" isEqualToString:path]) {
-        deckToAdd = [CDXCardDeckURLSerializer cardDeckFromVersion2String:[url query]];
-    }
-    
-    if (deckToAdd != nil) {
-        handled = YES;
-        [deckToAdd updateStorageObjectDeferred:YES];
-        CDXCardDeckHolder *holder =  [CDXCardDeckHolder cardDeckHolderWithCardDeck:deckToAdd];
-        [cardDecks addPendingCardDeckAdd:holder];
-        [appWindowManager popToInitialViewController];
-        UIViewController *vc = [appWindowManager visibleViewController];
-        if ([vc respondsToSelector:@selector(processPendingCardDeckAddsAtTopDelayed)]) {
-            [vc performSelector:@selector(processPendingCardDeckAddsAtTopDelayed)];
-        }
-    }
-    
-    return handled;
+    return [CDXAppURL handleOpenURL:url cardDecks:cardDecks];
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
@@ -265,9 +275,15 @@
     [CDXStorage drainAllDeferredActions];
 }
 
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    qltrace();
+    [appWindowManager applicationWillEnterForeground];
+}
+
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     qltrace();
     [appWindowManager dismissModalViewControllerAnimated:NO];
+    [appWindowManager applicationDidEnterBackground];
     [CDXStorage drainAllDeferredActions];
 }
 

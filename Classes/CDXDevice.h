@@ -46,8 +46,21 @@ typedef enum {
     
 }
 
+@property (nonatomic, readonly) NSString* deviceModel;
+@property (nonatomic, readonly) NSString* deviceMachine;
+
 @property (nonatomic, readonly) CDXDeviceType deviceType;
+@property (nonatomic, readonly) NSString* deviceTypeString;
 @property (nonatomic, readonly) CDXDeviceUIIdiom deviceUIIdiom;
+@property (nonatomic, readonly) NSString* deviceUIIdiomString;
+@property (nonatomic, readonly) CGFloat deviceScreenScale;
+
+@property (nonatomic, readonly) BOOL useReducedGraphicsEffects;
+@property (nonatomic, readonly) BOOL useImageBasedRendering;
+
+@property (nonatomic, readonly) BOOL hasTwitterIntegration;
+
+- (void)vibrate;
 
 declare_singleton(sharedDevice, CDXDevice);
 

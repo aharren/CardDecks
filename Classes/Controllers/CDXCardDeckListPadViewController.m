@@ -121,9 +121,9 @@
     ignoreCardDeckUpdateNotifications = NO;
 }
 
-- (IBAction)addButtonPressedDelayed {
+- (void)processCardAddAtBottomDelayed:(NSArray *)cards {
     ignoreCardDeckUpdateNotifications = YES;
-    [super addButtonPressedDelayed];
+    [super processCardAddAtBottomDelayed:cards];
     ignoreCardDeckUpdateNotifications = NO;
 }
 
@@ -137,6 +137,12 @@
     CDXCardDeckCardEditPadViewController *vc = [[[CDXCardDeckCardEditPadViewController alloc] initWithCardDeckViewContext:cardDeckViewContext editDefaults:YES] autorelease];
     [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc animated:YES];
     [self performBlockingSelectorEnd];
+}
+
+- (void)performAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    ignoreCardDeckUpdateNotifications = YES;
+    [super performAction:action withSender:sender tableView:tableView indexPath:indexPath];
+    ignoreCardDeckUpdateNotifications = NO;
 }
 
 @end

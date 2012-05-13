@@ -25,12 +25,7 @@
 
 #import "CDXCardDeck.h"
 #import "CDXCardsViewBase.h"
-#import "CDXObjectCache.h"
 
-
-enum {
-    CDXCardsStackSwipeViewCardImagesSize = 3
-};
 
 enum {
     CDXCardsStackSwipeViewCardViewsTopLeft = 0,
@@ -39,12 +34,9 @@ enum {
     CDXCardsStackSwipeViewCardViewsSize
 };
 
-@interface CDXCardsStackSwipeView : CDXCardsViewBase<CDXCardsViewView> {
+@interface CDXCardsStackSwipeView : CDXCardsViewBase {
     
 @protected
-    CDXObjectCache *cardImages;
-    
-    UIImageView *cardViewsView[CDXCardsStackSwipeViewCardViewsSize];
     CGSize cardViewsSize;
     
     CGPoint touchStartPosition;

@@ -24,38 +24,98 @@
 // THE SOFTWARE.
 
 #import "CDXDevice.h"
+#import "CDXMacros.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import <sys/types.h>
+#import <sys/sysctl.h>
+#import <Twitter/Twitter.h>
 
 
 @implementation CDXDevice
 
+@synthesize deviceModel;
+@synthesize deviceMachine;
 @synthesize deviceType;
+@synthesize deviceTypeString;
 @synthesize deviceUIIdiom;
+@synthesize deviceUIIdiomString;
+@synthesize deviceScreenScale;
+@synthesize useReducedGraphicsEffects;
+@synthesize useImageBasedRendering;
+@synthesize hasTwitterIntegration;
 
 synthesize_singleton(sharedDevice, CDXDevice);
 
+static NSString* CDXDeviceGetSystemInformationByName(const char* name) {
+    size_t bufferSize;
+    if (sysctlbyname(name, NULL, &bufferSize, NULL, 0) != 0) {
+        return nil;
+    }
+    
+    char *buffer = malloc(bufferSize);
+    NSString *value = nil;
+    if (sysctlbyname(name, buffer, &bufferSize, NULL, 0) == 0) {
+        value = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+    }
+    free(buffer);
+    
+    return value;
+}
+
 - (id)init {
     if ((self = [super init])) {
+        deviceType = CDXDeviceTypeUnknown;
+        useReducedGraphicsEffects = NO;
+        deviceScreenScale = [[UIScreen mainScreen] scale];
+        
         UIDevice* device = [UIDevice currentDevice];
-        NSString *deviceModel = [device model];
-        deviceModel = [deviceModel lowercaseString];
+        ivar_assign_and_copy(deviceModel, [[device model] lowercaseString]);
+        ivar_assign_and_copy(deviceMachine, [CDXDeviceGetSystemInformationByName("hw.machine") lowercaseString]);
+        
+        // set type of device
         if ([deviceModel hasSuffix:@"simulator"]) {
             deviceType = CDXDeviceTypeSimulator;
+            ivar_assign_and_copy(deviceTypeString, @"simulator");
         } else if ([deviceModel isEqualToString:@"iphone"]) {
             deviceType = CDXDeviceTypeiPhone;
+            ivar_assign_and_copy(deviceTypeString, @"iphone");
         } else if ([deviceModel isEqualToString:@"ipod touch"]) {
             deviceType = CDXDeviceTypeiPodTouch;
+            ivar_assign_and_copy(deviceTypeString, @"ipod touch");
         } else if ([deviceModel isEqualToString:@"ipad"]) {
             deviceType = CDXDeviceTypeiPad;
+            ivar_assign_and_copy(deviceTypeString, @"ipad");
+        } else {
+            deviceType = CDXDeviceTypeUnknown;
+            ivar_assign_and_copy(deviceTypeString, @"unknown");
         }
-        UIUserInterfaceIdiom userInterfaceIdiom = [device userInterfaceIdiom];
-        if (userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        // set UI idiom
+        if ([device userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             deviceUIIdiom = CDXDeviceUIIdiomPad;
+            ivar_assign_and_copy(deviceUIIdiomString, @"pad");
         } else {
             deviceUIIdiom = CDXDeviceUIIdiomPhone;
+            ivar_assign_and_copy(deviceUIIdiomString, @"phone");
         }
-        qltrace(@"%@ %d %d", deviceModel, deviceType, deviceUIIdiom);
+        
+        // use reduced graphics effects on devices with non-retina displays
+        useReducedGraphicsEffects = (deviceScreenScale <= 1.0);
+        
+        // use image-based rendering on devices with non-retina displays, and
+        // first-retina-generations of iPhone and iPod
+        useImageBasedRendering = (deviceScreenScale <= 1.0) || ([deviceMachine hasPrefix:@"iphone3,"]) || ([deviceMachine hasPrefix:@"ipod4,"]);
+        
+        // Twitter framework is weakly linked
+        hasTwitterIntegration = ([TWTweetComposeViewController class] != Nil) ? YES : NO;
+        
+        qltrace(@"%@ %@ %d %d %f %d %d %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, useReducedGraphicsEffects ? 1 : 0, useImageBasedRendering ? 1 : 0, hasTwitterIntegration ? 1 : 0);
     }
     return self;
+}
+
+- (void)vibrate {
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 }
 
 @end

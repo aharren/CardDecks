@@ -54,6 +54,11 @@ typedef enum {
 
 #define CDXCardFontSizeCacheSize 2
 
+#define CDXCardTimerIntervalOff     ((NSTimeInterval) 0)
+#define CDXCardTimerIntervalMin     ((NSTimeInterval) 1)
+#define CDXCardTimerIntervalMax     ((NSTimeInterval) 60 * 60)
+#define CDXCardTimerIntervalDefault ((NSTimeInterval) 5)
+
 @interface CDXCard : NSObject<NSCopying> {
     
 @protected
@@ -63,6 +68,7 @@ typedef enum {
     CDXCardOrientation orientation;
     CDXCardCornerStyle cornerStyle;
     CGFloat fontSize;
+    NSTimeInterval timerInterval;
     
     NSUInteger fontSizeCacheNextIndex;
     CGSize fontSizeCacheSize[CDXCardFontSizeCacheSize];
@@ -75,6 +81,7 @@ typedef enum {
 @property (nonatomic, assign) CDXCardOrientation orientation;
 @property (nonatomic, assign) CDXCardCornerStyle cornerStyle;
 @property (nonatomic, assign) CGFloat fontSize;
+@property (nonatomic, assign) NSTimeInterval timerInterval;
 
 - (CGFloat)fontSizeConstrainedToSize:(CGSize)size scale:(CGFloat)scale;
 

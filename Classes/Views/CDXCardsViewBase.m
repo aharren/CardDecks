@@ -24,6 +24,9 @@
 // THE SOFTWARE.
 
 #import "CDXCardsViewBase.h"
+#import "CDXCardViewImageRendering.h"
+#import "CDXCardViewDirectRendering.h"
+#import "CDXDevice.h"
 
 #undef ql_component
 #define ql_component lcl_cView
@@ -35,17 +38,57 @@
 @synthesize viewDataSource;
 @synthesize deviceOrientation;
 
-- (id)initWithFrame:(CGRect)rect {
+- (id)initWithFrame:(CGRect)rect viewCount:(NSUInteger)viewCount {
     qltrace();
     if ((self = [super initWithFrame:rect])) {
         deviceOrientation = UIDeviceOrientationPortrait;
+        
+        NSObject<CDXCardViewRendering> *viewRendering = nil;
+        if ([[CDXDevice sharedDevice] useImageBasedRendering]) {
+            viewRendering = [[CDXCardViewImageRendering alloc] initWithSize:viewCount];
+        } else {
+            viewRendering = [[CDXCardViewDirectRendering alloc] initWithSize:viewCount];
+        }
+        ivar_assign(cardViewRendering, viewRendering);
     }
     return self;
 }
 
+- (id)initWithFrame:(CGRect)rect {
+    return [self initWithFrame:rect viewCount:0];
+}
+
 - (void)dealloc {
     qltrace();
+    ivar_release_and_clear(cardViewRendering);
     [super dealloc];
+}
+
+- (void)showCardAtIndex:(NSUInteger)index {
+    [self showCardAtIndex:index tellDelegate:YES];
+}
+
+- (void)showCardAtIndex:(NSUInteger)index tellDelegate:(BOOL)tellDelegate {
+    
+}
+
+- (void)invalidateDataSourceCaches {
+    [cardViewRendering invalidateCaches];
+}
+
+- (NSUInteger)currentCardIndex {
+    return currentCardIndex;
+}
+
+- (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
+    qltrace();
+    deviceOrientation = orientation;
+    if (self.superview == nil) {
+        return;
+    }
+    
+    [self invalidateDataSourceCaches];
+    [self showCardAtIndex:currentCardIndex tellDelegate:NO];
 }
 
 @end

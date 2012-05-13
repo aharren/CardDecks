@@ -25,15 +25,10 @@
 
 #import "CDXCardDeck.h"
 #import "CDXCardsViewBase.h"
-#import "CDXObjectCache.h"
 
 
 @class CDXCardsStackViewScrollView;
 @class CDXCardsStackViewScrollViewDelegate;
-
-enum {
-    CDXCardsStackViewCardImagesSize = 3
-};
 
 enum {
     CDXCardsStackViewCardViewsTopLeft = 0,
@@ -50,7 +45,7 @@ enum {
     CDXCardsStackViewScrollViewDirectionLeftOut
 };
 
-@interface CDXCardsStackView : CDXCardsViewBase<CDXCardsViewView> {
+@interface CDXCardsStackView : CDXCardsViewBase {
     
 @protected
     CDXCardsStackViewScrollView *scrollView;
@@ -58,9 +53,6 @@ enum {
     CGFloat scrollViewPageWidth;
     NSUInteger scrollViewDirection;
     
-    CDXObjectCache *cardImages;
-    
-    UIImageView *cardViewsView[CDXCardsStackViewCardViewsSize];
     CGFloat cardViewsBorder;
     CGSize cardViewsSize;
 }

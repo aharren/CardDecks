@@ -30,6 +30,7 @@
 #import "CDXImageFactory.h"
 #import "CDXAppSettings.h"
 #import "CDXStorage.h"
+#import "CDXDevice.h"
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -38,41 +39,42 @@
 @interface CDXCardDeckCardViewControllerTimer : NSObject {
     
 @protected
-    unsigned int timerId;
+    NSUInteger cardIndex;
+    NSTimeInterval timerStart;
+    NSTimeInterval timerExpiration;
     unsigned int timerType;
-    NSTimeInterval timerInterval;
 }
 
-@property (readonly, nonatomic) unsigned int timerId;
+@property (readonly, nonatomic) NSUInteger cardIndex;
 @property (readonly, nonatomic) unsigned int timerType;
-@property (readonly, nonatomic) NSTimeInterval timerInterval;
 
 @end
 
 
 @implementation CDXCardDeckCardViewControllerTimer
 
-@synthesize timerId;
+@synthesize cardIndex;
 @synthesize timerType;
-@synthesize timerInterval;
 
-- (id)initWithTimerId:(unsigned int)tid timerType:(unsigned int)ttype {
+- (id)initWithCardIndex:(NSUInteger)index timerInterval:(NSTimeInterval)interval timerType:(unsigned int)type {
     qltrace();
     if ((self = [super init])) {
-        timerId = tid;
-        timerType = ttype;
-        switch (timerType) {
-            case 1:
-                timerInterval = 5;
-                break;
-            case 2:
-                timerInterval = 1;
-                break;
-            default:
-                timerInterval = 0.1;
-        }
+        double timerFactor = (type == 0) ? 1.0 : (1.0/5.0);
+        cardIndex = index;
+        timerStart = [NSDate timeIntervalSinceReferenceDate];
+        timerExpiration = timerStart + (interval * timerFactor);
+        timerType = type;
     }
     return self;
+}
+
+- (void)dealloc {
+    qltrace();
+    [super dealloc];
+}
+
+- (BOOL)isExpired {
+    return [NSDate timeIntervalSinceReferenceDate] > timerExpiration;
 }
 
 @end
@@ -104,13 +106,14 @@
     ivar_release_and_clear(cardDeck);
     ivar_release_and_clear(indexDotsView);
     ivar_release_and_clear(cardsView);
-    ivar_release_and_clear(imageView);
+    ivar_release_and_clear(initialView);
     ivar_release_and_clear(actionsViewShuffleButton);
     ivar_release_and_clear(actionsViewSortButton);
     ivar_release_and_clear(actionsViewPlayButton);
     ivar_release_and_clear(actionsViewPlay2Button);
     ivar_release_and_clear(actionsViewStopButton);
     ivar_release_and_clear(actionsViewButtonsView);
+    ivar_release_and_clear(timerSignalView);
     [super dealloc];
 }
 
@@ -147,8 +150,8 @@
     [cardsView removeFromSuperview];
     ivar_release_and_clear(cardsView);
     
-    [imageView removeFromSuperview];
-    ivar_release_and_clear(imageView);
+    [initialView removeFromSuperview];
+    ivar_release_and_clear(initialView);
     
     deviceOrientation = [[CDXAppWindowManager sharedAppWindowManager] deviceOrientation];
     UIDeviceOrientation orientation = cardDeck.wantsAutoRotate ? deviceOrientation : UIDeviceOrientationPortrait;
@@ -183,17 +186,24 @@
             [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:deviceOrientation view:self.view];
         }
     } else {
-        qltrace(@"image");
+        qltrace(@"initial");
         
         [self resignFirstResponder];
         CDXCard *card = [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex orCard:nil];
         if (card != nil) {
-            UIImage *image = [[CDXImageFactory sharedImageFactory]
-                              imageForCard:card
-                              size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
-                              deviceOrientation:orientation];
-            ivar_assign(imageView, [[UIImageView alloc] initWithImage:image]);
-            [self.view insertSubview:imageView atIndex:0];
+            CGSize viewSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
+            if ([[CDXDevice sharedDevice] useImageBasedRendering]) {
+                UIImage *image = [[CDXImageFactory sharedImageFactory]
+                                  imageForCard:card
+                                  size:viewSize
+                                  deviceOrientation:orientation];
+                ivar_assign(initialView, [[UIImageView alloc] initWithImage:image]);
+            } else {
+                CDXCardView *cardView = [[CDXCardView alloc] initWithFrame:CGRectMake(0,0, 1,1)];
+                [cardView setCard:card size:viewSize deviceOrientation:orientation preview:NO];
+                ivar_assign(initialView, cardView);
+            }
+            [self.view insertSubview:initialView atIndex:0];
         }
     }
 
@@ -208,18 +218,44 @@
     [self configureActionsViewAnimated:NO];
 }
 
+- (void)performTimerCallbackDelayed {
+    [self performSelector:@selector(timerCallback:) withObject:currentTimer afterDelay:0.01];
+    NSTimeInterval blinkFactor = (currentTimer.timerType == 0) ? 2.0 : 4.0;
+    timerSignalView.hidden = (int)(fmod([NSDate timeIntervalSinceReferenceDate] * blinkFactor, 2.0)) == 0;
+}
+
+- (void)uninstallTimer {
+    qltrace();
+    timerSignalView.hidden = YES;
+    ivar_release_and_clear(currentTimer);
+}
+
+- (void)installTimerWithCardIndex:(NSUInteger)cardIndex timerType:(unsigned int)timerType {
+    qltrace();
+    CDXCard* card = [cardDeck cardAtIndex:cardIndex];
+    if (card.timerInterval != CDXCardTimerIntervalOff) {
+        timerSignalView.backgroundColor = [[card textColor] uiColor];
+        ivar_assign(currentTimer, [[CDXCardDeckCardViewControllerTimer alloc] initWithCardIndex:cardIndex timerInterval:card.timerInterval timerType:timerType]);
+        [self performTimerCallbackDelayed];
+    } else {
+        [self stopButtonPressed];
+        [[CDXDevice sharedDevice] vibrate];
+    }
+}
+
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
     [self configureView];
     [self configureIndexDotsViewAndButtons];
+    timerSignalView.hidden = YES;
 }
 
 - (void)viewDidUnload {
     qltrace();
     ivar_release_and_clear(indexDotsView);
     ivar_release_and_clear(cardsView);
-    ivar_release_and_clear(imageView);
+    ivar_release_and_clear(initialView);
     ivar_release_and_clear(actionsView);
     ivar_release_and_clear(actionsViewButtonsView);
     ivar_release_and_clear(actionsViewShuffleButton);
@@ -227,7 +263,12 @@
     ivar_release_and_clear(actionsViewPlayButton);
     ivar_release_and_clear(actionsViewPlay2Button);
     ivar_release_and_clear(actionsViewStopButton);
+    ivar_release_and_clear(timerSignalView);
     [super viewDidUnload];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    cardsViewShowsFirstCard = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -237,12 +278,28 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self resignFirstResponder];
+    [self uninstallTimer];
 }
 
 - (void)setUserInteractionEnabled:(BOOL)enabled {
     userInteractionEnabled = enabled;
     if (self.view.superview != nil) {
         [self configureView];
+    }
+}
+
+- (void)applicationWillEnterForeground {
+    if (currentTimer) {
+        // signal to the user that the current timer is no longer active
+        [self stopButtonPressed];
+    }
+}
+
+- (void)applicationDidEnterBackground {
+    if (currentTimer) {
+        // install a new timer object to make current timer invalid, e.g. to
+        // avoid unexpected card changes when we come back
+        ivar_assign(currentTimer, [[CDXCardDeckCardViewControllerTimer alloc] initWithCardIndex:0 timerInterval:0 timerType:0]);
     }
 }
 
@@ -265,6 +322,9 @@
     [self configureActionsViewAnimated:YES];
 }
 
+- (void)menuControllerWillHideMenu {
+}
+
 - (NSUInteger)cardsViewDataSourceCardsCount {
     return [cardDeck cardsCount];
 }
@@ -285,9 +345,43 @@
     }
 }
 
+- (void)handleAutoPlayDelayed {
+    self.view.userInteractionEnabled = YES;
+    switch (cardDeck.autoPlay) {
+        case CDXCardDeckAutoPlayPlay:
+            [self playButtonPressed];
+            break;
+        case CDXCardDeckAutoPlayPlay2:
+            [self play2ButtonPressed];
+            break;
+        case CDXCardDeckAutoPlayOff:
+        default:
+            break;
+    }
+}
+
 - (void)cardsViewDelegateCurrentCardIndexHasChangedTo:(NSUInteger)index {
+    if (cardsViewShowsFirstCard) {
+        cardsViewShowsFirstCard = NO;
+        
+        // handle auto-play
+        switch (cardDeck.autoPlay) {
+            case CDXCardDeckAutoPlayPlay:
+            case CDXCardDeckAutoPlayPlay2:
+                self.view.userInteractionEnabled = NO;
+                [self performSelector:@selector(handleAutoPlayDelayed) withObject:nil afterDelay:0.3];
+                break;
+            case CDXCardDeckAutoPlayOff:
+            default:
+                break;
+        }
+    }
+    
     cardDeckViewContext.currentCardIndex = index;
     [indexDotsView setCurrentPage:index animated:YES];
+    if (currentTimer) {
+        [self installTimerWithCardIndex:index timerType:currentTimer.timerType];
+    }
 }
 
 - (BOOL)canBecomeFirstResponder {
@@ -448,40 +542,35 @@
     [self setActionsViewHidden:YES animated:YES];
 }
 
-- (void)timerAction:(id)object {
-    qltrace();
+- (void)timerCallback:(id)object {
     CDXCardDeckCardViewControllerTimer *timer = (CDXCardDeckCardViewControllerTimer *)object;
-    if (timer.timerId == currentTimerId && [self.view superview] != nil) {
-        NSUInteger currentCardIndex = [cardsView currentCardIndex];
-        switch (timer.timerType) {
-            case 1:
-            case 2:
-                currentCardIndex = (currentCardIndex + 1) % [cardDeck cardsCount];
-                [cardsView showCardAtIndex:currentCardIndex];
-                [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
-                break;
-            default:
-                break;
-        }
+    if (timer != currentTimer || timer.cardIndex != [cardsView currentCardIndex] || [self.view superview] == nil) {
+        qltrace("invalid timer");
+        return;
     }
+    
+    if (![timer isExpired]) {
+        [self performTimerCallbackDelayed];
+        return;
+    }
+    
+    qltrace("timer expired");
+    NSUInteger newCardIndex = ([cardsView currentCardIndex] + 1) % [cardDeck cardsCount];
+    [cardsView showCardAtIndex:newCardIndex];
 }
 
 - (IBAction)playButtonPressed {
-    currentTimerId++;
-    CDXCardDeckCardViewControllerTimer *timer = [[[CDXCardDeckCardViewControllerTimer alloc] initWithTimerId:currentTimerId timerType:1] autorelease];
-    [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play.png" text:@"play" timeInterval:0.4 orientation:deviceOrientation view:self.view];
+    [self installTimerWithCardIndex:[cardsView currentCardIndex] timerType:0];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play.png" text:@"play 1x" timeInterval:0.4 orientation:deviceOrientation view:self.view];
 }
 
 - (IBAction)play2ButtonPressed {
-    currentTimerId++;
-    CDXCardDeckCardViewControllerTimer *timer = [[[CDXCardDeckCardViewControllerTimer alloc] initWithTimerId:currentTimerId timerType:2] autorelease];
-    [self performSelector:@selector(timerAction:) withObject:timer afterDelay:timer.timerInterval];
-    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play2.png" text:@"fast play" timeInterval:0.4 orientation:deviceOrientation view:self.view];
+    [self installTimerWithCardIndex:[cardsView currentCardIndex] timerType:1];
+    [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Play2.png" text:@"play 5x" timeInterval:0.4 orientation:deviceOrientation view:self.view];
 }
 
 - (IBAction)stopButtonPressed {
-    currentTimerId++;
+    [self uninstallTimer];
     [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Stop.png" text:@"stop" timeInterval:0.4 orientation:deviceOrientation view:self.view];
 }
 

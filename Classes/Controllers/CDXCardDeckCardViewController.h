@@ -30,6 +30,8 @@
 #import "CDXIndexDotsView.h"
 
 
+@class CDXCardDeckCardViewControllerTimer;
+
 @interface CDXCardDeckCardViewController : UIViewController<CDXAppWindowViewController, CDXCardsViewDelegate, CDXCardsViewDataSource> {
     
 @protected
@@ -39,9 +41,10 @@
     UIDeviceOrientation deviceOrientation;
     
     UIView<CDXCardsViewView> *cardsView;
+    BOOL cardsViewShowsFirstCard;
     
     BOOL userInteractionEnabled;
-    UIView *imageView;
+    UIView *initialView;
     
     IBOutlet CDXIndexDotsView *indexDotsView;
     NSUInteger pageControlJumpPagesCount;
@@ -56,8 +59,9 @@
     IBOutlet UIButton *actionsViewStopButton;
 
     NSUInteger closeTapCount;
-    
-    unsigned int currentTimerId;
+
+    IBOutlet UIView *timerSignalView;
+    CDXCardDeckCardViewControllerTimer *currentTimer;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;

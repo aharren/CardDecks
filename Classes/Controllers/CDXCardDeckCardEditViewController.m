@@ -143,6 +143,7 @@
     self.navigationItem.title = @"";
     self.navigationItem.rightBarButtonItem = editingDefaults ? nil : viewButtonsUpDownBarButtonItem;
     
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
     [self showCardAtIndex:cardDeckViewContext.currentCardIndex];
     [text becomeFirstResponder];
     [self showCardView:NO];
@@ -165,6 +166,9 @@
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
 }
 
+- (void)menuControllerWillHideMenu {
+}
+
 - (IBAction)upDownButtonPressed {
     [self finishCardModification];
     [self showCardAtIndex:(cardDeckViewContext.currentCardIndex - 1) + (viewButtonsUpDown.selectedSegmentIndex << 1)];
@@ -176,8 +180,10 @@
                            [CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension],
                            [CDXColorKeyboardExtension sharedColorKeyboardExtension],
                            [CDXTextKeyboardExtension sharedtextKeyboardExtension],
+                           [CDXTimerKeyboardExtension sharedTimerKeyboardExtension],
                            nil];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
 }
 
 - (void)dismissActionSheet {
@@ -188,12 +194,12 @@
 }
 
 - (void)keyboardExtensionResponderExtensionBecameActiveAtIndex:(NSUInteger)index {
-    [self showCardView:(index == 1 || index == 2)];
+    [self showCardView:(index == 1 || index == 2 || index == 3)];
     [self dismissActionSheet];
 }
 
 - (BOOL)keyboardExtensionResponderHasActionsForExtensionAtIndex:(NSUInteger)index {
-    return index == 1 || index == 2;
+    return index == 1 || index == 2 || index == 3;
 }
 
 - (void)keyboardExtensionResponderRunActionsForExtensionAtIndex:(NSUInteger)index barButtonItem:(UIBarButtonItem *)barButtonItem {
@@ -222,6 +228,13 @@
                                    destructiveButtonTitle:nil
                                         otherButtonTitles:@"Layout \u21e2 Defaults", @"Layout \u21e0 Defaults", @"Size \u21e2 Defaults", @"Size \u21e0 Defaults", nil] autorelease];
             break;
+        case 3:
+            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Timer Properties"
+                                                 delegate:self
+                                        cancelButtonTitle:@"Cancel"
+                                   destructiveButtonTitle:nil
+                                        otherButtonTitles:@"Timer \u21e2 Defaults", @"Timer \u21e0 Defaults", nil] autorelease];
+            break;
         case -1:
             sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Color Properties"
                                                  delegate:self
@@ -235,6 +248,13 @@
                                         cancelButtonTitle:@"Cancel"
                                    destructiveButtonTitle:nil
                                         otherButtonTitles:@"Layout \u21e2 All Cards", @"Size \u21e2 All Cards", nil] autorelease];
+            break;
+        case -3:
+            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Timer Properties"
+                                                 delegate:self
+                                        cancelButtonTitle:@"Cancel"
+                                   destructiveButtonTitle:nil
+                                        otherButtonTitles:@"Timer \u21e2 All Cards", nil] autorelease];
             break;
         default:
             break;
@@ -287,6 +307,18 @@
                     break;
             }
             break;
+        case 3:
+            switch (buttonIndex) {
+                case 0:
+                    cardDeck.cardDefaults.timerInterval = card.timerInterval;
+                    break;
+                case 1:
+                    card.timerInterval = cardDeck.cardDefaults.timerInterval;
+                    break;
+                default:
+                    break;
+            }
+            break;
         case -1:
             switch (buttonIndex) {
                 case 0:
@@ -306,6 +338,15 @@
                     break;
                 case 1:
                     [cardDeck setFontSize:card.fontSize];
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case -3:
+            switch (buttonIndex) {
+                case 0:
+                    [cardDeck setTimerInterval:card.timerInterval];
                     break;
                 default:
                     break;
@@ -352,6 +393,14 @@
 - (void)textKeyboardExtensionSetFontSize:(CGFloat)fontSize {
     [self currentCard].fontSize = fontSize;
     [self updateCardPreview];
+}
+
+- (NSTimeInterval)timerKeyboardExtensionTimerInterval {
+    return [self currentCard].timerInterval;
+}
+
+- (void)timerKeyboardExtensionSetTimerInterval:(NSTimeInterval)interval {
+    [self currentCard].timerInterval = interval;
 }
 
 - (void)paste:(id)sender {

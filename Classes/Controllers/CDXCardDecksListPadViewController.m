@@ -102,24 +102,24 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
     BOOL selected = NO;
     if (indexPath.section == 1) {
         selected = [cardDecks cardDeckAtIndex:indexPath.row] == currentCardDeck;
     } else if (indexPath.section == 2) {
         selected = cardDecks.cardDeckDefaults == currentCardDeck;
     }
-    if (selected) {
-        cell.backgroundView	= [[[UIImageView alloc] initWithImage:tableCellBackgroundImageAlt] autorelease];
-    } else {
-        cell.backgroundView	= [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
-    }
+    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath marked:selected];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
     UITableViewCell *cell = [super tableView:tableView cellForSection:section];
-    cell.accessoryType = UITableViewCellAccessoryNone;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryNone;
     return cell;
 }
 
@@ -136,6 +136,7 @@
 
 - (void)pushCardDeckListViewControllerWithCardDeckHolder:(CDXCardDeckHolder *)deckHolder {
     qltrace();
+    ignoreCardDeckUpdateNotifications = YES;
     if (deckHolder != nil && deckHolder != currentCardDeck) {
         CDXCardDeck *deck = deckHolder.cardDeck;
         if (deck != nil) {
@@ -152,6 +153,7 @@
     NSIndexPath *indexPath = [viewTableView indexPathForSelectedRow];
     [viewTableView deselectRowAtIndexPath:indexPath animated:NO];
     [self performBlockingSelectorEnd];
+    ignoreCardDeckUpdateNotifications = NO;
 }
 
 - (void)processSinglePendingCardDeckAdd {
@@ -165,6 +167,12 @@
     ivar_release_and_clear(currentCardDeck);
     [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
     [super processPendingCardDeckAddsAtTopDelayed];
+}
+
+- (void)performAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    ignoreCardDeckUpdateNotifications = YES;
+    [super performAction:action withSender:sender tableView:tableView indexPath:indexPath];
+    ignoreCardDeckUpdateNotifications = NO;
 }
 
 @end

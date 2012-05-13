@@ -25,6 +25,7 @@
 
 #import "CDXAppAboutSettings.h"
 #import "CDXApplicationVersion.h"
+#import "CDXDevice.h"
 
 #undef ql_component
 #define ql_component lcl_cModel
@@ -33,14 +34,18 @@
 enum {
     CDXAppAboutSettingsFeedback,
     CDXAppAboutSettingsSite,
+    CDXAppAboutSettingsReleaseNotes,
     CDXAppAboutSettingsLegal,
+    CDXAppAboutSettingsDeviceInfo,
     CDXAppAboutSettingsCount
 };
 
 static const CDXSetting settings[] = {
     { CDXAppAboutSettingsFeedback, CDXSettingTypeURLAction, @"Feedback" },
     { CDXAppAboutSettingsSite, CDXSettingTypeURLAction, @"0xc0.de/CardDecks" },
+    { CDXAppAboutSettingsReleaseNotes, CDXSettingTypeHTMLText, @"Release Notes" },
     { CDXAppAboutSettingsLegal, CDXSettingTypeHTMLText, @"Legal" },
+    { CDXAppAboutSettingsDeviceInfo, CDXSettingTypeHTMLText, @"Device Information" },
     { 0, 0, @"" }
 };
 
@@ -52,7 +57,8 @@ typedef struct {
 
 static const CDXAppSettingGroup groups[] = {
     { @"", 2, CDXAppAboutSettingsFeedback },
-    { @"", 1, CDXAppAboutSettingsLegal },
+    { @"", 2, CDXAppAboutSettingsReleaseNotes },
+    { @"", 1, CDXAppAboutSettingsDeviceInfo },
     { @"", 0, 0 }
 };
 
@@ -158,10 +164,41 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
         default:
             return nil;
             break;
+        case CDXAppAboutSettingsReleaseNotes: {
+            NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];
+            NSString *path = [folder stringByAppendingPathComponent:@"ReleaseNotes.html"];
+            NSString *text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+            return text;
+            break;
+        }
         case CDXAppAboutSettingsLegal: {
             NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];
             NSString *path = [folder stringByAppendingPathComponent:@"Legal.html"];
             NSString *text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+            return text;
+            break;
+        }
+        case CDXAppAboutSettingsDeviceInfo: {
+            NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];
+            NSString *path = [folder stringByAppendingPathComponent:@"Template.html"];
+            NSString *text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+            
+            text = [text stringByReplacingOccurrencesOfString:@"$title$" withString:@"Device Information"];
+            
+            CDXDevice *device = [CDXDevice sharedDevice];
+            NSMutableString *content = [[[NSMutableString alloc] init] autorelease];
+            [content appendString:@"<table style=\"border-spacing:0px\">"];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Model", [device deviceModel]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Machine", [device deviceMachine]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Type", [device deviceTypeString]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"UI idiom", [device deviceUIIdiomString]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%.1f</td></tr>\n", @"Screen scale", [device deviceScreenScale]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Graphics effects", [device useReducedGraphicsEffects] ? @"reduced" : @"full"];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Rendering mode", [device useImageBasedRendering] ? @"image" : @"direct"];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Twitter integration", [device hasTwitterIntegration] ? @"yes" : @"no"];
+            [content appendString:@"</table>"];
+            text = [text stringByReplacingOccurrencesOfString:@"$content$" withString:content];
+            
             return text;
             break;
         }

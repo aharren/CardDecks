@@ -90,6 +90,8 @@
     deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
     deck.cornerStyle = CDXCardCornerStyleCornered;
     
+    deck.autoPlay = CDXCardDeckAutoPlayPlay;
+    
     CDXCard *card;
     card = [deck cardWithDefaults];
     card.text = @"Card1:Text";
@@ -98,6 +100,7 @@
     card.orientation = CDXCardOrientationUp;
     card.cornerStyle = CDXCardCornerStyleRounded;
     card.fontSize = 1;
+    card.timerInterval = 1;
     [deck addCard:card];
     
     card = [deck cardWithDefaults];
@@ -107,6 +110,7 @@
     card.orientation = CDXCardOrientationLeft;
     card.cornerStyle = CDXCardCornerStyleRounded;
     card.fontSize = 2;
+    card.timerInterval = 2;
     [deck addCard:card];
     
     card = [deck cardDefaults];
@@ -116,6 +120,7 @@
     card.orientation = CDXCardOrientationDown;
     card.cornerStyle = CDXCardCornerStyleCornered;
     card.fontSize = 3;
+    card.timerInterval = 10;
     
     NSDictionary *dictionary = [CDXCardDeckDictionarySerializer version2DictionaryFromCardDeck:deck];
     NSDictionary *expected = [self dictionaryFromFile:@"CDXCardDeckDictionarySerializerTestsDeck2b1.CardDeck.plist"];
@@ -145,6 +150,7 @@
     card.orientation = CDXCardOrientationUp;
     card.cornerStyle = CDXCardCornerStyleCornered;
     card.fontSize = 1;
+    card.timerInterval = 1;
     [deck addCard:card];
     
     card = [deck cardWithDefaults];
@@ -154,6 +160,7 @@
     card.orientation = CDXCardOrientationLeft;
     card.cornerStyle = CDXCardCornerStyleRounded;
     card.fontSize = 2;
+    card.timerInterval = 2;
     [deck addCard:card];
     
     card = [deck cardDefaults];
@@ -163,6 +170,7 @@
     card.orientation = CDXCardOrientationDown;
     card.cornerStyle = CDXCardCornerStyleCornered;
     card.fontSize = 3;
+    card.timerInterval = 10;
     
     NSDictionary *dictionary = [CDXCardDeckDictionarySerializer version2DictionaryFromCardDeck:deck];
     NSDictionary *expected = [self dictionaryFromFile:@"CDXCardDeckDictionarySerializerTestsDeck2b2.CardDeck.plist"];
@@ -184,6 +192,8 @@
     STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleSideBySide, nil);
     STAssertEquals(deck.cornerStyle, CDXCardCornerStyleCornered, nil);
     
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
+    
     STAssertEquals([deck cardsCount], (NSUInteger)2, nil);
     
     CDXCard *card;
@@ -194,6 +204,7 @@
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationUp, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleCornered, nil);
     STAssertEquals(card.fontSize, (CGFloat)1, nil);
+    STAssertEquals(card.timerInterval, (NSTimeInterval)5, nil);
     
     card = [deck cardAtCardsIndex:1];
     STAssertEqualObjects(card.text, @"Card2:Text", nil);
@@ -202,6 +213,7 @@
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationLeft, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleCornered, nil);
     STAssertEquals(card.fontSize, (CGFloat)2, nil);
+    STAssertEquals(card.timerInterval, (NSTimeInterval)5, nil);
     
     card = [deck cardDefaults];
     STAssertEqualObjects(card.text, @"Defaults:Text", nil);
@@ -210,6 +222,7 @@
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationDown, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleCornered, nil);
     STAssertEquals(card.fontSize, (CGFloat)3, nil);
+    STAssertEquals(card.timerInterval, (NSTimeInterval)5, nil);
 }
 
 - (void)testCardDeckFromVersion2aDictionaryReverse {
@@ -227,6 +240,8 @@
     STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleStack, nil);
     STAssertEquals(deck.cornerStyle, CDXCardCornerStyleRounded, nil);
     
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
+    
     STAssertEquals([deck cardsCount], (NSUInteger)2, nil);
     
     CDXCard *card;
@@ -237,6 +252,7 @@
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationUp, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleRounded, nil);
     STAssertEquals(card.fontSize, (CGFloat)1, nil);
+    STAssertEquals(card.timerInterval, (NSTimeInterval)5, nil);
     
     card = [deck cardAtCardsIndex:1];
     STAssertEqualObjects(card.text, @"Card2:TextReverse", nil);
@@ -245,6 +261,7 @@
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationLeft, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleRounded, nil);
     STAssertEquals(card.fontSize, (CGFloat)2, nil);
+    STAssertEquals(card.timerInterval, (NSTimeInterval)5, nil);
     
     card = [deck cardDefaults];
     STAssertEqualObjects(card.text, @"Defaults:TextReverse", nil);
@@ -253,6 +270,7 @@
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationDown, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleRounded, nil);
     STAssertEquals(card.fontSize, (CGFloat)3, nil);
+    STAssertEquals(card.timerInterval, (NSTimeInterval)5, nil);
 }
 
 - (void)testCardDeckFromVersion2bDictionary {
@@ -270,6 +288,8 @@
     STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleSideBySide, nil);
     STAssertEquals(deck.cornerStyle, CDXCardCornerStyleCornered, nil);
     
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayPlay, nil);
+    
     STAssertEquals([deck cardsCount], (NSUInteger)2, nil);
     
     CDXCard *card;
@@ -280,6 +300,7 @@
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationUp, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleCornered, nil);
     STAssertEquals(card.fontSize, (CGFloat)1, nil);
+    STAssertEquals(card.timerInterval, (NSTimeInterval)1, nil);
     
     card = [deck cardAtCardsIndex:1];
     STAssertEqualObjects(card.text, @"Card2:Text", nil);
@@ -288,6 +309,7 @@
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationLeft, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleCornered, nil);
     STAssertEquals(card.fontSize, (CGFloat)2, nil);
+    STAssertEquals(card.timerInterval, (NSTimeInterval)2, nil);
     
     card = [deck cardDefaults];
     STAssertEqualObjects(card.text, @"Defaults:Text", nil);
@@ -296,6 +318,7 @@
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationDown, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleCornered, nil);
     STAssertEquals(card.fontSize, (CGFloat)3, nil);
+    STAssertEquals(card.timerInterval, (NSTimeInterval)10, nil);
 }
 
 - (void)testCardDeckFromVersion2bDictionaryReverse {
@@ -313,6 +336,8 @@
     STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleStack, nil);
     STAssertEquals(deck.cornerStyle, CDXCardCornerStyleRounded, nil);
     
+    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
+    
     STAssertEquals([deck cardsCount], (NSUInteger)2, nil);
     
     CDXCard *card;
@@ -323,6 +348,7 @@
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationUp, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleRounded, nil);
     STAssertEquals(card.fontSize, (CGFloat)1, nil);
+    STAssertEquals(card.timerInterval, (NSTimeInterval)1, nil);
     
     card = [deck cardAtCardsIndex:1];
     STAssertEqualObjects(card.text, @"Card2:TextReverse", nil);
@@ -331,6 +357,7 @@
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationLeft, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleRounded, nil);
     STAssertEquals(card.fontSize, (CGFloat)2, nil);
+    STAssertEquals(card.timerInterval, (NSTimeInterval)2, nil);
     
     card = [deck cardDefaults];
     STAssertEqualObjects(card.text, @"Defaults:TextReverse", nil);
@@ -339,6 +366,7 @@
     STAssertEquals((NSUInteger)card.orientation, (NSUInteger)CDXCardOrientationDown, nil);
     STAssertEquals((NSUInteger)card.cornerStyle, (NSUInteger)CDXCardCornerStyleRounded, nil);
     STAssertEquals(card.fontSize, (CGFloat)3, nil);
+    STAssertEquals(card.timerInterval, (NSTimeInterval)10, nil);
 }
 
 - (void)testVersion2DictionaryShuffleIndexes {
@@ -384,7 +412,7 @@
     STAssertEqualObjects([[deck2 cardAtIndex:1] description], [card2s description], nil);
     STAssertEqualObjects([[deck2 cardAtIndex:2] description], [card3s description], nil);
     
-     // shuffle indexes should be mutable
+    // shuffle indexes should be mutable
     [deck2 removeCardAtIndex:1];
     STAssertEqualObjects([[deck2 cardAtIndex:0] description], [card1s description], nil);
     STAssertEqualObjects([[deck2 cardAtIndex:1] description], [card3s description], nil);
@@ -401,7 +429,7 @@
     dictionary = [self dictionaryFromFile:@"CDXCardDeckDictionarySerializerTestsDeck2a1.CardDeck.plist"];
     deck = [CDXCardDeckDictionarySerializer cardDeckFromDictionary:dictionary];
     STAssertEqualObjects([deck name], @"Deck:Name", nil);
-
+    
     dictionary = [self dictionaryFromFile:@"CDXCardDeckDictionarySerializerTestsDeck2b1.CardDeck.plist"];
     deck = [CDXCardDeckDictionarySerializer cardDeckFromDictionary:dictionary];
     STAssertEqualObjects([deck name], @"Deck:Name", nil);

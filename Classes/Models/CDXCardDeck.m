@@ -42,6 +42,7 @@
 @synthesize displayStyle;
 @synthesize cornerStyle;
 @synthesize pageControlStyle;
+@synthesize autoPlay;
 @synthesize isShuffled;
 @synthesize shuffleIndexes;
 
@@ -64,6 +65,7 @@
         displayStyle = CDXCardDeckDisplayStyleDefault;
         cornerStyle = CDXCardCornerStyleDefault;
         pageControlStyle = CDXCardDeckPageControlStyleDefault;
+        autoPlay = CDXCardDeckAutoPlayDefault;
         isShuffled = NO;
         shuffleIndexes = nil;
     }
@@ -85,21 +87,29 @@
     CDXCardDeck *copy = [[[self class] allocWithZone:zone] init];
     copy.cardDefaults = [[cardDefaults copyWithZone:zone] autorelease];
     copy.name = name;
-    copy.wantsPageControl = wantsPageControl;
-    copy.wantsPageJumps = wantsPageJumps;
-    copy.wantsAutoRotate = wantsAutoRotate;
-    copy.shakeAction = shakeAction;
-    copy.groupSize = groupSize;
-    copy.displayStyle = displayStyle;
-    copy.cornerStyle = cornerStyle;
-    copy.pageControlStyle = pageControlStyle;
+    [copy setFlagsFromCardDeck:self];
     for (CDXCard *card in cards) {
-        [copy addCard:[[card copyWithZone:zone] autorelease]];
+        CDXCard *newcard = [card copyWithZone:zone];
+        [copy addCardInternal:newcard];
+        [newcard release];
     }
     if (isShuffled) {
         copy.shuffleIndexes = shuffleIndexes;
     }
+    [copy updateFields];
     return copy;
+}
+
+- (void)setFlagsFromCardDeck:(CDXCardDeck *)deck {
+    wantsPageControl = deck.wantsPageControl;
+    wantsPageJumps = deck.wantsPageJumps;
+    wantsAutoRotate = deck.wantsAutoRotate;
+    shakeAction = deck.shakeAction;
+    groupSize = deck.groupSize;
+    displayStyle = deck.displayStyle;
+    cornerStyle = deck.cornerStyle;
+    pageControlStyle = deck.pageControlStyle;
+    autoPlay = deck.autoPlay;
 }
 
 - (NSUInteger)cardsIndex:(NSUInteger)index {
@@ -187,12 +197,23 @@
     return (CDXCard *)[cards objectAtIndex:cardsIndex];
 }
 
-- (void)addCard:(CDXCard *)card {
+- (void)addCardInternal:(CDXCard *)card {
     card.cornerStyle = cornerStyle;
     [cards addObject:card];
     if (isShuffled) {
         NSUInteger cardsIndex = [cards count]-1;
         [shuffleIndexes addObject:[NSNumber numberWithUnsignedInteger:cardsIndex]];
+    }
+}
+
+- (void)addCard:(CDXCard *)card {
+    [self addCardInternal:card];
+    [self updateFields];
+}
+
+- (void)addCards:(NSArray *)array {
+    for (CDXCard *card in array) {
+        [self addCardInternal:card];
     }
     [self updateFields];
 }
@@ -214,6 +235,14 @@
     if ([cards count] == 0) {
         [self sort];
     }
+}
+
+- (NSMutableArray *)removeCards {
+    NSMutableArray *array = [cards retain];
+    ivar_assign(cards, [[NSMutableArray alloc] initWithCapacity:0]);
+    [self sort];
+    [self updateFields];
+    return [array autorelease];
 }
 
 - (void)replaceCardAtIndex:(NSUInteger)index withCard:(CDXCard *)card {
@@ -261,6 +290,10 @@
     ivar_enum_assign(pageControlStyle, CDXCardDeckPageControlStyle, aPageControlStyle);
 }
 
+- (void)setAutoPlay:(CDXCardDeckAutoPlay)aAutoPlay {
+    ivar_enum_assign(autoPlay, CDXCardDeckAutoPlay, aAutoPlay);
+}
+
 - (void)setCornerStyle:(CDXCardCornerStyle)aCornerStyle {
     cornerStyle = aCornerStyle;
     for (CDXCard *card in cards) {
@@ -296,6 +329,13 @@
     }
     cardDefaults.backgroundColor = backgroundColor;
     [self updateFields];
+}
+
+- (void)setTimerInterval:(NSTimeInterval)timerInterval {
+    for (CDXCard *card in cards) {
+        card.timerInterval = timerInterval;
+    }
+    cardDefaults.timerInterval = timerInterval;
 }
 
 - (void)setShuffleIndexes:(NSMutableArray *)indexes {
