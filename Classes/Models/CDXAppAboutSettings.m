@@ -187,7 +187,7 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
             
             CDXDevice *device = [CDXDevice sharedDevice];
             NSMutableString *content = [[[NSMutableString alloc] init] autorelease];
-            [content appendString:@"<table style=\"border-spacing:0px\">"];
+            [content appendString:@"<table style=\"border-spacing:0px;font-family:Helvetica,sans-serif;font-size:12px;font-weight:700;color:#999999;background-color:#ffffff\">"];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"System version", [device deviceSystemVersionString]];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Model", [device deviceModel]];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Machine", [device deviceMachine]];
