@@ -262,7 +262,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 @interface CDXAppWindowManagerPhone : CDXAppWindowManager {
     
 @protected
-    IBOutlet UIView *statusBarView;
+    IBOutlet UIImageView *statusBarView;
     
     UINavigationController *navigationController;
 }
@@ -333,6 +333,9 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
     qltrace();
     const CDXDeviceType deviceType = [CDXDevice sharedDevice].deviceType;
     statusBarView.hidden = !(deviceType == CDXDeviceTypeiPhone || deviceType == CDXDeviceTypeiPodTouch);
+    if ([CDXDevice sharedDevice].hasAdaptiveStatusBar) {
+        statusBarView.image = [UIImage imageNamed:@"StatusBarAdaptiveBlue"];
+    }
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     

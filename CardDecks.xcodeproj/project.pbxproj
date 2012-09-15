@@ -122,6 +122,7 @@
 		E0CFA5FC11D68CF800FF686F /* IndexDotGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CFA5FB11D68CF800FF686F /* IndexDotGray@2x.png */; };
 		E0CFA5FE11D68D0600FF686F /* IndexDotWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CFA5FD11D68D0600FF686F /* IndexDotWhite@2x.png */; };
 		E0D01AED1170EF9200004856 /* CDXImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D01AEC1170EF9200004856 /* CDXImageFactory.m */; };
+		E0D1DAE21604CE9F0017BFF3 /* StatusBarAdaptiveBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1DAE11604CE9F0017BFF3 /* StatusBarAdaptiveBlue@2x.png */; };
 		E0D1E50C11D5F22E00C8B1C4 /* Toolbar-Up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E50B11D5F22E00C8B1C4 /* Toolbar-Up@2x.png */; };
 		E0D1E53C11D5FA0900C8B1C4 /* Toolbar-Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E53B11D5FA0900C8B1C4 /* Toolbar-Settings@2x.png */; };
 		E0D1E59F11D602E600C8B1C4 /* Toolbar-Edit-Reorder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E59E11D602E600C8B1C4 /* Toolbar-Edit-Reorder@2x.png */; };
@@ -351,6 +352,7 @@
 		E0CFA5FD11D68D0600FF686F /* IndexDotWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IndexDotWhite@2x.png"; path = "Images/IndexDotWhite@2x.png"; sourceTree = "<group>"; };
 		E0D01AEB1170EF9200004856 /* CDXImageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXImageFactory.h; path = Classes/CDXImageFactory.h; sourceTree = "<group>"; };
 		E0D01AEC1170EF9200004856 /* CDXImageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXImageFactory.m; path = Classes/CDXImageFactory.m; sourceTree = "<group>"; };
+		E0D1DAE11604CE9F0017BFF3 /* StatusBarAdaptiveBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "StatusBarAdaptiveBlue@2x.png"; path = "Images/StatusBarAdaptiveBlue@2x.png"; sourceTree = "<group>"; };
 		E0D1E50B11D5F22E00C8B1C4 /* Toolbar-Up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Up@2x.png"; path = "Images/Toolbars/Toolbar-Up@2x.png"; sourceTree = "<group>"; };
 		E0D1E53B11D5FA0900C8B1C4 /* Toolbar-Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Settings@2x.png"; path = "Images/Toolbars/Toolbar-Settings@2x.png"; sourceTree = "<group>"; };
 		E0D1E59E11D602E600C8B1C4 /* Toolbar-Edit-Reorder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Edit-Reorder@2x.png"; path = "Images/Toolbars/Toolbar-Edit-Reorder@2x.png"; sourceTree = "<group>"; };
@@ -766,6 +768,7 @@
 				E03032781528E96600F42494 /* Default@2x~ipad.png */,
 				E0620F8A119E950D00234667 /* StatusBarDefault.png */,
 				E0D1E5DF11D62CA700C8B1C4 /* StatusBarDefault@2x.png */,
+				E0D1DAE11604CE9F0017BFF3 /* StatusBarAdaptiveBlue@2x.png */,
 				E0CCC70C1170DA0A0040D222 /* Icon-Settings.png */,
 				E0602B4E11D54FC80075F439 /* Icon-Settings@2x.png */,
 				E0CCC70D1170DA0A0040D222 /* Icon.png */,
@@ -973,6 +976,7 @@
 				E0BDD69015210389001C325D /* Template.html in Resources */,
 				E03032791528E96600F42494 /* Default@2x~ipad.png in Resources */,
 				E01951F6153B3CD3002CE5B2 /* ReleaseNotes.html in Resources */,
+				E0D1DAE21604CE9F0017BFF3 /* StatusBarAdaptiveBlue@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
