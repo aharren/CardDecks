@@ -160,7 +160,7 @@ AAgACAAIAAEAAQABAAE</bytes>
 									<bytes key="NSWhite">MCAwAA</bytes>
 								</object>
 							</object>
-							<string key="IBUIColorCocoaTouchKeyPath">groupTableViewBackgroundColor</string>
+							<string key="IBUIColorCocoaTouchKeyPath">scrollViewTexturedBackgroundColor</string>
 						</object>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
