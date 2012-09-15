@@ -40,9 +40,11 @@
 @synthesize deviceUIIdiom;
 @synthesize deviceUIIdiomString;
 @synthesize deviceScreenScale;
+@synthesize deviceSystemVersionString;
 @synthesize useReducedGraphicsEffects;
 @synthesize useImageBasedRendering;
 @synthesize hasTwitterIntegration;
+@synthesize hasAdaptiveStatusBar;
 
 synthesize_singleton(sharedDevice, CDXDevice);
 
@@ -67,6 +69,7 @@ static NSString* CDXDeviceGetSystemInformationByName(const char* name) {
         deviceType = CDXDeviceTypeUnknown;
         useReducedGraphicsEffects = NO;
         deviceScreenScale = [[UIScreen mainScreen] scale];
+        ivar_assign_and_copy(deviceSystemVersionString, [[UIDevice currentDevice] systemVersion]);
         
         UIDevice* device = [UIDevice currentDevice];
         ivar_assign_and_copy(deviceModel, [[device model] lowercaseString]);
@@ -109,7 +112,10 @@ static NSString* CDXDeviceGetSystemInformationByName(const char* name) {
         // Twitter framework is weakly linked
         hasTwitterIntegration = ([TWTweetComposeViewController class] != Nil) ? YES : NO;
         
-        qltrace(@"%@ %@ %d %d %f %d %d %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, useReducedGraphicsEffects ? 1 : 0, useImageBasedRendering ? 1 : 0, hasTwitterIntegration ? 1 : 0);
+        // adaptive status bar
+        hasAdaptiveStatusBar = ([deviceSystemVersionString intValue] >= 6) && (deviceUIIdiom == CDXDeviceUIIdiomPhone);
+
+        qltrace(@"%@ %@ %d %d %f %@ %d %d %d %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, deviceSystemVersionString, useReducedGraphicsEffects ? 1 : 0, useImageBasedRendering ? 1 : 0, hasTwitterIntegration ? 1 : 0, hasAdaptiveStatusBar ? 1 : 0);
     }
     return self;
 }
