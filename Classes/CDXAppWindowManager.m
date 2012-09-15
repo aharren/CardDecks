@@ -225,6 +225,8 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     navigationView.frame = [[UIScreen mainScreen] bounds];
     navigationView.userInteractionEnabled = YES;
+    [navigationView removeFromSuperview];
+    [window addSubview:navigationView];
 }
 
 - (void)popFullScreenViewControllerAnimated:(BOOL)animated {
