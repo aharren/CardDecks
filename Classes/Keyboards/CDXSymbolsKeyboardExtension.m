@@ -317,7 +317,7 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
 }
 
 - (void)configureWithBlock:(CDXSymbolsKeyboardExtensionBlockStruct *)block {
-    label.text = block->blockName;
+    label.text = (block == NULL) ? @"" : block->blockName;
 }
 
 @end
@@ -519,7 +519,7 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     currentBlock = [CDXSymbolsKeyboardExtensionBlocks blockByIndex:currentBlockIndex];
     [blockTableView reloadData];
     [blockTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-    blockTableView.scrollEnabled = (((currentBlock->endCode - currentBlock->startCode) + 6) / 7) > 6;
+    blockTableView.scrollEnabled = (currentBlock == NULL) ? YES : (((currentBlock->endCode - currentBlock->startCode) + 6) / 7) > 6;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
