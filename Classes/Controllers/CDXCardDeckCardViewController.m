@@ -246,6 +246,7 @@
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
+    self.view.frame = [UIScreen mainScreen].bounds;
     [self configureView];
     [self configureIndexDotsViewAndButtons];
     timerSignalView.hidden = YES;
