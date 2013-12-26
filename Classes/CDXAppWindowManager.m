@@ -314,7 +314,6 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
         [self pushFullScreenViewController:viewController animated:animated];
     } else {
         [navigationController pushViewController:viewController animated:animated];
-        navigationController.view.frame = [[UIScreen mainScreen] applicationFrame];
     }
 }
 
