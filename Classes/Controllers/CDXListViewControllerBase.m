@@ -114,10 +114,8 @@
     ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:10]);
     ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor grayColor]);
     CGFloat rowHeight = viewTableView.rowHeight;
-    CGFloat base = useReducedGraphicsEffects ? 1.0 : 0.75;
-    if (!useReducedGraphicsEffects) {
-        ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:rowHeight base:base]);
-    }
+    CGFloat base = 1.0;
+    ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:rowHeight base:base]);
     ivar_assign_and_retain(tableCellBackgroundImageAlt, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff] bottomColor:[CDXColor colorWithRed:0xe8 green:0xe8 blue:0xe8 alpha:0xff] height:rowHeight base:base]);
     tableCellImageSize = CGSizeMake(10, 10);
     
