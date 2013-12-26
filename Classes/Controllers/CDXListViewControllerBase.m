@@ -107,8 +107,8 @@
                                           initWithCustomView:activityIndicator]
                                          autorelease];
     self.toolbarItems = viewToolbar.items;
-    ivar_assign_and_retain(tableCellTextFont, [UIFont boldSystemFontOfSize:18]);
-    ivar_assign_and_retain(tableCellTextFontAction, [UIFont boldSystemFontOfSize:11]);
+    ivar_assign_and_retain(tableCellTextFont, [UIFont systemFontOfSize:18]);
+    ivar_assign_and_retain(tableCellTextFontAction, [UIFont systemFontOfSize:11]);
     ivar_assign_and_retain(tableCellTextTextColor, [UIColor blackColor]);
     ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor grayColor]);
     ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor grayColor]);
