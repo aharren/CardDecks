@@ -41,6 +41,7 @@ typedef enum {
     IBOutlet UITableView *viewTableView;
     IBOutlet UIToolbar *viewToolbar;
     CGFloat viewTableViewContentOffsetY;
+    BOOL keepViewTableViewContentOffsetY;
     IBOutlet UIBarButtonItem *editButton;
     IBOutlet UIBarButtonItem *settingsButton;
     

@@ -194,6 +194,7 @@
         if (deck != nil && [deck cardsCount] != 0) {
             CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
             CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:context] autorelease];
+            keepViewTableViewContentOffsetY = YES;
             [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
         }
     }

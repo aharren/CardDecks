@@ -87,6 +87,8 @@
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
+    keepViewTableViewContentOffsetY = NO;
+
     UINavigationItem *navigationItem = self.navigationItem;
     navigationItem.title = titleText;
     navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc]
@@ -140,7 +142,10 @@
     [self performBlockingSelectorEnd];
     [viewTableView reloadData];
     [self updateToolbarButtons];
-    viewTableView.contentOffset = CGPointMake(0, MAX(0, viewTableViewContentOffsetY));
+    if (keepViewTableViewContentOffsetY) {
+        viewTableView.contentOffset = CGPointMake(0, viewTableViewContentOffsetY);
+    }
+    keepViewTableViewContentOffsetY = NO;
     performActionState = CDXListViewControllerBasePerformActionStateNone;
     ivar_release_and_clear(performActionTableViewIndexPath);
     ivar_release_and_clear(performActionToolbarBarButtonItem);
@@ -151,8 +156,10 @@
 - (void)viewWillDisappear:(BOOL)animated {
     qltrace();
     [super viewWillDisappear:animated];
+    if (keepViewTableViewContentOffsetY) {
+        viewTableViewContentOffsetY = viewTableView.contentOffset.y;
+    }
     [self performBlockingSelectorEnd];
-    viewTableViewContentOffsetY = viewTableView.contentOffset.y;
     [viewTableView removeGestureRecognizer:viewTableViewLongPressRecognizer];
     [self.navigationController.toolbar removeGestureRecognizer:viewToolbarLongPressRecognizer];
 }
