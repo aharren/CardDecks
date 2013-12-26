@@ -193,6 +193,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     
     [view removeFromSuperview];
     [window addSubview:fullScreenViewController.view];
+    [window setRootViewController:fullScreenViewController];
     
     [UIView commitAnimations];
 }
@@ -213,6 +214,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     } else {
         [navigationView removeFromSuperview];
         [window addSubview:fullScreenViewController.view];
+        [window setRootViewController:fullScreenViewController];
     }
 }
 
@@ -227,6 +229,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     navigationView.userInteractionEnabled = YES;
     [navigationView removeFromSuperview];
     [window addSubview:navigationView];
+    [window setRootViewController:navigationViewController];
 }
 
 - (void)popFullScreenViewControllerAnimated:(BOOL)animated {
@@ -248,6 +251,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     
     [fullScreenViewController.view removeFromSuperview];
     [window addSubview:navigationView];
+    [window setRootViewController:navigationViewController];
     
     if (animated) {
         [UIView commitAnimations];
@@ -288,6 +292,8 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
     if ((self = [super init])) {
         ivar_assign(navigationController, [[UINavigationController alloc] init]);
         navigationController.toolbarHidden = NO;
+
+        navigationViewController = navigationController;
     }
     return self;
 }
@@ -341,6 +347,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
     
     [window addSubview:navigationView];
     navigationView.frame = [[UIScreen mainScreen] bounds];
+    [window setRootViewController:navigationViewController];
     [navigationView addSubview:navigationController.view];
     
     [window makeKeyAndVisible];
@@ -481,6 +488,8 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
         [rightNavigationController setToolbarHidden:YES];
         [rightNavigationController setNavigationBarHidden:YES];
         [splitViewController setRightViewController:rightNavigationController];
+
+        navigationViewController = splitViewController;
     }
     return self;
 }
@@ -539,6 +548,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
     [window addSubview:navigationView];
+    [window setRootViewController:navigationViewController];
     navigationView.frame = [[UIScreen mainScreen] bounds];
     [navigationView addSubview:splitViewController.view];
     

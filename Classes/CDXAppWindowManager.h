@@ -36,6 +36,7 @@
     IBOutlet CDXAppWindowNoticeView *noticeView;
     
     UIViewController<CDXAppWindowViewController> *fullScreenViewController;
+    UIViewController *navigationViewController;
     
     UIDeviceOrientation deviceOrientation;
 }
