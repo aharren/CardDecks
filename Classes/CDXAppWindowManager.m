@@ -181,8 +181,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 
 - (void)pushFullScreenViewControllerAnimatedAndRemoveView:(UIView *)view {
     qltrace();
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    
+
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.6];
     [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:window cache:YES];
@@ -196,6 +195,8 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     [window setRootViewController:fullScreenViewController];
     
     [UIView commitAnimations];
+
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
 }
 
 - (void)pushFullScreenViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
@@ -224,18 +225,11 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 
 - (void)popFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
     qltrace();
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    navigationView.frame = [[UIScreen mainScreen] bounds];
     navigationView.userInteractionEnabled = YES;
-    [navigationView removeFromSuperview];
-    [window addSubview:navigationView];
-    [window setRootViewController:navigationViewController];
 }
 
 - (void)popFullScreenViewControllerAnimated:(BOOL)animated {
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     [fullScreenViewController setUserInteractionEnabled:NO];
-    navigationView.frame = [[UIScreen mainScreen] bounds];
     
     if (animated) {
         [UIView beginAnimations:nil context:NULL];
@@ -250,6 +244,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     }
     
     [fullScreenViewController.view removeFromSuperview];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     [window addSubview:navigationView];
     [window setRootViewController:navigationViewController];
     
