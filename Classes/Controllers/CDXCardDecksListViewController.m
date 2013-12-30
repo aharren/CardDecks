@@ -152,7 +152,8 @@
                 if ([@"" isEqualToString:description]) {
                     description = @" ";
                 }
-                cell.detailTextLabel.text = description;
+                NSString *text = [description stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+                cell.detailTextLabel.text = text;
                 cell.accessoryType = cardDeckQuickOpen ? UITableViewCellAccessoryDetailDisclosureButton : UITableViewCellAccessoryDisclosureIndicator;
             }
             

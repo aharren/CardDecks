@@ -159,7 +159,8 @@
         case 1: {
             UITableViewCell *cell = [self tableView:tableView cellForSection:indexPath.section];
             CDXCard *card = [cardDeck cardAtIndex:indexPath.row];
-            cell.textLabel.text = card.text;
+            NSString *text = [card.text stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+            cell.textLabel.text = text;
             cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForColor:card.backgroundColor size:tableCellImageSize];
             return cell;
         }
