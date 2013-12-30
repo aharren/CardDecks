@@ -67,6 +67,7 @@
     ivar_release_and_clear(tableCellBackgroundImageAlt);
     ivar_release_and_clear(viewTableViewLongPressRecognizer);
     ivar_release_and_clear(viewToolbarLongPressRecognizer);
+    ivar_release_and_clear(viewTableViewTapRecognizer);
     ivar_release_and_clear(performActionTableViewIndexPath);
     ivar_release_and_clear(performActionToolbarBarButtonItem);
 }
@@ -128,6 +129,8 @@
                                                    initWithTarget:self action:@selector(handleTableViewLongPressGesture:)]);
     ivar_assign(viewToolbarLongPressRecognizer, [[UILongPressGestureRecognizer alloc]
                                                  initWithTarget:self action:@selector(handleToolbarLongPressGesture:)]);
+    ivar_assign(viewTableViewTapRecognizer, [[UITapGestureRecognizer alloc]
+                                             initWithTarget:self action:@selector(handleTableViewTapGesture:)]);
 }
 
 - (void)viewDidUnload {
@@ -151,6 +154,7 @@
     ivar_release_and_clear(performActionToolbarBarButtonItem);
     [viewTableView addGestureRecognizer:viewTableViewLongPressRecognizer];
     [self.navigationController.toolbar addGestureRecognizer:viewToolbarLongPressRecognizer];
+    [viewTableView addGestureRecognizer:viewTableViewTapRecognizer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -162,6 +166,7 @@
     [self performBlockingSelectorEnd];
     [viewTableView removeGestureRecognizer:viewTableViewLongPressRecognizer];
     [self.navigationController.toolbar removeGestureRecognizer:viewToolbarLongPressRecognizer];
+    [viewTableView removeGestureRecognizer:viewTableViewTapRecognizer];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -174,8 +179,10 @@
     [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
     if (editing) {
         [viewTableView removeGestureRecognizer:viewTableViewLongPressRecognizer];
+        [viewTableView removeGestureRecognizer:viewTableViewTapRecognizer];
     } else {
         [viewTableView addGestureRecognizer:viewTableViewLongPressRecognizer];
+        [viewTableView addGestureRecognizer:viewTableViewTapRecognizer];
     }
 }
 
@@ -275,6 +282,14 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    qltrace();
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    qltrace();
+}
+
 #pragma mark -
 #pragma mark Gesture
 
@@ -337,6 +352,25 @@
                 }
             }
         }
+    }
+}
+
+- (void)handleTableViewTapGesture:(UITapGestureRecognizer *)sender {
+    qltrace(@"%@", sender);
+    NSIndexPath *indexPath = [viewTableView indexPathForRowAtPoint:[sender locationInView:viewTableView]];
+    UITableViewCell *cell = [viewTableView cellForRowAtIndexPath:indexPath];
+    
+    if (sender.state == UIGestureRecognizerStateRecognized) {
+        cell.selected = YES;
+        
+        if (cell.accessoryType == UITableViewCellAccessoryDetailDisclosureButton) {
+            if (cell.frame.origin.x + cell.frame.size.width - 44 < [sender locationInView:cell].x) {
+                [self tableView:viewTableView accessoryButtonTappedForRowWithIndexPath:indexPath];
+                return;
+            }
+        }
+        
+        [self tableView:viewTableView didSelectRowAtIndexPath:indexPath];
     }
 }
 

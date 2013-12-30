@@ -108,6 +108,7 @@
                 cell.detailTextLabel.textColor = tableCellDetailTextTextColor;
                 cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+                cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-Right"]] autorelease];
             }
             return cell;
         }
@@ -120,6 +121,7 @@
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-Right"]] autorelease];
             }
             cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
             return cell;

@@ -67,6 +67,7 @@ typedef enum {
     
     UILongPressGestureRecognizer *viewTableViewLongPressRecognizer;
     UILongPressGestureRecognizer *viewToolbarLongPressRecognizer;
+    UITapGestureRecognizer *viewTableViewTapRecognizer;
     CDXListViewControllerBasePerformActionState performActionState;
     NSIndexPath *performActionTableViewIndexPath;
     UIBarButtonItem *performActionToolbarBarButtonItem;
