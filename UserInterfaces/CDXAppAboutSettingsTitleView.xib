@@ -100,7 +100,7 @@
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Copyright (c) 2009-2012 Arne Harren &lt;ah@0xc0.de&gt;</string>
+						<string key="IBUIText">Copyright (c) 2009-2014 Arne Harren &lt;ah@0xc0.de&gt;</string>
 						<reference key="IBUITextColor" ref="652300872"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
