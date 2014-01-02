@@ -110,17 +110,17 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 
 - (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated {
     qltrace();
-    [[self visibleViewController] presentModalViewController:viewController animated:animated];
+    [[self visibleViewController] presentViewController:viewController animated:animated completion:NULL];
 }
 
 - (void)presentModalViewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem animated:(BOOL)animated {
     qltrace();
-    [[self visibleViewController] presentModalViewController:viewController animated:animated];
+    [[self visibleViewController] presentViewController:viewController animated:animated completion:NULL];
 }
 
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
     qltrace();
-    [[self visibleViewController] dismissModalViewControllerAnimated:animated];
+    [[self visibleViewController] dismissViewControllerAnimated:animated completion:NULL];
 }
 
 - (void)applicationWillEnterForeground {
@@ -566,7 +566,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
         [self dismissModalViewControllerAnimated:animated];
     }
     
-    [splitViewController presentModalViewController:viewController animated:animated];
+    [splitViewController presentViewController:viewController animated:animated completion:NULL];
 }
 
 - (void)presentModalViewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem animated:(BOOL)animated {
@@ -589,7 +589,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
 
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
     qltrace();
-    [splitViewController dismissModalViewControllerAnimated:animated];
+    [splitViewController dismissViewControllerAnimated:animated completion:NULL];
     [modalViewControllerContainer dismissPopoverAnimated:animated];
     ivar_release_and_clear(modalViewControllerContainer);
 }
