@@ -94,8 +94,8 @@
         qltrace();
         ivar_assign(cardText, [[UILabel alloc] init]);
         cardText.numberOfLines = 0;
-        cardText.lineBreakMode = UILineBreakModeClip;
-        cardText.textAlignment = UITextAlignmentCenter;
+        cardText.lineBreakMode = NSLineBreakByClipping;
+        cardText.textAlignment = NSTextAlignmentCenter;
         cardText.baselineAdjustment = 0;
         cardText.minimumFontSize = 1;
         cardText.adjustsFontSizeToFitWidth = NO;

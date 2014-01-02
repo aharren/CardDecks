@@ -145,7 +145,7 @@
             CGFloat lineFontSize;
             {
                 UIFont *fontWithMinlineFontSize = [font fontWithSize:floor(minlineFontSize)];
-                [textLine sizeWithFont:fontWithMinlineFontSize minFontSize:12 actualFontSize:&lineFontSize forWidth:size.width lineBreakMode:UILineBreakModeClip];
+                [textLine sizeWithFont:fontWithMinlineFontSize minFontSize:12 actualFontSize:&lineFontSize forWidth:size.width lineBreakMode:NSLineBreakByClipping];
             }
             
             CGSize lineSize;
@@ -157,7 +157,7 @@
             if (lineSize.height > size.height) {
                 lineFontSize = lineFontSize / lineSize.height * size.height;
                 UIFont *fontWithlineFontSize = [font fontWithSize:floor(lineFontSize)];
-                [textLine sizeWithFont:fontWithlineFontSize minFontSize:12 actualFontSize:&lineFontSize forWidth:size.width lineBreakMode:UILineBreakModeClip];
+                [textLine sizeWithFont:fontWithlineFontSize minFontSize:12 actualFontSize:&lineFontSize forWidth:size.width lineBreakMode:NSLineBreakByClipping];
             }
             
             minlineFontSize = MIN(minlineFontSize, lineFontSize);
