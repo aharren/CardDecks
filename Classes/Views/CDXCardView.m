@@ -97,7 +97,6 @@
         cardText.lineBreakMode = NSLineBreakByClipping;
         cardText.textAlignment = NSTextAlignmentCenter;
         cardText.baselineAdjustment = 0;
-        cardText.minimumFontSize = 1;
         cardText.adjustsFontSizeToFitWidth = NO;
         [self addSubview:cardText];
         self.userInteractionEnabled = NO;
