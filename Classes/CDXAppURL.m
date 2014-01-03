@@ -50,6 +50,7 @@
     [deckToAdd updateStorageObjectDeferred:YES];
     CDXCardDeckHolder *holder =  [CDXCardDeckHolder cardDeckHolderWithCardDeck:deckToAdd];
     [cardDecks addPendingCardDeckAdd:holder];
+    [[CDXAppWindowManager sharedAppWindowManager] dismissModalViewControllerAnimated:NO];
     [[CDXAppWindowManager sharedAppWindowManager] popToInitialViewController];
     UIViewController *vc = [[CDXAppWindowManager sharedAppWindowManager] visibleViewController];
     if ([vc respondsToSelector:@selector(processPendingCardDeckAddsAtTopDelayed)]) {
