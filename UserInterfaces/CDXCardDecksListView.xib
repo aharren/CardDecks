@@ -65,7 +65,7 @@
         </toolbar>
     </objects>
     <resources>
-        <image name="Toolbar-Edit-Reorder.png" width="44" height="48"/>
-        <image name="Toolbar-Settings.png" width="22" height="24"/>
+        <image name="Toolbar-Edit-Reorder.png" width="22" height="22"/>
+        <image name="Toolbar-Settings.png" width="22" height="22"/>
     </resources>
 </document>
