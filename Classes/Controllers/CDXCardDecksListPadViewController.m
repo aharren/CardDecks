@@ -83,7 +83,6 @@
         ivar_release_and_clear(currentCardDeck);
         [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
     }
-    cardDeckQuickOpen = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated {

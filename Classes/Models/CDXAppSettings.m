@@ -39,7 +39,6 @@ enum {
     CDXAppSettingsMigrationState,
     CDXAppSettingsVersionState,
     CDXAppSettingsIdleTimer,
-    CDXAppSettingsCardDeckQuickOpen,
     CDXAppSettingsCloseTapCount,
     CDXAppSettingsActionButtonsOnLeftSide,
     CDXAppSettingsDoneButtonOnLeftSide,
@@ -53,7 +52,6 @@ static const CDXSetting settings[] = {
     { CDXAppSettingsMigrationState, CDXSettingTypeText, @"Migration" },
     { CDXAppSettingsVersionState, CDXSettingTypeText, @"Version" },
     { CDXAppSettingsIdleTimer, CDXSettingTypeBoolean, @"Idle Timer" },
-    { CDXAppSettingsCardDeckQuickOpen, CDXSettingTypeBoolean, @"Quick Open" },
     { CDXAppSettingsCloseTapCount, CDXSettingTypeEnumeration, @"Close Gesture" },
     { CDXAppSettingsActionButtonsOnLeftSide, CDXSettingTypeEnumeration, @"Action Buttons" },
     { CDXAppSettingsDoneButtonOnLeftSide, CDXSettingTypeEnumeration, @"Done Button" },
@@ -67,7 +65,6 @@ static NSString *settingsUserDefaultsKeys[] = {
     @"Migration",
     @"Version",
     @"IdleTimer",
-    @"CardDeckQuickOpen",
     @"CloseTapCount",
     @"ActionButtonsOnLeftSide",
     @"DoneButtonOnLeftSide",
@@ -88,7 +85,7 @@ static const CDXAppSettingGroup groupsPhone[] = {
     { @"Internals", 2, CDXAppSettingsMigrationState },
 #endif
     { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
-    { @"Card Deck", 3, CDXAppSettingsCardDeckQuickOpen },
+    { @"Card Deck", 2, CDXAppSettingsCloseTapCount },
     { @"User Interface", 1, CDXAppSettingsDoneButtonOnLeftSide },
     { @"Integration", 1, CDXAppSettingsUseMailApplication },
     { @"Keyboard", 1, CDXAppSettingsAllKeyboardSymbols },
@@ -170,10 +167,6 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
     return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsAllKeyboardSymbols] defaultsTo:NO];
 }
 
-- (BOOL)cardDeckQuickOpen {
-    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsCardDeckQuickOpen] defaultsTo:YES];
-}
-
 - (NSUInteger)closeTapCount {
     NSUInteger value = [CDXAppSettings userDefaultsIntegerValueForKey:settingsUserDefaultsKeys[CDXAppSettingsCloseTapCount] defaultsTo:1];
     if (value >= 1 && value <= 2) {
@@ -246,8 +239,6 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
             return [self enableIdleTimer];
         case CDXAppSettingsAllKeyboardSymbols:
             return [self enableAllKeyboardSymbols];
-        case CDXAppSettingsCardDeckQuickOpen:
-            return [self cardDeckQuickOpen];
         case CDXAppSettingsUseMailApplication:
             return [self useMailApplication];
     }
@@ -259,7 +250,6 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
             break;
         case CDXAppSettingsIdleTimer:
         case CDXAppSettingsAllKeyboardSymbols:
-        case CDXAppSettingsCardDeckQuickOpen:
         case CDXAppSettingsUseMailApplication:
             [CDXAppSettings setUserDefaultsBooleanValue:value forKey:settingsUserDefaultsKeys[tag]];
             break;

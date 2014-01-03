@@ -32,7 +32,6 @@
 @protected
     CDXCardDecks *cardDecks;
     NSUInteger lastCardDeckIndex;
-    BOOL cardDeckQuickOpen;
 
     IBOutlet UIBarButtonItem *addButton;
 }

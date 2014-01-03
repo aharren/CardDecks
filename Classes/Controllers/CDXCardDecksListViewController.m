@@ -64,7 +64,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     qltrace();
-    cardDeckQuickOpen = [[CDXAppSettings sharedAppSettings] cardDeckQuickOpen];
     [super viewWillAppear:animated];
     [CDXStorage drainAllDeferredActions];
 }
@@ -156,7 +155,7 @@
                 }
                 NSString *text = [description stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
                 cell.detailTextLabel.text = text;
-                cell.accessoryType = cardDeckQuickOpen ? UITableViewCellAccessoryDetailDisclosureButton : UITableViewCellAccessoryDisclosureIndicator;
+                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
             }
             
             return cell;
@@ -218,7 +217,7 @@
             lastCardDeckIndex = indexPath.row;
             deselectRow = NO;
             CDXCardDeckHolder *deckHolder = [cardDecks cardDeckAtIndex:indexPath.row];
-            if (cardDeckQuickOpen && [deckHolder cardsCount] != 0) {
+            if ([deckHolder cardsCount] != 0) {
                 [self performBlockingSelector:@selector(pushCardDeckCardViewControllerWithCardDeckHolder:)
                                    withObject:deckHolder];
             } else {
