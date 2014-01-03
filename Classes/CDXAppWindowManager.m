@@ -305,7 +305,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
 
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
     qltrace();
-    if ([viewController wantsFullScreenLayout]) {
+    if ([viewController respondsToSelector:@selector(requiresFullScreenLayout)] && [viewController requiresFullScreenLayout]) {
         [self pushFullScreenViewController:viewController animated:animated];
     } else {
         [navigationController pushViewController:viewController animated:animated];
@@ -503,7 +503,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
         ivar_assign_and_retain(initialLeftViewController, viewController);
         [leftNavigationController pushViewController:viewController animated:NO];
     } else {
-        if ([viewController wantsFullScreenLayout]) {
+        if ([viewController respondsToSelector:@selector(requiresFullScreenLayout)] && [viewController requiresFullScreenLayout]) {
             [self pushFullScreenViewController:viewController animated:animated];
         } else {
             if (initialRightViewController == nil) {

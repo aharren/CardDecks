@@ -94,7 +94,6 @@
     if ((self = [super initWithNibName:@"CDXCardDeckCardView" bundle:nil])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
         ivar_assign_and_retain(cardDeck, cardDeckViewContext.cardDeck);
-        self.wantsFullScreenLayout = YES;
         closeTapCount = [[CDXAppSettings sharedAppSettings] closeTapCount];
     }
     return self;
@@ -302,6 +301,10 @@
         // avoid unexpected card changes when we come back
         ivar_assign(currentTimer, [[CDXCardDeckCardViewControllerTimer alloc] initWithCardIndex:0 timerInterval:0 timerType:0]);
     }
+}
+
+- (BOOL)requiresFullScreenLayout {
+    return YES;
 }
 
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {

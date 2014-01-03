@@ -34,6 +34,7 @@
 @optional
 - (void)applicationWillEnterForeground;
 - (void)applicationDidEnterBackground;
+- (BOOL)requiresFullScreenLayout;
 
 @end
 
