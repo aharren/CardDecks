@@ -9,10 +9,11 @@
             <connections>
                 <outlet property="cardView" destination="23" id="24"/>
                 <outlet property="cardViewScrollView" destination="22" id="25"/>
+                <outlet property="downButton" destination="BdL-8T-K8m" id="F97-Ah-pls"/>
                 <outlet property="text" destination="4" id="5"/>
+                <outlet property="upButton" destination="fxe-V4-NEr" id="XyV-zm-cFF"/>
                 <outlet property="view" destination="1" id="3"/>
-                <outlet property="viewButtonsUpDown" destination="7" id="18"/>
-                <outlet property="viewButtonsUpDownBarButtonItem" destination="13" id="17"/>
+                <outlet property="viewButtons" destination="hJ5-2J-mvf" id="CvJ-UL-oWF"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -47,22 +48,40 @@
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
         </view>
-        <barButtonItem style="plain" id="13">
-            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" momentary="YES" id="7">
-                <rect key="frame" x="235" y="7" width="80" height="30"/>
-                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                <segments>
-                    <segment title="" image="Toolbar-Up.png"/>
-                    <segment title="" image="Toolbar-Down.png"/>
-                </segments>
-                <connections>
-                    <action selector="upDownButtonPressed" destination="-1" eventType="valueChanged" id="20"/>
-                </connections>
-            </segmentedControl>
-        </barButtonItem>
+        <view contentMode="scaleToFill" id="hJ5-2J-mvf">
+            <rect key="frame" x="0.0" y="0.0" width="89" height="37"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fxe-V4-NEr">
+                    <rect key="frame" x="0.0" y="0.0" width="44" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" image="Toolbar-Up.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="upButtonPressed" destination="-1" eventType="touchDown" id="BZY-qe-nth"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BdL-8T-K8m">
+                    <rect key="frame" x="45" y="0.0" width="44" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                    <state key="normal" image="Toolbar-Down.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="downButtonPressed" destination="-1" eventType="touchDown" id="6r6-iT-5ec"/>
+                    </connections>
+                </button>
+            </subviews>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
     </objects>
     <resources>
-        <image name="Toolbar-Down.png" width="17" height="17"/>
-        <image name="Toolbar-Up.png" width="17" height="17"/>
+        <image name="Toolbar-Down.png" width="22" height="22"/>
+        <image name="Toolbar-Up.png" width="22" height="22"/>
     </resources>
 </document>

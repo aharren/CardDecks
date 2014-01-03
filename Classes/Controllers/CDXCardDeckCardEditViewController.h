@@ -43,8 +43,9 @@
     BOOL cardViewUsePreview;
     BOOL textUpdateColors;
     
-    IBOutlet UIBarButtonItem *viewButtonsUpDownBarButtonItem;
-    IBOutlet UISegmentedControl *viewButtonsUpDown;
+    IBOutlet UIButton *upButton;
+    IBOutlet UIButton *downButton;
+    IBOutlet UIView *viewButtons;
     
     CDXCardDeckViewContext *cardDeckViewContext;
     CDXCardDeck *cardDeck;
@@ -60,7 +61,8 @@
 - (CDXCard *)currentCard;
 - (void)updateCardPreview;
 
-- (IBAction)upDownButtonPressed;
+- (IBAction)upButtonPressed;
+- (IBAction)downButtonPressed;
 
 - (CDXCardOrientation)textKeyboardExtensionCardOrientation;
 - (void)textKeyboardExtensionSetCardOrientation:(CDXCardOrientation)cardOrientation;

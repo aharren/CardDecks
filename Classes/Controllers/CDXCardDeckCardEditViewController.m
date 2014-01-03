@@ -51,8 +51,9 @@
     ivar_release_and_clear(text);
     ivar_release_and_clear(cardViewScrollView);
     ivar_release_and_clear(cardView);
-    ivar_release_and_clear(viewButtonsUpDownBarButtonItem);
-    ivar_release_and_clear(viewButtonsUpDown);
+    ivar_release_and_clear(upButton);
+    ivar_release_and_clear(downButton);
+    ivar_release_and_clear(viewButtons);
     ivar_release_and_clear(cardDeckViewContext);
     ivar_release_and_clear(cardDeck);
     ivar_release_and_clear(activeActionSheet);
@@ -82,8 +83,8 @@
     CDXCard *card = [self currentCard];
     text.text = card.text;
     if (!editingDefaults) {
-        [viewButtonsUpDown setEnabled:(cardIndex != 0) forSegmentAtIndex:0];
-        [viewButtonsUpDown setEnabled:(cardIndex < ([cardDeck cardsCount] - 1)) forSegmentAtIndex:1];
+        upButton.enabled = (cardIndex != 0);
+        downButton.enabled = (cardIndex < ([cardDeck cardsCount] - 1));
         
         self.navigationItem.title = [NSString stringWithFormat:@"%d of %d", cardIndex+1, [cardDeck cardsCount]];
     } else {
@@ -132,8 +133,9 @@
     ivar_release_and_clear(text);
     ivar_release_and_clear(cardViewScrollView);
     ivar_release_and_clear(cardView);
-    ivar_release_and_clear(viewButtonsUpDownBarButtonItem);
-    ivar_release_and_clear(viewButtonsUpDown);
+    ivar_release_and_clear(upButton);
+    ivar_release_and_clear(downButton);
+    ivar_release_and_clear(viewButtons);
     ivar_release_and_clear(activeActionSheet);
     [super viewDidUnload];
 }
@@ -141,7 +143,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationItem.title = @"";
-    self.navigationItem.rightBarButtonItem = editingDefaults ? nil : viewButtonsUpDownBarButtonItem;
+    self.navigationItem.rightBarButtonItem = nil;
+    if (!editingDefaults) {
+        UIBarButtonItem *alignmentFix = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil] autorelease];
+        alignmentFix.width = -20;
+        UIBarButtonItem *buttons = [[[UIBarButtonItem alloc] initWithCustomView:viewButtons] autorelease];
+        self.navigationItem.rightBarButtonItems = @[ alignmentFix, buttons ];
+    }
     
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
     [self showCardAtIndex:cardDeckViewContext.currentCardIndex];
@@ -169,9 +177,15 @@
 - (void)menuControllerWillHideMenu {
 }
 
-- (IBAction)upDownButtonPressed {
+- (IBAction)upButtonPressed {
     [self finishCardModification];
-    [self showCardAtIndex:(cardDeckViewContext.currentCardIndex - 1) + (viewButtonsUpDown.selectedSegmentIndex << 1)];
+    [self showCardAtIndex:cardDeckViewContext.currentCardIndex - 1];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] refreshKeyboardExtensions];
+}
+
+- (IBAction)downButtonPressed {
+    [self finishCardModification];
+    [self showCardAtIndex:cardDeckViewContext.currentCardIndex + 1];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] refreshKeyboardExtensions];
 }
 
