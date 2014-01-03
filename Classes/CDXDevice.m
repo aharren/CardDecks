@@ -28,7 +28,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <sys/types.h>
 #import <sys/sysctl.h>
-#import <Twitter/Twitter.h>
+#import <Social/Social.h>
 
 
 @implementation CDXDevice
@@ -110,7 +110,7 @@ static NSString* CDXDeviceGetSystemInformationByName(const char* name) {
         useImageBasedRendering = (deviceScreenScale <= 1.0) || ([deviceMachine hasPrefix:@"iphone3,"]) || ([deviceMachine hasPrefix:@"ipod4,"]);
         
         // Twitter framework is weakly linked
-        hasTwitterIntegration = ([TWTweetComposeViewController class] != Nil) ? YES : NO;
+        hasTwitterIntegration = ([SLComposeViewController class] != Nil) ? YES : NO;
         
         // adaptive status bar
         hasAdaptiveStatusBar = ([deviceSystemVersionString intValue] >= 6) && (deviceUIIdiom == CDXDeviceUIIdiomPhone);

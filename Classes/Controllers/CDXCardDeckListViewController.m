@@ -32,7 +32,7 @@
 #import "CDXAppURL.h"
 #import "CDXAppSettings.h"
 #import "CDXDevice.h"
-#import <Twitter/Twitter.h>
+#import <Social/Social.h>
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -442,7 +442,7 @@ static const CDXCardDeckListViewControllerActionSheetButton actionSheetButtons[2
                 // we don't check [TWTweetComposeViewController canSendTweet] here
                 // in order to get the 'No Twitter Accounts' system message if no
                 // account is configured yet
-                TWTweetComposeViewController *twc = [[[TWTweetComposeViewController alloc] init] autorelease];
+                SLComposeViewController *twc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
                 NSURL *url = [NSURL URLWithString:[CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:cardDeck]];
                 if ([twc addURL:url] == NO) {
                     return;

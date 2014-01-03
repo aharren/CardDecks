@@ -56,7 +56,6 @@
 		E043F1771400EFC900DE0567 /* Toolbar-Left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E043F1751400EFC900DE0567 /* Toolbar-Left@2x.png */; };
 		E047CEF7119369430024A022 /* CDXAppWindowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E047CEF6119369430024A022 /* CDXAppWindowManager.m */; };
 		E048D463152E3A1B0081B88F /* CDXCardViewDirectRendering.m in Sources */ = {isa = PBXBuildFile; fileRef = E048D462152E3A1B0081B88F /* CDXCardViewDirectRendering.m */; };
-		E048D465152F17FD0081B88F /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E048D464152F17FC0081B88F /* Twitter.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E04B448A11B0441600DDBD33 /* CDXAppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E04B448911B0441600DDBD33 /* CDXAppSettings.m */; };
 		E04D945411D77EA500A4DA59 /* IndexDotBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E04D945211D77EA500A4DA59 /* IndexDotBlack@2x.png */; };
 		E04E7A0D14E4716200D46037 /* CDXTimerKeyboardExtensionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E04E7A0C14E4716200D46037 /* CDXTimerKeyboardExtensionView.xib */; };
@@ -95,6 +94,8 @@
 		E0AE1DF713B39C3100959FC7 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0AE1DF613B39C3100959FC7 /* MainWindow-iPad.xib */; };
 		E0BDD69015210389001C325D /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = E0BDD68F15210389001C325D /* Template.html */; };
 		E0BEE1F7117BA68D002F62A7 /* CDXCardsStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */; };
+		E0C1F67418772D4300F17779 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C1F67318772D4300F17779 /* Social.framework */; };
+		E0C1F67518772D6700F17779 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C1F67318772D4300F17779 /* Social.framework */; };
 		E0C3BBB4132EBE8200604881 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0D9E159132EBA1E001435D0 /* MessageUI.framework */; };
 		E0CCC73A1170DC120040D222 /* CDXCardDeckCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0CCC7391170DC120040D222 /* CDXCardDeckCardView.xib */; };
 		E0CCC7401170DC600040D222 /* CDXCardDeckCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0CCC73F1170DC600040D222 /* CDXCardDeckCardViewController.m */; };
@@ -162,7 +163,6 @@
 		E0FE443A153333F90044FE81 /* CDXDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = E023ACEB11F4D3B10051B1E2 /* CDXDevice.m */; };
 		E0FE443B153334060044FE81 /* CDXImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D01AEC1170EF9200004856 /* CDXImageFactory.m */; };
 		E0FE443C1533341C0044FE81 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E097B04314E70FD300A8F38B /* AudioToolbox.framework */; };
-		E0FE443D153334220044FE81 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E048D464152F17FC0081B88F /* Twitter.framework */; };
 		E0FE443E153334440044FE81 /* CDXCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EB6E7B1172343600F41F7A /* CDXCardView.m */; };
 /* End PBXBuildFile section */
 
@@ -246,7 +246,6 @@
 		E048D460152E37BB0081B88F /* CDXCardViewRenderingProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardViewRenderingProtocols.h; path = Classes/Views/CDXCardViewRenderingProtocols.h; sourceTree = "<group>"; };
 		E048D461152E3A1B0081B88F /* CDXCardViewDirectRendering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardViewDirectRendering.h; path = Classes/Views/CDXCardViewDirectRendering.h; sourceTree = "<group>"; };
 		E048D462152E3A1B0081B88F /* CDXCardViewDirectRendering.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardViewDirectRendering.m; path = Classes/Views/CDXCardViewDirectRendering.m; sourceTree = "<group>"; };
-		E048D464152F17FC0081B88F /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		E04B448811B0441600DDBD33 /* CDXAppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppSettings.h; path = Classes/Models/CDXAppSettings.h; sourceTree = "<group>"; };
 		E04B448911B0441600DDBD33 /* CDXAppSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppSettings.m; path = Classes/Models/CDXAppSettings.m; sourceTree = "<group>"; };
 		E04D945211D77EA500A4DA59 /* IndexDotBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IndexDotBlack@2x.png"; path = "Images/IndexDotBlack@2x.png"; sourceTree = "<group>"; };
@@ -297,6 +296,7 @@
 		E0BE980F11A1CF0000F30C50 /* CDXSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXSettings.h; path = Classes/Models/CDXSettings.h; sourceTree = "<group>"; };
 		E0BEE1F5117BA68D002F62A7 /* CDXCardsStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsStackView.h; path = Classes/Views/CDXCardsStackView.h; sourceTree = "<group>"; };
 		E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsStackView.m; path = Classes/Views/CDXCardsStackView.m; sourceTree = "<group>"; };
+		E0C1F67318772D4300F17779 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		E0CCC7391170DC120040D222 /* CDXCardDeckCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardDeckCardView.xib; path = UserInterfaces/CDXCardDeckCardView.xib; sourceTree = "<group>"; };
 		E0CCC73E1170DC600040D222 /* CDXCardDeckCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckCardViewController.h; path = Classes/Controllers/CDXCardDeckCardViewController.h; sourceTree = "<group>"; };
 		E0CCC73F1170DC600040D222 /* CDXCardDeckCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckCardViewController.m; path = Classes/Controllers/CDXCardDeckCardViewController.m; sourceTree = "<group>"; };
@@ -379,7 +379,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E048D465152F17FD0081B88F /* Twitter.framework in Frameworks */,
+				E0C1F67418772D4300F17779 /* Social.framework in Frameworks */,
 				E097B04414E70FD300A8F38B /* AudioToolbox.framework in Frameworks */,
 				E03BA2721167488B00FE7924 /* Foundation.framework in Frameworks */,
 				E03BA2741167489600FE7924 /* UIKit.framework in Frameworks */,
@@ -393,7 +393,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E0FE443D153334220044FE81 /* Twitter.framework in Frameworks */,
+				E0C1F67518772D6700F17779 /* Social.framework in Frameworks */,
 				E0FE443C1533341C0044FE81 /* AudioToolbox.framework in Frameworks */,
 				E0EB7021117240BD00F41F7A /* CoreGraphics.framework in Frameworks */,
 				E0EB6FD1117240AF00F41F7A /* QuartzCore.framework in Frameworks */,
@@ -531,7 +531,7 @@
 		E03BA26E1167488000FE7924 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E048D464152F17FC0081B88F /* Twitter.framework */,
+				E0C1F67318772D4300F17779 /* Social.framework */,
 				E097B04314E70FD300A8F38B /* AudioToolbox.framework */,
 				E0D9E159132EBA1E001435D0 /* MessageUI.framework */,
 				E0EB6F4D11723D1A00F41F7A /* CoreGraphics.framework */,
