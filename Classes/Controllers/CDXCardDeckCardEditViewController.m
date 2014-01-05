@@ -418,14 +418,7 @@
 }
 
 - (void)paste:(id)sender {
-    // we want to paste to text, but it doesn't respond to paste directly, so
-    // search for the right subview
-    for (UIView *view in [text subviews]) {
-        if ([view respondsToSelector:@selector(paste:)]) {
-            [view paste:nil];
-            return;
-        }
-    }
+    [text paste:sender];
 }
 
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
