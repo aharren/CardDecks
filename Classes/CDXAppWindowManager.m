@@ -261,8 +261,6 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 @interface CDXAppWindowManagerPhone : CDXAppWindowManager {
     
 @protected
-    IBOutlet UIImageView *statusBarView;
-    
     UINavigationController *navigationController;
 }
 
@@ -331,9 +329,6 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
 
 - (void)makeWindowKeyAndVisible {
     qltrace();
-    const CDXDeviceType deviceType = [CDXDevice sharedDevice].deviceType;
-    statusBarView.hidden = !(deviceType == CDXDeviceTypeiPhone || deviceType == CDXDeviceTypeiPodTouch);
-    
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
     [window addSubview:navigationView];

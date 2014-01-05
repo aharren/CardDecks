@@ -112,7 +112,6 @@
 		E0D1E5CF11D6129000C8B1C4 /* Notice-Shuffle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5CD11D6129000C8B1C4 /* Notice-Shuffle@2x.png */; };
 		E0D1E5D011D6129000C8B1C4 /* Notice-Sort@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5CE11D6129000C8B1C4 /* Notice-Sort@2x.png */; };
 		E0D1E5E011D62CA700C8B1C4 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5DE11D62CA700C8B1C4 /* Default@2x.png */; };
-		E0D1E5E111D62CA700C8B1C4 /* StatusBarDefault@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5DF11D62CA700C8B1C4 /* StatusBarDefault@2x.png */; };
 		E0D4B87513927A8100228167 /* Toolbar-Play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D4B87313927A8100228167 /* Toolbar-Play@2x.png */; };
 		E0D673E0151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D673DF151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib */; };
 		E0D8C7FE1172255F00356C2C /* lcl.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D8C7FD1172255F00356C2C /* lcl.m */; };
@@ -314,7 +313,6 @@
 		E0D1E5CD11D6129000C8B1C4 /* Notice-Shuffle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Shuffle@2x.png"; path = "Images/Notices/Notice-Shuffle@2x.png"; sourceTree = "<group>"; };
 		E0D1E5CE11D6129000C8B1C4 /* Notice-Sort@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Sort@2x.png"; path = "Images/Notices/Notice-Sort@2x.png"; sourceTree = "<group>"; };
 		E0D1E5DE11D62CA700C8B1C4 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Images/Default@2x.png"; sourceTree = "<group>"; };
-		E0D1E5DF11D62CA700C8B1C4 /* StatusBarDefault@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "StatusBarDefault@2x.png"; path = "Images/StatusBarDefault@2x.png"; sourceTree = "<group>"; };
 		E0D4B87313927A8100228167 /* Toolbar-Play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Play@2x.png"; path = "Images/Toolbars/Toolbar-Play@2x.png"; sourceTree = "<group>"; };
 		E0D673DF151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "CDXTimerKeyboardExtensionView~ipad.xib"; path = "UserInterfaces/CDXTimerKeyboardExtensionView~ipad.xib"; sourceTree = "<group>"; };
 		E0D8C7F91172255F00356C2C /* lcl_config_components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcl_config_components.h; path = Logging/lcl_config_components.h; sourceTree = "<group>"; };
@@ -693,7 +691,6 @@
 				E0D1E5DE11D62CA700C8B1C4 /* Default@2x.png */,
 				E0FCEE171604DA0C00EEA6F4 /* Default-568h@2x.png */,
 				E03032781528E96600F42494 /* Default@2x~ipad.png */,
-				E0D1E5DF11D62CA700C8B1C4 /* StatusBarDefault@2x.png */,
 				E084954A11D4034100489C15 /* Icon@2x.png */,
 				E0DD7D6411D6302B00ED23B6 /* Logo-Prerendered@2x.png */,
 			);
@@ -833,7 +830,6 @@
 				E0D1E5CF11D6129000C8B1C4 /* Notice-Shuffle@2x.png in Resources */,
 				E0D1E5D011D6129000C8B1C4 /* Notice-Sort@2x.png in Resources */,
 				E0D1E5E011D62CA700C8B1C4 /* Default@2x.png in Resources */,
-				E0D1E5E111D62CA700C8B1C4 /* StatusBarDefault@2x.png in Resources */,
 				E0DD7D6511D6302B00ED23B6 /* Logo-Prerendered@2x.png in Resources */,
 				E0DD7D9311D63A1D00ED23B6 /* Cell-Logo@2x.png in Resources */,
 				E0CFA5FC11D68CF800FF686F /* IndexDotGray@2x.png in Resources */,
