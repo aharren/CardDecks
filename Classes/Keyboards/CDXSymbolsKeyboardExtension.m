@@ -237,9 +237,10 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     { 0x2190, 0x2190 + 13*7, @"Arrows" },
     { 0x2580, 0x2580 +  4*7, @"Block Elements" },
     { 0x2500, 0x257F       , @"Box Drawing" },
+    { 0x2800, 0x28FF       , @"Braille Patterns" },
     { 0xFE30, 0xFE30 +  4*7, @"CJK Compatibility Forms" },
     { 0x3000, 0x303F       , @"CJK Symbols and Punctuation" },
-    { 0x20D0, 0x20D0 +  3*7, @"Combining Diacritical Marks for Symbols" },
+    { 0x20D0, 0x20D0 +  3*7, @"Combining Diacritical Marks Symbols" },
     { 0x20A0, 0x20A0 +  4*7, @"Currency Symbols" },
     { 0x2700, 0x27BF       , @"Dingbats" },
     { 0x2460, 0x2460 + 20*7, @"Enclosed Alphanumerics" },
@@ -332,7 +333,6 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     ivar_release_and_clear(button4);
     ivar_release_and_clear(button5);
     ivar_release_and_clear(button6);
-    ivar_release_and_clear(button7);
     [super dealloc];
 }
 
@@ -361,7 +361,6 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     [button4 setTitle:[NSString stringWithFormat:@"%C", (unichar) ((c+3) <= last ? (c+3) : 32)] forState:UIControlStateNormal];
     [button5 setTitle:[NSString stringWithFormat:@"%C", (unichar) ((c+4) <= last ? (c+4) : 32)] forState:UIControlStateNormal];
     [button6 setTitle:[NSString stringWithFormat:@"%C", (unichar) ((c+5) <= last ? (c+5) : 32)] forState:UIControlStateNormal];
-    [button7 setTitle:[NSString stringWithFormat:@"%C", (unichar) ((c+6) <= last ? (c+6) : 32)] forState:UIControlStateNormal];
 }
 
 @end
@@ -417,14 +416,7 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
 - (void)viewWillAppear:(BOOL)animated {
     backButton.alpha = 0;
     if (block != NULL) {
-        if (animated) {
-            [UIView beginAnimations:nil context:NULL];
-            [UIView setAnimationDuration:0.5];
-        }
         backButton.alpha = 1;
-        if (animated) {
-            [UIView commitAnimations];
-        }
     }
     [super viewWillAppear:animated];
 }
@@ -437,7 +429,7 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     if (block == NULL) {
         return [CDXSymbolsKeyboardExtensionBlocks count];
     } else {
-        return ((block->endCode - block->startCode) + 6) / 7;
+        return ((block->endCode - block->startCode) + 5) / 6;
     }
 }
 
@@ -450,6 +442,7 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
             ivar_release_and_clear(loadedTableViewCellA);
             NSAssert([@"CDXSymbolsKeyboardExtensionTableViewCellA" isEqualToString:[cell reuseIdentifier]], @"reuseIdentifier must match");        
             cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+            cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-Right"]] autorelease];
         }
         [cell configureWithBlock:[CDXSymbolsKeyboardExtensionBlocks blockByIndex:indexPath.row]];
         return cell;
@@ -462,7 +455,7 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
             NSAssert([@"CDXSymbolsKeyboardExtensionTableViewCellB" isEqualToString:[cell reuseIdentifier]], @"reuseIdentifier must match");        
             cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         }
-        [cell configureWithBlock:block offset:indexPath.row * 7];
+        [cell configureWithBlock:block offset:indexPath.row * 6];
         return cell;
     }
 }
@@ -519,7 +512,7 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     currentBlock = [CDXSymbolsKeyboardExtensionBlocks blockByIndex:currentBlockIndex];
     [blockTableView reloadData];
     [blockTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-    blockTableView.scrollEnabled = (currentBlock == NULL) ? YES : (((currentBlock->endCode - currentBlock->startCode) + 6) / 7) > 6;
+    blockTableView.scrollEnabled = (currentBlock == NULL) ? YES : (((currentBlock->endCode - currentBlock->startCode) + 5) / 6) > 5;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -530,7 +523,7 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     if (tableView == listTableView) {
         return [CDXSymbolsKeyboardExtensionBlocks count];
     } else {
-        return MAX(7, ((currentBlock->endCode - currentBlock->startCode) + 6) / 7);
+        return MAX(6, ((currentBlock->endCode - currentBlock->startCode) + 5) / 6);
     }
 }
 
@@ -566,7 +559,7 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
             NSAssert([@"CDXSymbolsKeyboardExtensionTableViewCellB" isEqualToString:[cell reuseIdentifier]], @"reuseIdentifier must match");
             cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         }
-        [cell configureWithBlock:currentBlock offset:indexPath.row * 7];
+        [cell configureWithBlock:currentBlock offset:indexPath.row * 6];
         return cell;
     }}
 

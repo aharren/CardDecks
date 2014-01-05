@@ -89,7 +89,6 @@ typedef struct {
     IBOutlet UIButton *button4;
     IBOutlet UIButton *button5;
     IBOutlet UIButton *button6;
-    IBOutlet UIButton *button7;
     
 }
 

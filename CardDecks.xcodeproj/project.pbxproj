@@ -97,6 +97,7 @@
 		E0C1F67418772D4300F17779 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C1F67318772D4300F17779 /* Social.framework */; };
 		E0C1F67518772D6700F17779 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C1F67318772D4300F17779 /* Social.framework */; };
 		E0C3BBB4132EBE8200604881 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0D9E159132EBA1E001435D0 /* MessageUI.framework */; };
+		E0C3F05E187A057400709551 /* Cell-Right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C3F05D187A057400709551 /* Cell-Right@2x.png */; };
 		E0CCC73A1170DC120040D222 /* CDXCardDeckCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0CCC7391170DC120040D222 /* CDXCardDeckCardView.xib */; };
 		E0CCC7401170DC600040D222 /* CDXCardDeckCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0CCC73F1170DC600040D222 /* CDXCardDeckCardViewController.m */; };
 		E0CCC9041170E9420040D222 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0CCC9031170E9420040D222 /* QuartzCore.framework */; };
@@ -293,6 +294,7 @@
 		E0BEE1F5117BA68D002F62A7 /* CDXCardsStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsStackView.h; path = Classes/Views/CDXCardsStackView.h; sourceTree = "<group>"; };
 		E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsStackView.m; path = Classes/Views/CDXCardsStackView.m; sourceTree = "<group>"; };
 		E0C1F67318772D4300F17779 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		E0C3F05D187A057400709551 /* Cell-Right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell-Right@2x.png"; path = "Images/Cells/Cell-Right@2x.png"; sourceTree = "<group>"; };
 		E0CCC7391170DC120040D222 /* CDXCardDeckCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardDeckCardView.xib; path = UserInterfaces/CDXCardDeckCardView.xib; sourceTree = "<group>"; };
 		E0CCC73E1170DC600040D222 /* CDXCardDeckCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckCardViewController.h; path = Classes/Controllers/CDXCardDeckCardViewController.h; sourceTree = "<group>"; };
 		E0CCC73F1170DC600040D222 /* CDXCardDeckCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckCardViewController.m; path = Classes/Controllers/CDXCardDeckCardViewController.m; sourceTree = "<group>"; };
@@ -514,6 +516,7 @@
 		E03B105E11C3F92900591E45 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				E0C3F05D187A057400709551 /* Cell-Right@2x.png */,
 				E09AD392187213B30014D372 /* Cell-RightDetail@2x.png */,
 				E0DD7D9211D63A1D00ED23B6 /* Cell-Logo@2x.png */,
 			);
@@ -833,6 +836,7 @@
 				E0A483C911F2FC7400A6ECC8 /* 15-0.CardDeck.plist in Resources */,
 				E0A483CA11F2FC7400A6ECC8 /* 60-0.CardDeck.plist in Resources */,
 				E0A483CD11F2FC7400A6ECC8 /* RedYellowGreen.CardDeck.plist in Resources */,
+				E0C3F05E187A057400709551 /* Cell-Right@2x.png in Resources */,
 				E0A483CE11F2FC7400A6ECC8 /* YesNoPerhaps.CardDeck.plist in Resources */,
 				E0331B8E11FC3F18008B8E2F /* Legal.html in Resources */,
 				E0D4B87513927A8100228167 /* Toolbar-Play@2x.png in Resources */,

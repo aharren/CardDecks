@@ -27,9 +27,9 @@
                     </connections>
                 </tableView>
                 <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9">
-                    <rect key="frame" x="0.0" y="1" width="34" height="460"/>
+                    <rect key="frame" x="0.0" y="1" width="36" height="460"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="24"/>
                     <state key="normal" image="Toolbar-Left.png">
                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -50,6 +50,6 @@
         </view>
     </objects>
     <resources>
-        <image name="Toolbar-Left.png" width="17" height="17"/>
+        <image name="Toolbar-Left.png" width="25" height="50"/>
     </resources>
 </document>
