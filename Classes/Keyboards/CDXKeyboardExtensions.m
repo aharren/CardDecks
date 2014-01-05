@@ -93,6 +93,8 @@ static float keyboardExtensionsOsVersion;
     double keyboardAnimationDuration;
     [[notification.userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&keyboardAnimationDuration];
     qltrace(@"FrameBegin");
+    UIViewAnimationCurve keyboardAnimationCurve;
+    [[notification.userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&keyboardAnimationCurve];
     CGRect keyboardAnimationStartFrame;
     [[notification.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue:&keyboardAnimationStartFrame];
     CGRect keyboardAnimationEndFrame;
@@ -145,6 +147,7 @@ static float keyboardExtensionsOsVersion;
         [UIView setAnimationsEnabled:YES];
         [toolbar setFrame:toolbarFrameAnimationStart];
         [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationCurve:keyboardAnimationCurve];
         [UIView setAnimationDuration:keyboardAnimationDuration];
     }
     [toolbar setFrame:toolbarFrameAnimationEnd];
