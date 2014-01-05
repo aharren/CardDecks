@@ -61,7 +61,6 @@ typedef enum {
 @property (nonatomic, readonly) BOOL useImageBasedRendering;
 
 @property (nonatomic, readonly) BOOL hasTwitterIntegration;
-@property (nonatomic, readonly) BOOL hasAdaptiveStatusBar;
 
 - (void)vibrate;
 

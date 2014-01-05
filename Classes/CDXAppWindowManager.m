@@ -333,9 +333,6 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
     qltrace();
     const CDXDeviceType deviceType = [CDXDevice sharedDevice].deviceType;
     statusBarView.hidden = !(deviceType == CDXDeviceTypeiPhone || deviceType == CDXDeviceTypeiPodTouch);
-    if ([CDXDevice sharedDevice].hasAdaptiveStatusBar) {
-        statusBarView.image = [UIImage imageNamed:@"StatusBarAdaptiveBlue"];
-    }
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
