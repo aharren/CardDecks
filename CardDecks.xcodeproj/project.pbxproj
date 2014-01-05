@@ -77,7 +77,7 @@
 		E09AC70111B7E76700C96E25 /* CDXColorKeyboardExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E09AC70011B7E76700C96E25 /* CDXColorKeyboardExtension.m */; };
 		E09AC7E611B7F60D00C96E25 /* CDXTextKeyboardExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E09AC7E511B7F60D00C96E25 /* CDXTextKeyboardExtension.m */; };
 		E09AC84511B7F95C00C96E25 /* CDXTextKeyboardExtensionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09AC84411B7F95C00C96E25 /* CDXTextKeyboardExtensionView.xib */; };
-		E09AD393187213B30014D372 /* Cell-Right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E09AD392187213B30014D372 /* Cell-Right@2x.png */; };
+		E09AD393187213B30014D372 /* Cell-RightDetail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E09AD392187213B30014D372 /* Cell-RightDetail@2x.png */; };
 		E09FCDBA11B7B69900135582 /* CDXSymbolsKeyboardExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E09FCDB911B7B69900135582 /* CDXSymbolsKeyboardExtension.m */; };
 		E09FCDF311B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09FCDF211B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib */; };
 		E0A1C00111A82BE100911848 /* CDXCardDeckCardEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A1C00011A82BE100911848 /* CDXCardDeckCardEditViewController.m */; };
@@ -275,7 +275,7 @@
 		E09AC7E411B7F60D00C96E25 /* CDXTextKeyboardExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXTextKeyboardExtension.h; path = Classes/Keyboards/CDXTextKeyboardExtension.h; sourceTree = "<group>"; };
 		E09AC7E511B7F60D00C96E25 /* CDXTextKeyboardExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXTextKeyboardExtension.m; path = Classes/Keyboards/CDXTextKeyboardExtension.m; sourceTree = "<group>"; };
 		E09AC84411B7F95C00C96E25 /* CDXTextKeyboardExtensionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXTextKeyboardExtensionView.xib; path = UserInterfaces/CDXTextKeyboardExtensionView.xib; sourceTree = "<group>"; };
-		E09AD392187213B30014D372 /* Cell-Right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell-Right@2x.png"; path = "Images/Cells/Cell-Right@2x.png"; sourceTree = "<group>"; };
+		E09AD392187213B30014D372 /* Cell-RightDetail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell-RightDetail@2x.png"; path = "Images/Cells/Cell-RightDetail@2x.png"; sourceTree = "<group>"; };
 		E09FCDB811B7B69900135582 /* CDXSymbolsKeyboardExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXSymbolsKeyboardExtension.h; path = Classes/Keyboards/CDXSymbolsKeyboardExtension.h; sourceTree = "<group>"; };
 		E09FCDB911B7B69900135582 /* CDXSymbolsKeyboardExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXSymbolsKeyboardExtension.m; path = Classes/Keyboards/CDXSymbolsKeyboardExtension.m; sourceTree = "<group>"; };
 		E09FCDF211B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXSymbolsKeyboardExtensionTableView.xib; path = UserInterfaces/CDXSymbolsKeyboardExtensionTableView.xib; sourceTree = "<group>"; };
@@ -518,7 +518,7 @@
 		E03B105E11C3F92900591E45 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				E09AD392187213B30014D372 /* Cell-Right@2x.png */,
+				E09AD392187213B30014D372 /* Cell-RightDetail@2x.png */,
 				E0DD7D9211D63A1D00ED23B6 /* Cell-Logo@2x.png */,
 			);
 			name = Cells;
@@ -836,7 +836,7 @@
 				E0CFA5FE11D68D0600FF686F /* IndexDotWhite@2x.png in Resources */,
 				E04D945411D77EA500A4DA59 /* IndexDotBlack@2x.png in Resources */,
 				E0A483C811F2FC7400A6ECC8 /* 0-10.CardDeck.plist in Resources */,
-				E09AD393187213B30014D372 /* Cell-Right@2x.png in Resources */,
+				E09AD393187213B30014D372 /* Cell-RightDetail@2x.png in Resources */,
 				E0A483C911F2FC7400A6ECC8 /* 15-0.CardDeck.plist in Resources */,
 				E0A483CA11F2FC7400A6ECC8 /* 60-0.CardDeck.plist in Resources */,
 				E0A483CD11F2FC7400A6ECC8 /* RedYellowGreen.CardDeck.plist in Resources */,
