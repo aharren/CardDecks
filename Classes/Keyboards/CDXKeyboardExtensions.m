@@ -44,7 +44,7 @@ static float keyboardExtensionsOsVersion;
         ivar_assign(toolbarActionButton, [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
                                                                                        target:self
                                                                                        action:@selector(toolbarActionButtonPressed:)]);
-        ivar_assign_and_retain(backgroundColor, [UIColor colorWithPatternImage:[UIImage imageNamed:@"KeyboardExtensionsBackground.png"]]);
+        ivar_assign_and_retain(backgroundColor, [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1]);
         enabled = NO;
         visible = NO;
         activeExtensionTag = -1;

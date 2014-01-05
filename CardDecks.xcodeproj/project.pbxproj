@@ -134,11 +134,9 @@
 		E0F2B3F7119563910092D11B /* CDXCardsStackSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */; };
 		E0F3AEDB13EED59B00B253ED /* CDXCardDeckCardEditPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F3AEDA13EED59B00B253ED /* CDXCardDeckCardEditPadViewController.m */; };
 		E0F3AEE013EEDA5800B253ED /* CDXCardDeckCardEditPadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0F3AEDF13EEDA5800B253ED /* CDXCardDeckCardEditPadView.xib */; };
-		E0F3AEE613EF005400B253ED /* KeyboardExtensionsBackground~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F3AEE513EF005400B253ED /* KeyboardExtensionsBackground~ipad.png */; };
 		E0F3AEE913EF03BA00B253ED /* CDXColorKeyboardExtensionView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0F3AEE713EF03B900B253ED /* CDXColorKeyboardExtensionView~ipad.xib */; };
 		E0F3AEEA13EF03BA00B253ED /* CDXTextKeyboardExtensionView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0F3AEE813EF03BA00B253ED /* CDXTextKeyboardExtensionView~ipad.xib */; };
 		E0F7A50A11B158DA00CD786B /* CDXKeyboardExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */; };
-		E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */; };
 		E0FAC00B11C024CD00CDA558 /* CDXDictionarySerializerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FAC00A11C024CD00CDA558 /* CDXDictionarySerializerUtils.m */; };
 		E0FAC00C11C024CD00CDA558 /* CDXDictionarySerializerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FAC00A11C024CD00CDA558 /* CDXDictionarySerializerUtils.m */; };
 		E0FAC02611C0268000CDA558 /* CDXCardDecksDictionarySerializerTestsDecks1.CardDeckList.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0FAC02511C0268000CDA558 /* CDXCardDecksDictionarySerializerTestsDecks1.CardDeckList.plist */; };
@@ -345,12 +343,10 @@
 		E0F3AED913EED59B00B253ED /* CDXCardDeckCardEditPadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckCardEditPadViewController.h; path = Classes/Controllers/CDXCardDeckCardEditPadViewController.h; sourceTree = "<group>"; };
 		E0F3AEDA13EED59B00B253ED /* CDXCardDeckCardEditPadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckCardEditPadViewController.m; path = Classes/Controllers/CDXCardDeckCardEditPadViewController.m; sourceTree = "<group>"; };
 		E0F3AEDF13EEDA5800B253ED /* CDXCardDeckCardEditPadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CDXCardDeckCardEditPadView.xib; path = UserInterfaces/CDXCardDeckCardEditPadView.xib; sourceTree = "<group>"; };
-		E0F3AEE513EF005400B253ED /* KeyboardExtensionsBackground~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "KeyboardExtensionsBackground~ipad.png"; path = "Images/KeyboardExtensionsBackground~ipad.png"; sourceTree = "<group>"; };
 		E0F3AEE713EF03B900B253ED /* CDXColorKeyboardExtensionView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "CDXColorKeyboardExtensionView~ipad.xib"; path = "UserInterfaces/CDXColorKeyboardExtensionView~ipad.xib"; sourceTree = "<group>"; };
 		E0F3AEE813EF03BA00B253ED /* CDXTextKeyboardExtensionView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "CDXTextKeyboardExtensionView~ipad.xib"; path = "UserInterfaces/CDXTextKeyboardExtensionView~ipad.xib"; sourceTree = "<group>"; };
 		E0F7A50811B158DA00CD786B /* CDXKeyboardExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXKeyboardExtensions.h; path = Classes/Keyboards/CDXKeyboardExtensions.h; sourceTree = "<group>"; };
 		E0F7A50911B158DA00CD786B /* CDXKeyboardExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXKeyboardExtensions.m; path = Classes/Keyboards/CDXKeyboardExtensions.m; sourceTree = "<group>"; };
-		E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = KeyboardExtensionsBackground.png; path = Images/KeyboardExtensionsBackground.png; sourceTree = "<group>"; };
 		E0FAC00911C024CD00CDA558 /* CDXDictionarySerializerUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXDictionarySerializerUtils.h; path = Classes/Serializers/CDXDictionarySerializerUtils.h; sourceTree = "<group>"; };
 		E0FAC00A11C024CD00CDA558 /* CDXDictionarySerializerUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXDictionarySerializerUtils.m; path = Classes/Serializers/CDXDictionarySerializerUtils.m; sourceTree = "<group>"; };
 		E0FAC02511C0268000CDA558 /* CDXCardDecksDictionarySerializerTestsDecks1.CardDeckList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CDXCardDecksDictionarySerializerTestsDecks1.CardDeckList.plist; path = Classes/Serializers/CDXCardDecksDictionarySerializerTestsDecks1.CardDeckList.plist; sourceTree = "<group>"; };
@@ -683,8 +679,6 @@
 				E04D945211D77EA500A4DA59 /* IndexDotBlack@2x.png */,
 				E0CFA5FB11D68CF800FF686F /* IndexDotGray@2x.png */,
 				E0CFA5FD11D68D0600FF686F /* IndexDotWhite@2x.png */,
-				E0F7A5BE11B164EE00CD786B /* KeyboardExtensionsBackground.png */,
-				E0F3AEE513EF005400B253ED /* KeyboardExtensionsBackground~ipad.png */,
 				E03B105E11C3F92900591E45 /* Cells */,
 				E0C51F87119DAC5F00D75D0E /* Toolbars */,
 				E0620D5211BAA606006AABD2 /* Notices */,
@@ -812,7 +806,6 @@
 				E02320F9117093870043D6CF /* CDXCardDeckListView.xib in Resources */,
 				E0CCC73A1170DC120040D222 /* CDXCardDeckCardView.xib in Resources */,
 				E0A1C00311A82C5600911848 /* CDXCardDeckCardEditView.xib in Resources */,
-				E0F7A5BF11B164EE00CD786B /* KeyboardExtensionsBackground.png in Resources */,
 				E09FCDF311B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib in Resources */,
 				E09AC62511B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib in Resources */,
 				E09AC62611B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib in Resources */,
@@ -852,7 +845,6 @@
 				E022CDF413B63E5D000FE10A /* CDXCardDecksListPadView.xib in Resources */,
 				E03B803A13B7918F00941540 /* CDXCardDeckListPadView.xib in Resources */,
 				E0F3AEE013EEDA5800B253ED /* CDXCardDeckCardEditPadView.xib in Resources */,
-				E0F3AEE613EF005400B253ED /* KeyboardExtensionsBackground~ipad.png in Resources */,
 				E0F3AEE913EF03BA00B253ED /* CDXColorKeyboardExtensionView~ipad.xib in Resources */,
 				E0F3AEEA13EF03BA00B253ED /* CDXTextKeyboardExtensionView~ipad.xib in Resources */,
 				E043F1771400EFC900DE0567 /* Toolbar-Left@2x.png in Resources */,
