@@ -118,6 +118,7 @@ synthesize_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [[CDXKeyboardExtensions sharedKeyboardExtensions] backgroundColor];
+    [sizeChooserSlider setThumbImage:[UIImage imageNamed:@"Circle.png"] forState:UIControlStateNormal];
 }
 
 - (void)viewDidUnload {
@@ -180,7 +181,7 @@ synthesize_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.2];
     UIColor *color = button.backgroundColor;
-    button.backgroundColor = [UIColor blueColor];
+    button.backgroundColor = [UIColor grayColor];
     button.backgroundColor = color;
     [UIView commitAnimations];
     
