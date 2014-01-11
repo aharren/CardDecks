@@ -136,9 +136,9 @@ synthesize_singleton(sharedTimerKeyboardExtension, CDXTimerKeyboardExtension);
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     if (component == 0) {
-        return [NSString stringWithFormat:@"  %d", row];
+        return [NSString stringWithFormat:@"%d", row];
     } else {
-        return [NSString stringWithFormat:@"  %d", row];
+        return [NSString stringWithFormat:@"%d", row];
     }
 }
 
