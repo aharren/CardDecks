@@ -229,46 +229,52 @@
     }
     switch (index) {
         case 1:
-            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Color Properties"
-                                                 delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:@"Text \u21e2 Defaults", @"Text \u21e0 Defaults", @"Background \u21e2 Defaults", @"Background \u21e0 Defaults", nil] autorelease];
+            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
+                      initWithTitle:@"Copy Color Properties"
+                      delegate:self
+                      cancelButtonTitle:@"Cancel"
+                      destructiveButtonTitle:nil
+                      otherButtonTitles:@"Text \u21e2 Defaults", @"Text \u21e0 Defaults", @"Background \u21e2 Defaults", @"Background \u21e0 Defaults", nil] autorelease];
             break;
         case 2:
-            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Text Properties"
-                                                 delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:@"Layout \u21e2 Defaults", @"Layout \u21e0 Defaults", @"Size \u21e2 Defaults", @"Size \u21e0 Defaults", nil] autorelease];
+            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
+                      initWithTitle:@"Copy Text Properties"
+                      delegate:self
+                      cancelButtonTitle:@"Cancel"
+                      destructiveButtonTitle:nil
+                      otherButtonTitles:@"Layout \u21e2 Defaults", @"Layout \u21e0 Defaults", @"Size \u21e2 Defaults", @"Size \u21e0 Defaults", nil] autorelease];
             break;
         case 3:
-            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Timer Properties"
-                                                 delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:@"Timer \u21e2 Defaults", @"Timer \u21e0 Defaults", nil] autorelease];
+            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
+                      initWithTitle:@"Copy Timer Properties"
+                      delegate:self
+                      cancelButtonTitle:@"Cancel"
+                      destructiveButtonTitle:nil
+                      otherButtonTitles:@"Timer \u21e2 Defaults", @"Timer \u21e0 Defaults", nil] autorelease];
             break;
         case -1:
-            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Color Properties"
-                                                 delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:@"Text \u21e2 All Cards", @"Background \u21e2 All Cards", nil] autorelease];
+            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
+                      initWithTitle:@"Copy Color Properties"
+                      delegate:self
+                      cancelButtonTitle:@"Cancel"
+                      destructiveButtonTitle:nil
+                      otherButtonTitles:@"Text \u21e2 All Cards", @"Background \u21e2 All Cards", nil] autorelease];
             break;
         case -2:
-            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Text Properties"
-                                                 delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:@"Layout \u21e2 All Cards", @"Size \u21e2 All Cards", nil] autorelease];
+            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
+                      initWithTitle:@"Copy Text Properties"
+                      delegate:self
+                      cancelButtonTitle:@"Cancel"
+                      destructiveButtonTitle:nil
+                      otherButtonTitles:@"Layout \u21e2 All Cards", @"Size \u21e2 All Cards", nil] autorelease];
             break;
         case -3:
-            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Timer Properties"
-                                                 delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:@"Timer \u21e2 All Cards", nil] autorelease];
+            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
+                      initWithTitle:@"Copy Timer Properties"
+                      delegate:self
+                      cancelButtonTitle:@"Cancel"
+                      destructiveButtonTitle:nil
+                      otherButtonTitles:@"Timer \u21e2 All Cards", nil] autorelease];
             break;
         default:
             break;

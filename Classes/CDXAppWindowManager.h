@@ -63,3 +63,12 @@ declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 
 @end
 
+
+@interface CDXAppWindowActionSheetNonFirstResponder : UIActionSheet {
+    
+}
+
+
+@end
+
+

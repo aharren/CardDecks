@@ -593,3 +593,12 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
 
 @end
 
+
+@implementation CDXAppWindowActionSheetNonFirstResponder
+
+- (BOOL)canBecomeFirstResponder {
+    return NO;
+}
+
+@end
+
