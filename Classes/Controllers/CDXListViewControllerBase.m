@@ -101,9 +101,7 @@
     
     ivar_assign(activityIndicator, [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]);
     activityIndicator.hidesWhenStopped = YES;
-    if ([[CDXDevice sharedDevice] deviceUIIdiom] == CDXDeviceUIIdiomPad) {
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-    }
+    activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
                                           initWithCustomView:activityIndicator]
                                          autorelease];
