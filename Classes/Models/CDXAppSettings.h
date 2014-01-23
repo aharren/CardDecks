@@ -37,7 +37,6 @@ declare_singleton(sharedAppSettings, CDXAppSettings);
 - (NSUInteger)closeTapCount;
 - (BOOL)doneButtonOnLeftSide;
 - (BOOL)actionButtonsOnLeftSide;
-- (BOOL)useMailApplication;
 - (NSUInteger)migrationState;
 - (void)setMigrationState:(NSUInteger)value;
 - (NSString *)versionState;

@@ -42,7 +42,6 @@ enum {
     CDXAppSettingsCloseTapCount,
     CDXAppSettingsActionButtonsOnLeftSide,
     CDXAppSettingsDoneButtonOnLeftSide,
-    CDXAppSettingsUseMailApplication,
     CDXAppSettingsAllKeyboardSymbols,
     CDXAppSettingsCount
 };
@@ -55,7 +54,6 @@ static const CDXSetting settings[] = {
     { CDXAppSettingsCloseTapCount, CDXSettingTypeEnumeration, @"Close Gesture" },
     { CDXAppSettingsActionButtonsOnLeftSide, CDXSettingTypeEnumeration, @"Action Buttons" },
     { CDXAppSettingsDoneButtonOnLeftSide, CDXSettingTypeEnumeration, @"Done Button" },
-    { CDXAppSettingsUseMailApplication, CDXSettingTypeBoolean, @"Use Mail Application" },
     { CDXAppSettingsAllKeyboardSymbols, CDXSettingTypeBoolean, @"All Unicode Symbols" },
     { 0, 0, @"" }
 };
@@ -68,7 +66,6 @@ static NSString *settingsUserDefaultsKeys[] = {
     @"CloseTapCount",
     @"ActionButtonsOnLeftSide",
     @"DoneButtonOnLeftSide",
-    @"UseMailApplication",
     @"AllKeyboardSymbols",
     nil
 };
@@ -87,7 +84,6 @@ static const CDXAppSettingGroup groupsPhone[] = {
     { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
     { @"Card Deck", 2, CDXAppSettingsCloseTapCount },
     { @"User Interface", 1, CDXAppSettingsDoneButtonOnLeftSide },
-    { @"Integration", 1, CDXAppSettingsUseMailApplication },
     { @"Keyboard", 1, CDXAppSettingsAllKeyboardSymbols },
     { @"", 0, 0 }
 };
@@ -99,7 +95,6 @@ static const CDXAppSettingGroup groupsPad[] = {
 #endif
     { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
     { @"Card Deck", 2, CDXAppSettingsCloseTapCount },
-    { @"Integration", 1, CDXAppSettingsUseMailApplication },
     { @"Keyboard", 1, CDXAppSettingsAllKeyboardSymbols },
     { @"", 0, 0 }
 };
@@ -184,10 +179,6 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
     return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsActionButtonsOnLeftSide] defaultsTo:YES];
 }
 
-- (BOOL)useMailApplication {
-    return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsUseMailApplication] defaultsTo:NO];
-}
-
 - (NSUInteger)migrationState {
     NSUInteger value = [CDXAppSettings userDefaultsIntegerValueForKey:settingsUserDefaultsKeys[CDXAppSettingsMigrationState] defaultsTo:0];
     return value;
@@ -239,8 +230,6 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
             return [self enableIdleTimer];
         case CDXAppSettingsAllKeyboardSymbols:
             return [self enableAllKeyboardSymbols];
-        case CDXAppSettingsUseMailApplication:
-            return [self useMailApplication];
     }
 }
 
@@ -250,7 +239,6 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
             break;
         case CDXAppSettingsIdleTimer:
         case CDXAppSettingsAllKeyboardSymbols:
-        case CDXAppSettingsUseMailApplication:
             [CDXAppSettings setUserDefaultsBooleanValue:value forKey:settingsUserDefaultsKeys[tag]];
             break;
     }
