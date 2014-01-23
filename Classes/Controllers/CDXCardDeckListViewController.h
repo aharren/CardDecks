@@ -26,10 +26,9 @@
 #import "CDXCardDeck.h"
 #import "CDXCardDeckViewContext.h"
 #import "CDXListViewControllerBase.h"
-#import <MessageUI/MFMailComposeViewController.h>
 
 
-@interface CDXCardDeckListViewController : CDXListViewControllerBase<UIActionSheetDelegate, MFMailComposeViewControllerDelegate> {
+@interface CDXCardDeckListViewController : CDXListViewControllerBase<UIActionSheetDelegate> {
     
 @protected
     CDXCardDeckViewContext *cardDeckViewContext;
@@ -52,12 +51,47 @@
 - (IBAction)shuffleButtonPressed;
 - (IBAction)actionButtonPressed;
 
-- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error;
-
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath;
 
 - (void)processCardAddAtBottomDelayed:(NSArray *)cards;
 
 @end
+
+
+@interface CDXCardDeckListViewControllerTextActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
+    
+@protected
+    CDXCardDeckViewContext *cardDeckViewContext;
+    
+}
+
+- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
+
+@end
+
+
+@interface CDXCardDeckListViewControllerURLActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
+    
+@protected
+    CDXCardDeckViewContext *cardDeckViewContext;
+    
+}
+
+- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
+
+@end
+
+
+@interface CDXCardDeckListViewControllerDuplicateDeckActivity : UIActivity {
+    
+@protected
+    CDXCardDeckViewContext *cardDeckViewContext;
+    
+}
+
+- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
+
+@end
+
 
