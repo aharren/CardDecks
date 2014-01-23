@@ -60,8 +60,6 @@ typedef enum {
 @property (nonatomic, readonly) BOOL useReducedGraphicsEffects;
 @property (nonatomic, readonly) BOOL useImageBasedRendering;
 
-@property (nonatomic, readonly) BOOL hasTwitterIntegration;
-
 - (void)vibrate;
 
 declare_singleton(sharedDevice, CDXDevice);

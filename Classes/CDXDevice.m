@@ -28,7 +28,6 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <sys/types.h>
 #import <sys/sysctl.h>
-#import <Social/Social.h>
 
 
 @implementation CDXDevice
@@ -43,7 +42,6 @@
 @synthesize deviceSystemVersionString;
 @synthesize useReducedGraphicsEffects;
 @synthesize useImageBasedRendering;
-@synthesize hasTwitterIntegration;
 
 synthesize_singleton(sharedDevice, CDXDevice);
 
@@ -108,10 +106,7 @@ static NSString* CDXDeviceGetSystemInformationByName(const char* name) {
         // first-retina-generations of iPhone and iPod
         useImageBasedRendering = (deviceScreenScale <= 1.0) || ([deviceMachine hasPrefix:@"iphone3,"]) || ([deviceMachine hasPrefix:@"ipod4,"]);
         
-        // Twitter framework is weakly linked
-        hasTwitterIntegration = ([SLComposeViewController class] != Nil) ? YES : NO;
-        
-        qltrace(@"%@ %@ %d %d %f %@ %d %d %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, deviceSystemVersionString, useReducedGraphicsEffects ? 1 : 0, useImageBasedRendering ? 1 : 0, hasTwitterIntegration ? 1 : 0);
+        qltrace(@"%@ %@ %d %d %f %@ %d %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, deviceSystemVersionString, useReducedGraphicsEffects ? 1 : 0, useImageBasedRendering ? 1 : 0);
     }
     return self;
 }
