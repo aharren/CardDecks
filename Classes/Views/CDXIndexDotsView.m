@@ -107,14 +107,6 @@
         view.highlighted = YES;
         view.alpha = imageDotAlphaHighlighted;
     }
-    
-    if (animated && invisibleByDefault) {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.4];
-        self.alpha = CDXIndexDotsViewAlphaVisible;
-        self.alpha = CDXIndexDotsViewAlphaInvisible;
-        [UIView commitAnimations];
-    }
 }
 
 - (void)setInvisibleByDefault:(BOOL)newInvisibleByDefault {
