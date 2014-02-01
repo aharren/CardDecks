@@ -209,9 +209,9 @@
     // configure the action buttons bar
     CGRect frame = actionsViewButtonsView.frame;
     if ([[CDXAppSettings sharedAppSettings] actionButtonsOnLeftSide]) {
-        frame.origin = CGPointMake(15, 0);
+        frame.origin = CGPointMake(0, 0);
     } else {
-        frame.origin = CGPointMake(self.view.frame.size.width - frame.size.width - 15, 0);
+        frame.origin = CGPointMake(self.view.frame.size.width - frame.size.width, 0);
     }
     actionsViewButtonsView.frame = frame;
     [self configureActionsViewAnimated:NO];
