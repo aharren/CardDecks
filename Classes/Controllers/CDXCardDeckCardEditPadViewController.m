@@ -55,7 +55,7 @@
 }
 
 - (IBAction)closeButtonPressed {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
