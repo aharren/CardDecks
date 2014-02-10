@@ -14,6 +14,11 @@
 	<array>
 		<string>Icon@2x</string>
 	</array>
+	<key>CFBundleIconFiles~ipad</key>
+	<array>
+		<string>Icon-76</string>
+		<string>Icon@2x</string>
+	</array>
 	<key>CFBundleIdentifier</key>
 	<string>0xc0.de.CardDecks</string>
 	<key>CFBundleInfoDictionaryVersion</key>
