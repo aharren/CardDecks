@@ -58,7 +58,6 @@
     
     viewTableView.hidden = cardDeck == nil;
     viewNoTableView.hidden = !viewTableView.hidden;
-    navigationItem.title = cardDeck.name;
 }
 
 - (void)viewDidUnload {
@@ -81,13 +80,18 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     qltrace();
+    settingsButton.enabled = YES;
+    actionButton.enabled = YES;
+    shuffleButton.enabled = YES;
+    editButton.enabled = YES;
+    addButton.enabled = YES;
     [super viewWillAppear:animated];
     if (!viewNoTableView.hidden) {
-        settingsButton.enabled = YES;
-        actionButton.enabled = YES;
-        shuffleButton.enabled = YES;
-        editButton.enabled = YES;
-        addButton.enabled = YES;
+        settingsButton.enabled = NO;
+        actionButton.enabled = NO;
+        shuffleButton.enabled = NO;
+        editButton.enabled = NO;
+        addButton.enabled = NO;
     }
 }
 
