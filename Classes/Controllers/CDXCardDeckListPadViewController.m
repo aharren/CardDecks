@@ -56,8 +56,6 @@
     qltrace();
     [super viewDidLoad];
     
-    viewTableViewContainer.layer.cornerRadius = 6;
-    
     viewTableView.hidden = cardDeck == nil;
     viewNoTableView.hidden = !viewTableView.hidden;
     navigationItem.title = cardDeck.name;

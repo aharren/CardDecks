@@ -55,8 +55,6 @@
     qltrace();
     [super viewDidLoad];
     
-    viewTableViewContainer.layer.cornerRadius = 6;
-    
     // steal the activity indicator
     viewNavigationItem.rightBarButtonItem = self.navigationItem.rightBarButtonItem;
 }
