@@ -217,7 +217,10 @@
             lastCardDeckIndex = indexPath.row;
             deselectRow = NO;
             CDXCardDeckHolder *deckHolder = [cardDecks cardDeckAtIndex:indexPath.row];
-            if ([deckHolder cardsCount] != 0) {
+            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            if ((cell.accessoryType == UITableViewCellAccessoryDisclosureIndicator ||
+                 cell.accessoryType == UITableViewCellAccessoryDetailDisclosureButton)
+                && [deckHolder cardsCount] != 0) {
                 [self performBlockingSelector:@selector(pushCardDeckCardViewControllerWithCardDeckHolder:)
                                    withObject:deckHolder];
             } else {

@@ -51,14 +51,6 @@
     [super dealloc];
 }
 
-- (void)viewDidLoad {
-    qltrace();
-    [super viewDidLoad];
-    
-    // steal the activity indicator
-    viewNavigationItem.rightBarButtonItem = self.navigationItem.rightBarButtonItem;
-}
-
 - (void)viewDidUnload {
     qltrace();
     ivar_release_and_clear(viewTableViewContainer);
@@ -111,6 +103,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
     UITableViewCell *cell = [super tableView:tableView cellForSection:section];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.accessoryView = nil;
     return cell;
 }
 
