@@ -468,11 +468,11 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
         ivar_assign(splitViewController, [[CDXLeftRightSplitViewController alloc] init]);
         ivar_assign(leftNavigationController, [[UINavigationController alloc] init]);
         [leftNavigationController setToolbarHidden:YES];
-        [leftNavigationController setNavigationBarHidden:YES];
+        [leftNavigationController setNavigationBarHidden:NO];
         [splitViewController setLeftViewController:leftNavigationController];
         ivar_assign(rightNavigationController, [[UINavigationController alloc] init]);
         [rightNavigationController setToolbarHidden:YES];
-        [rightNavigationController setNavigationBarHidden:YES];
+        [rightNavigationController setNavigationBarHidden:NO];
         [splitViewController setRightViewController:rightNavigationController];
 
         navigationViewController = splitViewController;
@@ -500,10 +500,8 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
         } else {
             if (initialRightViewController == nil) {
                 ivar_assign_and_retain(initialRightViewController, viewController);
-                [rightNavigationController setViewControllers:[NSArray arrayWithObject:viewController] animated:NO];
-            } else {
-                [rightNavigationController setViewControllers:[NSArray arrayWithObjects:initialRightViewController, viewController, nil] animated:NO];
             }
+            [rightNavigationController setViewControllers:@[viewController] animated:NO];
         }
     }
 }
@@ -513,9 +511,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     if (fullScreenViewController != nil) {
         [self popFullScreenViewControllerAnimated:animated];
     } else {
-        [rightNavigationController popToRootViewControllerAnimated:NO];
-        [initialLeftViewController viewWillAppear:NO];
-        [initialLeftViewController viewDidAppear:NO];
+        [rightNavigationController setViewControllers:@[initialRightViewController] animated:NO];
     }
 }
 
@@ -524,9 +520,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     if (fullScreenViewController != nil) {
         [self popViewControllerAnimated:NO];
     }
-    [rightNavigationController popToRootViewControllerAnimated:NO];
-    [initialLeftViewController viewWillAppear:NO];
-    [initialLeftViewController viewDidAppear:NO];
+    [rightNavigationController setViewControllers:@[initialRightViewController] animated:NO];
 }
 
 - (void)makeWindowKeyAndVisible {
