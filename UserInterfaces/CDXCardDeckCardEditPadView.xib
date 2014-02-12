@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4514" systemVersion="13B3116" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1072" identifier="iOS"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CDXCardDeckCardEditPadViewController">
             <connections>
                 <outlet property="cardView" destination="10" id="13"/>
-                <outlet property="navigationItem" destination="16" id="25"/>
+                <outlet property="downButton" destination="rTx-SO-UcZ" id="Kx5-XT-yDs"/>
                 <outlet property="text" destination="9" id="12"/>
+                <outlet property="upButton" destination="sS5-cg-IsH" id="ITw-NM-UdB"/>
                 <outlet property="view" destination="1" id="14"/>
-                <outlet property="viewButtonsUpDown" destination="18" id="20"/>
-                <outlet property="viewButtonsUpDownBarButtonItem" destination="17" id="24"/>
+                <outlet property="viewButtons" destination="auP-nj-X9z" id="so4-O7-15z"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+            <rect key="frame" x="0.0" y="0.0" width="768" height="980"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" id="32">
-                    <rect key="frame" x="224" y="52" width="320" height="500"/>
+                    <rect key="frame" x="224" y="77" width="320" height="456"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" id="10" customClass="CDXCardView">
-                            <rect key="frame" x="0.0" y="10" width="320" height="480"/>
+                            <rect key="frame" x="0.0" y="-12" width="320" height="480"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
@@ -33,55 +33,63 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <view alpha="0.10000000149011612" contentMode="scaleToFill" id="30">
-                    <rect key="frame" x="0.0" y="550.5" width="768" height="473.5"/>
+                    <rect key="frame" x="0.0" y="547.5" width="768" height="432.5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" indicatorStyle="white" textAlignment="center" id="9">
-                    <rect key="frame" x="0.0" y="555.5" width="768" height="160.5"/>
+                    <rect key="frame" x="0.0" y="547.5" width="768" height="124.5"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="24"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="11"/>
                     </connections>
                 </textView>
-                <navigationBar contentMode="scaleToFill" barStyle="black" id="15">
-                    <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                <view contentMode="scaleToFill" id="ZOt-0t-ccg">
+                    <rect key="frame" x="0.0" y="0.0" width="768" height="64"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <items>
-                        <navigationItem id="16">
-                            <barButtonItem key="leftBarButtonItem" title="Done" id="28">
-                                <connections>
-                                    <action selector="closeButtonPressed" destination="-1" id="29"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem key="rightBarButtonItem" id="17" userLabel="Bar Button Item">
-                                <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" momentary="YES" id="18">
-                                    <rect key="frame" x="681" y="7" width="80" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <segments>
-                                        <segment title="" image="Toolbar-Up.png"/>
-                                        <segment title="" image="Toolbar-Down.png"/>
-                                    </segments>
-                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <connections>
-                                        <action selector="upDownButtonPressed" destination="-1" eventType="valueChanged" id="19"/>
-                                    </connections>
-                                </segmentedControl>
-                            </barButtonItem>
-                        </navigationItem>
-                    </items>
-                </navigationBar>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
+        </view>
+        <view contentMode="scaleToFill" id="auP-nj-X9z">
+            <rect key="frame" x="0.0" y="0.0" width="89" height="37"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="sS5-cg-IsH">
+                    <rect key="frame" x="0.0" y="0.0" width="44" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" image="Toolbar-Up.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="upButtonPressed" destination="-1" eventType="touchDown" id="EJM-G1-kMg"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rTx-SO-UcZ">
+                    <rect key="frame" x="45" y="0.0" width="44" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                    <state key="normal" image="Toolbar-Down.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="downButtonPressed" destination="-1" eventType="touchDown" id="SEb-gR-0rz"/>
+                    </connections>
+                </button>
+            </subviews>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
     <resources>
-        <image name="Toolbar-Down.png" width="17" height="17"/>
-        <image name="Toolbar-Up.png" width="17" height="17"/>
+        <image name="Toolbar-Down.png" width="22" height="22"/>
+        <image name="Toolbar-Up.png" width="22" height="22"/>
     </resources>
 </document>

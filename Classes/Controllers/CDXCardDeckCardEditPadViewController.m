@@ -54,6 +54,11 @@
     [super viewDidUnload];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(closeButtonPressed)] autorelease];
+}
+
 - (IBAction)closeButtonPressed {
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
