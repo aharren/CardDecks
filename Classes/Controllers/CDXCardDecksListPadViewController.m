@@ -172,5 +172,11 @@
     ignoreCardDeckUpdateNotifications = NO;
 }
 
+- (IBAction)addButtonPressed {
+    ignoreCardDeckUpdateNotifications = YES;
+    [super addButtonPressed];
+    ignoreCardDeckUpdateNotifications = NO;
+}
+
 @end
 
