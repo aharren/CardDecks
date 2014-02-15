@@ -9,15 +9,14 @@
 	<key>CFBundleExecutable</key>
 	<string>CardDecks</string>
 	<key>CFBundleIconFile</key>
-	<string>Icon.png</string>
+	<string>Icon@2x.png</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>Icon@2x</string>
+		<string>Icon</string>
 	</array>
 	<key>CFBundleIconFiles~ipad</key>
 	<array>
 		<string>Icon-76</string>
-		<string>Icon@2x</string>
 	</array>
 	<key>CFBundleIdentifier</key>
 	<string>0xc0.de.CardDecks</string>
