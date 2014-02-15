@@ -80,6 +80,8 @@
     
     NSInteger activeExtensionTag;
     NSArray *keyboardExtensions;
+
+    UIView *viewInactiveExtensions;
 }
 
 declare_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
@@ -102,6 +104,8 @@ declare_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
 - (UIBarButtonItem *)toolbarButtonWithTitle:(NSString *)title;
 
 - (UIColor *)backgroundColor;
+
+- (void)setInactive:(BOOL)inactive;
 
 @end
 

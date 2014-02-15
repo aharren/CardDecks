@@ -284,6 +284,7 @@
     }
     if (sheet) {
         sheet.tag = index;
+        [[CDXKeyboardExtensions sharedKeyboardExtensions] setInactive:YES];
         [[CDXAppWindowManager sharedAppWindowManager] showActionSheet:sheet fromBarButtonItem:barButtonItem];
         ivar_assign_and_retain(activeActionSheet, sheet);
     }
@@ -380,6 +381,7 @@
     }
     [self updateCardPreview];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] refreshKeyboardExtensions];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setInactive:NO];
 }
 
 - (CDXColor *)colorKeyboardExtensionTextColor {
