@@ -60,6 +60,7 @@
 		E04D945411D77EA500A4DA59 /* IndexDotBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E04D945211D77EA500A4DA59 /* IndexDotBlack@2x.png */; };
 		E04E7A0D14E4716200D46037 /* CDXTimerKeyboardExtensionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E04E7A0C14E4716200D46037 /* CDXTimerKeyboardExtensionView.xib */; };
 		E04E7A1114E4717300D46037 /* CDXTimerKeyboardExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E04E7A1014E4717300D46037 /* CDXTimerKeyboardExtension.m */; };
+		E059C37618AF8FCF0078504A /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = E059C37518AF8FCF0078504A /* Icon-76.png */; };
 		E0602B6911D550AD0075F439 /* Toolbar-Down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0602B6711D550AD0075F439 /* Toolbar-Down@2x.png */; };
 		E0620CF611BA9EA3006AABD2 /* CDXAppWindowNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0620CF511BA9EA3006AABD2 /* CDXAppWindowNoticeView.m */; };
 		E0620D0111BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0620D0011BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib */; };
@@ -252,6 +253,7 @@
 		E04E7A0C14E4716200D46037 /* CDXTimerKeyboardExtensionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CDXTimerKeyboardExtensionView.xib; path = UserInterfaces/CDXTimerKeyboardExtensionView.xib; sourceTree = "<group>"; };
 		E04E7A0F14E4717300D46037 /* CDXTimerKeyboardExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXTimerKeyboardExtension.h; path = Classes/Keyboards/CDXTimerKeyboardExtension.h; sourceTree = "<group>"; };
 		E04E7A1014E4717300D46037 /* CDXTimerKeyboardExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXTimerKeyboardExtension.m; path = Classes/Keyboards/CDXTimerKeyboardExtension.m; sourceTree = "<group>"; };
+		E059C37518AF8FCF0078504A /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-76.png"; path = "Images/Icon-76.png"; sourceTree = "<group>"; };
 		E0602B6711D550AD0075F439 /* Toolbar-Down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Down@2x.png"; path = "Images/Toolbars/Toolbar-Down@2x.png"; sourceTree = "<group>"; };
 		E0620CF411BA9EA3006AABD2 /* CDXAppWindowNoticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppWindowNoticeView.h; path = Classes/CDXAppWindowNoticeView.h; sourceTree = "<group>"; };
 		E0620CF511BA9EA3006AABD2 /* CDXAppWindowNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppWindowNoticeView.m; path = Classes/CDXAppWindowNoticeView.m; sourceTree = "<group>"; };
@@ -705,6 +707,7 @@
 				E0FCEE171604DA0C00EEA6F4 /* Default-568h@2x.png */,
 				E03032781528E96600F42494 /* Default@2x~ipad.png */,
 				E084954A11D4034100489C15 /* Icon@2x.png */,
+				E059C37518AF8FCF0078504A /* Icon-76.png */,
 				E0CA54B018A80D5C007BD180 /* Icon-76@2x.png */,
 				E0DD7D6411D6302B00ED23B6 /* Logo-Prerendered@2x.png */,
 			);
@@ -838,6 +841,7 @@
 				E0602B6911D550AD0075F439 /* Toolbar-Down@2x.png in Resources */,
 				E0D1E50C11D5F22E00C8B1C4 /* Toolbar-Up@2x.png in Resources */,
 				E0D1E53C11D5FA0900C8B1C4 /* Toolbar-Settings@2x.png in Resources */,
+				E059C37618AF8FCF0078504A /* Icon-76.png in Resources */,
 				E0D1E59F11D602E600C8B1C4 /* Toolbar-Edit-Reorder@2x.png in Resources */,
 				E0D1E5A811D608DE00C8B1C4 /* Toolbar-Shuffle@2x.png in Resources */,
 				E0D1E5B611D60B7E00C8B1C4 /* Toolbar-Sort@2x.png in Resources */,
