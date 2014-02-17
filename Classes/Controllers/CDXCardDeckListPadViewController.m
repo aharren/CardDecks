@@ -138,7 +138,8 @@
 
 - (void)pushCardDeckEditViewControllerForDefaults {
     CDXCardDeckCardEditPadViewController *vc = [[[CDXCardDeckCardEditPadViewController alloc] initWithCardDeckViewContext:cardDeckViewContext editDefaults:YES] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc animated:YES];
+    UINavigationController *nvc = [[[UINavigationController alloc] initWithRootViewController:vc] autorelease];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:nvc animated:YES];
     [self performBlockingSelectorEnd];
 }
 
