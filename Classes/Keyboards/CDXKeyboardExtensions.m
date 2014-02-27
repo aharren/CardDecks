@@ -3,7 +3,7 @@
 // CDXKeyboardExtensions.m
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXKeyboardExtensions.h"
+#import "CDXDevice.h"
 
 
 @implementation CDXKeyboardExtensions
@@ -44,11 +45,16 @@ static float keyboardExtensionsOsVersion;
         ivar_assign(toolbarActionButton, [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
                                                                                        target:self
                                                                                        action:@selector(toolbarActionButtonPressed:)]);
-        ivar_assign_and_retain(backgroundColor, [UIColor colorWithPatternImage:[UIImage imageNamed:@"KeyboardExtensionsBackground.png"]]);
+        ivar_assign_and_retain(backgroundColor, [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1]);
         enabled = NO;
         visible = NO;
         activeExtensionTag = -1;
         keyboardExtensionsOsVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
+        ivar_assign(viewInactiveExtensions, [[UIView alloc] init]);
+        if ([[CDXDevice sharedDevice] deviceUIIdiom] == CDXDeviceUIIdiomPad) {
+            viewInactiveExtensions.backgroundColor = [UIColor colorWithRed:0.68 green:0.68 blue:0.68 alpha:0.5];
+        }
+        viewInactiveExtensions.userInteractionEnabled = NO;
     }
     
     return self;
@@ -62,6 +68,7 @@ static float keyboardExtensionsOsVersion;
     ivar_release_and_clear(responder);
     ivar_release_and_clear(keyboardExtensions);
     ivar_release_and_clear(backgroundColor);
+    ivar_release_and_clear(viewInactiveExtensions);
     [super dealloc];
 }
 
@@ -93,6 +100,8 @@ static float keyboardExtensionsOsVersion;
     double keyboardAnimationDuration;
     [[notification.userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&keyboardAnimationDuration];
     qltrace(@"FrameBegin");
+    UIViewAnimationCurve keyboardAnimationCurve;
+    [[notification.userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&keyboardAnimationCurve];
     CGRect keyboardAnimationStartFrame;
     [[notification.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue:&keyboardAnimationStartFrame];
     CGRect keyboardAnimationEndFrame;
@@ -145,6 +154,7 @@ static float keyboardExtensionsOsVersion;
         [UIView setAnimationsEnabled:YES];
         [toolbar setFrame:toolbarFrameAnimationStart];
         [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationCurve:keyboardAnimationCurve];
         [UIView setAnimationDuration:keyboardAnimationDuration];
     }
     [toolbar setFrame:toolbarFrameAnimationEnd];
@@ -270,7 +280,9 @@ static float keyboardExtensionsOsVersion;
                                 style:UIBarButtonItemStyleBordered
                                 target:self action:@selector(toolbarButtonPressed:)]
                                autorelease];
-    button.width = 40;
+    button.width = 41;
+    NSDictionary *textAttributes = @{ NSFontAttributeName: [UIFont systemFontOfSize:15] };
+    [button setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
     return button;
 }
 
@@ -302,6 +314,10 @@ static float keyboardExtensionsOsVersion;
         UIView *view = [keyboardExtension keyboardExtensionView];
         view.frame = extensionViewRect;
         [[self keyboardWindow] addSubview:view];
+        
+        viewInactiveExtensions.frame = extensionViewRect;
+        viewInactiveExtensions.hidden = YES;
+        [[self keyboardWindow] addSubview:viewInactiveExtensions];
     }
     
     if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionDidBecomeActive)]) {
@@ -335,6 +351,8 @@ static float keyboardExtensionsOsVersion;
     if (keyboardExtension != nil) {
         UIView *view = [keyboardExtension keyboardExtensionView];
         [view removeFromSuperview];
+        
+        [viewInactiveExtensions removeFromSuperview];
     }
     
     if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionDidBecomeInactive)]) {
@@ -370,6 +388,10 @@ static float keyboardExtensionsOsVersion;
 
 - (UIColor *)backgroundColor {
     return [[backgroundColor retain] autorelease];
+}
+
+- (void)setInactive:(BOOL)inactive {
+    viewInactiveExtensions.hidden = !inactive;
 }
 
 @end

@@ -3,7 +3,7 @@
 // CDXCardDecksListPadViewController.m
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -54,11 +54,8 @@
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
-    
-    viewTableViewContainer.layer.cornerRadius = 6;
-    
-    // steal the activity indicator
-    viewNavigationItem.rightBarButtonItem = self.navigationItem.rightBarButtonItem;
+    CGFloat rowHeight = viewTableView.rowHeight;
+    ivar_assign_and_retain(tableCellBackgroundImageAlt, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWithRed:0xd9 green:0xd9 blue:0xd9 alpha:0xff] bottomColor:[CDXColor colorWithRed:0xd9 green:0xd9 blue:0xd9 alpha:0xff] height:rowHeight base:1]);
 }
 
 - (void)viewDidUnload {
@@ -83,7 +80,6 @@
         ivar_release_and_clear(currentCardDeck);
         [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
     }
-    cardDeckQuickOpen = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -114,6 +110,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
     UITableViewCell *cell = [super tableView:tableView cellForSection:section];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.accessoryView = nil;
     return cell;
 }
 
@@ -172,6 +169,12 @@
 - (void)performAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
     ignoreCardDeckUpdateNotifications = YES;
     [super performAction:action withSender:sender tableView:tableView indexPath:indexPath];
+    ignoreCardDeckUpdateNotifications = NO;
+}
+
+- (IBAction)addButtonPressed {
+    ignoreCardDeckUpdateNotifications = YES;
+    [super addButtonPressed];
     ignoreCardDeckUpdateNotifications = NO;
 }
 

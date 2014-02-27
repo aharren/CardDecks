@@ -3,7 +3,7 @@
 // CDXColorKeyboardExtension.m
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ synthesize_singleton(sharedColorKeyboardExtension, CDXColorKeyboardExtension);
 }
 
 - (NSString *)keyboardExtensionTitle {
-    return @"rgb";
+    return @"col";
 }
 
 - (UIView *)keyboardExtensionView {
@@ -117,6 +117,14 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     [super viewDidLoad];
     self.view.backgroundColor = [[CDXKeyboardExtensions sharedKeyboardExtensions] backgroundColor];
     [self simpleButtonPressed];
+    NSDictionary *textAttributes = @{ NSFontAttributeName: [UIFont systemFontOfSize:15] };
+    [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [textButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [backgroundButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [colorChooserRGBSliderRed setThumbImage:[UIImage imageNamed:@"Circle.png"] forState:UIControlStateNormal];
+    [colorChooserRGBSliderGreen setThumbImage:[UIImage imageNamed:@"Circle.png"] forState:UIControlStateNormal];
+    [colorChooserRGBSliderBlue setThumbImage:[UIImage imageNamed:@"Circle.png"] forState:UIControlStateNormal];
+    [colorChooserRGBSliderAlpha setThumbImage:[UIImage imageNamed:@"Circle.png"] forState:UIControlStateNormal];
 }
 
 - (void)viewDidUnload {

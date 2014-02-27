@@ -3,7 +3,7 @@
 // CDXListViewControllerBase.h
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -41,6 +41,7 @@ typedef enum {
     IBOutlet UITableView *viewTableView;
     IBOutlet UIToolbar *viewToolbar;
     CGFloat viewTableViewContentOffsetY;
+    BOOL keepViewTableViewContentOffsetY;
     IBOutlet UIBarButtonItem *editButton;
     IBOutlet UIBarButtonItem *settingsButton;
     
@@ -66,6 +67,7 @@ typedef enum {
     
     UILongPressGestureRecognizer *viewTableViewLongPressRecognizer;
     UILongPressGestureRecognizer *viewToolbarLongPressRecognizer;
+    UITapGestureRecognizer *viewTableViewTapRecognizer;
     CDXListViewControllerBasePerformActionState performActionState;
     NSIndexPath *performActionTableViewIndexPath;
     UIBarButtonItem *performActionToolbarBarButtonItem;

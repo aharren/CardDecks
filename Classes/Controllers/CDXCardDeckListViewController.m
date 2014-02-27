@@ -3,7 +3,7 @@
 // CDXCardDeckListViewController.m
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@
 #import "CDXAppURL.h"
 #import "CDXAppSettings.h"
 #import "CDXDevice.h"
-#import <Twitter/Twitter.h>
+#import <Social/Social.h>
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -131,6 +131,7 @@
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                 cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+                cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
             }
             return cell;
         }
@@ -139,10 +140,11 @@
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
                 cell.textLabel.font = tableCellTextFontAction;
-                cell.textLabel.textAlignment = UITextAlignmentCenter;
+                cell.textLabel.textAlignment = NSTextAlignmentCenter;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
             }
             cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
             return cell;
@@ -159,7 +161,8 @@
         case 1: {
             UITableViewCell *cell = [self tableView:tableView cellForSection:indexPath.section];
             CDXCard *card = [cardDeck cardAtIndex:indexPath.row];
-            cell.textLabel.text = card.text;
+            NSString *text = [card.text stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+            cell.textLabel.text = text;
             cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForColor:card.backgroundColor size:tableCellImageSize];
             return cell;
         }
@@ -181,6 +184,7 @@
 
 - (void)pushCardDeckCardViewController {
     CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
+    keepViewTableViewContentOffsetY = YES;
     [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
     
     [viewTableView deselectRowAtIndexPath:[viewTableView indexPathForSelectedRow] animated:YES];
@@ -350,119 +354,17 @@
     }
 }
 
-typedef enum {
-    CDXCardDeckListViewControllerActionEmailDeck = 0,
-    CDXCardDeckListViewControllerActionTweekDeck,
-    CDXCardDeckListViewControllerActionDuplicateDeck,
-    CDXCardDeckListViewControllerActionCount
-} CDXCardDeckListViewControllerAction;
-
-typedef struct {
-    CDXCardDeckListViewControllerAction action;
-    NSString *title;
-} CDXCardDeckListViewControllerActionSheetButton;
-
-static const CDXCardDeckListViewControllerActionSheetButton actionSheetButtons[2][4] = {
-    {
-        { CDXCardDeckListViewControllerActionEmailDeck, @"Email Deck" },
-        { CDXCardDeckListViewControllerActionTweekDeck, @"Tweet Deck" },
-        { CDXCardDeckListViewControllerActionDuplicateDeck, @"Duplicate Deck" },
-        { -1, nil }
-    },
-    {
-        { CDXCardDeckListViewControllerActionEmailDeck, @"Email Deck" },
-        { CDXCardDeckListViewControllerActionDuplicateDeck, @"Duplicate Deck" },
-        { -1, nil },
-        { -1, nil }
-    }
-};
-
 - (IBAction)actionButtonPressed {
-    const int type = ([[CDXDevice sharedDevice] hasTwitterIntegration]) ? 0 : 1;
-    UIActionSheet *actionSheet = [[[UIActionSheet alloc]
-                                   initWithTitle:nil
-                                   delegate:self
-                                   cancelButtonTitle:@"Cancel"
-                                   destructiveButtonTitle:nil
-                                   otherButtonTitles:
-                                   actionSheetButtons[type][0].title,
-                                   actionSheetButtons[type][1].title,
-                                   actionSheetButtons[type][2].title,
-                                   nil]
-                                  autorelease];
-    actionSheet.tag = type + 1;
-    actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-    if (activeActionSheet != nil) {
-        [self dismissActionSheet];
-        // don't open a new sheet, just closed the same one
-        return;
-    }
-    [[CDXAppWindowManager sharedAppWindowManager] showActionSheet:actionSheet fromBarButtonItem:actionButton];
-    ivar_assign_and_retain(activeActionSheet, actionSheet);
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    qltrace();
-    ivar_release_and_clear(activeActionSheet);
-    int type = actionSheet.tag - 1;
-    if (type != 0 && type != 1) {
-        return;
-    }
-    if (buttonIndex < 0 || buttonIndex > 3) {
-        return;
-    }
-    switch (actionSheetButtons[type][buttonIndex].action) {
-        default:
-            return;
-        case CDXCardDeckListViewControllerActionEmailDeck: {
-            NSString *carddeckUrl = [CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeck];
-            if ([[CDXAppSettings sharedAppSettings] useMailApplication] || ![MFMailComposeViewController canSendMail]) {
-                NSString *mailUrl = [NSString stringWithFormat:@"mailto:?&subject=%@&body=%@",
-                                     [[cardDeck.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
-                                      stringByReplacingOccurrencesOfString:@"&" withString:@"%26"],
-                                     [[carddeckUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
-                                      stringByReplacingOccurrencesOfString:@"&" withString:@"%26"]];
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mailUrl]];
-            } else {
-                MFMailComposeViewController *vc = [[[MFMailComposeViewController alloc] init] autorelease];
-                [vc setMailComposeDelegate:self];
-                [vc setSubject:cardDeck.name];
-                [vc setMessageBody:[carddeckUrl stringByAppendingString:@" "] isHTML:NO];
-                [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:NO];
-                [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc animated:YES];
-            }
-            return;
-        }
-        case CDXCardDeckListViewControllerActionTweekDeck: {
-            if ([[CDXDevice sharedDevice] hasTwitterIntegration]) {
-                // we don't check [TWTweetComposeViewController canSendTweet] here
-                // in order to get the 'No Twitter Accounts' system message if no
-                // account is configured yet
-                TWTweetComposeViewController *twc = [[[TWTweetComposeViewController alloc] init] autorelease];
-                NSURL *url = [NSURL URLWithString:[CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:cardDeck]];
-                if ([twc addURL:url] == NO) {
-                    return;
-                }
-                [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:NO];
-                [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:twc animated:YES];
-            }
-            return;
-        }
-        case CDXCardDeckListViewControllerActionDuplicateDeck: {
-            CDXCardDeck *deck = [[cardDeck copy] autorelease];
-            deck.name = [deck.name stringByAppendingString:@" - Copy"];
-            [deck updateStorageObjectDeferred:NO];
-            CDXCardDeckHolder *holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
-            [cardDeckViewContext.cardDecks addPendingCardDeckAdd:holder];
-            [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES];
-            return;
-        }
-    }
-}
-
-- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
-    [controller dismissModalViewControllerAnimated:YES];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
+    CDXCardDeckListViewControllerTextActivityItemProvider *textItem = [[[CDXCardDeckListViewControllerTextActivityItemProvider alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
+    CDXCardDeckListViewControllerURLActivityItemProvider *urlItem = [[[CDXCardDeckListViewControllerURLActivityItemProvider alloc]  initWithCardDeckViewContext:cardDeckViewContext] autorelease];
+    
+    CDXCardDeckListViewControllerDuplicateDeckActivity *duplicateDeckActivity = [[[CDXCardDeckListViewControllerDuplicateDeckActivity alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
+    NSArray *items = @[textItem, urlItem];
+    NSArray *activities = @[duplicateDeckActivity];
+    
+    UIActivityViewController *vc = [[[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:activities] autorelease];
+    
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:actionButton animated:YES];
 }
 
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
@@ -553,3 +455,105 @@ static const CDXCardDeckListViewControllerActionSheetButton actionSheetButtons[2
 
 @end
 
+
+@implementation CDXCardDeckListViewControllerTextActivityItemProvider
+
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
+    if ((self = [super init])) {
+        ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
+    }
+    return self;
+}
+
+- (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
+    if ([activityType isEqualToString:UIActivityTypeCopyToPasteboard]) {
+        return [CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck];
+    }
+    return nil;
+}
+
+- (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController {
+    return @"";
+}
+
+@end
+
+
+@implementation CDXCardDeckListViewControllerURLActivityItemProvider
+
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
+    if ((self = [super init])) {
+        ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
+    }
+    return self;
+}
+
+- (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
+    if ([activityType isEqualToString:UIActivityTypePostToTwitter]) {
+        return [NSURL URLWithString:[CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
+    }
+    if ([activityType isEqualToString:UIActivityTypePostToFacebook]) {
+        return [NSURL URLWithString:[CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
+    }
+    if ([activityType isEqualToString:UIActivityTypeMessage]) {
+        return [NSURL URLWithString:[CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
+    }
+    if ([activityType isEqualToString:UIActivityTypeMail]) {
+        return [NSURL URLWithString:[CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
+    }
+    if ([activityType isEqualToString:UIActivityTypeAirDrop]) {
+        return [NSURL URLWithString:[CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
+    }
+    return nil;
+}
+
+- (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController {
+    return [NSURL URLWithString:@""];
+}
+
+@end
+
+
+@implementation CDXCardDeckListViewControllerDuplicateDeckActivity
+
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
+    if ((self = [super init])) {
+        ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
+    }
+    return self;
+}
+
+- (NSString *)activityType {
+    return @"de.0xc0.de.carddecks.duplicatedeck";
+}
+
+- (NSString *)activityTitle {
+    return @"Duplicate";
+}
+
+- (UIImage *)activityImage {
+    return [UIImage imageNamed:@"Activity-Duplicate"];
+}
+
+- (BOOL)canPerformWithActivityItems:(NSArray *)activityItems {
+    return YES;
+}
+
+- (void)prepareWithActivityItems:(NSArray *)activityItems {
+}
+
+- (UIViewController *)activityViewController {
+    return nil;
+}
+
+- (void)performActivity {
+    CDXCardDeck *deck = [[cardDeckViewContext.cardDeck copy] autorelease];
+    deck.name = [deck.name stringByAppendingString:@" - Copy"];
+    [deck updateStorageObjectDeferred:NO];
+    CDXCardDeckHolder *holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
+    [cardDeckViewContext.cardDecks addPendingCardDeckAdd:holder];
+    [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES];
+    [self activityDidFinish:YES];
+}
+
+@end

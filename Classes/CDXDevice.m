@@ -3,7 +3,7 @@
 // CDXDevice.m
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,6 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <sys/types.h>
 #import <sys/sysctl.h>
-#import <Twitter/Twitter.h>
 
 
 @implementation CDXDevice
@@ -43,8 +42,6 @@
 @synthesize deviceSystemVersionString;
 @synthesize useReducedGraphicsEffects;
 @synthesize useImageBasedRendering;
-@synthesize hasTwitterIntegration;
-@synthesize hasAdaptiveStatusBar;
 
 synthesize_singleton(sharedDevice, CDXDevice);
 
@@ -109,13 +106,7 @@ static NSString* CDXDeviceGetSystemInformationByName(const char* name) {
         // first-retina-generations of iPhone and iPod
         useImageBasedRendering = (deviceScreenScale <= 1.0) || ([deviceMachine hasPrefix:@"iphone3,"]) || ([deviceMachine hasPrefix:@"ipod4,"]);
         
-        // Twitter framework is weakly linked
-        hasTwitterIntegration = ([TWTweetComposeViewController class] != Nil) ? YES : NO;
-        
-        // adaptive status bar
-        hasAdaptiveStatusBar = ([deviceSystemVersionString intValue] >= 6) && (deviceUIIdiom == CDXDeviceUIIdiomPhone);
-
-        qltrace(@"%@ %@ %d %d %f %@ %d %d %d %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, deviceSystemVersionString, useReducedGraphicsEffects ? 1 : 0, useImageBasedRendering ? 1 : 0, hasTwitterIntegration ? 1 : 0, hasAdaptiveStatusBar ? 1 : 0);
+        qltrace(@"%@ %@ %d %d %f %@ %d %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, deviceSystemVersionString, useReducedGraphicsEffects ? 1 : 0, useImageBasedRendering ? 1 : 0);
     }
     return self;
 }

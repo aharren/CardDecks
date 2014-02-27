@@ -3,7 +3,7 @@
 // CDXTimerKeyboardExtension.m
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -136,9 +136,9 @@ synthesize_singleton(sharedTimerKeyboardExtension, CDXTimerKeyboardExtension);
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     if (component == 0) {
-        return [NSString stringWithFormat:@"  %d", row];
+        return [NSString stringWithFormat:@"%d", row];
     } else {
-        return [NSString stringWithFormat:@"  %d", row];
+        return [NSString stringWithFormat:@"%d", row];
     }
 }
 

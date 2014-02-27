@@ -3,7 +3,7 @@
 // CDXCardDeckCardEditViewController.m
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -51,8 +51,9 @@
     ivar_release_and_clear(text);
     ivar_release_and_clear(cardViewScrollView);
     ivar_release_and_clear(cardView);
-    ivar_release_and_clear(viewButtonsUpDownBarButtonItem);
-    ivar_release_and_clear(viewButtonsUpDown);
+    ivar_release_and_clear(upButton);
+    ivar_release_and_clear(downButton);
+    ivar_release_and_clear(viewButtons);
     ivar_release_and_clear(cardDeckViewContext);
     ivar_release_and_clear(cardDeck);
     ivar_release_and_clear(activeActionSheet);
@@ -82,8 +83,8 @@
     CDXCard *card = [self currentCard];
     text.text = card.text;
     if (!editingDefaults) {
-        [viewButtonsUpDown setEnabled:(cardIndex != 0) forSegmentAtIndex:0];
-        [viewButtonsUpDown setEnabled:(cardIndex < ([cardDeck cardsCount] - 1)) forSegmentAtIndex:1];
+        upButton.enabled = (cardIndex != 0);
+        downButton.enabled = (cardIndex < ([cardDeck cardsCount] - 1));
         
         self.navigationItem.title = [NSString stringWithFormat:@"%d of %d", cardIndex+1, [cardDeck cardsCount]];
     } else {
@@ -132,8 +133,9 @@
     ivar_release_and_clear(text);
     ivar_release_and_clear(cardViewScrollView);
     ivar_release_and_clear(cardView);
-    ivar_release_and_clear(viewButtonsUpDownBarButtonItem);
-    ivar_release_and_clear(viewButtonsUpDown);
+    ivar_release_and_clear(upButton);
+    ivar_release_and_clear(downButton);
+    ivar_release_and_clear(viewButtons);
     ivar_release_and_clear(activeActionSheet);
     [super viewDidUnload];
 }
@@ -141,7 +143,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationItem.title = @"";
-    self.navigationItem.rightBarButtonItem = editingDefaults ? nil : viewButtonsUpDownBarButtonItem;
+    self.navigationItem.rightBarButtonItem = nil;
+    if (!editingDefaults) {
+        UIBarButtonItem *alignmentFix = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil] autorelease];
+        alignmentFix.width = -20;
+        UIBarButtonItem *buttons = [[[UIBarButtonItem alloc] initWithCustomView:viewButtons] autorelease];
+        self.navigationItem.rightBarButtonItems = @[ alignmentFix, buttons ];
+    }
     
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
     [self showCardAtIndex:cardDeckViewContext.currentCardIndex];
@@ -152,6 +160,9 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension] reset];
+
+    cardViewScrollView.contentInset = text.contentInset;
+    cardViewScrollView.scrollIndicatorInsets = text.scrollIndicatorInsets;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -169,9 +180,15 @@
 - (void)menuControllerWillHideMenu {
 }
 
-- (IBAction)upDownButtonPressed {
+- (IBAction)upButtonPressed {
     [self finishCardModification];
-    [self showCardAtIndex:(cardDeckViewContext.currentCardIndex - 1) + (viewButtonsUpDown.selectedSegmentIndex << 1)];
+    [self showCardAtIndex:cardDeckViewContext.currentCardIndex - 1];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] refreshKeyboardExtensions];
+}
+
+- (IBAction)downButtonPressed {
+    [self finishCardModification];
+    [self showCardAtIndex:cardDeckViewContext.currentCardIndex + 1];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] refreshKeyboardExtensions];
 }
 
@@ -215,52 +232,59 @@
     }
     switch (index) {
         case 1:
-            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Color Properties"
-                                                 delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:@"Text \u21e2 Defaults", @"Text \u21e0 Defaults", @"Background \u21e2 Defaults", @"Background \u21e0 Defaults", nil] autorelease];
+            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
+                      initWithTitle:@"Copy Color Properties"
+                      delegate:self
+                      cancelButtonTitle:@"Cancel"
+                      destructiveButtonTitle:nil
+                      otherButtonTitles:@"Text \u21e2 Defaults", @"Text \u21e0 Defaults", @"Background \u21e2 Defaults", @"Background \u21e0 Defaults", nil] autorelease];
             break;
         case 2:
-            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Text Properties"
-                                                 delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:@"Layout \u21e2 Defaults", @"Layout \u21e0 Defaults", @"Size \u21e2 Defaults", @"Size \u21e0 Defaults", nil] autorelease];
+            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
+                      initWithTitle:@"Copy Text Properties"
+                      delegate:self
+                      cancelButtonTitle:@"Cancel"
+                      destructiveButtonTitle:nil
+                      otherButtonTitles:@"Layout \u21e2 Defaults", @"Layout \u21e0 Defaults", @"Size \u21e2 Defaults", @"Size \u21e0 Defaults", nil] autorelease];
             break;
         case 3:
-            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Timer Properties"
-                                                 delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:@"Timer \u21e2 Defaults", @"Timer \u21e0 Defaults", nil] autorelease];
+            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
+                      initWithTitle:@"Copy Timer Properties"
+                      delegate:self
+                      cancelButtonTitle:@"Cancel"
+                      destructiveButtonTitle:nil
+                      otherButtonTitles:@"Timer \u21e2 Defaults", @"Timer \u21e0 Defaults", nil] autorelease];
             break;
         case -1:
-            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Color Properties"
-                                                 delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:@"Text \u21e2 All Cards", @"Background \u21e2 All Cards", nil] autorelease];
+            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
+                      initWithTitle:@"Copy Color Properties"
+                      delegate:self
+                      cancelButtonTitle:@"Cancel"
+                      destructiveButtonTitle:nil
+                      otherButtonTitles:@"Text \u21e2 All Cards", @"Background \u21e2 All Cards", nil] autorelease];
             break;
         case -2:
-            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Text Properties"
-                                                 delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:@"Layout \u21e2 All Cards", @"Size \u21e2 All Cards", nil] autorelease];
+            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
+                      initWithTitle:@"Copy Text Properties"
+                      delegate:self
+                      cancelButtonTitle:@"Cancel"
+                      destructiveButtonTitle:nil
+                      otherButtonTitles:@"Layout \u21e2 All Cards", @"Size \u21e2 All Cards", nil] autorelease];
             break;
         case -3:
-            sheet = [[[UIActionSheet alloc] initWithTitle:@"Copy Timer Properties"
-                                                 delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:@"Timer \u21e2 All Cards", nil] autorelease];
+            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
+                      initWithTitle:@"Copy Timer Properties"
+                      delegate:self
+                      cancelButtonTitle:@"Cancel"
+                      destructiveButtonTitle:nil
+                      otherButtonTitles:@"Timer \u21e2 All Cards", nil] autorelease];
             break;
         default:
             break;
     }
     if (sheet) {
         sheet.tag = index;
+        [[CDXKeyboardExtensions sharedKeyboardExtensions] setInactive:YES];
         [[CDXAppWindowManager sharedAppWindowManager] showActionSheet:sheet fromBarButtonItem:barButtonItem];
         ivar_assign_and_retain(activeActionSheet, sheet);
     }
@@ -357,6 +381,7 @@
     }
     [self updateCardPreview];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] refreshKeyboardExtensions];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setInactive:NO];
 }
 
 - (CDXColor *)colorKeyboardExtensionTextColor {
@@ -404,14 +429,7 @@
 }
 
 - (void)paste:(id)sender {
-    // we want to paste to text, but it doesn't respond to paste directly, so
-    // search for the right subview
-    for (UIView *view in [text subviews]) {
-        if ([view respondsToSelector:@selector(paste:)]) {
-            [view paste:nil];
-            return;
-        }
-    }
+    [text paste:sender];
 }
 
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {

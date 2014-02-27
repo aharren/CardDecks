@@ -3,7 +3,7 @@
 // CDXCardDeckListPadViewController.m
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -56,11 +56,8 @@
     qltrace();
     [super viewDidLoad];
     
-    viewTableViewContainer.layer.cornerRadius = 6;
-    
     viewTableView.hidden = cardDeck == nil;
     viewNoTableView.hidden = !viewTableView.hidden;
-    navigationItem.title = cardDeck.name;
 }
 
 - (void)viewDidUnload {
@@ -83,13 +80,18 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     qltrace();
+    settingsButton.enabled = YES;
+    actionButton.enabled = YES;
+    shuffleButton.enabled = YES;
+    editButton.enabled = YES;
+    addButton.enabled = YES;
     [super viewWillAppear:animated];
     if (!viewNoTableView.hidden) {
-        settingsButton.enabled = YES;
-        actionButton.enabled = YES;
-        shuffleButton.enabled = YES;
-        editButton.enabled = YES;
-        addButton.enabled = YES;
+        settingsButton.enabled = NO;
+        actionButton.enabled = NO;
+        shuffleButton.enabled = NO;
+        editButton.enabled = NO;
+        addButton.enabled = NO;
     }
 }
 
@@ -129,13 +131,15 @@
 
 - (void)pushCardDeckEditViewController {
     CDXCardDeckCardEditPadViewController *vc = [[[CDXCardDeckCardEditPadViewController alloc] initWithCardDeckViewContext:cardDeckViewContext editDefaults:NO] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc animated:YES];
+    UINavigationController *nvc = [[[UINavigationController alloc] initWithRootViewController:vc] autorelease];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:nvc animated:YES];
     [self performBlockingSelectorEnd];
 }
 
 - (void)pushCardDeckEditViewControllerForDefaults {
     CDXCardDeckCardEditPadViewController *vc = [[[CDXCardDeckCardEditPadViewController alloc] initWithCardDeckViewContext:cardDeckViewContext editDefaults:YES] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc animated:YES];
+    UINavigationController *nvc = [[[UINavigationController alloc] initWithRootViewController:vc] autorelease];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:nvc animated:YES];
     [self performBlockingSelectorEnd];
 }
 
@@ -143,6 +147,18 @@
     ignoreCardDeckUpdateNotifications = YES;
     [super performAction:action withSender:sender tableView:tableView indexPath:indexPath];
     ignoreCardDeckUpdateNotifications = NO;
+}
+
+- (IBAction)actionButtonPressed {
+    CDXCardDeckListViewControllerTextActivityItemProvider *textItem = [[[CDXCardDeckListViewControllerTextActivityItemProvider alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
+    CDXCardDeckListViewControllerURLActivityItemProvider *urlItem = [[[CDXCardDeckListViewControllerURLActivityItemProvider alloc]  initWithCardDeckViewContext:cardDeckViewContext] autorelease];
+    
+    NSArray *items = @[textItem, urlItem];
+    NSArray *activities = nil;
+    
+    UIActivityViewController *vc = [[[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:activities] autorelease];
+    
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:actionButton animated:YES];
 }
 
 @end

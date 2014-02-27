@@ -3,7 +3,7 @@
 // CDXCardDeckCardViewController.m
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -94,7 +94,6 @@
     if ((self = [super initWithNibName:@"CDXCardDeckCardView" bundle:nil])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
         ivar_assign_and_retain(cardDeck, cardDeckViewContext.cardDeck);
-        self.wantsFullScreenLayout = YES;
         closeTapCount = [[CDXAppSettings sharedAppSettings] closeTapCount];
     }
     return self;
@@ -210,9 +209,9 @@
     // configure the action buttons bar
     CGRect frame = actionsViewButtonsView.frame;
     if ([[CDXAppSettings sharedAppSettings] actionButtonsOnLeftSide]) {
-        frame.origin = CGPointMake(15, 0);
+        frame.origin = CGPointMake(0, 0);
     } else {
-        frame.origin = CGPointMake(self.view.frame.size.width - frame.size.width - 15, 0);
+        frame.origin = CGPointMake(self.view.frame.size.width - frame.size.width, 0);
     }
     actionsViewButtonsView.frame = frame;
     [self configureActionsViewAnimated:NO];
@@ -246,6 +245,7 @@
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
+    self.view.frame = [UIScreen mainScreen].bounds;
     [self configureView];
     [self configureIndexDotsViewAndButtons];
     timerSignalView.hidden = YES;
@@ -301,6 +301,10 @@
         // avoid unexpected card changes when we come back
         ivar_assign(currentTimer, [[CDXCardDeckCardViewControllerTimer alloc] initWithCardIndex:0 timerInterval:0 timerType:0]);
     }
+}
+
+- (BOOL)requiresFullScreenLayout {
+    return YES;
 }
 
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {

@@ -3,7 +3,7 @@
 // CDXAppWindowManager.h
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +36,7 @@
     IBOutlet CDXAppWindowNoticeView *noticeView;
     
     UIViewController<CDXAppWindowViewController> *fullScreenViewController;
+    UIViewController *navigationViewController;
     
     UIDeviceOrientation deviceOrientation;
 }
@@ -61,4 +62,13 @@ declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 + (CGAffineTransform)transformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation;
 
 @end
+
+
+@interface CDXAppWindowActionSheetNonFirstResponder : UIActionSheet {
+    
+}
+
+
+@end
+
 

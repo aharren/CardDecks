@@ -3,7 +3,7 @@
 // CDXImageFactory.m
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -61,28 +61,21 @@ static void CDXGraphicsBeginImageContextNativeScale(CGSize size) {
 }
 
 - (UIImage *)imageForColor:(CDXColor *)color size:(CGSize)size {
-    UIGraphicsBeginImageContext(size);
+    CDXGraphicsBeginImageContextNativeScale(size);
     CGContextRef cgContext = UIGraphicsGetCurrentContext();
-    // background
+    
+    // circle
     if (color != nil) {
         CGContextSetFillColorWithColor(cgContext, [[color uiColor] CGColor]);
     } else {
         CGContextSetFillColorWithColor(cgContext, [[UIColor whiteColor] CGColor]);
     }
-    CGContextFillRect(cgContext, CGRectMake(0, 0, size.width, size.height));
+    CGContextFillEllipseInRect(cgContext, CGRectMake(0.5, 0.5, size.width-1, size.height-1));
     // border
-    CGContextSetStrokeColorWithColor(cgContext, [[UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:0.3] CGColor]);
-    CGPoint cgPoints[] = {
-        CGPointMake(0, 0),
-        CGPointMake(size.width, 0),
-        CGPointMake(size.width, 1),
-        CGPointMake(size.width, size.height-1),
-        CGPointMake(size.width, size.height),
-        CGPointMake(0, size.height),
-        CGPointMake(0, size.height-1),
-        CGPointMake(0, 1),
-    };
-    CGContextStrokeLineSegments(cgContext, cgPoints, 8);
+    CGContextSetStrokeColorWithColor(cgContext, [[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1] CGColor]);
+    CGContextSetLineWidth(cgContext, 0.5);
+    CGContextStrokeEllipseInRect(cgContext, CGRectMake(0.5, 0.5, size.width-1, size.height-1));
+    
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;

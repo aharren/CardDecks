@@ -3,7 +3,7 @@
 // CDXListViewControllerBase.m
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -67,6 +67,7 @@
     ivar_release_and_clear(tableCellBackgroundImageAlt);
     ivar_release_and_clear(viewTableViewLongPressRecognizer);
     ivar_release_and_clear(viewToolbarLongPressRecognizer);
+    ivar_release_and_clear(viewTableViewTapRecognizer);
     ivar_release_and_clear(performActionTableViewIndexPath);
     ivar_release_and_clear(performActionToolbarBarButtonItem);
 }
@@ -87,6 +88,8 @@
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
+    keepViewTableViewContentOffsetY = NO;
+
     UINavigationItem *navigationItem = self.navigationItem;
     navigationItem.title = titleText;
     navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc]
@@ -98,15 +101,13 @@
     
     ivar_assign(activityIndicator, [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]);
     activityIndicator.hidesWhenStopped = YES;
-    if ([[CDXDevice sharedDevice] deviceUIIdiom] == CDXDeviceUIIdiomPad) {
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-    }
+    activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
                                           initWithCustomView:activityIndicator]
                                          autorelease];
     self.toolbarItems = viewToolbar.items;
-    ivar_assign_and_retain(tableCellTextFont, [UIFont boldSystemFontOfSize:18]);
-    ivar_assign_and_retain(tableCellTextFontAction, [UIFont boldSystemFontOfSize:11]);
+    ivar_assign_and_retain(tableCellTextFont, [UIFont systemFontOfSize:18]);
+    ivar_assign_and_retain(tableCellTextFontAction, [UIFont systemFontOfSize:11]);
     ivar_assign_and_retain(tableCellTextTextColor, [UIColor blackColor]);
     ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor grayColor]);
     ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor grayColor]);
@@ -114,10 +115,8 @@
     ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:10]);
     ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor grayColor]);
     CGFloat rowHeight = viewTableView.rowHeight;
-    CGFloat base = useReducedGraphicsEffects ? 1.0 : 0.75;
-    if (!useReducedGraphicsEffects) {
-        ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:rowHeight base:base]);
-    }
+    CGFloat base = 1.0;
+    ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:rowHeight base:base]);
     ivar_assign_and_retain(tableCellBackgroundImageAlt, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff] bottomColor:[CDXColor colorWithRed:0xe8 green:0xe8 blue:0xe8 alpha:0xff] height:rowHeight base:base]);
     tableCellImageSize = CGSizeMake(10, 10);
     
@@ -128,6 +127,8 @@
                                                    initWithTarget:self action:@selector(handleTableViewLongPressGesture:)]);
     ivar_assign(viewToolbarLongPressRecognizer, [[UILongPressGestureRecognizer alloc]
                                                  initWithTarget:self action:@selector(handleToolbarLongPressGesture:)]);
+    ivar_assign(viewTableViewTapRecognizer, [[UITapGestureRecognizer alloc]
+                                             initWithTarget:self action:@selector(handleTableViewTapGesture:)]);
 }
 
 - (void)viewDidUnload {
@@ -142,21 +143,28 @@
     [self performBlockingSelectorEnd];
     [viewTableView reloadData];
     [self updateToolbarButtons];
-    viewTableView.contentOffset = CGPointMake(0, MAX(0, viewTableViewContentOffsetY));
+    if (keepViewTableViewContentOffsetY) {
+        viewTableView.contentOffset = CGPointMake(0, viewTableViewContentOffsetY);
+    }
+    keepViewTableViewContentOffsetY = NO;
     performActionState = CDXListViewControllerBasePerformActionStateNone;
     ivar_release_and_clear(performActionTableViewIndexPath);
     ivar_release_and_clear(performActionToolbarBarButtonItem);
     [viewTableView addGestureRecognizer:viewTableViewLongPressRecognizer];
     [self.navigationController.toolbar addGestureRecognizer:viewToolbarLongPressRecognizer];
+    [viewTableView addGestureRecognizer:viewTableViewTapRecognizer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     qltrace();
     [super viewWillDisappear:animated];
+    if (keepViewTableViewContentOffsetY) {
+        viewTableViewContentOffsetY = viewTableView.contentOffset.y;
+    }
     [self performBlockingSelectorEnd];
-    viewTableViewContentOffsetY = viewTableView.contentOffset.y;
     [viewTableView removeGestureRecognizer:viewTableViewLongPressRecognizer];
     [self.navigationController.toolbar removeGestureRecognizer:viewToolbarLongPressRecognizer];
+    [viewTableView removeGestureRecognizer:viewTableViewTapRecognizer];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -169,8 +177,10 @@
     [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
     if (editing) {
         [viewTableView removeGestureRecognizer:viewTableViewLongPressRecognizer];
+        [viewTableView removeGestureRecognizer:viewTableViewTapRecognizer];
     } else {
         [viewTableView addGestureRecognizer:viewTableViewLongPressRecognizer];
+        [viewTableView addGestureRecognizer:viewTableViewTapRecognizer];
     }
 }
 
@@ -270,6 +280,14 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    qltrace();
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    qltrace();
+}
+
 #pragma mark -
 #pragma mark Gesture
 
@@ -332,6 +350,25 @@
                 }
             }
         }
+    }
+}
+
+- (void)handleTableViewTapGesture:(UITapGestureRecognizer *)sender {
+    qltrace(@"%@", sender);
+    NSIndexPath *indexPath = [viewTableView indexPathForRowAtPoint:[sender locationInView:viewTableView]];
+    UITableViewCell *cell = [viewTableView cellForRowAtIndexPath:indexPath];
+    
+    if (sender.state == UIGestureRecognizerStateRecognized) {
+        cell.selected = YES;
+        
+        if (cell.accessoryType == UITableViewCellAccessoryDetailDisclosureButton) {
+            if (cell.frame.origin.x + cell.frame.size.width - 44 < [sender locationInView:cell].x) {
+                [self tableView:viewTableView accessoryButtonTappedForRowWithIndexPath:indexPath];
+                return;
+            }
+        }
+        
+        [self tableView:viewTableView didSelectRowAtIndexPath:indexPath];
     }
 }
 

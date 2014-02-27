@@ -3,7 +3,7 @@
 // CDXCardDeckCardEditViewController.h
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -43,8 +43,9 @@
     BOOL cardViewUsePreview;
     BOOL textUpdateColors;
     
-    IBOutlet UIBarButtonItem *viewButtonsUpDownBarButtonItem;
-    IBOutlet UISegmentedControl *viewButtonsUpDown;
+    IBOutlet UIButton *upButton;
+    IBOutlet UIButton *downButton;
+    IBOutlet UIView *viewButtons;
     
     CDXCardDeckViewContext *cardDeckViewContext;
     CDXCardDeck *cardDeck;
@@ -60,7 +61,8 @@
 - (CDXCard *)currentCard;
 - (void)updateCardPreview;
 
-- (IBAction)upDownButtonPressed;
+- (IBAction)upButtonPressed;
+- (IBAction)downButtonPressed;
 
 - (CDXCardOrientation)textKeyboardExtensionCardOrientation;
 - (void)textKeyboardExtensionSetCardOrientation:(CDXCardOrientation)cardOrientation;

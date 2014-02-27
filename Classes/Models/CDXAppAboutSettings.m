@@ -3,7 +3,7 @@
 // CDXAppAboutSettings.m
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -187,7 +187,7 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
             
             CDXDevice *device = [CDXDevice sharedDevice];
             NSMutableString *content = [[[NSMutableString alloc] init] autorelease];
-            [content appendString:@"<table style=\"border-spacing:0px;font-family:Helvetica,sans-serif;font-size:12px;font-weight:700;color:#999999;background-color:#ffffff\">"];
+            [content appendString:@"<table style=\"border-spacing:0px;font-family:HelveticaNeue,sans-serif;font-size:12px;font-weight:100;color:#000000;background-color:#ffffff\">"];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"System version", [device deviceSystemVersionString]];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Model", [device deviceModel]];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Machine", [device deviceMachine]];
@@ -196,8 +196,6 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%.1f</td></tr>\n", @"Screen scale", [device deviceScreenScale]];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Graphics effects", [device useReducedGraphicsEffects] ? @"reduced" : @"full"];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Rendering mode", [device useImageBasedRendering] ? @"image" : @"direct"];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Twitter integration", [device hasTwitterIntegration] ? @"yes" : @"no"];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Adaptive status bar", [device hasAdaptiveStatusBar] ? @"yes" : @"no"];
             [content appendString:@"</table>"];
             text = [text stringByReplacingOccurrencesOfString:@"$content$" withString:content];
             

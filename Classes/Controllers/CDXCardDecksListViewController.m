@@ -3,7 +3,7 @@
 // CDXCardDecksListViewController.m
 //
 //
-// Copyright (c) 2009-2012 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -64,7 +64,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     qltrace();
-    cardDeckQuickOpen = [[CDXAppSettings sharedAppSettings] cardDeckQuickOpen];
     [super viewWillAppear:animated];
     [CDXStorage drainAllDeferredActions];
 }
@@ -108,6 +107,7 @@
                 cell.detailTextLabel.textColor = tableCellDetailTextTextColor;
                 cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+                cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
             }
             return cell;
         }
@@ -116,10 +116,11 @@
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
                 cell.textLabel.font = tableCellTextFontAction;
-                cell.textLabel.textAlignment = UITextAlignmentCenter;
+                cell.textLabel.textAlignment = NSTextAlignmentCenter;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
             }
             cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
             return cell;
@@ -152,8 +153,9 @@
                 if ([@"" isEqualToString:description]) {
                     description = @" ";
                 }
-                cell.detailTextLabel.text = description;
-                cell.accessoryType = cardDeckQuickOpen ? UITableViewCellAccessoryDetailDisclosureButton : UITableViewCellAccessoryDisclosureIndicator;
+                NSString *text = [description stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+                cell.detailTextLabel.text = text;
+                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
             }
             
             return cell;
@@ -194,6 +196,7 @@
         if (deck != nil && [deck cardsCount] != 0) {
             CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
             CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:context] autorelease];
+            keepViewTableViewContentOffsetY = YES;
             [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
         }
     }
@@ -214,7 +217,10 @@
             lastCardDeckIndex = indexPath.row;
             deselectRow = NO;
             CDXCardDeckHolder *deckHolder = [cardDecks cardDeckAtIndex:indexPath.row];
-            if (cardDeckQuickOpen && [deckHolder cardsCount] != 0) {
+            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            if ((cell.accessoryType == UITableViewCellAccessoryDisclosureIndicator ||
+                 cell.accessoryType == UITableViewCellAccessoryDetailDisclosureButton)
+                && [deckHolder cardsCount] != 0) {
                 [self performBlockingSelector:@selector(pushCardDeckCardViewControllerWithCardDeckHolder:)
                                    withObject:deckHolder];
             } else {
