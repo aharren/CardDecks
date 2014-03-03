@@ -148,7 +148,7 @@
 - (void)scrollViewDidEndScrolling {
     CGFloat x = scrollView.contentOffset.x;
     CGFloat width = scrollViewPageWidth;
-    qltrace(": %f %d", x, scrollViewDirection);
+    qltrace(": %f %lu", x, (unsigned long)scrollViewDirection);
     
     switch (scrollViewDirection) {
         case CDXCardsStackViewScrollViewDirectionNone:
@@ -191,7 +191,7 @@
 - (void)scrollViewDidScroll {
     CGFloat x = scrollView.contentOffset.x;
     CGFloat width = scrollViewPageWidth;
-    qltrace(": %f %d", x, scrollViewDirection);
+    qltrace(": %f %lu", x, (unsigned long)scrollViewDirection);
     
     switch (scrollViewDirection) {
         case CDXCardsStackViewScrollViewDirectionNone:

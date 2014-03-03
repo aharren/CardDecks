@@ -516,9 +516,9 @@
     }
     
     NSUInteger currentCardIndex = [cardsView currentCardIndex];
-    for (int i = pageControlJumpPagesCount-1; i >= 0; i--) {
-        if (currentCardIndex > pageControlJumpPages[i]) {
-            [cardsView showCardAtIndex:pageControlJumpPages[i]];
+    for (NSUInteger i = pageControlJumpPagesCount; i > 0; i--) {
+        if (currentCardIndex > pageControlJumpPages[i-1]) {
+            [cardsView showCardAtIndex:pageControlJumpPages[i-1]];
             break;
         }
     }

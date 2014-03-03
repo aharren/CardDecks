@@ -216,29 +216,29 @@
                          (orientationIsNotDefault || fontSizeIsNotDefault || timerIntervalIsNotDefault) ? @"," : @"",
                          (orientationIsNotDefault) ? [CDXCard stringFromCardOrientation:orientation] : @"",
                          (fontSizeIsNotDefault || timerIntervalIsNotDefault) ? @"," : @"",
-                         (fontSizeIsNotDefault) ? [NSString stringWithFormat:@"%d", (NSUInteger)fontSize] : @"",
+                         (fontSizeIsNotDefault) ? [NSString stringWithFormat:@"%ld", (unsigned long)fontSize] : @"",
                          (timerIntervalIsNotDefault) ? @"," : @"",
-                         (timerIntervalIsNotDefault) ? [NSString stringWithFormat:@"%d", (NSUInteger)timerInterval] : @""];
+                         (timerIntervalIsNotDefault) ? [NSString stringWithFormat:@"%lu", (unsigned long)timerInterval] : @""];
     return string;
 }
 
 + (NSString *)version2StringFromCardDeck:(CDXCardDeck *)cardDeck {
     NSMutableArray *parts = [[[NSMutableArray alloc] initWithCapacity:2 + [cardDeck cardsCount]] autorelease];
     
-    NSString *deck = [NSString stringWithFormat:@"%@,g%d,d%d,c%d,id%d,is%d,it%d,r%d,s%d,ap%d",
+    NSString *deck = [NSString stringWithFormat:@"%@,g%ld,d%ld,c%ld,id%d,is%ld,it%d,r%d,s%ld,ap%ld",
                       [CDXURLSerializerUtils stringByAddingURLEscapes:cardDeck.name],
-                      (NSUInteger)cardDeck.groupSize,
-                      (NSUInteger)cardDeck.displayStyle,
-                      (NSUInteger)cardDeck.cornerStyle,
+                      (unsigned long)cardDeck.groupSize,
+                      (unsigned long)cardDeck.displayStyle,
+                      (unsigned long)cardDeck.cornerStyle,
                       cardDeck.wantsPageControl ? 1 : 0,
-                      (NSUInteger)cardDeck.pageControlStyle,
+                      (unsigned long)cardDeck.pageControlStyle,
                       cardDeck.wantsPageJumps ? 1 : 0,
                       cardDeck.wantsAutoRotate ? 1 : 0,
                       // version 2a: s0, s1
                       // version 2b: s0, s1, s2
-                      (NSUInteger)cardDeck.shakeAction,
+                      (unsigned long)cardDeck.shakeAction,
                       // version 2c: ap0, ap1, ap2
-                      (NSUInteger)cardDeck.autoPlay];
+                      (unsigned long)cardDeck.autoPlay];
     [parts addObject:deck];
     
     CDXCard *cardDefaults = [cardDeck cardDefaults];

@@ -240,7 +240,7 @@ static NSMutableArray *storageDeferredRemoves = nil;
 }
 
 + (void)drainDeferredActionForStorageObject:(NSObject<CDXStorageObject> *)object {
-    qltrace(@"%@ (updates:%d removes:%d)", [object storageObjectName], [storageDeferredUpdates count], [storageDeferredRemoves count]);
+    qltrace(@"%@ (updates:%lu removes:%lu)", [object storageObjectName], (unsigned long)[storageDeferredUpdates count], (unsigned long)[storageDeferredRemoves count]);
     
     [object retain];
     

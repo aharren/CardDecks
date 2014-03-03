@@ -290,7 +290,7 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
         default:
             return @"";
         case CDXAppSettingsMigrationState:
-            return [NSString stringWithFormat:@"%d",value];
+            return [NSString stringWithFormat:@"%lu",(unsigned long)value];
         case CDXAppSettingsCloseTapCount:
             switch (value) {
                 default:
@@ -316,7 +316,7 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
         default:
             return @"";
         case CDXAppSettingsMigrationState:
-            return [NSString stringWithFormat:@"%d", [self migrationState]];
+            return [NSString stringWithFormat:@"%lu", (unsigned long)[self migrationState]];
         case CDXAppSettingsVersionState:
             return [self versionState];
     }

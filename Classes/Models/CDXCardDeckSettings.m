@@ -164,22 +164,22 @@ static const CDXCardDeckSettingGroup groups[] = {
         default:
             break;
         case CDXCardDeckSettingsDeckDisplayStyle:
-            cardDeck.displayStyle = value;
+            cardDeck.displayStyle = (CDXCardDeckDisplayStyle)value;
             break;
         case CDXCardDeckSettingsCornerStyle:
-            cardDeck.cornerStyle = value;
+            cardDeck.cornerStyle = (CDXCardCornerStyle)value;
             break;
         case CDXCardDeckSettingsPageControlStyle:
-            cardDeck.pageControlStyle = value;
+            cardDeck.pageControlStyle = (CDXCardDeckPageControlStyle)value;
             break;
         case CDXCardDeckSettingsGroupSize:
-            cardDeck.groupSize = value;
+            cardDeck.groupSize = (CDXCardDeckGroupSize)value;
             break;
         case CDXCardDeckSettingsShakeAction:
-            cardDeck.shakeAction = value;
+            cardDeck.shakeAction = (CDXCardDeckShakeAction)value;
             break;
         case CDXCardDeckSettingsAutoPlay:
-            cardDeck.autoPlay = value;
+            cardDeck.autoPlay = (CDXCardDeckAutoPlay)value;
             break;
     }
     [cardDeck updateStorageObjectDeferred:YES];
@@ -240,7 +240,7 @@ static const CDXCardDeckSettingGroup groups[] = {
             } else if (value == 1) {
                 return @"1 Card";
             } else {
-                return [NSString stringWithFormat:@"%d Cards", value];
+                return [NSString stringWithFormat:@"%lu Cards", (unsigned long)value];
             }
         }
         case CDXCardDeckSettingsShakeAction: {

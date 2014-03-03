@@ -86,7 +86,7 @@
         upButton.enabled = (cardIndex != 0);
         downButton.enabled = (cardIndex < ([cardDeck cardsCount] - 1));
         
-        self.navigationItem.title = [NSString stringWithFormat:@"%d of %d", cardIndex+1, [cardDeck cardsCount]];
+        self.navigationItem.title = [NSString stringWithFormat:@"%lu of %lu", (unsigned long)cardIndex+1, (unsigned long)[cardDeck cardsCount]];
     } else {
         self.navigationItem.title = @"Defaults";
     }

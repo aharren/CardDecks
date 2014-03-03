@@ -105,8 +105,8 @@
     if (textColor != nil) {
         card.backgroundColor = [CDXColor colorWithRGBAString:backgroundColor defaultsTo:card.backgroundColor];
     }
-    card.orientation = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"orientation" defaultsTo:card.orientation];
-    card.cornerStyle = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"cornerStyle" defaultsTo:card.cornerStyle];
+    card.orientation = (CDXCardOrientation)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"orientation" defaultsTo:card.orientation];
+    card.cornerStyle = (CDXCardCornerStyle)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"cornerStyle" defaultsTo:card.cornerStyle];
     card.fontSize = (CGFloat)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"fontSize" defaultsTo:(NSUInteger)card.fontSize];
     card.timerInterval = (CGFloat)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"timerInterval" defaultsTo:(NSUInteger)card.timerInterval];
     
@@ -130,17 +130,17 @@
     dDeck.wantsAutoRotate = [CDXDictionarySerializerUtils boolFromDictionary:dictionary forKey:@"wantsAutoRotate" defaultsTo:dDeck.wantsAutoRotate];
     if ([CDXDictionarySerializerUtils dictionary:dictionary hasBoolForKey:@"wantsShakeShuffle"]) {
         // version 2a: wantsShakeShuffle
-        dDeck.shakeAction = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"wantsShakeShuffle" defaultsTo:dDeck.shakeAction];
+        dDeck.shakeAction = (CDXCardDeckShakeAction)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"wantsShakeShuffle" defaultsTo:dDeck.shakeAction];
     } else {
         // version 2b: shakeAction
-        dDeck.shakeAction = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"shakeAction" defaultsTo:dDeck.shakeAction];
+        dDeck.shakeAction = (CDXCardDeckShakeAction)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"shakeAction" defaultsTo:dDeck.shakeAction];
     }
     
-    dDeck.groupSize = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"groupSize" defaultsTo:dDeck.groupSize];
-    dDeck.displayStyle = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"displayStyle" defaultsTo:dDeck.displayStyle];
-    dDeck.cornerStyle = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"cornerStyle" defaultsTo:dDeck.cornerStyle];
-    dDeck.pageControlStyle = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"pageControlStyle" defaultsTo:dDeck.pageControlStyle];
-    dDeck.autoPlay = [CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"autoPlay" defaultsTo:dDeck.autoPlay];
+    dDeck.groupSize = (CDXCardDeckGroupSize)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"groupSize" defaultsTo:dDeck.groupSize];
+    dDeck.displayStyle = (CDXCardDeckDisplayStyle)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"displayStyle" defaultsTo:dDeck.displayStyle];
+    dDeck.cornerStyle = (CDXCardCornerStyle)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"cornerStyle" defaultsTo:dDeck.cornerStyle];
+    dDeck.pageControlStyle = (CDXCardDeckPageControlStyle)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"pageControlStyle" defaultsTo:dDeck.pageControlStyle];
+    dDeck.autoPlay = (CDXCardDeckAutoPlay)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"autoPlay" defaultsTo:dDeck.autoPlay];
     
     NSArray *cardDictionaries = (NSArray *)[dictionary objectForKey:@"cards"];
     for (NSDictionary *cardDictionary in cardDictionaries) {

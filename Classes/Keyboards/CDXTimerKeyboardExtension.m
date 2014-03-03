@@ -52,7 +52,7 @@ synthesize_singleton(sharedTimerKeyboardExtension, CDXTimerKeyboardExtension);
     if (minutes == 0 && seconds == 0) {
         return @"\u25a0";
     } else {
-        return [NSString stringWithFormat:@"%02u:%02u", minutes, seconds];
+        return [NSString stringWithFormat:@"%02lu:%02lu", (unsigned long)minutes, (unsigned long)seconds];
     }
 }
 
@@ -136,9 +136,9 @@ synthesize_singleton(sharedTimerKeyboardExtension, CDXTimerKeyboardExtension);
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     if (component == 0) {
-        return [NSString stringWithFormat:@"%d", row];
+        return [NSString stringWithFormat:@"%ld", (long)row];
     } else {
-        return [NSString stringWithFormat:@"%d", row];
+        return [NSString stringWithFormat:@"%ld", (long)row];
     }
 }
 
