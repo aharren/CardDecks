@@ -114,7 +114,7 @@
 
 - (NSUInteger)cardsIndex:(NSUInteger)index {
     if (isShuffled) {
-        return [(NSNumber *)[shuffleIndexes objectAtIndex:index] unsignedIntegerValue];
+        return [(NSNumber *)shuffleIndexes[index] unsignedIntegerValue];
     } else {
         return index;
     }
@@ -167,7 +167,7 @@
     
     // thumbnailColor
     if (cardsCount != 0) {
-        ivar_assign_and_retain(thumbnailColor, ((CDXCard *)[cards objectAtIndex:0]).backgroundColor);
+        ivar_assign_and_retain(thumbnailColor, ((CDXCard *)cards[0]).backgroundColor);
     } else {
         ivar_release_and_clear(thumbnailColor);
     }
@@ -181,12 +181,12 @@
 }
 
 - (CDXCard *)cardAtCardsIndex:(NSUInteger)cardsIndex {
-    return (CDXCard *)[cards objectAtIndex:cardsIndex];
+    return (CDXCard *)cards[cardsIndex];
 }
 
 - (CDXCard *)cardAtIndex:(NSUInteger)index {
     NSUInteger cardsIndex = [self cardsIndex:index];
-    return (CDXCard *)[cards objectAtIndex:cardsIndex];
+    return (CDXCard *)cards[cardsIndex];
 }
 
 - (CDXCard *)cardAtIndex:(NSUInteger)index orCard:(CDXCard *)card {
@@ -194,7 +194,7 @@
         return card;
     }
     NSUInteger cardsIndex = [self cardsIndex:index];
-    return (CDXCard *)[cards objectAtIndex:cardsIndex];
+    return (CDXCard *)cards[cardsIndex];
 }
 
 - (void)addCardInternal:(CDXCard *)card {
@@ -202,7 +202,7 @@
     [cards addObject:card];
     if (isShuffled) {
         NSUInteger cardsIndex = [cards count]-1;
-        [shuffleIndexes addObject:[NSNumber numberWithUnsignedInteger:cardsIndex]];
+        [shuffleIndexes addObject:@(cardsIndex)];
     }
 }
 
@@ -225,9 +225,9 @@
         [shuffleIndexes removeObjectAtIndex:index];
         NSUInteger count = [cards count];
         for (NSUInteger i = 0; i < count; i++) {
-            NSUInteger aCardsIndex = [(NSNumber *)[shuffleIndexes objectAtIndex:i] unsignedIntegerValue];
+            NSUInteger aCardsIndex = [(NSNumber *)shuffleIndexes[i] unsignedIntegerValue];
             if (aCardsIndex >= cardsIndex) {
-                [shuffleIndexes replaceObjectAtIndex:i withObject:[NSNumber numberWithUnsignedInteger:aCardsIndex-1]];
+                shuffleIndexes[i] = @(aCardsIndex-1);
             }
         }
     }
@@ -258,9 +258,9 @@
     if (isShuffled) {
         NSUInteger cardsIndex = [self cardsIndex:fromIndex];
         [shuffleIndexes removeObjectAtIndex:fromIndex];
-        [shuffleIndexes insertObject:[NSNumber numberWithUnsignedInteger:cardsIndex] atIndex:toIndex];
+        [shuffleIndexes insertObject:@(cardsIndex) atIndex:toIndex];
     } else {
-        CDXCard *card = (CDXCard *)[cards objectAtIndex:fromIndex];
+        CDXCard *card = (CDXCard *)cards[fromIndex];
         [card retain];
         [cards removeObjectAtIndex:fromIndex];
         [cards insertObject:card atIndex:toIndex];
@@ -347,7 +347,7 @@
     NSUInteger count = [cards count];
     ivar_assign(shuffleIndexes, [[NSMutableArray alloc] initWithCapacity:count]);
     for (NSUInteger i = 0; i < count; i++) {
-        [shuffleIndexes addObject:[NSNumber numberWithUnsignedInteger:i]];
+        [shuffleIndexes addObject:@(i)];
     }
     for (NSUInteger i = 0; i < count; i++) {
         NSUInteger newIndex = (((double)arc4random() / 0x100000000) * count);

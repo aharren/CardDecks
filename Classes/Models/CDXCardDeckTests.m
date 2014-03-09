@@ -148,8 +148,8 @@
     XCTAssertEqual([newdeck cardsCount], (NSUInteger)0);
     [newdeck addCards:cards];
     
-    [[cards objectAtIndex:0] setText:@"NewText1"];
-    [[cards objectAtIndex:1] setText:@"NewText2"];
+    [cards[0] setText:@"NewText1"];
+    [cards[1] setText:@"NewText2"];
     XCTAssertEqual([cards count], (NSUInteger)2);
     XCTAssertEqualObjects([[cards objectAtIndex:0] text], @"NewText1");
     XCTAssertEqualObjects([[cards objectAtIndex:1] text], @"NewText2");

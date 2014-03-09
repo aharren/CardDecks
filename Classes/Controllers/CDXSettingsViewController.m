@@ -88,10 +88,8 @@
     NSUInteger value = [settings enumerationValueForSettingWithTag:setting.tag];
     if (value != indexPath.row) {
         [settings setEnumerationValue:indexPath.row forSettingWithTag:setting.tag];
-        NSArray *paths = [NSArray arrayWithObjects:
-                          [NSIndexPath indexPathForRow:value inSection:0],
-                          indexPath,
-                          nil];
+        NSArray *paths = @[[NSIndexPath indexPathForRow:value inSection:0],
+                          indexPath];
         [tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -228,9 +226,7 @@
 
 - (void)textStartedEditing:(UITextField *)cellText {
     qltrace();
-    NSArray *extensions = [NSArray arrayWithObjects:
-                           [CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension],
-                           nil];
+    NSArray *extensions = @[[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension]];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:cellText keyboardExtensions:extensions];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
 }

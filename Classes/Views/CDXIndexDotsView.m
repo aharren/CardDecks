@@ -97,13 +97,13 @@
 
 - (void)setCurrentPage:(NSUInteger)newCurrentPage animated:(BOOL)animated {
     if (currentPage >= firstVisiblePage && currentPage <= lastVisiblePage) {
-        UIImageView *view = [[self subviews] objectAtIndex:currentPage-firstVisiblePage];
+        UIImageView *view = [self subviews][currentPage-firstVisiblePage];
         view.highlighted = NO;
         view.alpha = imageDotAlpha;
     }
     currentPage = newCurrentPage;
     if (currentPage >= firstVisiblePage && currentPage <= lastVisiblePage) {
-        UIImageView *view = [[self subviews] objectAtIndex:currentPage-firstVisiblePage];
+        UIImageView *view = [self subviews][currentPage-firstVisiblePage];
         view.highlighted = YES;
         view.alpha = imageDotAlphaHighlighted;
     }

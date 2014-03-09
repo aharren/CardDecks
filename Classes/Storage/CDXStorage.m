@@ -249,7 +249,7 @@ static NSMutableArray *storageDeferredRemoves = nil;
     
     indexPlus1 = [storageDeferredUpdates count];
     for (;indexPlus1 > 0; indexPlus1--) {
-        NSObject<CDXStorageObject> *object = (NSObject<CDXStorageObject> *)[storageDeferredUpdates objectAtIndex:indexPlus1-1];
+        NSObject<CDXStorageObject> *object = (NSObject<CDXStorageObject> *)storageDeferredUpdates[indexPlus1-1];
         if (storageObjectName == nil || [[object storageObjectName] isEqualToString:storageObjectName]) {
             [CDXStorage updateStorageObject:object deferred:NO];
             [storageDeferredUpdates removeObjectAtIndex:indexPlus1-1];
@@ -262,7 +262,7 @@ static NSMutableArray *storageDeferredRemoves = nil;
     
     indexPlus1 = [storageDeferredRemoves count];
     for (;indexPlus1 > 0; indexPlus1--) {
-        NSObject<CDXStorageObject> *object = (NSObject<CDXStorageObject> *)[storageDeferredRemoves objectAtIndex:indexPlus1-1];
+        NSObject<CDXStorageObject> *object = (NSObject<CDXStorageObject> *)storageDeferredRemoves[indexPlus1-1];
         if (storageObjectName == nil || [[object storageObjectName] isEqualToString:storageObjectName]) {
             [CDXStorage removeStorageObject:object deferred:NO];
             [storageDeferredRemoves removeObjectAtIndex:indexPlus1-1];
@@ -286,7 +286,7 @@ static NSMutableArray *storageDeferredRemoves = nil;
     
     indexPlus1 = [storageDeferredUpdates count];
     for (;indexPlus1 > 0; indexPlus1--) {
-        NSObject<CDXStorageObject> *object = (NSObject<CDXStorageObject> *)[storageDeferredUpdates objectAtIndex:indexPlus1-1];
+        NSObject<CDXStorageObject> *object = (NSObject<CDXStorageObject> *)storageDeferredUpdates[indexPlus1-1];
         if ([[object storageObjectName] isEqualToString:storageObjectName]) {
             [storageDeferredUpdates removeObjectAtIndex:indexPlus1-1];
         }
@@ -294,7 +294,7 @@ static NSMutableArray *storageDeferredRemoves = nil;
     
     indexPlus1 = [storageDeferredRemoves count];
     for (;indexPlus1 > 0; indexPlus1--) {
-        NSObject<CDXStorageObject> *object = (NSObject<CDXStorageObject> *)[storageDeferredRemoves objectAtIndex:indexPlus1-1];
+        NSObject<CDXStorageObject> *object = (NSObject<CDXStorageObject> *)storageDeferredRemoves[indexPlus1-1];
         if ([[object storageObjectName] isEqualToString:storageObjectName]) {
             [storageDeferredRemoves removeObjectAtIndex:indexPlus1-1];
         }

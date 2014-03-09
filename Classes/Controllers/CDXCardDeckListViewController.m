@@ -244,7 +244,7 @@
         [cardDeck removeCardAtIndex:indexPath.row];
         [cardDeckViewContext updateStorageObjectsDeferred:YES];
         
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self updateToolbarButtons];
     }
 }
@@ -289,7 +289,7 @@
     }
     [viewTableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
     for (NSUInteger i = 0; i < [paths count]; i++) {
-        NSIndexPath *path = [paths objectAtIndex:i];
+        NSIndexPath *path = paths[i];
         [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
         [viewTableView deselectRowAtIndexPath:path animated:YES];
     }
@@ -315,7 +315,7 @@
 - (IBAction)addButtonPressed {
     qltrace();
     CDXCard *card = [cardDeck cardWithDefaults];
-    NSArray *cards = [NSArray arrayWithObject:card];
+    NSArray *cards = @[card];
     [self processCardAddAtBottom:cards];
 }
 
@@ -412,7 +412,7 @@
             }
             [cardDeck replaceCardAtIndex:indexPath.row withCard:[[[sourceDeck cardAtIndex:0] copy] autorelease]];
             [cardDeck updateStorageObjectDeferred:YES];
-            [viewTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
+            [viewTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
         }
     }
 }

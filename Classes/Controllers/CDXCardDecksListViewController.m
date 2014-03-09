@@ -263,7 +263,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self deleteCardDeckAtIndex:indexPath.row];
         
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self updateToolbarButtons];
     }
 }
@@ -284,7 +284,7 @@
     [cardDecks updateStorageObjectDeferred:NO];
     
     NSIndexPath *path = [NSIndexPath indexPathForRow:[cardDecks cardDecksCount]-1 inSection:1];
-    [viewTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
+    [viewTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
     [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
     [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
     [viewTableView deselectRowAtIndexPath:path animated:YES];
@@ -335,7 +335,7 @@
         [cardDecks insertCardDeck:deck atIndex:row];
         [cardDecks updateStorageObjectDeferred:YES];
         NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:1];
-        [viewTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
+        [viewTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
         [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
         [viewTableView deselectRowAtIndexPath:path animated:YES];
         [self updateToolbarButtons];
@@ -418,7 +418,7 @@
             }
             [targetDeck updateStorageObjectDeferred:NO];
             [cardDecks updateStorageObjectDeferred:NO];
-            [viewTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation];
+            [viewTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:animation];
         }
     }
 }

@@ -29,12 +29,12 @@
 @implementation CDXDictionarySerializerUtils
 
 + (BOOL)dictionary:(NSDictionary *)dictionary hasBoolForKey:(NSString *)key {
-    NSObject *object = [dictionary objectForKey:key];
+    NSObject *object = dictionary[key];
     return (object != nil && [object isKindOfClass:[NSNumber class]]);
 }
 
 + (NSString *)stringFromDictionary:(NSDictionary *)dictionary forKey:(NSString *)key defaultsTo:(NSString *)defaultValue {
-    NSObject *object = [dictionary objectForKey:key];
+    NSObject *object = dictionary[key];
     if (object == nil || ![object isKindOfClass:[NSString class]]) {
         return defaultValue;
     } else {
@@ -43,7 +43,7 @@
 }
 
 + (BOOL)boolFromDictionary:(NSDictionary *)dictionary forKey:(NSString *)key defaultsTo:(BOOL)defaultValue {
-    NSObject *object = [dictionary objectForKey:key];
+    NSObject *object = dictionary[key];
     if (object == nil || ![object isKindOfClass:[NSNumber class]]) {
         return defaultValue;
     } else {
@@ -52,7 +52,7 @@
 }
 
 + (NSUInteger)unsignedIntegerFromDictionary:(NSDictionary *)dictionary forKey:(NSString *)key defaultsTo:(NSUInteger)defaultValue {
-    NSObject *object = [dictionary objectForKey:key];
+    NSObject *object = dictionary[key];
     if (object == nil || ![object isKindOfClass:[NSNumber class]]) {
         return defaultValue;
     } else {
@@ -61,7 +61,7 @@
 }
 
 + (NSDictionary *)dictionaryFromDictionary:(NSDictionary *)dictionary forKey:(NSString *)key defaultsTo:(NSDictionary *)defaultValue {
-    NSObject *object = [dictionary objectForKey:key];
+    NSObject *object = dictionary[key];
     if (object == nil || ![object isKindOfClass:[NSDictionary class]]) {
         return defaultValue;
     } else {
@@ -71,7 +71,7 @@
 
 + (void)dictionary:(NSMutableDictionary *)dictionary setObject:(NSObject *)object forKey:(NSString *)key {
     if (object) {
-        [dictionary setObject:object forKey:key];
+        dictionary[key] = object;
     }
 }
 

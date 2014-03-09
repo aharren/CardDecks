@@ -35,34 +35,34 @@
         CDXCard *dCard = [cardDeck cardWithDefaults];
         
         // <text>
-        dCard.text = [CDXURLSerializerUtils stringByReplacingURLEscapes:(NSString *)[sCardParts objectAtIndex:0]];
+        dCard.text = [CDXURLSerializerUtils stringByReplacingURLEscapes:(NSString *)sCardParts[0]];
         // [,[<text-color>] ...
         if ([sCardParts count] >= 2) {
-            dCard.textColor = [CDXColor colorWithRGBAString:(NSString *)[sCardParts objectAtIndex:1]
+            dCard.textColor = [CDXColor colorWithRGBAString:(NSString *)sCardParts[1]
                                                  defaultsTo:dCard.textColor];
         }
         // [,[<background-color>] ...
         if ([sCardParts count] >= 3) {
-            dCard.backgroundColor = [CDXColor colorWithRGBAString:(NSString *)[sCardParts objectAtIndex:2]
+            dCard.backgroundColor = [CDXColor colorWithRGBAString:(NSString *)sCardParts[2]
                                                        defaultsTo:dCard.backgroundColor];
         }
         // [,[<orientation>] ...
         if ([sCardParts count] >= 4) {
-            NSString *value = (NSString *)[sCardParts objectAtIndex:3];
+            NSString *value = (NSString *)sCardParts[3];
             if ([value length] != 0) {
                 dCard.orientation = [CDXCard cardOrientationFromString:value];
             }
         }
         // [,[<font-size>] ...
         if ([sCardParts count] >= 5 && version >= 2) {
-            NSString *value = (NSString *)[sCardParts objectAtIndex:4];
+            NSString *value = (NSString *)sCardParts[4];
             if ([value length] != 0) {
                 dCard.fontSize = (CGFloat)[value intValue];
             }
         }
         // [,[<timer-interval>] ...
         if ([sCardParts count] >= 6 && version >= 2) {
-            NSString *value = (NSString *)[sCardParts objectAtIndex:5];
+            NSString *value = (NSString *)sCardParts[5];
             if ([value length] != 0) {
                 dCard.timerInterval = (NSTimeInterval)[value intValue];
             }
@@ -84,7 +84,7 @@
     // deck := <name>[,[<text-color>][,[<background-color>][,[<orientation>]]]]
     CDXCardDeck *dDeck = nil;
     {
-        NSString *sDeck = (NSString *)[sParts objectAtIndex:0];
+        NSString *sDeck = (NSString *)sParts[0];
         NSArray *sDeckParts = [sDeck componentsSeparatedByString:@","];
         if ([sDeckParts count] < 1) {
             // no name, exit
@@ -97,7 +97,7 @@
         dCardDefaults.textColor = [CDXColor colorWhite];
         
         // <name>
-        dDeck.name = [CDXURLSerializerUtils stringByReplacingURLEscapes:(NSString *)[sDeckParts objectAtIndex:0]];
+        dDeck.name = [CDXURLSerializerUtils stringByReplacingURLEscapes:(NSString *)sDeckParts[0]];
         
         // defaults, parse <deck> as <card> and reset the text to ""
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -113,7 +113,7 @@
     // card := <text>[,[<text-color>][,[<background-color>][,[<orientation>]]]]
     for (NSUInteger i = 1; i < [sParts count]; i++) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-        NSString *sCard = (NSString *)[sParts objectAtIndex:i];
+        NSString *sCard = (NSString *)sParts[i];
         CDXCard *dCard = [CDXCardDeckURLSerializer cardFromString:sCard cardDeck:dDeck version:1];
         if (dCard != nil) {
             [dDeck addCard:dCard];
@@ -135,7 +135,7 @@
     // deck := <name>[,<setting>[,<setting>[...]]]
     CDXCardDeck *dDeck = nil;
     {
-        NSString *sDeck = (NSString *)[sParts objectAtIndex:0];
+        NSString *sDeck = (NSString *)sParts[0];
         NSArray *sDeckParts = [sDeck componentsSeparatedByString:@","];
         if ([sDeckParts count] < 1) {
             // no name, exit
@@ -144,11 +144,11 @@
         
         dDeck = [[[CDXCardDeck alloc] init] autorelease];
         // <name>
-        dDeck.name = [CDXURLSerializerUtils stringByReplacingURLEscapes:(NSString *)[sDeckParts objectAtIndex:0]];
+        dDeck.name = [CDXURLSerializerUtils stringByReplacingURLEscapes:(NSString *)sDeckParts[0]];
         
         // <setting>
         for (NSUInteger i = 1; i < [sDeckParts count]; i++) {
-            NSString *sSetting = (NSString *)[sDeckParts objectAtIndex:i];
+            NSString *sSetting = (NSString *)sDeckParts[i];
             if ([sSetting hasPrefix:@"g"]) {
                 dDeck.groupSize = [[sSetting substringFromIndex:1] intValue];
             } else if ([sSetting hasPrefix:@"d"]) {
@@ -174,7 +174,7 @@
     // default-card := <text>[,[<text-color>][,[<background-color>][,[<orientation>][,[<font-size>][,[<timer-interval>]]]]]]
     if ([sParts count] >= 1) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-        NSString *sCard = (NSString *)[sParts objectAtIndex:1];
+        NSString *sCard = (NSString *)sParts[1];
         CDXCard *dCard = [CDXCardDeckURLSerializer cardFromString:sCard cardDeck:dDeck version:2];
         if (dCard != nil) {
             [dDeck setCardDefaults:dCard];
@@ -185,7 +185,7 @@
     // card := <text>[,[<text-color>][,[<background-color>][,[<orientation>][,[<font-size>][,[<timer-interval>]]]]]]
     for (NSUInteger i = 2; i < [sParts count]; i++) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-        NSString *sCard = (NSString *)[sParts objectAtIndex:i];
+        NSString *sCard = (NSString *)sParts[i];
         CDXCard *dCard = [CDXCardDeckURLSerializer cardFromString:sCard cardDeck:dDeck version:2];
         if (dCard != nil) {
             [dDeck addCard:dCard];

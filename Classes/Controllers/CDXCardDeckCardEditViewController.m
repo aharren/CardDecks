@@ -193,12 +193,10 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    NSArray *extensions = [NSArray arrayWithObjects:
-                           [CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension],
+    NSArray *extensions = @[[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension],
                            [CDXColorKeyboardExtension sharedColorKeyboardExtension],
                            [CDXTextKeyboardExtension sharedtextKeyboardExtension],
-                           [CDXTimerKeyboardExtension sharedTimerKeyboardExtension],
-                           nil];
+                           [CDXTimerKeyboardExtension sharedTimerKeyboardExtension]];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
 }

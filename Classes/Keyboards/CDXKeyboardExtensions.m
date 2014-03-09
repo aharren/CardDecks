@@ -74,7 +74,7 @@ static float keyboardExtensionsOsVersion;
 
 - (NSObject<CDXKeyboardExtension> *)keyboardExtensionByTag:(NSInteger)tag {
     if (tag >= 0) {
-        return [[(NSObject<CDXKeyboardExtension> *)[keyboardExtensions objectAtIndex:tag] retain] autorelease];
+        return [[(NSObject<CDXKeyboardExtension> *)keyboardExtensions[tag] retain] autorelease];
     }
     
     return nil;
@@ -82,7 +82,7 @@ static float keyboardExtensionsOsVersion;
 
 - (UIBarButtonItem *)toolbarButtonByTag:(NSInteger)tag {
     if (tag >= -1) {
-        return [[(UIBarButtonItem *)[toolbarButtons objectAtIndex:tag + 1] retain] autorelease];
+        return [[(UIBarButtonItem *)toolbarButtons[tag + 1] retain] autorelease];
     }
     
     return toolbarKeyboardButton;
@@ -268,7 +268,7 @@ static float keyboardExtensionsOsVersion;
     }
     // return the second window
     if ([applicationWindows count] > 1) {
-        return [applicationWindows objectAtIndex:1];
+        return applicationWindows[1];
     }
     // fail
     return nil;
@@ -289,13 +289,13 @@ static float keyboardExtensionsOsVersion;
 - (void)refreshKeyboardExtensions {
     NSUInteger count = [keyboardExtensions count];
     for (NSUInteger tag = 0; tag < count; tag++) {
-        NSObject<CDXKeyboardExtension> *keyboardExtension = [keyboardExtensions objectAtIndex:tag];
+        NSObject<CDXKeyboardExtension> *keyboardExtension = keyboardExtensions[tag];
         if (tag == activeExtensionTag) {
             if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionWillBecomeActive)]) {
                 [keyboardExtension keyboardExtensionWillBecomeActive];
             }
         }
-        UIBarButtonItem *button = [toolbarButtons objectAtIndex:tag+1];
+        UIBarButtonItem *button = toolbarButtons[tag+1];
         button.title = [keyboardExtension keyboardExtensionTitle];
         if (tag == activeExtensionTag) {
             if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionDidBecomeActive)]) {

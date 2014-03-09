@@ -43,42 +43,42 @@
 
 + (CDXCardDeck *)cardDeckFromVersion1Dictionary:(NSDictionary *)dictionary {
     CDXCardDeck *dDeck = [[[CDXCardDeck alloc] init] autorelease];
-    dDeck.name = (NSString *)[dictionary objectForKey:@"Name"];
-    dDeck.file = (NSString *)[dictionary objectForKey:@"File"];
+    dDeck.name = (NSString *)dictionary[@"Name"];
+    dDeck.file = (NSString *)dictionary[@"File"];
     
     CDXCard *dCardDefaults = dDeck.cardDefaults;
-    dCardDefaults.textColor = [CDXColor colorWithRGBAString:(NSString *)[dictionary objectForKey:@"DefaultTextColor"] defaultsTo:[CDXColor colorWhite]];
-    dCardDefaults.backgroundColor = [CDXColor colorWithRGBAString:(NSString *)[dictionary objectForKey:@"DefaultBackgroundColor"] defaultsTo:[CDXColor colorBlack]];
+    dCardDefaults.textColor = [CDXColor colorWithRGBAString:(NSString *)dictionary[@"DefaultTextColor"] defaultsTo:[CDXColor colorWhite]];
+    dCardDefaults.backgroundColor = [CDXColor colorWithRGBAString:(NSString *)dictionary[@"DefaultBackgroundColor"] defaultsTo:[CDXColor colorBlack]];
     
-    NSArray *cardDictionaries = (NSArray *)[dictionary objectForKey:@"Cards"];
+    NSArray *cardDictionaries = (NSArray *)dictionary[@"Cards"];
     for (NSDictionary *cardDictionary in cardDictionaries) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         
         CDXCard *dCard = [dDeck cardWithDefaults];
         NSObject *object;
         
-        object = [cardDictionary objectForKey:@"Text"];
+        object = cardDictionary[@"Text"];
         if (object == nil || ![object isKindOfClass:[NSString class]]) {
             dCard.text = @"";
         } else {
             dCard.text = (NSString *)object;
         }
         
-        object = [cardDictionary objectForKey:@"TextColor"];
+        object = cardDictionary[@"TextColor"];
         if (object == nil || ![object isKindOfClass:[NSString class]]) {
             dCard.textColor = [CDXColor colorWhite];
         } else {
             dCard.textColor = [CDXColor colorWithRGBAString:(NSString *)object defaultsTo:[CDXColor colorWhite]];
         }
         
-        object = [cardDictionary objectForKey:@"BackgroundColor"];
+        object = cardDictionary[@"BackgroundColor"];
         if (object == nil || ![object isKindOfClass:[NSString class]]) {
             dCard.backgroundColor = [CDXColor colorBlack];
         } else {
             dCard.backgroundColor = [CDXColor colorWithRGBAString:(NSString *)object defaultsTo:[CDXColor colorBlack]];
         }
         
-        object = [cardDictionary objectForKey:@"Orientation"];
+        object = cardDictionary[@"Orientation"];
         if (object == nil || ![object isKindOfClass:[NSString class]]) {
             dCard.orientation = CDXCardOrientationUp;
         } else {
@@ -142,7 +142,7 @@
     dDeck.pageControlStyle = (CDXCardDeckPageControlStyle)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"pageControlStyle" defaultsTo:dDeck.pageControlStyle];
     dDeck.autoPlay = (CDXCardDeckAutoPlay)[CDXDictionarySerializerUtils unsignedIntegerFromDictionary:dictionary forKey:@"autoPlay" defaultsTo:dDeck.autoPlay];
     
-    NSArray *cardDictionaries = (NSArray *)[dictionary objectForKey:@"cards"];
+    NSArray *cardDictionaries = (NSArray *)dictionary[@"cards"];
     for (NSDictionary *cardDictionary in cardDictionaries) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         
@@ -152,7 +152,7 @@
         [pool release];
     }
     
-    NSArray *shuffleIndexes = (NSArray *)[dictionary objectForKey:@"shuffleIndexes"];
+    NSArray *shuffleIndexes = (NSArray *)dictionary[@"shuffleIndexes"];
     if (shuffleIndexes != nil) {
         dDeck.shuffleIndexes = [NSMutableArray arrayWithArray:shuffleIndexes];
     }
@@ -172,10 +172,10 @@
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:[card.textColor rgbaString] forKey:@"textColor"];
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:[card.backgroundColor rgbaString] forKey:@"backgroundColor"];
     
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:card.orientation] forKey:@"orientation"];
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:card.cornerStyle] forKey:@"cornerStyle"];
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:(NSUInteger)card.fontSize] forKey:@"fontSize"];
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:(NSUInteger)card.timerInterval] forKey:@"timerInterval"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@(card.orientation) forKey:@"orientation"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@(card.cornerStyle) forKey:@"cornerStyle"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@((NSUInteger)card.fontSize) forKey:@"fontSize"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@((NSUInteger)card.timerInterval) forKey:@"timerInterval"];
     
     return dictionary;
 }
@@ -195,25 +195,25 @@
     }
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:cards forKey:@"cards"];
     
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithBool:cardDeck.wantsPageControl] forKey:@"wantsPageControl"];
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithBool:cardDeck.wantsPageJumps] forKey:@"wantsPageJumps"];
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithBool:cardDeck.wantsAutoRotate] forKey:@"wantsAutoRotate"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@(cardDeck.wantsPageControl) forKey:@"wantsPageControl"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@(cardDeck.wantsPageJumps) forKey:@"wantsPageJumps"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@(cardDeck.wantsAutoRotate) forKey:@"wantsAutoRotate"];
     // version 2a: wantsShakeShuffle
     // version 2b: shakeAction
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:cardDeck.shakeAction] forKey:@"shakeAction"];
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:cardDeck.groupSize] forKey:@"groupSize"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@(cardDeck.shakeAction) forKey:@"shakeAction"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@(cardDeck.groupSize) forKey:@"groupSize"];
     
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:cardDeck.displayStyle] forKey:@"displayStyle"];
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:cardDeck.cornerStyle] forKey:@"cornerStyle"];
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:cardDeck.pageControlStyle] forKey:@"pageControlStyle"];
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:cardDeck.autoPlay] forKey:@"autoPlay"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@(cardDeck.displayStyle) forKey:@"displayStyle"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@(cardDeck.cornerStyle) forKey:@"cornerStyle"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@(cardDeck.pageControlStyle) forKey:@"pageControlStyle"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@(cardDeck.autoPlay) forKey:@"autoPlay"];
     
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithBool:cardDeck.isShuffled] forKey:@"isShuffled"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@(cardDeck.isShuffled) forKey:@"isShuffled"];
     if (cardDeck.isShuffled) {
         [CDXDictionarySerializerUtils dictionary:dictionary setObject:[[[cardDeck shuffleIndexes] copy] autorelease] forKey:@"shuffleIndexes"];
     }
     
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:2] forKey:@"VERSION"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@2U forKey:@"VERSION"];
     return dictionary;
 }
 
