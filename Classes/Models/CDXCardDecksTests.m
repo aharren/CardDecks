@@ -23,11 +23,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import "CDXCardDecks.h"
 
 
-@interface CDXCardDecksTests : SenTestCase {
+@interface CDXCardDecksTests : XCTestCase {
     
 }
 
@@ -38,42 +38,42 @@
 
 - (void)testAddCardDeck {
     CDXCardDecks *cardDecks = [[[CDXCardDecks alloc] init] autorelease];
-    STAssertEquals([cardDecks cardDecksCount], (NSUInteger)0, nil);
+    XCTAssertEqual([cardDecks cardDecksCount], (NSUInteger)0);
     
     CDXCardDeckHolder *cardDeck = [[CDXCardDeckHolder alloc] init];
     cardDeck.name = @"Text";
     [cardDecks addCardDeck:cardDeck];
     [cardDeck release];
     
-    STAssertEquals([cardDecks cardDecksCount], (NSUInteger)1, nil);
-    STAssertEqualObjects([[cardDecks cardDeckAtIndex:0] name], @"Text", nil);
+    XCTAssertEqual([cardDecks cardDecksCount], (NSUInteger)1);
+    XCTAssertEqualObjects([[cardDecks cardDeckAtIndex:0] name], @"Text");
 }
 
 - (void)testInsertCardDeck {
     CDXCardDecks *cardDecks = [[[CDXCardDecks alloc] init] autorelease];
-    STAssertEquals([cardDecks cardDecksCount], (NSUInteger)0, nil);
+    XCTAssertEqual([cardDecks cardDecksCount], (NSUInteger)0);
     
     CDXCardDeckHolder *cardDeck1 = [[CDXCardDeckHolder alloc] init];
     cardDeck1.name = @"Text 1";
     [cardDecks insertCardDeck:cardDeck1 atIndex:10];
     [cardDeck1 release];
     
-    STAssertEquals([cardDecks cardDecksCount], (NSUInteger)1, nil);
-    STAssertEqualObjects([[cardDecks cardDeckAtIndex:0] name], @"Text 1", nil);
+    XCTAssertEqual([cardDecks cardDecksCount], (NSUInteger)1);
+    XCTAssertEqualObjects([[cardDecks cardDeckAtIndex:0] name], @"Text 1");
     
     CDXCardDeckHolder *cardDeck2 = [[CDXCardDeckHolder alloc] init];
     cardDeck2.name = @"Text 2";
     [cardDecks insertCardDeck:cardDeck2 atIndex:0];
     [cardDeck2 release];
     
-    STAssertEquals([cardDecks cardDecksCount], (NSUInteger)2, nil);
-    STAssertEqualObjects([[cardDecks cardDeckAtIndex:0] name], @"Text 2", nil);
-    STAssertEqualObjects([[cardDecks cardDeckAtIndex:1] name], @"Text 1", nil);
+    XCTAssertEqual([cardDecks cardDecksCount], (NSUInteger)2);
+    XCTAssertEqualObjects([[cardDecks cardDeckAtIndex:0] name], @"Text 2");
+    XCTAssertEqualObjects([[cardDecks cardDeckAtIndex:1] name], @"Text 1");
 }
 
 - (void)testRemoveCardDeck {
     CDXCardDecks *cardDecks = [[[CDXCardDecks alloc] init] autorelease];
-    STAssertEquals([cardDecks cardDecksCount], (NSUInteger)0, nil);
+    XCTAssertEqual([cardDecks cardDecksCount], (NSUInteger)0);
     
     CDXCardDeckHolder *cardDeck1 = [[CDXCardDeckHolder alloc] init];
     cardDeck1.name = @"Text 1";
@@ -90,15 +90,15 @@
     [cardDecks addCardDeck:cardDeck3];
     [cardDeck3 release];
     
-    STAssertEquals([cardDecks cardDecksCount], (NSUInteger)3, nil);
-    STAssertEqualObjects([[cardDecks cardDeckAtIndex:0] name], @"Text 1", nil);
-    STAssertEqualObjects([[cardDecks cardDeckAtIndex:1] name], @"Text 2", nil);
-    STAssertEqualObjects([[cardDecks cardDeckAtIndex:2] name], @"Text 3", nil);
+    XCTAssertEqual([cardDecks cardDecksCount], (NSUInteger)3);
+    XCTAssertEqualObjects([[cardDecks cardDeckAtIndex:0] name], @"Text 1");
+    XCTAssertEqualObjects([[cardDecks cardDeckAtIndex:1] name], @"Text 2");
+    XCTAssertEqualObjects([[cardDecks cardDeckAtIndex:2] name], @"Text 3");
     
     [cardDecks removeCardDeckAtIndex:1];
-    STAssertEquals([cardDecks cardDecksCount], (NSUInteger)2, nil);
-    STAssertEqualObjects([[cardDecks cardDeckAtIndex:0] name], @"Text 1", nil);
-    STAssertEqualObjects([[cardDecks cardDeckAtIndex:1] name], @"Text 3", nil);
+    XCTAssertEqual([cardDecks cardDecksCount], (NSUInteger)2);
+    XCTAssertEqualObjects([[cardDecks cardDeckAtIndex:0] name], @"Text 1");
+    XCTAssertEqualObjects([[cardDecks cardDeckAtIndex:1] name], @"Text 3");
 }
 
 @end

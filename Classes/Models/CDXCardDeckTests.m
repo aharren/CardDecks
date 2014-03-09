@@ -23,11 +23,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import "CDXCardDeck.h"
 
 
-@interface CDXCardDeckTests : SenTestCase {
+@interface CDXCardDeckTests : XCTestCase {
     
 }
 
@@ -38,28 +38,28 @@
 
 - (void)testInitWithDefaults {
     CDXCardDeck *deck = [[CDXCardDeck alloc] init];
-    STAssertEqualObjects([deck name], @"New Card Deck", nil);
+    XCTAssertEqualObjects([deck name], @"New Card Deck");
     CDXCard *defaults = deck.cardDefaults;
-    STAssertEqualObjects([defaults textColor], [CDXColor colorBlack], nil);
-    STAssertEqualObjects([defaults backgroundColor], [CDXColor colorWhite], nil);
-    STAssertEquals((int)[defaults orientation], (int)CDXCardOrientationUp, nil);
+    XCTAssertEqualObjects([defaults textColor], [CDXColor colorBlack]);
+    XCTAssertEqualObjects([defaults backgroundColor], [CDXColor colorWhite]);
+    XCTAssertEqual((int)[defaults orientation], (int)CDXCardOrientationUp);
     
-    STAssertEquals(deck.wantsPageControl, YES, nil);
-    STAssertEquals(deck.wantsPageJumps, YES, nil);
-    STAssertEquals(deck.wantsAutoRotate, YES, nil);
-    STAssertEquals(deck.shakeAction, CDXCardDeckShakeActionDefault, nil);
-    STAssertEquals(deck.groupSize, CDXCardDeckGroupSizeDefault, nil);
-    STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleDefault, nil);
-    STAssertEquals(deck.cornerStyle, CDXCardCornerStyleDefault, nil);
-    STAssertEquals(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault, nil);
-    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayDefault, nil);
+    XCTAssertEqual(deck.wantsPageControl, YES);
+    XCTAssertEqual(deck.wantsPageJumps, YES);
+    XCTAssertEqual(deck.wantsAutoRotate, YES);
+    XCTAssertEqual(deck.shakeAction, CDXCardDeckShakeActionDefault);
+    XCTAssertEqual(deck.groupSize, CDXCardDeckGroupSizeDefault);
+    XCTAssertEqual(deck.displayStyle, CDXCardDeckDisplayStyleDefault);
+    XCTAssertEqual(deck.cornerStyle, CDXCardCornerStyleDefault);
+    XCTAssertEqual(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault);
+    XCTAssertEqual(deck.autoPlay, CDXCardDeckAutoPlayDefault);
     
     [deck release];
 }
 
 - (void)testCopy {
     CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
-    STAssertEquals([deck cardsCount], (NSUInteger)0, nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)0);
     
     CDXCard *card;
     card = [[[CDXCard alloc] init] autorelease];
@@ -69,64 +69,64 @@
     card.text = @"Text2";
     [deck addCard:card];
     
-    STAssertEquals([deck cardsCount], (NSUInteger)2, nil);
-    STAssertEqualObjects([[deck cardAtIndex:0] text], @"Text1", nil);
-    STAssertEqualObjects([[deck cardAtIndex:1] text], @"Text2", nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)2);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text1");
+    XCTAssertEqualObjects([[deck cardAtIndex:1] text], @"Text2");
     
-    STAssertEquals(deck.wantsPageControl, YES, nil);
+    XCTAssertEqual(deck.wantsPageControl, YES);
     deck.wantsPageControl = NO;
-    STAssertEquals(deck.wantsPageJumps, YES, nil);
+    XCTAssertEqual(deck.wantsPageJumps, YES);
     deck.wantsPageJumps = NO;
-    STAssertEquals(deck.wantsAutoRotate, YES, nil);
+    XCTAssertEqual(deck.wantsAutoRotate, YES);
     deck.wantsAutoRotate = NO;
-    STAssertEquals(deck.shakeAction, CDXCardDeckShakeActionShuffle, nil);
+    XCTAssertEqual(deck.shakeAction, CDXCardDeckShakeActionShuffle);
     deck.shakeAction = CDXCardDeckShakeActionRandom;
-    STAssertEquals(deck.groupSize, CDXCardDeckGroupSizeNoGroups, nil);
+    XCTAssertEqual(deck.groupSize, CDXCardDeckGroupSizeNoGroups);
     deck.groupSize = CDXCardDeckGroupSizeMax;
-    STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleSideBySide, nil);
+    XCTAssertEqual(deck.displayStyle, CDXCardDeckDisplayStyleSideBySide);
     deck.displayStyle = CDXCardDeckDisplayStyleStack;
-    STAssertEquals(deck.cornerStyle, CDXCardCornerStyleRounded, nil);
+    XCTAssertEqual(deck.cornerStyle, CDXCardCornerStyleRounded);
     deck.cornerStyle = CDXCardCornerStyleCornered;
-    STAssertEquals(deck.pageControlStyle, CDXCardDeckPageControlStyleLight, nil);
+    XCTAssertEqual(deck.pageControlStyle, CDXCardDeckPageControlStyleLight);
     deck.pageControlStyle = CDXCardDeckPageControlStyleDark;
-    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
+    XCTAssertEqual(deck.autoPlay, CDXCardDeckAutoPlayOff);
     deck.autoPlay = CDXCardDeckAutoPlayPlay;
     
     CDXCardDeck *newdeck = [[deck copy] autorelease];
-    STAssertEquals([newdeck cardsCount], (NSUInteger)2, nil);
+    XCTAssertEqual([newdeck cardsCount], (NSUInteger)2);
     
     [[deck cardAtIndex:0] setText:@"NewText1"];
     [[deck cardAtIndex:1] setText:@"NewText2"];
-    STAssertEquals([deck cardsCount], (NSUInteger)2, nil);
-    STAssertEqualObjects([[deck cardAtIndex:0] text], @"NewText1", nil);
-    STAssertEqualObjects([[deck cardAtIndex:1] text], @"NewText2", nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)2);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"NewText1");
+    XCTAssertEqualObjects([[deck cardAtIndex:1] text], @"NewText2");
     
-    STAssertEquals([newdeck cardsCount], (NSUInteger)2, nil);
-    STAssertEqualObjects([[newdeck cardAtIndex:0] text], @"Text1", nil);
-    STAssertEqualObjects([[newdeck cardAtIndex:1] text], @"Text2", nil);
+    XCTAssertEqual([newdeck cardsCount], (NSUInteger)2);
+    XCTAssertEqualObjects([[newdeck cardAtIndex:0] text], @"Text1");
+    XCTAssertEqualObjects([[newdeck cardAtIndex:1] text], @"Text2");
     
-    STAssertEquals(newdeck.wantsPageControl, NO, nil);
-    STAssertEquals(newdeck.wantsPageJumps, NO, nil);
-    STAssertEquals(newdeck.wantsAutoRotate, NO, nil);
-    STAssertEquals(newdeck.shakeAction, CDXCardDeckShakeActionRandom, nil);
-    STAssertEquals(newdeck.groupSize, CDXCardDeckGroupSizeMax, nil);
-    STAssertEquals(newdeck.displayStyle, CDXCardDeckDisplayStyleStack, nil);
-    STAssertEquals(newdeck.cornerStyle, CDXCardCornerStyleCornered, nil);
-    STAssertEquals(newdeck.pageControlStyle, CDXCardDeckPageControlStyleDark, nil);
-    STAssertEquals(newdeck.autoPlay, CDXCardDeckAutoPlayPlay, nil);
+    XCTAssertEqual(newdeck.wantsPageControl, NO);
+    XCTAssertEqual(newdeck.wantsPageJumps, NO);
+    XCTAssertEqual(newdeck.wantsAutoRotate, NO);
+    XCTAssertEqual(newdeck.shakeAction, CDXCardDeckShakeActionRandom);
+    XCTAssertEqual(newdeck.groupSize, CDXCardDeckGroupSizeMax);
+    XCTAssertEqual(newdeck.displayStyle, CDXCardDeckDisplayStyleStack);
+    XCTAssertEqual(newdeck.cornerStyle, CDXCardCornerStyleCornered);
+    XCTAssertEqual(newdeck.pageControlStyle, CDXCardDeckPageControlStyleDark);
+    XCTAssertEqual(newdeck.autoPlay, CDXCardDeckAutoPlayPlay);
 }
 
 - (void)testAddCard {
     CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
-    STAssertEquals([deck cardsCount], (NSUInteger)0, nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)0);
     
     CDXCard *card = [[CDXCard alloc] init];
     card.text = @"Text";
     [deck addCard:card];
     [card release];
     
-    STAssertEquals([deck cardsCount], (NSUInteger)1, nil);
-    STAssertEqualObjects([[deck cardAtIndex:0] text], @"Text", nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)1);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text");
 }
 
 - (void)testAddCards {
@@ -140,28 +140,28 @@
     card.text = @"Text2";
     [cards addObject:card];
     
-    STAssertEquals([cards count], (NSUInteger)2, nil);
-    STAssertEqualObjects([[cards objectAtIndex:0] text], @"Text1", nil);
-    STAssertEqualObjects([[cards objectAtIndex:1] text], @"Text2", nil);
+    XCTAssertEqual([cards count], (NSUInteger)2);
+    XCTAssertEqualObjects([[cards objectAtIndex:0] text], @"Text1");
+    XCTAssertEqualObjects([[cards objectAtIndex:1] text], @"Text2");
     
     CDXCardDeck *newdeck = [[[CDXCardDeck alloc] init] autorelease];
-    STAssertEquals([newdeck cardsCount], (NSUInteger)0, nil);
+    XCTAssertEqual([newdeck cardsCount], (NSUInteger)0);
     [newdeck addCards:cards];
     
     [[cards objectAtIndex:0] setText:@"NewText1"];
     [[cards objectAtIndex:1] setText:@"NewText2"];
-    STAssertEquals([cards count], (NSUInteger)2, nil);
-    STAssertEqualObjects([[cards objectAtIndex:0] text], @"NewText1", nil);
-    STAssertEqualObjects([[cards objectAtIndex:1] text], @"NewText2", nil);
+    XCTAssertEqual([cards count], (NSUInteger)2);
+    XCTAssertEqualObjects([[cards objectAtIndex:0] text], @"NewText1");
+    XCTAssertEqualObjects([[cards objectAtIndex:1] text], @"NewText2");
     
-    STAssertEquals([newdeck cardsCount], (NSUInteger)2, nil);
-    STAssertEqualObjects([[newdeck cardAtIndex:0] text], @"NewText1", nil);
-    STAssertEqualObjects([[newdeck cardAtIndex:1] text], @"NewText2", nil);
+    XCTAssertEqual([newdeck cardsCount], (NSUInteger)2);
+    XCTAssertEqualObjects([[newdeck cardAtIndex:0] text], @"NewText1");
+    XCTAssertEqualObjects([[newdeck cardAtIndex:1] text], @"NewText2");
 }
 
 - (void)testRemoveCard {
     CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
-    STAssertEquals([deck cardsCount], (NSUInteger)0, nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)0);
     
     CDXCard *card1 = [[CDXCard alloc] init];
     card1.text = @"Text 1";
@@ -178,20 +178,20 @@
     [deck addCard:card3];
     [card3 release];
     
-    STAssertEquals([deck cardsCount], (NSUInteger)3, nil);
-    STAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 1", nil);
-    STAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 2", nil);
-    STAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 3", nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)3);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 1");
+    XCTAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 2");
+    XCTAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 3");
     
     [deck removeCardAtIndex:1];
-    STAssertEquals([deck cardsCount], (NSUInteger)2, nil);
-    STAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 1", nil);
-    STAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 3", nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)2);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 1");
+    XCTAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 3");
 }
 
 - (void)testRemoveCards {
     CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
-    STAssertEquals([deck cardsCount], (NSUInteger)0, nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)0);
     
     CDXCard *card;
     card = [[[CDXCard alloc] init] autorelease];
@@ -201,16 +201,16 @@
     card.text = @"Text2";
     [deck addCard:card];
     
-    STAssertEquals([deck cardsCount], (NSUInteger)2, nil);
-    STAssertEqualObjects([[deck cardAtIndex:0] text], @"Text1", nil);
-    STAssertEqualObjects([[deck cardAtIndex:1] text], @"Text2", nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)2);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text1");
+    XCTAssertEqualObjects([[deck cardAtIndex:1] text], @"Text2");
     
     NSMutableArray *cards = [deck removeCards];
-    STAssertEquals([cards count], (NSUInteger)2, nil);
-    STAssertEqualObjects([[cards objectAtIndex:0] text], @"Text1", nil);
-    STAssertEqualObjects([[cards objectAtIndex:1] text], @"Text2", nil);
+    XCTAssertEqual([cards count], (NSUInteger)2);
+    XCTAssertEqualObjects([[cards objectAtIndex:0] text], @"Text1");
+    XCTAssertEqualObjects([[cards objectAtIndex:1] text], @"Text2");
     
-    STAssertEquals([deck cardsCount], (NSUInteger)0, nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)0);
 }
 
 - (void)testMoveCard {
@@ -228,55 +228,55 @@
     card3.text = @"Text 3";
     [deck addCard:card3];
     
-    STAssertEquals([deck cardsCount], (NSUInteger)3, nil);
-    STAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 1", nil);
-    STAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 2", nil);
-    STAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 3", nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)3);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 1");
+    XCTAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 2");
+    XCTAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 3");
     
     [deck moveCardAtIndex:0 toIndex:2];
-    STAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 2", nil);
-    STAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 3", nil);
-    STAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 1", nil);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 2");
+    XCTAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 3");
+    XCTAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 1");
     
     [deck moveCardAtIndex:1 toIndex:2];
-    STAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 2", nil);
-    STAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 1", nil);
-    STAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 3", nil);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 2");
+    XCTAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 1");
+    XCTAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 3");
     
     [deck moveCardAtIndex:2 toIndex:0];
-    STAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 3", nil);
-    STAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 2", nil);
-    STAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 1", nil);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 3");
+    XCTAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 2");
+    XCTAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 1");
     
     [deck moveCardAtIndex:2 toIndex:2];
-    STAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 3", nil);
-    STAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 2", nil);
-    STAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 1", nil);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 3");
+    XCTAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 2");
+    XCTAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 1");
     
     [deck moveCardAtIndex:1 toIndex:0];
-    STAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 2", nil);
-    STAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 3", nil);
-    STAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 1", nil);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 2");
+    XCTAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 3");
+    XCTAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 1");
 }
 
 - (void)testCardWithDefaults {
     CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
     
     CDXCard *card1 = [deck cardWithDefaults];
-    STAssertEqualObjects([card1 text], @"", nil);
-    STAssertEqualObjects([card1 textColor], [CDXColor colorBlack], nil);
-    STAssertEqualObjects([card1 backgroundColor], [CDXColor colorWhite], nil);
-    STAssertEquals((int)[card1 orientation], (int)CDXCardOrientationUp, nil);
+    XCTAssertEqualObjects([card1 text], @"");
+    XCTAssertEqualObjects([card1 textColor], [CDXColor colorBlack]);
+    XCTAssertEqualObjects([card1 backgroundColor], [CDXColor colorWhite]);
+    XCTAssertEqual((int)[card1 orientation], (int)CDXCardOrientationUp);
     
     CDXCard *defaults = deck.cardDefaults;
     defaults.textColor = [CDXColor colorWithRed:0x10 green:0x10 blue:0x10 alpha:0x10];
     defaults.backgroundColor =  [CDXColor colorWithRed:0x20 green:0x20 blue:0x20 alpha:0x20];
     defaults.orientation = CDXCardOrientationDown;
     CDXCard *card2 = [deck cardWithDefaults];
-    STAssertEqualObjects([card2 text], @"", nil);
-    STAssertEqualObjects([card2 textColor], [CDXColor colorWithRed:0x10 green:0x10 blue:0x10 alpha:0x10], nil);
-    STAssertEqualObjects([card2 backgroundColor], [CDXColor colorWithRed:0x20 green:0x20 blue:0x20 alpha:0x20], nil);
-    STAssertEquals((int)[card2 orientation], (int)CDXCardOrientationDown, nil);
+    XCTAssertEqualObjects([card2 text], @"");
+    XCTAssertEqualObjects([card2 textColor], [CDXColor colorWithRed:0x10 green:0x10 blue:0x10 alpha:0x10]);
+    XCTAssertEqualObjects([card2 backgroundColor], [CDXColor colorWithRed:0x20 green:0x20 blue:0x20 alpha:0x20]);
+    XCTAssertEqual((int)[card2 orientation], (int)CDXCardOrientationDown);
 }
 
 - (void)testShuffleAndSort {
@@ -315,18 +315,18 @@
     [deck addCard:card8];
     
     [deck shuffle];
-    STAssertEquals((NSUInteger)8, [deck cardsCount], nil);
+    XCTAssertEqual((NSUInteger)8, [deck cardsCount]);
     
     [deck sort];
-    STAssertEquals((NSUInteger)8, [deck cardsCount], nil);
-    STAssertEquals([deck cardAtIndex:0], card1, nil);
-    STAssertEquals([deck cardAtIndex:1], card2, nil);
-    STAssertEquals([deck cardAtIndex:2], card3, nil);
-    STAssertEquals([deck cardAtIndex:3], card4, nil);
-    STAssertEquals([deck cardAtIndex:4], card5, nil);
-    STAssertEquals([deck cardAtIndex:5], card6, nil);
-    STAssertEquals([deck cardAtIndex:6], card7, nil);
-    STAssertEquals([deck cardAtIndex:7], card8, nil);
+    XCTAssertEqual((NSUInteger)8, [deck cardsCount]);
+    XCTAssertEqual([deck cardAtIndex:0], card1);
+    XCTAssertEqual([deck cardAtIndex:1], card2);
+    XCTAssertEqual([deck cardAtIndex:2], card3);
+    XCTAssertEqual([deck cardAtIndex:3], card4);
+    XCTAssertEqual([deck cardAtIndex:4], card5);
+    XCTAssertEqual([deck cardAtIndex:5], card6);
+    XCTAssertEqual([deck cardAtIndex:6], card7);
+    XCTAssertEqual([deck cardAtIndex:7], card8);
 }
 
 - (void)testMoveCardShuffled {
@@ -344,43 +344,43 @@
     card3.text = @"Text 3";
     [deck addCard:card3];
     
-    STAssertEquals([deck cardsCount], (NSUInteger)3, nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)3);
     
     [deck shuffle];
     CDXCard *card1s = [deck cardAtIndex:0];
     CDXCard *card2s = [deck cardAtIndex:1];
     CDXCard *card3s = [deck cardAtIndex:2];
     
-    STAssertEqualObjects([deck cardAtCardsIndex:0], card1, nil);
-    STAssertEqualObjects([deck cardAtCardsIndex:1], card2, nil);
-    STAssertEqualObjects([deck cardAtCardsIndex:2], card3, nil);
-    STAssertEqualObjects([deck cardAtIndex:0], card1s, nil);
-    STAssertEqualObjects([deck cardAtIndex:1], card2s, nil);
-    STAssertEqualObjects([deck cardAtIndex:2], card3s, nil);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:0], card1);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:1], card2);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:2], card3);
+    XCTAssertEqualObjects([deck cardAtIndex:0], card1s);
+    XCTAssertEqualObjects([deck cardAtIndex:1], card2s);
+    XCTAssertEqualObjects([deck cardAtIndex:2], card3s);
     
     [deck moveCardAtIndex:0 toIndex:2];
-    STAssertEqualObjects([deck cardAtCardsIndex:0], card1, nil);
-    STAssertEqualObjects([deck cardAtCardsIndex:1], card2, nil);
-    STAssertEqualObjects([deck cardAtCardsIndex:2], card3, nil);
-    STAssertEqualObjects([deck cardAtIndex:0], card2s, nil);
-    STAssertEqualObjects([deck cardAtIndex:1], card3s, nil);
-    STAssertEqualObjects([deck cardAtIndex:2], card1s, nil);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:0], card1);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:1], card2);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:2], card3);
+    XCTAssertEqualObjects([deck cardAtIndex:0], card2s);
+    XCTAssertEqualObjects([deck cardAtIndex:1], card3s);
+    XCTAssertEqualObjects([deck cardAtIndex:2], card1s);
     
     [deck moveCardAtIndex:1 toIndex:1];
-    STAssertEqualObjects([deck cardAtCardsIndex:0], card1, nil);
-    STAssertEqualObjects([deck cardAtCardsIndex:1], card2, nil);
-    STAssertEqualObjects([deck cardAtCardsIndex:2], card3, nil);
-    STAssertEqualObjects([deck cardAtIndex:0], card2s, nil);
-    STAssertEqualObjects([deck cardAtIndex:1], card3s, nil);
-    STAssertEqualObjects([deck cardAtIndex:2], card1s, nil);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:0], card1);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:1], card2);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:2], card3);
+    XCTAssertEqualObjects([deck cardAtIndex:0], card2s);
+    XCTAssertEqualObjects([deck cardAtIndex:1], card3s);
+    XCTAssertEqualObjects([deck cardAtIndex:2], card1s);
     
     [deck moveCardAtIndex:1 toIndex:0];
-    STAssertEqualObjects([deck cardAtCardsIndex:0], card1, nil);
-    STAssertEqualObjects([deck cardAtCardsIndex:1], card2, nil);
-    STAssertEqualObjects([deck cardAtCardsIndex:2], card3, nil);
-    STAssertEqualObjects([deck cardAtIndex:0], card3s, nil);
-    STAssertEqualObjects([deck cardAtIndex:1], card2s, nil);
-    STAssertEqualObjects([deck cardAtIndex:2], card1s, nil);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:0], card1);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:1], card2);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:2], card3);
+    XCTAssertEqualObjects([deck cardAtIndex:0], card3s);
+    XCTAssertEqualObjects([deck cardAtIndex:1], card2s);
+    XCTAssertEqualObjects([deck cardAtIndex:2], card1s);
 }
 
 - (void)testAddCardShuffled {
@@ -398,32 +398,32 @@
     card3.text = @"Text 3";
     [deck addCard:card3];
     
-    STAssertEquals([deck cardsCount], (NSUInteger)3, nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)3);
     
     [deck shuffle];
     CDXCard *card1s = [deck cardAtIndex:0];
     CDXCard *card2s = [deck cardAtIndex:1];
     CDXCard *card3s = [deck cardAtIndex:2];
     
-    STAssertEqualObjects([deck cardAtCardsIndex:0], card1, nil);
-    STAssertEqualObjects([deck cardAtCardsIndex:1], card2, nil);
-    STAssertEqualObjects([deck cardAtCardsIndex:2], card3, nil);
-    STAssertEqualObjects([deck cardAtIndex:0], card1s, nil);
-    STAssertEqualObjects([deck cardAtIndex:1], card2s, nil);
-    STAssertEqualObjects([deck cardAtIndex:2], card3s, nil);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:0], card1);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:1], card2);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:2], card3);
+    XCTAssertEqualObjects([deck cardAtIndex:0], card1s);
+    XCTAssertEqualObjects([deck cardAtIndex:1], card2s);
+    XCTAssertEqualObjects([deck cardAtIndex:2], card3s);
     
     CDXCard *card4 = [[[CDXCard alloc] init] autorelease];
     card3.text = @"Text 4";
     [deck addCard:card4];
     
-    STAssertEqualObjects([deck cardAtCardsIndex:0], card1, nil);
-    STAssertEqualObjects([deck cardAtCardsIndex:1], card2, nil);
-    STAssertEqualObjects([deck cardAtCardsIndex:2], card3, nil);
-    STAssertEqualObjects([deck cardAtCardsIndex:3], card4, nil);
-    STAssertEqualObjects([deck cardAtIndex:0], card1s, nil);
-    STAssertEqualObjects([deck cardAtIndex:1], card2s, nil);
-    STAssertEqualObjects([deck cardAtIndex:2], card3s, nil);
-    STAssertEqualObjects([deck cardAtIndex:3], card4, nil);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:0], card1);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:1], card2);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:2], card3);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:3], card4);
+    XCTAssertEqualObjects([deck cardAtIndex:0], card1s);
+    XCTAssertEqualObjects([deck cardAtIndex:1], card2s);
+    XCTAssertEqualObjects([deck cardAtIndex:2], card3s);
+    XCTAssertEqualObjects([deck cardAtIndex:3], card4);
 }
 
 - (void)testRemoveCardShuffled {
@@ -441,103 +441,103 @@
     card3.text = @"Text 3";
     [deck addCard:card3];
     
-    STAssertEquals([deck cardsCount], (NSUInteger)3, nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)3);
     
     [deck shuffle];
     CDXCard *card1s = [deck cardAtIndex:0];
     CDXCard *card2s = [deck cardAtIndex:1];
     CDXCard *card3s = [deck cardAtIndex:2];
     
-    STAssertEqualObjects([deck cardAtCardsIndex:0], card1, nil);
-    STAssertEqualObjects([deck cardAtCardsIndex:1], card2, nil);
-    STAssertEqualObjects([deck cardAtCardsIndex:2], card3, nil);
-    STAssertEqualObjects([deck cardAtIndex:0], card1s, nil);
-    STAssertEqualObjects([deck cardAtIndex:1], card2s, nil);
-    STAssertEqualObjects([deck cardAtIndex:2], card3s, nil);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:0], card1);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:1], card2);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:2], card3);
+    XCTAssertEqualObjects([deck cardAtIndex:0], card1s);
+    XCTAssertEqualObjects([deck cardAtIndex:1], card2s);
+    XCTAssertEqualObjects([deck cardAtIndex:2], card3s);
     
     NSUInteger cardsIndex = [deck cardsIndex:1];
     [deck removeCardAtIndex:1];
-    STAssertEquals([deck cardsCount], (NSUInteger)2, nil);
+    XCTAssertEqual([deck cardsCount], (NSUInteger)2);
     switch (cardsIndex) {
         case 0:
-            STAssertEqualObjects([deck cardAtCardsIndex:0], card2, nil);
-            STAssertEqualObjects([deck cardAtCardsIndex:1], card3, nil);
+            XCTAssertEqualObjects([deck cardAtCardsIndex:0], card2);
+            XCTAssertEqualObjects([deck cardAtCardsIndex:1], card3);
             break;
         case 1:
-            STAssertEqualObjects([deck cardAtCardsIndex:0], card1, nil);
-            STAssertEqualObjects([deck cardAtCardsIndex:1], card3, nil);
+            XCTAssertEqualObjects([deck cardAtCardsIndex:0], card1);
+            XCTAssertEqualObjects([deck cardAtCardsIndex:1], card3);
             break;
         case 2:
-            STAssertEqualObjects([deck cardAtCardsIndex:0], card1, nil);
-            STAssertEqualObjects([deck cardAtCardsIndex:1], card2, nil);
+            XCTAssertEqualObjects([deck cardAtCardsIndex:0], card1);
+            XCTAssertEqualObjects([deck cardAtCardsIndex:1], card2);
             break;
         default:
-            STFail(nil);
+            XCTFail();
     }
-    STAssertEqualObjects([deck cardAtIndex:0], card1s, nil);
-    STAssertEqualObjects([deck cardAtIndex:1], card3s, nil);
+    XCTAssertEqualObjects([deck cardAtIndex:0], card1s);
+    XCTAssertEqualObjects([deck cardAtIndex:1], card3s);
 }
 
 - (void)testGroupSize {
     CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
     
-    STAssertEquals(deck.groupSize, CDXCardDeckGroupSizeDefault, nil);
+    XCTAssertEqual(deck.groupSize, CDXCardDeckGroupSizeDefault);
     deck.groupSize = -1;
-    STAssertEquals(deck.groupSize, CDXCardDeckGroupSizeDefault, nil);
+    XCTAssertEqual(deck.groupSize, CDXCardDeckGroupSizeDefault);
     deck.groupSize = 0;
-    STAssertEquals(deck.groupSize, CDXCardDeckGroupSizeNoGroups, nil);
+    XCTAssertEqual(deck.groupSize, CDXCardDeckGroupSizeNoGroups);
     deck.groupSize = 3;
-    STAssertEquals(deck.groupSize, 3, nil);
+    XCTAssertEqual(deck.groupSize, 3);
     deck.groupSize = 12;
-    STAssertEquals(deck.groupSize, CDXCardDeckGroupSizeMax, nil);
+    XCTAssertEqual(deck.groupSize, CDXCardDeckGroupSizeMax);
     deck.groupSize = 13;
-    STAssertEquals(deck.groupSize, CDXCardDeckGroupSizeNoGroups, nil);
+    XCTAssertEqual(deck.groupSize, CDXCardDeckGroupSizeNoGroups);
 }
 
 - (void)testDisplayStyle {
     CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
     
-    STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleDefault, nil);
+    XCTAssertEqual(deck.displayStyle, CDXCardDeckDisplayStyleDefault);
     deck.displayStyle = -1;
-    STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleDefault, nil);
+    XCTAssertEqual(deck.displayStyle, CDXCardDeckDisplayStyleDefault);
     deck.displayStyle = 0;
-    STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleDefault, nil);
+    XCTAssertEqual(deck.displayStyle, CDXCardDeckDisplayStyleDefault);
     deck.displayStyle = 1;
-    STAssertEquals(deck.displayStyle, 1, nil);
+    XCTAssertEqual(deck.displayStyle, 1);
     deck.displayStyle = 2;
-    STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleCount-1, nil);
+    XCTAssertEqual(deck.displayStyle, CDXCardDeckDisplayStyleCount-1);
     deck.displayStyle = 3;
-    STAssertEquals(deck.displayStyle, CDXCardDeckDisplayStyleDefault, nil);
+    XCTAssertEqual(deck.displayStyle, CDXCardDeckDisplayStyleDefault);
 }
 
 - (void)testPageControlStyle {
     CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
     
-    STAssertEquals(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault, nil);
+    XCTAssertEqual(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault);
     deck.pageControlStyle = -1;
-    STAssertEquals(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault, nil);
+    XCTAssertEqual(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault);
     deck.pageControlStyle = 0;
-    STAssertEquals(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault, nil);
+    XCTAssertEqual(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault);
     deck.pageControlStyle = 1;
-    STAssertEquals(deck.pageControlStyle, CDXCardDeckPageControlStyleCount-1, nil);
+    XCTAssertEqual(deck.pageControlStyle, CDXCardDeckPageControlStyleCount-1);
     deck.pageControlStyle = 2;
-    STAssertEquals(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault, nil);
+    XCTAssertEqual(deck.pageControlStyle, CDXCardDeckPageControlStyleDefault);
 }
 
 - (void)testAutoPlay {
     CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
     
-    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
+    XCTAssertEqual(deck.autoPlay, CDXCardDeckAutoPlayOff);
     deck.autoPlay = -1;
-    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
+    XCTAssertEqual(deck.autoPlay, CDXCardDeckAutoPlayOff);
     deck.autoPlay = 0;
-    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
+    XCTAssertEqual(deck.autoPlay, CDXCardDeckAutoPlayOff);
     deck.autoPlay = 1;
-    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayPlay, nil);
+    XCTAssertEqual(deck.autoPlay, CDXCardDeckAutoPlayPlay);
     deck.autoPlay = 2;
-    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayPlay2, nil);
+    XCTAssertEqual(deck.autoPlay, CDXCardDeckAutoPlayPlay2);
     deck.autoPlay = 3;
-    STAssertEquals(deck.autoPlay, CDXCardDeckAutoPlayOff, nil);
+    XCTAssertEqual(deck.autoPlay, CDXCardDeckAutoPlayOff);
 }
 
 @end

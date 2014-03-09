@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		E002B5951167613A0072C409 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2711167488B00FE7924 /* Foundation.framework */; };
 		E002B5E3116761410072C409 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2731167489600FE7924 /* UIKit.framework */; };
-		E002B62D116762300072C409 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E002B627116762260072C409 /* SenTestingKit.framework */; };
 		E002B6C7116885150072C409 /* CDXColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B6C6116885150072C409 /* CDXColor.m */; };
 		E002B6C9116885230072C409 /* CDXColorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B6C8116885230072C409 /* CDXColorTests.m */; };
 		E002B6CC116885340072C409 /* CDXColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B6C6116885150072C409 /* CDXColor.m */; };
@@ -117,6 +116,7 @@
 		E0D1E5CF11D6129000C8B1C4 /* Notice-Shuffle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5CD11D6129000C8B1C4 /* Notice-Shuffle@2x.png */; };
 		E0D1E5D011D6129000C8B1C4 /* Notice-Sort@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5CE11D6129000C8B1C4 /* Notice-Sort@2x.png */; };
 		E0D1E5E011D62CA700C8B1C4 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5DE11D62CA700C8B1C4 /* Default@2x.png */; };
+		E0D1F09E18CC6C4300BA521A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0D1F09C18CC6BFF00BA521A /* XCTest.framework */; };
 		E0D4B87513927A8100228167 /* Toolbar-Play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D4B87313927A8100228167 /* Toolbar-Play@2x.png */; };
 		E0D673E0151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D673DF151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib */; };
 		E0D8C7FE1172255F00356C2C /* lcl.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D8C7FD1172255F00356C2C /* lcl.m */; };
@@ -179,7 +179,7 @@
 
 /* Begin PBXFileReference section */
 		E002B449116754350072C409 /* CardDecks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardDecks.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E002B4FA116760650072C409 /* Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E002B4FA116760650072C409 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E002B4FB116760650072C409 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		E002B627116762260072C409 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Developer/Library/Frameworks/SenTestingKit.framework; sourceTree = SDKROOT; };
 		E002B6C5116885150072C409 /* CDXColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXColor.h; path = Classes/Models/CDXColor.h; sourceTree = "<group>"; };
@@ -321,6 +321,7 @@
 		E0D1E5CD11D6129000C8B1C4 /* Notice-Shuffle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Shuffle@2x.png"; path = "Images/Notices/Notice-Shuffle@2x.png"; sourceTree = "<group>"; };
 		E0D1E5CE11D6129000C8B1C4 /* Notice-Sort@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Sort@2x.png"; path = "Images/Notices/Notice-Sort@2x.png"; sourceTree = "<group>"; };
 		E0D1E5DE11D62CA700C8B1C4 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Images/Default@2x.png"; sourceTree = "<group>"; };
+		E0D1F09C18CC6BFF00BA521A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		E0D4B87313927A8100228167 /* Toolbar-Play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Play@2x.png"; path = "Images/Toolbars/Toolbar-Play@2x.png"; sourceTree = "<group>"; };
 		E0D673DF151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "CDXTimerKeyboardExtensionView~ipad.xib"; path = "UserInterfaces/CDXTimerKeyboardExtensionView~ipad.xib"; sourceTree = "<group>"; };
 		E0D8C7F91172255F00356C2C /* lcl_config_components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcl_config_components.h; path = Logging/lcl_config_components.h; sourceTree = "<group>"; };
@@ -395,13 +396,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0D1F09E18CC6C4300BA521A /* XCTest.framework in Frameworks */,
 				E0C1F67518772D6700F17779 /* Social.framework in Frameworks */,
 				E0FE443C1533341C0044FE81 /* AudioToolbox.framework in Frameworks */,
 				E0EB7021117240BD00F41F7A /* CoreGraphics.framework in Frameworks */,
 				E0EB6FD1117240AF00F41F7A /* QuartzCore.framework in Frameworks */,
 				E002B5951167613A0072C409 /* Foundation.framework in Frameworks */,
 				E002B5E3116761410072C409 /* UIKit.framework in Frameworks */,
-				E002B62D116762300072C409 /* SenTestingKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,7 +517,7 @@
 			isa = PBXGroup;
 			children = (
 				E002B449116754350072C409 /* CardDecks.app */,
-				E002B4FA116760650072C409 /* Tests.octest */,
+				E002B4FA116760650072C409 /* Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -534,6 +535,7 @@
 		E03BA26E1167488000FE7924 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E0D1F09C18CC6BFF00BA521A /* XCTest.framework */,
 				E0C1F67318772D4300F17779 /* Social.framework */,
 				E097B04314E70FD300A8F38B /* AudioToolbox.framework */,
 				E0D9E159132EBA1E001435D0 /* MessageUI.framework */,
@@ -790,8 +792,8 @@
 			);
 			name = Tests;
 			productName = Tests;
-			productReference = E002B4FA116760650072C409 /* Tests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = E002B4FA116760650072C409 /* Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -1012,7 +1014,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1036,7 +1041,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = CDX.pch;
 				GCC_THUMB_SUPPORT = NO;
@@ -1087,8 +1095,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -1098,19 +1107,18 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Tests-Info.plist";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
-					"-framework",
-					SenTestingKit,
 					"-framework",
 					UIKit,
 				);
 				PRODUCT_NAME = Tests;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
-				TEST_AFTER_BUILD = YES;
-				WRAPPER_EXTENSION = octest;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -1122,8 +1130,9 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1135,15 +1144,13 @@
 					"-framework",
 					Foundation,
 					"-framework",
-					SenTestingKit,
-					"-framework",
 					UIKit,
 				);
 				PRODUCT_NAME = Tests;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
-				TEST_AFTER_BUILD = YES;
-				WRAPPER_EXTENSION = octest;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1154,8 +1161,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1167,15 +1175,13 @@
 					"-framework",
 					Foundation,
 					"-framework",
-					SenTestingKit,
-					"-framework",
 					UIKit,
 				);
 				PRODUCT_NAME = Tests;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
-				TEST_AFTER_BUILD = YES;
-				WRAPPER_EXTENSION = octest;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -1201,7 +1207,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = CDX.pch;
 				GCC_THUMB_SUPPORT = NO;
