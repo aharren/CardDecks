@@ -268,10 +268,12 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     cardsViewShowsFirstCard = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     [[UIApplication sharedApplication] setIdleTimerDisabled:![[CDXAppSettings sharedAppSettings] enableIdleTimer]];
 }
 
@@ -279,6 +281,7 @@
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self resignFirstResponder];
     [self uninstallTimer];
+    [super viewWillDisappear:animated];
 }
 
 - (void)setUserInteractionEnabled:(BOOL)enabled {
