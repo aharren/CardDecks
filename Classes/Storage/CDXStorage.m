@@ -71,7 +71,7 @@ static NSMutableArray *storageDeferredRemoves = nil;
     
     // second, look in application bundle
     {
-        NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];
+        NSString *folder = [[NSBundle mainBundle] resourcePath];
         NSString *path = [folder stringByAppendingPathComponent:fileName];
         qltrace(@"path2 %@", path);
         NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:path];
