@@ -37,16 +37,18 @@
 
 @implementation CDXAppURLTests
 
-- (void)testCardDeckFromURLVersion1 {
+- (void)testCardDeckFromURLCarddecksSchemeVersion1 {
     NSString *string = @"carddecks:///add?card%20deck,010203,040506&card%201&card%202";
     CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:string]];
     XCTAssertNotNil(deck);
+    XCTAssertEqualObjects(@"card deck", deck.name);
 }
 
-- (void)testCardDeckFromURLVersion2 {
+- (void)testCardDeckFromURLCarddecksSchemeVersion2 {
     NSString *string = @"carddecks:///2/add?card%20deck,010203,040506&card%201&card%202";
     CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:string]];
     XCTAssertNotNil(deck);
+    XCTAssertEqualObjects(@"card deck", deck.name);
 }
 
 - (void)testCardDeckFromURLBad {

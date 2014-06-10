@@ -33,14 +33,16 @@
 #define CDXAppURLPath_v1_add @"/add"
 #define CDXAppURLPath_v2_add @"/2/add"
 
-#define CDXAppURLPrefix_carddecks_v1_add @"carddecks://" CDXAppURLPath_v1_add @"?"
-#define CDXAppURLPrefix_carddecks_v2_add @"carddecks://" CDXAppURLPath_v2_add @"?"
+#define CDXAppURLScheme_carddecks @"carddecks"
+
+#define CDXAppURLPrefix_carddecks_v1_add CDXAppURLScheme_carddecks @"://" CDXAppURLPath_v1_add @"?"
+#define CDXAppURLPrefix_carddecks_v2_add CDXAppURLScheme_carddecks @"://" CDXAppURLPath_v2_add @"?"
 #define CDXAppURLPrefix_http_v2_add @"http://carddecks.protocol.0xc0.de" CDXAppURLPath_v2_add @"?"
 
 
 @implementation CDXAppURL
 
-+ (BOOL)handleOpenURL:(NSURL *)url cardDecks:(CDXCardDecks *)cardDecks {
++ (BOOL)handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation cardDecks:(CDXCardDecks *)cardDecks {
     qltrace(@"%@", url);
     CDXCardDeck *deckToAdd = [CDXAppURL cardDeckFromURL:url];
     if (deckToAdd == nil) {
@@ -66,17 +68,21 @@
         return nil;
     }
     
-    NSString *host = [url host];
-    if (!(host == nil || [@"" isEqualToString:host])) {
-        return nil;
+    NSString *scheme = [url scheme];
+    
+    
+    // carddecks URL
+    if ([CDXAppURLScheme_carddecks isEqualToString:scheme]) {
+        NSString *path = [url path];
+        if ([CDXAppURLPath_v1_add isEqualToString:path]) {
+            return [CDXCardDeckURLSerializer cardDeckFromVersion1String:[url query]];
+        } else if ([CDXAppURLPath_v2_add isEqualToString:path]) {
+            return [CDXCardDeckURLSerializer cardDeckFromVersion2String:[url query]];
+        } else {
+            return nil;
+        }
     }
     
-    NSString *path = [url path];
-    if ([CDXAppURLPath_v1_add isEqualToString:path]) {
-        return [CDXCardDeckURLSerializer cardDeckFromVersion1String:[url query]];
-    } else if ([CDXAppURLPath_v2_add isEqualToString:path]) {
-        return [CDXCardDeckURLSerializer cardDeckFromVersion2String:[url query]];
-    }
     return nil;
 }
 
