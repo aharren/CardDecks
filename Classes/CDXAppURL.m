@@ -25,6 +25,7 @@
 
 #import "CDXAppURL.h"
 #import "CDXCardDeckURLSerializer.h"
+#import "CDXCardDeckJSONSerializer.h"
 
 #undef ql_component
 #define ql_component lcl_cApplication
@@ -33,6 +34,7 @@
 #define CDXAppURLPath_v1_add @"/add"
 #define CDXAppURLPath_v2_add @"/2/add"
 
+#define CDXAppURLScheme_file @"file"
 #define CDXAppURLScheme_carddecks @"carddecks"
 
 #define CDXAppURLPrefix_carddecks_v1_add CDXAppURLScheme_carddecks @"://" CDXAppURLPath_v1_add @"?"
@@ -70,6 +72,13 @@
     
     NSString *scheme = [url scheme];
     
+    // file URL
+    if ([CDXAppURLScheme_file isEqualToString:scheme]) {
+        NSError *error = nil;
+        NSString *string = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+        [[NSFileManager defaultManager] removeItemAtURL:url error:&error];
+        return [CDXCardDeckJSONSerializer cardDeckFromVersion2String:string];
+    }
     
     // carddecks URL
     if ([CDXAppURLScheme_carddecks isEqualToString:scheme]) {
