@@ -86,6 +86,7 @@ typedef enum {
 - (CGFloat)fontSizeConstrainedToSize:(CGSize)size scale:(CGFloat)scale;
 
 + (CDXCardOrientation)cardOrientationFromString:(NSString *)string;
++ (CDXCardOrientation)cardOrientationFromString:(NSString *)string defaultsTo:(CDXCardOrientation)defaultOrientation;
 + (NSString *)stringFromCardOrientation:(CDXCardOrientation)cardOrientation;
 
 @end

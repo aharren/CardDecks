@@ -49,12 +49,56 @@
     NSString *string = [self stringFromFile:@"CDXCardDeckJSONSerializerTestsDeck1.carddeck.json"];
     CDXCardDeck *deck = [CDXCardDeckJSONSerializer cardDeckFromVersion2String:string];
     
+    XCTAssertNotNil(deck);
     XCTAssertEqualObjects(@"numbers", deck.name);
+    XCTAssertEqual(5, deck.cardsCount);
     
-    XCTAssertEqual(3, deck.cardsCount);
-    XCTAssertEqualObjects(@"1", [deck cardAtIndex:0].text);
-    XCTAssertEqualObjects(@"2", [deck cardAtIndex:1].text);
-    XCTAssertEqualObjects(@"3", [deck cardAtIndex:2].text);
+    CDXCard* card;
+    card = deck.cardDefaults;
+    XCTAssertEqualObjects(@"default", card.text);
+    XCTAssertEqualObjects([CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xf8], card.textColor);
+    XCTAssertEqualObjects([CDXColor colorWithRed:0x08 green:0x08 blue:0x08 alpha:0x08], card.backgroundColor);
+    XCTAssertEqual(CDXCardOrientationUp, card.orientation);
+    XCTAssertEqual((CGFloat)1, card.fontSize);
+    XCTAssertEqual((NSTimeInterval)2, card.timerInterval);
+
+    int i = 0;
+    card = [deck cardAtIndex:i++];
+    XCTAssertEqualObjects(@"ok1", card.text);
+    XCTAssertEqualObjects([CDXColor colorWithRed:0x12 green:0x34 blue:0x56 alpha:0x78], card.textColor);
+    XCTAssertEqualObjects([CDXColor colorWithRed:0x17 green:0x65 blue:0x43 alpha:0x28], card.backgroundColor);
+    XCTAssertEqual(CDXCardOrientationLeft, card.orientation);
+    XCTAssertEqual((CGFloat)50, card.fontSize);
+    XCTAssertEqual((NSTimeInterval)100, card.timerInterval);
+
+    card = [deck cardAtIndex:i++];
+    XCTAssertEqualObjects(@"bad1", card.text);
+    XCTAssertEqualObjects(deck.cardDefaults.textColor, card.textColor);
+    XCTAssertEqualObjects(deck.cardDefaults.backgroundColor, card.backgroundColor);
+    XCTAssertEqual(deck.cardDefaults.orientation, card.orientation);
+    XCTAssertEqual(CDXCardFontSizeMax, card.fontSize);
+    XCTAssertEqual(CDXCardTimerIntervalMin, card.timerInterval);
+
+    card = [deck cardAtIndex:i++];
+    XCTAssertEqualObjects(@"default", card.text);
+    XCTAssertEqualObjects(deck.cardDefaults.textColor, card.textColor);
+    XCTAssertEqualObjects(deck.cardDefaults.backgroundColor, card.backgroundColor);
+    XCTAssertEqual(deck.cardDefaults.orientation, card.orientation);
+    XCTAssertEqual(deck.cardDefaults.fontSize, card.fontSize);
+    XCTAssertEqual(deck.cardDefaults.timerInterval, card.timerInterval);
+    
+    card = [deck cardAtIndex:i++];
+    XCTAssertEqualObjects(@"bad3", card.text);
+    XCTAssertEqual(CDXCardFontSizeMax, card.fontSize);
+    XCTAssertEqual(CDXCardTimerIntervalMax, card.timerInterval);
+    
+    card = [deck cardAtIndex:i++];
+    XCTAssertEqualObjects(@"default", card.text);
+    XCTAssertEqualObjects(deck.cardDefaults.textColor, card.textColor);
+    XCTAssertEqualObjects(deck.cardDefaults.backgroundColor, card.backgroundColor);
+    XCTAssertEqual(deck.cardDefaults.orientation, card.orientation);
+    XCTAssertEqual(deck.cardDefaults.fontSize, card.fontSize);
+    XCTAssertEqual(deck.cardDefaults.timerInterval, card.timerInterval);
 }
 
 @end
