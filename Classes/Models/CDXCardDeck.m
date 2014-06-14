@@ -382,5 +382,18 @@
     [CDXStorage updateStorageObject:self deferred:deferred];
 }
 
++ (CDXCardDeckDisplayStyle)displayStyleFromString:(NSString *)string defaultsTo:(CDXCardDeckDisplayStyle)defaultStyle {
+    string = [string lowercaseString];
+    if ([@"side-by-side,scroll" isEqualToString:string]) {
+        return CDXCardDeckDisplayStyleSideBySide;
+    } else if ([@"stacked,scroll" isEqualToString:string]) {
+        return CDXCardDeckDisplayStyleStack;
+    } else if ([@"stacked,swipe" isEqualToString:string]) {
+        return CDXCardDeckDisplayStyleSwipeStack;
+    } else {
+        return defaultStyle;
+    }
+}
+
 @end
 

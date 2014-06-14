@@ -138,5 +138,7 @@ typedef enum {
 + (CDXCardDeck *)cardDeckFromStorageObjectNamed:(NSString *)file;
 - (void)updateStorageObjectDeferred:(BOOL)deferred;
 
++ (CDXCardDeckDisplayStyle)displayStyleFromString:(NSString *)string defaultsTo:(CDXCardDeckDisplayStyle)defaultStyle;
+
 @end
 

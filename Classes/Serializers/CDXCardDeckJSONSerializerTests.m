@@ -108,6 +108,8 @@
     XCTAssertNotNil(deck);
     XCTAssertEqualObjects(@"settings", deck.name);
     XCTAssertEqual(0, deck.cardsCount);
+    
+    XCTAssertEqual(CDXCardDeckDisplayStyleSideBySide, deck.displayStyle);
 }
 
 @end
