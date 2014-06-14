@@ -101,7 +101,7 @@
     XCTAssertEqual(deck.cardDefaults.timerInterval, card.timerInterval);
 }
 
-- (void)testCardDecksFromVersion2JSONSettings {
+- (void)testCardDecksFromVersion2JSONSettings1 {
     NSString *string = [self stringFromFile:@"CDXCardDeckJSONSerializerTestsDeck2.carddeck.json"];
     CDXCardDeck *deck = [CDXCardDeckJSONSerializer cardDeckFromVersion2String:string];
     
@@ -110,6 +110,17 @@
     XCTAssertEqual(0, deck.cardsCount);
     
     XCTAssertEqual(CDXCardDeckDisplayStyleSideBySide, deck.displayStyle);
+}
+
+- (void)testCardDecksFromVersion2JSONSettings2 {
+    NSString *string = [self stringFromFile:@"CDXCardDeckJSONSerializerTestsDeck3.carddeck.json"];
+    CDXCardDeck *deck = [CDXCardDeckJSONSerializer cardDeckFromVersion2String:string];
+    
+    XCTAssertNotNil(deck);
+    XCTAssertEqualObjects(@"settings2", deck.name);
+    XCTAssertEqual(0, deck.cardsCount);
+    
+    XCTAssertEqual(CDXCardDeckDisplayStyleStack, deck.displayStyle);
 }
 
 @end
