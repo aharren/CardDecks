@@ -227,5 +227,16 @@
     }
 }
 
++ (CDXCardCornerStyle)cornerStyleFromString:(NSString *)string defaultsTo:(CDXCardCornerStyle)defaultStyle {
+    string = [string lowercaseString];
+    if ([@"cornered" isEqualToString:string]) {
+        return CDXCardCornerStyleCornered;
+    } else if ([@"rounded" isEqualToString:string]) {
+        return CDXCardCornerStyleRounded;
+    } else {
+        return defaultStyle;
+    }
+}
+
 @end
 

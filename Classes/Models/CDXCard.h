@@ -88,6 +88,7 @@ typedef enum {
 + (CDXCardOrientation)cardOrientationFromString:(NSString *)string;
 + (CDXCardOrientation)cardOrientationFromString:(NSString *)string defaultsTo:(CDXCardOrientation)defaultOrientation;
 + (NSString *)stringFromCardOrientation:(CDXCardOrientation)cardOrientation;
++ (CDXCardCornerStyle)cornerStyleFromString:(NSString *)string defaultsTo:(CDXCardCornerStyle)defaultStyle;
 
 @end
 

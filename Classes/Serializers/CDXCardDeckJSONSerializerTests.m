@@ -110,6 +110,7 @@
     XCTAssertEqual(0, deck.cardsCount);
     
     XCTAssertEqual(CDXCardDeckDisplayStyleSideBySide, deck.displayStyle);
+    XCTAssertEqual(CDXCardCornerStyleRounded, deck.cornerStyle);
 }
 
 - (void)testCardDecksFromVersion2JSONSettings2 {
@@ -121,6 +122,7 @@
     XCTAssertEqual(0, deck.cardsCount);
     
     XCTAssertEqual(CDXCardDeckDisplayStyleStack, deck.displayStyle);
+    XCTAssertEqual(CDXCardCornerStyleCornered, deck.cornerStyle);
 }
 
 @end

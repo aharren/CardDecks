@@ -133,6 +133,11 @@
     if (jstring != nil) {
         cardDeck.displayStyle = [CDXCardDeck displayStyleFromString:jstring defaultsTo:cardDeck.displayStyle];
     }
+    // corner_style
+    jstring = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"corner_style" defaultsTo:nil];
+    if (jstring != nil) {
+        cardDeck.cornerStyle = [CDXCard cornerStyleFromString:jstring defaultsTo:cardDeck.cornerStyle];
+    }
     // default_card
     NSDictionary *jdefaultcard = [CDXCardDeckJSONSerializer dictionary:jdeck dictionaryForKey:@"default_card" defaultsTo:nil];
     if (jdefaultcard != nil) {
