@@ -125,9 +125,15 @@
     
     CDXCardDeck *cardDeck = [[[CDXCardDeck alloc] init] autorelease];
     NSString* jstring = nil;
+    NSNumber* jnumber = nil;
     
     // name
     cardDeck.name = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"name" defaultsTo:@"?"];
+    // group_size
+    jnumber = [CDXCardDeckJSONSerializer dictionary:jdeck numberForKey:@"group_size" defaultsTo:nil];
+    if (jnumber != nil) {
+        cardDeck.groupSize = [CDXCardDeckJSONSerializer intFromDouble:[jnumber doubleValue]];
+    }
     // deck_style
     jstring = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"deck_style" defaultsTo:nil];
     if (jstring != nil) {

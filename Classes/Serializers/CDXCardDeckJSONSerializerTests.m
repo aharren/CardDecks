@@ -109,6 +109,7 @@
     XCTAssertEqualObjects(@"settings", deck.name);
     XCTAssertEqual(0, deck.cardsCount);
     
+    XCTAssertEqual(2, deck.groupSize);
     XCTAssertEqual(CDXCardDeckDisplayStyleSideBySide, deck.displayStyle);
     XCTAssertEqual(CDXCardCornerStyleRounded, deck.cornerStyle);
 }
@@ -121,6 +122,7 @@
     XCTAssertEqualObjects(@"settings2", deck.name);
     XCTAssertEqual(0, deck.cardsCount);
     
+    XCTAssertEqual(0, deck.groupSize);
     XCTAssertEqual(CDXCardDeckDisplayStyleStack, deck.displayStyle);
     XCTAssertEqual(CDXCardCornerStyleCornered, deck.cornerStyle);
 }
