@@ -1,6 +1,6 @@
 //
 //
-// lcl_config_extensions.h
+// lcl_config_logger.h
 //
 //
 // Copyright (c) 2008-2011 Arne Harren <ah@0xc0.de>
@@ -24,5 +24,9 @@
 // THE SOFTWARE.
 
 
-#import "qlog.h"
+#import "Logging/CDXLogger.h"
+
+
+/*::lcl_configure:begin::*/
+/*::lcl_configure:end::*/
 

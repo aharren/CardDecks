@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D8E79F15D084BB08F76D8C5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB7D94BFAB549A2B8958AF9 /* libPods.a */; };
+		D437CAAE6ADF4189BD318CEE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB7D94BFAB549A2B8958AF9 /* libPods.a */; };
 		E002B5951167613A0072C409 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2711167488B00FE7924 /* Foundation.framework */; };
 		E002B5E3116761410072C409 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2731167489600FE7924 /* UIKit.framework */; };
 		E002B6C7116885150072C409 /* CDXColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B6C6116885150072C409 /* CDXColor.m */; };
@@ -124,7 +126,6 @@
 		E0D1F09E18CC6C4300BA521A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0D1F09C18CC6BFF00BA521A /* XCTest.framework */; };
 		E0D4B87513927A8100228167 /* Toolbar-Play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D4B87313927A8100228167 /* Toolbar-Play@2x.png */; };
 		E0D673E0151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D673DF151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib */; };
-		E0D8C7FE1172255F00356C2C /* lcl.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D8C7FD1172255F00356C2C /* lcl.m */; };
 		E0D909281172275D00AD50DA /* CDXLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D909271172275D00AD50DA /* CDXLogger.m */; };
 		E0DBA1821531F39B0049A26B /* CDXAppURL.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DBA1811531F39B0049A26B /* CDXAppURL.m */; };
 		E0DD7D6511D6302B00ED23B6 /* Logo-Prerendered@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0DD7D6411D6302B00ED23B6 /* Logo-Prerendered@2x.png */; };
@@ -139,7 +140,6 @@
 		E0F2B33611955A7C0092D11B /* CDXObjectCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B33511955A7C0092D11B /* CDXObjectCacheTest.m */; };
 		E0F2B34011955B060092D11B /* CDXObjectCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B2AA119550BC0092D11B /* CDXObjectCache.m */; };
 		E0F2B34511955B700092D11B /* CDXLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D909271172275D00AD50DA /* CDXLogger.m */; };
-		E0F2B34611955B730092D11B /* lcl.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D8C7FD1172255F00356C2C /* lcl.m */; };
 		E0F2B3C11195617A0092D11B /* CDXCardsViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3C01195617A0092D11B /* CDXCardsViewBase.m */; };
 		E0F2B3F7119563910092D11B /* CDXCardsStackSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B3F6119563910092D11B /* CDXCardsStackSwipeView.m */; };
 		E0F3AEDB13EED59B00B253ED /* CDXCardDeckCardEditPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F3AEDA13EED59B00B253ED /* CDXCardDeckCardEditPadViewController.m */; };
@@ -183,6 +183,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7DB7D94BFAB549A2B8958AF9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E002B449116754350072C409 /* CardDecks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardDecks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E002B4FA116760650072C409 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E002B4FB116760650072C409 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
@@ -333,14 +334,8 @@
 		E0D1F09C18CC6BFF00BA521A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		E0D4B87313927A8100228167 /* Toolbar-Play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Play@2x.png"; path = "Images/Toolbars/Toolbar-Play@2x.png"; sourceTree = "<group>"; };
 		E0D673DF151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "CDXTimerKeyboardExtensionView~ipad.xib"; path = "UserInterfaces/CDXTimerKeyboardExtensionView~ipad.xib"; sourceTree = "<group>"; };
-		E0D8C7F91172255F00356C2C /* lcl_config_components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcl_config_components.h; path = Logging/lcl_config_components.h; sourceTree = "<group>"; };
-		E0D8C7FA1172255F00356C2C /* lcl_config_extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcl_config_extensions.h; path = Logging/lcl_config_extensions.h; sourceTree = "<group>"; };
-		E0D8C7FB1172255F00356C2C /* lcl_config_logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcl_config_logger.h; path = Logging/lcl_config_logger.h; sourceTree = "<group>"; };
-		E0D8C7FC1172255F00356C2C /* lcl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcl.h; path = Logging/lcl.h; sourceTree = "<group>"; };
-		E0D8C7FD1172255F00356C2C /* lcl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = lcl.m; path = Logging/lcl.m; sourceTree = "<group>"; };
 		E0D909261172275D00AD50DA /* CDXLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXLogger.h; path = Logging/CDXLogger.h; sourceTree = "<group>"; };
 		E0D909271172275D00AD50DA /* CDXLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXLogger.m; path = Logging/CDXLogger.m; sourceTree = "<group>"; };
-		E0D9096811722AD700AD50DA /* qlog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = qlog.h; path = Logging/qlog.h; sourceTree = "<group>"; };
 		E0D9E159132EBA1E001435D0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		E0DBA1801531F3380049A26B /* CDXAppURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CDXAppURL.h; path = Classes/CDXAppURL.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		E0DBA1811531F39B0049A26B /* CDXAppURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CDXAppURL.m; path = Classes/CDXAppURL.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -350,6 +345,9 @@
 		E0DD7E6A11D65CEA00ED23B6 /* CDXIndexDotsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXIndexDotsView.m; path = Classes/Views/CDXIndexDotsView.m; sourceTree = "<group>"; };
 		E0DDD80E11B26807004CECCB /* CDXListViewControllerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXListViewControllerBase.h; path = Classes/Controllers/CDXListViewControllerBase.h; sourceTree = "<group>"; };
 		E0DDD80F11B26807004CECCB /* CDXListViewControllerBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXListViewControllerBase.m; path = Classes/Controllers/CDXListViewControllerBase.m; sourceTree = "<group>"; };
+		E0E0DFA4194C7AE10091AF2C /* lcl_config_components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl_config_components.h; sourceTree = "<group>"; };
+		E0E0DFA5194C7AE10091AF2C /* lcl_config_extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl_config_extensions.h; sourceTree = "<group>"; };
+		E0E0DFA6194C7AE10091AF2C /* lcl_config_logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcl_config_logger.h; sourceTree = "<group>"; };
 		E0EB6E7A1172343600F41F7A /* CDXCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardView.h; path = Classes/Views/CDXCardView.h; sourceTree = "<group>"; };
 		E0EB6E7B1172343600F41F7A /* CDXCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardView.m; path = Classes/Views/CDXCardView.m; sourceTree = "<group>"; };
 		E0EB6F4D11723D1A00F41F7A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -384,6 +382,7 @@
 		E0FD05C11392D76300136B40 /* Notice-Play2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Play2@2x.png"; path = "Images/Notices/Notice-Play2@2x.png"; sourceTree = "<group>"; };
 		E0FD05C31392D76300136B40 /* Notice-Stop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Stop@2x.png"; path = "Images/Notices/Notice-Stop@2x.png"; sourceTree = "<group>"; };
 		E0FE4435153332A80044FE81 /* CDXAppURLTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppURLTests.m; path = Classes/CDXAppURLTests.m; sourceTree = "<group>"; };
+		FC35523A61A7461EA95C83E7 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -398,6 +397,7 @@
 				E0CCC9041170E9420040D222 /* QuartzCore.framework in Frameworks */,
 				E0EB6F4E11723D1A00F41F7A /* CoreGraphics.framework in Frameworks */,
 				E0C3BBB4132EBE8200604881 /* MessageUI.framework in Frameworks */,
+				1D8E79F15D084BB08F76D8C5 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +412,7 @@
 				E0EB6FD1117240AF00F41F7A /* QuartzCore.framework in Frameworks */,
 				E002B5951167613A0072C409 /* Foundation.framework in Frameworks */,
 				E002B5E3116761410072C409 /* UIKit.framework in Frameworks */,
+				D437CAAE6ADF4189BD318CEE /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +436,7 @@
 				E03BA26E1167488000FE7924 /* Frameworks */,
 				E00DD48811662E5500D4215E /* Products */,
 				E00CE7AD120DC0CE00D82A60 /* README.md */,
+				FC35523A61A7461EA95C83E7 /* Pods.xcconfig */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -553,6 +555,7 @@
 				E03BA2731167489600FE7924 /* UIKit.framework */,
 				E002B627116762260072C409 /* SenTestingKit.framework */,
 				E0CCC9031170E9420040D222 /* QuartzCore.framework */,
+				7DB7D94BFAB549A2B8958AF9 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -732,14 +735,11 @@
 		E0D8C7F81172254B00356C2C /* Logging */ = {
 			isa = PBXGroup;
 			children = (
-				E0D8C7FC1172255F00356C2C /* lcl.h */,
-				E0D8C7FD1172255F00356C2C /* lcl.m */,
-				E0D8C7F91172255F00356C2C /* lcl_config_components.h */,
-				E0D8C7FA1172255F00356C2C /* lcl_config_extensions.h */,
-				E0D8C7FB1172255F00356C2C /* lcl_config_logger.h */,
+				E0E0DFA4194C7AE10091AF2C /* lcl_config_components.h */,
+				E0E0DFA5194C7AE10091AF2C /* lcl_config_extensions.h */,
+				E0E0DFA6194C7AE10091AF2C /* lcl_config_logger.h */,
 				E0D909261172275D00AD50DA /* CDXLogger.h */,
 				E0D909271172275D00AD50DA /* CDXLogger.m */,
-				E0D9096811722AD700AD50DA /* qlog.h */,
 			);
 			name = Logging;
 			sourceTree = "<group>";
@@ -777,9 +777,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "CardDecks" */;
 			buildPhases = (
+				5F84AD0DD5944855A536F6D5 /* Check Pods Manifest.lock */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				558DAC9A839840C093CDB2E3 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -795,9 +797,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E002B4FF116760660072C409 /* Build configuration list for PBXNativeTarget "Tests" */;
 			buildPhases = (
+				83FDE4A939C74ECFA869A712 /* Check Pods Manifest.lock */,
 				E002B4F5116760650072C409 /* Resources */,
 				E002B4F6116760650072C409 /* Sources */,
 				E002B4F7116760650072C409 /* Frameworks */,
+				3235E549E4744C448FC81EBD /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -920,6 +924,69 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3235E549E4744C448FC81EBD /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		558DAC9A839840C093CDB2E3 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5F84AD0DD5944855A536F6D5 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		83FDE4A939C74ECFA869A712 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -936,7 +1003,6 @@
 				E02320F7117093720043D6CF /* CDXCardDeckListViewController.m in Sources */,
 				E0CCC7401170DC600040D222 /* CDXCardDeckCardViewController.m in Sources */,
 				E0D01AED1170EF9200004856 /* CDXImageFactory.m in Sources */,
-				E0D8C7FE1172255F00356C2C /* lcl.m in Sources */,
 				E0D909281172275D00AD50DA /* CDXLogger.m in Sources */,
 				E0EB6E7C1172343600F41F7A /* CDXCardView.m in Sources */,
 				E0150074117A1E4900C3BF63 /* CDXCardsSideBySideView.m in Sources */,
@@ -1000,7 +1066,6 @@
 				E0F2B33611955A7C0092D11B /* CDXObjectCacheTest.m in Sources */,
 				E0F2B34011955B060092D11B /* CDXObjectCache.m in Sources */,
 				E0F2B34511955B700092D11B /* CDXLogger.m in Sources */,
-				E0F2B34611955B730092D11B /* lcl.m in Sources */,
 				E0260A3711BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m in Sources */,
 				E0260A3A11BC02F800FCAB34 /* CDXCardDeckDictionarySerializerTests.m in Sources */,
 				E0743BCA11C023BE00B40ED4 /* CDXCardDeckBase.m in Sources */,
@@ -1028,6 +1093,7 @@
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC35523A61A7461EA95C83E7 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1054,6 +1120,7 @@
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC35523A61A7461EA95C83E7 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1086,7 +1153,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1101,6 +1168,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1108,6 +1176,7 @@
 		};
 		E002B4FC116760660072C409 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC35523A61A7461EA95C83E7 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1126,12 +1195,6 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Tests-Info.plist";
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PRODUCT_NAME = Tests;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
@@ -1142,6 +1205,7 @@
 		};
 		E002B4FD116760660072C409 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC35523A61A7461EA95C83E7 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1158,12 +1222,6 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Tests-Info.plist";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PRODUCT_NAME = Tests;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
@@ -1175,6 +1233,7 @@
 		};
 		E002B4FE116760660072C409 /* Distribution */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC35523A61A7461EA95C83E7 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
@@ -1189,12 +1248,6 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Tests-Info.plist";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PRODUCT_NAME = Tests;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
@@ -1212,6 +1265,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1220,6 +1274,7 @@
 		};
 		E06615A40FFF78C800571D7D /* Distribution */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC35523A61A7461EA95C83E7 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";

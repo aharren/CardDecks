@@ -1,0 +1,18 @@
+PODS:
+  - LibComponentLogging-Core (1.3.3)
+  - LibComponentLogging-pods (0.0.1):
+    - LibComponentLogging-Core
+  - LibComponentLogging-qlog (1.1.1):
+    - LibComponentLogging-Core (>= 1.2.1)
+
+DEPENDENCIES:
+  - LibComponentLogging-Core
+  - LibComponentLogging-pods
+  - LibComponentLogging-qlog
+
+SPEC CHECKSUMS:
+  LibComponentLogging-Core: 769c6f596b96348911fe75f9825728213d334941
+  LibComponentLogging-pods: 40f1d8bbaecf0cefd98751af7545bceb7b7bc25a
+  LibComponentLogging-qlog: 60ef1090df3d98c575c1c8185ab3f52e67ef977c
+
+COCOAPODS: 0.33.1

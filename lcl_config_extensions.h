@@ -1,6 +1,6 @@
 //
 //
-// lcl_config_components.h
+// lcl_config_extensions.h
 //
 //
 // Copyright (c) 2008-2011 Arne Harren <ah@0xc0.de>
@@ -24,15 +24,7 @@
 // THE SOFTWARE.
 
 
-_lcl_component(Main,            "main",         "Main")
-
-_lcl_component(Application,     "application",  "AppDelegate")
-
-_lcl_component(Storage,         "storage",      "Storage")
-_lcl_component(Cache,           "cache",        "Cache")
-_lcl_component(Image,           "image",        "Image")
-
-_lcl_component(Controller,      "controller",   "Controller")
-_lcl_component(Model,           "model",        "Model")
-_lcl_component(View,            "view",         "View")
+/*::lcl_configure:begin::*/
+#include "qlog.h"
+/*::lcl_configure:end::*/
 
