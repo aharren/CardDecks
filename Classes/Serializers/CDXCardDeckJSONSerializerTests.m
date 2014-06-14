@@ -45,7 +45,7 @@
     return string;
 }
 
-- (void)testCardDecksFromVersion2JSON {
+- (void)testCardDecksFromVersion2JSONDefaultCardsAndCards {
     NSString *string = [self stringFromFile:@"CDXCardDeckJSONSerializerTestsDeck1.carddeck.json"];
     CDXCardDeck *deck = [CDXCardDeckJSONSerializer cardDeckFromVersion2String:string];
     
@@ -99,6 +99,15 @@
     XCTAssertEqual(deck.cardDefaults.orientation, card.orientation);
     XCTAssertEqual(deck.cardDefaults.fontSize, card.fontSize);
     XCTAssertEqual(deck.cardDefaults.timerInterval, card.timerInterval);
+}
+
+- (void)testCardDecksFromVersion2JSONSettings {
+    NSString *string = [self stringFromFile:@"CDXCardDeckJSONSerializerTestsDeck2.carddeck.json"];
+    CDXCardDeck *deck = [CDXCardDeckJSONSerializer cardDeckFromVersion2String:string];
+    
+    XCTAssertNotNil(deck);
+    XCTAssertEqualObjects(@"settings", deck.name);
+    XCTAssertEqual(0, deck.cardsCount);
 }
 
 @end
