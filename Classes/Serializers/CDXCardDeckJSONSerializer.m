@@ -170,6 +170,11 @@
     if (jstring != nil) {
         cardDeck.wantsPageJumps = [CDXCardDeckJSONSerializer boolFromOnOffString:jstring defaultsTo:cardDeck.wantsPageJumps];
     }
+    // auto_rotate
+    jstring = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"auto_rotate" defaultsTo:nil];
+    if (jstring != nil) {
+        cardDeck.wantsAutoRotate = [CDXCardDeckJSONSerializer boolFromOnOffString:jstring defaultsTo:cardDeck.wantsAutoRotate];
+    }
     // default_card
     NSDictionary *jdefaultcard = [CDXCardDeckJSONSerializer dictionary:jdeck dictionaryForKey:@"default_card" defaultsTo:nil];
     if (jdefaultcard != nil) {

@@ -115,6 +115,7 @@
     XCTAssertEqual(NO, deck.wantsPageControl);
     XCTAssertEqual(CDXCardDeckPageControlStyleLight, deck.pageControlStyle);
     XCTAssertEqual(NO, deck.wantsPageJumps);
+    XCTAssertEqual(NO, deck.wantsAutoRotate);
 }
 
 - (void)testCardDecksFromVersion2JSONSettings2 {
@@ -131,6 +132,7 @@
     XCTAssertEqual(YES, deck.wantsPageControl);
     XCTAssertEqual(CDXCardDeckPageControlStyleDark, deck.pageControlStyle);
     XCTAssertEqual(YES, deck.wantsPageJumps);
+    XCTAssertEqual(YES, deck.wantsAutoRotate);
 }
 
 @end
