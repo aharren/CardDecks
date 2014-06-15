@@ -135,6 +135,23 @@
     XCTAssertEqual(YES, deck.wantsAutoRotate);
 }
 
+- (void)testIntFromDouble {
+    XCTAssertEqual(INT_MIN, [CDXCardDeckJSONSerializer intFromDouble:-2e+32]);
+    XCTAssertEqual(INT_MIN, [CDXCardDeckJSONSerializer intFromDouble:(double)INT_MIN]);
+    XCTAssertEqual(-1, [CDXCardDeckJSONSerializer intFromDouble:(double)-1]);
+    XCTAssertEqual(0, [CDXCardDeckJSONSerializer intFromDouble:(double)0]);
+    XCTAssertEqual(1, [CDXCardDeckJSONSerializer intFromDouble:(double)1]);
+    XCTAssertEqual(INT_MAX, [CDXCardDeckJSONSerializer intFromDouble:(double)INT_MAX]);
+    XCTAssertEqual(INT_MAX, [CDXCardDeckJSONSerializer intFromDouble:2e+32]);
+}
+
+- (void)testBoolFromOnOffString {
+    XCTAssertEqual(YES, [CDXCardDeckJSONSerializer boolFromOnOffString:@"on" defaultsTo:YES]);
+    XCTAssertEqual(NO, [CDXCardDeckJSONSerializer boolFromOnOffString:@"off" defaultsTo:NO]);
+    XCTAssertEqual(YES, [CDXCardDeckJSONSerializer boolFromOnOffString:@"?" defaultsTo:YES]);
+    XCTAssertEqual(NO, [CDXCardDeckJSONSerializer boolFromOnOffString:@"?" defaultsTo:NO]);
+}
+
 - (void)testCardOrientationFromString {
     XCTAssertEqual(CDXCardOrientationUp, [CDXCardDeckJSONSerializer cardOrientationFromString:@"up" defaultsTo:CDXCardOrientationDown]);
     XCTAssertEqual(CDXCardOrientationDown, [CDXCardDeckJSONSerializer cardOrientationFromString:@"down" defaultsTo:CDXCardOrientationUp]);

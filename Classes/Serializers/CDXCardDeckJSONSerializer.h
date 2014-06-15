@@ -36,6 +36,9 @@
 // Serializes the given CDXCardDeck instance into a JSON string.
 + (NSString *)version2StringFromCardDeck:(CDXCardDeck *)cardDeck;
 
++ (int)intFromDouble:(double)value;
++ (BOOL)boolFromOnOffString:(NSString *)string defaultsTo:(BOOL)defaultsTo;
+
 + (CDXCardOrientation)cardOrientationFromString:(NSString *)string defaultsTo:(CDXCardOrientation)defaultOrientation;
 + (CDXCardCornerStyle)cornerStyleFromString:(NSString *)string defaultsTo:(CDXCardCornerStyle)defaultStyle;
 + (CDXCardDeckDisplayStyle)displayStyleFromString:(NSString *)string defaultsTo:(CDXCardDeckDisplayStyle)defaultStyle;
