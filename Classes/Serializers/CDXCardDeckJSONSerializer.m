@@ -165,6 +165,11 @@
     if (jstring != nil) {
         cardDeck.pageControlStyle = [CDXCardDeck pageControlStyleFromString:jstring defaultsTo:cardDeck.pageControlStyle];
     }
+    // index_touches
+    jstring = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"index_touches" defaultsTo:nil];
+    if (jstring != nil) {
+        cardDeck.wantsPageJumps = [CDXCardDeckJSONSerializer boolFromOnOffString:jstring defaultsTo:cardDeck.wantsPageJumps];
+    }
     // default_card
     NSDictionary *jdefaultcard = [CDXCardDeckJSONSerializer dictionary:jdeck dictionaryForKey:@"default_card" defaultsTo:nil];
     if (jdefaultcard != nil) {
