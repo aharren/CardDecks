@@ -85,6 +85,57 @@
     }
 }
 
++ (CDXCardOrientation)cardOrientationFromString:(NSString *)string defaultsTo:(CDXCardOrientation)defaultOrientation {
+    // valid orientations are 'u', 'r', 'd', and 'l', everything else maps to given default orientation
+    string = [string lowercaseString];
+    if ([@"right" isEqualToString:string]) {
+        return CDXCardOrientationRight;
+    } else if ([@"down" isEqualToString:string]) {
+        return CDXCardOrientationDown;
+    } else if ([@"left" isEqualToString:string]) {
+        return CDXCardOrientationLeft;
+    } else if ([@"up" isEqualToString:string]) {
+        return CDXCardOrientationUp;
+    } else {
+        return defaultOrientation;
+    }
+}
+
++ (CDXCardCornerStyle)cornerStyleFromString:(NSString *)string defaultsTo:(CDXCardCornerStyle)defaultStyle {
+    string = [string lowercaseString];
+    if ([@"cornered" isEqualToString:string]) {
+        return CDXCardCornerStyleCornered;
+    } else if ([@"rounded" isEqualToString:string]) {
+        return CDXCardCornerStyleRounded;
+    } else {
+        return defaultStyle;
+    }
+}
+
++ (CDXCardDeckDisplayStyle)displayStyleFromString:(NSString *)string defaultsTo:(CDXCardDeckDisplayStyle)defaultStyle {
+    string = [string lowercaseString];
+    if ([@"side-by-side,scroll" isEqualToString:string]) {
+        return CDXCardDeckDisplayStyleSideBySide;
+    } else if ([@"stacked,scroll" isEqualToString:string]) {
+        return CDXCardDeckDisplayStyleStack;
+    } else if ([@"stacked,swipe" isEqualToString:string]) {
+        return CDXCardDeckDisplayStyleSwipeStack;
+    } else {
+        return defaultStyle;
+    }
+}
+
++ (CDXCardDeckPageControlStyle)pageControlStyleFromString:(NSString *)string defaultsTo:(CDXCardDeckPageControlStyle)defaultStyle {
+    string = [string lowercaseString];
+    if ([@"dark" isEqualToString:string]) {
+        return CDXCardDeckPageControlStyleDark;
+    } else if ([@"light" isEqualToString:string]) {
+        return CDXCardDeckPageControlStyleLight;
+    } else {
+        return defaultStyle;
+    }
+}
+
 + (CDXCard *)cardFromDictionary:(NSDictionary *)jcard cardDeck:(CDXCardDeck *)cardDeck {
     NSString *jstring = nil;
     NSNumber *jnumber = nil;
@@ -109,7 +160,7 @@
     // orientation
     jstring = [CDXCardDeckJSONSerializer dictionary:jcard stringForKey:@"orientation" defaultsTo:nil];
     if (jstring != nil) {
-        card.orientation = [CDXCard cardOrientationFromString:jstring defaultsTo:card.orientation];
+        card.orientation = [CDXCardDeckJSONSerializer cardOrientationFromString:jstring defaultsTo:card.orientation];
     }
     // font_size
     jnumber = [CDXCardDeckJSONSerializer dictionary:jcard numberForKey:@"font_size" defaultsTo:nil];
@@ -148,12 +199,12 @@
     // deck_style
     jstring = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"deck_style" defaultsTo:nil];
     if (jstring != nil) {
-        cardDeck.displayStyle = [CDXCardDeck displayStyleFromString:jstring defaultsTo:cardDeck.displayStyle];
+        cardDeck.displayStyle = [CDXCardDeckJSONSerializer displayStyleFromString:jstring defaultsTo:cardDeck.displayStyle];
     }
     // corner_style
     jstring = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"corner_style" defaultsTo:nil];
     if (jstring != nil) {
-        cardDeck.cornerStyle = [CDXCard cornerStyleFromString:jstring defaultsTo:cardDeck.cornerStyle];
+        cardDeck.cornerStyle = [CDXCardDeckJSONSerializer cornerStyleFromString:jstring defaultsTo:cardDeck.cornerStyle];
     }
     // index_dots
     jstring = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"index_dots" defaultsTo:nil];
@@ -163,7 +214,7 @@
     // index_style
     jstring = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"index_style" defaultsTo:nil];
     if (jstring != nil) {
-        cardDeck.pageControlStyle = [CDXCardDeck pageControlStyleFromString:jstring defaultsTo:cardDeck.pageControlStyle];
+        cardDeck.pageControlStyle = [CDXCardDeckJSONSerializer pageControlStyleFromString:jstring defaultsTo:cardDeck.pageControlStyle];
     }
     // index_touches
     jstring = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"index_touches" defaultsTo:nil];

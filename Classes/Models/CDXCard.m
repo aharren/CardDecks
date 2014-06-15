@@ -196,22 +196,6 @@
     }
 }
 
-+ (CDXCardOrientation)cardOrientationFromString:(NSString *)string defaultsTo:(CDXCardOrientation)defaultOrientation {
-    // valid orientations are 'u', 'r', 'd', and 'l', everything else maps to given default orientation
-    string = [string lowercaseString];
-    if ([@"r" isEqualToString:string] || [@"right" isEqualToString:string]) {
-        return CDXCardOrientationRight;
-    } else if ([@"d" isEqualToString:string] || [@"down" isEqualToString:string]) {
-        return CDXCardOrientationDown;
-    } else if ([@"l" isEqualToString:string] || [@"left" isEqualToString:string]) {
-        return CDXCardOrientationLeft;
-    } else if ([@"u" isEqualToString:string] || [@"up" isEqualToString:string]) {
-        return CDXCardOrientationUp;
-    } else {
-        return defaultOrientation;
-    }
-}
-
 + (NSString *)stringFromCardOrientation:(CDXCardOrientation)cardOrientation {
     // return orientation: 'u', 'r', 'd', or 'l'
     switch (cardOrientation) {
@@ -224,17 +208,6 @@
             return @"d";
         case CDXCardOrientationLeft:
             return @"l";
-    }
-}
-
-+ (CDXCardCornerStyle)cornerStyleFromString:(NSString *)string defaultsTo:(CDXCardCornerStyle)defaultStyle {
-    string = [string lowercaseString];
-    if ([@"cornered" isEqualToString:string]) {
-        return CDXCardCornerStyleCornered;
-    } else if ([@"rounded" isEqualToString:string]) {
-        return CDXCardCornerStyleRounded;
-    } else {
-        return defaultStyle;
     }
 }
 

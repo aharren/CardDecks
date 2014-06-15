@@ -160,12 +160,5 @@
     [card release];
 }
 
-- (void)testCornerStyleFromString {
-    XCTAssertEqual(CDXCardCornerStyleCornered, [CDXCard cornerStyleFromString:@"cornered" defaultsTo:CDXCardCornerStyleRounded]);
-    XCTAssertEqual(CDXCardCornerStyleRounded, [CDXCard cornerStyleFromString:@"rounded" defaultsTo:CDXCardCornerStyleCornered]);
-    XCTAssertEqual(CDXCardCornerStyleCornered, [CDXCard cornerStyleFromString:@"?" defaultsTo:CDXCardCornerStyleCornered]);
-    XCTAssertEqual(CDXCardCornerStyleRounded, [CDXCard cornerStyleFromString:@"?" defaultsTo:CDXCardCornerStyleRounded]);
-}
-
 @end
 

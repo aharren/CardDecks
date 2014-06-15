@@ -135,5 +135,36 @@
     XCTAssertEqual(YES, deck.wantsAutoRotate);
 }
 
+- (void)testCardOrientationFromString {
+    XCTAssertEqual(CDXCardOrientationUp, [CDXCardDeckJSONSerializer cardOrientationFromString:@"up" defaultsTo:CDXCardOrientationDown]);
+    XCTAssertEqual(CDXCardOrientationDown, [CDXCardDeckJSONSerializer cardOrientationFromString:@"down" defaultsTo:CDXCardOrientationUp]);
+    XCTAssertEqual(CDXCardOrientationLeft, [CDXCardDeckJSONSerializer cardOrientationFromString:@"left" defaultsTo:CDXCardOrientationRight]);
+    XCTAssertEqual(CDXCardOrientationRight, [CDXCardDeckJSONSerializer cardOrientationFromString:@"right" defaultsTo:CDXCardOrientationLeft]);
+    XCTAssertEqual(CDXCardOrientationUp, [CDXCardDeckJSONSerializer cardOrientationFromString:@"?" defaultsTo:CDXCardOrientationUp]);
+    XCTAssertEqual(CDXCardOrientationDown, [CDXCardDeckJSONSerializer cardOrientationFromString:@"?" defaultsTo:CDXCardOrientationDown]);
+}
+
+- (void)testCornerStyleFromString {
+    XCTAssertEqual(CDXCardCornerStyleCornered, [CDXCardDeckJSONSerializer cornerStyleFromString:@"cornered" defaultsTo:CDXCardCornerStyleRounded]);
+    XCTAssertEqual(CDXCardCornerStyleRounded, [CDXCardDeckJSONSerializer cornerStyleFromString:@"rounded" defaultsTo:CDXCardCornerStyleCornered]);
+    XCTAssertEqual(CDXCardCornerStyleCornered, [CDXCardDeckJSONSerializer cornerStyleFromString:@"?" defaultsTo:CDXCardCornerStyleCornered]);
+    XCTAssertEqual(CDXCardCornerStyleRounded, [CDXCardDeckJSONSerializer cornerStyleFromString:@"?" defaultsTo:CDXCardCornerStyleRounded]);
+}
+
+- (void)testDisplayStyleFromString {
+    XCTAssertEqual(CDXCardDeckDisplayStyleSideBySide, [CDXCardDeckJSONSerializer displayStyleFromString:@"side-by-side,scroll" defaultsTo:CDXCardDeckDisplayStyleStack]);
+    XCTAssertEqual(CDXCardDeckDisplayStyleStack, [CDXCardDeckJSONSerializer displayStyleFromString:@"stacked,scroll" defaultsTo:CDXCardDeckDisplayStyleSideBySide]);
+    XCTAssertEqual(CDXCardDeckDisplayStyleSwipeStack, [CDXCardDeckJSONSerializer displayStyleFromString:@"stacked,swipe" defaultsTo:CDXCardDeckDisplayStyleSideBySide]);
+    XCTAssertEqual(CDXCardDeckDisplayStyleSideBySide, [CDXCardDeckJSONSerializer displayStyleFromString:@"?" defaultsTo:CDXCardDeckDisplayStyleSideBySide]);
+    XCTAssertEqual(CDXCardDeckDisplayStyleSwipeStack, [CDXCardDeckJSONSerializer displayStyleFromString:@"?" defaultsTo:CDXCardDeckDisplayStyleSwipeStack]);
+}
+
+- (void)testPageControlStyleFromString {
+    XCTAssertEqual(CDXCardDeckPageControlStyleLight, [CDXCardDeckJSONSerializer pageControlStyleFromString:@"light" defaultsTo:CDXCardDeckPageControlStyleDark]);
+    XCTAssertEqual(CDXCardDeckPageControlStyleDark, [CDXCardDeckJSONSerializer pageControlStyleFromString:@"dark" defaultsTo:CDXCardDeckPageControlStyleLight]);
+    XCTAssertEqual(CDXCardDeckPageControlStyleDark, [CDXCardDeckJSONSerializer pageControlStyleFromString:@"?" defaultsTo:CDXCardDeckPageControlStyleDark]);
+    XCTAssertEqual(CDXCardDeckPageControlStyleLight, [CDXCardDeckJSONSerializer pageControlStyleFromString:@"?" defaultsTo:CDXCardDeckPageControlStyleLight]);
+}
+
 @end
 
