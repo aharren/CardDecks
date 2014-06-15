@@ -74,6 +74,17 @@
     }
 }
 
++ (BOOL)boolFromOnOffString:(NSString *)string defaultsTo:(BOOL)defaultsTo {
+    string = [string lowercaseString];
+    if ([@"on" isEqualToString:string]) {
+        return YES;
+    } else if ([@"off" isEqualToString:string]) {
+        return NO;
+    } else {
+        return defaultsTo;
+    }
+}
+
 + (CDXCard *)cardFromDictionary:(NSDictionary *)jcard cardDeck:(CDXCardDeck *)cardDeck {
     NSString *jstring = nil;
     NSNumber *jnumber = nil;
@@ -143,6 +154,11 @@
     jstring = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"corner_style" defaultsTo:nil];
     if (jstring != nil) {
         cardDeck.cornerStyle = [CDXCard cornerStyleFromString:jstring defaultsTo:cardDeck.cornerStyle];
+    }
+    // index_dots
+    jstring = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"index_dots" defaultsTo:nil];
+    if (jstring != nil) {
+        cardDeck.wantsPageControl = [CDXCardDeckJSONSerializer boolFromOnOffString:jstring defaultsTo:cardDeck.wantsPageControl];
     }
     // default_card
     NSDictionary *jdefaultcard = [CDXCardDeckJSONSerializer dictionary:jdeck dictionaryForKey:@"default_card" defaultsTo:nil];

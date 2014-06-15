@@ -112,6 +112,7 @@
     XCTAssertEqual(2, deck.groupSize);
     XCTAssertEqual(CDXCardDeckDisplayStyleSideBySide, deck.displayStyle);
     XCTAssertEqual(CDXCardCornerStyleRounded, deck.cornerStyle);
+    XCTAssertEqual(NO, deck.wantsPageControl);
 }
 
 - (void)testCardDecksFromVersion2JSONSettings2 {
@@ -125,6 +126,7 @@
     XCTAssertEqual(0, deck.groupSize);
     XCTAssertEqual(CDXCardDeckDisplayStyleStack, deck.displayStyle);
     XCTAssertEqual(CDXCardCornerStyleCornered, deck.cornerStyle);
+    XCTAssertEqual(YES, deck.wantsPageControl);
 }
 
 @end
