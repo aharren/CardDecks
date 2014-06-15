@@ -395,5 +395,16 @@
     }
 }
 
++ (CDXCardDeckPageControlStyle)pageControlStyleFromString:(NSString *)string defaultsTo:(CDXCardDeckPageControlStyle)defaultStyle {
+    string = [string lowercaseString];
+    if ([@"dark" isEqualToString:string]) {
+        return CDXCardDeckPageControlStyleDark;
+    } else if ([@"light" isEqualToString:string]) {
+        return CDXCardDeckPageControlStyleLight;
+    } else {
+        return defaultStyle;
+    }
+}
+
 @end
 

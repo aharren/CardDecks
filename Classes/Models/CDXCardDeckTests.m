@@ -548,5 +548,12 @@
     XCTAssertEqual(CDXCardDeckDisplayStyleSwipeStack, [CDXCardDeck displayStyleFromString:@"?" defaultsTo:CDXCardDeckDisplayStyleSwipeStack]);
 }
 
+- (void)testPageControlStyleFromString {
+    XCTAssertEqual(CDXCardDeckPageControlStyleLight, [CDXCardDeck pageControlStyleFromString:@"light" defaultsTo:CDXCardDeckPageControlStyleDark]);
+    XCTAssertEqual(CDXCardDeckPageControlStyleDark, [CDXCardDeck pageControlStyleFromString:@"dark" defaultsTo:CDXCardDeckPageControlStyleLight]);
+    XCTAssertEqual(CDXCardDeckPageControlStyleDark, [CDXCardDeck pageControlStyleFromString:@"?" defaultsTo:CDXCardDeckPageControlStyleDark]);
+    XCTAssertEqual(CDXCardDeckPageControlStyleLight, [CDXCardDeck pageControlStyleFromString:@"?" defaultsTo:CDXCardDeckPageControlStyleLight]);
+}
+
 @end
 
