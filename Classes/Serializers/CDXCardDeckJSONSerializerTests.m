@@ -116,6 +116,7 @@
     XCTAssertEqual(CDXCardDeckPageControlStyleLight, deck.pageControlStyle);
     XCTAssertEqual(NO, deck.wantsPageJumps);
     XCTAssertEqual(NO, deck.wantsAutoRotate);
+    XCTAssertEqual(CDXCardDeckShakeActionNone, deck.shakeAction);
 }
 
 - (void)testCardDecksFromVersion2JSONSettings2 {
@@ -133,6 +134,7 @@
     XCTAssertEqual(CDXCardDeckPageControlStyleDark, deck.pageControlStyle);
     XCTAssertEqual(YES, deck.wantsPageJumps);
     XCTAssertEqual(YES, deck.wantsAutoRotate);
+    XCTAssertEqual(CDXCardDeckShakeActionRandom, deck.shakeAction);
 }
 
 - (void)testIntFromDouble {
@@ -181,6 +183,14 @@
     XCTAssertEqual(CDXCardDeckPageControlStyleDark, [CDXCardDeckJSONSerializer pageControlStyleFromString:@"dark" defaultsTo:CDXCardDeckPageControlStyleLight]);
     XCTAssertEqual(CDXCardDeckPageControlStyleDark, [CDXCardDeckJSONSerializer pageControlStyleFromString:@"?" defaultsTo:CDXCardDeckPageControlStyleDark]);
     XCTAssertEqual(CDXCardDeckPageControlStyleLight, [CDXCardDeckJSONSerializer pageControlStyleFromString:@"?" defaultsTo:CDXCardDeckPageControlStyleLight]);
+}
+
+- (void)testShakeActionFromString {
+    XCTAssertEqual(CDXCardDeckShakeActionNone, [CDXCardDeckJSONSerializer shakeActionFromString:@"off" defaultsTo:CDXCardDeckShakeActionRandom]);
+    XCTAssertEqual(CDXCardDeckShakeActionRandom, [CDXCardDeckJSONSerializer shakeActionFromString:@"random" defaultsTo:CDXCardDeckShakeActionNone]);
+    XCTAssertEqual(CDXCardDeckShakeActionShuffle, [CDXCardDeckJSONSerializer shakeActionFromString:@"shuffle" defaultsTo:CDXCardDeckShakeActionNone]);
+    XCTAssertEqual(CDXCardDeckShakeActionNone, [CDXCardDeckJSONSerializer shakeActionFromString:@"?" defaultsTo:CDXCardDeckShakeActionNone]);
+    XCTAssertEqual(CDXCardDeckShakeActionRandom, [CDXCardDeckJSONSerializer shakeActionFromString:@"?" defaultsTo:CDXCardDeckShakeActionRandom]);
 }
 
 @end

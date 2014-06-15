@@ -136,6 +136,19 @@
     }
 }
 
++ (CDXCardDeckShakeAction)shakeActionFromString:(NSString *)string defaultsTo:(CDXCardDeckShakeAction)defaultAction {
+    string = [string lowercaseString];
+    if ([@"off" isEqualToString:string]) {
+        return CDXCardDeckShakeActionNone;
+    } else if ([@"random" isEqualToString:string]) {
+        return CDXCardDeckShakeActionRandom;
+    } else if ([@"shuffle" isEqualToString:string]) {
+        return CDXCardDeckShakeActionShuffle;
+    } else {
+        return defaultAction;
+    }
+}
+
 + (CDXCard *)cardFromDictionary:(NSDictionary *)jcard cardDeck:(CDXCardDeck *)cardDeck {
     NSString *jstring = nil;
     NSNumber *jnumber = nil;
@@ -225,6 +238,11 @@
     jstring = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"auto_rotate" defaultsTo:nil];
     if (jstring != nil) {
         cardDeck.wantsAutoRotate = [CDXCardDeckJSONSerializer boolFromOnOffString:jstring defaultsTo:cardDeck.wantsAutoRotate];
+    }
+    // shake
+    jstring = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"shake" defaultsTo:nil];
+    if (jstring != nil) {
+        cardDeck.shakeAction = [CDXCardDeckJSONSerializer shakeActionFromString:jstring defaultsTo:cardDeck.shakeAction];
     }
     // default_card
     NSDictionary *jdefaultcard = [CDXCardDeckJSONSerializer dictionary:jdeck dictionaryForKey:@"default_card" defaultsTo:nil];
