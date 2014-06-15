@@ -149,6 +149,19 @@
     }
 }
 
++ (CDXCardDeckAutoPlay)autoPlayFromString:(NSString *)string defaultsTo:(CDXCardDeckAutoPlay)defaultAutoPlay {
+    string = [string lowercaseString];
+    if ([@"off" isEqualToString:string]) {
+        return CDXCardDeckAutoPlayOff;
+    } else if ([@"play1x" isEqualToString:string]) {
+        return CDXCardDeckAutoPlayPlay;
+    } else if ([@"play5x" isEqualToString:string]) {
+        return CDXCardDeckAutoPlayPlay2;
+    } else {
+        return defaultAutoPlay;
+    }
+}
+
 + (CDXCard *)cardFromDictionary:(NSDictionary *)jcard cardDeck:(CDXCardDeck *)cardDeck {
     NSString *jstring = nil;
     NSNumber *jnumber = nil;
@@ -243,6 +256,11 @@
     jstring = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"shake" defaultsTo:nil];
     if (jstring != nil) {
         cardDeck.shakeAction = [CDXCardDeckJSONSerializer shakeActionFromString:jstring defaultsTo:cardDeck.shakeAction];
+    }
+    // auto_play
+    jstring = [CDXCardDeckJSONSerializer dictionary:jdeck stringForKey:@"auto_play" defaultsTo:nil];
+    if (jstring != nil) {
+        cardDeck.autoPlay = [CDXCardDeckJSONSerializer autoPlayFromString:jstring defaultsTo:cardDeck.autoPlay];
     }
     // default_card
     NSDictionary *jdefaultcard = [CDXCardDeckJSONSerializer dictionary:jdeck dictionaryForKey:@"default_card" defaultsTo:nil];

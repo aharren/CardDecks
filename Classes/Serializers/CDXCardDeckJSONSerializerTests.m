@@ -117,6 +117,7 @@
     XCTAssertEqual(NO, deck.wantsPageJumps);
     XCTAssertEqual(NO, deck.wantsAutoRotate);
     XCTAssertEqual(CDXCardDeckShakeActionNone, deck.shakeAction);
+    XCTAssertEqual(CDXCardDeckAutoPlayOff, deck.autoPlay);
 }
 
 - (void)testCardDecksFromVersion2JSONSettings2 {
@@ -135,6 +136,7 @@
     XCTAssertEqual(YES, deck.wantsPageJumps);
     XCTAssertEqual(YES, deck.wantsAutoRotate);
     XCTAssertEqual(CDXCardDeckShakeActionRandom, deck.shakeAction);
+    XCTAssertEqual(CDXCardDeckAutoPlayPlay, deck.autoPlay);
 }
 
 - (void)testIntFromDouble {
@@ -191,6 +193,14 @@
     XCTAssertEqual(CDXCardDeckShakeActionShuffle, [CDXCardDeckJSONSerializer shakeActionFromString:@"shuffle" defaultsTo:CDXCardDeckShakeActionNone]);
     XCTAssertEqual(CDXCardDeckShakeActionNone, [CDXCardDeckJSONSerializer shakeActionFromString:@"?" defaultsTo:CDXCardDeckShakeActionNone]);
     XCTAssertEqual(CDXCardDeckShakeActionRandom, [CDXCardDeckJSONSerializer shakeActionFromString:@"?" defaultsTo:CDXCardDeckShakeActionRandom]);
+}
+
+- (void)testAutoPlayFromString {
+    XCTAssertEqual(CDXCardDeckAutoPlayOff, [CDXCardDeckJSONSerializer autoPlayFromString:@"off" defaultsTo:CDXCardDeckAutoPlayPlay]);
+    XCTAssertEqual(CDXCardDeckAutoPlayPlay, [CDXCardDeckJSONSerializer autoPlayFromString:@"play1x" defaultsTo:CDXCardDeckAutoPlayOff]);
+    XCTAssertEqual(CDXCardDeckAutoPlayPlay2, [CDXCardDeckJSONSerializer autoPlayFromString:@"play5x" defaultsTo:CDXCardDeckAutoPlayOff]);
+    XCTAssertEqual(CDXCardDeckAutoPlayOff, [CDXCardDeckJSONSerializer autoPlayFromString:@"?" defaultsTo:CDXCardDeckAutoPlayOff]);
+    XCTAssertEqual(CDXCardDeckAutoPlayPlay, [CDXCardDeckJSONSerializer autoPlayFromString:@"?" defaultsTo:CDXCardDeckAutoPlayPlay]);
 }
 
 @end
