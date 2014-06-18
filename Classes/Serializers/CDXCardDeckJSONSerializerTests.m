@@ -161,6 +161,7 @@
     XCTAssertEqual(CDXCardOrientationDown, [CDXCardDeckJSONSerializer cardOrientationFromString:@"down" defaultsTo:CDXCardOrientationUp]);
     XCTAssertEqual(CDXCardOrientationLeft, [CDXCardDeckJSONSerializer cardOrientationFromString:@"left" defaultsTo:CDXCardOrientationRight]);
     XCTAssertEqual(CDXCardOrientationRight, [CDXCardDeckJSONSerializer cardOrientationFromString:@"right" defaultsTo:CDXCardOrientationLeft]);
+    XCTAssertEqual(4, CDXCardOrientationCount);
     XCTAssertEqual(CDXCardOrientationUp, [CDXCardDeckJSONSerializer cardOrientationFromString:@"?" defaultsTo:CDXCardOrientationUp]);
     XCTAssertEqual(CDXCardOrientationDown, [CDXCardDeckJSONSerializer cardOrientationFromString:@"?" defaultsTo:CDXCardOrientationDown]);
 }
@@ -168,6 +169,7 @@
 - (void)testCornerStyleFromString {
     XCTAssertEqual(CDXCardCornerStyleCornered, [CDXCardDeckJSONSerializer cornerStyleFromString:@"cornered" defaultsTo:CDXCardCornerStyleRounded]);
     XCTAssertEqual(CDXCardCornerStyleRounded, [CDXCardDeckJSONSerializer cornerStyleFromString:@"rounded" defaultsTo:CDXCardCornerStyleCornered]);
+    XCTAssertEqual(2, CDXCardCornerStyleCount);
     XCTAssertEqual(CDXCardCornerStyleCornered, [CDXCardDeckJSONSerializer cornerStyleFromString:@"?" defaultsTo:CDXCardCornerStyleCornered]);
     XCTAssertEqual(CDXCardCornerStyleRounded, [CDXCardDeckJSONSerializer cornerStyleFromString:@"?" defaultsTo:CDXCardCornerStyleRounded]);
 }
@@ -176,6 +178,7 @@
     XCTAssertEqual(CDXCardDeckDisplayStyleSideBySide, [CDXCardDeckJSONSerializer displayStyleFromString:@"side-by-side,scroll" defaultsTo:CDXCardDeckDisplayStyleStack]);
     XCTAssertEqual(CDXCardDeckDisplayStyleStack, [CDXCardDeckJSONSerializer displayStyleFromString:@"stacked,scroll" defaultsTo:CDXCardDeckDisplayStyleSideBySide]);
     XCTAssertEqual(CDXCardDeckDisplayStyleSwipeStack, [CDXCardDeckJSONSerializer displayStyleFromString:@"stacked,swipe" defaultsTo:CDXCardDeckDisplayStyleSideBySide]);
+    XCTAssertEqual(3, CDXCardDeckDisplayStyleCount);
     XCTAssertEqual(CDXCardDeckDisplayStyleSideBySide, [CDXCardDeckJSONSerializer displayStyleFromString:@"?" defaultsTo:CDXCardDeckDisplayStyleSideBySide]);
     XCTAssertEqual(CDXCardDeckDisplayStyleSwipeStack, [CDXCardDeckJSONSerializer displayStyleFromString:@"?" defaultsTo:CDXCardDeckDisplayStyleSwipeStack]);
 }
@@ -183,6 +186,7 @@
 - (void)testPageControlStyleFromString {
     XCTAssertEqual(CDXCardDeckPageControlStyleLight, [CDXCardDeckJSONSerializer pageControlStyleFromString:@"light" defaultsTo:CDXCardDeckPageControlStyleDark]);
     XCTAssertEqual(CDXCardDeckPageControlStyleDark, [CDXCardDeckJSONSerializer pageControlStyleFromString:@"dark" defaultsTo:CDXCardDeckPageControlStyleLight]);
+    XCTAssertEqual(2, CDXCardDeckPageControlStyleCount);
     XCTAssertEqual(CDXCardDeckPageControlStyleDark, [CDXCardDeckJSONSerializer pageControlStyleFromString:@"?" defaultsTo:CDXCardDeckPageControlStyleDark]);
     XCTAssertEqual(CDXCardDeckPageControlStyleLight, [CDXCardDeckJSONSerializer pageControlStyleFromString:@"?" defaultsTo:CDXCardDeckPageControlStyleLight]);
 }
@@ -191,6 +195,7 @@
     XCTAssertEqual(CDXCardDeckShakeActionNone, [CDXCardDeckJSONSerializer shakeActionFromString:@"off" defaultsTo:CDXCardDeckShakeActionRandom]);
     XCTAssertEqual(CDXCardDeckShakeActionRandom, [CDXCardDeckJSONSerializer shakeActionFromString:@"random" defaultsTo:CDXCardDeckShakeActionNone]);
     XCTAssertEqual(CDXCardDeckShakeActionShuffle, [CDXCardDeckJSONSerializer shakeActionFromString:@"shuffle" defaultsTo:CDXCardDeckShakeActionNone]);
+    XCTAssertEqual(3, CDXCardDeckShakeActionCount);
     XCTAssertEqual(CDXCardDeckShakeActionNone, [CDXCardDeckJSONSerializer shakeActionFromString:@"?" defaultsTo:CDXCardDeckShakeActionNone]);
     XCTAssertEqual(CDXCardDeckShakeActionRandom, [CDXCardDeckJSONSerializer shakeActionFromString:@"?" defaultsTo:CDXCardDeckShakeActionRandom]);
 }
@@ -199,6 +204,7 @@
     XCTAssertEqual(CDXCardDeckAutoPlayOff, [CDXCardDeckJSONSerializer autoPlayFromString:@"off" defaultsTo:CDXCardDeckAutoPlayPlay]);
     XCTAssertEqual(CDXCardDeckAutoPlayPlay, [CDXCardDeckJSONSerializer autoPlayFromString:@"play1x" defaultsTo:CDXCardDeckAutoPlayOff]);
     XCTAssertEqual(CDXCardDeckAutoPlayPlay2, [CDXCardDeckJSONSerializer autoPlayFromString:@"play5x" defaultsTo:CDXCardDeckAutoPlayOff]);
+    XCTAssertEqual(3, CDXCardDeckAutoPlayCount);
     XCTAssertEqual(CDXCardDeckAutoPlayOff, [CDXCardDeckJSONSerializer autoPlayFromString:@"?" defaultsTo:CDXCardDeckAutoPlayOff]);
     XCTAssertEqual(CDXCardDeckAutoPlayPlay, [CDXCardDeckJSONSerializer autoPlayFromString:@"?" defaultsTo:CDXCardDeckAutoPlayPlay]);
 }
