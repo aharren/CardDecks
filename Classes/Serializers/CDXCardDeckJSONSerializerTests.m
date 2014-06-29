@@ -273,6 +273,22 @@
     XCTAssertEqual(CDXCardDeckShakeActionRandom, [CDXCardDeckJSONSerializer shakeActionFromString:@"?" defaultsTo:CDXCardDeckShakeActionRandom]);
 }
 
+- (void)testShakeActionToString {
+    XCTAssertEqualObjects(@"off", [CDXCardDeckJSONSerializer stringFromShakeAction:CDXCardDeckShakeActionNone]);
+    XCTAssertEqualObjects(@"random", [CDXCardDeckJSONSerializer stringFromShakeAction:CDXCardDeckShakeActionRandom]);
+    XCTAssertEqualObjects(@"shuffle", [CDXCardDeckJSONSerializer stringFromShakeAction:CDXCardDeckShakeActionShuffle]);
+    XCTAssertEqualObjects(@"shuffle", [CDXCardDeckJSONSerializer stringFromShakeAction:CDXCardDeckShakeActionCount]);
+}
+
+- (void)testShakeActionToFromString {
+    for (CDXCardDeckShakeAction i = (CDXCardDeckShakeAction) 0; i < CDXCardDeckShakeActionCount; ++i) {
+        XCTAssertEqual(i, [CDXCardDeckJSONSerializer shakeActionFromString:[CDXCardDeckJSONSerializer stringFromShakeAction:i] defaultsTo:(CDXCardDeckShakeAction) 0]);
+        XCTAssertEqual(i, [CDXCardDeckJSONSerializer shakeActionFromString:[CDXCardDeckJSONSerializer stringFromShakeAction:i] defaultsTo:(CDXCardDeckShakeAction) 1]);
+    }
+    XCTAssertEqual(CDXCardDeckShakeActionDefault, [CDXCardDeckJSONSerializer shakeActionFromString:[CDXCardDeckJSONSerializer stringFromShakeAction:CDXCardDeckShakeActionCount] defaultsTo:(CDXCardDeckShakeAction) 0]);
+    XCTAssertEqual(CDXCardDeckShakeActionDefault, [CDXCardDeckJSONSerializer shakeActionFromString:[CDXCardDeckJSONSerializer stringFromShakeAction:CDXCardDeckShakeActionCount] defaultsTo:(CDXCardDeckShakeAction) 1]);
+}
+
 - (void)testAutoPlayFromString {
     XCTAssertEqual(CDXCardDeckAutoPlayOff, [CDXCardDeckJSONSerializer autoPlayFromString:@"off" defaultsTo:CDXCardDeckAutoPlayPlay]);
     XCTAssertEqual(CDXCardDeckAutoPlayPlay, [CDXCardDeckJSONSerializer autoPlayFromString:@"play1x" defaultsTo:CDXCardDeckAutoPlayOff]);

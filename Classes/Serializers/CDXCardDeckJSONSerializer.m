@@ -203,6 +203,19 @@
     }
 }
 
++ (NSString *)stringFromShakeAction:(CDXCardDeckShakeAction)shakeAction {
+    switch (shakeAction) {
+        case CDXCardDeckShakeActionNone:
+            return @"off";
+        case CDXCardDeckShakeActionRandom:
+            return @"random";
+        case CDXCardDeckShakeActionShuffle:
+            return @"shuffle";
+        default:
+            return [CDXCardDeckJSONSerializer stringFromShakeAction:CDXCardDeckShakeActionDefault];
+    }
+}
+
 + (CDXCardDeckAutoPlay)autoPlayFromString:(NSString *)string defaultsTo:(CDXCardDeckAutoPlay)defaultAutoPlay {
     string = [string lowercaseString];
     if ([@"off" isEqualToString:string]) {

@@ -53,6 +53,8 @@
 + (NSString *)stringFromPageControlStyle:(CDXCardDeckPageControlStyle)pageControlStyle;
 
 + (CDXCardDeckShakeAction)shakeActionFromString:(NSString *)string defaultsTo:(CDXCardDeckShakeAction)defaultAction;
++ (NSString *)stringFromShakeAction:(CDXCardDeckShakeAction)shakeAction;
+
 + (CDXCardDeckAutoPlay)autoPlayFromString:(NSString *)string defaultsTo:(CDXCardDeckAutoPlay)defaultAutoPlay;
 
 @end
