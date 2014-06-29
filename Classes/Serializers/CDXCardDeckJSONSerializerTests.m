@@ -156,6 +156,16 @@
     XCTAssertEqual(NO, [CDXCardDeckJSONSerializer boolFromOnOffString:@"?" defaultsTo:NO]);
 }
 
+- (void)testBoolToOnOffString {
+    XCTAssertEqualObjects(@"on", [CDXCardDeckJSONSerializer stringOnOffFromBool:YES]);
+    XCTAssertEqualObjects(@"off", [CDXCardDeckJSONSerializer stringOnOffFromBool:NO]);
+}
+
+- (void)testBootToFromOnOffString {
+    XCTAssertEqual(YES, [CDXCardDeckJSONSerializer boolFromOnOffString:[CDXCardDeckJSONSerializer stringOnOffFromBool:YES] defaultsTo:NO]);
+    XCTAssertEqual(NO, [CDXCardDeckJSONSerializer boolFromOnOffString:[CDXCardDeckJSONSerializer stringOnOffFromBool:NO] defaultsTo:YES]);
+}
+
 - (void)testCardOrientationFromString {
     XCTAssertEqual(CDXCardOrientationUp, [CDXCardDeckJSONSerializer cardOrientationFromString:@"up" defaultsTo:CDXCardOrientationDown]);
     XCTAssertEqual(CDXCardOrientationDown, [CDXCardDeckJSONSerializer cardOrientationFromString:@"down" defaultsTo:CDXCardOrientationUp]);

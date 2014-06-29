@@ -85,6 +85,10 @@
     }
 }
 
++ (NSString *)stringOnOffFromBool:(BOOL)value {
+    return value ? @"on" : @"off";
+}
+
 + (CDXCardOrientation)cardOrientationFromString:(NSString *)string defaultsTo:(CDXCardOrientation)defaultOrientation {
     // valid orientations are 'u', 'r', 'd', and 'l', everything else maps to given default orientation
     string = [string lowercaseString];

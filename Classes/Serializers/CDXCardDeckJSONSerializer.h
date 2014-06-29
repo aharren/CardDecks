@@ -38,6 +38,7 @@
 
 + (int)intFromDouble:(double)value;
 + (BOOL)boolFromOnOffString:(NSString *)string defaultsTo:(BOOL)defaultsTo;
++ (NSString *)stringOnOffFromBool:(BOOL)value;
 
 + (CDXCardOrientation)cardOrientationFromString:(NSString *)string defaultsTo:(CDXCardOrientation)defaultOrientation;
 + (CDXCardCornerStyle)cornerStyleFromString:(NSString *)string defaultsTo:(CDXCardCornerStyle)defaultStyle;
