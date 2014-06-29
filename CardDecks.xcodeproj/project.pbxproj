@@ -61,6 +61,9 @@
 		E043F1771400EFC900DE0567 /* Toolbar-Left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E043F1751400EFC900DE0567 /* Toolbar-Left@2x.png */; };
 		E047CEF7119369430024A022 /* CDXAppWindowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E047CEF6119369430024A022 /* CDXAppWindowManager.m */; };
 		E048D463152E3A1B0081B88F /* CDXCardViewDirectRendering.m in Sources */ = {isa = PBXBuildFile; fileRef = E048D462152E3A1B0081B88F /* CDXCardViewDirectRendering.m */; };
+		E04B42CB19602D30004B0E0D /* CDXEnumSerializerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E04B42CA19602D30004B0E0D /* CDXEnumSerializerUtils.m */; };
+		E04B42CD19602D8E004B0E0D /* CDXEnumSerializerUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E04B42CC19602D8E004B0E0D /* CDXEnumSerializerUtilsTests.m */; };
+		E04B42CE19602F3F004B0E0D /* CDXEnumSerializerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E04B42CA19602D30004B0E0D /* CDXEnumSerializerUtils.m */; };
 		E04B448A11B0441600DDBD33 /* CDXAppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E04B448911B0441600DDBD33 /* CDXAppSettings.m */; };
 		E04D945411D77EA500A4DA59 /* IndexDotBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E04D945211D77EA500A4DA59 /* IndexDotBlack@2x.png */; };
 		E04E7A0D14E4716200D46037 /* CDXTimerKeyboardExtensionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E04E7A0C14E4716200D46037 /* CDXTimerKeyboardExtensionView.xib */; };
@@ -263,6 +266,9 @@
 		E048D460152E37BB0081B88F /* CDXCardViewRenderingProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardViewRenderingProtocols.h; path = Classes/Views/CDXCardViewRenderingProtocols.h; sourceTree = "<group>"; };
 		E048D461152E3A1B0081B88F /* CDXCardViewDirectRendering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardViewDirectRendering.h; path = Classes/Views/CDXCardViewDirectRendering.h; sourceTree = "<group>"; };
 		E048D462152E3A1B0081B88F /* CDXCardViewDirectRendering.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardViewDirectRendering.m; path = Classes/Views/CDXCardViewDirectRendering.m; sourceTree = "<group>"; };
+		E04B42C919602D30004B0E0D /* CDXEnumSerializerUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXEnumSerializerUtils.h; path = Classes/Serializers/CDXEnumSerializerUtils.h; sourceTree = "<group>"; };
+		E04B42CA19602D30004B0E0D /* CDXEnumSerializerUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXEnumSerializerUtils.m; path = Classes/Serializers/CDXEnumSerializerUtils.m; sourceTree = "<group>"; };
+		E04B42CC19602D8E004B0E0D /* CDXEnumSerializerUtilsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXEnumSerializerUtilsTests.m; path = Classes/Serializers/CDXEnumSerializerUtilsTests.m; sourceTree = "<group>"; };
 		E04B448811B0441600DDBD33 /* CDXAppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppSettings.h; path = Classes/Models/CDXAppSettings.h; sourceTree = "<group>"; };
 		E04B448911B0441600DDBD33 /* CDXAppSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppSettings.m; path = Classes/Models/CDXAppSettings.m; sourceTree = "<group>"; };
 		E04D945211D77EA500A4DA59 /* IndexDotBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IndexDotBlack@2x.png"; path = "Images/IndexDotBlack@2x.png"; sourceTree = "<group>"; };
@@ -675,6 +681,9 @@
 				E0875D981958CAB9007FA508 /* CDXOrderedSerializerDictionary.h */,
 				E0875D9A1958CAD6007FA508 /* CDXOrderedSerializerDictionary.m */,
 				E0C7D433195EEAAF00201BD3 /* CDXOrderedSerializerDictionaryTests.m */,
+				E04B42C919602D30004B0E0D /* CDXEnumSerializerUtils.h */,
+				E04B42CA19602D30004B0E0D /* CDXEnumSerializerUtils.m */,
+				E04B42CC19602D8E004B0E0D /* CDXEnumSerializerUtilsTests.m */,
 			);
 			name = Serializers;
 			sourceTree = "<group>";
@@ -1054,6 +1063,7 @@
 				E03B10A311C3FC4300591E45 /* CDXAppAboutSettings.m in Sources */,
 				E0DD7E6B11D65CEA00ED23B6 /* CDXIndexDotsView.m in Sources */,
 				E03E6C9411E8E2120086BA9C /* CDXURLSerializerUtils.m in Sources */,
+				E04B42CB19602D30004B0E0D /* CDXEnumSerializerUtils.m in Sources */,
 				E023ACEC11F4D3B10051B1E2 /* CDXDevice.m in Sources */,
 				E022CDF813B64218000FE10A /* CDXCardDecksListPadViewController.m in Sources */,
 				E0CDB1F913B793550079B722 /* CDXCardDeckListPadViewController.m in Sources */,
@@ -1071,6 +1081,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E04B42CE19602F3F004B0E0D /* CDXEnumSerializerUtils.m in Sources */,
 				E0C7D4321958CDE000201BD3 /* CDXOrderedSerializerDictionary.m in Sources */,
 				E0521EB71945FE22001CCC96 /* CDXCardDeckJSONSerializer.m in Sources */,
 				E0521EB81945FE22001CCC96 /* CDXCardDeckJSONSerializerTests.m in Sources */,
@@ -1082,6 +1093,7 @@
 				E002B6CC116885340072C409 /* CDXColor.m in Sources */,
 				E002B6C9116885230072C409 /* CDXColorTests.m in Sources */,
 				E002B6E011688B640072C409 /* CDXCard.m in Sources */,
+				E04B42CD19602D8E004B0E0D /* CDXEnumSerializerUtilsTests.m in Sources */,
 				E002B6DF11688B5F0072C409 /* CDXCardTests.m in Sources */,
 				E002B7021168942F0072C409 /* CDXCardDeck.m in Sources */,
 				E002B704116894980072C409 /* CDXCardDeckTests.m in Sources */,
