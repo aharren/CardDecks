@@ -25,6 +25,7 @@
 
 #import "CDXCardDeckJSONSerializer.h"
 #import "CDXOrderedSerializerDictionary.h"
+#import "CDXEnumSerializerUtils.h"
 
 
 @implementation CDXCardDeckJSONSerializer
@@ -90,157 +91,93 @@
     return value ? @"on" : @"off";
 }
 
+static const NSUInteger cardOrientationsCount = (NSUInteger)CDXCardOrientationCount;
+static NSString *cardOrientations[cardOrientationsCount] = {
+    [CDXCardOrientationUp] = @"up",
+    [CDXCardOrientationRight] = @"right",
+    [CDXCardOrientationDown] = @"down",
+    [CDXCardOrientationLeft] = @"left"
+};
+
 + (CDXCardOrientation)cardOrientationFromString:(NSString *)string defaultsTo:(CDXCardOrientation)defaultOrientation {
-    // valid orientations are 'u', 'r', 'd', and 'l', everything else maps to given default orientation
-    string = [string lowercaseString];
-    if ([@"right" isEqualToString:string]) {
-        return CDXCardOrientationRight;
-    } else if ([@"down" isEqualToString:string]) {
-        return CDXCardOrientationDown;
-    } else if ([@"left" isEqualToString:string]) {
-        return CDXCardOrientationLeft;
-    } else if ([@"up" isEqualToString:string]) {
-        return CDXCardOrientationUp;
-    } else {
-        return defaultOrientation;
-    }
+    return (CDXCardOrientation) [CDXEnumSerializerUtils array:cardOrientations size:cardOrientationsCount valueFromString:string defaultsTo:(NSUInteger)defaultOrientation];
 }
 
 + (NSString *)stringFromCardOrientation:(CDXCardOrientation)cardOrientation {
-    switch (cardOrientation) {
-        case CDXCardOrientationRight:
-            return @"right";
-        case CDXCardOrientationDown:
-            return @"down";
-        case CDXCardOrientationLeft:
-            return @"left";
-        case CDXCardOrientationUp:
-            return @"up";
-        default:
-            return [CDXCardDeckJSONSerializer stringFromCardOrientation:CDXCardOrientationDefault];
-    }
+    return [CDXEnumSerializerUtils array:cardOrientations size:cardOrientationsCount stringFromValue:(NSUInteger)cardOrientation defaultsTo:cardOrientations[CDXCardOrientationDefault]];
 }
 
+static const NSUInteger cornerStylesCount = (NSUInteger)CDXCardCornerStyleCount;
+static NSString *cornerStyles[cornerStylesCount] = {
+    [CDXCardCornerStyleRounded] = @"rounded",
+    [CDXCardCornerStyleCornered] = @"cornered"
+};
+
 + (CDXCardCornerStyle)cornerStyleFromString:(NSString *)string defaultsTo:(CDXCardCornerStyle)defaultStyle {
-    string = [string lowercaseString];
-    if ([@"cornered" isEqualToString:string]) {
-        return CDXCardCornerStyleCornered;
-    } else if ([@"rounded" isEqualToString:string]) {
-        return CDXCardCornerStyleRounded;
-    } else {
-        return defaultStyle;
-    }
+    return (CDXCardCornerStyle) [CDXEnumSerializerUtils array:cornerStyles size:cornerStylesCount valueFromString:string defaultsTo:(NSUInteger)defaultStyle];
 }
 
 + (NSString *)stringFromCornerStyle:(CDXCardCornerStyle)cornerStyle {
-    switch (cornerStyle) {
-        case CDXCardCornerStyleCornered:
-            return @"cornered";
-        case CDXCardCornerStyleRounded:
-            return @"rounded";
-        default:
-            return [CDXCardDeckJSONSerializer stringFromCornerStyle:CDXCardCornerStyleDefault];
-    }
+    return [CDXEnumSerializerUtils array:cornerStyles size:cornerStylesCount stringFromValue:(NSUInteger)cornerStyle defaultsTo:cornerStyles[CDXCardCornerStyleDefault]];
 }
 
+static const NSUInteger displayStylesCount = (NSUInteger)CDXCardDeckDisplayStyleCount;
+static NSString *displayStyles[displayStylesCount] = {
+    [CDXCardDeckDisplayStyleSideBySide] = @"side-by-side,scroll",
+    [CDXCardDeckDisplayStyleStack] = @"stacked,scroll",
+    [CDXCardDeckDisplayStyleSwipeStack] = @"stacked,swipe"
+};
+
 + (CDXCardDeckDisplayStyle)displayStyleFromString:(NSString *)string defaultsTo:(CDXCardDeckDisplayStyle)defaultStyle {
-    string = [string lowercaseString];
-    if ([@"side-by-side,scroll" isEqualToString:string]) {
-        return CDXCardDeckDisplayStyleSideBySide;
-    } else if ([@"stacked,scroll" isEqualToString:string]) {
-        return CDXCardDeckDisplayStyleStack;
-    } else if ([@"stacked,swipe" isEqualToString:string]) {
-        return CDXCardDeckDisplayStyleSwipeStack;
-    } else {
-        return defaultStyle;
-    }
+    return (CDXCardDeckDisplayStyle) [CDXEnumSerializerUtils array:displayStyles size:displayStylesCount valueFromString:string defaultsTo:(NSUInteger)defaultStyle];
 }
 
 + (NSString *)stringFromDisplayStyle:(CDXCardDeckDisplayStyle)displayStyle {
-    switch (displayStyle) {
-        case CDXCardDeckDisplayStyleSideBySide:
-            return @"side-by-side,scroll";
-        case CDXCardDeckDisplayStyleStack:
-            return @"stacked,scroll";
-        case CDXCardDeckDisplayStyleSwipeStack:
-            return @"stacked,swipe";
-        default:
-            return [CDXCardDeckJSONSerializer stringFromDisplayStyle:CDXCardDeckDisplayStyleDefault];
-    }
+    return [CDXEnumSerializerUtils array:displayStyles size:displayStylesCount stringFromValue:(NSUInteger)displayStyle defaultsTo:displayStyles[CDXCardDeckDisplayStyleDefault]];
 }
 
+static const NSUInteger pageControlStylesCount = (NSUInteger)CDXCardDeckPageControlStyleCount;
+static NSString *pageControlStyles[pageControlStylesCount] = {
+    [CDXCardDeckPageControlStyleLight] = @"light",
+    [CDXCardDeckPageControlStyleDark] = @"dark"
+};
+
 + (CDXCardDeckPageControlStyle)pageControlStyleFromString:(NSString *)string defaultsTo:(CDXCardDeckPageControlStyle)defaultStyle {
-    string = [string lowercaseString];
-    if ([@"dark" isEqualToString:string]) {
-        return CDXCardDeckPageControlStyleDark;
-    } else if ([@"light" isEqualToString:string]) {
-        return CDXCardDeckPageControlStyleLight;
-    } else {
-        return defaultStyle;
-    }
+    return (CDXCardDeckPageControlStyle) [CDXEnumSerializerUtils array:pageControlStyles size:pageControlStylesCount valueFromString:string defaultsTo:(NSUInteger)defaultStyle];
 }
 
 + (NSString *)stringFromPageControlStyle:(CDXCardDeckPageControlStyle)pageControlStyle {
-    switch (pageControlStyle) {
-        case CDXCardDeckPageControlStyleDark:
-            return @"dark";
-        case CDXCardDeckPageControlStyleLight:
-            return @"light";
-        default:
-            return [CDXCardDeckJSONSerializer stringFromPageControlStyle:CDXCardDeckPageControlStyleDefault];
-    }
+    return [CDXEnumSerializerUtils array:pageControlStyles size:pageControlStylesCount stringFromValue:(NSUInteger)pageControlStyle defaultsTo:pageControlStyles[CDXCardDeckPageControlStyleDefault]];
 }
 
+static const NSUInteger shakeActionsCount = (NSUInteger)CDXCardDeckShakeActionCount;
+static NSString *shakeActions[shakeActionsCount] = {
+    [CDXCardDeckShakeActionNone] = @"off",
+    [CDXCardDeckShakeActionRandom] = @"random",
+    [CDXCardDeckShakeActionShuffle] = @"shuffle"
+};
+
 + (CDXCardDeckShakeAction)shakeActionFromString:(NSString *)string defaultsTo:(CDXCardDeckShakeAction)defaultAction {
-    string = [string lowercaseString];
-    if ([@"off" isEqualToString:string]) {
-        return CDXCardDeckShakeActionNone;
-    } else if ([@"random" isEqualToString:string]) {
-        return CDXCardDeckShakeActionRandom;
-    } else if ([@"shuffle" isEqualToString:string]) {
-        return CDXCardDeckShakeActionShuffle;
-    } else {
-        return defaultAction;
-    }
+    return (CDXCardDeckShakeAction) [CDXEnumSerializerUtils array:shakeActions size:shakeActionsCount valueFromString:string defaultsTo:(NSUInteger)defaultAction];
 }
 
 + (NSString *)stringFromShakeAction:(CDXCardDeckShakeAction)shakeAction {
-    switch (shakeAction) {
-        case CDXCardDeckShakeActionNone:
-            return @"off";
-        case CDXCardDeckShakeActionRandom:
-            return @"random";
-        case CDXCardDeckShakeActionShuffle:
-            return @"shuffle";
-        default:
-            return [CDXCardDeckJSONSerializer stringFromShakeAction:CDXCardDeckShakeActionDefault];
-    }
+    return [CDXEnumSerializerUtils array:shakeActions size:shakeActionsCount stringFromValue:(NSUInteger)shakeAction defaultsTo:shakeActions[CDXCardDeckShakeActionDefault]];
 }
 
+static const NSUInteger autoPlaysCount = (NSUInteger)CDXCardDeckAutoPlayCount;
+static NSString *autoPlays[autoPlaysCount] = {
+    [CDXCardDeckAutoPlayOff] = @"off",
+    [CDXCardDeckAutoPlayPlay] = @"play1x",
+    [CDXCardDeckAutoPlayPlay2] = @"play5x"
+};
+
 + (CDXCardDeckAutoPlay)autoPlayFromString:(NSString *)string defaultsTo:(CDXCardDeckAutoPlay)defaultAutoPlay {
-    string = [string lowercaseString];
-    if ([@"off" isEqualToString:string]) {
-        return CDXCardDeckAutoPlayOff;
-    } else if ([@"play1x" isEqualToString:string]) {
-        return CDXCardDeckAutoPlayPlay;
-    } else if ([@"play5x" isEqualToString:string]) {
-        return CDXCardDeckAutoPlayPlay2;
-    } else {
-        return defaultAutoPlay;
-    }
+    return (CDXCardDeckAutoPlay) [CDXEnumSerializerUtils array:autoPlays size:autoPlaysCount valueFromString:string defaultsTo:(NSUInteger)defaultAutoPlay];
 }
 
 + (NSString *)stringFromAutoPlay:(CDXCardDeckAutoPlay)autoPlay {
-    switch (autoPlay) {
-        case CDXCardDeckAutoPlayOff:
-            return @"off";
-        case CDXCardDeckAutoPlayPlay:
-            return @"play1x";
-        case CDXCardDeckAutoPlayPlay2:
-            return @"play5x";
-        default:
-            return [CDXCardDeckJSONSerializer stringFromAutoPlay:CDXCardDeckAutoPlayDefault];
-    }
+    return [CDXEnumSerializerUtils array:autoPlays size:autoPlaysCount stringFromValue:(NSUInteger)autoPlay defaultsTo:autoPlays[CDXCardDeckAutoPlayDefault]];
 }
 
 + (CDXCard *)cardFromDictionary:(NSDictionary *)jcard cardDeck:(CDXCardDeck *)cardDeck {
