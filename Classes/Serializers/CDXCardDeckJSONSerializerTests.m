@@ -201,6 +201,21 @@
     XCTAssertEqual(CDXCardCornerStyleRounded, [CDXCardDeckJSONSerializer cornerStyleFromString:@"?" defaultsTo:CDXCardCornerStyleRounded]);
 }
 
+- (void)testCornerStyleToString {
+    XCTAssertEqualObjects(@"cornered", [CDXCardDeckJSONSerializer stringFromCornerStyle:CDXCardCornerStyleCornered]);
+    XCTAssertEqualObjects(@"rounded", [CDXCardDeckJSONSerializer stringFromCornerStyle:CDXCardCornerStyleRounded]);
+    XCTAssertEqualObjects(@"rounded", [CDXCardDeckJSONSerializer stringFromCornerStyle:CDXCardCornerStyleCount]);
+}
+
+- (void)testCornerStyleToFromString {
+    for (CDXCardCornerStyle i = (CDXCardCornerStyle) 0; i < CDXCardCornerStyleCount; ++i) {
+        XCTAssertEqual(i, [CDXCardDeckJSONSerializer cornerStyleFromString:[CDXCardDeckJSONSerializer stringFromCornerStyle:i] defaultsTo:(CDXCardCornerStyle) 0]);
+        XCTAssertEqual(i, [CDXCardDeckJSONSerializer cornerStyleFromString:[CDXCardDeckJSONSerializer stringFromCornerStyle:i] defaultsTo:(CDXCardCornerStyle) 1]);
+    }
+    XCTAssertEqual(CDXCardCornerStyleDefault, [CDXCardDeckJSONSerializer cornerStyleFromString:[CDXCardDeckJSONSerializer stringFromCornerStyle:CDXCardCornerStyleCount] defaultsTo:(CDXCardCornerStyle) 0]);
+    XCTAssertEqual(CDXCardCornerStyleDefault, [CDXCardDeckJSONSerializer cornerStyleFromString:[CDXCardDeckJSONSerializer stringFromCornerStyle:CDXCardCornerStyleCount] defaultsTo:(CDXCardCornerStyle) 1]);
+}
+
 - (void)testDisplayStyleFromString {
     XCTAssertEqual(CDXCardDeckDisplayStyleSideBySide, [CDXCardDeckJSONSerializer displayStyleFromString:@"side-by-side,scroll" defaultsTo:CDXCardDeckDisplayStyleStack]);
     XCTAssertEqual(CDXCardDeckDisplayStyleStack, [CDXCardDeckJSONSerializer displayStyleFromString:@"stacked,scroll" defaultsTo:CDXCardDeckDisplayStyleSideBySide]);

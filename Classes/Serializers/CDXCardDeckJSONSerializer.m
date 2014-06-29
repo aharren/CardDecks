@@ -131,6 +131,17 @@
     }
 }
 
++ (NSString *)stringFromCornerStyle:(CDXCardCornerStyle)cornerStyle {
+    switch (cornerStyle) {
+        case CDXCardCornerStyleCornered:
+            return @"cornered";
+        case CDXCardCornerStyleRounded:
+            return @"rounded";
+        default:
+            return [CDXCardDeckJSONSerializer stringFromCornerStyle:CDXCardCornerStyleDefault];
+    }
+}
+
 + (CDXCardDeckDisplayStyle)displayStyleFromString:(NSString *)string defaultsTo:(CDXCardDeckDisplayStyle)defaultStyle {
     string = [string lowercaseString];
     if ([@"side-by-side,scroll" isEqualToString:string]) {

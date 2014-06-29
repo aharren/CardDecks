@@ -44,6 +44,8 @@
 + (NSString *)stringFromCardOrientation:(CDXCardOrientation)cardOrientation;
 
 + (CDXCardCornerStyle)cornerStyleFromString:(NSString *)string defaultsTo:(CDXCardCornerStyle)defaultStyle;
++ (NSString *)stringFromCornerStyle:(CDXCardCornerStyle)cornerStyle;
+
 + (CDXCardDeckDisplayStyle)displayStyleFromString:(NSString *)string defaultsTo:(CDXCardDeckDisplayStyle)defaultStyle;
 + (CDXCardDeckPageControlStyle)pageControlStyleFromString:(NSString *)string defaultsTo:(CDXCardDeckPageControlStyle)defaultStyle;
 + (CDXCardDeckShakeAction)shakeActionFromString:(NSString *)string defaultsTo:(CDXCardDeckShakeAction)defaultAction;
