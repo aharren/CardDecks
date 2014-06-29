@@ -155,6 +155,19 @@
     }
 }
 
++ (NSString *)stringFromDisplayStyle:(CDXCardDeckDisplayStyle)displayStyle {
+    switch (displayStyle) {
+        case CDXCardDeckDisplayStyleSideBySide:
+            return @"side-by-side,scroll";
+        case CDXCardDeckDisplayStyleStack:
+            return @"stacked,scroll";
+        case CDXCardDeckDisplayStyleSwipeStack:
+            return @"stacked,swipe";
+        default:
+            return [CDXCardDeckJSONSerializer stringFromDisplayStyle:CDXCardDeckDisplayStyleDefault];
+    }
+}
+
 + (CDXCardDeckPageControlStyle)pageControlStyleFromString:(NSString *)string defaultsTo:(CDXCardDeckPageControlStyle)defaultStyle {
     string = [string lowercaseString];
     if ([@"dark" isEqualToString:string]) {

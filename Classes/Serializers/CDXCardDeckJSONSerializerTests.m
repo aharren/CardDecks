@@ -225,6 +225,22 @@
     XCTAssertEqual(CDXCardDeckDisplayStyleSwipeStack, [CDXCardDeckJSONSerializer displayStyleFromString:@"?" defaultsTo:CDXCardDeckDisplayStyleSwipeStack]);
 }
 
+- (void)testDisplayStyleToString {
+    XCTAssertEqualObjects(@"side-by-side,scroll", [CDXCardDeckJSONSerializer stringFromDisplayStyle:CDXCardDeckDisplayStyleSideBySide]);
+    XCTAssertEqualObjects(@"stacked,scroll", [CDXCardDeckJSONSerializer stringFromDisplayStyle:CDXCardDeckDisplayStyleStack]);
+    XCTAssertEqualObjects(@"stacked,swipe", [CDXCardDeckJSONSerializer stringFromDisplayStyle:CDXCardDeckDisplayStyleSwipeStack]);
+    XCTAssertEqualObjects(@"side-by-side,scroll", [CDXCardDeckJSONSerializer stringFromDisplayStyle:CDXCardDeckDisplayStyleCount]);
+}
+
+- (void)testDisplayStyleToFromString {
+    for (CDXCardDeckDisplayStyle i = (CDXCardDeckDisplayStyle) 0; i < CDXCardDeckDisplayStyleCount; ++i) {
+        XCTAssertEqual(i, [CDXCardDeckJSONSerializer displayStyleFromString:[CDXCardDeckJSONSerializer stringFromDisplayStyle:i] defaultsTo:(CDXCardDeckDisplayStyle) 0]);
+        XCTAssertEqual(i, [CDXCardDeckJSONSerializer displayStyleFromString:[CDXCardDeckJSONSerializer stringFromDisplayStyle:i] defaultsTo:(CDXCardDeckDisplayStyle) 1]);
+    }
+    XCTAssertEqual(CDXCardDeckDisplayStyleDefault, [CDXCardDeckJSONSerializer displayStyleFromString:[CDXCardDeckJSONSerializer stringFromDisplayStyle:CDXCardDeckDisplayStyleCount] defaultsTo:(CDXCardDeckDisplayStyle) 0]);
+    XCTAssertEqual(CDXCardDeckDisplayStyleDefault, [CDXCardDeckJSONSerializer displayStyleFromString:[CDXCardDeckJSONSerializer stringFromDisplayStyle:CDXCardDeckDisplayStyleCount] defaultsTo:(CDXCardDeckDisplayStyle) 1]);
+}
+
 - (void)testPageControlStyleFromString {
     XCTAssertEqual(CDXCardDeckPageControlStyleLight, [CDXCardDeckJSONSerializer pageControlStyleFromString:@"light" defaultsTo:CDXCardDeckPageControlStyleDark]);
     XCTAssertEqual(CDXCardDeckPageControlStyleDark, [CDXCardDeckJSONSerializer pageControlStyleFromString:@"dark" defaultsTo:CDXCardDeckPageControlStyleLight]);
