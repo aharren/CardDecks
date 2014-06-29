@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeckJSONSerializer.h"
+#import "CDXOrderedSerializerDictionary.h"
 
 
 @implementation CDXCardDeckJSONSerializer
@@ -343,9 +344,9 @@
         cardDeck.autoPlay = [CDXCardDeckJSONSerializer autoPlayFromString:jstring defaultsTo:cardDeck.autoPlay];
     }
     // default_card
-    NSDictionary *jdefaultcard = [CDXCardDeckJSONSerializer dictionary:jdeck dictionaryForKey:@"default_card" defaultsTo:nil];
-    if (jdefaultcard != nil) {
-        CDXCard *card = [CDXCardDeckJSONSerializer cardFromDictionary:(NSDictionary *)jdefaultcard cardDeck:cardDeck];
+    NSDictionary *jcardDefaults = [CDXCardDeckJSONSerializer dictionary:jdeck dictionaryForKey:@"default_card" defaultsTo:nil];
+    if (jcardDefaults != nil) {
+        CDXCard *card = [CDXCardDeckJSONSerializer cardFromDictionary:(NSDictionary *)jcardDefaults cardDeck:cardDeck];
         cardDeck.cardDefaults = card;
     }
     // cards
@@ -361,9 +362,80 @@
     return cardDeck;
 }
 
++ (NSDictionary *)version2DictionaryFromCard:(CDXCard *)card cardDefaults:(CDXCard *)cardDefaults {
+    NSMutableDictionary *dictionary = [[[CDXOrderedSerializerDictionary alloc] init] autorelease];
+    // text
+    if (!cardDefaults || ![card.text isEqualToString:cardDefaults.text]) {
+        [dictionary setObject:card.text forKey:@"text"];
+    }
+    // text_color
+    if (!cardDefaults || ![card.textColor isEqual:cardDefaults.textColor]) {
+        [dictionary setObject:[card.textColor rgbaString] forKey:@"text_color"];
+    }
+    // background_color
+    if (!cardDefaults || ![card.backgroundColor isEqual:cardDefaults.backgroundColor]) {
+        [dictionary setObject:[card.backgroundColor rgbaString] forKey:@"background_color"];
+    }
+    // orientation
+    if (!cardDefaults || card.orientation != cardDefaults.orientation) {
+        [dictionary setObject:[CDXCardDeckJSONSerializer stringFromCardOrientation:card.orientation] forKey:@"orientation"];
+    }
+    // font_size
+    if (!cardDefaults || card.fontSize != cardDefaults.fontSize) {
+        [dictionary setObject:@((NSUInteger)card.fontSize) forKey:@"font_size"];
+    }
+    // timer
+    if (!cardDefaults || card.timerInterval != cardDefaults.timerInterval) {
+        [dictionary setObject:@((NSUInteger)card.timerInterval) forKey:@"timer"];
+    }
+    
+    return dictionary;
+}
+
++ (NSDictionary *)version2DictionaryFromCardDeck:(CDXCardDeck *)cardDeck {
+    NSMutableDictionary *dictionary = [[[CDXOrderedSerializerDictionary alloc] init] autorelease];
+    
+    // name
+    [dictionary setObject:cardDeck.name forKey:@"name"];
+    // group_size
+    [dictionary setObject:@(cardDeck.groupSize) forKey:@"group_size"];
+    // deck_style
+    [dictionary setObject:[CDXCardDeckJSONSerializer stringFromDisplayStyle:cardDeck.displayStyle] forKey:@"deck_style"];
+    // corner_style
+    [dictionary setObject:[CDXCardDeckJSONSerializer stringFromCornerStyle:cardDeck.cornerStyle] forKey:@"corner_style"];
+    // index_dots
+    [dictionary setObject:[CDXCardDeckJSONSerializer stringOnOffFromBool:cardDeck.wantsPageControl] forKey:@"index_dots"];
+    // index_style
+    [dictionary setObject:[CDXCardDeckJSONSerializer stringFromPageControlStyle:cardDeck.pageControlStyle] forKey:@"index_style"];
+    // index_touches
+    [dictionary setObject:[CDXCardDeckJSONSerializer stringOnOffFromBool:cardDeck.wantsPageJumps] forKey:@"index_touches"];
+    // auto_rotate
+    [dictionary setObject:[CDXCardDeckJSONSerializer stringOnOffFromBool:cardDeck.wantsAutoRotate] forKey:@"auto_rotate"];
+    // shake
+    [dictionary setObject:[CDXCardDeckJSONSerializer stringFromShakeAction:cardDeck.shakeAction] forKey:@"shake"];
+    // auto_play
+    [dictionary setObject:[CDXCardDeckJSONSerializer stringFromAutoPlay:cardDeck.autoPlay] forKey:@"auto_play"];
+    
+    // default_card
+    CDXCard *cardDefaults = cardDeck.cardDefaults;
+    [dictionary setObject:[CDXCardDeckJSONSerializer version2DictionaryFromCard:cardDefaults cardDefaults:nil] forKey:@"default_card"];
+    
+    // cards
+    NSUInteger cardsCount = [cardDeck cardsCount];
+    NSMutableArray *cards = [NSMutableArray arrayWithCapacity:cardsCount];
+    for (NSUInteger i=0; i < cardsCount; i++) {
+        [cards addObject:[CDXCardDeckJSONSerializer version2DictionaryFromCard:[cardDeck cardAtCardsIndex:i] cardDefaults:cardDefaults]];
+    }
+    [dictionary setObject:cards forKey:@"cards"];
+    
+    return dictionary;
+}
+
 + (NSString *)version2StringFromCardDeck:(CDXCardDeck *)cardDeck {
-    // no serialization; only deserialization for now
-    return nil;
+    NSDictionary *dictionary = [CDXCardDeckJSONSerializer version2DictionaryFromCardDeck:cardDeck];
+    NSError *error = nil;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:&error];
+    return [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
 }
 
 @end

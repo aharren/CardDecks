@@ -314,5 +314,62 @@
     XCTAssertEqual(CDXCardDeckAutoPlayDefault, [CDXCardDeckJSONSerializer autoPlayFromString:[CDXCardDeckJSONSerializer stringFromAutoPlay:CDXCardDeckAutoPlayCount] defaultsTo:(CDXCardDeckAutoPlay) 1]);
 }
 
+- (void)testVersion2StringFromCardDeck {
+    NSString *string = [self stringFromFile:@"CDXCardDeckJSONSerializerTestsDeck1.carddeck.json"];
+    CDXCardDeck *deck = [CDXCardDeckJSONSerializer cardDeckFromVersion2String:string];
+    
+    NSString *expected = @""
+    @"{"
+    @"\n  \"name\" : \"numbers\","
+    @"\n  \"group_size\" : 1,"
+    @"\n  \"deck_style\" : \"stacked,swipe\","
+    @"\n  \"corner_style\" : \"rounded\","
+    @"\n  \"index_dots\" : \"on\","
+    @"\n  \"index_style\" : \"light\","
+    @"\n  \"index_touches\" : \"on\","
+    @"\n  \"auto_rotate\" : \"on\","
+    @"\n  \"shake\" : \"shuffle\","
+    @"\n  \"auto_play\" : \"play1x\","
+    @"\n  \"default_card\" : {"
+    @"\n    \"text\" : \"default\","
+    @"\n    \"text_color\" : \"f8f8f8f8\","
+    @"\n    \"background_color\" : \"08080808\","
+    @"\n    \"orientation\" : \"up\","
+    @"\n    \"font_size\" : 1,"
+    @"\n    \"timer\" : 2"
+    @"\n  },"
+    @"\n  \"cards\" : ["
+    @"\n    {"
+    @"\n      \"text\" : \"ok1\","
+    @"\n      \"text_color\" : \"12345678\","
+    @"\n      \"background_color\" : \"17654328\","
+    @"\n      \"orientation\" : \"left\","
+    @"\n      \"font_size\" : 50,"
+    @"\n      \"timer\" : 100"
+    @"\n    },"
+    @"\n    {"
+    @"\n      \"text\" : \"bad1\","
+    @"\n      \"font_size\" : 100,"
+    @"\n      \"timer\" : 1"
+    @"\n    },"
+    @"\n    {"
+    @"\n"
+    @"\n    },"
+    @"\n    {"
+    @"\n      \"text\" : \"bad3\","
+    @"\n      \"font_size\" : 100,"
+    @"\n      \"timer\" : 3600"
+    @"\n    },"
+    @"\n    {"
+    @"\n"
+    @"\n    }"
+    @"\n  ]"
+    @"\n}";
+    
+    XCTAssertEqualObjects(expected, [CDXCardDeckJSONSerializer version2StringFromCardDeck:deck]);
+
+    XCTAssertEqualObjects(expected, [CDXCardDeckJSONSerializer version2StringFromCardDeck:[CDXCardDeckJSONSerializer cardDeckFromVersion2String:expected]]);
+}
+
 @end
 
