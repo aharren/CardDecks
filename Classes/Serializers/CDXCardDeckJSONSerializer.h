@@ -41,6 +41,8 @@
 + (NSString *)stringOnOffFromBool:(BOOL)value;
 
 + (CDXCardOrientation)cardOrientationFromString:(NSString *)string defaultsTo:(CDXCardOrientation)defaultOrientation;
++ (NSString *)stringFromCardOrientation:(CDXCardOrientation)cardOrientation;
+
 + (CDXCardCornerStyle)cornerStyleFromString:(NSString *)string defaultsTo:(CDXCardCornerStyle)defaultStyle;
 + (CDXCardDeckDisplayStyle)displayStyleFromString:(NSString *)string defaultsTo:(CDXCardDeckDisplayStyle)defaultStyle;
 + (CDXCardDeckPageControlStyle)pageControlStyleFromString:(NSString *)string defaultsTo:(CDXCardDeckPageControlStyle)defaultStyle;

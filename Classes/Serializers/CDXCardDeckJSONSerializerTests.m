@@ -176,6 +176,23 @@
     XCTAssertEqual(CDXCardOrientationDown, [CDXCardDeckJSONSerializer cardOrientationFromString:@"?" defaultsTo:CDXCardOrientationDown]);
 }
 
+- (void)testCardOrientationToString {
+    XCTAssertEqualObjects(@"up", [CDXCardDeckJSONSerializer stringFromCardOrientation:CDXCardOrientationUp]);
+    XCTAssertEqualObjects(@"down", [CDXCardDeckJSONSerializer stringFromCardOrientation:CDXCardOrientationDown]);
+    XCTAssertEqualObjects(@"left", [CDXCardDeckJSONSerializer stringFromCardOrientation:CDXCardOrientationLeft]);
+    XCTAssertEqualObjects(@"right", [CDXCardDeckJSONSerializer stringFromCardOrientation:CDXCardOrientationRight]);
+    XCTAssertEqualObjects(@"up", [CDXCardDeckJSONSerializer stringFromCardOrientation:CDXCardOrientationCount]);
+}
+
+- (void)testCardOrientationToFromString {
+    for (CDXCardOrientation i = (CDXCardOrientation) 0; i < CDXCardOrientationCount; ++i) {
+        XCTAssertEqual(i, [CDXCardDeckJSONSerializer cardOrientationFromString:[CDXCardDeckJSONSerializer stringFromCardOrientation:i] defaultsTo:(CDXCardOrientation) 0]);
+        XCTAssertEqual(i, [CDXCardDeckJSONSerializer cardOrientationFromString:[CDXCardDeckJSONSerializer stringFromCardOrientation:i] defaultsTo:(CDXCardOrientation) 1]);
+    }
+    XCTAssertEqual(CDXCardOrientationDefault, [CDXCardDeckJSONSerializer cardOrientationFromString:[CDXCardDeckJSONSerializer stringFromCardOrientation:CDXCardOrientationCount] defaultsTo:(CDXCardOrientation) 0]);
+    XCTAssertEqual(CDXCardOrientationDefault, [CDXCardDeckJSONSerializer cardOrientationFromString:[CDXCardDeckJSONSerializer stringFromCardOrientation:CDXCardOrientationCount] defaultsTo:(CDXCardOrientation) 1]);
+}
+
 - (void)testCornerStyleFromString {
     XCTAssertEqual(CDXCardCornerStyleCornered, [CDXCardDeckJSONSerializer cornerStyleFromString:@"cornered" defaultsTo:CDXCardCornerStyleRounded]);
     XCTAssertEqual(CDXCardCornerStyleRounded, [CDXCardDeckJSONSerializer cornerStyleFromString:@"rounded" defaultsTo:CDXCardCornerStyleCornered]);

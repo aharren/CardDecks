@@ -105,6 +105,21 @@
     }
 }
 
++ (NSString *)stringFromCardOrientation:(CDXCardOrientation)cardOrientation {
+    switch (cardOrientation) {
+        case CDXCardOrientationRight:
+            return @"right";
+        case CDXCardOrientationDown:
+            return @"down";
+        case CDXCardOrientationLeft:
+            return @"left";
+        case CDXCardOrientationUp:
+            return @"up";
+        default:
+            return [CDXCardDeckJSONSerializer stringFromCardOrientation:CDXCardOrientationDefault];
+    }
+}
+
 + (CDXCardCornerStyle)cornerStyleFromString:(NSString *)string defaultsTo:(CDXCardCornerStyle)defaultStyle {
     string = [string lowercaseString];
     if ([@"cornered" isEqualToString:string]) {
