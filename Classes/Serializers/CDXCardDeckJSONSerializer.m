@@ -229,6 +229,19 @@
     }
 }
 
++ (NSString *)stringFromAutoPlay:(CDXCardDeckAutoPlay)autoPlay {
+    switch (autoPlay) {
+        case CDXCardDeckAutoPlayOff:
+            return @"off";
+        case CDXCardDeckAutoPlayPlay:
+            return @"play1x";
+        case CDXCardDeckAutoPlayPlay2:
+            return @"play5x";
+        default:
+            return [CDXCardDeckJSONSerializer stringFromAutoPlay:CDXCardDeckAutoPlayDefault];
+    }
+}
+
 + (CDXCard *)cardFromDictionary:(NSDictionary *)jcard cardDeck:(CDXCardDeck *)cardDeck {
     NSString *jstring = nil;
     NSNumber *jnumber = nil;

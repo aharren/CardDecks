@@ -298,5 +298,21 @@
     XCTAssertEqual(CDXCardDeckAutoPlayPlay, [CDXCardDeckJSONSerializer autoPlayFromString:@"?" defaultsTo:CDXCardDeckAutoPlayPlay]);
 }
 
+- (void)testAutoPlayToString {
+    XCTAssertEqualObjects(@"off", [CDXCardDeckJSONSerializer stringFromAutoPlay:CDXCardDeckAutoPlayOff]);
+    XCTAssertEqualObjects(@"play1x", [CDXCardDeckJSONSerializer stringFromAutoPlay:CDXCardDeckAutoPlayPlay]);
+    XCTAssertEqualObjects(@"play5x", [CDXCardDeckJSONSerializer stringFromAutoPlay:CDXCardDeckAutoPlayPlay2]);
+    XCTAssertEqualObjects(@"off", [CDXCardDeckJSONSerializer stringFromAutoPlay:CDXCardDeckAutoPlayCount]);
+}
+
+- (void)testAutoPlayToFromString {
+    for (CDXCardDeckAutoPlay i = (CDXCardDeckAutoPlay) 0; i < CDXCardDeckAutoPlayCount; ++i) {
+        XCTAssertEqual(i, [CDXCardDeckJSONSerializer autoPlayFromString:[CDXCardDeckJSONSerializer stringFromAutoPlay:i] defaultsTo:(CDXCardDeckAutoPlay) 0]);
+        XCTAssertEqual(i, [CDXCardDeckJSONSerializer autoPlayFromString:[CDXCardDeckJSONSerializer stringFromAutoPlay:i] defaultsTo:(CDXCardDeckAutoPlay) 1]);
+    }
+    XCTAssertEqual(CDXCardDeckAutoPlayDefault, [CDXCardDeckJSONSerializer autoPlayFromString:[CDXCardDeckJSONSerializer stringFromAutoPlay:CDXCardDeckAutoPlayCount] defaultsTo:(CDXCardDeckAutoPlay) 0]);
+    XCTAssertEqual(CDXCardDeckAutoPlayDefault, [CDXCardDeckJSONSerializer autoPlayFromString:[CDXCardDeckJSONSerializer stringFromAutoPlay:CDXCardDeckAutoPlayCount] defaultsTo:(CDXCardDeckAutoPlay) 1]);
+}
+
 @end
 

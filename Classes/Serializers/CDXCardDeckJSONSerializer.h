@@ -56,6 +56,7 @@
 + (NSString *)stringFromShakeAction:(CDXCardDeckShakeAction)shakeAction;
 
 + (CDXCardDeckAutoPlay)autoPlayFromString:(NSString *)string defaultsTo:(CDXCardDeckAutoPlay)defaultAutoPlay;
++ (NSString *)stringFromAutoPlay:(CDXCardDeckAutoPlay)autoPlay;
 
 @end
 
