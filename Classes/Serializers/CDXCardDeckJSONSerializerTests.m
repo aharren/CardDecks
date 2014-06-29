@@ -249,6 +249,21 @@
     XCTAssertEqual(CDXCardDeckPageControlStyleLight, [CDXCardDeckJSONSerializer pageControlStyleFromString:@"?" defaultsTo:CDXCardDeckPageControlStyleLight]);
 }
 
+- (void)testPageControlStyleToString {
+    XCTAssertEqualObjects(@"light", [CDXCardDeckJSONSerializer stringFromPageControlStyle:CDXCardDeckPageControlStyleLight]);
+    XCTAssertEqualObjects(@"dark", [CDXCardDeckJSONSerializer stringFromPageControlStyle:CDXCardDeckPageControlStyleDark]);
+    XCTAssertEqualObjects(@"light", [CDXCardDeckJSONSerializer stringFromPageControlStyle:CDXCardDeckPageControlStyleCount]);
+}
+
+- (void)testPageControlStyleToFromString {
+    for (CDXCardDeckPageControlStyle i = (CDXCardDeckPageControlStyle) 0; i < CDXCardDeckPageControlStyleCount; ++i) {
+        XCTAssertEqual(i, [CDXCardDeckJSONSerializer pageControlStyleFromString:[CDXCardDeckJSONSerializer stringFromPageControlStyle:i] defaultsTo:(CDXCardDeckPageControlStyle) 0]);
+        XCTAssertEqual(i, [CDXCardDeckJSONSerializer pageControlStyleFromString:[CDXCardDeckJSONSerializer stringFromPageControlStyle:i] defaultsTo:(CDXCardDeckPageControlStyle) 1]);
+    }
+    XCTAssertEqual(CDXCardDeckPageControlStyleDefault, [CDXCardDeckJSONSerializer pageControlStyleFromString:[CDXCardDeckJSONSerializer stringFromPageControlStyle:CDXCardDeckPageControlStyleCount] defaultsTo:(CDXCardDeckPageControlStyle) 0]);
+    XCTAssertEqual(CDXCardDeckPageControlStyleDefault, [CDXCardDeckJSONSerializer pageControlStyleFromString:[CDXCardDeckJSONSerializer stringFromPageControlStyle:CDXCardDeckPageControlStyleCount] defaultsTo:(CDXCardDeckPageControlStyle) 1]);
+}
+
 - (void)testShakeActionFromString {
     XCTAssertEqual(CDXCardDeckShakeActionNone, [CDXCardDeckJSONSerializer shakeActionFromString:@"off" defaultsTo:CDXCardDeckShakeActionRandom]);
     XCTAssertEqual(CDXCardDeckShakeActionRandom, [CDXCardDeckJSONSerializer shakeActionFromString:@"random" defaultsTo:CDXCardDeckShakeActionNone]);

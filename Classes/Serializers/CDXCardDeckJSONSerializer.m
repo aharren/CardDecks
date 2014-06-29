@@ -179,6 +179,17 @@
     }
 }
 
++ (NSString *)stringFromPageControlStyle:(CDXCardDeckPageControlStyle)pageControlStyle {
+    switch (pageControlStyle) {
+        case CDXCardDeckPageControlStyleDark:
+            return @"dark";
+        case CDXCardDeckPageControlStyleLight:
+            return @"light";
+        default:
+            return [CDXCardDeckJSONSerializer stringFromPageControlStyle:CDXCardDeckPageControlStyleDefault];
+    }
+}
+
 + (CDXCardDeckShakeAction)shakeActionFromString:(NSString *)string defaultsTo:(CDXCardDeckShakeAction)defaultAction {
     string = [string lowercaseString];
     if ([@"off" isEqualToString:string]) {

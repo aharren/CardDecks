@@ -50,6 +50,8 @@
 + (NSString *)stringFromDisplayStyle:(CDXCardDeckDisplayStyle)displayStyle;
 
 + (CDXCardDeckPageControlStyle)pageControlStyleFromString:(NSString *)string defaultsTo:(CDXCardDeckPageControlStyle)defaultStyle;
++ (NSString *)stringFromPageControlStyle:(CDXCardDeckPageControlStyle)pageControlStyle;
+
 + (CDXCardDeckShakeAction)shakeActionFromString:(NSString *)string defaultsTo:(CDXCardDeckShakeAction)defaultAction;
 + (CDXCardDeckAutoPlay)autoPlayFromString:(NSString *)string defaultsTo:(CDXCardDeckAutoPlay)defaultAutoPlay;
 
