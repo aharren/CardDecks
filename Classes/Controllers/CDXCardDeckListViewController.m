@@ -108,7 +108,7 @@
     BOOL otherGroup = NO;
     if (indexPath.section == 1) {
         NSUInteger groupSize = [cardDeck groupSize];
-        if (groupSize > 0 && (indexPath.row / groupSize) % 2 == 0) {
+        if (groupSize > 0 && (indexPath.row / groupSize) % 2 == 1) {
             otherGroup = YES;
         }
     }
