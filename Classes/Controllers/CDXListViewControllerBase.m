@@ -63,8 +63,8 @@
     ivar_release_and_clear(tableCellTextTextColorActionInactive);
     ivar_release_and_clear(tableCellDetailTextFont);
     ivar_release_and_clear(tableCellDetailTextTextColor);
-    ivar_release_and_clear(tableCellBackgroundImage);
-    ivar_release_and_clear(tableCellBackgroundImageAlt);
+    ivar_release_and_clear(tableCellBackgroundColor);
+    ivar_release_and_clear(tableCellBackgroundColorAlt);
     ivar_release_and_clear(viewTableViewLongPressRecognizer);
     ivar_release_and_clear(viewToolbarLongPressRecognizer);
     ivar_release_and_clear(viewTableViewTapRecognizer);
@@ -114,10 +114,8 @@
     ivar_assign_and_retain(tableCellTextTextColorActionInactive, [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]);
     ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:10]);
     ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor grayColor]);
-    CGFloat rowHeight = viewTableView.rowHeight;
-    CGFloat base = 1.0;
-    ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:rowHeight base:base]);
-    ivar_assign_and_retain(tableCellBackgroundImageAlt, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff] bottomColor:[CDXColor colorWithRed:0xe8 green:0xe8 blue:0xe8 alpha:0xff] height:rowHeight base:base]);
+    ivar_assign_and_retain(tableCellBackgroundColor, [UIColor whiteColor]);
+    ivar_assign_and_retain(tableCellBackgroundColorAlt, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff].uiColor);
     tableCellImageSize = CGSizeMake(10, 10);
     
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
@@ -223,14 +221,12 @@
         UIColor *backgroundColor = [UIColor clearColor];
         cell.textLabel.backgroundColor = backgroundColor;
         cell.detailTextLabel.backgroundColor = backgroundColor;
-        cell.backgroundColor = backgroundColor;
-        cell.backgroundView = [[[UIImageView alloc] initWithImage:marked ? tableCellBackgroundImageAlt : tableCellBackgroundImage] autorelease];
+        cell.backgroundColor = marked ? tableCellBackgroundColorAlt : tableCellBackgroundColor;
     } else {
         UIColor *backgroundColor = [UIColor whiteColor];
         cell.textLabel.backgroundColor = backgroundColor;
         cell.detailTextLabel.backgroundColor = backgroundColor;
-        cell.backgroundColor = backgroundColor;
-        cell.backgroundView = nil;
+        cell.backgroundColor = tableCellBackgroundColor;
     }
 }
 

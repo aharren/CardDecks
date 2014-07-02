@@ -105,7 +105,7 @@
                 cell.textLabel.font = tableCellTextFont;
                 cell.detailTextLabel.font = tableCellDetailTextFont;
                 cell.detailTextLabel.textColor = tableCellDetailTextTextColor;
-                cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
+                cell.backgroundColor = tableCellBackgroundColor;
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
             }
@@ -118,7 +118,7 @@
                 cell.textLabel.font = tableCellTextFontAction;
                 cell.textLabel.textAlignment = NSTextAlignmentCenter;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
+                cell.backgroundColor = tableCellBackgroundColor;
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
                 cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
             }

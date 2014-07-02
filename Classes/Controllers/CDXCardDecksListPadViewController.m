@@ -54,8 +54,6 @@
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
-    CGFloat rowHeight = viewTableView.rowHeight;
-    ivar_assign_and_retain(tableCellBackgroundImageAlt, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWithRed:0xd9 green:0xd9 blue:0xd9 alpha:0xff] bottomColor:[CDXColor colorWithRed:0xd9 green:0xd9 blue:0xd9 alpha:0xff] height:rowHeight base:1]);
 }
 
 - (void)viewDidUnload {

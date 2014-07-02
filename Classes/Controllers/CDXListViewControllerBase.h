@@ -55,8 +55,8 @@ typedef enum {
     UIColor *tableCellTextTextColorActionInactive;
     UIFont *tableCellDetailTextFont;
     UIColor *tableCellDetailTextTextColor;
-    UIImage *tableCellBackgroundImage;
-    UIImage *tableCellBackgroundImageAlt;
+    UIColor *tableCellBackgroundColor;
+    UIColor *tableCellBackgroundColorAlt;
     CGSize tableCellImageSize;
     
     NSString *titleText;
