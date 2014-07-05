@@ -424,6 +424,8 @@
             // paste is only possible if the pasteboard contains a "valid" URL
             NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
             return [CDXAppURL mayBeCardDecksURLString:carddeckUrl];
+        } else if (action == @selector(addButtonPressed)) {
+            return YES;
         } else {
             return NO;
         }
@@ -450,6 +452,13 @@
         } else {
             return;
         }
+    }
+}
+
+- (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem {
+    if (barButtonItem == addButton) {
+        UIMenuItem *menuItemNew = [[UIMenuItem alloc] initWithTitle:@"New" action:@selector(addButtonPressed)];
+        menuController.menuItems = @[menuItemNew];
     }
 }
 
