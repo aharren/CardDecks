@@ -186,7 +186,7 @@
 - (void)pushCardDeckCardViewController {
     CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
     keepViewTableViewContentOffsetY = YES;
-    [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES withTouchLocation:currentTouchLocationInWindow];
     
     [viewTableView deselectRowAtIndexPath:[viewTableView indexPathForSelectedRow] animated:YES];
     [self performBlockingSelectorEnd];

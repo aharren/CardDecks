@@ -197,7 +197,7 @@
             CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
             CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:context] autorelease];
             keepViewTableViewContentOffsetY = YES;
-            [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+            [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES withTouchLocation:currentTouchLocationInWindow];
         }
     }
     

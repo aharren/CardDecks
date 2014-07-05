@@ -71,6 +71,8 @@ typedef enum {
     CDXListViewControllerBasePerformActionState performActionState;
     NSIndexPath *performActionTableViewIndexPath;
     UIBarButtonItem *performActionToolbarBarButtonItem;
+    
+    CGPoint currentTouchLocationInWindow;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)titleText backButtonText:(NSString *)backButtonText;

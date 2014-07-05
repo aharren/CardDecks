@@ -348,7 +348,8 @@
     qltrace();
     UITouch *touch = [touches anyObject];
     if ([touch tapCount] == closeTapCount) {
-        [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES];
+        CGPoint location = [touch locationInView:[CDXAppWindowManager sharedAppWindowManager].window];
+        [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES withTouchLocation:location];
     }
 }
 

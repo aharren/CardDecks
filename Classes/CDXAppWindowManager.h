@@ -48,7 +48,9 @@ declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 
 - (UIViewController *)visibleViewController;
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated;
+- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location;
 - (void)popViewControllerAnimated:(BOOL)animated;
+- (void)popViewControllerAnimated:(BOOL)animated withTouchLocation:(CGPoint)location;
 - (void)popToInitialViewController;
 - (void)makeWindowKeyAndVisible;
 - (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation view:(UIView*)viewOrNil;

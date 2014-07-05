@@ -362,6 +362,9 @@
 
 - (void)handleTableViewTapGesture:(UITapGestureRecognizer *)sender {
     qltrace(@"%@", sender);
+    currentTouchLocationInWindow = [sender locationInView:self.view];
+    qltrace(@"location %f %f", currentTouchLocationInWindow.x, currentTouchLocationInWindow.y);
+
     NSIndexPath *indexPath = [viewTableView indexPathForRowAtPoint:[sender locationInView:viewTableView]];
     UITableViewCell *cell = [viewTableView cellForRowAtIndexPath:indexPath];
     

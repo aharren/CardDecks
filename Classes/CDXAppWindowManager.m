@@ -56,9 +56,19 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
     qltrace();
+    [self pushViewController:viewController animated:animated withTouchLocation:CGPointMake(window.bounds.size.width,window.bounds.size.height)];
+}
+
+- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location {
+    qltrace();
 }
 
 - (void)popViewControllerAnimated:(BOOL)animated {
+    qltrace();
+    [self popViewControllerAnimated:animated withTouchLocation:CGPointMake(window.bounds.size.width,window.bounds.size.height)];
+}
+
+- (void)popViewControllerAnimated:(BOOL)animated withTouchLocation:(CGPoint)location {
     qltrace();
 }
 
@@ -179,13 +189,17 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     [fullScreenViewController setUserInteractionEnabled:YES];
 }
 
-- (void)pushFullScreenViewControllerAnimatedAndRemoveView:(UIView *)view {
+- (void)pushFullScreenViewControllerAnimatedAndRemoveView:(NSArray *)data {
     qltrace();
+    
+    UIView *view = data[0];
+    NSNumber *location_x = data[1];
 
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.6];
-    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:window cache:YES];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    UIViewAnimationTransition transition = (location_x.floatValue > window.bounds.size.width / 2) ? UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight;
+    [UIView setAnimationTransition:transition forView:window cache:YES];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationWillStartSelector:@selector(pushFullScreenViewControllerAnimationWillStart:context:)];
     [UIView setAnimationDidStopSelector:@selector(pushFullScreenViewControllerAnimationDidStop:finished:context:)];
@@ -199,7 +213,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
 }
 
-- (void)pushFullScreenViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
+- (void)pushFullScreenViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location {
     ivar_assign_and_retain(fullScreenViewController, viewController);
     [fullScreenViewController setUserInteractionEnabled:!animated];
     if (animated) {
@@ -208,9 +222,9 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
             UIImageView *screenshotView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForScreen]] autorelease];
             [navigationView removeFromSuperview];
             [window addSubview:screenshotView];
-            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:screenshotView afterDelay:0.001];
+            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:@[screenshotView, @(location.x)] afterDelay:0.001];
         } else {
-            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:navigationView afterDelay:0.001];
+            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:@[navigationView, @(location.x)] afterDelay:0.001];
         }
     } else {
         [navigationView removeFromSuperview];
@@ -228,14 +242,16 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     navigationView.userInteractionEnabled = YES;
 }
 
-- (void)popFullScreenViewControllerAnimated:(BOOL)animated {
+- (void)popFullScreenViewControllerAnimated:(BOOL)animated withTouchLocation:(CGPoint)location {
+    qltrace(@"location %f %f", location.x, location.y);
     [fullScreenViewController setUserInteractionEnabled:NO];
     
     if (animated) {
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:0.6];
-        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:window cache:YES];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+        UIViewAnimationTransition transition =  (location.x > window.bounds.size.width / 2) ? UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight;
+        [UIView setAnimationTransition:transition forView:window cache:YES];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationWillStartSelector:@selector(popFullScreenViewControllerAnimationWillStart:context:)];
         [UIView setAnimationDidStopSelector:@selector(popFullScreenViewControllerAnimationDidStop:finished:context:)];
@@ -301,19 +317,19 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
 }
 
 
-- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
+- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location {
     qltrace();
     if ([viewController respondsToSelector:@selector(requiresFullScreenLayout)] && [viewController requiresFullScreenLayout]) {
-        [self pushFullScreenViewController:viewController animated:animated];
+        [self pushFullScreenViewController:viewController animated:animated withTouchLocation:(CGPoint)location];
     } else {
         [navigationController pushViewController:viewController animated:animated];
     }
 }
 
-- (void)popViewControllerAnimated:(BOOL)animated {
+- (void)popViewControllerAnimated:(BOOL)animated withTouchLocation:(CGPoint)location {
     qltrace();
     if (fullScreenViewController != nil) {
-        [self popFullScreenViewControllerAnimated:animated];
+        [self popFullScreenViewControllerAnimated:animated withTouchLocation:location];
     } else {
         [navigationController popViewControllerAnimated:animated];
     }
@@ -489,14 +505,14 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     }
 }
 
-- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
+- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location {
     qltrace();
     if (initialLeftViewController == nil) {
         ivar_assign_and_retain(initialLeftViewController, viewController);
         [leftNavigationController pushViewController:viewController animated:NO];
     } else {
         if ([viewController respondsToSelector:@selector(requiresFullScreenLayout)] && [viewController requiresFullScreenLayout]) {
-            [self pushFullScreenViewController:viewController animated:animated];
+            [self pushFullScreenViewController:viewController animated:animated withTouchLocation:location];
         } else {
             if (initialRightViewController == nil) {
                 ivar_assign_and_retain(initialRightViewController, viewController);
@@ -506,10 +522,10 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     }
 }
 
-- (void)popViewControllerAnimated:(BOOL)animated {
+- (void)popViewControllerAnimated:(BOOL)animated withTouchLocation:(CGPoint)location {
     qltrace();
     if (fullScreenViewController != nil) {
-        [self popFullScreenViewControllerAnimated:animated];
+        [self popFullScreenViewControllerAnimated:animated withTouchLocation:location];
     } else {
         [rightNavigationController setViewControllers:@[initialRightViewController] animated:NO];
     }
