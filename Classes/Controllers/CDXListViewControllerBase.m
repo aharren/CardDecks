@@ -331,6 +331,12 @@
                 // find the corresponding bar-button item
                 for (UIBarButtonItem *item in [viewToolbar items]) {
                     if ([[(UIControl *)view allTargets] containsObject:item]) {
+                        if (!item.isEnabled) {
+                            // skip item if not enabled
+                            qltrace(@"item %@ is not enabled", item);
+                            return;
+                        }
+
                         // keep state
                         performActionState = CDXListViewControllerBasePerformActionStateToolbar;
                         ivar_assign_and_retain(performActionToolbarBarButtonItem, item);
