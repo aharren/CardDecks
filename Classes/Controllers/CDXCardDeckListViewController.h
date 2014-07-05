@@ -59,7 +59,7 @@
 @end
 
 
-@interface CDXCardDeckListViewControllerTextActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
+@interface CDXCardDeckListViewControllerURLTextActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
     
 @protected
     CDXCardDeckViewContext *cardDeckViewContext;
@@ -67,6 +67,18 @@
 }
 
 - (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
+
+@end
+
+
+@interface CDXCardDeckListViewControllerStringTextActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
+    
+@protected
+    NSString *text;
+    
+}
+
+- (instancetype)initWithString:(NSString *)text;
 
 @end
 

@@ -150,7 +150,7 @@
 }
 
 - (IBAction)actionButtonPressed {
-    CDXCardDeckListViewControllerTextActivityItemProvider *textItem = [[[CDXCardDeckListViewControllerTextActivityItemProvider alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
+    CDXCardDeckListViewControllerURLTextActivityItemProvider *textItem = [[[CDXCardDeckListViewControllerURLTextActivityItemProvider alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
     CDXCardDeckListViewControllerURLActivityItemProvider *urlItem = [[[CDXCardDeckListViewControllerURLActivityItemProvider alloc]  initWithCardDeckViewContext:cardDeckViewContext] autorelease];
     
     NSArray *items = @[textItem, urlItem];

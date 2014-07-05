@@ -429,6 +429,11 @@
             [self performAction:@selector(copy:) withSender:sender tableView:viewTableView indexPath:performActionTableViewIndexPath];
             return;
         }
+    } else if (performActionState == CDXListViewControllerBasePerformActionStateToolbar) {
+        if (performActionToolbarBarButtonItem != nil) {
+            [self performAction:@selector(copy:) withSender:sender barButtonItem:performActionToolbarBarButtonItem];
+            return;
+        }
     }
 }
 
