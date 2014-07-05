@@ -86,6 +86,8 @@ typedef enum {
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
 - (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
 
+- (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem;
+
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
 - (void)updateToolbarButtons;
 

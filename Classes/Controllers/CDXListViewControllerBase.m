@@ -339,6 +339,8 @@
                         [self becomeFirstResponder];
                         UIMenuController *menu = [UIMenuController sharedMenuController];
                         [menu setTargetRect:view.frame inView:sender.view];
+                        // add additional menu items, defined by subclass
+                        [self menu:menu itemsForBarButtonItem:item];
                         [menu setMenuVisible:YES animated:YES];
                         
                         return;
@@ -347,6 +349,9 @@
             }
         }
     }
+}
+
+- (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem {
 }
 
 - (void)handleTableViewTapGesture:(UITapGestureRecognizer *)sender {
