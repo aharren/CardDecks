@@ -38,7 +38,6 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)aTitleText backButtonText:(NSString *)aBackButtonText {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        useReducedGraphicsEffects = [[CDXDevice sharedDevice] useReducedGraphicsEffects];
         ivar_assign_and_copy(titleText, aTitleText);
         ivar_assign_and_copy(backButtonText, aBackButtonText);
         ivar_assign_and_retain(reuseIdentifierSection1, @"Section1Cell");
@@ -217,17 +216,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath  marked:(BOOL)marked {
-    if (marked || !useReducedGraphicsEffects) {
-        UIColor *backgroundColor = [UIColor clearColor];
-        cell.textLabel.backgroundColor = backgroundColor;
-        cell.detailTextLabel.backgroundColor = backgroundColor;
-        cell.backgroundColor = marked ? tableCellBackgroundColorAlt : tableCellBackgroundColor;
-    } else {
-        UIColor *backgroundColor = [UIColor whiteColor];
-        cell.textLabel.backgroundColor = backgroundColor;
-        cell.detailTextLabel.backgroundColor = backgroundColor;
-        cell.backgroundColor = tableCellBackgroundColor;
-    }
+    UIColor *backgroundColor = [UIColor clearColor];
+    cell.textLabel.backgroundColor = backgroundColor;
+    cell.detailTextLabel.backgroundColor = backgroundColor;
+    cell.backgroundColor = marked ? tableCellBackgroundColorAlt : tableCellBackgroundColor;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

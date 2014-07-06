@@ -40,7 +40,6 @@
 @synthesize deviceUIIdiomString;
 @synthesize deviceScreenScale;
 @synthesize deviceSystemVersionString;
-@synthesize useReducedGraphicsEffects;
 @synthesize useImageBasedRendering;
 
 synthesize_singleton(sharedDevice, CDXDevice);
@@ -64,7 +63,6 @@ static NSString* CDXDeviceGetSystemInformationByName(const char* name) {
 - (id)init {
     if ((self = [super init])) {
         deviceType = CDXDeviceTypeUnknown;
-        useReducedGraphicsEffects = NO;
         deviceScreenScale = [[UIScreen mainScreen] scale];
         ivar_assign_and_copy(deviceSystemVersionString, [[UIDevice currentDevice] systemVersion]);
         
@@ -99,14 +97,11 @@ static NSString* CDXDeviceGetSystemInformationByName(const char* name) {
             ivar_assign_and_copy(deviceUIIdiomString, @"phone");
         }
         
-        // use reduced graphics effects on devices with non-retina displays
-        useReducedGraphicsEffects = (deviceScreenScale <= 1.0);
-        
         // use image-based rendering on devices with non-retina displays, and
         // first-retina-generations of iPhone and iPod
         useImageBasedRendering = (deviceScreenScale <= 1.0) || ([deviceMachine hasPrefix:@"iphone3,"]) || ([deviceMachine hasPrefix:@"ipod4,"]);
         
-        qltrace(@"%@ %@ %d %d %f %@ %d %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, deviceSystemVersionString, useReducedGraphicsEffects ? 1 : 0, useImageBasedRendering ? 1 : 0);
+        qltrace(@"%@ %@ %d %d %f %@ %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, deviceSystemVersionString, useImageBasedRendering ? 1 : 0);
     }
     return self;
 }
