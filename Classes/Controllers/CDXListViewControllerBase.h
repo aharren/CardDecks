@@ -32,6 +32,11 @@ typedef enum {
     CDXListViewControllerBasePerformActionStateToolbar
 } CDXListViewControllerBasePerformActionState;
 
+typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
+    CDXTableViewCellTagMarked = 1 << 0,
+    CDXTableViewCellTagAltGroup = 1 << 1,
+    CDXTableViewCellTagNone = 0
+};
 
 @interface CDXListViewControllerBase : UIViewController<CDXAppWindowViewController> {
     
@@ -54,7 +59,8 @@ typedef enum {
     UIFont *tableCellDetailTextFont;
     UIColor *tableCellDetailTextTextColor;
     UIColor *tableCellBackgroundColor;
-    UIColor *tableCellBackgroundColorAlt;
+    UIColor *tableCellBackgroundColorAltGroup;
+    UIColor *tableCellBackgroundColorMarked;
     CGSize tableCellImageSize;
     
     NSString *titleText;
@@ -75,7 +81,6 @@ typedef enum {
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)titleText backButtonText:(NSString *)backButtonText;
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath marked:(BOOL)marked;
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;

@@ -66,7 +66,7 @@
     ivar_release_and_clear(navigationItem);
     ivar_release_and_clear(viewNoTableView);
     ivar_release_and_clear(tableCellBackgroundColor);
-    ivar_release_and_clear(tableCellBackgroundColorAlt);
+    ivar_release_and_clear(tableCellBackgroundColorAltGroup);
     [super viewDidUnload];
 }
 

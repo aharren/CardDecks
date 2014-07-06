@@ -105,18 +105,6 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    BOOL otherGroup = NO;
-    if (indexPath.section == 1) {
-        NSUInteger groupSize = [cardDeck groupSize];
-        if (groupSize > 0 && (indexPath.row / groupSize) % 2 == 1) {
-            otherGroup = YES;
-        }
-    }
-    
-    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath marked:otherGroup];
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
     switch (section) {
         default:
@@ -130,7 +118,6 @@
                 cell.textLabel.font = tableCellTextFont;
                 cell.textLabel.textColor = tableCellTextTextColor;
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-                cell.backgroundColor = tableCellBackgroundColor;
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
             }
@@ -143,7 +130,6 @@
                 cell.textLabel.font = tableCellTextFontAction;
                 cell.textLabel.textAlignment = NSTextAlignmentCenter;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                cell.backgroundColor = tableCellBackgroundColor;
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
                 cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
             }
@@ -165,6 +151,12 @@
             NSString *text = [card.text stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
             cell.textLabel.text = text;
             cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForColor:card.backgroundColor size:tableCellImageSize];
+            
+            NSInteger tag = 0;
+            NSUInteger groupSize = cardDeck.groupSize;
+            tag |= (groupSize > 0 && (indexPath.row / groupSize) % 2 == 1) ? CDXTableViewCellTagAltGroup : CDXTableViewCellTagNone;
+            cell.tag = tag;
+            
             return cell;
         }
         case 2: {

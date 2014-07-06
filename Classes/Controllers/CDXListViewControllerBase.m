@@ -63,7 +63,8 @@
     ivar_release_and_clear(tableCellDetailTextFont);
     ivar_release_and_clear(tableCellDetailTextTextColor);
     ivar_release_and_clear(tableCellBackgroundColor);
-    ivar_release_and_clear(tableCellBackgroundColorAlt);
+    ivar_release_and_clear(tableCellBackgroundColorMarked);
+    ivar_release_and_clear(tableCellBackgroundColorAltGroup);
     ivar_release_and_clear(viewTableViewLongPressRecognizer);
     ivar_release_and_clear(viewToolbarLongPressRecognizer);
     ivar_release_and_clear(viewTableViewTapRecognizer);
@@ -114,7 +115,8 @@
     ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:10]);
     ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor grayColor]);
     ivar_assign_and_retain(tableCellBackgroundColor, [UIColor whiteColor]);
-    ivar_assign_and_retain(tableCellBackgroundColorAlt, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff].uiColor);
+    ivar_assign_and_retain(tableCellBackgroundColorMarked, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff].uiColor);
+    ivar_assign_and_retain(tableCellBackgroundColorAltGroup, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff].uiColor);
     tableCellImageSize = CGSizeMake(10, 10);
     
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
@@ -215,15 +217,15 @@
     return 0;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath  marked:(BOOL)marked {
-    UIColor *backgroundColor = [UIColor clearColor];
-    cell.textLabel.backgroundColor = backgroundColor;
-    cell.detailTextLabel.backgroundColor = backgroundColor;
-    cell.backgroundColor = marked ? tableCellBackgroundColorAlt : tableCellBackgroundColor;
-}
-
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath marked:NO];
+    NSInteger tag = cell.tag;
+    UIColor *backgroundColor = tableCellBackgroundColor;
+    if (tag & CDXTableViewCellTagMarked) {
+        backgroundColor = tableCellBackgroundColorMarked;
+    } else if (tag & CDXTableViewCellTagAltGroup) {
+        backgroundColor = tableCellBackgroundColorAltGroup;
+    }
+    cell.backgroundColor = backgroundColor;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {

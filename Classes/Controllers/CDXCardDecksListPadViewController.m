@@ -102,7 +102,12 @@
     } else if (indexPath.section == 2) {
         selected = cardDecks.cardDeckDefaults == currentCardDeck;
     }
-    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath marked:selected];
+    NSInteger oldTag = cell.tag;
+    if (selected) {
+        cell.tag |= CDXTableViewCellTagMarked;
+    }
+    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
+    cell.tag = oldTag;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
