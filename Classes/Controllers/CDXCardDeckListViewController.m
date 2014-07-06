@@ -155,6 +155,7 @@
             NSInteger tag = 0;
             NSUInteger groupSize = cardDeck.groupSize;
             tag |= (groupSize > 0 && (indexPath.row / groupSize) % 2 == 1) ? CDXTableViewCellTagAltGroup : CDXTableViewCellTagNone;
+            tag |= (card.tag == currentTag) ? CDXTableViewCellTagNewObject : CDXTableViewCellTagNone;
             cell.tag = tag;
             
             return cell;
@@ -269,6 +270,9 @@
     qltrace();
     if ([cards count] == 0) {
         return;
+    }
+    for (CDXCard *card in cards) {
+        card.tag = currentTag;
     }
     
     NSUInteger startrow = [cardDeck cardsCount];

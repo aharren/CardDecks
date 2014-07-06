@@ -40,6 +40,7 @@
 @synthesize file;
 @synthesize thumbnailColor;
 @synthesize cardsCount;
+@synthesize tag;
 
 - (id)init {
     qltrace();
@@ -49,6 +50,7 @@
         ivar_assign_and_copy(name, @"");
         ivar_assign_and_copy(description, @"");
         ivar_assign_and_copy(file, [CDXStorage fileWithSuffix:@".CardDeck"]);
+        tag = 0;
     }
     return self;
 }
@@ -62,6 +64,7 @@
         ivar_assign_and_copy(description, @"");
         ivar_assign_and_copy(file, [CDXStorage fileWithSuffix:@".CardDeck"]);
         
+        tag = 0;
         [cardDeck linkBase:self];
     }
     return self;

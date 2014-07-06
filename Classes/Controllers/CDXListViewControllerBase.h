@@ -35,6 +35,7 @@ typedef enum {
 typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
     CDXTableViewCellTagMarked = 1 << 0,
     CDXTableViewCellTagAltGroup = 1 << 1,
+    CDXTableViewCellTagNewObject = 1 << 2,
     CDXTableViewCellTagNone = 0
 };
 
@@ -61,6 +62,8 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
     UIColor *tableCellBackgroundColor;
     UIColor *tableCellBackgroundColorAltGroup;
     UIColor *tableCellBackgroundColorMarked;
+    UIColor *tableCellBackgroundColorNewObject;
+    UIColor *tableCellBackgroundColorNewObjectAltGroup;
     CGSize tableCellImageSize;
     
     NSString *titleText;
@@ -77,6 +80,7 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
     UIBarButtonItem *performActionToolbarBarButtonItem;
     
     CGPoint currentTouchLocationInWindow;
+    NSUInteger currentTag;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)titleText backButtonText:(NSString *)backButtonText;

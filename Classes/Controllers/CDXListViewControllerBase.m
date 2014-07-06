@@ -43,6 +43,7 @@
         ivar_assign_and_retain(reuseIdentifierSection1, @"Section1Cell");
         ivar_assign_and_retain(reuseIdentifierSection2, @"Section2Cell");
         performActionState = CDXListViewControllerBasePerformActionStateNone;
+        currentTag = 1;
     }
     return self;
 }
@@ -65,6 +66,8 @@
     ivar_release_and_clear(tableCellBackgroundColor);
     ivar_release_and_clear(tableCellBackgroundColorMarked);
     ivar_release_and_clear(tableCellBackgroundColorAltGroup);
+    ivar_release_and_clear(tableCellBackgroundColorNewObject);
+    ivar_release_and_clear(tableCellBackgroundColorNewObjectAltGroup);
     ivar_release_and_clear(viewTableViewLongPressRecognizer);
     ivar_release_and_clear(viewToolbarLongPressRecognizer);
     ivar_release_and_clear(viewTableViewTapRecognizer);
@@ -117,6 +120,8 @@
     ivar_assign_and_retain(tableCellBackgroundColor, [UIColor whiteColor]);
     ivar_assign_and_retain(tableCellBackgroundColorMarked, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff].uiColor);
     ivar_assign_and_retain(tableCellBackgroundColorAltGroup, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff].uiColor);
+    ivar_assign_and_retain(tableCellBackgroundColorNewObject, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0+0x4 alpha:0xff].uiColor);
+    ivar_assign_and_retain(tableCellBackgroundColorNewObjectAltGroup, [CDXColor colorWithRed:0xe8 green:0xe8 blue:0xe8+0x4 alpha:0xff].uiColor);
     tableCellImageSize = CGSizeMake(10, 10);
     
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
@@ -152,6 +157,8 @@
     [viewTableView addGestureRecognizer:viewTableViewLongPressRecognizer];
     [self.navigationController.toolbar addGestureRecognizer:viewToolbarLongPressRecognizer];
     [viewTableView addGestureRecognizer:viewTableViewTapRecognizer];
+    
+    ++currentTag;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -222,6 +229,12 @@
     UIColor *backgroundColor = tableCellBackgroundColor;
     if (tag & CDXTableViewCellTagMarked) {
         backgroundColor = tableCellBackgroundColorMarked;
+    } else if (tag & CDXTableViewCellTagNewObject) {
+        if (tag & CDXTableViewCellTagAltGroup) {
+            backgroundColor = tableCellBackgroundColorNewObjectAltGroup;
+        } else {
+            backgroundColor = tableCellBackgroundColorNewObject;
+        }
     } else if (tag & CDXTableViewCellTagAltGroup) {
         backgroundColor = tableCellBackgroundColorAltGroup;
     }

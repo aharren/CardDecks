@@ -38,6 +38,7 @@
 @synthesize cornerStyle;
 @synthesize fontSize;
 @synthesize timerInterval;
+@synthesize tag;
 
 - (id)init {
     qltrace();
@@ -49,6 +50,7 @@
         cornerStyle = CDXCardCornerStyleDefault;
         fontSize = CDXCardFontSizeDefault;
         timerInterval = CDXCardTimerIntervalDefault;
+        tag = 0;
     }
     return self;
 }

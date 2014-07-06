@@ -156,6 +156,10 @@
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
             }
             
+            NSInteger tag = 0;
+            tag |= (deck.tag == currentTag) ? CDXTableViewCellTagNewObject : CDXTableViewCellTagNone;
+            cell.tag = tag;
+            
             return cell;
         }
         case 2: {
@@ -278,6 +282,7 @@
 
 - (void)processCardDeckAddAtBottomDelayed:(CDXCardDeckHolder *)holder {
     qltrace();
+    holder.tag = currentTag;
     [cardDecks addCardDeck:holder];
     [cardDecks updateStorageObjectDeferred:NO];
     
@@ -290,6 +295,7 @@
 }
 
 - (void)processCardDeckAddAtBottom:(CDXCardDeckHolder *)holder {
+    qltrace();
     if (![[viewTableView indexPathsForVisibleRows] containsObject:[NSIndexPath indexPathForRow:0 inSection:2]] ||
         [viewTableView isEditing]) {
         qltrace();
@@ -329,6 +335,7 @@
 - (void)processSinglePendingCardDeckAdd {
     CDXCardDeckHolder *deck = [cardDecks popPendingCardDeckAdd];
     if (deck != nil) {
+        deck.tag = currentTag;
         NSUInteger row = (lastCardDeckIndex < [cardDecks cardDecksCount]) ? lastCardDeckIndex : 0;
         [cardDecks insertCardDeck:deck atIndex:row];
         [cardDecks updateStorageObjectDeferred:YES];
