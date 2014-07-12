@@ -404,6 +404,11 @@
             }
             CDXCardDeck *sourceDeck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
             if (sourceDeck == nil) {
+                [[CDXAppWindowManager sharedAppWindowManager] showErrorMessage:@"Paste failed: invalid document" afterDelay:0.1];
+                return;
+            }
+            if (sourceDeck.cardsCount == 0) {
+                [[CDXAppWindowManager sharedAppWindowManager] showErrorMessage:@"Paste failed: no cards to paste" afterDelay:0.1];
                 return;
             }
             CDXCardDeck *targetDeck = [cardDecks cardDeckAtIndex:indexPath.row].cardDeck;
@@ -455,6 +460,7 @@
             }
             CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
             if (deck == nil) {
+                [[CDXAppWindowManager sharedAppWindowManager] showErrorMessage:@"Paste failed: invalid document" afterDelay:0.1];
                 return;
             }
             CDXCardDeckHolder *holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];

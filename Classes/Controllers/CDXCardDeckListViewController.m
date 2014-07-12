@@ -446,7 +446,12 @@
                 return;
             }
             CDXCardDeck *sourceDeck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
-            if (sourceDeck == nil || [sourceDeck cardsCount] == 0) {
+            if (sourceDeck == nil) {
+                [[CDXAppWindowManager sharedAppWindowManager] showErrorMessage:@"Paste failed: invalid document" afterDelay:0.1];
+                return;
+            }
+            if (sourceDeck.cardsCount == 0) {
+                [[CDXAppWindowManager sharedAppWindowManager] showErrorMessage:@"Paste failed: no card to paste" afterDelay:0.1];
                 return;
             }
             [cardDeck replaceCardAtIndex:indexPath.row withCard:[[[sourceDeck cardAtIndex:0] copy] autorelease]];
@@ -492,7 +497,12 @@
                 return;
             }
             CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
-            if (deck == nil || [deck cardsCount] == 0) {
+            if (deck == nil) {
+                [[CDXAppWindowManager sharedAppWindowManager] showErrorMessage:@"Paste failed: invalid document" afterDelay:0.1];
+                return;
+            }
+            if (deck.cardsCount == 0) {
+                [[CDXAppWindowManager sharedAppWindowManager] showErrorMessage:@"Paste failed: no cards to paste" afterDelay:0.1];
                 return;
             }
             NSMutableArray *cards = [deck removeCards];
