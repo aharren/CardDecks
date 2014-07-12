@@ -584,6 +584,7 @@
 
 - (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
     if ([activityType isEqualToString:UIActivityTypePostToTwitter]) {
+        [[CDXAppWindowManager sharedAppWindowManager] showInfoMessage:@"Card deck attached to Twitter message" afterDelay:1];
         return [NSURL URLWithString:[CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
     }
     if ([activityType isEqualToString:UIActivityTypePostToFacebook] ||
