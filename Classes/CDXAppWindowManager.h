@@ -25,6 +25,7 @@
 
 #import "CDXAppWindowProtocols.h"
 #import "CDXAppWindowNoticeView.h"
+#import "CDXAppWindowMessageView.h"
 
 
 @interface CDXAppWindowManager : NSObject {
@@ -34,6 +35,7 @@
     IBOutlet UIView *navigationView;
     
     IBOutlet CDXAppWindowNoticeView *noticeView;
+    IBOutlet CDXAppWindowMessageView *messageView;
     
     UIViewController<CDXAppWindowViewController> *fullScreenViewController;
     UIViewController *navigationViewController;
@@ -54,6 +56,8 @@ declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 - (void)popToInitialViewController;
 - (void)makeWindowKeyAndVisible;
 - (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation view:(UIView*)viewOrNil;
+- (void)showInfoMessage:(NSString *)text afterDelay:(NSTimeInterval)timeDelay;
+- (void)showErrorMessage:(NSString *)text afterDelay:(NSTimeInterval)timeDelay;
 - (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)presentModalViewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem animated:(BOOL)animated;
 - (void)dismissModalViewControllerAnimated:(BOOL)animated;
