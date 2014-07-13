@@ -48,6 +48,7 @@
     qltrace(@"%@", url);
     CDXCardDeck *deckToAdd = [CDXAppURL cardDeckFromURL:url];
     if (deckToAdd == nil) {
+        [[CDXAppWindowManager sharedAppWindowManager] showErrorMessage:@"Import failed: invalid document" afterDelay:0.7];
         return NO;
     }
     
