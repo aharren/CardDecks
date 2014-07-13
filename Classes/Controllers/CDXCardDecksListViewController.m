@@ -352,6 +352,10 @@
         [CDXStorage drainAllDeferredActions];
         [self performBlockingSelectorEnd];
         [self processStartupCallbacks];
+        
+        if (deck != nil) {
+            [[CDXAppWindowManager sharedAppWindowManager] showInfoMessage:@"Card deck added" afterDelay:0.3];
+        }
     }
 }
 
