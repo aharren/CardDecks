@@ -31,7 +31,7 @@
 }
 
 // Deserializes the given JSON string into a CDXCardDeck instance.
-+ (CDXCardDeck *)cardDeckFromVersion2String:(NSString *)string;
++ (CDXCardDeck *)cardDeckFromString:(NSString *)string;
 
 // Serializes the given CDXCardDeck instance into a JSON string.
 + (NSString *)version2StringFromCardDeck:(CDXCardDeck *)cardDeck;

@@ -1,4 +1,5 @@
 {
+  "version" : 2,
   "name": "numbers",
   "group_size": 1,
   "deck_style": "stacked,swipe",

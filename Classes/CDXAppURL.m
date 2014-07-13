@@ -78,7 +78,7 @@
         NSError *error = nil;
         NSString *string = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
         [[NSFileManager defaultManager] removeItemAtURL:url error:&error];
-        return [CDXCardDeckJSONSerializer cardDeckFromVersion2String:string];
+        return [CDXCardDeckJSONSerializer cardDeckFromString:string];
     }
     
     // carddecks URL

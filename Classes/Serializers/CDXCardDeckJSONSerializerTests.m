@@ -47,7 +47,7 @@
 
 - (void)testCardDecksFromVersion2JSONDefaultCardsAndCards {
     NSString *string = [self stringFromFile:@"CDXCardDeckJSONSerializerTestsDeck1.carddeck.json"];
-    CDXCardDeck *deck = [CDXCardDeckJSONSerializer cardDeckFromVersion2String:string];
+    CDXCardDeck *deck = [CDXCardDeckJSONSerializer cardDeckFromString:string];
     
     XCTAssertNotNil(deck);
     XCTAssertEqualObjects(@"numbers", deck.name);
@@ -103,7 +103,7 @@
 
 - (void)testCardDecksFromVersion2JSONSettings1 {
     NSString *string = [self stringFromFile:@"CDXCardDeckJSONSerializerTestsDeck2.carddeck.json"];
-    CDXCardDeck *deck = [CDXCardDeckJSONSerializer cardDeckFromVersion2String:string];
+    CDXCardDeck *deck = [CDXCardDeckJSONSerializer cardDeckFromString:string];
     
     XCTAssertNotNil(deck);
     XCTAssertEqualObjects(@"settings", deck.name);
@@ -122,7 +122,7 @@
 
 - (void)testCardDecksFromVersion2JSONSettings2 {
     NSString *string = [self stringFromFile:@"CDXCardDeckJSONSerializerTestsDeck3.carddeck.json"];
-    CDXCardDeck *deck = [CDXCardDeckJSONSerializer cardDeckFromVersion2String:string];
+    CDXCardDeck *deck = [CDXCardDeckJSONSerializer cardDeckFromString:string];
     
     XCTAssertNotNil(deck);
     XCTAssertEqualObjects(@"settings2", deck.name);
@@ -316,10 +316,11 @@
 
 - (void)testVersion2StringFromCardDeck {
     NSString *string = [self stringFromFile:@"CDXCardDeckJSONSerializerTestsDeck1.carddeck.json"];
-    CDXCardDeck *deck = [CDXCardDeckJSONSerializer cardDeckFromVersion2String:string];
+    CDXCardDeck *deck = [CDXCardDeckJSONSerializer cardDeckFromString:string];
     
     NSString *expected = @""
     @"{"
+    @"\n  \"version\" : 2,"
     @"\n  \"name\" : \"numbers\","
     @"\n  \"group_size\" : 1,"
     @"\n  \"deck_style\" : \"stacked,swipe\","
@@ -368,7 +369,7 @@
     
     XCTAssertEqualObjects(expected, [CDXCardDeckJSONSerializer version2StringFromCardDeck:deck]);
 
-    XCTAssertEqualObjects(expected, [CDXCardDeckJSONSerializer version2StringFromCardDeck:[CDXCardDeckJSONSerializer cardDeckFromVersion2String:expected]]);
+    XCTAssertEqualObjects(expected, [CDXCardDeckJSONSerializer version2StringFromCardDeck:[CDXCardDeckJSONSerializer cardDeckFromString:expected]]);
 }
 
 @end

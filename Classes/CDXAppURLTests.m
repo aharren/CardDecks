@@ -51,8 +51,24 @@
     XCTAssertEqualObjects(@"card deck", deck.name);
 }
 
-- (void)testCardDeckFromURLFileSchemeVersion2 {
+- (void)testCardDeckFromURLFileSchemeNoVersion {
     NSString *string = @"{ \"name\" : \"card deck\" }";
+    [string writeToFile:@"/tmp/file.carddeck" atomically:NO encoding:NSUTF8StringEncoding error:NULL];
+    XCTAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:@"/tmp/file.carddeck"]);
+    CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:@"file:///tmp/file.carddeck"]];
+    XCTAssertNil(deck); // invalid
+}
+
+- (void)testCardDeckFromURLFileSchemeVersion1 {
+    NSString *string = @"{ \"version\" : 1, \"name\" : \"card deck\" }";
+    [string writeToFile:@"/tmp/file.carddeck" atomically:NO encoding:NSUTF8StringEncoding error:NULL];
+    XCTAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:@"/tmp/file.carddeck"]);
+    CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:@"file:///tmp/file.carddeck"]];
+    XCTAssertNil(deck); // invalid
+}
+
+- (void)testCardDeckFromURLFileSchemeVersion2 {
+    NSString *string = @"{ \"version\" : 2, \"name\" : \"card deck\" }";
     [string writeToFile:@"/tmp/file.carddeck" atomically:NO encoding:NSUTF8StringEncoding error:NULL];
     XCTAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:@"/tmp/file.carddeck"]);
     CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:@"file:///tmp/file.carddeck"]];

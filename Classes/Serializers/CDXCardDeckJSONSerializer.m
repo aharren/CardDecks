@@ -220,15 +220,7 @@ static NSString *autoPlays[autoPlaysCount] = {
     return card;
 }
 
-+ (CDXCardDeck *)cardDeckFromVersion2String:(NSString *)string {
-    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *error = nil;
-    id jobject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    if (![jobject isKindOfClass:[NSDictionary class]]) {
-        return nil;
-    }
-    NSDictionary *jdeck = (NSDictionary *)jobject;
-    
++ (CDXCardDeck *)cardDeckFromVersion2Dictionary:(NSDictionary *)jdeck {
     CDXCardDeck *cardDeck = [[[CDXCardDeck alloc] init] autorelease];
     NSString* jstring = nil;
     NSNumber* jnumber = nil;
@@ -299,6 +291,28 @@ static NSString *autoPlays[autoPlaysCount] = {
     return cardDeck;
 }
 
++ (CDXCardDeck *)cardDeckFromString:(NSString *)string {
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = nil;
+    id jobject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    if (![jobject isKindOfClass:[NSDictionary class]]) {
+        return nil;
+    }
+    NSDictionary *jdeck = (NSDictionary *)jobject;
+    NSNumber* jnumber = nil;
+    
+    jnumber = [CDXCardDeckJSONSerializer dictionary:jdeck numberForKey:@"version" defaultsTo:nil];
+    if (jnumber == nil) {
+        return nil;
+    }
+    int version = [CDXCardDeckJSONSerializer intFromDouble:[jnumber doubleValue]];
+
+    if (version == 2) {
+        return [CDXCardDeckJSONSerializer cardDeckFromVersion2Dictionary:jdeck];
+    }
+    return nil;
+}
+
 + (NSDictionary *)version2DictionaryFromCard:(CDXCard *)card cardDefaults:(CDXCard *)cardDefaults {
     NSMutableDictionary *dictionary = [[[CDXOrderedSerializerDictionary alloc] init] autorelease];
     // text
@@ -332,6 +346,8 @@ static NSString *autoPlays[autoPlaysCount] = {
 + (NSDictionary *)version2DictionaryFromCardDeck:(CDXCardDeck *)cardDeck {
     NSMutableDictionary *dictionary = [[[CDXOrderedSerializerDictionary alloc] init] autorelease];
     
+    // version
+    [dictionary setObject:@(2) forKey:@"version"];
     // name
     [dictionary setObject:cardDeck.name forKey:@"name"];
     // group_size
