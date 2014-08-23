@@ -39,7 +39,9 @@ static float keyboardExtensionsOsVersion;
 - (id)init {
     if ((self = [super init])) {
         ivar_assign(toolbar, [[UIToolbar alloc] init]);
+        toolbar.alpha = 0;
         toolbar.barStyle = UIBarStyleDefault;
+        toolbar.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, 0, 32);
         ivar_assign(toolbarButtons, [[NSMutableArray alloc] init]);
         ivar_assign_and_retain(toolbarKeyboardButton, [self toolbarButtonWithTitle:@"abc"]);
         ivar_assign(toolbarActionButton, [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
@@ -88,101 +90,52 @@ static float keyboardExtensionsOsVersion;
     return toolbarKeyboardButton;
 }
 
-- (void)setToolbarHidden:(BOOL)hidden notification:(NSNotification *)notification {
-    qltrace(@"hidden %d", hidden);
-    CGRect keyboardBounds;
-    CGPoint keyboardAnimationStartPoint;
-    CGPoint keyboardAnimationEndPoint;
-    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
-    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+- (void)setToolbarHidden:(BOOL)hide notification:(NSNotification *)notification {
+    qltrace(@"hide %d, %@", hide, notification);
     
     // get animation information for the keyboard
     double keyboardAnimationDuration;
     [[notification.userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&keyboardAnimationDuration];
-    qltrace(@"FrameBegin");
     UIViewAnimationCurve keyboardAnimationCurve;
     [[notification.userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&keyboardAnimationCurve];
-    CGRect keyboardAnimationStartFrame;
-    [[notification.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue:&keyboardAnimationStartFrame];
+    CGRect keyboardAnimationBeginFrame;
+    [[notification.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue:&keyboardAnimationBeginFrame];
     CGRect keyboardAnimationEndFrame;
     [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardAnimationEndFrame];
-    keyboardAnimationEndPoint.x = keyboardAnimationEndFrame.origin.x + keyboardAnimationEndFrame.size.width / 2;
-    keyboardAnimationEndPoint.y = keyboardAnimationEndFrame.origin.y + keyboardAnimationEndFrame.size.height / 2;
-    keyboardAnimationStartPoint.x = keyboardAnimationStartFrame.origin.x + keyboardAnimationStartFrame.size.width / 2;
-    keyboardAnimationStartPoint.y = keyboardAnimationStartFrame.origin.y + keyboardAnimationStartFrame.size.height / 2;
-    keyboardBounds.origin = CGPointMake(0, 0);
-    keyboardBounds.size = CGSizeMake(MAX(keyboardAnimationStartFrame.size.width, keyboardAnimationEndFrame.size.width),
-                                     MAX(keyboardAnimationStartFrame.size.height, keyboardAnimationEndFrame.size.height));
-    qltrace(@"start: %3f %3f", keyboardAnimationStartPoint.x, keyboardAnimationStartPoint.y);
-    qltrace(@"end  : %3f %3f", keyboardAnimationEndPoint.x, keyboardAnimationEndPoint.y);
-    BOOL offScreenNew = keyboardAnimationEndFrame.origin.x < 0 || keyboardAnimationEndFrame.origin.x >= screenWidth;
-    if (offScreenNew && offScreen) {
-        // already off-screen
-        return;
-    }
-    offScreen = offScreenNew;
-
-    // animate the toolbar?
-    BOOL keyboardAnimationHasYDistance = keyboardAnimationStartPoint.y != keyboardAnimationEndPoint.y;
-    BOOL keyboardAnimationHasXDistance = keyboardAnimationStartPoint.x != keyboardAnimationEndPoint.x;
-    BOOL animated = keyboardAnimationHasYDistance || keyboardAnimationHasXDistance;
-    if (!hidden) {
-        animated = animated & !visible;
-    }
     
+    // remember the rectangle for the extension views
+    if (!hide) {
+        extensionViewRect = keyboardAnimationEndFrame;
+    }
+
     // add the toolbar view to the application's main window
     [[[UIApplication sharedApplication] keyWindow] addSubview:toolbar];
     [toolbar sizeToFit];
+    toolbar.frame = CGRectMake(keyboardAnimationBeginFrame.origin.x, keyboardAnimationBeginFrame.origin.y - toolbar.frame.size.height,
+                               keyboardAnimationBeginFrame.size.width, toolbar.frame.size.height);
+
+    [UIView setAnimationsEnabled:YES];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:keyboardAnimationCurve];
+    [UIView setAnimationDuration:keyboardAnimationDuration];
     
-    // get animation information for the toolbar
-    CGRect toolbarFrame = [toolbar frame];
-    CGRect toolbarFrameAnimationStart = toolbarFrame;
-    toolbarFrameAnimationStart.origin.y = keyboardAnimationStartPoint.y - keyboardBounds.size.height/2 - toolbarFrame.size.height;
-    toolbarFrameAnimationStart.origin.x = keyboardAnimationStartPoint.x - keyboardBounds.size.width/2;
-    CGRect toolbarFrameAnimationEnd = toolbarFrame;
-    toolbarFrameAnimationEnd.origin.y = keyboardAnimationEndPoint.y - keyboardBounds.size.height/2 - toolbarFrame.size.height;
-    toolbarFrameAnimationEnd.origin.x = keyboardAnimationEndPoint.x - keyboardBounds.size.width/2;
-    if (toolbarFrameAnimationStart.origin.y >= screenHeight - toolbarFrame.size.height) {
-        toolbarFrameAnimationStart.origin.y = screenHeight;
-    }
-    if (toolbarFrameAnimationEnd.origin.y >= screenHeight - toolbarFrame.size.height) {
-        toolbarFrameAnimationEnd.origin.y = screenHeight;
-    }
+    toolbar.alpha = hide ? 0 : 1;
+    toolbar.frame = CGRectMake(keyboardAnimationEndFrame.origin.x, keyboardAnimationEndFrame.origin.y - toolbar.frame.size.height,
+                               keyboardAnimationEndFrame.size.width, toolbar.frame.size.height);
     
-    // now, animate and position the toolbar
-    if (animated) {
-        [UIView setAnimationsEnabled:YES];
-        [toolbar setFrame:toolbarFrameAnimationStart];
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationCurve:keyboardAnimationCurve];
-        [UIView setAnimationDuration:keyboardAnimationDuration];
+    if (activeExtensionTag != -1) {
+        if (hide) {
+            NSObject<CDXKeyboardExtension> *extension = [self keyboardExtensionByTag:activeExtensionTag];
+            UIView *extensionView = [extension keyboardExtensionView];
+            extensionView.frame = keyboardAnimationEndFrame;
+            extensionView.alpha = 0;
+        } else {
+            [self deactivateKeyboardExtension:[self keyboardExtensionByTag:activeExtensionTag] tag:activeExtensionTag];
+            [self activateKeyboardExtension:nil tag:-1];
+        }
     }
-    [toolbar setFrame:toolbarFrameAnimationEnd];
-    
-    if (hidden && activeExtensionTag != -1) {
-        NSObject<CDXKeyboardExtension> *extension = [self keyboardExtensionByTag:activeExtensionTag];
-        UIView *extensionView = [extension keyboardExtensionView];
-        CGRect extensionViewFrameAnimationEnd = [extensionView frame];
-        extensionViewFrameAnimationEnd.origin.y = keyboardAnimationEndPoint.y - keyboardBounds.size.height/2;
-        extensionViewFrameAnimationEnd.origin.x = keyboardAnimationEndPoint.x - keyboardBounds.size.width/2;
-        [extensionView setFrame:extensionViewFrameAnimationEnd];
-    }
-    if (!hidden && activeExtensionTag != -1) {
-        [self deactivateKeyboardExtension:[self keyboardExtensionByTag:activeExtensionTag] tag:activeExtensionTag];
-        [self activateKeyboardExtension:nil tag:-1];
-    }
-    
-    if (animated) {
-        [UIView commitAnimations];
-    }
-    
-    // remember the rectangle for the extension views
-    if (!hidden) {
-        extensionViewRect.size = keyboardBounds.size;
-        extensionViewRect.origin.x = keyboardAnimationEndPoint.x - keyboardBounds.size.width/2;
-        extensionViewRect.origin.y = keyboardAnimationEndPoint.y - keyboardBounds.size.height/2;
-        extensionViewRect.size.height = extensionViewRect.size.height;
-    }
+
+    [UIView commitAnimations];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
@@ -313,6 +266,7 @@ static float keyboardExtensionsOsVersion;
     if (keyboardExtension != nil) {
         UIView *view = [keyboardExtension keyboardExtensionView];
         view.frame = extensionViewRect;
+        view.alpha = 1;
         [[self keyboardWindow] addSubview:view];
         
         viewInactiveExtensions.frame = extensionViewRect;
