@@ -129,6 +129,7 @@ static float keyboardExtensionsOsVersion;
             UIView *extensionView = [extension keyboardExtensionView];
             extensionView.frame = keyboardAnimationEndFrame;
             extensionView.alpha = 0;
+            viewInactiveExtensions.hidden = YES;
         } else {
             [self deactivateKeyboardExtension:[self keyboardExtensionByTag:activeExtensionTag] tag:activeExtensionTag];
             [self activateKeyboardExtension:nil tag:-1];
