@@ -47,6 +47,7 @@
 		E032F1541169DB790033980C /* CDXCardDecksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1531169DB790033980C /* CDXCardDecksTests.m */; };
 		E032F1681169DDC10033980C /* CDXCardDecksListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E032F1671169DDC10033980C /* CDXCardDecksListView.xib */; };
 		E0331B8E11FC3F18008B8E2F /* Legal.html in Resources */ = {isa = PBXBuildFile; fileRef = E0331B8D11FC3F18008B8E2F /* Legal.html */; };
+		E03B05F719C62F3D0024991E /* CDXLaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E03B05F619C62F3D0024991E /* CDXLaunchScreen.xib */; };
 		E03B10A311C3FC4300591E45 /* CDXAppAboutSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E03B10A211C3FC4300591E45 /* CDXAppAboutSettings.m */; };
 		E03B10B911C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E03B10B811C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib */; };
 		E03B803A13B7918F00941540 /* CDXCardDeckListPadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E03B803913B7918F00941540 /* CDXCardDeckListPadView.xib */; };
@@ -243,6 +244,7 @@
 		E032F1671169DDC10033980C /* CDXCardDecksListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardDecksListView.xib; path = UserInterfaces/CDXCardDecksListView.xib; sourceTree = "<group>"; };
 		E0331B8D11FC3F18008B8E2F /* Legal.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Legal.html; sourceTree = "<group>"; };
 		E034181A1195CD9F00007FF7 /* CDXAppWindowProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppWindowProtocols.h; path = Classes/CDXAppWindowProtocols.h; sourceTree = "<group>"; };
+		E03B05F619C62F3D0024991E /* CDXLaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CDXLaunchScreen.xib; path = UserInterfaces/CDXLaunchScreen.xib; sourceTree = "<group>"; };
 		E03B103011C3F4A300591E45 /* CDXApplicationVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDXApplicationVersion.h; sourceTree = "<group>"; };
 		E03B10A111C3FC4300591E45 /* CDXAppAboutSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppAboutSettings.h; path = Classes/Models/CDXAppAboutSettings.h; sourceTree = "<group>"; };
 		E03B10A211C3FC4300591E45 /* CDXAppAboutSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppAboutSettings.m; path = Classes/Models/CDXAppAboutSettings.m; sourceTree = "<group>"; };
@@ -645,6 +647,7 @@
 				E022635C140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib */,
 				E04E7A0C14E4716200D46037 /* CDXTimerKeyboardExtensionView.xib */,
 				E0D673DF151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib */,
+				E03B05F619C62F3D0024991E /* CDXLaunchScreen.xib */,
 			);
 			name = "User Interfaces";
 			sourceTree = "<group>";
@@ -876,6 +879,7 @@
 				E09FCDF311B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib in Resources */,
 				E02D6811194CF96F003F06B9 /* CDXCardDeckJSONSerializerTestsDeck3.carddeck.json in Resources */,
 				E09AC62511B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib in Resources */,
+				E03B05F719C62F3D0024991E /* CDXLaunchScreen.xib in Resources */,
 				E09AC62611B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib in Resources */,
 				E09AC6FD11B7E75100C96E25 /* CDXColorKeyboardExtensionView.xib in Resources */,
 				E09AC84511B7F95C00C96E25 /* CDXTextKeyboardExtensionView.xib in Resources */,
