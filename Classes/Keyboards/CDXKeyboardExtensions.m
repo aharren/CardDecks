@@ -200,8 +200,20 @@ static float keyboardExtensionsOsVersion;
         [toolbarButtons addObject:toolbarActionButton];
     }
     
+    NSUInteger alignmentFixWidth = ([[[CDXDevice sharedDevice] deviceSystemVersionString] floatValue] >= 8.0) ? 17 : 0;
+    UIBarButtonItem *leftAlignmentFix = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil] autorelease];
+    leftAlignmentFix.width = alignmentFixWidth;
+    leftAlignmentFix.enabled = NO;
+    UIBarButtonItem *rightAlignmentFix = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil] autorelease];
+    rightAlignmentFix.width = alignmentFixWidth;
+    rightAlignmentFix.enabled = NO;
+
     // set the toolbar buttons
-    [toolbar setItems:toolbarButtons animated:NO];
+    NSMutableArray *buttons = [NSMutableArray arrayWithCapacity:toolbarButtons.count + 2];
+    [buttons addObject:leftAlignmentFix];
+    [buttons addObjectsFromArray:toolbarButtons];
+    [buttons addObject:rightAlignmentFix];
+    [toolbar setItems:buttons animated:NO];
     
     [self activateKeyboardExtension:nil tag:-1];
 }
