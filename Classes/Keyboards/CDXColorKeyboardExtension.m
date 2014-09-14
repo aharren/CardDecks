@@ -160,9 +160,7 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     
     button.enabled = NO;
     [self.view addSubview:view];
-    CGRect frame = view.frame;
-    frame.origin.y = toolbar.frame.origin.y + toolbar.frame.size.height + 1;
-    view.frame = frame;
+    view.frame = CGRectMake(0, CGRectGetHeight(toolbar.bounds) + 2, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - CGRectGetHeight(toolbar.bounds) - 2);
 }
 
 - (CDXColor *)colorChooserRGBSliderValues {
