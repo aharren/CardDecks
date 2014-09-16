@@ -325,7 +325,7 @@
 
 - (IBAction)settingsButtonPressed {
     qltrace();
-    CDXCardDeckSettings *settings = [[[CDXCardDeckSettings alloc] initWithCardDeck:cardDeck] autorelease];
+    CDXCardDeckSettings *settings = [[[CDXCardDeckSettings alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
     CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings] autorelease];
     [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsButton animated:YES];
 }
