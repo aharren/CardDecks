@@ -28,7 +28,7 @@
 #import "CDXListViewControllerBase.h"
 
 
-@interface CDXCardDeckListViewController : CDXListViewControllerBase<UIActionSheetDelegate> {
+@interface CDXCardDeckListViewController : CDXListViewControllerBase {
     
 @protected
     CDXCardDeckViewContext *cardDeckViewContext;
@@ -38,8 +38,6 @@
     IBOutlet UIBarButtonItem *actionButton;
     IBOutlet UIBarButtonItem *addButton;
     BOOL viewWasAlreadyVisible;
-    
-    UIActionSheet *activeActionSheet;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;

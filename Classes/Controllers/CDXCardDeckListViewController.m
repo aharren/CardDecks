@@ -60,7 +60,6 @@
     ivar_release_and_clear(shuffleButton);
     ivar_release_and_clear(actionButton);
     ivar_release_and_clear(addButton);
-    ivar_release_and_clear(activeActionSheet);
     [super dealloc];
 }
 
@@ -68,7 +67,6 @@
     ivar_release_and_clear(shuffleButton);
     ivar_release_and_clear(actionButton);
     ivar_release_and_clear(addButton);
-    ivar_release_and_clear(activeActionSheet);
     [super viewDidUnload];
 }
 
@@ -344,13 +342,6 @@
     [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
 }
 
-- (void)dismissActionSheet {
-    if (activeActionSheet != nil) {
-        [activeActionSheet dismissWithClickedButtonIndex:[activeActionSheet cancelButtonIndex] animated:NO];
-        ivar_release_and_clear(activeActionSheet);
-    }
-}
-
 - (IBAction)actionButtonPressed {
     qltrace();
     CDXCardDeckListViewControllerURLTextActivityItemProvider *textItem = [[[CDXCardDeckListViewControllerURLTextActivityItemProvider alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
@@ -409,7 +400,6 @@
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
     qltrace();
     [super dismissModalViewControllerAnimated:animated];
-    [self dismissActionSheet];
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
