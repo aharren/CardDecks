@@ -42,6 +42,7 @@ static float keyboardExtensionsOsVersion;
         toolbar.alpha = 0;
         toolbar.barStyle = UIBarStyleDefault;
         toolbar.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, 0, 32);
+        toolbar.backgroundColor = [UIColor whiteColor];
         ivar_assign(toolbarButtons, [[NSMutableArray alloc] init]);
         ivar_assign_and_retain(toolbarKeyboardButton, [self toolbarButtonWithTitle:@"abc"]);
         ivar_assign(toolbarActionButton, [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
