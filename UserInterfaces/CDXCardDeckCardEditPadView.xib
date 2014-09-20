@@ -43,7 +43,7 @@
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="yes"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="11"/>
                     </connections>
