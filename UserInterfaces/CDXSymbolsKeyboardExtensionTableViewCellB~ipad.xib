@@ -19,8 +19,8 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="15">
-                        <rect key="frame" x="0.0" y="0.0" width="54" height="42"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="0.0" y="0.0" width="54" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                         <state key="normal">
@@ -38,8 +38,8 @@
                         </connections>
                     </button>
                     <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="17">
-                        <rect key="frame" x="55" y="0.0" width="54" height="42"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="55" y="0.0" width="54" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                         <state key="normal">
@@ -60,8 +60,8 @@
                         </connections>
                     </button>
                     <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="19">
-                        <rect key="frame" x="110" y="0.0" width="54" height="42"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="110" y="0.0" width="54" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                         <state key="normal">
@@ -82,8 +82,8 @@
                         </connections>
                     </button>
                     <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="21">
-                        <rect key="frame" x="165" y="0.0" width="54" height="42"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="165" y="0.0" width="54" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                         <state key="normal">
@@ -104,8 +104,8 @@
                         </connections>
                     </button>
                     <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="23">
-                        <rect key="frame" x="220" y="0.0" width="54" height="42"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="220" y="0.0" width="54" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                         <state key="normal">
@@ -126,8 +126,8 @@
                         </connections>
                     </button>
                     <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="25">
-                        <rect key="frame" x="275" y="0.0" width="54" height="42"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="275" y="0.0" width="54" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                         <state key="normal">
@@ -148,8 +148,8 @@
                         </connections>
                     </button>
                     <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="27">
-                        <rect key="frame" x="330" y="0.0" width="54" height="42"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="330" y="0.0" width="54" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                         <state key="normal">
@@ -168,7 +168,7 @@
                     </button>
                     <view contentMode="scaleToFill" id="38">
                         <rect key="frame" x="0.0" y="40" width="384" height="1"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.86274509803921573" green="0.86274509803921573" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                 </subviews>
