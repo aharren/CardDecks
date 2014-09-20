@@ -61,7 +61,6 @@
 		E041E3961169FDD5009DC453 /* CDXCardDeckURLSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E041E3941169FDD5009DC453 /* CDXCardDeckURLSerializer.m */; };
 		E041E3981169FDDB009DC453 /* CDXCardDeckURLSerializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E041E3951169FDD5009DC453 /* CDXCardDeckURLSerializerTests.m */; };
 		E041E3A21169FE24009DC453 /* CDXCardDeckURLSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E041E3941169FDD5009DC453 /* CDXCardDeckURLSerializer.m */; };
-		E043F1771400EFC900DE0567 /* Toolbar-Left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E043F1751400EFC900DE0567 /* Toolbar-Left@2x.png */; };
 		E047CEF7119369430024A022 /* CDXAppWindowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E047CEF6119369430024A022 /* CDXAppWindowManager.m */; };
 		E048D463152E3A1B0081B88F /* CDXCardViewDirectRendering.m in Sources */ = {isa = PBXBuildFile; fileRef = E048D462152E3A1B0081B88F /* CDXCardViewDirectRendering.m */; };
 		E04B42CB19602D30004B0E0D /* CDXEnumSerializerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E04B42CA19602D30004B0E0D /* CDXEnumSerializerUtils.m */; };
@@ -76,7 +75,6 @@
 		E0521EB81945FE22001CCC96 /* CDXCardDeckJSONSerializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0521EB51945FC69001CCC96 /* CDXCardDeckJSONSerializerTests.m */; };
 		E0521EBC194644EE001CCC96 /* CDXCardDeckJSONSerializerTestsDeck1.carddeck.json in Resources */ = {isa = PBXBuildFile; fileRef = E0521EBB194644EE001CCC96 /* CDXCardDeckJSONSerializerTestsDeck1.carddeck.json */; };
 		E0521EBD19464CFA001CCC96 /* CDXCardDeckJSONSerializerTestsDeck1.carddeck.json in Resources */ = {isa = PBXBuildFile; fileRef = E0521EBB194644EE001CCC96 /* CDXCardDeckJSONSerializerTestsDeck1.carddeck.json */; };
-		E0602B6911D550AD0075F439 /* Toolbar-Down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0602B6711D550AD0075F439 /* Toolbar-Down@2x.png */; };
 		E0620CF611BA9EA3006AABD2 /* CDXAppWindowNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0620CF511BA9EA3006AABD2 /* CDXAppWindowNoticeView.m */; };
 		E0620D0111BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0620D0011BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib */; };
 		E06B37DF1401668000D57C37 /* CDXSymbolsKeyboardExtensionTableViewCellB~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E06B37DE1401668000D57C37 /* CDXSymbolsKeyboardExtensionTableViewCellB~ipad.xib */; };
@@ -99,6 +97,7 @@
 		E09AD393187213B30014D372 /* Cell-RightDetail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E09AD392187213B30014D372 /* Cell-RightDetail@2x.png */; };
 		E09FCDBA11B7B69900135582 /* CDXSymbolsKeyboardExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E09FCDB911B7B69900135582 /* CDXSymbolsKeyboardExtension.m */; };
 		E09FCDF311B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09FCDF211B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib */; };
+		E0A03BB319CE2D0D00B5B4BA /* ToolbarIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0A03BB219CE2D0D00B5B4BA /* ToolbarIcons.xcassets */; };
 		E0A1C00111A82BE100911848 /* CDXCardDeckCardEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A1C00011A82BE100911848 /* CDXCardDeckCardEditViewController.m */; };
 		E0A1C00311A82C5600911848 /* CDXCardDeckCardEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0A1C00211A82C5600911848 /* CDXCardDeckCardEditView.xib */; };
 		E0A483C811F2FC7400A6ECC8 /* 0-10.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0A483C111F2FC7400A6ECC8 /* 0-10.CardDeck.plist */; };
@@ -127,15 +126,9 @@
 		E0CFA5FC11D68CF800FF686F /* IndexDotGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CFA5FB11D68CF800FF686F /* IndexDotGray@2x.png */; };
 		E0CFA5FE11D68D0600FF686F /* IndexDotWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CFA5FD11D68D0600FF686F /* IndexDotWhite@2x.png */; };
 		E0D01AED1170EF9200004856 /* CDXImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D01AEC1170EF9200004856 /* CDXImageFactory.m */; };
-		E0D1E50C11D5F22E00C8B1C4 /* Toolbar-Up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E50B11D5F22E00C8B1C4 /* Toolbar-Up@2x.png */; };
-		E0D1E53C11D5FA0900C8B1C4 /* Toolbar-Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E53B11D5FA0900C8B1C4 /* Toolbar-Settings@2x.png */; };
-		E0D1E59F11D602E600C8B1C4 /* Toolbar-Edit-Reorder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E59E11D602E600C8B1C4 /* Toolbar-Edit-Reorder@2x.png */; };
-		E0D1E5A811D608DE00C8B1C4 /* Toolbar-Shuffle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5A711D608DE00C8B1C4 /* Toolbar-Shuffle@2x.png */; };
-		E0D1E5B611D60B7E00C8B1C4 /* Toolbar-Sort@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5B511D60B7E00C8B1C4 /* Toolbar-Sort@2x.png */; };
 		E0D1E5CF11D6129000C8B1C4 /* Notice-Shuffle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5CD11D6129000C8B1C4 /* Notice-Shuffle@2x.png */; };
 		E0D1E5D011D6129000C8B1C4 /* Notice-Sort@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D1E5CE11D6129000C8B1C4 /* Notice-Sort@2x.png */; };
 		E0D1F09E18CC6C4300BA521A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0D1F09C18CC6BFF00BA521A /* XCTest.framework */; };
-		E0D4B87513927A8100228167 /* Toolbar-Play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D4B87313927A8100228167 /* Toolbar-Play@2x.png */; };
 		E0D673E0151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D673DF151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib */; };
 		E0D909281172275D00AD50DA /* CDXLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D909271172275D00AD50DA /* CDXLogger.m */; };
 		E0DBA1821531F39B0049A26B /* CDXAppURL.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DBA1811531F39B0049A26B /* CDXAppURL.m */; };
@@ -168,8 +161,6 @@
 		E0FAC13B11C0398800CDA558 /* CDXStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FAC13A11C0398800CDA558 /* CDXStorage.m */; };
 		E0FAC13C11C0398800CDA558 /* CDXStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FAC13A11C0398800CDA558 /* CDXStorage.m */; };
 		E0FAC1CF11C166D900CDA558 /* CDXCardDeckBaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FAC1CE11C166D900CDA558 /* CDXCardDeckBaseTests.m */; };
-		E0FD05BA1392B93600136B40 /* Toolbar-Stop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FD05B61392B93600136B40 /* Toolbar-Stop@2x.png */; };
-		E0FD05BC1392B93600136B40 /* Toolbar-Play2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FD05B81392B93600136B40 /* Toolbar-Play2@2x.png */; };
 		E0FD05C51392D76300136B40 /* Notice-Play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FD05BF1392D76300136B40 /* Notice-Play@2x.png */; };
 		E0FD05C71392D76300136B40 /* Notice-Play2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FD05C11392D76300136B40 /* Notice-Play2@2x.png */; };
 		E0FD05C91392D76300136B40 /* Notice-Stop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FD05C31392D76300136B40 /* Notice-Stop@2x.png */; };
@@ -263,7 +254,6 @@
 		E041E3931169FDD5009DC453 /* CDXCardDeckURLSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckURLSerializer.h; path = Classes/Serializers/CDXCardDeckURLSerializer.h; sourceTree = "<group>"; };
 		E041E3941169FDD5009DC453 /* CDXCardDeckURLSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckURLSerializer.m; path = Classes/Serializers/CDXCardDeckURLSerializer.m; sourceTree = "<group>"; };
 		E041E3951169FDD5009DC453 /* CDXCardDeckURLSerializerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckURLSerializerTests.m; path = Classes/Serializers/CDXCardDeckURLSerializerTests.m; sourceTree = "<group>"; };
-		E043F1751400EFC900DE0567 /* Toolbar-Left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Left@2x.png"; path = "Images/Toolbars/Toolbar-Left@2x.png"; sourceTree = "<group>"; };
 		E047CEF5119369430024A022 /* CDXAppWindowManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppWindowManager.h; path = Classes/CDXAppWindowManager.h; sourceTree = "<group>"; };
 		E047CEF6119369430024A022 /* CDXAppWindowManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppWindowManager.m; path = Classes/CDXAppWindowManager.m; sourceTree = "<group>"; };
 		E048D460152E37BB0081B88F /* CDXCardViewRenderingProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardViewRenderingProtocols.h; path = Classes/Views/CDXCardViewRenderingProtocols.h; sourceTree = "<group>"; };
@@ -282,7 +272,6 @@
 		E0521EB21945FB9E001CCC96 /* CDXCardDeckJSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckJSONSerializer.m; path = Classes/Serializers/CDXCardDeckJSONSerializer.m; sourceTree = "<group>"; };
 		E0521EB51945FC69001CCC96 /* CDXCardDeckJSONSerializerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckJSONSerializerTests.m; path = Classes/Serializers/CDXCardDeckJSONSerializerTests.m; sourceTree = "<group>"; };
 		E0521EBB194644EE001CCC96 /* CDXCardDeckJSONSerializerTestsDeck1.carddeck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = CDXCardDeckJSONSerializerTestsDeck1.carddeck.json; path = Classes/Serializers/CDXCardDeckJSONSerializerTestsDeck1.carddeck.json; sourceTree = "<group>"; };
-		E0602B6711D550AD0075F439 /* Toolbar-Down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Down@2x.png"; path = "Images/Toolbars/Toolbar-Down@2x.png"; sourceTree = "<group>"; };
 		E0620CF411BA9EA3006AABD2 /* CDXAppWindowNoticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppWindowNoticeView.h; path = Classes/CDXAppWindowNoticeView.h; sourceTree = "<group>"; };
 		E0620CF511BA9EA3006AABD2 /* CDXAppWindowNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppWindowNoticeView.m; path = Classes/CDXAppWindowNoticeView.m; sourceTree = "<group>"; };
 		E0620D0011BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXAppWindowNoticeView.xib; path = UserInterfaces/CDXAppWindowNoticeView.xib; sourceTree = "<group>"; };
@@ -314,6 +303,7 @@
 		E09FCDB811B7B69900135582 /* CDXSymbolsKeyboardExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXSymbolsKeyboardExtension.h; path = Classes/Keyboards/CDXSymbolsKeyboardExtension.h; sourceTree = "<group>"; };
 		E09FCDB911B7B69900135582 /* CDXSymbolsKeyboardExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXSymbolsKeyboardExtension.m; path = Classes/Keyboards/CDXSymbolsKeyboardExtension.m; sourceTree = "<group>"; };
 		E09FCDF211B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXSymbolsKeyboardExtensionTableView.xib; path = UserInterfaces/CDXSymbolsKeyboardExtensionTableView.xib; sourceTree = "<group>"; };
+		E0A03BB219CE2D0D00B5B4BA /* ToolbarIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = ToolbarIcons.xcassets; path = Images/ToolbarIcons.xcassets; sourceTree = "<group>"; };
 		E0A1BFFF11A82BE100911848 /* CDXCardDeckCardEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckCardEditViewController.h; path = Classes/Controllers/CDXCardDeckCardEditViewController.h; sourceTree = "<group>"; };
 		E0A1C00011A82BE100911848 /* CDXCardDeckCardEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckCardEditViewController.m; path = Classes/Controllers/CDXCardDeckCardEditViewController.m; sourceTree = "<group>"; };
 		E0A1C00211A82C5600911848 /* CDXCardDeckCardEditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardDeckCardEditView.xib; path = UserInterfaces/CDXCardDeckCardEditView.xib; sourceTree = "<group>"; };
@@ -343,15 +333,9 @@
 		E0CFA5FD11D68D0600FF686F /* IndexDotWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IndexDotWhite@2x.png"; path = "Images/IndexDotWhite@2x.png"; sourceTree = "<group>"; };
 		E0D01AEB1170EF9200004856 /* CDXImageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXImageFactory.h; path = Classes/CDXImageFactory.h; sourceTree = "<group>"; };
 		E0D01AEC1170EF9200004856 /* CDXImageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXImageFactory.m; path = Classes/CDXImageFactory.m; sourceTree = "<group>"; };
-		E0D1E50B11D5F22E00C8B1C4 /* Toolbar-Up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Up@2x.png"; path = "Images/Toolbars/Toolbar-Up@2x.png"; sourceTree = "<group>"; };
-		E0D1E53B11D5FA0900C8B1C4 /* Toolbar-Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Settings@2x.png"; path = "Images/Toolbars/Toolbar-Settings@2x.png"; sourceTree = "<group>"; };
-		E0D1E59E11D602E600C8B1C4 /* Toolbar-Edit-Reorder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Edit-Reorder@2x.png"; path = "Images/Toolbars/Toolbar-Edit-Reorder@2x.png"; sourceTree = "<group>"; };
-		E0D1E5A711D608DE00C8B1C4 /* Toolbar-Shuffle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Shuffle@2x.png"; path = "Images/Toolbars/Toolbar-Shuffle@2x.png"; sourceTree = "<group>"; };
-		E0D1E5B511D60B7E00C8B1C4 /* Toolbar-Sort@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Sort@2x.png"; path = "Images/Toolbars/Toolbar-Sort@2x.png"; sourceTree = "<group>"; };
 		E0D1E5CD11D6129000C8B1C4 /* Notice-Shuffle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Shuffle@2x.png"; path = "Images/Notices/Notice-Shuffle@2x.png"; sourceTree = "<group>"; };
 		E0D1E5CE11D6129000C8B1C4 /* Notice-Sort@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Sort@2x.png"; path = "Images/Notices/Notice-Sort@2x.png"; sourceTree = "<group>"; };
 		E0D1F09C18CC6BFF00BA521A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		E0D4B87313927A8100228167 /* Toolbar-Play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Play@2x.png"; path = "Images/Toolbars/Toolbar-Play@2x.png"; sourceTree = "<group>"; };
 		E0D673DF151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "CDXTimerKeyboardExtensionView~ipad.xib"; path = "UserInterfaces/CDXTimerKeyboardExtensionView~ipad.xib"; sourceTree = "<group>"; };
 		E0D909261172275D00AD50DA /* CDXLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXLogger.h; path = Logging/CDXLogger.h; sourceTree = "<group>"; };
 		E0D909271172275D00AD50DA /* CDXLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXLogger.m; path = Logging/CDXLogger.m; sourceTree = "<group>"; };
@@ -394,8 +378,6 @@
 		E0FAC13911C0398800CDA558 /* CDXStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXStorage.h; path = Classes/Storage/CDXStorage.h; sourceTree = "<group>"; };
 		E0FAC13A11C0398800CDA558 /* CDXStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXStorage.m; path = Classes/Storage/CDXStorage.m; sourceTree = "<group>"; };
 		E0FAC1CE11C166D900CDA558 /* CDXCardDeckBaseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckBaseTests.m; path = Classes/Models/CDXCardDeckBaseTests.m; sourceTree = "<group>"; };
-		E0FD05B61392B93600136B40 /* Toolbar-Stop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Stop@2x.png"; path = "Images/Toolbars/Toolbar-Stop@2x.png"; sourceTree = "<group>"; };
-		E0FD05B81392B93600136B40 /* Toolbar-Play2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Toolbar-Play2@2x.png"; path = "Images/Toolbars/Toolbar-Play2@2x.png"; sourceTree = "<group>"; };
 		E0FD05BF1392D76300136B40 /* Notice-Play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Play@2x.png"; path = "Images/Notices/Notice-Play@2x.png"; sourceTree = "<group>"; };
 		E0FD05C11392D76300136B40 /* Notice-Play2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Play2@2x.png"; path = "Images/Notices/Notice-Play2@2x.png"; sourceTree = "<group>"; };
 		E0FD05C31392D76300136B40 /* Notice-Stop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Notice-Stop@2x.png"; path = "Images/Notices/Notice-Stop@2x.png"; sourceTree = "<group>"; };
@@ -723,34 +705,17 @@
 			name = Templates;
 			sourceTree = "<group>";
 		};
-		E0C51F87119DAC5F00D75D0E /* Toolbars */ = {
-			isa = PBXGroup;
-			children = (
-				E0D4B87313927A8100228167 /* Toolbar-Play@2x.png */,
-				E0FD05B81392B93600136B40 /* Toolbar-Play2@2x.png */,
-				E0FD05B61392B93600136B40 /* Toolbar-Stop@2x.png */,
-				E0D1E5B511D60B7E00C8B1C4 /* Toolbar-Sort@2x.png */,
-				E0D1E5A711D608DE00C8B1C4 /* Toolbar-Shuffle@2x.png */,
-				E0D1E53B11D5FA0900C8B1C4 /* Toolbar-Settings@2x.png */,
-				E0D1E59E11D602E600C8B1C4 /* Toolbar-Edit-Reorder@2x.png */,
-				E0D1E50B11D5F22E00C8B1C4 /* Toolbar-Up@2x.png */,
-				E0602B6711D550AD0075F439 /* Toolbar-Down@2x.png */,
-				E043F1751400EFC900DE0567 /* Toolbar-Left@2x.png */,
-			);
-			name = Toolbars;
-			sourceTree = "<group>";
-		};
 		E0CCC70A1170D9D50040D222 /* Images */ = {
 			isa = PBXGroup;
 			children = (
 				E007D65B19C23C4000CE9BB2 /* AppIcon.xcassets */,
 				E007D65D19C23C4E00CE9BB2 /* LaunchImage.xcassets */,
+				E0A03BB219CE2D0D00B5B4BA /* ToolbarIcons.xcassets */,
 				E0B30D24187B45D10010A375 /* Circle@2x.png */,
 				E04D945211D77EA500A4DA59 /* IndexDotBlack@2x.png */,
 				E0CFA5FB11D68CF800FF686F /* IndexDotGray@2x.png */,
 				E0CFA5FD11D68D0600FF686F /* IndexDotWhite@2x.png */,
 				E03B105E11C3F92900591E45 /* Cells */,
-				E0C51F87119DAC5F00D75D0E /* Toolbars */,
 				E0620D5211BAA606006AABD2 /* Notices */,
 				E07418E7188DCD3500039D8A /* Activities */,
 				E0DD7D6411D6302B00ED23B6 /* Logo-Prerendered@2x.png */,
@@ -886,12 +851,6 @@
 				E0620D0111BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib in Resources */,
 				E03B10B911C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib in Resources */,
 				E0875D991958CAB9007FA508 /* CDXOrderedSerializerDictionary.h in Resources */,
-				E0602B6911D550AD0075F439 /* Toolbar-Down@2x.png in Resources */,
-				E0D1E50C11D5F22E00C8B1C4 /* Toolbar-Up@2x.png in Resources */,
-				E0D1E53C11D5FA0900C8B1C4 /* Toolbar-Settings@2x.png in Resources */,
-				E0D1E59F11D602E600C8B1C4 /* Toolbar-Edit-Reorder@2x.png in Resources */,
-				E0D1E5A811D608DE00C8B1C4 /* Toolbar-Shuffle@2x.png in Resources */,
-				E0D1E5B611D60B7E00C8B1C4 /* Toolbar-Sort@2x.png in Resources */,
 				E0D1E5CF11D6129000C8B1C4 /* Notice-Shuffle@2x.png in Resources */,
 				E0D1E5D011D6129000C8B1C4 /* Notice-Sort@2x.png in Resources */,
 				E0521EBC194644EE001CCC96 /* CDXCardDeckJSONSerializerTestsDeck1.carddeck.json in Resources */,
@@ -910,9 +869,6 @@
 				E0B30D25187B45D10010A375 /* Circle@2x.png in Resources */,
 				E0A483CE11F2FC7400A6ECC8 /* YesNoPerhaps.CardDeck.plist in Resources */,
 				E0331B8E11FC3F18008B8E2F /* Legal.html in Resources */,
-				E0D4B87513927A8100228167 /* Toolbar-Play@2x.png in Resources */,
-				E0FD05BA1392B93600136B40 /* Toolbar-Stop@2x.png in Resources */,
-				E0FD05BC1392B93600136B40 /* Toolbar-Play2@2x.png in Resources */,
 				E0FD05C51392D76300136B40 /* Notice-Play@2x.png in Resources */,
 				E0FD05C71392D76300136B40 /* Notice-Play2@2x.png in Resources */,
 				E0FD05C91392D76300136B40 /* Notice-Stop@2x.png in Resources */,
@@ -922,7 +878,6 @@
 				E0F3AEE013EEDA5800B253ED /* CDXCardDeckCardEditPadView.xib in Resources */,
 				E0F3AEE913EF03BA00B253ED /* CDXColorKeyboardExtensionView~ipad.xib in Resources */,
 				E0F3AEEA13EF03BA00B253ED /* CDXTextKeyboardExtensionView~ipad.xib in Resources */,
-				E043F1771400EFC900DE0567 /* Toolbar-Left@2x.png in Resources */,
 				E022635D140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib in Resources */,
 				E06B37DF1401668000D57C37 /* CDXSymbolsKeyboardExtensionTableViewCellB~ipad.xib in Resources */,
 				E02D680E194C88E1003F06B9 /* CDXCardDeckJSONSerializerTestsDeck2.carddeck.json in Resources */,
@@ -931,6 +886,7 @@
 				E0D673E0151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib in Resources */,
 				E0BDD69015210389001C325D /* Template.html in Resources */,
 				E01951F6153B3CD3002CE5B2 /* ReleaseNotes.html in Resources */,
+				E0A03BB319CE2D0D00B5B4BA /* ToolbarIcons.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
