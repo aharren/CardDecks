@@ -531,9 +531,9 @@
         menuController.menuItems = @[menuItemNew];
     }
     else if (barButtonItem == actionButton) {
-        UIMenuItem *menuItemCarddecksURL = [[UIMenuItem alloc] initWithTitle:@"carddecks:// URL" action:@selector(actionButtonPressedCarddecksURL)];
-        UIMenuItem *menuItemHTTPURL = [[UIMenuItem alloc] initWithTitle:@"http:// URL" action:@selector(actionButtonPressedHTTPURL)];
-        UIMenuItem *menuItemDocument = [[UIMenuItem alloc] initWithTitle:@".carddeck file" action:@selector(actionButtonPressedJSON)];
+        UIMenuItem *menuItemCarddecksURL = [[UIMenuItem alloc] initWithTitle:@"carddecks://" action:@selector(actionButtonPressedCarddecksURL)];
+        UIMenuItem *menuItemHTTPURL = [[UIMenuItem alloc] initWithTitle:@"http://" action:@selector(actionButtonPressedHTTPURL)];
+        UIMenuItem *menuItemDocument = [[UIMenuItem alloc] initWithTitle:@".carddeck" action:@selector(actionButtonPressedJSON)];
         menuController.menuItems = @[menuItemCarddecksURL, menuItemHTTPURL, menuItemDocument];
     }
 }
