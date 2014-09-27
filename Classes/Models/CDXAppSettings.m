@@ -341,7 +341,7 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
             return nil;
             break;
         case CDXAppSettingsAbout:
-            return [UIImage imageNamed:@"Cell-Logo.png"];
+            return [UIImage imageNamed:@"Cell-Logo"];
             break;
     }
 }

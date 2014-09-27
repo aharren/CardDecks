@@ -85,7 +85,7 @@
     self.navigationItem.title = cardDeckViewContext.cardDeck.name;
     if ([cardDeck isShuffled]) {
         if (!viewWasAlreadyVisible) {
-            [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:self.view];
+            [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:self.view];
         }
     }
     viewWasAlreadyVisible = YES;
@@ -251,9 +251,9 @@
 
 - (void)updateShuffleButton {
     if ([cardDeck isShuffled]) {
-        shuffleButton.image = [UIImage imageNamed:@"Toolbar-Sort.png"];
+        shuffleButton.image = [UIImage imageNamed:@"Toolbar-Sort"];
     } else {
-        shuffleButton.image = [UIImage imageNamed:@"Toolbar-Shuffle.png"];
+        shuffleButton.image = [UIImage imageNamed:@"Toolbar-Shuffle"];
     }
     shuffleButton.enabled = ([self tableView:viewTableView numberOfRowsInSection:1] != 0);
 }
@@ -331,10 +331,10 @@
 - (IBAction)shuffleButtonPressed {
     if ([cardDeck isShuffled]) {
         [cardDeck sort];
-        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort.png" text:@"sort" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:self.view];
+        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Sort" text:@"sort" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:self.view];
     } else {
         [cardDeck shuffle];
-        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle.png" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:self.view];
+        [[CDXAppWindowManager sharedAppWindowManager] showNoticeWithImageNamed:@"Notice-Shuffle" text:@"shuffle" timeInterval:0.4 orientation:UIDeviceOrientationFaceUp view:self.view];
     }
     [cardDeck updateStorageObjectDeferred:YES];
     

@@ -121,10 +121,10 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
     [textButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
     [backgroundButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
-    [colorChooserRGBSliderRed setThumbImage:[UIImage imageNamed:@"Circle.png"] forState:UIControlStateNormal];
-    [colorChooserRGBSliderGreen setThumbImage:[UIImage imageNamed:@"Circle.png"] forState:UIControlStateNormal];
-    [colorChooserRGBSliderBlue setThumbImage:[UIImage imageNamed:@"Circle.png"] forState:UIControlStateNormal];
-    [colorChooserRGBSliderAlpha setThumbImage:[UIImage imageNamed:@"Circle.png"] forState:UIControlStateNormal];
+    [colorChooserRGBSliderRed setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
+    [colorChooserRGBSliderGreen setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
+    [colorChooserRGBSliderBlue setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
+    [colorChooserRGBSliderAlpha setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
 }
 
 - (void)viewDidUnload {
