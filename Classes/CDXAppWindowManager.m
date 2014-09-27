@@ -498,11 +498,11 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     if ((self = [super init])) {
         ivar_assign(splitViewController, [[CDXLeftRightSplitViewController alloc] init]);
         ivar_assign(leftNavigationController, [[UINavigationController alloc] init]);
-        [leftNavigationController setToolbarHidden:YES];
+        [leftNavigationController setToolbarHidden:NO];
         [leftNavigationController setNavigationBarHidden:NO];
         [splitViewController setLeftViewController:leftNavigationController];
         ivar_assign(rightNavigationController, [[UINavigationController alloc] init]);
-        [rightNavigationController setToolbarHidden:YES];
+        [rightNavigationController setToolbarHidden:NO];
         [rightNavigationController setNavigationBarHidden:NO];
         [splitViewController setRightViewController:rightNavigationController];
 
