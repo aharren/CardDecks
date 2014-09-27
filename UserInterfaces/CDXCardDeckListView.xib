@@ -41,7 +41,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
             <items>
                 <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="10"/>
-                <barButtonItem image="Toolbar-Edit-Reorder.png" width="24" style="plain" id="13">
+                <barButtonItem image="Toolbar-Edit-Reorder" width="24" style="plain" id="13">
                     <connections>
                         <action selector="editButtonPressed" destination="-1" id="37"/>
                     </connections>
@@ -66,7 +66,7 @@
                     </connections>
                 </barButtonItem>
                 <barButtonItem style="plain" systemItem="flexibleSpace" id="16"/>
-                <barButtonItem image="Toolbar-Settings.png" width="24" style="plain" id="24">
+                <barButtonItem image="Toolbar-Settings" width="24" style="plain" id="24">
                     <connections>
                         <action selector="settingsButtonPressed" destination="-1" id="25"/>
                     </connections>
@@ -76,8 +76,8 @@
         </toolbar>
     </objects>
     <resources>
-        <image name="Toolbar-Edit-Reorder.png" width="22" height="22"/>
-        <image name="Toolbar-Settings.png" width="22" height="22"/>
+        <image name="Toolbar-Edit-Reorder" width="22" height="22"/>
+        <image name="Toolbar-Settings" width="22" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

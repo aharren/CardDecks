@@ -40,13 +40,13 @@
                             <rect key="frame" x="0.0" y="980" width="423" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             <items>
-                                <barButtonItem image="Toolbar-Edit-Reorder.png" style="plain" id="85">
+                                <barButtonItem image="Toolbar-Edit-Reorder" style="plain" id="85">
                                     <connections>
                                         <action selector="editButtonPressed" destination="-1" id="117"/>
                                     </connections>
                                 </barButtonItem>
                                 <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="4AB-2A-dYP"/>
-                                <barButtonItem image="Toolbar-Shuffle.png" style="plain" id="101">
+                                <barButtonItem image="Toolbar-Shuffle" style="plain" id="101">
                                     <connections>
                                         <action selector="shuffleButtonPressed" destination="-1" id="114"/>
                                     </connections>
@@ -64,7 +64,7 @@
                                     </connections>
                                 </barButtonItem>
                                 <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="g4k-Rh-Oz2"/>
-                                <barButtonItem image="Toolbar-Settings.png" style="plain" id="71">
+                                <barButtonItem image="Toolbar-Settings" style="plain" id="71">
                                     <connections>
                                         <action selector="settingsButtonPressed" destination="-1" id="72"/>
                                     </connections>
@@ -86,9 +86,9 @@
         </view>
     </objects>
     <resources>
-        <image name="Toolbar-Edit-Reorder.png" width="22" height="22"/>
-        <image name="Toolbar-Settings.png" width="22" height="22"/>
-        <image name="Toolbar-Shuffle.png" width="22" height="22"/>
+        <image name="Toolbar-Edit-Reorder" width="22" height="22"/>
+        <image name="Toolbar-Settings" width="22" height="22"/>
+        <image name="Toolbar-Shuffle" width="22" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

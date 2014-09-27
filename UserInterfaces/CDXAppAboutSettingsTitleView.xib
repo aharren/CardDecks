@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="316" height="120"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="center" image="Logo-Prerendered.png" id="7">
+                <imageView autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="center" image="Logo-Prerendered" id="7">
                     <rect key="frame" x="63" y="25" width="57" height="57"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                 </imageView>
@@ -49,7 +49,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Logo-Prerendered.png" width="60" height="60"/>
+        <image name="Logo-Prerendered" width="60" height="60"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
