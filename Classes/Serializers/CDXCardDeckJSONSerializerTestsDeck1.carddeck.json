@@ -12,8 +12,8 @@
   "auto_play": "play1x",
   "default_card": {
     "text": "default",
-    "text_color": "f8f8f8f8",
-    "background_color": "08080808",
+    "text_color": "#f8f8f8f8",
+    "background_color": "#08080808",
     "font_size": 1,
     "orientation": "up",
     "timer": 2
@@ -21,8 +21,8 @@
   "cards": [
     {
       "text": "ok1",
-      "text_color": "12345678",
-      "background_color": "17654328",
+      "text_color": "#12345678",
+      "background_color": "#17654328",
       "font_size": 50,
       "orientation": "left",
       "timer": 100

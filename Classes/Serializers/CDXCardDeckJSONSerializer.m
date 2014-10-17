@@ -194,12 +194,12 @@ static NSString *autoPlays[autoPlaysCount] = {
     // text_color
     jstring = [CDXCardDeckJSONSerializer dictionary:jcard stringForKey:@"text_color" defaultsTo:nil];
     if (jstring != nil) {
-        card.textColor = [CDXColor colorWithRGBAString:jstring defaultsTo:card.textColor];
+        card.textColor = [CDXColor colorWithRGBAString:jstring defaultsTo:card.textColor prefix:@"#"];
     }
     // background_color
     jstring = [CDXCardDeckJSONSerializer dictionary:jcard stringForKey:@"background_color" defaultsTo:nil];
     if (jstring != nil) {
-        card.backgroundColor = [CDXColor colorWithRGBAString:jstring defaultsTo:card.backgroundColor];
+        card.backgroundColor = [CDXColor colorWithRGBAString:jstring defaultsTo:card.backgroundColor prefix:@"#"];
     }
     // orientation
     jstring = [CDXCardDeckJSONSerializer dictionary:jcard stringForKey:@"orientation" defaultsTo:nil];
@@ -321,11 +321,11 @@ static NSString *autoPlays[autoPlaysCount] = {
     }
     // text_color
     if (!cardDefaults || ![card.textColor isEqual:cardDefaults.textColor]) {
-        [dictionary setObject:[card.textColor rgbaString] forKey:@"text_color"];
+        [dictionary setObject:[card.textColor rgbaStringWithPrefix:@"#"] forKey:@"text_color"];
     }
     // background_color
     if (!cardDefaults || ![card.backgroundColor isEqual:cardDefaults.backgroundColor]) {
-        [dictionary setObject:[card.backgroundColor rgbaString] forKey:@"background_color"];
+        [dictionary setObject:[card.backgroundColor rgbaStringWithPrefix:@"#"] forKey:@"background_color"];
     }
     // orientation
     if (!cardDefaults || card.orientation != cardDefaults.orientation) {

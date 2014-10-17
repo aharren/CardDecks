@@ -40,6 +40,7 @@
 @property (nonatomic, readonly) uint8_t alpha;
 
 - (NSString *)rgbaString;
+- (NSString *)rgbaStringWithPrefix:(NSString *)prefix;
 - (UIColor *)uiColor;
 
 - (BOOL)isEqual:(id)anObject;
@@ -47,6 +48,7 @@
 
 + (CDXColor *)colorWithRed:(uint8_t)red green:(uint8_t)green blue:(uint8_t)blue alpha:(uint8_t)alpha;
 + (CDXColor *)colorWithRGBAString:(NSString *)string defaultsTo:(CDXColor *)defaultColor;
++ (CDXColor *)colorWithRGBAString:(NSString *)string defaultsTo:(CDXColor *)defaultColor prefix:(NSString *)prefix;
 
 + (CDXColor *)colorWhite;
 + (CDXColor *)colorBlack;
