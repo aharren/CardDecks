@@ -203,7 +203,7 @@
 
 - (void)dismissActionSheet {
     if (activeActionSheet != nil) {
-        [activeActionSheet dismissWithClickedButtonIndex:[activeActionSheet cancelButtonIndex] animated:NO];
+        [activeActionSheet dismissActionSheetAnimated:NO];
         ivar_release_and_clear(activeActionSheet);
     }
 }
@@ -220,77 +220,57 @@
 - (void)keyboardExtensionResponderRunActionsForExtensionAtIndex:(NSUInteger)index barButtonItem:(UIBarButtonItem *)barButtonItem {
     qltrace();
     if (activeActionSheet != nil) {
-        [self dismissActionSheet];
-        // don't open a new sheet, just closed the same one
-        return;
+        if (activeActionSheet.tag == index && activeActionSheet.isVisible) {
+            [self dismissActionSheet];
+            [self buttonClickedActionSheet:activeActionSheet buttonAtIndex:-1];
+            // don't open a new sheet, just closed the same one
+            return;
+        } else {
+            [self dismissActionSheet];
+        }
     }
-    UIActionSheet *sheet = nil;
     if (editingDefaults) {
         index = -index;
     }
+    NSString *title = nil;
+    NSArray *buttons = nil;
     switch (index) {
         case 1:
-            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
-                      initWithTitle:@"Copy Color Properties"
-                      delegate:self
-                      cancelButtonTitle:@"Cancel"
-                      destructiveButtonTitle:nil
-                      otherButtonTitles:@"Text \u21e2 Defaults", @"Text \u21e0 Defaults", @"Background \u21e2 Defaults", @"Background \u21e0 Defaults", nil] autorelease];
+            title = @"Copy Color Properties";
+            buttons = @[@"Text \u21e2 Defaults", @"Text \u21e0 Defaults", @"Background \u21e2 Defaults", @"Background \u21e0 Defaults"];
             break;
         case 2:
-            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
-                      initWithTitle:@"Copy Text Properties"
-                      delegate:self
-                      cancelButtonTitle:@"Cancel"
-                      destructiveButtonTitle:nil
-                      otherButtonTitles:@"Layout \u21e2 Defaults", @"Layout \u21e0 Defaults", @"Size \u21e2 Defaults", @"Size \u21e0 Defaults", nil] autorelease];
+            title = @"Copy Text Properties";
+            buttons = @[@"Layout \u21e2 Defaults", @"Layout \u21e0 Defaults", @"Size \u21e2 Defaults", @"Size \u21e0 Defaults"];
             break;
         case 3:
-            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
-                      initWithTitle:@"Copy Timer Properties"
-                      delegate:self
-                      cancelButtonTitle:@"Cancel"
-                      destructiveButtonTitle:nil
-                      otherButtonTitles:@"Timer \u21e2 Defaults", @"Timer \u21e0 Defaults", nil] autorelease];
+            title = @"Copy Timer Properties";
+            buttons = @[@"Timer \u21e2 Defaults", @"Timer \u21e0 Defaults"];
             break;
         case -1:
-            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
-                      initWithTitle:@"Copy Color Properties"
-                      delegate:self
-                      cancelButtonTitle:@"Cancel"
-                      destructiveButtonTitle:nil
-                      otherButtonTitles:@"Text \u21e2 All Cards", @"Background \u21e2 All Cards", nil] autorelease];
+            title = @"Copy Color Properties";
+            buttons = @[@"Text \u21e2 All Cards", @"Background \u21e2 All Cards"];
             break;
         case -2:
-            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
-                      initWithTitle:@"Copy Text Properties"
-                      delegate:self
-                      cancelButtonTitle:@"Cancel"
-                      destructiveButtonTitle:nil
-                      otherButtonTitles:@"Layout \u21e2 All Cards", @"Size \u21e2 All Cards", nil] autorelease];
+            title = @"Copy Text Properties";
+            buttons = @[@"Layout \u21e2 All Cards", @"Size \u21e2 All Cards"];
             break;
         case -3:
-            sheet = [[[CDXAppWindowActionSheetNonFirstResponder alloc]
-                      initWithTitle:@"Copy Timer Properties"
-                      delegate:self
-                      cancelButtonTitle:@"Cancel"
-                      destructiveButtonTitle:nil
-                      otherButtonTitles:@"Timer \u21e2 All Cards", nil] autorelease];
+            title = @"Copy Timer Properties";
+            buttons = @[@"Timer \u21e2 All Cards"];
             break;
         default:
             break;
     }
-    if (sheet) {
-        sheet.tag = index;
-        [[CDXKeyboardExtensions sharedKeyboardExtensions] setInactive:YES];
-        [[CDXAppWindowManager sharedAppWindowManager] showActionSheet:sheet fromBarButtonItem:barButtonItem];
+    if (buttons) {
+        CDXActionSheet *sheet = [CDXActionSheet actionSheetWithTitle:title tag:index delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:buttons];
+        [[CDXAppWindowManager sharedAppWindowManager] showActionSheet:sheet viewController:self fromBarButtonItem:barButtonItem];
         ivar_assign_and_retain(activeActionSheet, sheet);
     }
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    qltrace();
-    ivar_release_and_clear(activeActionSheet);
+- (void)buttonClickedActionSheet:(CDXActionSheet *)actionSheet buttonAtIndex:(NSInteger)buttonIndex {
+    qltrace(@"tag: %ld index: %ld", (long)actionSheet.tag, (long)buttonIndex);
     CDXCard *card = [self currentCard];
     switch (actionSheet.tag) {
         case 1:
@@ -379,7 +359,11 @@
     }
     [self updateCardPreview];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] refreshKeyboardExtensions];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setInactive:NO];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setInactive:NO animated:YES];
+}
+
+- (void)presentActionSheetCompleted:(CDXActionSheet *)actionSheet {
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setInactive:YES animated:YES];
 }
 
 - (CDXColor *)colorKeyboardExtensionTextColor {

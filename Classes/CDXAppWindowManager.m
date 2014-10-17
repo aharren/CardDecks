@@ -169,7 +169,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     }
 }
 
-- (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem {
+- (void)showActionSheet:(CDXActionSheet *)actionSheet viewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem *)barButtonItem {
     qltrace();
 }
 
@@ -370,9 +370,9 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
     [window makeKeyAndVisible];
 }
 
-- (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem {
+- (void)showActionSheet:(CDXActionSheet *)actionSheet viewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem *)barButtonItem {
     qltrace();
-    [actionSheet showInView:window];
+    [actionSheet presentWithViewController:viewController view:window animated:YES];
 }
 
 @end
@@ -612,18 +612,9 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     ivar_release_and_clear(modalViewControllerContainer);
 }
 
-- (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem {
+- (void)showActionSheet:(CDXActionSheet *)actionSheet viewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem *)barButtonItem {
     qltrace();
-    [actionSheet showFromBarButtonItem:barButtonItem animated:NO];
-}
-
-@end
-
-
-@implementation CDXAppWindowActionSheetNonFirstResponder
-
-- (BOOL)canBecomeFirstResponder {
-    return NO;
+    [actionSheet presentWithViewController:viewController fromBarButtonItem:barButtonItem animated:NO];
 }
 
 @end

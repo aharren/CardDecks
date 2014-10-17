@@ -31,9 +31,10 @@
 #import "CDXSymbolsKeyboardExtension.h"
 #import "CDXTimerKeyboardExtension.h"
 #import "CDXCardView.h"
+#import "CDXActionSheet.h"
 
 
-@interface CDXCardDeckCardEditViewController : UIViewController<CDXAppWindowViewController, UIActionSheetDelegate, CDXKeyboardExtensionResponder, CDXKeyboardExtensionResponderWithActions, CDXColorKeyboardExtensionResponder, CDXTextKeyboardExtensionResponder, CDXTimerKeyboardExtensionResponder> {
+@interface CDXCardDeckCardEditViewController : UIViewController<CDXAppWindowViewController, UIActionSheetDelegate, CDXKeyboardExtensionResponder, CDXKeyboardExtensionResponderWithActions, CDXColorKeyboardExtensionResponder, CDXTextKeyboardExtensionResponder, CDXTimerKeyboardExtensionResponder, CDXActionSheetDelegate> {
     
 @protected
     IBOutlet UITextView *text;
@@ -52,7 +53,7 @@
     
     BOOL editingDefaults;
     
-    UIActionSheet *activeActionSheet;
+    CDXActionSheet *activeActionSheet;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext editDefaults:(BOOL)editDefaults nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;

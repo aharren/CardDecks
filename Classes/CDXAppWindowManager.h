@@ -26,6 +26,7 @@
 #import "CDXAppWindowProtocols.h"
 #import "CDXAppWindowNoticeView.h"
 #import "CDXAppWindowMessageView.h"
+#import "CDXActionSheet.h"
 
 
 @interface CDXAppWindowManager : NSObject {
@@ -61,20 +62,11 @@ declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 - (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)presentModalViewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem animated:(BOOL)animated;
 - (void)dismissModalViewControllerAnimated:(BOOL)animated;
-- (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem;
+- (void)showActionSheet:(CDXActionSheet *)actionSheet viewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem *)barButtonItem;
 - (void)applicationWillEnterForeground;
 - (void)applicationDidEnterBackground;
 
 + (CGAffineTransform)transformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation;
 
 @end
-
-
-@interface CDXAppWindowActionSheetNonFirstResponder : UIActionSheet {
-    
-}
-
-
-@end
-
 

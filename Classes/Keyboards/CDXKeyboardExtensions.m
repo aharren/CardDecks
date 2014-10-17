@@ -358,8 +358,19 @@ static float keyboardExtensionsOsVersion;
     return [[backgroundColor retain] autorelease];
 }
 
-- (void)setInactive:(BOOL)inactive {
-    viewInactiveExtensions.hidden = !inactive;
+- (void)setInactive:(BOOL)inactive animated:(BOOL)animated {
+    qltrace(@"inactive: %d, animated: %d", inactive ? 1 : 0, animated ? 1 : 0);
+    if (animated) {
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.25];
+    }
+    
+    viewInactiveExtensions.hidden = NO;
+    viewInactiveExtensions.alpha = inactive ? 1 : 0;
+    
+    if (animated) {
+        [UIView commitAnimations];
+    }
 }
 
 @end
