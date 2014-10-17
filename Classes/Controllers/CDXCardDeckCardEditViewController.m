@@ -414,9 +414,9 @@
     [text paste:sender];
 }
 
-- (void)dismissModalViewControllerAnimated:(BOOL)animated {
+- (void)dismissViewControllerAnimated:(BOOL)animated completion: (void (^)(void))completion {
     qltrace();
-    [super dismissModalViewControllerAnimated:animated];
+    [super dismissViewControllerAnimated:animated completion:completion];
     [self dismissActionSheet];
 }
 

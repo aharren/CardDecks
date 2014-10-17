@@ -410,11 +410,6 @@
     [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:actionButton animated:YES];
 }
 
-- (void)dismissModalViewControllerAnimated:(BOOL)animated {
-    qltrace();
-    [super dismissModalViewControllerAnimated:animated];
-}
-
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
     qltrace();
     if (indexPath.section == 1 && indexPath.row < [cardDeck cardsCount]) {
