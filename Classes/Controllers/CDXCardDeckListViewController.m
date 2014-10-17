@@ -545,6 +545,11 @@
     return self;
 }
 
+- (void)dealloc {
+    ivar_release_and_clear(cardDeckViewContext);
+    [super dealloc];
+}
+
 - (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
     if ([activityType isEqualToString:UIActivityTypeCopyToPasteboard]) {
         return [CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck];
@@ -566,6 +571,11 @@
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
     }
     return self;
+}
+
+- (void)dealloc {
+    ivar_release_and_clear(cardDeckViewContext);
+    [super dealloc];
 }
 
 - (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
@@ -591,6 +601,11 @@
     return self;
 }
 
+- (void)dealloc {
+    ivar_release_and_clear(text);
+    [super dealloc];
+}
+
 - (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
     if ([activityType isEqualToString:UIActivityTypeCopyToPasteboard]) {
         return text;
@@ -612,6 +627,11 @@
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
     }
     return self;
+}
+
+- (void)dealloc {
+    ivar_release_and_clear(cardDeckViewContext);
+    [super dealloc];
 }
 
 - (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
@@ -643,6 +663,11 @@
     return self;
 }
 
+- (void)dealloc {
+    ivar_release_and_clear(cardDeckViewContext);
+    [super dealloc];
+}
+
 - (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
     if ([activityType isEqualToString:UIActivityTypePostToTwitter]) {
         [[CDXAppWindowManager sharedAppWindowManager] showInfoMessage:@"Card deck attached to Twitter message" afterDelay:1];
@@ -667,6 +692,11 @@
     return self;
 }
 
+- (void)dealloc {
+    ivar_release_and_clear(cardDeckViewContext);
+    [super dealloc];
+}
+
 - (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
     if ([activityType isEqualToString:UIActivityTypePostToTwitter]) {
         [[CDXAppWindowManager sharedAppWindowManager] showInfoMessage:@"Card deck attached to Twitter message" afterDelay:1];
@@ -689,6 +719,11 @@
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
     }
     return self;
+}
+
+- (void)dealloc {
+    ivar_release_and_clear(cardDeckViewContext);
+    [super dealloc];
 }
 
 - (NSString *)activityType {
