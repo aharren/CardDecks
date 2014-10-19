@@ -88,6 +88,7 @@
 		E0875D9B1958CAD6007FA508 /* CDXOrderedSerializerDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E0875D9A1958CAD6007FA508 /* CDXOrderedSerializerDictionary.m */; };
 		E091E41619CF20010080A2E5 /* Logo.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E091E41519CF20010080A2E5 /* Logo.xcassets */; };
 		E097B04414E70FD300A8F38B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E097B04314E70FD300A8F38B /* AudioToolbox.framework */; };
+		E09A489619F3D41B001D9286 /* CDXCopyPaste.m in Sources */ = {isa = PBXBuildFile; fileRef = E09A489419F3D41B001D9286 /* CDXCopyPaste.m */; };
 		E09AC62511B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09AC62311B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib */; };
 		E09AC62611B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09AC62411B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib */; };
 		E09AC6FD11B7E75100C96E25 /* CDXColorKeyboardExtensionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09AC6FC11B7E75100C96E25 /* CDXColorKeyboardExtensionView.xib */; };
@@ -284,6 +285,8 @@
 		E0875D9A1958CAD6007FA508 /* CDXOrderedSerializerDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXOrderedSerializerDictionary.m; path = Classes/Serializers/CDXOrderedSerializerDictionary.m; sourceTree = "<group>"; };
 		E091E41519CF20010080A2E5 /* Logo.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Logo.xcassets; path = Images/Logo.xcassets; sourceTree = "<group>"; };
 		E097B04314E70FD300A8F38B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		E09A489419F3D41B001D9286 /* CDXCopyPaste.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCopyPaste.m; path = Classes/CDXCopyPaste.m; sourceTree = "<group>"; };
+		E09A489519F3D41B001D9286 /* CDXCopyPaste.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCopyPaste.h; path = Classes/CDXCopyPaste.h; sourceTree = "<group>"; };
 		E09AC62311B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXSymbolsKeyboardExtensionTableViewCellA.xib; path = UserInterfaces/CDXSymbolsKeyboardExtensionTableViewCellA.xib; sourceTree = "<group>"; };
 		E09AC62411B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXSymbolsKeyboardExtensionTableViewCellB.xib; path = UserInterfaces/CDXSymbolsKeyboardExtensionTableViewCellB.xib; sourceTree = "<group>"; };
 		E09AC6FC11B7E75100C96E25 /* CDXColorKeyboardExtensionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXColorKeyboardExtensionView.xib; path = UserInterfaces/CDXColorKeyboardExtensionView.xib; sourceTree = "<group>"; };
@@ -580,6 +583,8 @@
 				E0C0BFEE19D81C1C00806E21 /* CDXActionSheet.h */,
 				E0C0BFF119D81C3400806E21 /* CDXActionSheet.m */,
 				E0D77FB219E321DF00450F82 /* CDXActionSheetProtocols.h */,
+				E09A489519F3D41B001D9286 /* CDXCopyPaste.h */,
+				E09A489419F3D41B001D9286 /* CDXCopyPaste.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -937,6 +942,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E03BA24D116747FC00FE7924 /* main.m in Sources */,
+				E09A489619F3D41B001D9286 /* CDXCopyPaste.m in Sources */,
 				E03BA38911674CBF00FE7924 /* CDXAppDelegate.m in Sources */,
 				E002B6C7116885150072C409 /* CDXColor.m in Sources */,
 				E002B6D41168858C0072C409 /* CDXCard.m in Sources */,

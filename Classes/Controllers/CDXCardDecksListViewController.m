@@ -32,6 +32,7 @@
 #import "CDXSettingsViewController.h"
 #import "CDXCardDecks.h"
 #import "CDXAppURL.h"
+#import "CDXCopyPaste.h"
 #import "CDXApplicationVersion.h"
 
 #undef ql_component
@@ -384,9 +385,9 @@
             // copy is always possible
             return YES;
         } else if (action == @selector(paste:)) {
-            // paste is only possible if the pasteboard contains a "valid" URL
-            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
-            return [CDXAppURL mayBeCardDecksURLString:carddeckUrl];
+            // paste is only possible if the pasteboard contains a potentially valid card deck
+            NSString *carddeckString = [[UIPasteboard generalPasteboard] string];
+            return [CDXCopyPaste mayBeCardDeck:carddeckString];
         }
     }
     return NO;
@@ -402,17 +403,12 @@
             [[UIPasteboard generalPasteboard] setString:carddeckUrl];
         } else if (action == @selector(paste:)) {
             // paste the card deck from the pasteboard
-            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
-            if (![CDXAppURL mayBeCardDecksURLString:carddeckUrl]) {
+            NSString *carddeckString = [[UIPasteboard generalPasteboard] string];
+            if (![CDXCopyPaste mayBeCardDeck:carddeckString]) {
                 return;
             }
-            CDXCardDeck *sourceDeck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
+            CDXCardDeck *sourceDeck = [CDXCopyPaste cardDeckFromString:carddeckString allowEmpty:NO];
             if (sourceDeck == nil) {
-                [[CDXAppWindowManager sharedAppWindowManager] showErrorMessage:@"Paste failed: invalid document" afterDelay:0.1];
-                return;
-            }
-            if (sourceDeck.cardsCount == 0) {
-                [[CDXAppWindowManager sharedAppWindowManager] showErrorMessage:@"Paste failed: no cards to paste" afterDelay:0.1];
                 return;
             }
             CDXCardDeck *targetDeck = [cardDecks cardDeckAtIndex:indexPath.row].cardDeck;
@@ -441,9 +437,9 @@
     qltrace();
     if (barButtonItem == addButton) {
         if (action == @selector(paste:)) {
-            // paste is only possible if the pasteboard contains a "valid" URL
-            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
-            return [CDXAppURL mayBeCardDecksURLString:carddeckUrl];
+            // paste is only possible if the pasteboard contains a potentially valid card deck
+            NSString *carddeckString = [[UIPasteboard generalPasteboard] string];
+            return [CDXCopyPaste mayBeCardDeck:carddeckString];
         } else if (action == @selector(addButtonPressed)) {
             return YES;
         } else {
@@ -458,16 +454,15 @@
     if (barButtonItem == addButton) {
         if (action == @selector(paste:)) {
             // paste the card deck from the pasteboard as a new card deck
-            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
-            if (![CDXAppURL mayBeCardDecksURLString:carddeckUrl]) {
+            NSString *carddeckString = [[UIPasteboard generalPasteboard] string];
+            if (![CDXCopyPaste mayBeCardDeck:carddeckString]) {
                 return;
             }
-            CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
-            if (deck == nil) {
-                [[CDXAppWindowManager sharedAppWindowManager] showErrorMessage:@"Paste failed: invalid document" afterDelay:0.1];
+            CDXCardDeck *sourceDeck = [CDXCopyPaste cardDeckFromString:carddeckString allowEmpty:YES];
+            if (sourceDeck == nil) {
                 return;
             }
-            CDXCardDeckHolder *holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
+            CDXCardDeckHolder *holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:sourceDeck];
             [holder.cardDeck updateStorageObjectDeferred:NO];
             [self processCardDeckAddAtBottom:holder];
             return;
