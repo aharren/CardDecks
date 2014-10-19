@@ -635,6 +635,9 @@
         [activityType isEqualToString:UIActivityTypeAirDrop]) {
         return [NSURL URLWithString:[CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
     }
+    if ([activityType isEqualToString:UIActivityTypeCopyToPasteboard]) {
+        return nil;
+    }
     return [NSURL URLWithString:[CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
 }
 
