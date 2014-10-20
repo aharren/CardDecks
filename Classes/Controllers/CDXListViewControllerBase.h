@@ -95,6 +95,7 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
 - (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
 
+- (void)menu:(UIMenuController *)menuController itemsForTableView:(UITableView *)tableView cell:(UITableViewCell *)cell;
 - (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem;
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;

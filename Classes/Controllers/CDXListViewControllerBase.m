@@ -318,6 +318,8 @@
         [self becomeFirstResponder];
         UIMenuController *menu = [UIMenuController sharedMenuController];
         [menu setTargetRect:cell.frame inView:sender.view];
+        // add additional menu items, defined by subclass
+        [self menu:menu itemsForTableView:viewTableView cell:cell];
         [menu setMenuVisible:YES animated:YES];
         
         // keep cell selected
@@ -362,6 +364,9 @@
             }
         }
     }
+}
+
+- (void)menu:(UIMenuController *)menuController itemsForTableView:(UITableView *)tableView cell:(UITableViewCell *)cell {
 }
 
 - (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem {
