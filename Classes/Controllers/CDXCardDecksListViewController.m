@@ -390,6 +390,9 @@
             return [CDXCopyPaste mayBeCardDeck:carddeckString];
         }
     }
+    if (action == @selector(duplicateButtonPressed)) {
+        return YES;
+    }
     return NO;
 }
 
@@ -470,6 +473,26 @@
             return;
         }
     }
+}
+
+- (void)duplicateButtonPressed {
+    qltrace(@"%@", performActionTableViewIndexPath);
+    if (performActionTableViewIndexPath.section != 1) {
+        return;
+    }
+    CDXCardDeckHolder *sourceDeck = nil;
+    sourceDeck = [cardDecks cardDeckAtIndex:performActionTableViewIndexPath.row];
+    CDXCardDeck *deck = [[sourceDeck.cardDeck copy] autorelease];
+    [deck updateStorageObjectDeferred:NO];
+    CDXCardDeckHolder *holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
+    [cardDecks addPendingCardDeckAdd:holder];
+    lastCardDeckIndex = performActionTableViewIndexPath.row;
+    [self processPendingCardDeckAdds];
+}
+
+- (void)menu:(UIMenuController *)menuController itemsForTableView:(UITableView *)tableView cell:(UITableViewCell *)cell {
+    UIMenuItem *menuItemNew = [[UIMenuItem alloc] initWithTitle:@"Duplicate" action:@selector(duplicateButtonPressed)];
+    menuController.menuItems = @[menuItemNew];
 }
 
 - (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem {
