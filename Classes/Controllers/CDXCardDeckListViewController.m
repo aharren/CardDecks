@@ -745,7 +745,6 @@
 
 - (void)performActivity {
     CDXCardDeck *deck = [[cardDeckViewContext.cardDeck copy] autorelease];
-    deck.name = [deck.name stringByAppendingString:@" - Copy"];
     [deck updateStorageObjectDeferred:NO];
     CDXCardDeckHolder *holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
     [cardDeckViewContext.cardDecks addPendingCardDeckAdd:holder];
