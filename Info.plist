@@ -21,8 +21,6 @@
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>CardDecks</string>
-	<key>CFBundleIconFile</key>
-	<string>Icon@2x.png</string>
 	<key>CFBundleIdentifier</key>
 	<string>0xc0.de.CardDecks</string>
 	<key>CFBundleInfoDictionaryVersion</key>
