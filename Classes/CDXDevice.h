@@ -57,7 +57,6 @@ typedef enum {
 
 @property (nonatomic, readonly) NSString* deviceSystemVersionString;
 
-@property (nonatomic, readonly) BOOL useReducedGraphicsEffects;
 @property (nonatomic, readonly) BOOL useImageBasedRendering;
 
 - (void)vibrate;

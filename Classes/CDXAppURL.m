@@ -25,6 +25,7 @@
 
 #import "CDXAppURL.h"
 #import "CDXCardDeckURLSerializer.h"
+#import "CDXCardDeckJSONSerializer.h"
 
 #undef ql_component
 #define ql_component lcl_cApplication
@@ -33,17 +34,22 @@
 #define CDXAppURLPath_v1_add @"/add"
 #define CDXAppURLPath_v2_add @"/2/add"
 
-#define CDXAppURLPrefix_carddecks_v1_add @"carddecks://" CDXAppURLPath_v1_add @"?"
-#define CDXAppURLPrefix_carddecks_v2_add @"carddecks://" CDXAppURLPath_v2_add @"?"
+#define CDXAppURLScheme_file @"file"
+#define CDXAppURLScheme_http @"http"
+#define CDXAppURLScheme_carddecks @"carddecks"
+
+#define CDXAppURLPrefix_carddecks_v1_add CDXAppURLScheme_carddecks @"://" CDXAppURLPath_v1_add @"?"
+#define CDXAppURLPrefix_carddecks_v2_add CDXAppURLScheme_carddecks @"://" CDXAppURLPath_v2_add @"?"
 #define CDXAppURLPrefix_http_v2_add @"http://carddecks.protocol.0xc0.de" CDXAppURLPath_v2_add @"?"
 
 
 @implementation CDXAppURL
 
-+ (BOOL)handleOpenURL:(NSURL *)url cardDecks:(CDXCardDecks *)cardDecks {
++ (BOOL)handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation cardDecks:(CDXCardDecks *)cardDecks {
     qltrace(@"%@", url);
     CDXCardDeck *deckToAdd = [CDXAppURL cardDeckFromURL:url];
     if (deckToAdd == nil) {
+        [[CDXAppWindowManager sharedAppWindowManager] showErrorMessage:@"Import failed: invalid document" afterDelay:0.7];
         return NO;
     }
     
@@ -66,17 +72,38 @@
         return nil;
     }
     
-    NSString *host = [url host];
-    if (!(host == nil || [@"" isEqualToString:host])) {
-        return nil;
+    NSString *scheme = [url scheme];
+    
+    // file URL
+    if ([CDXAppURLScheme_file isEqualToString:scheme]) {
+        NSError *error = nil;
+        NSString *string = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+        [[NSFileManager defaultManager] removeItemAtURL:url error:&error];
+        return [CDXCardDeckJSONSerializer cardDeckFromString:string];
     }
     
-    NSString *path = [url path];
-    if ([CDXAppURLPath_v1_add isEqualToString:path]) {
-        return [CDXCardDeckURLSerializer cardDeckFromVersion1String:[url query]];
-    } else if ([CDXAppURLPath_v2_add isEqualToString:path]) {
-        return [CDXCardDeckURLSerializer cardDeckFromVersion2String:[url query]];
+    // http URL
+    if ([CDXAppURLScheme_http isEqualToString:scheme]) {
+        NSString *path = [url path];
+        if ([CDXAppURLPath_v2_add isEqualToString:path]) {
+            return [CDXCardDeckURLSerializer cardDeckFromVersion2String:[url query]];
+        } else {
+            return nil;
+        }
     }
+    
+    // carddecks URL
+    if ([CDXAppURLScheme_carddecks isEqualToString:scheme]) {
+        NSString *path = [url path];
+        if ([CDXAppURLPath_v1_add isEqualToString:path]) {
+            return [CDXCardDeckURLSerializer cardDeckFromVersion1String:[url query]];
+        } else if ([CDXAppURLPath_v2_add isEqualToString:path]) {
+            return [CDXCardDeckURLSerializer cardDeckFromVersion2String:[url query]];
+        } else {
+            return nil;
+        }
+    }
+    
     return nil;
 }
 
@@ -85,6 +112,8 @@
     if ([urlString hasPrefix:CDXAppURLPrefix_carddecks_v1_add]) {
         return YES;
     } else if ([urlString hasPrefix:CDXAppURLPrefix_carddecks_v2_add]) {
+        return YES;
+    } else if ([urlString hasPrefix:CDXAppURLPrefix_http_v2_add]) {
         return YES;
     }
     return NO;

@@ -38,12 +38,12 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)aTitleText backButtonText:(NSString *)aBackButtonText {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        useReducedGraphicsEffects = [[CDXDevice sharedDevice] useReducedGraphicsEffects];
         ivar_assign_and_copy(titleText, aTitleText);
         ivar_assign_and_copy(backButtonText, aBackButtonText);
         ivar_assign_and_retain(reuseIdentifierSection1, @"Section1Cell");
         ivar_assign_and_retain(reuseIdentifierSection2, @"Section2Cell");
         performActionState = CDXListViewControllerBasePerformActionStateNone;
+        currentTag = 1;
     }
     return self;
 }
@@ -63,8 +63,11 @@
     ivar_release_and_clear(tableCellTextTextColorActionInactive);
     ivar_release_and_clear(tableCellDetailTextFont);
     ivar_release_and_clear(tableCellDetailTextTextColor);
-    ivar_release_and_clear(tableCellBackgroundImage);
-    ivar_release_and_clear(tableCellBackgroundImageAlt);
+    ivar_release_and_clear(tableCellBackgroundColor);
+    ivar_release_and_clear(tableCellBackgroundColorMarked);
+    ivar_release_and_clear(tableCellBackgroundColorAltGroup);
+    ivar_release_and_clear(tableCellBackgroundColorNewObject);
+    ivar_release_and_clear(tableCellBackgroundColorNewObjectAltGroup);
     ivar_release_and_clear(viewTableViewLongPressRecognizer);
     ivar_release_and_clear(viewToolbarLongPressRecognizer);
     ivar_release_and_clear(viewTableViewTapRecognizer);
@@ -114,10 +117,11 @@
     ivar_assign_and_retain(tableCellTextTextColorActionInactive, [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]);
     ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:10]);
     ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor grayColor]);
-    CGFloat rowHeight = viewTableView.rowHeight;
-    CGFloat base = 1.0;
-    ivar_assign_and_retain(tableCellBackgroundImage, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:rowHeight base:base]);
-    ivar_assign_and_retain(tableCellBackgroundImageAlt, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff] bottomColor:[CDXColor colorWithRed:0xe8 green:0xe8 blue:0xe8 alpha:0xff] height:rowHeight base:base]);
+    ivar_assign_and_retain(tableCellBackgroundColor, [UIColor whiteColor]);
+    ivar_assign_and_retain(tableCellBackgroundColorMarked, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff].uiColor);
+    ivar_assign_and_retain(tableCellBackgroundColorAltGroup, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff].uiColor);
+    ivar_assign_and_retain(tableCellBackgroundColorNewObject, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0+0x4 alpha:0xff].uiColor);
+    ivar_assign_and_retain(tableCellBackgroundColorNewObjectAltGroup, [CDXColor colorWithRed:0xe8 green:0xe8 blue:0xe8+0x4 alpha:0xff].uiColor);
     tableCellImageSize = CGSizeMake(10, 10);
     
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
@@ -153,6 +157,8 @@
     [viewTableView addGestureRecognizer:viewTableViewLongPressRecognizer];
     [self.navigationController.toolbar addGestureRecognizer:viewToolbarLongPressRecognizer];
     [viewTableView addGestureRecognizer:viewTableViewTapRecognizer];
+    
+    ++currentTag;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -218,24 +224,21 @@
     return 0;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath  marked:(BOOL)marked {
-    if (marked || !useReducedGraphicsEffects) {
-        UIColor *backgroundColor = [UIColor clearColor];
-        cell.textLabel.backgroundColor = backgroundColor;
-        cell.detailTextLabel.backgroundColor = backgroundColor;
-        cell.backgroundColor = backgroundColor;
-        cell.backgroundView = [[[UIImageView alloc] initWithImage:marked ? tableCellBackgroundImageAlt : tableCellBackgroundImage] autorelease];
-    } else {
-        UIColor *backgroundColor = [UIColor whiteColor];
-        cell.textLabel.backgroundColor = backgroundColor;
-        cell.detailTextLabel.backgroundColor = backgroundColor;
-        cell.backgroundColor = backgroundColor;
-        cell.backgroundView = nil;
-    }
-}
-
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath marked:NO];
+    NSInteger tag = cell.tag;
+    UIColor *backgroundColor = tableCellBackgroundColor;
+    if (tag & CDXTableViewCellTagMarked) {
+        backgroundColor = tableCellBackgroundColorMarked;
+    } else if (tag & CDXTableViewCellTagNewObject) {
+        if (tag & CDXTableViewCellTagAltGroup) {
+            backgroundColor = tableCellBackgroundColorNewObjectAltGroup;
+        } else {
+            backgroundColor = tableCellBackgroundColorNewObject;
+        }
+    } else if (tag & CDXTableViewCellTagAltGroup) {
+        backgroundColor = tableCellBackgroundColorAltGroup;
+    }
+    cell.backgroundColor = backgroundColor;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {
@@ -315,6 +318,8 @@
         [self becomeFirstResponder];
         UIMenuController *menu = [UIMenuController sharedMenuController];
         [menu setTargetRect:cell.frame inView:sender.view];
+        // add additional menu items, defined by subclass
+        [self menu:menu itemsForTableView:viewTableView cell:cell];
         [menu setMenuVisible:YES animated:YES];
         
         // keep cell selected
@@ -335,6 +340,12 @@
                 // find the corresponding bar-button item
                 for (UIBarButtonItem *item in [viewToolbar items]) {
                     if ([[(UIControl *)view allTargets] containsObject:item]) {
+                        if (!item.isEnabled) {
+                            // skip item if not enabled
+                            qltrace(@"item %@ is not enabled", item);
+                            return;
+                        }
+
                         // keep state
                         performActionState = CDXListViewControllerBasePerformActionStateToolbar;
                         ivar_assign_and_retain(performActionToolbarBarButtonItem, item);
@@ -343,6 +354,8 @@
                         [self becomeFirstResponder];
                         UIMenuController *menu = [UIMenuController sharedMenuController];
                         [menu setTargetRect:view.frame inView:sender.view];
+                        // add additional menu items, defined by subclass
+                        [self menu:menu itemsForBarButtonItem:item];
                         [menu setMenuVisible:YES animated:YES];
                         
                         return;
@@ -353,8 +366,17 @@
     }
 }
 
+- (void)menu:(UIMenuController *)menuController itemsForTableView:(UITableView *)tableView cell:(UITableViewCell *)cell {
+}
+
+- (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem {
+}
+
 - (void)handleTableViewTapGesture:(UITapGestureRecognizer *)sender {
     qltrace(@"%@", sender);
+    currentTouchLocationInWindow = [sender locationInView:self.view];
+    qltrace(@"location %f %f", currentTouchLocationInWindow.x, currentTouchLocationInWindow.y);
+
     NSIndexPath *indexPath = [viewTableView indexPathForRowAtPoint:[sender locationInView:viewTableView]];
     UITableViewCell *cell = [viewTableView cellForRowAtIndexPath:indexPath];
     
@@ -420,6 +442,11 @@
     if (performActionState == CDXListViewControllerBasePerformActionStateTableView) {
         if (performActionTableViewIndexPath != nil) {
             [self performAction:@selector(copy:) withSender:sender tableView:viewTableView indexPath:performActionTableViewIndexPath];
+            return;
+        }
+    } else if (performActionState == CDXListViewControllerBasePerformActionStateToolbar) {
+        if (performActionToolbarBarButtonItem != nil) {
+            [self performAction:@selector(copy:) withSender:sender barButtonItem:performActionToolbarBarButtonItem];
             return;
         }
     }

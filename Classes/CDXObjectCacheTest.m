@@ -23,11 +23,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import "CDXObjectCache.h"
 
 
-@interface CDXObjectCacheTest : SenTestCase {
+@interface CDXObjectCacheTest : XCTestCase {
     
 }
 
@@ -41,24 +41,24 @@
     
     NSObject *object1 = [[[NSObject alloc] init] autorelease];
     [cache addObject:object1 withKey:1];
-    STAssertEquals((NSUInteger)1, [cache count], nil);
+    XCTAssertEqual((NSUInteger)1, [cache count]);
     
     NSObject *object2 = [[[NSObject alloc] init] autorelease];
     [cache addObject:object2 withKey:2];
-    STAssertEquals((NSUInteger)2, [cache count], nil);
+    XCTAssertEqual((NSUInteger)2, [cache count]);
     
     NSObject *object3 = [[[NSObject alloc] init] autorelease];
     [cache addObject:object3 withKey:3];
-    STAssertEquals((NSUInteger)3, [cache count], nil);
+    XCTAssertEqual((NSUInteger)3, [cache count]);
     
     NSObject *object4 = [[[NSObject alloc] init] autorelease];
     [cache addObject:object4 withKey:4];
-    STAssertEquals((NSUInteger)3, [cache count], nil);
+    XCTAssertEqual((NSUInteger)3, [cache count]);
     
-    STAssertNil(nil, [cache objectWithKey:4], nil);
-    STAssertEquals(object3, [cache objectWithKey:3], nil);
-    STAssertEquals(object2, [cache objectWithKey:2], nil);
-    STAssertEquals(object1, [cache objectWithKey:1], nil);
+    XCTAssertNil([cache objectWithKey:4]);
+    XCTAssertEqual(object3, [cache objectWithKey:3]);
+    XCTAssertEqual(object2, [cache objectWithKey:2]);
+    XCTAssertEqual(object1, [cache objectWithKey:1]);
 }
 
 - (void)testAddObjectSize7 {
@@ -66,45 +66,45 @@
     
     NSObject *object1 = [[[NSObject alloc] init] autorelease];
     [cache addObject:object1 withKey:1];
-    STAssertEquals((NSUInteger)1, [cache count], nil);
+    XCTAssertEqual((NSUInteger)1, [cache count]);
     
     NSObject *object2 = [[[NSObject alloc] init] autorelease];
     [cache addObject:object2 withKey:2];
-    STAssertEquals((NSUInteger)2, [cache count], nil);
+    XCTAssertEqual((NSUInteger)2, [cache count]);
     
     NSObject *object3 = [[[NSObject alloc] init] autorelease];
     [cache addObject:object3 withKey:3];
-    STAssertEquals((NSUInteger)3, [cache count], nil);
+    XCTAssertEqual((NSUInteger)3, [cache count]);
     
     NSObject *object4 = [[[NSObject alloc] init] autorelease];
     [cache addObject:object4 withKey:4];
-    STAssertEquals((NSUInteger)4, [cache count], nil);
+    XCTAssertEqual((NSUInteger)4, [cache count]);
     
     NSObject *object5 = [[[NSObject alloc] init] autorelease];
     [cache addObject:object5 withKey:5];
-    STAssertEquals((NSUInteger)5, [cache count], nil);
+    XCTAssertEqual((NSUInteger)5, [cache count]);
     
     NSObject *object6 = [[[NSObject alloc] init] autorelease];
     [cache addObject:object6 withKey:6];
-    STAssertEquals((NSUInteger)5, [cache count], nil);
+    XCTAssertEqual((NSUInteger)5, [cache count]);
     
-    STAssertNil(nil, [cache objectWithKey:6], nil);
-    STAssertEquals(object5, [cache objectWithKey:5], nil);
-    STAssertEquals(object4, [cache objectWithKey:4], nil);
-    STAssertEquals(object3, [cache objectWithKey:3], nil);
-    STAssertEquals(object2, [cache objectWithKey:2], nil);
-    STAssertEquals(object1, [cache objectWithKey:1], nil);
+    XCTAssertNil([cache objectWithKey:6]);
+    XCTAssertEqual(object5, [cache objectWithKey:5]);
+    XCTAssertEqual(object4, [cache objectWithKey:4]);
+    XCTAssertEqual(object3, [cache objectWithKey:3]);
+    XCTAssertEqual(object2, [cache objectWithKey:2]);
+    XCTAssertEqual(object1, [cache objectWithKey:1]);
 }
 
 - (void)testAddObjectBad {
     CDXObjectCache *cache = [[[CDXObjectCache alloc] initWithSize:3] autorelease];
     
     [cache addObject:nil withKey:1];
-    STAssertEquals((NSUInteger)0, [cache count], nil);
+    XCTAssertEqual((NSUInteger)0, [cache count]);
     
     NSObject *object0 = [[[NSObject alloc] init] autorelease];
     [cache addObject:object0 withKey:-1];
-    STAssertEquals((NSUInteger)0, [cache count], nil);
+    XCTAssertEqual((NSUInteger)0, [cache count]);
 }    
 
 - (void)testDeallocObjects {
@@ -113,16 +113,16 @@
     
     NSObject *object1 = [[NSObject alloc] init];
     [cache addObject:object1 withKey:1];
-    STAssertEquals((NSUInteger)1, [cache count], nil);
-    STAssertEquals((NSUInteger)2, [object1 retainCount], nil);
+    XCTAssertEqual((NSUInteger)1, [cache count]);
+    XCTAssertEqual((NSUInteger)2, [object1 retainCount]);
     
     [pool release];
     
-    STAssertEquals((NSUInteger)2, [object1 retainCount], nil);
+    XCTAssertEqual((NSUInteger)2, [object1 retainCount]);
     
     [cache release];
     
-    STAssertEquals((NSUInteger)1, [object1 retainCount], nil);
+    XCTAssertEqual((NSUInteger)1, [object1 retainCount]);
     
     [object1 release];
 }
@@ -133,20 +133,20 @@
     
     NSObject *object1 = [[NSObject alloc] init];
     [cache addObject:object1 withKey:1];
-    STAssertEquals((NSUInteger)1, [cache count], nil);
-    STAssertEquals((NSUInteger)2, [object1 retainCount], nil);
+    XCTAssertEqual((NSUInteger)1, [cache count]);
+    XCTAssertEqual((NSUInteger)2, [object1 retainCount]);
     
-    STAssertNotNil([cache objectWithKey:1], nil);
-    STAssertEquals((NSUInteger)3, [object1 retainCount], nil);
+    XCTAssertNotNil([cache objectWithKey:1]);
+    XCTAssertEqual((NSUInteger)3, [object1 retainCount]);
     
     [pool release];
     
-    STAssertEquals((NSUInteger)2, [object1 retainCount], nil);
+    XCTAssertEqual((NSUInteger)2, [object1 retainCount]);
     
     [cache clear];
     
-    STAssertEquals((NSUInteger)1, [object1 retainCount], nil);
-    STAssertNil([cache objectWithKey:1], nil);
+    XCTAssertEqual((NSUInteger)1, [object1 retainCount]);
+    XCTAssertNil([cache objectWithKey:1]);
     
     [object1 release];
 }

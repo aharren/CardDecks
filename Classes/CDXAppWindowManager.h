@@ -25,6 +25,8 @@
 
 #import "CDXAppWindowProtocols.h"
 #import "CDXAppWindowNoticeView.h"
+#import "CDXAppWindowMessageView.h"
+#import "CDXActionSheet.h"
 
 
 @interface CDXAppWindowManager : NSObject {
@@ -34,6 +36,7 @@
     IBOutlet UIView *navigationView;
     
     IBOutlet CDXAppWindowNoticeView *noticeView;
+    IBOutlet CDXAppWindowMessageView *messageView;
     
     UIViewController<CDXAppWindowViewController> *fullScreenViewController;
     UIViewController *navigationViewController;
@@ -48,27 +51,22 @@ declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 
 - (UIViewController *)visibleViewController;
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated;
+- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location;
 - (void)popViewControllerAnimated:(BOOL)animated;
+- (void)popViewControllerAnimated:(BOOL)animated withTouchLocation:(CGPoint)location;
 - (void)popToInitialViewController;
 - (void)makeWindowKeyAndVisible;
 - (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation view:(UIView*)viewOrNil;
+- (void)showInfoMessage:(NSString *)text afterDelay:(NSTimeInterval)timeDelay;
+- (void)showErrorMessage:(NSString *)text afterDelay:(NSTimeInterval)timeDelay;
 - (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)presentModalViewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem animated:(BOOL)animated;
 - (void)dismissModalViewControllerAnimated:(BOOL)animated;
-- (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem;
+- (void)showActionSheet:(CDXActionSheet *)actionSheet viewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem *)barButtonItem;
 - (void)applicationWillEnterForeground;
 - (void)applicationDidEnterBackground;
 
 + (CGAffineTransform)transformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation;
 
 @end
-
-
-@interface CDXAppWindowActionSheetNonFirstResponder : UIActionSheet {
-    
-}
-
-
-@end
-
 

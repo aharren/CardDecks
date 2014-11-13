@@ -165,22 +165,19 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
             return nil;
             break;
         case CDXAppAboutSettingsReleaseNotes: {
-            NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];
-            NSString *path = [folder stringByAppendingPathComponent:@"ReleaseNotes.html"];
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"ReleaseNotes" ofType:@"html"];
             NSString *text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
             return text;
             break;
         }
         case CDXAppAboutSettingsLegal: {
-            NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];
-            NSString *path = [folder stringByAppendingPathComponent:@"Legal.html"];
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"Legal" ofType:@"html"];
             NSString *text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
             return text;
             break;
         }
         case CDXAppAboutSettingsDeviceInfo: {
-            NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];
-            NSString *path = [folder stringByAppendingPathComponent:@"Template.html"];
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"Template" ofType:@"html"];
             NSString *text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
             
             text = [text stringByReplacingOccurrencesOfString:@"$title$" withString:@"Device Information"];
@@ -194,7 +191,6 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Type", [device deviceTypeString]];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"UI idiom", [device deviceUIIdiomString]];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%.1f</td></tr>\n", @"Screen scale", [device deviceScreenScale]];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Graphics effects", [device useReducedGraphicsEffects] ? @"reduced" : @"full"];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Rendering mode", [device useImageBasedRendering] ? @"image" : @"direct"];
             [content appendString:@"</table>"];
             text = [text stringByReplacingOccurrencesOfString:@"$content$" withString:content];

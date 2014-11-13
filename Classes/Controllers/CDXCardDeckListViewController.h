@@ -28,7 +28,7 @@
 #import "CDXListViewControllerBase.h"
 
 
-@interface CDXCardDeckListViewController : CDXListViewControllerBase<UIActionSheetDelegate> {
+@interface CDXCardDeckListViewController : CDXListViewControllerBase {
     
 @protected
     CDXCardDeckViewContext *cardDeckViewContext;
@@ -38,8 +38,6 @@
     IBOutlet UIBarButtonItem *actionButton;
     IBOutlet UIBarButtonItem *addButton;
     BOOL viewWasAlreadyVisible;
-    
-    UIActionSheet *activeActionSheet;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
@@ -59,7 +57,7 @@
 @end
 
 
-@interface CDXCardDeckListViewControllerTextActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
+@interface CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
     
 @protected
     CDXCardDeckViewContext *cardDeckViewContext;
@@ -71,7 +69,55 @@
 @end
 
 
-@interface CDXCardDeckListViewControllerURLActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
+@interface CDXCardDeckListViewControllerHTTPURLTextActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
+    
+@protected
+    CDXCardDeckViewContext *cardDeckViewContext;
+    
+}
+
+- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
+
+@end
+
+
+@interface CDXCardDeckListViewControllerStringTextActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
+    
+@protected
+    NSString *text;
+    
+}
+
+- (instancetype)initWithString:(NSString *)text;
+
+@end
+
+
+@interface CDXCardDeckListViewControllerAutoDetectActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
+    
+@protected
+    CDXCardDeckViewContext *cardDeckViewContext;
+    
+}
+
+- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
+
+@end
+
+
+@interface CDXCardDeckListViewControllerCarddecksURLActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
+    
+@protected
+    CDXCardDeckViewContext *cardDeckViewContext;
+    
+}
+
+- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
+
+@end
+
+
+@interface CDXCardDeckListViewControllerHTTPURLActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
     
 @protected
     CDXCardDeckViewContext *cardDeckViewContext;

@@ -84,7 +84,7 @@
     viewIndex += CDXCardsSideBySideViewCardViewsSize;
     viewIndex %= CDXCardsSideBySideViewCardViewsSize;
     if (cardViewsCardIndex[viewIndex] == cardIndex+1) {
-        qltrace(@": %d => %d", viewIndex, cardIndex);
+        qltrace(@": %lu => %lu", (unsigned long)viewIndex, (unsigned long)cardIndex);
         return;
     }
     cardViewsCardIndex[viewIndex] = cardIndex+1;
@@ -107,7 +107,7 @@
         }
     }
     
-    qltrace(@": %d %d", cardIndex, viewIndex);
+    qltrace(@": %lu %lu", (unsigned long)cardIndex, (unsigned long)viewIndex);
     for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
         [self configureCardViewsViewAtIndex:viewIndex-CDXCardsSideBySideViewCardViewsSize/2+i cardIndex:(cardIndex+cardsCount-CDXCardsSideBySideViewCardViewsSize/2+i)%cardsCount];
     }

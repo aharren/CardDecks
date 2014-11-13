@@ -23,12 +23,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import "CDXCardDeck.h"
 #import "CDXCardDeckURLSerializer.h"
 
 
-@interface CDXCardDeckBaseTests : SenTestCase {
+@interface CDXCardDeckBaseTests : XCTestCase {
     
 }
 
@@ -40,7 +40,7 @@
 - (void)testInitWithDefaults {
     CDXCardDeckBase *base = [[CDXCardDeckBase alloc] init];
     
-    STAssertNil(base.base, nil);
+    XCTAssertNil(base.base);
     [base release];
 }
 
@@ -50,16 +50,16 @@
     "&card%201"
     "&card%202";
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
-    STAssertNil(deck.base, nil);
+    XCTAssertNil(deck.base);
     deck.file = @"File";
     
     CDXCardDeckBase *base = [[CDXCardDeckBase alloc] initWithCardDeck:deck];
-    STAssertEquals(deck.base, base, nil);
-    STAssertEquals(base.cardDeck, deck, nil);
-    STAssertEqualObjects(base.name, @"card deck", nil);
-    STAssertEqualObjects(base.file, @"File", nil);
-    STAssertEqualObjects(base.description, @"card 1, card 2", nil);
-    STAssertEqualObjects([base.thumbnailColor description], @"888888ff", nil);
+    XCTAssertEqual(deck.base, base);
+    XCTAssertEqual(base.cardDeck, deck);
+    XCTAssertEqualObjects(base.name, @"card deck");
+    XCTAssertEqualObjects(base.file, @"File");
+    XCTAssertEqualObjects(base.description, @"card 1, card 2");
+    XCTAssertEqualObjects([base.thumbnailColor description], @"888888ff");
     [base release];
 }
 
@@ -69,25 +69,25 @@
     "&card%201"
     "&card%202";
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:string];
-    STAssertNil(deck.base, nil);
+    XCTAssertNil(deck.base);
     
     CDXCardDeckBase *base = [[CDXCardDeckBase alloc] initWithCardDeck:deck];
-    STAssertEquals(deck.base, base, nil);
-    STAssertEquals(base.cardDeck, deck, nil);
-    STAssertEqualObjects(base.name, @"card deck", nil);
-    STAssertEqualObjects(base.description, @"card 1, card 2", nil);
-    STAssertEqualObjects([base.thumbnailColor description], @"888888ff", nil);
-    STAssertEquals(base.cardsCount, (NSUInteger)2, nil);
+    XCTAssertEqual(deck.base, base);
+    XCTAssertEqual(base.cardDeck, deck);
+    XCTAssertEqualObjects(base.name, @"card deck");
+    XCTAssertEqualObjects(base.description, @"card 1, card 2");
+    XCTAssertEqualObjects([base.thumbnailColor description], @"888888ff");
+    XCTAssertEqual(base.cardsCount, (NSUInteger)2);
     
     deck.name = @"new card deck";
-    STAssertEqualObjects(base.name, @"new card deck", nil);
+    XCTAssertEqualObjects(base.name, @"new card deck");
     [deck cardAtIndex:0].text = @"new card 1";
     [deck cardAtIndex:0].backgroundColor = [CDXColor colorWhite];
     [deck replaceCardAtIndex:0 withCard:[deck cardAtIndex:0]];
-    STAssertEqualObjects(base.description, @"new card 1, card 2", nil);
-    STAssertEqualObjects([base.thumbnailColor description], @"ffffffff", nil);
+    XCTAssertEqualObjects(base.description, @"new card 1, card 2");
+    XCTAssertEqualObjects([base.thumbnailColor description], @"ffffffff");
     [deck addCard:[[[CDXCard alloc] init] autorelease]];
-    STAssertEquals(base.cardsCount, (NSUInteger)3, nil);
+    XCTAssertEqual(base.cardsCount, (NSUInteger)3);
     
     [base release];
 }
@@ -97,14 +97,14 @@
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"card%20deck,ffffff,888888"];
     [deck retain];
     [pool1 release];
-    STAssertNil(deck.base, nil);
+    XCTAssertNil(deck.base);
     
     CDXCardDeckBase *base = [[CDXCardDeckBase alloc] initWithCardDeck:deck];
-    STAssertEquals(deck.base, base, nil);
-    STAssertEquals(base.cardDeck, deck, nil);
+    XCTAssertEqual(deck.base, base);
+    XCTAssertEqual(base.cardDeck, deck);
     
     [base release];
-    STAssertNil(deck.base, nil);
+    XCTAssertNil(deck.base);
     
     [deck release];
 }
@@ -114,15 +114,15 @@
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"card%20deck,ffffff,888888"];
     [deck retain];
     [pool1 release];
-    STAssertNil(deck.base, nil);
+    XCTAssertNil(deck.base);
     
     CDXCardDeckBase *base = [[CDXCardDeckBase alloc] initWithCardDeck:deck];
-    STAssertEquals(deck.base, base, nil);
-    STAssertEquals(base.cardDeck, deck, nil);
+    XCTAssertEqual(deck.base, base);
+    XCTAssertEqual(base.cardDeck, deck);
     
     base.file = @"";
     [deck release];
-    STAssertNil(base.cardDeck, nil);
+    XCTAssertNil(base.cardDeck);
     
     [base release];
 }

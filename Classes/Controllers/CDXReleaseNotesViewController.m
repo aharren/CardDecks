@@ -93,8 +93,7 @@
 
 - (id)init {
     if ((self = [super init])) {
-        NSString *folder = [NSHomeDirectory() stringByAppendingPathComponent:@"CardDecks.app"];
-        NSString *path = [folder stringByAppendingPathComponent:@"ReleaseNotes.html"];
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"ReleaseNotes" ofType:@"html"];
         NSString *text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
         UIViewController *vc = [[[CDXReleaseNotesHTMLTextViewController alloc] initWithHTMLText:text title:@"Release Notes"] autorelease];
         [self pushViewController:vc animated:NO];

@@ -296,13 +296,13 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     } else {
         tvc = [[[CDXSymbolsKeyboardExtensionTablePadViewController alloc] init] autorelease];
     }
-    [self setViewControllers:[NSArray arrayWithObject:tvc]];
+    [self setViewControllers:@[tvc]];
 }
 
 - (void)reset {
     [self popToRootViewControllerAnimated:NO];
     if ([[self viewControllers] count] > 0) {
-        CDXSymbolsKeyboardExtensionTableViewController *tvc = (CDXSymbolsKeyboardExtensionTableViewController *)[[self viewControllers] objectAtIndex:0];
+        CDXSymbolsKeyboardExtensionTableViewController *tvc = (CDXSymbolsKeyboardExtensionTableViewController *)[self viewControllers][0];
         [tvc reset];
     }
 }

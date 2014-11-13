@@ -1,0 +1,13 @@
+{
+  "version" : 2,
+  "name": "settings2",
+  "group_size": 0,
+  "deck_style": "stacked,scroll",
+  "corner_style": "cornered",
+  "index_dots": "on",
+  "index_style": "dark",
+  "index_touches": "on",
+  "auto_rotate": "on",
+  "shake": "random",
+  "auto_play": "play1x"
+}

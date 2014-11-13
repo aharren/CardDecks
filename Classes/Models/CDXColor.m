@@ -58,6 +58,10 @@ static CDXColor *colorBlack = nil;
     return [NSString stringWithFormat:@"%02x%02x%02x%02x", red, green, blue, alpha];
 }
 
+- (NSString *)rgbaStringWithPrefix:(NSString *)prefix {
+    return [NSString stringWithFormat:@"%@%02x%02x%02x%02x", prefix, red, green, blue, alpha];
+}
+
 - (UIColor *)uiColor {
     return [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:alpha/255.0];
 }
@@ -117,6 +121,18 @@ static CDXColor *colorBlack = nil;
                             green:(nibbles[2] << 4) | nibbles[3]
                              blue:(nibbles[4] << 4) | nibbles[5]
                             alpha:(nibbles[6] << 4) | nibbles[7]];
+}
+
++ (CDXColor *)colorWithRGBAString:(NSString *)string defaultsTo:(CDXColor *)defaultColor prefix:(NSString *)prefix {
+    if (string == nil) {
+        return [[defaultColor retain] autorelease];
+    }
+    
+    if (![string hasPrefix:prefix]) {
+        return [[defaultColor retain] autorelease];
+    }
+    
+    return [CDXColor colorWithRGBAString:[string substringFromIndex:[prefix length]] defaultsTo:defaultColor];
 }
 
 + (CDXColor *)colorWhite {

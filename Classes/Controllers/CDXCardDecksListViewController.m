@@ -32,6 +32,7 @@
 #import "CDXSettingsViewController.h"
 #import "CDXCardDecks.h"
 #import "CDXAppURL.h"
+#import "CDXCopyPaste.h"
 #import "CDXApplicationVersion.h"
 
 #undef ql_component
@@ -105,7 +106,6 @@
                 cell.textLabel.font = tableCellTextFont;
                 cell.detailTextLabel.font = tableCellDetailTextFont;
                 cell.detailTextLabel.textColor = tableCellDetailTextTextColor;
-                cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
             }
@@ -118,7 +118,6 @@
                 cell.textLabel.font = tableCellTextFontAction;
                 cell.textLabel.textAlignment = NSTextAlignmentCenter;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                cell.backgroundView = [[[UIImageView alloc] initWithImage:tableCellBackgroundImage] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
                 cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
             }
@@ -157,6 +156,10 @@
                 cell.detailTextLabel.text = text;
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
             }
+            
+            NSInteger tag = 0;
+            tag |= (deck.tag == currentTag) ? CDXTableViewCellTagNewObject : CDXTableViewCellTagNone;
+            cell.tag = tag;
             
             return cell;
         }
@@ -197,7 +200,7 @@
             CDXCardDeckViewContext *context = [[[CDXCardDeckViewContext alloc] initWithCardDeck:deck cardDecks:cardDecks] autorelease];
             CDXCardDeckCardViewController *vc = [[[CDXCardDeckCardViewController alloc] initWithCardDeckViewContext:context] autorelease];
             keepViewTableViewContentOffsetY = YES;
-            [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES];
+            [[CDXAppWindowManager sharedAppWindowManager] pushViewController:vc animated:YES withTouchLocation:currentTouchLocationInWindow];
         }
     }
     
@@ -263,7 +266,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self deleteCardDeckAtIndex:indexPath.row];
         
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self updateToolbarButtons];
     }
 }
@@ -280,11 +283,12 @@
 
 - (void)processCardDeckAddAtBottomDelayed:(CDXCardDeckHolder *)holder {
     qltrace();
+    holder.tag = currentTag;
     [cardDecks addCardDeck:holder];
     [cardDecks updateStorageObjectDeferred:NO];
     
     NSIndexPath *path = [NSIndexPath indexPathForRow:[cardDecks cardDecksCount]-1 inSection:1];
-    [viewTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
+    [viewTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
     [viewTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:UITableViewScrollPositionNone animated:YES];
     [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
     [viewTableView deselectRowAtIndexPath:path animated:YES];
@@ -292,6 +296,7 @@
 }
 
 - (void)processCardDeckAddAtBottom:(CDXCardDeckHolder *)holder {
+    qltrace();
     if (![[viewTableView indexPathsForVisibleRows] containsObject:[NSIndexPath indexPathForRow:0 inSection:2]] ||
         [viewTableView isEditing]) {
         qltrace();
@@ -331,11 +336,12 @@
 - (void)processSinglePendingCardDeckAdd {
     CDXCardDeckHolder *deck = [cardDecks popPendingCardDeckAdd];
     if (deck != nil) {
+        deck.tag = currentTag;
         NSUInteger row = (lastCardDeckIndex < [cardDecks cardDecksCount]) ? lastCardDeckIndex : 0;
         [cardDecks insertCardDeck:deck atIndex:row];
         [cardDecks updateStorageObjectDeferred:YES];
         NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:1];
-        [viewTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
+        [viewTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
         [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
         [viewTableView deselectRowAtIndexPath:path animated:YES];
         [self updateToolbarButtons];
@@ -347,6 +353,10 @@
         [CDXStorage drainAllDeferredActions];
         [self performBlockingSelectorEnd];
         [self processStartupCallbacks];
+        
+        if (deck != nil) {
+            [[CDXAppWindowManager sharedAppWindowManager] showInfoMessage:@"Card deck added" afterDelay:0.3];
+        }
     }
 }
 
@@ -375,10 +385,13 @@
             // copy is always possible
             return YES;
         } else if (action == @selector(paste:)) {
-            // paste is only possible if the pasteboard contains a "valid" URL
-            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
-            return [CDXAppURL mayBeCardDecksURLString:carddeckUrl];
+            // paste is only possible if the pasteboard contains a potentially valid card deck
+            NSString *carddeckString = [[UIPasteboard generalPasteboard] string];
+            return [CDXCopyPaste mayBeCardDeck:carddeckString];
         }
+    }
+    if (action == @selector(duplicateButtonPressed)) {
+        return YES;
     }
     return NO;
 }
@@ -393,11 +406,11 @@
             [[UIPasteboard generalPasteboard] setString:carddeckUrl];
         } else if (action == @selector(paste:)) {
             // paste the card deck from the pasteboard
-            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
-            if (![CDXAppURL mayBeCardDecksURLString:carddeckUrl]) {
+            NSString *carddeckString = [[UIPasteboard generalPasteboard] string];
+            if (![CDXCopyPaste mayBeCardDeck:carddeckString]) {
                 return;
             }
-            CDXCardDeck *sourceDeck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
+            CDXCardDeck *sourceDeck = [CDXCopyPaste cardDeckFromString:carddeckString allowEmpty:NO];
             if (sourceDeck == nil) {
                 return;
             }
@@ -418,7 +431,7 @@
             }
             [targetDeck updateStorageObjectDeferred:NO];
             [cardDecks updateStorageObjectDeferred:NO];
-            [viewTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation];
+            [viewTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:animation];
         }
     }
 }
@@ -427,9 +440,11 @@
     qltrace();
     if (barButtonItem == addButton) {
         if (action == @selector(paste:)) {
-            // paste is only possible if the pasteboard contains a "valid" URL
-            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
-            return [CDXAppURL mayBeCardDecksURLString:carddeckUrl];
+            // paste is only possible if the pasteboard contains a potentially valid card deck
+            NSString *carddeckString = [[UIPasteboard generalPasteboard] string];
+            return [CDXCopyPaste mayBeCardDeck:carddeckString];
+        } else if (action == @selector(addButtonPressed)) {
+            return YES;
         } else {
             return NO;
         }
@@ -442,21 +457,48 @@
     if (barButtonItem == addButton) {
         if (action == @selector(paste:)) {
             // paste the card deck from the pasteboard as a new card deck
-            NSString *carddeckUrl = [[UIPasteboard generalPasteboard] string];
-            if (![CDXAppURL mayBeCardDecksURLString:carddeckUrl]) {
+            NSString *carddeckString = [[UIPasteboard generalPasteboard] string];
+            if (![CDXCopyPaste mayBeCardDeck:carddeckString]) {
                 return;
             }
-            CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:carddeckUrl]];
-            if (deck == nil) {
+            CDXCardDeck *sourceDeck = [CDXCopyPaste cardDeckFromString:carddeckString allowEmpty:YES];
+            if (sourceDeck == nil) {
                 return;
             }
-            CDXCardDeckHolder *holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
+            CDXCardDeckHolder *holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:sourceDeck];
             [holder.cardDeck updateStorageObjectDeferred:NO];
             [self processCardDeckAddAtBottom:holder];
             return;
         } else {
             return;
         }
+    }
+}
+
+- (void)duplicateButtonPressed {
+    qltrace(@"%@", performActionTableViewIndexPath);
+    if (performActionTableViewIndexPath.section != 1) {
+        return;
+    }
+    CDXCardDeckHolder *sourceDeck = nil;
+    sourceDeck = [cardDecks cardDeckAtIndex:performActionTableViewIndexPath.row];
+    CDXCardDeck *deck = [[sourceDeck.cardDeck copy] autorelease];
+    [deck updateStorageObjectDeferred:NO];
+    CDXCardDeckHolder *holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
+    [cardDecks addPendingCardDeckAdd:holder];
+    lastCardDeckIndex = performActionTableViewIndexPath.row;
+    [self processPendingCardDeckAdds];
+}
+
+- (void)menu:(UIMenuController *)menuController itemsForTableView:(UITableView *)tableView cell:(UITableViewCell *)cell {
+    UIMenuItem *menuItemNew = [[UIMenuItem alloc] initWithTitle:@"Duplicate" action:@selector(duplicateButtonPressed)];
+    menuController.menuItems = @[menuItemNew];
+}
+
+- (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem {
+    if (barButtonItem == addButton) {
+        UIMenuItem *menuItemNew = [[UIMenuItem alloc] initWithTitle:@"New" action:@selector(addButtonPressed)];
+        menuController.menuItems = @[menuItemNew];
     }
 }
 

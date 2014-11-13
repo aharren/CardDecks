@@ -118,7 +118,7 @@ synthesize_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [[CDXKeyboardExtensions sharedKeyboardExtensions] backgroundColor];
-    [sizeChooserSlider setThumbImage:[UIImage imageNamed:@"Circle.png"] forState:UIControlStateNormal];
+    [sizeChooserSlider setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
 }
 
 - (void)viewDidUnload {

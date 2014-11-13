@@ -65,8 +65,8 @@
     ivar_release_and_clear(viewTableViewContainer);
     ivar_release_and_clear(navigationItem);
     ivar_release_and_clear(viewNoTableView);
-    ivar_release_and_clear(tableCellBackgroundImage);
-    ivar_release_and_clear(tableCellBackgroundImageAlt);
+    ivar_release_and_clear(tableCellBackgroundColor);
+    ivar_release_and_clear(tableCellBackgroundColorAltGroup);
     [super viewDidUnload];
 }
 
@@ -150,8 +150,8 @@
 }
 
 - (IBAction)actionButtonPressed {
-    CDXCardDeckListViewControllerTextActivityItemProvider *textItem = [[[CDXCardDeckListViewControllerTextActivityItemProvider alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    CDXCardDeckListViewControllerURLActivityItemProvider *urlItem = [[[CDXCardDeckListViewControllerURLActivityItemProvider alloc]  initWithCardDeckViewContext:cardDeckViewContext] autorelease];
+    CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider *textItem = [[[CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
+    CDXCardDeckListViewControllerAutoDetectActivityItemProvider *urlItem = [[[CDXCardDeckListViewControllerAutoDetectActivityItemProvider alloc]  initWithCardDeckViewContext:cardDeckViewContext] autorelease];
     
     NSArray *items = @[textItem, urlItem];
     NSArray *activities = nil;

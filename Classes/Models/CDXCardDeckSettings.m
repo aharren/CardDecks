@@ -73,15 +73,15 @@ static const CDXCardDeckSettingGroup groups[] = {
 
 @implementation CDXCardDeckSettings
 
-- (id)initWithCardDeck:(CDXCardDeck *)deck {
+- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)viewContext {
     if ((self = [super init])) {
-        ivar_assign_and_retain(cardDeck, deck);
+        ivar_assign_and_retain(cardDeckViewContext, viewContext);
     }
     return self;
 }
 
 - (void)dealloc {
-    ivar_release_and_clear(cardDeck);
+    ivar_release_and_clear(cardDeckViewContext);
     [super dealloc];
 }
 
@@ -115,11 +115,11 @@ static const CDXCardDeckSettingGroup groups[] = {
         default:
             return NO;
         case CDXCardDeckSettingsPageControl:
-            return cardDeck.wantsPageControl;
+            return cardDeckViewContext.cardDeck.wantsPageControl;
         case CDXCardDeckSettingsPageJumps:
-            return cardDeck.wantsPageJumps;
+            return cardDeckViewContext.cardDeck.wantsPageJumps;
         case CDXCardDeckSettingsAutoRotate:
-            return cardDeck.wantsAutoRotate;
+            return cardDeckViewContext.cardDeck.wantsAutoRotate;
     }
 }
 
@@ -128,16 +128,16 @@ static const CDXCardDeckSettingGroup groups[] = {
         default:
             break;
         case CDXCardDeckSettingsPageControl:
-            cardDeck.wantsPageControl = value;
+            cardDeckViewContext.cardDeck.wantsPageControl = value;
             break;
         case CDXCardDeckSettingsPageJumps:
-            cardDeck.wantsPageJumps = value;
+            cardDeckViewContext.cardDeck.wantsPageJumps = value;
             break;
         case CDXCardDeckSettingsAutoRotate:
-            cardDeck.wantsAutoRotate = value;
+            cardDeckViewContext.cardDeck.wantsAutoRotate = value;
             break;
     }
-    [cardDeck updateStorageObjectDeferred:YES];
+    [cardDeckViewContext.cardDeck updateStorageObjectDeferred:YES];
 }
 
 - (NSUInteger)enumerationValueForSettingWithTag:(NSUInteger)tag {
@@ -145,17 +145,17 @@ static const CDXCardDeckSettingGroup groups[] = {
         default:
             return 0;
         case CDXCardDeckSettingsDeckDisplayStyle:
-            return (NSUInteger)cardDeck.displayStyle;
+            return (NSUInteger)cardDeckViewContext.cardDeck.displayStyle;
         case CDXCardDeckSettingsCornerStyle:
-            return (NSUInteger)cardDeck.cornerStyle;
+            return (NSUInteger)cardDeckViewContext.cardDeck.cornerStyle;
         case CDXCardDeckSettingsPageControlStyle:
-            return cardDeck.pageControlStyle;
+            return cardDeckViewContext.cardDeck.pageControlStyle;
         case CDXCardDeckSettingsGroupSize:
-            return cardDeck.groupSize;
+            return cardDeckViewContext.cardDeck.groupSize;
         case CDXCardDeckSettingsShakeAction:
-            return cardDeck.shakeAction;
+            return cardDeckViewContext.cardDeck.shakeAction;
         case CDXCardDeckSettingsAutoPlay:
-            return cardDeck.autoPlay;
+            return cardDeckViewContext.cardDeck.autoPlay;
     }
 }
 
@@ -164,25 +164,25 @@ static const CDXCardDeckSettingGroup groups[] = {
         default:
             break;
         case CDXCardDeckSettingsDeckDisplayStyle:
-            cardDeck.displayStyle = value;
+            cardDeckViewContext.cardDeck.displayStyle = (CDXCardDeckDisplayStyle)value;
             break;
         case CDXCardDeckSettingsCornerStyle:
-            cardDeck.cornerStyle = value;
+            cardDeckViewContext.cardDeck.cornerStyle = (CDXCardCornerStyle)value;
             break;
         case CDXCardDeckSettingsPageControlStyle:
-            cardDeck.pageControlStyle = value;
+            cardDeckViewContext.cardDeck.pageControlStyle = (CDXCardDeckPageControlStyle)value;
             break;
         case CDXCardDeckSettingsGroupSize:
-            cardDeck.groupSize = value;
+            cardDeckViewContext.cardDeck.groupSize = (CDXCardDeckGroupSize)value;
             break;
         case CDXCardDeckSettingsShakeAction:
-            cardDeck.shakeAction = value;
+            cardDeckViewContext.cardDeck.shakeAction = (CDXCardDeckShakeAction)value;
             break;
         case CDXCardDeckSettingsAutoPlay:
-            cardDeck.autoPlay = value;
+            cardDeckViewContext.cardDeck.autoPlay = (CDXCardDeckAutoPlay)value;
             break;
     }
-    [cardDeck updateStorageObjectDeferred:YES];
+    [cardDeckViewContext.cardDeck updateStorageObjectDeferred:YES];
 }
 
 - (NSUInteger)enumerationValuesCountForSettingWithTag:(NSUInteger)tag {
@@ -240,7 +240,7 @@ static const CDXCardDeckSettingGroup groups[] = {
             } else if (value == 1) {
                 return @"1 Card";
             } else {
-                return [NSString stringWithFormat:@"%d Cards", value];
+                return [NSString stringWithFormat:@"%lu Cards", (unsigned long)value];
             }
         }
         case CDXCardDeckSettingsShakeAction: {
@@ -273,7 +273,7 @@ static const CDXCardDeckSettingGroup groups[] = {
         default:
             return @"";
         case CDXCardDeckSettingsName:
-            return cardDeck.name;
+            return cardDeckViewContext.cardDeck.name;
     }
 }
 
@@ -282,10 +282,10 @@ static const CDXCardDeckSettingGroup groups[] = {
         default:
             break;
         case CDXCardDeckSettingsName:
-            cardDeck.name = value;
+            cardDeckViewContext.cardDeck.name = value;
             break;
     }
-    [cardDeck updateStorageObjectDeferred:YES];
+    [cardDeckViewContext updateStorageObjectsDeferred:YES];
 }
 
 - (UIImage *)settingsImageForSettingWithTag:(NSUInteger)tag {

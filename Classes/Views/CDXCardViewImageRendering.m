@@ -53,19 +53,19 @@
 
 - (UIView *)viewAtIndex:(NSUInteger)index {
     qltrace();
-    return (UIView *)[imageViews objectAtIndex:index];
+    return (UIView *)imageViews[index];
 }
 
 - (UIView *)configureViewAtIndex:(NSUInteger)index viewSize:(CGSize)viewSize cardIndex:(NSUInteger)cardIndex card:(CDXCard *)card deviceOrientation:(UIDeviceOrientation)deviceOrientation {
     qltrace();
     UIImage *image = [imageCache objectWithKey:cardIndex];
     if (image != nil) {
-        qltrace(@"%d => %d; hit", index, cardIndex);
+        qltrace(@"%lu => %lu; hit", (unsigned long)index, (unsigned long)cardIndex);
     } else {
         image = [[CDXImageFactory sharedImageFactory] imageForCard:card size:viewSize deviceOrientation:deviceOrientation];
-        qltrace(@"%d => %d; miss", index, cardIndex);
+        qltrace(@"%lu => %lu; miss", (unsigned long)index, (unsigned long)cardIndex);
     }
-    UIImageView *view = (UIImageView *)[imageViews objectAtIndex:index];
+    UIImageView *view = (UIImageView *)imageViews[index];
     view.image = image;
     return view;
 }
@@ -76,8 +76,8 @@
 }
 
 - (void)cacheViewAtIndex:(NSUInteger)index cardIndex:(NSUInteger)cardIndex {
-    qltrace(@"%d => %d; cache", index, cardIndex);
-    UIImageView *view = (UIImageView *)[imageViews objectAtIndex:index];
+    qltrace(@"%lu => %lu; cache", (unsigned long)index, (unsigned long)cardIndex);
+    UIImageView *view = (UIImageView *)imageViews[index];
     [imageCache addObject:view.image withKey:cardIndex];
 }
 

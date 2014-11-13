@@ -54,8 +54,6 @@
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
-    CGFloat rowHeight = viewTableView.rowHeight;
-    ivar_assign_and_retain(tableCellBackgroundImageAlt, [[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWithRed:0xd9 green:0xd9 blue:0xd9 alpha:0xff] bottomColor:[CDXColor colorWithRed:0xd9 green:0xd9 blue:0xd9 alpha:0xff] height:rowHeight base:1]);
 }
 
 - (void)viewDidUnload {
@@ -104,7 +102,12 @@
     } else if (indexPath.section == 2) {
         selected = cardDecks.cardDeckDefaults == currentCardDeck;
     }
-    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath marked:selected];
+    NSInteger oldTag = cell.tag;
+    if (selected) {
+        cell.tag |= CDXTableViewCellTagMarked;
+    }
+    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
+    cell.tag = oldTag;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section {

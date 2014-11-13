@@ -32,12 +32,16 @@ typedef enum {
     CDXListViewControllerBasePerformActionStateToolbar
 } CDXListViewControllerBasePerformActionState;
 
+typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
+    CDXTableViewCellTagMarked = 1 << 0,
+    CDXTableViewCellTagAltGroup = 1 << 1,
+    CDXTableViewCellTagNewObject = 1 << 2,
+    CDXTableViewCellTagNone = 0
+};
 
 @interface CDXListViewControllerBase : UIViewController<CDXAppWindowViewController> {
     
 @protected
-    BOOL useReducedGraphicsEffects;
-
     IBOutlet UITableView *viewTableView;
     IBOutlet UIToolbar *viewToolbar;
     CGFloat viewTableViewContentOffsetY;
@@ -55,8 +59,11 @@ typedef enum {
     UIColor *tableCellTextTextColorActionInactive;
     UIFont *tableCellDetailTextFont;
     UIColor *tableCellDetailTextTextColor;
-    UIImage *tableCellBackgroundImage;
-    UIImage *tableCellBackgroundImageAlt;
+    UIColor *tableCellBackgroundColor;
+    UIColor *tableCellBackgroundColorAltGroup;
+    UIColor *tableCellBackgroundColorMarked;
+    UIColor *tableCellBackgroundColorNewObject;
+    UIColor *tableCellBackgroundColorNewObjectAltGroup;
     CGSize tableCellImageSize;
     
     NSString *titleText;
@@ -71,11 +78,13 @@ typedef enum {
     CDXListViewControllerBasePerformActionState performActionState;
     NSIndexPath *performActionTableViewIndexPath;
     UIBarButtonItem *performActionToolbarBarButtonItem;
+    
+    CGPoint currentTouchLocationInWindow;
+    NSUInteger currentTag;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)titleText backButtonText:(NSString *)backButtonText;
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath marked:(BOOL)marked;
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
@@ -85,6 +94,9 @@ typedef enum {
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
 - (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
+
+- (void)menu:(UIMenuController *)menuController itemsForTableView:(UITableView *)tableView cell:(UITableViewCell *)cell;
+- (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem;
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
 - (void)updateToolbarButtons;

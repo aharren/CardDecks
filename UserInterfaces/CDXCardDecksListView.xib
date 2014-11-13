@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13B3116" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1072" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CDXCardDecksListViewController">
@@ -31,15 +31,15 @@
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
         <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="10">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
             <items>
                 <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="30"/>
-                <barButtonItem image="Toolbar-Edit-Reorder.png" width="24" style="plain" id="25">
+                <barButtonItem image="Toolbar-Edit-Reorder" width="24" style="plain" id="25">
                     <connections>
                         <action selector="editButtonPressed" destination="-1" id="32"/>
                     </connections>
@@ -55,7 +55,7 @@
                 <barButtonItem style="plain" systemItem="flexibleSpace" id="20"/>
                 <barButtonItem enabled="NO" width="24" style="plain" id="43"/>
                 <barButtonItem style="plain" systemItem="flexibleSpace" id="44"/>
-                <barButtonItem image="Toolbar-Settings.png" width="24" style="plain" id="33">
+                <barButtonItem image="Toolbar-Settings" width="24" style="plain" id="33">
                     <connections>
                         <action selector="settingsButtonPressed" destination="-1" id="35"/>
                     </connections>
@@ -65,7 +65,12 @@
         </toolbar>
     </objects>
     <resources>
-        <image name="Toolbar-Edit-Reorder.png" width="22" height="22"/>
-        <image name="Toolbar-Settings.png" width="22" height="22"/>
+        <image name="Toolbar-Edit-Reorder" width="22" height="22"/>
+        <image name="Toolbar-Settings" width="22" height="22"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

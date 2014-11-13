@@ -56,9 +56,19 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
     qltrace();
+    [self pushViewController:viewController animated:animated withTouchLocation:CGPointMake(window.bounds.size.width,window.bounds.size.height)];
+}
+
+- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location {
+    qltrace();
 }
 
 - (void)popViewControllerAnimated:(BOOL)animated {
+    qltrace();
+    [self popViewControllerAnimated:animated withTouchLocation:CGPointMake(window.bounds.size.width,window.bounds.size.height)];
+}
+
+- (void)popViewControllerAnimated:(BOOL)animated withTouchLocation:(CGPoint)location {
     qltrace();
 }
 
@@ -108,6 +118,20 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     ivar_release_and_clear(noticeView);
 }
 
+- (void)showInfoMessage:(NSString *)text afterDelay:(NSTimeInterval)timeDelay {
+    qltrace();
+    [[NSBundle mainBundle] loadNibNamed:@"CDXAppWindowMessageView" owner:self options:nil];
+    [messageView showMessage:text timeInterval:2 view:window backgroundColor:[CDXColor colorWithRed:0 green:121 blue:255 alpha:220].uiColor height:65 afterDelay:timeDelay];
+    ivar_release_and_clear(messageView);
+}
+
+- (void)showErrorMessage:(NSString *)text afterDelay:(NSTimeInterval)timeDelay {
+    qltrace();
+    [[NSBundle mainBundle] loadNibNamed:@"CDXAppWindowMessageView" owner:self options:nil];
+    [messageView showMessage:text timeInterval:2 view:window backgroundColor:[CDXColor colorWithRed:255 green:0 blue:0 alpha:220].uiColor height:65 afterDelay:timeDelay];
+    ivar_release_and_clear(messageView);
+}
+
 - (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated {
     qltrace();
     [[self visibleViewController] presentViewController:viewController animated:animated completion:NULL];
@@ -145,7 +169,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     }
 }
 
-- (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem {
+- (void)showActionSheet:(CDXActionSheet *)actionSheet viewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem *)barButtonItem {
     qltrace();
 }
 
@@ -179,13 +203,17 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     [fullScreenViewController setUserInteractionEnabled:YES];
 }
 
-- (void)pushFullScreenViewControllerAnimatedAndRemoveView:(UIView *)view {
+- (void)pushFullScreenViewControllerAnimatedAndRemoveView:(NSArray *)data {
     qltrace();
+    
+    UIView *view = data[0];
+    NSNumber *location_x = data[1];
 
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.6];
-    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:window cache:YES];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    UIViewAnimationTransition transition = (location_x.floatValue > window.bounds.size.width / 2) ? UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight;
+    [UIView setAnimationTransition:transition forView:window cache:NO];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationWillStartSelector:@selector(pushFullScreenViewControllerAnimationWillStart:context:)];
     [UIView setAnimationDidStopSelector:@selector(pushFullScreenViewControllerAnimationDidStop:finished:context:)];
@@ -199,18 +227,19 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
 }
 
-- (void)pushFullScreenViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
+- (void)pushFullScreenViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location {
     ivar_assign_and_retain(fullScreenViewController, viewController);
     [fullScreenViewController setUserInteractionEnabled:!animated];
     if (animated) {
+        CGFloat location_x = ([CDXDevice sharedDevice].deviceUIIdiom == CDXDeviceUIIdiomPad) ? (window.bounds.size.width - 1) : (location.x);
         navigationView.userInteractionEnabled = NO;
         if ([[CDXDevice sharedDevice] useImageBasedRendering]) {
             UIImageView *screenshotView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForScreen]] autorelease];
             [navigationView removeFromSuperview];
             [window addSubview:screenshotView];
-            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:screenshotView afterDelay:0.001];
+            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:@[screenshotView, @(location_x)] afterDelay:0.001];
         } else {
-            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:navigationView afterDelay:0.001];
+            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:@[navigationView, @(location_x)] afterDelay:0.001];
         }
     } else {
         [navigationView removeFromSuperview];
@@ -228,14 +257,16 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     navigationView.userInteractionEnabled = YES;
 }
 
-- (void)popFullScreenViewControllerAnimated:(BOOL)animated {
+- (void)popFullScreenViewControllerAnimated:(BOOL)animated withTouchLocation:(CGPoint)location {
+    qltrace(@"location %f %f", location.x, location.y);
     [fullScreenViewController setUserInteractionEnabled:NO];
     
     if (animated) {
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:0.6];
-        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:window cache:YES];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+        UIViewAnimationTransition transition =  (location.x > window.bounds.size.width / 2) ? UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight;
+        [UIView setAnimationTransition:transition forView:window cache:NO];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationWillStartSelector:@selector(popFullScreenViewControllerAnimationWillStart:context:)];
         [UIView setAnimationDidStopSelector:@selector(popFullScreenViewControllerAnimationDidStop:finished:context:)];
@@ -301,19 +332,19 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
 }
 
 
-- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
+- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location {
     qltrace();
     if ([viewController respondsToSelector:@selector(requiresFullScreenLayout)] && [viewController requiresFullScreenLayout]) {
-        [self pushFullScreenViewController:viewController animated:animated];
+        [self pushFullScreenViewController:viewController animated:animated withTouchLocation:(CGPoint)location];
     } else {
         [navigationController pushViewController:viewController animated:animated];
     }
 }
 
-- (void)popViewControllerAnimated:(BOOL)animated {
+- (void)popViewControllerAnimated:(BOOL)animated withTouchLocation:(CGPoint)location {
     qltrace();
     if (fullScreenViewController != nil) {
-        [self popFullScreenViewControllerAnimated:animated];
+        [self popFullScreenViewControllerAnimated:animated withTouchLocation:location];
     } else {
         [navigationController popViewControllerAnimated:animated];
     }
@@ -339,9 +370,9 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
     [window makeKeyAndVisible];
 }
 
-- (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem {
+- (void)showActionSheet:(CDXActionSheet *)actionSheet viewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem *)barButtonItem {
     qltrace();
-    [actionSheet showInView:window];
+    [actionSheet presentWithViewController:viewController view:window animated:YES];
 }
 
 @end
@@ -467,11 +498,11 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     if ((self = [super init])) {
         ivar_assign(splitViewController, [[CDXLeftRightSplitViewController alloc] init]);
         ivar_assign(leftNavigationController, [[UINavigationController alloc] init]);
-        [leftNavigationController setToolbarHidden:YES];
+        [leftNavigationController setToolbarHidden:NO];
         [leftNavigationController setNavigationBarHidden:NO];
         [splitViewController setLeftViewController:leftNavigationController];
         ivar_assign(rightNavigationController, [[UINavigationController alloc] init]);
-        [rightNavigationController setToolbarHidden:YES];
+        [rightNavigationController setToolbarHidden:NO];
         [rightNavigationController setNavigationBarHidden:NO];
         [splitViewController setRightViewController:rightNavigationController];
 
@@ -489,14 +520,14 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     }
 }
 
-- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated {
+- (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location {
     qltrace();
     if (initialLeftViewController == nil) {
         ivar_assign_and_retain(initialLeftViewController, viewController);
         [leftNavigationController pushViewController:viewController animated:NO];
     } else {
         if ([viewController respondsToSelector:@selector(requiresFullScreenLayout)] && [viewController requiresFullScreenLayout]) {
-            [self pushFullScreenViewController:viewController animated:animated];
+            [self pushFullScreenViewController:viewController animated:animated withTouchLocation:location];
         } else {
             if (initialRightViewController == nil) {
                 ivar_assign_and_retain(initialRightViewController, viewController);
@@ -506,10 +537,10 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     }
 }
 
-- (void)popViewControllerAnimated:(BOOL)animated {
+- (void)popViewControllerAnimated:(BOOL)animated withTouchLocation:(CGPoint)location {
     qltrace();
     if (fullScreenViewController != nil) {
-        [self popFullScreenViewControllerAnimated:animated];
+        [self popFullScreenViewControllerAnimated:animated withTouchLocation:location];
     } else {
         [rightNavigationController setViewControllers:@[initialRightViewController] animated:NO];
     }
@@ -581,18 +612,9 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     ivar_release_and_clear(modalViewControllerContainer);
 }
 
-- (void)showActionSheet:(UIActionSheet*)actionSheet fromBarButtonItem:(UIBarButtonItem*)barButtonItem {
+- (void)showActionSheet:(CDXActionSheet *)actionSheet viewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem *)barButtonItem {
     qltrace();
-    [actionSheet showFromBarButtonItem:barButtonItem animated:NO];
-}
-
-@end
-
-
-@implementation CDXAppWindowActionSheetNonFirstResponder
-
-- (BOOL)canBecomeFirstResponder {
-    return NO;
+    [actionSheet presentWithViewController:viewController fromBarButtonItem:barButtonItem animated:NO];
 }
 
 @end

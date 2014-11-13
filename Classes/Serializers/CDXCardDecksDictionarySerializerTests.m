@@ -23,12 +23,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import "CDXCardDecksDictionarySerializer.h"
 #import "CDXCardDeckURLSerializer.h"
 
 
-@interface CDXCardDecksDictionarySerializerTests : SenTestCase {
+@interface CDXCardDecksDictionarySerializerTests : XCTestCase {
     
 }
 
@@ -40,7 +40,7 @@
 - (NSDictionary *)dictionaryFromFile:(NSString *)file {
     NSString *path = [[NSBundle bundleForClass:[CDXCardDecksDictionarySerializerTests class]] pathForResource:file ofType:nil];
     NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:path];
-    STAssertNotNil(dictionary, nil);
+    XCTAssertNotNil(dictionary);
     return dictionary;
 }
 
@@ -48,62 +48,62 @@
     NSDictionary *dictionary = [self dictionaryFromFile:@"CDXCardDecksDictionarySerializerTestsDecks1.CardDeckList.plist"];
     
     CDXCardDecks *decks = [CDXCardDecksDictionarySerializer cardDecksFromVersion1Dictionary:dictionary];
-    STAssertEquals([decks cardDecksCount], (NSUInteger)5, nil);
+    XCTAssertEqual([decks cardDecksCount], (NSUInteger)5);
     
     CDXCardDeckBase *deck;
     
     deck = [decks cardDeckAtIndex:0];
-    STAssertEqualObjects(deck.name, @"Yes, No, Perhaps", nil);
-    STAssertEqualObjects(deck.file, @"YesNoPerhaps.CardDeck", nil);
+    XCTAssertEqualObjects(deck.name, @"Yes, No, Perhaps");
+    XCTAssertEqualObjects(deck.file, @"YesNoPerhaps.CardDeck");
     
     deck = [decks cardDeckAtIndex:1];
-    STAssertEqualObjects(deck.name, @"Red, Yellow, Green", nil);
-    STAssertEqualObjects(deck.file, @"RedYellowGreen.CardDeck", nil);
+    XCTAssertEqualObjects(deck.name, @"Red, Yellow, Green");
+    XCTAssertEqualObjects(deck.file, @"RedYellowGreen.CardDeck");
     
     deck = [decks cardDeckAtIndex:2];
-    STAssertEqualObjects(deck.name, @"60, 45, 30, 15, 10, 5, 0", nil);
-    STAssertEqualObjects(deck.file, @"60-0.CardDeck", nil);
+    XCTAssertEqualObjects(deck.name, @"60, 45, 30, 15, 10, 5, 0");
+    XCTAssertEqualObjects(deck.file, @"60-0.CardDeck");
     
     deck = [decks cardDeckAtIndex:3];
-    STAssertEqualObjects(deck.name, @"15, 10, 5, 0", nil);
-    STAssertEqualObjects(deck.file, @"15-0.CardDeck", nil);
+    XCTAssertEqualObjects(deck.name, @"15, 10, 5, 0");
+    XCTAssertEqualObjects(deck.file, @"15-0.CardDeck");
     
     deck = [decks cardDeckAtIndex:4];
-    STAssertEqualObjects(deck.name, @"0, ..., 10", nil);
-    STAssertEqualObjects(deck.file, @"0-10.CardDeck", nil);
+    XCTAssertEqualObjects(deck.name, @"0, ..., 10");
+    XCTAssertEqualObjects(deck.file, @"0-10.CardDeck");
 }
 
 - (void)testCardDecksFromVersion2Dictionary {
     NSDictionary *dictionary = [self dictionaryFromFile:@"CDXCardDecksDictionarySerializerTestsDecks2.CardDeckList.plist"];
     
     CDXCardDecks *decks = [CDXCardDecksDictionarySerializer cardDecksFromVersion2Dictionary:dictionary];
-    STAssertEquals([decks cardDecksCount], (NSUInteger)3, nil);
+    XCTAssertEqual([decks cardDecksCount], (NSUInteger)3);
     
     CDXCardDeckBase *deck;
     
     deck = [decks cardDeckAtIndex:0];
-    STAssertEqualObjects(deck.name, @"0, ..., 10", nil);
-    STAssertEqualObjects(deck.description, @"0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", nil);
-    STAssertEqualObjects(deck.file, @"File1", nil);
-    STAssertNil(deck.thumbnailColor, nil);
-    STAssertEquals(deck.cardsCount, (NSUInteger)11, nil);
+    XCTAssertEqualObjects(deck.name, @"0, ..., 10");
+    XCTAssertEqualObjects(deck.description, @"0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10");
+    XCTAssertEqualObjects(deck.file, @"File1");
+    XCTAssertNil(deck.thumbnailColor);
+    XCTAssertEqual(deck.cardsCount, (NSUInteger)11);
     
     deck = [decks cardDeckAtIndex:1];
-    STAssertEqualObjects(deck.name, @"Estimation 1", nil);
-    STAssertEqualObjects(deck.description, @"0, 1, 2, 4, 8, 16, 32, 64", nil);
-    STAssertEqualObjects(deck.file, @"File2", nil);
-    STAssertEqualObjects([deck.thumbnailColor rgbaString], @"f0f0f0ff", nil);
-    STAssertEquals(deck.cardsCount, (NSUInteger)8, nil);
+    XCTAssertEqualObjects(deck.name, @"Estimation 1");
+    XCTAssertEqualObjects(deck.description, @"0, 1, 2, 4, 8, 16, 32, 64");
+    XCTAssertEqualObjects(deck.file, @"File2");
+    XCTAssertEqualObjects([deck.thumbnailColor rgbaString], @"f0f0f0ff");
+    XCTAssertEqual(deck.cardsCount, (NSUInteger)8);
     
     deck = [decks cardDeckAtIndex:2];
-    STAssertEqualObjects(deck.name, @"Estimation 2", nil);
-    STAssertEqualObjects(deck.description, @"XXS, XS, S, M, L, XL, XXL", nil);
-    STAssertEqualObjects(deck.file, @"File3", nil);
-    STAssertEqualObjects([deck.thumbnailColor rgbaString], @"ffffffff", nil);
-    STAssertEquals(deck.cardsCount, (NSUInteger)7, nil);
+    XCTAssertEqualObjects(deck.name, @"Estimation 2");
+    XCTAssertEqualObjects(deck.description, @"XXS, XS, S, M, L, XL, XXL");
+    XCTAssertEqualObjects(deck.file, @"File3");
+    XCTAssertEqualObjects([deck.thumbnailColor rgbaString], @"ffffffff");
+    XCTAssertEqual(deck.cardsCount, (NSUInteger)7);
     
     deck = [decks cardDeckDefaults];
-    STAssertEqualObjects(deck.name, @"*NEW CARD DECK*", nil);
+    XCTAssertEqualObjects(deck.name, @"*NEW CARD DECK*");
 }
 
 - (void)testVersion2DictionaryFromCardDecks {
@@ -128,12 +128,12 @@
     decks.cardDeckDefaults.name = @"*NEW CARD DECK*";
     decks.cardDeckDefaults.file = @"FileDefault";
     
-    STAssertEquals([decks cardDecksCount], (NSUInteger)3, nil);
+    XCTAssertEqual([decks cardDecksCount], (NSUInteger)3);
     
     NSDictionary *dictionary = [CDXCardDecksDictionarySerializer version2DictionaryFromCardDecks:decks];
     [dictionary writeToFile:@"/tmp/dict" atomically:NO];
     NSDictionary *expected = [self dictionaryFromFile:@"CDXCardDecksDictionarySerializerTestsDecks2.CardDeckList.plist"];
-    STAssertTrue([expected isEqualToDictionary:dictionary], nil);
+    XCTAssertTrue([expected isEqualToDictionary:dictionary]);
 }
 
 
@@ -144,15 +144,15 @@
     
     dictionary = [self dictionaryFromFile:@"CDXCardDecksDictionarySerializerTestsDecks1.CardDeckList.plist"];
     decks = [CDXCardDecksDictionarySerializer cardDecksFromDictionary:dictionary];
-    STAssertEquals([decks cardDecksCount], (NSUInteger)5, nil);
+    XCTAssertEqual([decks cardDecksCount], (NSUInteger)5);
     deck = [decks cardDeckAtIndex:0];
-    STAssertEqualObjects(deck.name, @"Yes, No, Perhaps", nil);
+    XCTAssertEqualObjects(deck.name, @"Yes, No, Perhaps");
     
     dictionary = [self dictionaryFromFile:@"CDXCardDecksDictionarySerializerTestsDecks2.CardDeckList.plist"];
     decks = [CDXCardDecksDictionarySerializer cardDecksFromDictionary:dictionary];
-    STAssertEquals([decks cardDecksCount], (NSUInteger)3, nil);
+    XCTAssertEqual([decks cardDecksCount], (NSUInteger)3);
     deck = [decks cardDeckAtIndex:0];
-    STAssertEqualObjects(deck.name, @"0, ..., 10", nil);
+    XCTAssertEqualObjects(deck.name, @"0, ..., 10");
 }
 
 - (void)testDictionaryFromCardDeck {
@@ -163,7 +163,7 @@
     }
     
     NSDictionary *dictionary = [CDXCardDecksDictionarySerializer dictionaryFromCardDecks:decks];
-    STAssertEqualObjects([[dictionary valueForKey:@"VERSION"] description], @"2", nil);
+    XCTAssertEqualObjects([[dictionary valueForKey:@"VERSION"] description], @"2");
 }
 
 @end

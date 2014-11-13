@@ -38,6 +38,7 @@
 @synthesize cornerStyle;
 @synthesize fontSize;
 @synthesize timerInterval;
+@synthesize tag;
 
 - (id)init {
     qltrace();
@@ -49,6 +50,7 @@
         cornerStyle = CDXCardCornerStyleDefault;
         fontSize = CDXCardFontSizeDefault;
         timerInterval = CDXCardTimerIntervalDefault;
+        tag = 0;
     }
     return self;
 }
@@ -123,7 +125,7 @@
             if (fontSizeCacheSize[i].height == size.height &&
                 fontSizeCacheSize[i].width == size.width) {
                 CGFloat cachedFontSize = fontSizeCacheFontSize[i];
-                qltrace("cached: %3.0f index: %d", cachedFontSize, i);
+                qltrace("cached: %3.0f index: %lu", cachedFontSize, (unsigned long)i);
                 return cachedFontSize;
             }
         }
@@ -168,7 +170,7 @@
         if (fontSizeCacheNextIndex < CDXCardFontSizeCacheSize) {
             fontSizeCacheFontSize[fontSizeCacheNextIndex] = minlineFontSize;
             fontSizeCacheSize[fontSizeCacheNextIndex] = size;
-            qltrace(@"calculated: %3.0f index: %d", minlineFontSize, fontSizeCacheNextIndex);
+            qltrace(@"calculated: %3.0f index: %lu", minlineFontSize, (unsigned long)fontSizeCacheNextIndex);
             fontSizeCacheNextIndex++;
         } else {
             qltrace(@"calculated: %3.0f", minlineFontSize);

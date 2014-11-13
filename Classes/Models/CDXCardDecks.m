@@ -101,7 +101,7 @@
 }
 
 - (CDXCardDeckHolder *)cardDeckAtIndex:(NSUInteger)index {
-    return (CDXCardDeckHolder *)[cardDecks objectAtIndex:index];
+    return (CDXCardDeckHolder *)cardDecks[index];
 }
 
 - (void)addCardDeck:(CDXCardDeckHolder *)cardDeck {
@@ -144,7 +144,7 @@
     if (![self hasPendingCardDeckAdds]) {
         return nil;
     } else {
-        CDXCardDeckHolder *object = (CDXCardDeckHolder *)[pendingCardDeckAdds objectAtIndex:0];
+        CDXCardDeckHolder *object = (CDXCardDeckHolder *)pendingCardDeckAdds[0];
         [object retain];
         [pendingCardDeckAdds removeObjectAtIndex:0];
         [object autorelease];

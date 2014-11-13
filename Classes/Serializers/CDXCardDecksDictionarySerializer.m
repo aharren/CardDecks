@@ -45,7 +45,7 @@
 + (CDXCardDecks *)cardDecksFromVersion1Dictionary:(NSDictionary *)dictionary {
     CDXCardDecks *dDecks = [[[CDXCardDecks alloc] init] autorelease];
     
-    NSArray *deckDictionaries = (NSArray *)[dictionary objectForKey:@"CardDecks"];
+    NSArray *deckDictionaries = (NSArray *)dictionary[@"CardDecks"];
     for (NSDictionary *deckDictionary in deckDictionaries) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         
@@ -92,7 +92,7 @@
         [pool release];
     }
     
-    NSArray *deckDictionaries = (NSArray *)[dictionary objectForKey:@"cardDecks"];
+    NSArray *deckDictionaries = (NSArray *)dictionary[@"cardDecks"];
     for (NSDictionary *deckDictionary in deckDictionaries) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         
@@ -119,7 +119,7 @@
     if (cardDeck.thumbnailColor != nil) {
         [CDXDictionarySerializerUtils dictionary:dictionary setObject:[cardDeck.thumbnailColor rgbaString] forKey:@"thumbnailColor"];
     }
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:[cardDeck cardsCount]] forKey:@"cardsCount"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@([cardDeck cardsCount]) forKey:@"cardsCount"];
     
     return dictionary;
 }
@@ -138,7 +138,7 @@
     }
     [CDXDictionarySerializerUtils dictionary:dictionary setObject:decks forKey:@"cardDecks"];
     
-    [CDXDictionarySerializerUtils dictionary:dictionary setObject:[NSNumber numberWithUnsignedInteger:2] forKey:@"VERSION"];
+    [CDXDictionarySerializerUtils dictionary:dictionary setObject:@2U forKey:@"VERSION"];
     return dictionary;
 }
 

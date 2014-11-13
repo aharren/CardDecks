@@ -105,7 +105,7 @@ declare_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
 
 - (UIColor *)backgroundColor;
 
-- (void)setInactive:(BOOL)inactive;
+- (void)setInactive:(BOOL)inactive animated:(BOOL)animated;
 
 @end
 

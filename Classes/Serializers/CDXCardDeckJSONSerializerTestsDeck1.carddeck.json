@@ -1,0 +1,53 @@
+{
+  "version" : 2,
+  "name": "numbers",
+  "group_size": 1,
+  "deck_style": "stacked,swipe",
+  "corner_style": "rounded",
+  "index_dots": "on",
+  "index_style": "light",
+  "index_touches": "on",
+  "auto_rotate": "on",
+  "shake": "shuffle",
+  "auto_play": "play1x",
+  "default_card": {
+    "text": "default",
+    "text_color": "#f8f8f8f8",
+    "background_color": "#08080808",
+    "font_size": 1,
+    "orientation": "up",
+    "timer": 2
+  },
+  "cards": [
+    {
+      "text": "ok1",
+      "text_color": "#12345678",
+      "background_color": "#17654328",
+      "font_size": 50,
+      "orientation": "left",
+      "timer": 100
+    },
+    {
+      "text": "bad1",
+      "text_color": "xyz",
+      "background_color": "klm",
+      "font_size": 1000,
+      "orientation": "top-left",
+      "timer": -100
+    },
+    {
+      "text": 2,
+      "text_color": 22345678,
+      "background_color": 27654318,
+      "font_size": "1000",
+      "orientation": 0,
+      "timer": "-100"
+    },
+    {
+      "text": "bad3",
+      "font_size": 2e+32,
+      "timer": 2e+32
+    },
+    {}
+  ]
+}

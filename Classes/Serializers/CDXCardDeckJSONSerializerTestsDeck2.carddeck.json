@@ -1,0 +1,13 @@
+{
+  "version" : 2,
+  "name": "settings",
+  "group_size": 2,
+  "deck_style": "side-by-side,scroll",
+  "corner_style": "rounded",
+  "index_dots": "off",
+  "index_style": "light",
+  "index_touches": "off",
+  "auto_rotate": "off",
+  "shake": "off",
+  "auto_play": "off"
+}

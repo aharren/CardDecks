@@ -23,12 +23,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import "CDXAppURL.h"
 #import "CDXCardDeckURLSerializer.h"
 
 
-@interface CDXAppURLTests : SenTestCase {
+@interface CDXAppURLTests : XCTestCase {
     
 }
 
@@ -37,51 +37,79 @@
 
 @implementation CDXAppURLTests
 
-- (void)testCardDeckFromURLVersion1 {
+- (void)testCardDeckFromURLCarddecksSchemeVersion1 {
     NSString *string = @"carddecks:///add?card%20deck,010203,040506&card%201&card%202";
     CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:string]];
-    STAssertNotNil(deck, nil);
+    XCTAssertNotNil(deck);
+    XCTAssertEqualObjects(@"card deck", deck.name);
 }
 
-- (void)testCardDeckFromURLVersion2 {
+- (void)testCardDeckFromURLCarddecksSchemeVersion2 {
     NSString *string = @"carddecks:///2/add?card%20deck,010203,040506&card%201&card%202";
     CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:string]];
-    STAssertNotNil(deck, nil);
+    XCTAssertNotNil(deck);
+    XCTAssertEqualObjects(@"card deck", deck.name);
+}
+
+- (void)testCardDeckFromURLFileSchemeNoVersion {
+    NSString *string = @"{ \"name\" : \"card deck\" }";
+    [string writeToFile:@"/tmp/file.carddeck" atomically:NO encoding:NSUTF8StringEncoding error:NULL];
+    XCTAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:@"/tmp/file.carddeck"]);
+    CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:@"file:///tmp/file.carddeck"]];
+    XCTAssertNil(deck); // invalid
+}
+
+- (void)testCardDeckFromURLFileSchemeVersion1 {
+    NSString *string = @"{ \"version\" : 1, \"name\" : \"card deck\" }";
+    [string writeToFile:@"/tmp/file.carddeck" atomically:NO encoding:NSUTF8StringEncoding error:NULL];
+    XCTAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:@"/tmp/file.carddeck"]);
+    CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:@"file:///tmp/file.carddeck"]];
+    XCTAssertNil(deck); // invalid
+}
+
+- (void)testCardDeckFromURLFileSchemeVersion2 {
+    NSString *string = @"{ \"version\" : 2, \"name\" : \"card deck\" }";
+    [string writeToFile:@"/tmp/file.carddeck" atomically:NO encoding:NSUTF8StringEncoding error:NULL];
+    XCTAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:@"/tmp/file.carddeck"]);
+    CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:@"file:///tmp/file.carddeck"]];
+    XCTAssertNotNil(deck);
+    XCTAssertEqualObjects(@"card deck", deck.name);
+    XCTAssertFalse([[NSFileManager defaultManager] fileExistsAtPath:@"/tmp/file.carddeck"]);
 }
 
 - (void)testCardDeckFromURLBad {
     NSString *string = @"carddecks:///x/add?card%20deck,010203,040506&card%201&card%202";
     CDXCardDeck *deck = [CDXAppURL cardDeckFromURL:[NSURL URLWithString:string]];
-    STAssertNil(deck, nil);
+    XCTAssertNil(deck);
 }
 
 - (void)testMayBeCardDecksURLStringVersion1 {
     NSString *string = @"carddecks:///add?card%20deck,010203,040506&card%201&card%202";
-    STAssertTrue([CDXAppURL mayBeCardDecksURLString:string], nil);
+    XCTAssertTrue([CDXAppURL mayBeCardDecksURLString:string]);
 }
 
 - (void)testMayBeCardDecksURLStringVersion2 {
     NSString *string = @"carddecks:///2/add?card%20deck,010203,040506&card%201&card%202";
-    STAssertTrue([CDXAppURL mayBeCardDecksURLString:string], nil);
+    XCTAssertTrue([CDXAppURL mayBeCardDecksURLString:string]);
 }
 
 - (void)testMayBeCardDecksURLStringBad {
     NSString *string = @"carddecks:///x/add?card%20deck,010203,040506&card%201&card%202";
-    STAssertFalse([CDXAppURL mayBeCardDecksURLString:string], nil);
+    XCTAssertFalse([CDXAppURL mayBeCardDecksURLString:string]);
 }
 
 - (void)testCarddecksURLStringVersion2 {
     NSString *string = @"card%21deck,g1,d1,c1,id1,is1,it1,r1,s1,ap1&,000000ff,ffffffff,u,0,5";
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
     NSString *urlString = [CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:deck];
-    STAssertEqualObjects(urlString, [@"carddecks:///2/add?" stringByAppendingString:string], nil);
+    XCTAssertEqualObjects(urlString, [@"carddecks:///2/add?" stringByAppendingString:string]);
 }
 
 - (void)testHttpURLStringVersion2 {
     NSString *string = @"card%21deck,g1,d1,c1,id1,is1,it1,r1,s1,ap1&,000000ff,ffffffff,u,0,5";
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
     NSString *urlString = [CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:deck];
-    STAssertEqualObjects(urlString, [@"http://carddecks.protocol.0xc0.de/2/add?" stringByAppendingString:string], nil);
+    XCTAssertEqualObjects(urlString, [@"http://carddecks.protocol.0xc0.de/2/add?" stringByAppendingString:string]);
 }
 
 @end

@@ -51,12 +51,12 @@
 
 - (UIView *)viewAtIndex:(NSUInteger)index {
     qltrace();
-    return (UIView *)[directViews objectAtIndex:index];
+    return (UIView *)directViews[index];
 }
 
 - (UIView *)configureViewAtIndex:(NSUInteger)index viewSize:(CGSize)viewSize cardIndex:(NSUInteger)cardIndex card:(CDXCard *)card deviceOrientation:(UIDeviceOrientation)deviceOrientation {
     qltrace();
-    CDXCardView *view = [directViews objectAtIndex:index];
+    CDXCardView *view = directViews[index];
     [view setCard:card size:viewSize deviceOrientation:deviceOrientation preview:NO];
     return view;
 }

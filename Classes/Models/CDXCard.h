@@ -73,6 +73,8 @@ typedef enum {
     NSUInteger fontSizeCacheNextIndex;
     CGSize fontSizeCacheSize[CDXCardFontSizeCacheSize];
     CGFloat fontSizeCacheFontSize[CDXCardFontSizeCacheSize];
+
+    NSInteger tag;
 }
 
 @property (nonatomic, copy) NSString *text;
@@ -82,6 +84,7 @@ typedef enum {
 @property (nonatomic, assign) CDXCardCornerStyle cornerStyle;
 @property (nonatomic, assign) CGFloat fontSize;
 @property (nonatomic, assign) NSTimeInterval timerInterval;
+@property (nonatomic, assign) NSInteger tag;
 
 - (CGFloat)fontSizeConstrainedToSize:(CGSize)size scale:(CGFloat)scale;
 

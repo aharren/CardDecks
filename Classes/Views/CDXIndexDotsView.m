@@ -55,15 +55,15 @@
     switch (style) {
         default:
         case CDXIndexDotsViewStyleLight:
-            ivar_assign_and_retain(imageDot, [UIImage imageNamed:@"IndexDotGray.png"]);
+            ivar_assign_and_retain(imageDot, [UIImage imageNamed:@"IndexDotGray"]);
             imageDotAlpha = CDXIndexDotsViewDotAlphaWhite;
-            ivar_assign_and_retain(imageDotHighlighted, [UIImage imageNamed:@"IndexDotWhite.png"]);
+            ivar_assign_and_retain(imageDotHighlighted, [UIImage imageNamed:@"IndexDotWhite"]);
             imageDotAlphaHighlighted = CDXIndexDotsViewDotAlphaHightlighted;
             break;
         case CDXIndexDotsViewStyleDark:
-            ivar_assign_and_retain(imageDot, [UIImage imageNamed:@"IndexDotGray.png"]);
+            ivar_assign_and_retain(imageDot, [UIImage imageNamed:@"IndexDotGray"]);
             imageDotAlpha = CDXIndexDotsViewDotAlphaBlack;
-            ivar_assign_and_retain(imageDotHighlighted, [UIImage imageNamed:@"IndexDotBlack.png"]);
+            ivar_assign_and_retain(imageDotHighlighted, [UIImage imageNamed:@"IndexDotBlack"]);
             imageDotAlphaHighlighted = CDXIndexDotsViewDotAlphaHightlighted;
             break;
     }
@@ -97,13 +97,13 @@
 
 - (void)setCurrentPage:(NSUInteger)newCurrentPage animated:(BOOL)animated {
     if (currentPage >= firstVisiblePage && currentPage <= lastVisiblePage) {
-        UIImageView *view = [[self subviews] objectAtIndex:currentPage-firstVisiblePage];
+        UIImageView *view = [self subviews][currentPage-firstVisiblePage];
         view.highlighted = NO;
         view.alpha = imageDotAlpha;
     }
     currentPage = newCurrentPage;
     if (currentPage >= firstVisiblePage && currentPage <= lastVisiblePage) {
-        UIImageView *view = [[self subviews] objectAtIndex:currentPage-firstVisiblePage];
+        UIImageView *view = [self subviews][currentPage-firstVisiblePage];
         view.highlighted = YES;
         view.alpha = imageDotAlphaHighlighted;
     }

@@ -43,6 +43,8 @@
     
     CDXColor *thumbnailColor;
     NSUInteger cardsCount;
+    
+    NSInteger tag;
 }
 
 @property (nonatomic, readonly) CDXCardDeckBase *base;
@@ -54,6 +56,8 @@
 
 @property (nonatomic, retain) CDXColor *thumbnailColor;
 @property (nonatomic, assign) NSUInteger cardsCount;
+
+@property (nonatomic, assign) NSInteger tag;
 
 - (id)init;
 - (id)initWithCardDeck:(CDXCardDeck *)cardDeck;
