@@ -1,1 +1,0 @@
-../../LibComponentLogging-Core/lcl_config_components.template.h

@@ -16,7 +16,7 @@
 #define COCOAPODS_POD_AVAILABLE_LibComponentLogging_pods
 #define COCOAPODS_VERSION_MAJOR_LibComponentLogging_pods 0
 #define COCOAPODS_VERSION_MINOR_LibComponentLogging_pods 0
-#define COCOAPODS_VERSION_PATCH_LibComponentLogging_pods 1
+#define COCOAPODS_VERSION_PATCH_LibComponentLogging_pods 2
 
 // LibComponentLogging-qlog
 #define COCOAPODS_POD_AVAILABLE_LibComponentLogging_qlog
