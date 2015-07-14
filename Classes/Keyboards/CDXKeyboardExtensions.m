@@ -233,6 +233,11 @@ static float keyboardExtensionsOsVersion;
             }
         }
     }
+    for (UIWindow *window in applicationWindows) {
+        if ([@"UIRemoteKeyboardWindow" isEqualToString:NSStringFromClass([window class])]) {
+            return window;
+        }
+    }
     // return the second window
     if ([applicationWindows count] > 1) {
         return applicationWindows[1];
