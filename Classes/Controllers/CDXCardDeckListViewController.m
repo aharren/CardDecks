@@ -530,7 +530,7 @@
 @implementation CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super init])) {
+    if ((self = [super initWithPlaceholderItem:@""])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
     }
     return self;
@@ -558,7 +558,7 @@
 @implementation CDXCardDeckListViewControllerHTTPURLTextActivityItemProvider
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super init])) {
+    if ((self = [super initWithPlaceholderItem:@""])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
     }
     return self;
@@ -586,7 +586,7 @@
 @implementation CDXCardDeckListViewControllerStringTextActivityItemProvider
 
 - (id)initWithString:(NSString *)aText {
-    if ((self = [super init])) {
+    if ((self = [super initWithPlaceholderItem:@""])) {
         ivar_assign_and_copy(text, aText);
     }
     return self;
@@ -614,7 +614,7 @@
 @implementation CDXCardDeckListViewControllerAutoDetectActivityItemProvider
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super init])) {
+    if ((self = [super initWithPlaceholderItem:[NSURL URLWithString:@""]])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
     }
     return self;
@@ -651,7 +651,7 @@
 @implementation CDXCardDeckListViewControllerCarddecksURLActivityItemProvider
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super init])) {
+    if ((self = [super initWithPlaceholderItem:[NSURL URLWithString:@""]])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
     }
     return self;
@@ -680,7 +680,7 @@
 @implementation CDXCardDeckListViewControllerHTTPURLActivityItemProvider
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super init])) {
+    if ((self = [super initWithPlaceholderItem:[NSURL URLWithString:@""]])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
     }
     return self;
