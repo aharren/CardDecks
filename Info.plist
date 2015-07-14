@@ -22,7 +22,7 @@
 	<key>CFBundleExecutable</key>
 	<string>CardDecks</string>
 	<key>CFBundleIdentifier</key>
-	<string>0xc0.de.CardDecks</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
