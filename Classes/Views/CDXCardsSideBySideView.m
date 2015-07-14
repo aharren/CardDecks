@@ -192,7 +192,7 @@
     
     const CGFloat contentOffsetXCurrentPage = (currentCardIndex * width);
     const CGFloat contentOffsetXDiff = contentOffsetX - contentOffsetXCurrentPage;
-    if (abs(contentOffsetXDiff) < width + 20) {
+    if (fabs(contentOffsetXDiff) < width + 20) {
         return;
     }
     

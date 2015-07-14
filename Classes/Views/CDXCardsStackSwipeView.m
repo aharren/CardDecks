@@ -128,7 +128,7 @@
     CGFloat deltay = touchCurrentPosition.y - touchStartPosition.y;
     
     // animate if the move was at least 30 pixels wide
-    if (fabsf(deltax) >= 30) {
+    if (fabs(deltax) >= 30) {
         if (touchCurrentPosition.x < touchStartPosition.x) {
             // move to the left
             if (currentCardIndex+1 < cardsCount) {
