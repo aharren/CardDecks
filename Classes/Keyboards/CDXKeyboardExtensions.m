@@ -132,8 +132,9 @@ static float keyboardExtensionsOsVersion;
             extensionView.alpha = 0;
             viewInactiveExtensions.hidden = YES;
         } else {
+            NSInteger currentActiveExtensionTag = activeExtensionTag;
             [self deactivateKeyboardExtension:[self keyboardExtensionByTag:activeExtensionTag] tag:activeExtensionTag];
-            [self activateKeyboardExtension:nil tag:-1];
+            [self activateKeyboardExtension:[self keyboardExtensionByTag:currentActiveExtensionTag] tag:currentActiveExtensionTag];
         }
     }
 
