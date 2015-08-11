@@ -72,6 +72,8 @@
     NSObject *responder;
     CGRect extensionViewRect;
     
+    UIView *backgroundView;
+    
     UIColor *backgroundColor;
     
     BOOL enabled;

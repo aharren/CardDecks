@@ -48,6 +48,8 @@ static float keyboardExtensionsOsVersion;
         ivar_assign(toolbarActionButton, [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
                                                                                        target:self
                                                                                        action:@selector(toolbarActionButtonPressed:)]);
+        ivar_assign(backgroundView, [[UIView alloc] initWithFrame:extensionViewRect]);
+        backgroundView.alpha = 0;
         ivar_assign_and_retain(backgroundColor, [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1]);
         enabled = NO;
         visible = NO;
@@ -68,6 +70,7 @@ static float keyboardExtensionsOsVersion;
     ivar_release_and_clear(toolbarButtons);
     ivar_release_and_clear(toolbarKeyboardButton);
     ivar_release_and_clear(toolbarActionButton);
+    ivar_release_and_clear(backgroundView);
     ivar_release_and_clear(responder);
     ivar_release_and_clear(keyboardExtensions);
     ivar_release_and_clear(backgroundColor);
@@ -109,6 +112,12 @@ static float keyboardExtensionsOsVersion;
         extensionViewRect = keyboardAnimationEndFrame;
     }
 
+    // add the background view to the application's main window
+    [[[UIApplication sharedApplication] keyWindow] addSubview:backgroundView];
+    [backgroundView sizeToFit];
+    backgroundView.backgroundColor = [UIColor whiteColor];
+    backgroundView.frame = CGRectMake(keyboardAnimationBeginFrame.origin.x, keyboardAnimationBeginFrame.origin.y - toolbar.frame.size.height,
+                                      keyboardAnimationBeginFrame.size.width, keyboardAnimationBeginFrame.size.height + toolbar.frame.size.height);
     // add the toolbar view to the application's main window
     [[[UIApplication sharedApplication] keyWindow] addSubview:toolbar];
     [toolbar sizeToFit];
@@ -123,6 +132,9 @@ static float keyboardExtensionsOsVersion;
     toolbar.alpha = hide ? 0 : 1;
     toolbar.frame = CGRectMake(keyboardAnimationEndFrame.origin.x, keyboardAnimationEndFrame.origin.y - toolbar.frame.size.height,
                                keyboardAnimationEndFrame.size.width, toolbar.frame.size.height);
+    backgroundView.alpha = hide ? 0 : 1;
+    backgroundView.frame = CGRectMake(keyboardAnimationEndFrame.origin.x, keyboardAnimationEndFrame.origin.y - toolbar.frame.size.height,
+                                      keyboardAnimationEndFrame.size.width, keyboardAnimationEndFrame.size.height + toolbar.frame.size.height);
     
     if (activeExtensionTag != -1) {
         if (hide) {
