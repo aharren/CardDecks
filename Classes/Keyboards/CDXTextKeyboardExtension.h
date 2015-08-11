@@ -58,7 +58,7 @@ declare_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
     
 @protected
     IBOutlet UISlider *sizeChooserSlider;
-    IBOutlet UILabel *sizeChooserSliderLabel;
+    IBOutlet UIButton *sizeChooserSliderSize;
     IBOutlet UILabel *orientationSample;
 }
 
@@ -67,6 +67,7 @@ declare_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
 
 - (IBAction)orientationButtonPressed:(id)sender;
 - (IBAction)sizeChooserSliderValueChanged;
+- (IBAction)sizeButtonPressed:(id)sender;
 
 @end
 

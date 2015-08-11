@@ -110,7 +110,7 @@ synthesize_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
 
 - (void)dealloc {
     ivar_release_and_clear(sizeChooserSlider);
-    ivar_release_and_clear(sizeChooserSliderLabel);
+    ivar_release_and_clear(sizeChooserSliderSize);
     ivar_release_and_clear(orientationSample);
     [super dealloc];
 }
@@ -123,7 +123,7 @@ synthesize_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
 
 - (void)viewDidUnload {
     ivar_release_and_clear(sizeChooserSlider);
-    ivar_release_and_clear(sizeChooserSliderLabel);
+    ivar_release_and_clear(sizeChooserSliderSize);
     ivar_release_and_clear(orientationSample);
     [super viewDidUnload];
 }
@@ -144,7 +144,7 @@ synthesize_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
         fontSize = [r textKeyboardExtensionFontSize];
     }
     sizeChooserSlider.value = fontSize;
-    sizeChooserSliderLabel.text = [CDXTextKeyboardExtension stringForFontSize:fontSize];
+    [sizeChooserSliderSize setTitle:[CDXTextKeyboardExtension stringForFontSize:fontSize] forState:UIControlStateNormal];
 }
 
 - (void)updateOrientationSample {
@@ -166,6 +166,21 @@ synthesize_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
     }
     [self updateSize];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] refreshKeyboardExtensions];
+}
+
+- (IBAction)sizeButtonPressed:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    NSInteger tag = button.tag;
+    sizeChooserSlider.value += tag;
+    
+    [self sizeChooserSliderValueChanged];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.2];
+    UIColor *color = button.backgroundColor;
+    button.backgroundColor = [UIColor grayColor];
+    button.backgroundColor = color;
+    [UIView commitAnimations];
 }
 
 - (IBAction)orientationButtonPressed:(id)sender {
