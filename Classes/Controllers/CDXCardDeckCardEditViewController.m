@@ -73,6 +73,7 @@
         CDXCard *card = [self currentCard];
         text.textColor = [card.textColor uiColor];
         text.backgroundColor = [card.backgroundColor uiColor];
+        self.view.backgroundColor = text.backgroundColor;
     }
     [cardView setCard:[self currentCard] size:cardViewSize deviceOrientation:UIDeviceOrientationPortrait preview:cardViewUsePreview];
     cardViewScrollView.contentSize = cardViewSize;
