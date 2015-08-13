@@ -61,6 +61,21 @@
 @end
 
 
+@interface CDXKeyboardExtensionMarker : NSObject {
+    
+@protected
+    UILabel *label;
+    
+}
+
+@property (nonatomic, readonly) UIView *view;
+
+- (void)positionAtBarButtonItem:(UIBarButtonItem *)item animated:(BOOL)animated;
+- (void)hide;
+
+@end
+
+
 @interface CDXKeyboardExtensions : NSObject {
     
 @protected
@@ -68,6 +83,7 @@
     NSMutableArray *toolbarButtons;
     UIBarButtonItem *toolbarKeyboardButton;
     UIBarButtonItem *toolbarActionButton;
+    CDXKeyboardExtensionMarker *toolbarActiveButtonMarker;
     
     NSObject *responder;
     CGRect extensionViewRect;
