@@ -106,10 +106,10 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     ivar_release_and_clear(colorChooserRGBSliderGreen);
     ivar_release_and_clear(colorChooserRGBSliderBlue);
     ivar_release_and_clear(colorChooserRGBSliderAlpha);
-    ivar_release_and_clear(colorChooserRGBSliderRedLabel);
-    ivar_release_and_clear(colorChooserRGBSliderGreenLabel);
-    ivar_release_and_clear(colorChooserRGBSliderBlueLabel);
-    ivar_release_and_clear(colorChooserRGBSliderAlphaLabel);
+    ivar_release_and_clear(colorChooserRGBSliderRedValue);
+    ivar_release_and_clear(colorChooserRGBSliderGreenValue);
+    ivar_release_and_clear(colorChooserRGBSliderBlueValue);
+    ivar_release_and_clear(colorChooserRGBSliderAlphaValue);
     [super dealloc];
 }
 
@@ -138,10 +138,10 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     ivar_release_and_clear(colorChooserRGBSliderGreen);
     ivar_release_and_clear(colorChooserRGBSliderBlue);
     ivar_release_and_clear(colorChooserRGBSliderAlpha);
-    ivar_release_and_clear(colorChooserRGBSliderRedLabel);
-    ivar_release_and_clear(colorChooserRGBSliderGreenLabel);
-    ivar_release_and_clear(colorChooserRGBSliderBlueLabel);
-    ivar_release_and_clear(colorChooserRGBSliderAlphaLabel);
+    ivar_release_and_clear(colorChooserRGBSliderRedValue);
+    ivar_release_and_clear(colorChooserRGBSliderGreenValue);
+    ivar_release_and_clear(colorChooserRGBSliderBlueValue);
+    ivar_release_and_clear(colorChooserRGBSliderAlphaValue);
     [super viewDidUnload];
 }
 
@@ -175,10 +175,10 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     colorChooserRGBSliderGreen.value = color.green;
     colorChooserRGBSliderBlue.value = color.blue;
     colorChooserRGBSliderAlpha.value = color.alpha;
-    colorChooserRGBSliderRedLabel.text = [NSString stringWithFormat:@"%02X", color.red];
-    colorChooserRGBSliderGreenLabel.text = [NSString stringWithFormat:@"%02X", color.green];
-    colorChooserRGBSliderBlueLabel.text = [NSString stringWithFormat:@"%02X", color.blue];
-    colorChooserRGBSliderAlphaLabel.text = [NSString stringWithFormat:@"%02X", color.alpha];
+    [colorChooserRGBSliderRedValue setTitle:[NSString stringWithFormat:@"%02x", color.red] forState:UIControlStateNormal];
+    [colorChooserRGBSliderGreenValue setTitle:[NSString stringWithFormat:@"%02x", color.green] forState:UIControlStateNormal];
+    [colorChooserRGBSliderBlueValue setTitle:[NSString stringWithFormat:@"%02x", color.blue] forState:UIControlStateNormal];
+    [colorChooserRGBSliderAlphaValue setTitle:[NSString stringWithFormat:@"%02x", color.alpha] forState:UIControlStateNormal];
 }
 
 - (void)updateView {
@@ -230,6 +230,49 @@ static CDXColorRGB colorChooserSimpleColors[] = {
 
 - (IBAction)colorChooserRGBSliderValueChanged {
     [self postColorUpdate:[self colorChooserRGBSliderValues] textNotBackground:!textButton.enabled];
+}
+
+- (void)colorChooserRGBSliderButtonPressedPostProcess:(UIButton *)button {
+    [self colorChooserRGBSliderValueChanged];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.2];
+    UIColor *color = button.backgroundColor;
+    button.backgroundColor = [UIColor grayColor];
+    button.backgroundColor = color;
+    [UIView commitAnimations];
+}
+
+- (IBAction)colorChooserRGBSliderRedButtonPressed:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    NSInteger tag = button.tag;
+    colorChooserRGBSliderRed.value += tag;
+    
+    [self colorChooserRGBSliderButtonPressedPostProcess:button];
+}
+
+- (IBAction)colorChooserRGBSliderGreenButtonPressed:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    NSInteger tag = button.tag;
+    colorChooserRGBSliderGreen.value += tag;
+
+    [self colorChooserRGBSliderButtonPressedPostProcess:button];
+}
+
+- (IBAction)colorChooserRGBSliderBlueButtonPressed:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    NSInteger tag = button.tag;
+    colorChooserRGBSliderBlue.value += tag;
+
+    [self colorChooserRGBSliderButtonPressedPostProcess:button];
+}
+
+- (IBAction)colorChooserRGBSliderAlphaButtonPressed:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    NSInteger tag = button.tag;
+    colorChooserRGBSliderAlpha.value += tag;
+
+    [self colorChooserRGBSliderButtonPressedPostProcess:button];
 }
 
 - (IBAction)colorChooserSimpleValueSelected:(id)sender {
