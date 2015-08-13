@@ -40,13 +40,37 @@
                                 <action selector="simpleButtonPressed" destination="-1" id="98"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="hfF-y1-947"/>
+                        <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="5Kc-Bd-AVx"/>
+                        <barButtonItem title="Item" style="plain" id="Mu8-vf-t5x">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Uo8-kU-M6s">
+                                <rect key="frame" x="154" y="-8" width="1" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.81568627450980391" green="0.81568627450980391" blue="0.81568627450980391" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                        <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="NLL-Wt-bpB"/>
                         <barButtonItem title="text" style="plain" id="89">
                             <connections>
                                 <action selector="textButtonPressed" destination="-1" id="99"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="NGW-0X-2MT"/>
+                        <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="8eD-Bw-ybB"/>
+                        <barButtonItem title="Item" style="plain" id="miW-RI-q8n">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fqY-7N-rUh">
+                                <rect key="frame" x="154" y="-8" width="1" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.81568627450980391" green="0.81568627450980391" blue="0.81568627450980391" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                        <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="NGW-0X-2MT"/>
                         <barButtonItem title="background" style="plain" id="90">
                             <connections>
                                 <action selector="backgroundButtonPressed" destination="-1" id="100"/>

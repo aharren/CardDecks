@@ -89,7 +89,7 @@ static float keyboardExtensionsOsVersion;
 
 - (UIBarButtonItem *)toolbarButtonByTag:(NSInteger)tag {
     if (tag >= -1) {
-        return [[(UIBarButtonItem *)toolbarButtons[tag + 1] retain] autorelease];
+        return [[(UIBarButtonItem *)toolbarButtons[(tag + 1) * 2] retain] autorelease];
     }
     
     return toolbarKeyboardButton;
@@ -204,14 +204,19 @@ static float keyboardExtensionsOsVersion;
     [toolbarButtons removeAllObjects];
     [toolbarButtons addObject:toolbarKeyboardButton];
     toolbarKeyboardButton.tag = tag;
-    
+    [toolbarButtons addObject:[self toolbarSeparatorItem]];
+
     ivar_assign_and_copy(keyboardExtensions, aKeyboardExtensions);
     for (NSObject<CDXKeyboardExtension> *extension in keyboardExtensions) {
         UIBarButtonItem *button = [self toolbarButtonWithTitle:[extension keyboardExtensionTitle]];
         button.tag = ++tag;
         [toolbarButtons addObject:button];
         [extension keyboardExtensionInitialize];
+        
+        [toolbarButtons addObject:[self toolbarSeparatorItem]];
     }
+    
+    [toolbarButtons removeLastObject];
     
     if ([aResponder conformsToProtocol:@protocol(CDXKeyboardExtensionResponderWithActions)]) {
         [toolbarButtons addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease]];
@@ -275,6 +280,13 @@ static float keyboardExtensionsOsVersion;
     return button;
 }
 
+- (UIBarButtonItem *)toolbarSeparatorItem {
+    UIButton *separator = [[[UIButton alloc] init] autorelease];
+    separator.frame = CGRectMake(0, 0, 1, 44);
+    separator.backgroundColor = [UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0];
+    return [[[UIBarButtonItem alloc] initWithCustomView:separator] autorelease];
+}
+
 - (void)refreshKeyboardExtensions {
     NSUInteger count = [keyboardExtensions count];
     for (NSUInteger tag = 0; tag < count; tag++) {
@@ -284,7 +296,7 @@ static float keyboardExtensionsOsVersion;
                 [keyboardExtension keyboardExtensionWillBecomeActive];
             }
         }
-        UIBarButtonItem *button = toolbarButtons[tag+1];
+        UIBarButtonItem *button = [self toolbarButtonByTag:tag];
         button.title = [keyboardExtension keyboardExtensionTitle];
         if (tag == activeExtensionTag) {
             if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionDidBecomeActive)]) {
