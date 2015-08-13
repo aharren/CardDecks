@@ -97,6 +97,7 @@ static CDXColorRGB colorChooserSimpleColors[] = {
 
 - (void)dealloc {
     ivar_release_and_clear(toolbar);
+    ivar_release_and_clear(toolbarActiveButtonMarker);
     ivar_release_and_clear(simpleButton);
     ivar_release_and_clear(textButton);
     ivar_release_and_clear(backgroundButton);
@@ -115,8 +116,9 @@ static CDXColorRGB colorChooserSimpleColors[] = {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    ivar_assign(toolbarActiveButtonMarker, [[CDXKeyboardExtensionMarker alloc] init]);
+    [toolbar addSubview:toolbarActiveButtonMarker.view];
     self.view.backgroundColor = [[CDXKeyboardExtensions sharedKeyboardExtensions] backgroundColor];
-    [self simpleButtonPressed];
     NSDictionary *textAttributes = @{ NSFontAttributeName: [UIFont systemFontOfSize:15] };
     [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
     [textButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
@@ -125,10 +127,14 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     [colorChooserRGBSliderGreen setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
     [colorChooserRGBSliderBlue setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
     [colorChooserRGBSliderAlpha setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
+    [self setView:colorChooserSimpleView button:simpleButton animated:NO];
+    [self updateView];
+    [toolbarActiveButtonMarker hide];
 }
 
 - (void)viewDidUnload {
     ivar_release_and_clear(toolbar);
+    ivar_release_and_clear(toolbarActiveButtonMarker);
     ivar_release_and_clear(simpleButton);
     ivar_release_and_clear(textButton);
     ivar_release_and_clear(backgroundButton);
@@ -148,9 +154,20 @@ static CDXColorRGB colorChooserSimpleColors[] = {
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self updateView];
+    [self performSelector:@selector(viewDidAppearPostActions) withObject:nil afterDelay:0.01];
 }
 
-- (void)setView:(UIView *)view button:(UIBarButtonItem *)button {
+- (void)viewDidAppearPostActions {
+    if (!textButton.enabled) {
+        [toolbarActiveButtonMarker positionAtBarButtonItem:textButton animated:NO];
+    } else if (!backgroundButton.enabled) {
+        [toolbarActiveButtonMarker positionAtBarButtonItem:backgroundButton animated:NO];
+    } else {
+        [toolbarActiveButtonMarker positionAtBarButtonItem:simpleButton animated:NO];
+    }
+}
+
+- (void)setView:(UIView *)view button:(UIBarButtonItem *)button animated:(BOOL)animated {
     simpleButton.enabled = YES;
     textButton.enabled = YES;
     backgroundButton.enabled = YES;
@@ -161,6 +178,8 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     button.enabled = NO;
     [self.view addSubview:view];
     view.frame = CGRectMake(0, CGRectGetHeight(toolbar.bounds) + 2, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - CGRectGetHeight(toolbar.bounds) - 2);
+    
+    [toolbarActiveButtonMarker positionAtBarButtonItem:button animated:animated];
 }
 
 - (CDXColor *)colorChooserRGBSliderValues {
@@ -214,17 +233,17 @@ static CDXColorRGB colorChooserSimpleColors[] = {
 }
 
 - (IBAction)simpleButtonPressed {
-    [self setView:colorChooserSimpleView button:simpleButton];
+    [self setView:colorChooserSimpleView button:simpleButton animated:YES];
     [self updateView];
 }
 
 - (IBAction)textButtonPressed {
-    [self setView:colorChooserRGBView button:textButton];
+    [self setView:colorChooserRGBView button:textButton animated:YES];
     [self updateView];
 }
 
 - (IBAction)backgroundButtonPressed {
-    [self setView:colorChooserRGBView button:backgroundButton];
+    [self setView:colorChooserRGBView button:backgroundButton animated:YES];
     [self updateView];
 }
 

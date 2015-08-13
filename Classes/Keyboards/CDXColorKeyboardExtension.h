@@ -58,6 +58,7 @@ declare_singleton(sharedColorKeyboardExtension, CDXColorKeyboardExtension);
     
 @protected
     IBOutlet UIToolbar *toolbar;
+    CDXKeyboardExtensionMarker *toolbarActiveButtonMarker;
     
     IBOutlet UIBarButtonItem *simpleButton;
     IBOutlet UIBarButtonItem *textButton;
