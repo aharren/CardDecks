@@ -40,13 +40,37 @@
                                 <action selector="simpleButtonPressed" destination="-1" id="98"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="GFB-TO-iu7"/>
+                        <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="kUs-kz-GKg"/>
+                        <barButtonItem title="Item" style="plain" id="Wtm-Pt-J8x">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="GUw-VV-3sB">
+                                <rect key="frame" x="154" y="-8" width="1" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.81568627449999997" green="0.81568627449999997" blue="0.81568627449999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                        <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="pnB-Jk-qdi"/>
                         <barButtonItem title="text" id="89">
                             <connections>
                                 <action selector="textButtonPressed" destination="-1" id="99"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="e3p-Ki-SYj"/>
+                        <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="cLM-2d-oJK"/>
+                        <barButtonItem title="Item" style="plain" id="3UV-n4-Ar4">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="f6W-go-dwL">
+                                <rect key="frame" x="154" y="-8" width="1" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.81568627449999997" green="0.81568627449999997" blue="0.81568627449999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                        <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="4BV-t4-psh"/>
                         <barButtonItem title="background" id="90">
                             <connections>
                                 <action selector="backgroundButtonPressed" destination="-1" id="100"/>
@@ -399,7 +423,7 @@
             <nil key="simulatedStatusBarMetrics"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="404" y="260"/>
+            <point key="canvasLocation" x="412" y="-86"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="54">
             <rect key="frame" x="0.0" y="0.0" width="768" height="223"/>
@@ -618,7 +642,7 @@
             <nil key="simulatedStatusBarMetrics"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="412" y="472.5"/>
+            <point key="canvasLocation" x="412" y="579.5"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
