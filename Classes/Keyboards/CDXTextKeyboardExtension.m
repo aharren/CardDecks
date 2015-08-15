@@ -47,6 +47,9 @@ synthesize_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
 - (void)keyboardExtensionInitialize {
 }
 
+- (void)keyboardExtensionReset {
+}
+
 - (NSString *)keyboardExtensionTitle {
     CGFloat fontSize = CDXCardFontSizeAutomatic;
     CDXCardOrientation orientation = CDXCardOrientationUp;

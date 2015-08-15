@@ -349,6 +349,19 @@ static float keyboardExtensionsOsVersion;
     }
 }
 
+- (void)resetKeyboardExtensions {
+    NSUInteger count = [keyboardExtensions count];
+    for (NSUInteger tag = 0; tag < count; tag++) {
+        NSObject<CDXKeyboardExtension> *keyboardExtension = keyboardExtensions[tag];
+        [keyboardExtension keyboardExtensionReset];
+    }
+    if (activeExtensionTag != -1) {
+        [self deactivateKeyboardExtension:[self keyboardExtensionByTag:activeExtensionTag] tag:activeExtensionTag];
+        [toolbarActiveButtonMarker positionAtBarButtonItem:[self toolbarButtonByTag:-1] animated:NO];
+        [self activateKeyboardExtension:nil tag:-1];
+    }
+}
+
 - (void)activateKeyboardExtension:(NSObject<CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag {
     if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionWillBecomeActive)]) {
         [keyboardExtension keyboardExtensionWillBecomeActive];

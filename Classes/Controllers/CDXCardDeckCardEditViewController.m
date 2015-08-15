@@ -160,7 +160,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension] reset];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] resetKeyboardExtensions];
 
     cardViewScrollView.contentInset = text.contentInset;
     cardViewScrollView.scrollIndicatorInsets = text.scrollIndicatorInsets;

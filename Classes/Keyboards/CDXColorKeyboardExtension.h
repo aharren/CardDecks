@@ -79,6 +79,7 @@ declare_singleton(sharedColorKeyboardExtension, CDXColorKeyboardExtension);
 }
 
 - (void)updateView;
+- (void)resetView;
 
 - (IBAction)simpleButtonPressed;
 - (IBAction)textButtonPressed;

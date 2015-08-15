@@ -38,6 +38,10 @@ synthesize_singleton(sharedColorKeyboardExtension, CDXColorKeyboardExtension);
 - (void)keyboardExtensionInitialize {
 }
 
+- (void)keyboardExtensionReset {
+    [viewController resetView];
+}
+
 - (NSString *)keyboardExtensionTitle {
     return @"col";
 }
@@ -127,9 +131,7 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     [colorChooserRGBSliderGreen setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
     [colorChooserRGBSliderBlue setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
     [colorChooserRGBSliderAlpha setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
-    [self setView:colorChooserSimpleView button:simpleButton animated:NO];
-    [self updateView];
-    [toolbarActiveButtonMarker hide];
+    [self resetView];
 }
 
 - (void)viewDidUnload {
@@ -217,6 +219,12 @@ static CDXColorRGB colorChooserSimpleColors[] = {
             [self setColorChooserRGBSliderValues:[CDXColor colorBlack]];
         }
     }
+}
+
+- (void)resetView {
+    [self setView:colorChooserSimpleView button:simpleButton animated:NO];
+    [self updateView];
+    [toolbarActiveButtonMarker hide];
 }
 
 - (void)postColorUpdate:(CDXColor *)color textNotBackground:(BOOL)textNotBackground {

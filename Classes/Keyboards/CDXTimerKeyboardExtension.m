@@ -39,6 +39,9 @@ synthesize_singleton(sharedTimerKeyboardExtension, CDXTimerKeyboardExtension);
 - (void)keyboardExtensionInitialize {
 }
 
+- (void)keyboardExtensionReset {
+}
+
 - (NSString *)keyboardExtensionTitle {
     NSUInteger minutes = 0;
     NSUInteger seconds = 0;

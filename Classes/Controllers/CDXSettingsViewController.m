@@ -199,7 +199,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension] reset];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] resetKeyboardExtensions];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

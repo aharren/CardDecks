@@ -44,6 +44,10 @@ synthesize_singleton(sharedSymbolsKeyboardExtension, CDXSymbolsKeyboardExtension
     [viewController reset];
 }
 
+- (void)keyboardExtensionReset {
+    [viewController reset];
+}
+
 - (NSString *)keyboardExtensionTitle {
     return @"sym";
 }
@@ -71,10 +75,6 @@ synthesize_singleton(sharedSymbolsKeyboardExtension, CDXSymbolsKeyboardExtension
 
 - (void)keyboardExtensionDidBecomeInactive {
     [viewController viewDidDisappear:NO];
-}
-
-- (void)reset {
-    [viewController reset];
 }
 
 @end
