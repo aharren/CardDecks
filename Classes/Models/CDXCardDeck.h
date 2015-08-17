@@ -105,6 +105,7 @@ typedef enum {
 - (CDXCard *)cardAtIndex:(NSUInteger)index;
 - (CDXCard *)cardAtIndex:(NSUInteger)index orCard:(CDXCard *)card;
 - (void)addCard:(CDXCard *)card;
+- (void)insertCard:(CDXCard *)card atIndex:(NSUInteger)index;
 - (void)addCards:(NSArray *)array;
 - (void)removeCardAtIndex:(NSUInteger)index;
 - (NSMutableArray *)removeCards;

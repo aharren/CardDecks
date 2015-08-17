@@ -90,7 +90,7 @@
     [copy setFlagsFromCardDeck:self];
     for (CDXCard *card in cards) {
         CDXCard *newcard = [card copyWithZone:zone];
-        [copy addCardInternal:newcard];
+        [copy insertCardInternal:newcard atIndex:NSUIntegerMax];
         [newcard release];
     }
     if (isShuffled) {
@@ -197,23 +197,41 @@
     return (CDXCard *)cards[cardsIndex];
 }
 
-- (void)addCardInternal:(CDXCard *)card {
+- (void)insertCardInternal:(CDXCard *)card atIndex:(NSUInteger)index {
     card.cornerStyle = cornerStyle;
-    [cards addObject:card];
-    if (isShuffled) {
-        NSUInteger cardsIndex = [cards count]-1;
-        [shuffleIndexes addObject:@(cardsIndex)];
+    if (index == NSUIntegerMax) {
+        [cards addObject:card];
+        if (isShuffled) {
+            NSUInteger cardsIndex = [cards count]-1;
+            [shuffleIndexes addObject:@(cardsIndex)];
+        }
+    } else {
+        if (!isShuffled) {
+            [cards insertObject:card atIndex:index];
+        } else {
+            [cards addObject:card];
+            NSUInteger cardsIndex = [cards count]-1;
+            [shuffleIndexes insertObject:@(cardsIndex) atIndex:index];
+        }
     }
 }
 
 - (void)addCard:(CDXCard *)card {
-    [self addCardInternal:card];
+    [self insertCardInternal:card atIndex:NSUIntegerMax];
+    [self updateFields];
+}
+
+- (void)insertCard:(CDXCard *)card atIndex:(NSUInteger)index {
+    if (index >= [cards count]) {
+        index = NSUIntegerMax;
+    }
+    [self insertCardInternal:card atIndex:index];
     [self updateFields];
 }
 
 - (void)addCards:(NSArray *)array {
     for (CDXCard *card in array) {
-        [self addCardInternal:card];
+        [self insertCardInternal:card atIndex:NSUIntegerMax];
     }
     [self updateFields];
 }
