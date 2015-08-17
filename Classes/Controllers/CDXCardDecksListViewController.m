@@ -342,8 +342,7 @@
         [cardDecks updateStorageObjectDeferred:YES];
         NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:1];
         [viewTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
-        [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
-        [viewTableView deselectRowAtIndexPath:path animated:YES];
+        [viewTableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:YES];
         [self updateToolbarButtons];
     }
     
