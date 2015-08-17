@@ -161,5 +161,11 @@
     [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:actionButton animated:YES];
 }
 
+- (void)duplicateButtonPressed {
+    ignoreCardDeckUpdateNotifications = YES;
+    [super duplicateButtonPressed];
+    ignoreCardDeckUpdateNotifications = NO;
+}
+
 @end
 

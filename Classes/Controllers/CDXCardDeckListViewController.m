@@ -423,6 +423,9 @@
             return [CDXCopyPaste mayBeCardDeck:carddeckString];
         }
     }
+    if (action == @selector(duplicateButtonPressed)) {
+        return YES;
+    }
     return NO;
 }
 
@@ -509,6 +512,25 @@
             return;
         }
     }
+}
+
+- (void)duplicateButtonPressed {
+    qltrace(@"%@", performActionTableViewIndexPath);
+    if (performActionTableViewIndexPath.section != 1) {
+        return;
+    }
+
+    CDXCard *card = [[[cardDeck cardAtIndex:performActionTableViewIndexPath.row] copy] autorelease];
+    card.tag = currentTag;
+    [cardDeck insertCard:card atIndex:performActionTableViewIndexPath.row];
+    [cardDeck updateStorageObjectDeferred:YES];
+    [viewTableView cellForRowAtIndexPath:performActionTableViewIndexPath].selected = NO;
+    [viewTableView insertRowsAtIndexPaths:@[ performActionTableViewIndexPath ] withRowAnimation:UITableViewRowAnimationBottom];
+}
+
+- (void)menu:(UIMenuController *)menuController itemsForTableView:(UITableView *)tableView cell:(UITableViewCell *)cell {
+    UIMenuItem *menuItemNew = [[UIMenuItem alloc] initWithTitle:@"Duplicate" action:@selector(duplicateButtonPressed)];
+    menuController.menuItems = @[menuItemNew];
 }
 
 - (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem {
