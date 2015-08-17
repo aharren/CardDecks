@@ -38,8 +38,6 @@
 
 declare_singleton(sharedSymbolsKeyboardExtension, CDXSymbolsKeyboardExtension);
 
-- (void)reset;
-
 @end
 
 
