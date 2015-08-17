@@ -421,5 +421,9 @@
     [self dismissActionSheet];
 }
 
+- (void)applicationDidEnterBackground {
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] resetKeyboardExtensions];
+}
+
 @end
 
