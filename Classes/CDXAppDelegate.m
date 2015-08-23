@@ -204,6 +204,93 @@
     
 }
 
+- (void)addDefaultCardDeck_InfinityTimer:(CDXCardDecks *)decks width:(int)width count:(int)count fontSize:(int)fontSize {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    CDXCardDeckHolder *holder;
+    CDXCardDeck *deck;
+    
+    // n Minutes Infinity Timer
+    deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:@"%20,g0,d0,c1,id0,is1,it1,r0,s0,ap1&,,,l,0,60"];
+    deck.name = [NSString stringWithFormat:@"%d Minutes Infinity Timer", count];
+    deck.cardDefaults.fontSize = fontSize;
+    deck.cardDefaults.backgroundColor = [CDXColor colorBlack];
+    deck.cardDefaults.textColor = [CDXColor colorWhite];
+    for (int i = 0; i < count; i++) {
+        CDXCard *card = [deck cardWithDefaults];
+        NSMutableString *text = [[NSMutableString alloc] init];
+        int characters = 0;
+        for (int j = 0; j < count - i; j++) {
+            if (characters > 0) {
+                if (characters % width == 0) {
+                    [text appendString:@"\n"];
+                } else {
+                    [text appendString:@" "];
+                }
+            }
+            [text appendString:@"\u25a0"];
+            characters++;
+        }
+        for (int j = count - i; j < count; j++) {
+            if (characters > 0) {
+                if (characters % width == 0) {
+                    [text appendString:@"\n"];
+                } else {
+                    [text appendString:@" "];
+                }
+            }
+            [text appendString:@"\u25a1"];
+            characters++;
+        }
+        card.text = text;
+        [text release];
+        [deck addCard:card];
+    }
+    deck.cardDefaults.backgroundColor = [CDXColor colorWhite];
+    deck.cardDefaults.textColor = [CDXColor colorBlack];
+    for (int i = 0; i < count; i++) {
+        CDXCard *card = [deck cardWithDefaults];
+        NSMutableString *text = [[NSMutableString alloc] init];
+        int characters = 0;
+        for (int j = 0; j < count - i; j++) {
+            if (characters > 0) {
+                if (characters % width == 0) {
+                    [text appendString:@"\n"];
+                } else {
+                    [text appendString:@" "];
+                }
+            }
+            [text appendString:@"\u25a1"];
+            characters++;
+        }
+        for (int j = count - i; j < count; j++) {
+            if (characters > 0) {
+                if (characters % width == 0) {
+                    [text appendString:@"\n"];
+                } else {
+                    [text appendString:@" "];
+                }
+            }
+            [text appendString:@"\u25a0"];
+            characters++;
+        }
+        card.text = text;
+        [text release];
+        [deck addCard:card];
+    }
+    [deck updateStorageObjectDeferred:NO];
+    holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
+    [decks addPendingCardDeckAdd:holder];
+    [pool release];
+}
+
+- (void)addDefaultCardDecks2:(CDXCardDecks *)decks {
+    [self addDefaultCardDeck_InfinityTimer:decks width:10 count:60 fontSize:7];
+    [self addDefaultCardDeck_InfinityTimer:decks width:10 count:30 fontSize:7];
+    [self addDefaultCardDeck_InfinityTimer:decks width:5 count:15 fontSize:13];
+    [self addDefaultCardDeck_InfinityTimer:decks width:5 count:10 fontSize:13];
+    [self addDefaultCardDeck_InfinityTimer:decks width:5 count:5 fontSize:13];
+}
+
 - (CDXCardDecks *)cardDecks {
     NSUInteger version = 0;
     CDXCardDecks *decks = [CDXCardDecks cardDecksFromStorageObjectNamed:@"Main.CardDecksList" version:&version];
@@ -237,6 +324,16 @@
         [decks updateStorageObjectDeferred:NO];
         
         [[CDXAppSettings sharedAppSettings] setMigrationState:migrationState_1];
+    }
+    
+    const NSUInteger migrationState_2 = 200;
+    if ([[CDXAppSettings sharedAppSettings] migrationState] < migrationState_2) {
+        // add some new default card decks
+        [self addDefaultCardDecks2:decks];
+        // save the list
+        [decks updateStorageObjectDeferred:NO];
+        
+        [[CDXAppSettings sharedAppSettings] setMigrationState:migrationState_2];
     }
     
     return decks;
