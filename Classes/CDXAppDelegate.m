@@ -299,6 +299,9 @@
         version = 0;
         decks = [[[CDXCardDecks alloc] init] autorelease];
         decks.file = @"Main.CardDecksList";
+        
+        // also reset migration state
+        [[CDXAppSettings sharedAppSettings] setMigrationState:0];
     }
     
     if (version < 2) {
