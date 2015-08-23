@@ -317,7 +317,7 @@ static float keyboardExtensionsOsVersion;
                                 style:UIBarButtonItemStyleBordered
                                 target:self action:@selector(toolbarButtonPressed:)]
                                autorelease];
-    button.width = 41;
+    button.width = 33;
     NSDictionary *textAttributes = @{ NSFontAttributeName: [UIFont systemFontOfSize:15] };
     [button setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
     return button;
