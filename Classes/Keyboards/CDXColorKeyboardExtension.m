@@ -3,7 +3,7 @@
 // CDXColorKeyboardExtension.m
 //
 //
-// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +36,10 @@ synthesize_singleton(sharedColorKeyboardExtension, CDXColorKeyboardExtension);
 }
 
 - (void)keyboardExtensionInitialize {
+}
+
+- (void)keyboardExtensionReset {
+    [viewController resetView];
 }
 
 - (NSString *)keyboardExtensionTitle {
@@ -97,6 +101,7 @@ static CDXColorRGB colorChooserSimpleColors[] = {
 
 - (void)dealloc {
     ivar_release_and_clear(toolbar);
+    ivar_release_and_clear(toolbarActiveButtonMarker);
     ivar_release_and_clear(simpleButton);
     ivar_release_and_clear(textButton);
     ivar_release_and_clear(backgroundButton);
@@ -106,17 +111,18 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     ivar_release_and_clear(colorChooserRGBSliderGreen);
     ivar_release_and_clear(colorChooserRGBSliderBlue);
     ivar_release_and_clear(colorChooserRGBSliderAlpha);
-    ivar_release_and_clear(colorChooserRGBSliderRedLabel);
-    ivar_release_and_clear(colorChooserRGBSliderGreenLabel);
-    ivar_release_and_clear(colorChooserRGBSliderBlueLabel);
-    ivar_release_and_clear(colorChooserRGBSliderAlphaLabel);
+    ivar_release_and_clear(colorChooserRGBSliderRedValue);
+    ivar_release_and_clear(colorChooserRGBSliderGreenValue);
+    ivar_release_and_clear(colorChooserRGBSliderBlueValue);
+    ivar_release_and_clear(colorChooserRGBSliderAlphaValue);
     [super dealloc];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    ivar_assign(toolbarActiveButtonMarker, [[CDXKeyboardExtensionMarker alloc] init]);
+    [toolbar addSubview:toolbarActiveButtonMarker.view];
     self.view.backgroundColor = [[CDXKeyboardExtensions sharedKeyboardExtensions] backgroundColor];
-    [self simpleButtonPressed];
     NSDictionary *textAttributes = @{ NSFontAttributeName: [UIFont systemFontOfSize:15] };
     [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
     [textButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
@@ -125,10 +131,12 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     [colorChooserRGBSliderGreen setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
     [colorChooserRGBSliderBlue setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
     [colorChooserRGBSliderAlpha setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
+    [self resetView];
 }
 
 - (void)viewDidUnload {
     ivar_release_and_clear(toolbar);
+    ivar_release_and_clear(toolbarActiveButtonMarker);
     ivar_release_and_clear(simpleButton);
     ivar_release_and_clear(textButton);
     ivar_release_and_clear(backgroundButton);
@@ -138,19 +146,30 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     ivar_release_and_clear(colorChooserRGBSliderGreen);
     ivar_release_and_clear(colorChooserRGBSliderBlue);
     ivar_release_and_clear(colorChooserRGBSliderAlpha);
-    ivar_release_and_clear(colorChooserRGBSliderRedLabel);
-    ivar_release_and_clear(colorChooserRGBSliderGreenLabel);
-    ivar_release_and_clear(colorChooserRGBSliderBlueLabel);
-    ivar_release_and_clear(colorChooserRGBSliderAlphaLabel);
+    ivar_release_and_clear(colorChooserRGBSliderRedValue);
+    ivar_release_and_clear(colorChooserRGBSliderGreenValue);
+    ivar_release_and_clear(colorChooserRGBSliderBlueValue);
+    ivar_release_and_clear(colorChooserRGBSliderAlphaValue);
     [super viewDidUnload];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self updateView];
+    [self performSelector:@selector(viewDidAppearPostActions) withObject:nil afterDelay:0.01];
 }
 
-- (void)setView:(UIView *)view button:(UIBarButtonItem *)button {
+- (void)viewDidAppearPostActions {
+    if (!textButton.enabled) {
+        [toolbarActiveButtonMarker positionAtBarButtonItem:textButton animated:NO];
+    } else if (!backgroundButton.enabled) {
+        [toolbarActiveButtonMarker positionAtBarButtonItem:backgroundButton animated:NO];
+    } else {
+        [toolbarActiveButtonMarker positionAtBarButtonItem:simpleButton animated:NO];
+    }
+}
+
+- (void)setView:(UIView *)view button:(UIBarButtonItem *)button animated:(BOOL)animated {
     simpleButton.enabled = YES;
     textButton.enabled = YES;
     backgroundButton.enabled = YES;
@@ -161,6 +180,8 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     button.enabled = NO;
     [self.view addSubview:view];
     view.frame = CGRectMake(0, CGRectGetHeight(toolbar.bounds) + 2, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - CGRectGetHeight(toolbar.bounds) - 2);
+    
+    [toolbarActiveButtonMarker positionAtBarButtonItem:button animated:animated];
 }
 
 - (CDXColor *)colorChooserRGBSliderValues {
@@ -175,10 +196,10 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     colorChooserRGBSliderGreen.value = color.green;
     colorChooserRGBSliderBlue.value = color.blue;
     colorChooserRGBSliderAlpha.value = color.alpha;
-    colorChooserRGBSliderRedLabel.text = [NSString stringWithFormat:@"%02X", color.red];
-    colorChooserRGBSliderGreenLabel.text = [NSString stringWithFormat:@"%02X", color.green];
-    colorChooserRGBSliderBlueLabel.text = [NSString stringWithFormat:@"%02X", color.blue];
-    colorChooserRGBSliderAlphaLabel.text = [NSString stringWithFormat:@"%02X", color.alpha];
+    [colorChooserRGBSliderRedValue setTitle:[NSString stringWithFormat:@"%02x", color.red] forState:UIControlStateNormal];
+    [colorChooserRGBSliderGreenValue setTitle:[NSString stringWithFormat:@"%02x", color.green] forState:UIControlStateNormal];
+    [colorChooserRGBSliderBlueValue setTitle:[NSString stringWithFormat:@"%02x", color.blue] forState:UIControlStateNormal];
+    [colorChooserRGBSliderAlphaValue setTitle:[NSString stringWithFormat:@"%02x", color.alpha] forState:UIControlStateNormal];
 }
 
 - (void)updateView {
@@ -200,6 +221,12 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     }
 }
 
+- (void)resetView {
+    [self setView:colorChooserSimpleView button:simpleButton animated:NO];
+    [self updateView];
+    [toolbarActiveButtonMarker hide];
+}
+
 - (void)postColorUpdate:(CDXColor *)color textNotBackground:(BOOL)textNotBackground {
     NSObject *responder = [[CDXKeyboardExtensions sharedKeyboardExtensions] responder];
     if ([responder conformsToProtocol:@protocol(CDXColorKeyboardExtensionResponder)]) {
@@ -214,22 +241,65 @@ static CDXColorRGB colorChooserSimpleColors[] = {
 }
 
 - (IBAction)simpleButtonPressed {
-    [self setView:colorChooserSimpleView button:simpleButton];
+    [self setView:colorChooserSimpleView button:simpleButton animated:YES];
     [self updateView];
 }
 
 - (IBAction)textButtonPressed {
-    [self setView:colorChooserRGBView button:textButton];
+    [self setView:colorChooserRGBView button:textButton animated:YES];
     [self updateView];
 }
 
 - (IBAction)backgroundButtonPressed {
-    [self setView:colorChooserRGBView button:backgroundButton];
+    [self setView:colorChooserRGBView button:backgroundButton animated:YES];
     [self updateView];
 }
 
 - (IBAction)colorChooserRGBSliderValueChanged {
     [self postColorUpdate:[self colorChooserRGBSliderValues] textNotBackground:!textButton.enabled];
+}
+
+- (void)colorChooserRGBSliderButtonPressedPostProcess:(UIButton *)button {
+    [self colorChooserRGBSliderValueChanged];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.2];
+    UIColor *color = button.backgroundColor;
+    button.backgroundColor = [UIColor grayColor];
+    button.backgroundColor = color;
+    [UIView commitAnimations];
+}
+
+- (IBAction)colorChooserRGBSliderRedButtonPressed:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    NSInteger tag = button.tag;
+    colorChooserRGBSliderRed.value += tag;
+    
+    [self colorChooserRGBSliderButtonPressedPostProcess:button];
+}
+
+- (IBAction)colorChooserRGBSliderGreenButtonPressed:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    NSInteger tag = button.tag;
+    colorChooserRGBSliderGreen.value += tag;
+
+    [self colorChooserRGBSliderButtonPressedPostProcess:button];
+}
+
+- (IBAction)colorChooserRGBSliderBlueButtonPressed:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    NSInteger tag = button.tag;
+    colorChooserRGBSliderBlue.value += tag;
+
+    [self colorChooserRGBSliderButtonPressedPostProcess:button];
+}
+
+- (IBAction)colorChooserRGBSliderAlphaButtonPressed:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    NSInteger tag = button.tag;
+    colorChooserRGBSliderAlpha.value += tag;
+
+    [self colorChooserRGBSliderButtonPressedPostProcess:button];
 }
 
 - (IBAction)colorChooserSimpleValueSelected:(id)sender {

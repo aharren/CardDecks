@@ -3,7 +3,7 @@
 // CDXCardDeck.h
 //
 //
-// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -105,6 +105,7 @@ typedef enum {
 - (CDXCard *)cardAtIndex:(NSUInteger)index;
 - (CDXCard *)cardAtIndex:(NSUInteger)index orCard:(CDXCard *)card;
 - (void)addCard:(CDXCard *)card;
+- (void)insertCard:(CDXCard *)card atIndex:(NSUInteger)index;
 - (void)addCards:(NSArray *)array;
 - (void)removeCardAtIndex:(NSUInteger)index;
 - (NSMutableArray *)removeCards;

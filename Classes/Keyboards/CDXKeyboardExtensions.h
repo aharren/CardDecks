@@ -3,7 +3,7 @@
 // CDXKeyboardExtensions.h
 //
 //
-// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@
 @required
 
 - (void)keyboardExtensionInitialize;
+- (void)keyboardExtensionReset;
 
 - (NSString *)keyboardExtensionTitle;
 - (UIView *)keyboardExtensionView;
@@ -61,6 +62,21 @@
 @end
 
 
+@interface CDXKeyboardExtensionMarker : NSObject {
+    
+@protected
+    UILabel *label;
+    
+}
+
+@property (nonatomic, readonly) UIView *view;
+
+- (void)positionAtBarButtonItem:(UIBarButtonItem *)item animated:(BOOL)animated;
+- (void)hide;
+
+@end
+
+
 @interface CDXKeyboardExtensions : NSObject {
     
 @protected
@@ -68,9 +84,12 @@
     NSMutableArray *toolbarButtons;
     UIBarButtonItem *toolbarKeyboardButton;
     UIBarButtonItem *toolbarActionButton;
+    CDXKeyboardExtensionMarker *toolbarActiveButtonMarker;
     
     NSObject *responder;
     CGRect extensionViewRect;
+    
+    UIView *backgroundView;
     
     UIColor *backgroundColor;
     
@@ -95,6 +114,7 @@ declare_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
 - (void)setEnabled:(BOOL)enabled;
 
 - (void)refreshKeyboardExtensions;
+- (void)resetKeyboardExtensions;
 
 - (void)activateKeyboardExtension:(NSObject<CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag;
 - (void)deactivateKeyboardExtension:(NSObject<CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag;

@@ -3,7 +3,7 @@
 // CDXCardDeckListViewController.m
 //
 //
-// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -423,6 +423,9 @@
             return [CDXCopyPaste mayBeCardDeck:carddeckString];
         }
     }
+    if (action == @selector(duplicateButtonPressed)) {
+        return YES;
+    }
     return NO;
 }
 
@@ -511,6 +514,25 @@
     }
 }
 
+- (void)duplicateButtonPressed {
+    qltrace(@"%@", performActionTableViewIndexPath);
+    if (performActionTableViewIndexPath.section != 1) {
+        return;
+    }
+
+    CDXCard *card = [[[cardDeck cardAtIndex:performActionTableViewIndexPath.row] copy] autorelease];
+    card.tag = currentTag;
+    [cardDeck insertCard:card atIndex:performActionTableViewIndexPath.row];
+    [cardDeck updateStorageObjectDeferred:YES];
+    [viewTableView cellForRowAtIndexPath:performActionTableViewIndexPath].selected = NO;
+    [viewTableView insertRowsAtIndexPaths:@[ performActionTableViewIndexPath ] withRowAnimation:UITableViewRowAnimationBottom];
+}
+
+- (void)menu:(UIMenuController *)menuController itemsForTableView:(UITableView *)tableView cell:(UITableViewCell *)cell {
+    UIMenuItem *menuItemNew = [[UIMenuItem alloc] initWithTitle:@"Duplicate" action:@selector(duplicateButtonPressed)];
+    menuController.menuItems = @[menuItemNew];
+}
+
 - (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem {
     if (barButtonItem == addButton) {
         UIMenuItem *menuItemNew = [[UIMenuItem alloc] initWithTitle:@"New" action:@selector(addButtonPressed)];
@@ -530,7 +552,7 @@
 @implementation CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super init])) {
+    if ((self = [super initWithPlaceholderItem:@""])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
     }
     return self;
@@ -558,7 +580,7 @@
 @implementation CDXCardDeckListViewControllerHTTPURLTextActivityItemProvider
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super init])) {
+    if ((self = [super initWithPlaceholderItem:@""])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
     }
     return self;
@@ -586,7 +608,7 @@
 @implementation CDXCardDeckListViewControllerStringTextActivityItemProvider
 
 - (id)initWithString:(NSString *)aText {
-    if ((self = [super init])) {
+    if ((self = [super initWithPlaceholderItem:@""])) {
         ivar_assign_and_copy(text, aText);
     }
     return self;
@@ -614,7 +636,7 @@
 @implementation CDXCardDeckListViewControllerAutoDetectActivityItemProvider
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super init])) {
+    if ((self = [super initWithPlaceholderItem:[NSURL URLWithString:@""]])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
     }
     return self;
@@ -651,7 +673,7 @@
 @implementation CDXCardDeckListViewControllerCarddecksURLActivityItemProvider
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super init])) {
+    if ((self = [super initWithPlaceholderItem:[NSURL URLWithString:@""]])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
     }
     return self;
@@ -680,7 +702,7 @@
 @implementation CDXCardDeckListViewControllerHTTPURLActivityItemProvider
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super init])) {
+    if ((self = [super initWithPlaceholderItem:[NSURL URLWithString:@""]])) {
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
     }
     return self;

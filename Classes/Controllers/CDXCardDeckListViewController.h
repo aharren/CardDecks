@@ -3,7 +3,7 @@
 // CDXCardDeckListViewController.h
 //
 //
-// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -48,6 +48,7 @@
 - (IBAction)settingsButtonPressed;
 - (IBAction)shuffleButtonPressed;
 - (IBAction)actionButtonPressed;
+- (void)duplicateButtonPressed;
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath;

@@ -3,7 +3,7 @@
 // CDXActionSheet.m
 //
 //
-// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -144,8 +144,8 @@
     cas.buttonIndexBase = 0;
     cas.tag = tag;
     cas.delegate = delegate;
-    if (([[[CDXDevice sharedDevice] deviceSystemVersionString] floatValue] >= 8.0) && [[CDXDevice sharedDevice] deviceUIIdiom] != CDXDeviceUIIdiomPhone) {
-        // iOS 8 UIAlertController; for now on iPad only
+    if ([[[CDXDevice sharedDevice] deviceSystemVersionString] floatValue] >= 8.0) {
+        // iOS 8 UIAlertController
         qltrace(@"UIAlertController");
         UIAlertController* ac = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         [cas configureWithAlertController:ac];

@@ -3,7 +3,7 @@
 // CDXCardsStackSwipeView.m
 //
 //
-// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -128,7 +128,7 @@
     CGFloat deltay = touchCurrentPosition.y - touchStartPosition.y;
     
     // animate if the move was at least 30 pixels wide
-    if (fabsf(deltax) >= 30) {
+    if (fabs(deltax) >= 30) {
         if (touchCurrentPosition.x < touchStartPosition.x) {
             // move to the left
             if (currentCardIndex+1 < cardsCount) {

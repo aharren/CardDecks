@@ -3,7 +3,7 @@
 // CDXTimerKeyboardExtension.m
 //
 //
-// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +37,9 @@ synthesize_singleton(sharedTimerKeyboardExtension, CDXTimerKeyboardExtension);
 }
 
 - (void)keyboardExtensionInitialize {
+}
+
+- (void)keyboardExtensionReset {
 }
 
 - (NSString *)keyboardExtensionTitle {
@@ -134,12 +137,16 @@ synthesize_singleton(sharedTimerKeyboardExtension, CDXTimerKeyboardExtension);
     return 60;
 }
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    NSString *text;
     if (component == 0) {
-        return [NSString stringWithFormat:@"%ld", (long)row];
+        text = [NSString stringWithFormat:@"%ld", (long)row];
     } else {
-        return [NSString stringWithFormat:@"%ld", (long)row];
+        text = [NSString stringWithFormat:@"%ld", (long)row];
     }
+    
+    NSAttributedString *string = [[[NSAttributedString alloc] initWithString:text attributes:@{ NSForegroundColorAttributeName:[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] }] autorelease];
+    return string;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {

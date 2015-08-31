@@ -3,7 +3,7 @@
 // CDXCardDecksListViewController.m
 //
 //
-// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -342,8 +342,7 @@
         [cardDecks updateStorageObjectDeferred:YES];
         NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:1];
         [viewTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
-        [viewTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
-        [viewTableView deselectRowAtIndexPath:path animated:YES];
+        [viewTableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:YES];
         [self updateToolbarButtons];
     }
     

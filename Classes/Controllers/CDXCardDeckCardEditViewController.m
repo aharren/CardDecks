@@ -3,7 +3,7 @@
 // CDXCardDeckCardEditViewController.m
 //
 //
-// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -73,6 +73,7 @@
         CDXCard *card = [self currentCard];
         text.textColor = [card.textColor uiColor];
         text.backgroundColor = [card.backgroundColor uiColor];
+        self.view.backgroundColor = text.backgroundColor;
     }
     [cardView setCard:[self currentCard] size:cardViewSize deviceOrientation:UIDeviceOrientationPortrait preview:cardViewUsePreview];
     cardViewScrollView.contentSize = cardViewSize;
@@ -159,7 +160,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension] reset];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] resetKeyboardExtensions];
 
     cardViewScrollView.contentInset = text.contentInset;
     cardViewScrollView.scrollIndicatorInsets = text.scrollIndicatorInsets;
@@ -418,6 +419,10 @@
     qltrace();
     [super dismissViewControllerAnimated:animated completion:completion];
     [self dismissActionSheet];
+}
+
+- (void)applicationDidEnterBackground {
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] resetKeyboardExtensions];
 }
 
 @end

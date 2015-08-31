@@ -3,7 +3,7 @@
 // CDXColorKeyboardExtension.h
 //
 //
-// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -58,6 +58,7 @@ declare_singleton(sharedColorKeyboardExtension, CDXColorKeyboardExtension);
     
 @protected
     IBOutlet UIToolbar *toolbar;
+    CDXKeyboardExtensionMarker *toolbarActiveButtonMarker;
     
     IBOutlet UIBarButtonItem *simpleButton;
     IBOutlet UIBarButtonItem *textButton;
@@ -70,14 +71,15 @@ declare_singleton(sharedColorKeyboardExtension, CDXColorKeyboardExtension);
     IBOutlet UISlider *colorChooserRGBSliderGreen;
     IBOutlet UISlider *colorChooserRGBSliderBlue;
     IBOutlet UISlider *colorChooserRGBSliderAlpha;
-    IBOutlet UILabel *colorChooserRGBSliderRedLabel;
-    IBOutlet UILabel *colorChooserRGBSliderGreenLabel;
-    IBOutlet UILabel *colorChooserRGBSliderBlueLabel;
-    IBOutlet UILabel *colorChooserRGBSliderAlphaLabel;
+    IBOutlet UIButton *colorChooserRGBSliderRedValue;
+    IBOutlet UIButton *colorChooserRGBSliderGreenValue;
+    IBOutlet UIButton *colorChooserRGBSliderBlueValue;
+    IBOutlet UIButton *colorChooserRGBSliderAlphaValue;
     
 }
 
 - (void)updateView;
+- (void)resetView;
 
 - (IBAction)simpleButtonPressed;
 - (IBAction)textButtonPressed;

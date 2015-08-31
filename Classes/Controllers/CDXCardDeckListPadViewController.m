@@ -3,7 +3,7 @@
 // CDXCardDeckListPadViewController.m
 //
 //
-// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -159,6 +159,12 @@
     UIActivityViewController *vc = [[[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:activities] autorelease];
     
     [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:actionButton animated:YES];
+}
+
+- (void)duplicateButtonPressed {
+    ignoreCardDeckUpdateNotifications = YES;
+    [super duplicateButtonPressed];
+    ignoreCardDeckUpdateNotifications = NO;
 }
 
 @end

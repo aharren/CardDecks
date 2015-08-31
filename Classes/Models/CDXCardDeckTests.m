@@ -3,7 +3,7 @@
 // CDXCardDeckTests.m
 //
 //
-// Copyright (c) 2009-2014 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -127,6 +127,58 @@
     
     XCTAssertEqual([deck cardsCount], (NSUInteger)1);
     XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text");
+}
+
+- (void)testInsertCardAtIndex {
+    CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
+    XCTAssertEqual([deck cardsCount], (NSUInteger)0);
+    
+    CDXCard *card1 = [[CDXCard alloc] init];
+    card1.text = @"Text 1";
+    [deck addCard:card1];
+    [card1 release];
+    
+    CDXCard *card2 = [[CDXCard alloc] init];
+    card2.text = @"Text 2";
+    [deck addCard:card2];
+    [card2 release];
+    
+    XCTAssertEqual([deck cardsCount], (NSUInteger)2);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 1");
+    XCTAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 2");
+    
+    CDXCard *card3 = [[CDXCard alloc] init];
+    card3.text = @"Text 3";
+    [deck insertCard:card3 atIndex:0];
+    [card3 release];
+    
+    XCTAssertEqual([deck cardsCount], (NSUInteger)3);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 3");
+    XCTAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 1");
+    XCTAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 2");
+    
+    CDXCard *card4 = [[CDXCard alloc] init];
+    card4.text = @"Text 4";
+    [deck insertCard:card4 atIndex:2];
+    [card4 release];
+    
+    XCTAssertEqual([deck cardsCount], (NSUInteger)4);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 3");
+    XCTAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 1");
+    XCTAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 4");
+    XCTAssertEqualObjects([[deck cardAtIndex:3] text], @"Text 2");
+
+    CDXCard *card5 = [[CDXCard alloc] init];
+    card5.text = @"Text 5";
+    [deck insertCard:card5 atIndex:NSUIntegerMax];
+    [card5 release];
+    
+    XCTAssertEqual([deck cardsCount], (NSUInteger)5);
+    XCTAssertEqualObjects([[deck cardAtIndex:0] text], @"Text 3");
+    XCTAssertEqualObjects([[deck cardAtIndex:1] text], @"Text 1");
+    XCTAssertEqualObjects([[deck cardAtIndex:2] text], @"Text 4");
+    XCTAssertEqualObjects([[deck cardAtIndex:3] text], @"Text 2");
+    XCTAssertEqualObjects([[deck cardAtIndex:4] text], @"Text 5");
 }
 
 - (void)testAddCards {
@@ -424,6 +476,82 @@
     XCTAssertEqualObjects([deck cardAtIndex:1], card2s);
     XCTAssertEqualObjects([deck cardAtIndex:2], card3s);
     XCTAssertEqualObjects([deck cardAtIndex:3], card4);
+}
+
+
+- (void)testInsetCardAtIndexShuffled {
+    CDXCardDeck *deck = [[[CDXCardDeck alloc] init] autorelease];
+    
+    CDXCard *card1 = [[[CDXCard alloc] init] autorelease];
+    card1.text = @"Text 1";
+    [deck addCard:card1];
+    
+    CDXCard *card2 = [[[CDXCard alloc] init] autorelease];
+    card2.text = @"Text 2";
+    [deck addCard:card2];
+    
+    CDXCard *card3 = [[[CDXCard alloc] init] autorelease];
+    card3.text = @"Text 3";
+    [deck addCard:card3];
+    
+    XCTAssertEqual([deck cardsCount], (NSUInteger)3);
+    
+    [deck shuffle];
+    CDXCard *card1s = [deck cardAtIndex:0];
+    CDXCard *card2s = [deck cardAtIndex:1];
+    CDXCard *card3s = [deck cardAtIndex:2];
+    
+    XCTAssertEqualObjects([deck cardAtCardsIndex:0], card1);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:1], card2);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:2], card3);
+    XCTAssertEqualObjects([deck cardAtIndex:0], card1s);
+    XCTAssertEqualObjects([deck cardAtIndex:1], card2s);
+    XCTAssertEqualObjects([deck cardAtIndex:2], card3s);
+    
+    CDXCard *card4 = [[[CDXCard alloc] init] autorelease];
+    card4.text = @"Text 4";
+    [deck insertCard:card4 atIndex:0];
+    
+    XCTAssertEqualObjects([deck cardAtCardsIndex:0], card1);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:1], card2);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:2], card3);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:3], card4);
+    XCTAssertEqualObjects([deck cardAtIndex:0], card4);
+    XCTAssertEqualObjects([deck cardAtIndex:1], card1s);
+    XCTAssertEqualObjects([deck cardAtIndex:2], card2s);
+    XCTAssertEqualObjects([deck cardAtIndex:3], card3s);
+    
+    CDXCard *card5 = [[[CDXCard alloc] init] autorelease];
+    card5.text = @"Text 5";
+    [deck insertCard:card5 atIndex:2];
+    
+    XCTAssertEqualObjects([deck cardAtCardsIndex:0], card1);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:1], card2);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:2], card3);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:3], card4);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:4], card5);
+    XCTAssertEqualObjects([deck cardAtIndex:0], card4);
+    XCTAssertEqualObjects([deck cardAtIndex:1], card1s);
+    XCTAssertEqualObjects([deck cardAtIndex:2], card5);
+    XCTAssertEqualObjects([deck cardAtIndex:3], card2s);
+    XCTAssertEqualObjects([deck cardAtIndex:4], card3s);
+    
+    CDXCard *card6 = [[[CDXCard alloc] init] autorelease];
+    card6.text = @"Text 6";
+    [deck insertCard:card6 atIndex:NSUIntegerMax];
+    
+    XCTAssertEqualObjects([deck cardAtCardsIndex:0], card1);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:1], card2);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:2], card3);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:3], card4);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:4], card5);
+    XCTAssertEqualObjects([deck cardAtCardsIndex:5], card6);
+    XCTAssertEqualObjects([deck cardAtIndex:0], card4);
+    XCTAssertEqualObjects([deck cardAtIndex:1], card1s);
+    XCTAssertEqualObjects([deck cardAtIndex:2], card5);
+    XCTAssertEqualObjects([deck cardAtIndex:3], card2s);
+    XCTAssertEqualObjects([deck cardAtIndex:4], card3s);
+    XCTAssertEqualObjects([deck cardAtIndex:5], card6);
 }
 
 - (void)testRemoveCardShuffled {
