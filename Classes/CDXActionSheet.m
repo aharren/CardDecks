@@ -33,22 +33,6 @@
 #define ql_component lcl_cView
 
 
-@interface CDXUIActionSheetNonFirstResponder : UIActionSheet {
-    
-}
-
-@end
-
-
-@implementation CDXUIActionSheetNonFirstResponder
-
-- (BOOL)canBecomeFirstResponder {
-    return NO;
-}
-
-@end
-
-
 @implementation CDXActionSheet
 
 @synthesize tag;
@@ -59,19 +43,11 @@
 - (void)configureWithAlertController:(UIAlertController *)ac {
     qltrace();
     ivar_assign_and_retain(alertController, ac);
-    ivar_release_and_clear(actionSheet);
-}
-
-- (void)configureWithActionSheet:(UIActionSheet *)as {
-    qltrace();
-    ivar_release_and_clear(alertController);
-    ivar_assign_and_retain(actionSheet, as);
 }
 
 - (void)dealloc {
     qltrace();
     ivar_release_and_clear(alertController);
-    ivar_release_and_clear(actionSheet);
     [super dealloc];
 }
 
@@ -90,51 +66,29 @@
 
 - (void)presentWithViewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem *)barButtomItem animated:(BOOL)animated {
     qltrace();
-    if (alertController != nil) {
-        alertController.popoverPresentationController.barButtonItem = barButtomItem;
-        [viewController presentViewController:alertController animated:animated completion:
-         ^() {
-             qltrace();
-             [self presentActionSheetCompleted];
-         }
-         ];
-    } else if (actionSheet != nil) {
-        [actionSheet showFromBarButtonItem:barButtomItem animated:animated];
-    }
+    alertController.popoverPresentationController.barButtonItem = barButtomItem;
+    [viewController presentViewController:alertController animated:animated completion:
+     ^() {
+         qltrace();
+         [self presentActionSheetCompleted];
+     }
+     ];
 }
 
 - (void)presentWithViewController:(UIViewController *)viewController view:(UIView *)view animated:(BOOL)animated {
     qltrace();
-    if (alertController != nil) {
-        [viewController presentViewController:alertController animated:animated completion:
-         ^() {
-             qltrace();
-             [self presentActionSheetCompleted];
-         }
-         ];
-    } else if (actionSheet != nil) {
-        [actionSheet showInView:view];
-    }
+    [viewController presentViewController:alertController animated:animated completion:
+     ^() {
+         qltrace();
+         [self presentActionSheetCompleted];
+     }
+     ];
 }
 
 - (void)dismissActionSheetAnimated:(BOOL)animated {
     qltrace();
-    if (alertController != nil) {
-        [alertController dismissViewControllerAnimated:animated completion:nil];
-    } else if (actionSheet != nil) {
-        [actionSheet dismissWithClickedButtonIndex:[actionSheet cancelButtonIndex] animated:animated];
-    }
+    [alertController dismissViewControllerAnimated:animated completion:nil];
     visible = NO;
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    qltrace();
-    [self buttonClickedAtIndex:buttonIndex];
-}
-
-- (void)didPresentActionSheet:(UIActionSheet *)actionSheet {
-    qltrace();
-    [self presentActionSheetCompleted];
 }
 
 + (CDXActionSheet *)actionSheetWithTitle:(NSString *)title tag:(NSInteger)tag delegate:(id<CDXActionSheetDelegate>)delegate cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles{
@@ -144,47 +98,29 @@
     cas.buttonIndexBase = 0;
     cas.tag = tag;
     cas.delegate = delegate;
-    if ([[[CDXDevice sharedDevice] deviceSystemVersionString] floatValue] >= 8.0) {
-        // iOS 8 UIAlertController
-        qltrace(@"UIAlertController");
-        UIAlertController* ac = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [cas configureWithAlertController:ac];
-        NSInteger index = 0;
-        for (NSString *buttonTile in otherButtonTitles) {
-            [ac addAction:[UIAlertAction actionWithTitle:buttonTile style:UIAlertActionStyleDefault handler:
-                           ^(UIAlertAction * action) {
-                               qltrace(@"%ld", (long)index);
-                               [cas buttonClickedAtIndex:index];
-                           }
-                           ]
-             ];
-            ++index;
-        }
-        
-        [ac addAction:[UIAlertAction actionWithTitle:cancelButtonTitle style:UIAlertActionStyleCancel handler:
+    // iOS 8 UIAlertController
+    qltrace(@"UIAlertController");
+    UIAlertController* ac = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [cas configureWithAlertController:ac];
+    NSInteger index = 0;
+    for (NSString *buttonTile in otherButtonTitles) {
+        [ac addAction:[UIAlertAction actionWithTitle:buttonTile style:UIAlertActionStyleDefault handler:
                        ^(UIAlertAction * action) {
-                           qltrace(@"cancel: -1");
+                           qltrace(@"%ld", (long)index);
                            [cas buttonClickedAtIndex:index];
                        }
                        ]
          ];
-    } else {
-        // iOS 7 UIActionSheet
-        qltrace(@"UIActionSheet");
-        UIActionSheet *as = [[[CDXUIActionSheetNonFirstResponder alloc] initWithTitle:title delegate:cas cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil] autorelease];
-        [cas configureWithActionSheet:as];
-        
-        NSInteger index = 0;
-        for (NSString *buttonTile in otherButtonTitles) {
-            NSInteger buttonIndex = [as addButtonWithTitle:buttonTile];
-            if (index == 0) {
-                cas.buttonIndexBase = buttonIndex;
-            }
-            ++index;
-        }
-        [as addButtonWithTitle:cancelButtonTitle];
-        as.cancelButtonIndex = index;
+        ++index;
     }
+
+    [ac addAction:[UIAlertAction actionWithTitle:cancelButtonTitle style:UIAlertActionStyleCancel handler:
+                   ^(UIAlertAction * action) {
+                       qltrace(@"cancel: -1");
+                       [cas buttonClickedAtIndex:index];
+                   }
+                   ]
+     ];
     return cas;
 }
 

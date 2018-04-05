@@ -26,11 +26,10 @@
 #import "CDXActionSheetProtocols.h"
 
 
-@interface CDXActionSheet : NSObject<UIActionSheetDelegate> {
+@interface CDXActionSheet : NSObject {
 
 @protected
     UIAlertController *alertController;
-    UIActionSheet *actionSheet;
     NSInteger tag;
     NSInteger buttonIndexBase;
     id<CDXActionSheetDelegate> delegate;
@@ -45,8 +44,6 @@
 - (void)presentWithViewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem *)barButtomItem animated:(BOOL)animated;
 - (void)presentWithViewController:(UIViewController *)viewController view:(UIView *)view animated:(BOOL)animated;
 - (void)dismissActionSheetAnimated:(BOOL)animated;
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex;
 
 + (CDXActionSheet *)actionSheetWithTitle:(NSString *)title tag:(NSInteger)tag delegate:(id<CDXActionSheetDelegate>)delegate cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles;
 
