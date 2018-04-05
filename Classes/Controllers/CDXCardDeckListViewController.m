@@ -229,7 +229,7 @@
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     cardDeckViewContext.currentCardIndex = indexPath.row;
     [self performBlockingSelector:@selector(pushCardDeckEditViewController)
-                       withObject:NO];
+                       withObject:nil];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -319,7 +319,7 @@
     qltrace();
     cardDeckViewContext.currentCardIndex = [cardDeck cardsCount]-1;
     [self performBlockingSelector:@selector(pushCardDeckEditViewControllerForDefaults)
-                       withObject:NO];
+                       withObject:nil];
 }
 
 - (IBAction)settingsButtonPressed {
