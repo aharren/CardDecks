@@ -32,7 +32,7 @@
 - (id)init {
     if ((self = [super init])) {
         ivar_assign(label, [[UILabel alloc] init]);
-        NSAttributedString *text = [[[NSAttributedString alloc] initWithString:@"\u25B4" attributes:@{ NSForegroundColorAttributeName:[UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0], NSFontAttributeName: [UIFont systemFontOfSize:15] }] autorelease];
+        NSAttributedString *text = [[[NSAttributedString alloc] initWithString:@"\u25B4" attributes:@{ NSForegroundColorAttributeName:[UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0], NSFontAttributeName: [UIFont systemFontOfSize:30] }] autorelease];
         [label setAttributedText:text];
         [self hide];
     }
@@ -51,7 +51,7 @@
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:0.25];
     }
-    label.frame = CGRectMake(itemViewFrame.origin.x + (itemViewFrame.size.width - 14)/2.0, 34, 14, 14);
+    label.frame = CGRectMake(itemViewFrame.origin.x + (itemViewFrame.size.width - 18)/2.0, 30, 18, 18);
     label.alpha = 1;
     if (animated) {
         [UIView commitAnimations];
@@ -206,6 +206,7 @@ static float keyboardExtensionsOsVersion;
 - (void)keyboardDidShow:(NSNotification *)notification {
     qltrace();
     visible = YES;
+    [toolbarActiveButtonMarker positionAtBarButtonItem:[self toolbarButtonByTag:activeExtensionTag] animated:NO];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
@@ -264,7 +265,7 @@ static float keyboardExtensionsOsVersion;
         [toolbarButtons addObject:toolbarActionButton];
     }
     
-    NSUInteger alignmentFixWidth = ([[[CDXDevice sharedDevice] deviceSystemVersionString] floatValue] >= 8.0) ? 17 : 0;
+    NSUInteger alignmentFixWidth = 17;
     UIBarButtonItem *leftAlignmentFix = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil] autorelease];
     leftAlignmentFix.width = alignmentFixWidth;
     leftAlignmentFix.enabled = NO;
@@ -314,20 +315,22 @@ static float keyboardExtensionsOsVersion;
 - (UIBarButtonItem *)toolbarButtonWithTitle:(NSString *)title {
     UIBarButtonItem *button = [[[UIBarButtonItem alloc] 
                                 initWithTitle:title
-                                style:UIBarButtonItemStyleBordered
+                                style:UIBarButtonItemStylePlain
                                 target:self action:@selector(toolbarButtonPressed:)]
                                autorelease];
     button.width = 33;
     NSDictionary *textAttributes = @{ NSFontAttributeName: [UIFont systemFontOfSize:15] };
     [button setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [button setTitleTextAttributes:textAttributes forState:UIControlStateDisabled];
+    [button setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+    [button setTitleTextAttributes:textAttributes forState:UIControlStateFocused];
     return button;
 }
 
 - (UIBarButtonItem *)toolbarSeparatorItem {
-    UIButton *separator = [[[UIButton alloc] init] autorelease];
-    separator.frame = CGRectMake(0, 0, 1, 44);
-    separator.backgroundColor = [UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0];
-    return [[[UIBarButtonItem alloc] initWithCustomView:separator] autorelease];
+    UIBarButtonItem *item = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:NULL] autorelease];
+    item.width = 10;
+    return item;
 }
 
 - (void)refreshKeyboardExtensions {

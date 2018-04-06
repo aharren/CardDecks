@@ -125,8 +125,17 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     self.view.backgroundColor = [[CDXKeyboardExtensions sharedKeyboardExtensions] backgroundColor];
     NSDictionary *textAttributes = @{ NSFontAttributeName: [UIFont systemFontOfSize:15] };
     [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateDisabled];
+    [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+    [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateFocused];
     [textButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [textButton setTitleTextAttributes:textAttributes forState:UIControlStateDisabled];
+    [textButton setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+    [textButton setTitleTextAttributes:textAttributes forState:UIControlStateFocused];
     [backgroundButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [backgroundButton setTitleTextAttributes:textAttributes forState:UIControlStateDisabled];
+    [backgroundButton setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+    [backgroundButton setTitleTextAttributes:textAttributes forState:UIControlStateFocused];
     [colorChooserRGBSliderRed setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
     [colorChooserRGBSliderGreen setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
     [colorChooserRGBSliderBlue setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
