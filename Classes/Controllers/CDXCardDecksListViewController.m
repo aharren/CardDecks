@@ -148,10 +148,18 @@
                 [image setImage:[[CDXImageFactory sharedImageFactory] imageForColor:deck.thumbnailColor size:tableCellImageSize]];
             }
             cell.textLabel.text = name;
-            
+
+            NSInteger tag = 0;
+            tag |= (deck.tag == currentTag) ? CDXTableViewCellTagNewObject : CDXTableViewCellTagNone;
+            cell.tag = tag;
+
             if ([deck cardsCount] == 0) {
                 cell.textLabel.textColor = tableCellTextTextColorNoCards;
-                cell.detailTextLabel.text = @"NO CARDS";
+                if ((cell.tag & CDXTableViewCellTagNewObject) == CDXTableViewCellTagNewObject) {
+                    cell.detailTextLabel.text = @"tap here to add cards to this deck";
+                } else {
+                    cell.detailTextLabel.text = @"no cards";
+                }
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             } else {
                 cell.textLabel.textColor = tableCellTextTextColor;
@@ -163,10 +171,6 @@
                 cell.detailTextLabel.text = text;
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
             }
-            
-            NSInteger tag = 0;
-            tag |= (deck.tag == currentTag) ? CDXTableViewCellTagNewObject : CDXTableViewCellTagNone;
-            cell.tag = tag;
             
             return cell;
         }
