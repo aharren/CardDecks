@@ -122,9 +122,8 @@
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
                 cell.textLabel.font = tableCellTextFontAction;
                 cell.textLabel.textAlignment = NSTextAlignmentCenter;
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
-                cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
             }
             cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
             return cell;
@@ -176,7 +175,7 @@
             switch (indexPath.row) {
                 default:
                 case 0: {
-                    cell.textLabel.text = @"  DECK DEFAULTS";
+                    cell.textLabel.text = @"tap here to edit defaults for new decks";
                     break;
                 }
             }
