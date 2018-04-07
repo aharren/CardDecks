@@ -64,17 +64,17 @@ static void CDXGraphicsBeginImageContextNativeScale(CGSize size) {
     CDXGraphicsBeginImageContextNativeScale(size);
     CGContextRef cgContext = UIGraphicsGetCurrentContext();
     
-    // circle
+    // color bar
     if (color != nil) {
         CGContextSetFillColorWithColor(cgContext, [[color uiColor] CGColor]);
     } else {
         CGContextSetFillColorWithColor(cgContext, [[UIColor whiteColor] CGColor]);
     }
-    CGContextFillEllipseInRect(cgContext, CGRectMake(0.5, 0.5, size.width-1, size.height-1));
-    // border
-    CGContextSetStrokeColorWithColor(cgContext, [[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1] CGColor]);
-    CGContextSetLineWidth(cgContext, 0.5);
-    CGContextStrokeEllipseInRect(cgContext, CGRectMake(0.5, 0.5, size.width-1, size.height-1));
+    CGContextFillRect(cgContext, CGRectMake(0, 0, size.width-2, size.height-1));
+    
+    // separator
+    CGContextSetFillColorWithColor(cgContext, [[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1] CGColor]);
+    CGContextFillRect(cgContext, CGRectMake(size.width-2, 0, 1, size.height-1));
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

@@ -119,7 +119,12 @@
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
+                [cell.contentView insertSubview:[[[UIImageView alloc] initWithFrame:CGRectMake(0,0,tableCellImageSize.width,tableCellImageSize.height)] autorelease] atIndex:0];
+                cell.indentationWidth = 6;
+                cell.indentationLevel = 1;
             }
+            UIImageView* image = cell.contentView.subviews[0];
+            [image setImage:nil];
             return cell;
         }
         case 2: {
@@ -148,8 +153,11 @@
             UITableViewCell *cell = [self tableView:tableView cellForSection:indexPath.section];
             CDXCard *card = [cardDeck cardAtIndex:indexPath.row];
             NSString *text = [card.text stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+            if (!self.editing) {
+                UIImageView* image = cell.contentView.subviews[0];
+                [image setImage:[[CDXImageFactory sharedImageFactory] imageForColor:card.backgroundColor size:tableCellImageSize]];
+            }
             cell.textLabel.text = text;
-            cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForColor:card.backgroundColor size:tableCellImageSize];
             
             NSInteger tag = 0;
             NSUInteger groupSize = cardDeck.groupSize;

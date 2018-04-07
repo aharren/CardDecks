@@ -122,7 +122,7 @@
     ivar_assign_and_retain(tableCellBackgroundColorAltGroup, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff].uiColor);
     ivar_assign_and_retain(tableCellBackgroundColorNewObject, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0+0x4 alpha:0xff].uiColor);
     ivar_assign_and_retain(tableCellBackgroundColorNewObjectAltGroup, [CDXColor colorWithRed:0xe8 green:0xe8 blue:0xe8+0x4 alpha:0xff].uiColor);
-    tableCellImageSize = CGSizeMake(10, 10);
+    tableCellImageSize = CGSizeMake(5, 51);
     
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     viewTableView.backgroundView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:screenHeight base:0.0]] autorelease];
@@ -177,10 +177,14 @@
     if ([self isEditing] == editing) {
         return;
     }
+
+    [viewTableView reloadData];
+
+    [viewTableView beginUpdates];
     [super setEditing:editing animated:animated];
     [viewTableView setEditing:editing animated:animated];
-    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+    [viewTableView endUpdates];
+
     if (editing) {
         [viewTableView removeGestureRecognizer:viewTableViewLongPressRecognizer];
         [viewTableView removeGestureRecognizer:viewTableViewTapRecognizer];
@@ -262,7 +266,7 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
+    return YES;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {

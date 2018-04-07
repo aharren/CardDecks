@@ -108,7 +108,12 @@
                 cell.detailTextLabel.textColor = tableCellDetailTextTextColor;
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
+                [cell.contentView insertSubview:[[[UIImageView alloc] initWithFrame:CGRectMake(0,0,tableCellImageSize.width,tableCellImageSize.height)] autorelease] atIndex:0];
+                cell.indentationWidth = 6;
+                cell.indentationLevel = 1;
             }
+            UIImageView* image = cell.contentView.subviews[0];
+            [image setImage:nil];
             return cell;
         }
         case 2: {
@@ -139,8 +144,11 @@
             if ([@"" isEqualToString:name]) {
                 name = @" ";
             }
+            if (!self.editing) {
+                UIImageView* image = cell.contentView.subviews[0];
+                [image setImage:[[CDXImageFactory sharedImageFactory] imageForColor:deck.thumbnailColor size:tableCellImageSize]];
+            }
             cell.textLabel.text = name;
-            cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForColor:deck.thumbnailColor size:tableCellImageSize];
             
             if ([deck cardsCount] == 0) {
                 cell.textLabel.textColor = tableCellTextTextColorNoCards;
