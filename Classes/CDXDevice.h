@@ -54,6 +54,7 @@ typedef enum {
 @property (nonatomic, readonly) CDXDeviceUIIdiom deviceUIIdiom;
 @property (nonatomic, readonly) NSString* deviceUIIdiomString;
 @property (nonatomic, readonly) CGFloat deviceScreenScale;
+@property (nonatomic, readonly) CGSize deviceScreenSize;
 
 @property (nonatomic, readonly) NSString* deviceSystemVersionString;
 

@@ -39,6 +39,7 @@
 @synthesize deviceUIIdiom;
 @synthesize deviceUIIdiomString;
 @synthesize deviceScreenScale;
+@synthesize deviceScreenSize;
 @synthesize deviceSystemVersionString;
 @synthesize useImageBasedRendering;
 
@@ -64,6 +65,7 @@ static NSString* CDXDeviceGetSystemInformationByName(const char* name) {
     if ((self = [super init])) {
         deviceType = CDXDeviceTypeUnknown;
         deviceScreenScale = [[UIScreen mainScreen] scale];
+        deviceScreenSize = [[UIScreen mainScreen] nativeBounds].size;
         ivar_assign_and_copy(deviceSystemVersionString, [[UIDevice currentDevice] systemVersion]);
         
         UIDevice* device = [UIDevice currentDevice];
@@ -101,7 +103,7 @@ static NSString* CDXDeviceGetSystemInformationByName(const char* name) {
         // first-retina-generations of iPhone and iPod
         useImageBasedRendering = (deviceScreenScale <= 1.0) || ([deviceMachine hasPrefix:@"iphone3,"]) || ([deviceMachine hasPrefix:@"ipod4,"]);
         
-        qltrace(@"%@ %@ %d %d %f %@ %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, deviceSystemVersionString, useImageBasedRendering ? 1 : 0);
+        qltrace(@"%@ %@ %d %d %f %f-%f %@ %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, deviceScreenSize.width, deviceScreenSize.height, deviceSystemVersionString, useImageBasedRendering ? 1 : 0);
     }
     return self;
 }
