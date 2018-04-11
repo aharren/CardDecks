@@ -158,6 +158,12 @@
     [self.navigationController.toolbar addGestureRecognizer:viewToolbarLongPressRecognizer];
     [viewTableView addGestureRecognizer:viewTableViewTapRecognizer];
     
+    if ([CDXDevice sharedDevice].useLargeTitles) {
+        self.navigationController.navigationBar.prefersLargeTitles = YES;
+        self.navigationController.navigationBar.largeTitleTextAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:23]};
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
+    }
+
     ++currentTag;
 }
 

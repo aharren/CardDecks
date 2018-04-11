@@ -156,6 +156,8 @@
     [self showCardAtIndex:cardDeckViewContext.currentCardIndex];
     [text becomeFirstResponder];
     [self showCardView:NO];
+
+    self.navigationController.navigationBar.prefersLargeTitles = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -164,6 +166,8 @@
 
     cardViewScrollView.contentInset = text.contentInset;
     cardViewScrollView.scrollIndicatorInsets = text.scrollIndicatorInsets;
+
+    self.navigationController.navigationBar.prefersLargeTitles = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

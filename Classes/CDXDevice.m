@@ -42,6 +42,7 @@
 @synthesize deviceScreenSize;
 @synthesize deviceSystemVersionString;
 @synthesize useImageBasedRendering;
+@synthesize useLargeTitles;
 
 synthesize_singleton(sharedDevice, CDXDevice);
 
@@ -103,7 +104,10 @@ static NSString* CDXDeviceGetSystemInformationByName(const char* name) {
         // first-retina-generations of iPhone and iPod
         useImageBasedRendering = (deviceScreenScale <= 1.0) || ([deviceMachine hasPrefix:@"iphone3,"]) || ([deviceMachine hasPrefix:@"ipod4,"]);
         
-        qltrace(@"%@ %@ %d %d %f %f-%f %@ %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, deviceScreenSize.width, deviceScreenSize.height, deviceSystemVersionString, useImageBasedRendering ? 1 : 0);
+        // large devices, starting with iPhone 6's screen size
+        useLargeTitles = (deviceScreenSize.height >= 1334);
+        
+        qltrace(@"%@ %@ %d %d %f %f-%f %@ %d %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, deviceScreenSize.width, deviceScreenSize.height, deviceSystemVersionString, useImageBasedRendering ? 1 : 0, useLargeTitles ? 1 : 0);
     }
     return self;
 }
