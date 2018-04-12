@@ -342,36 +342,62 @@
     if (sender.state == UIGestureRecognizerStateBegan) {
         // find the control which was touched
         CGPoint point = [sender locationInView:sender.view];
-        for (UIView *view in [sender.view subviews]) {
-            CGRect frame = view.frame;
-            frame.origin.x -= 21;
-            frame.size.width += 42;
-            if (CGRectContainsPoint(frame, point) && ([view isKindOfClass:[UIControl class]])) {
-                // find the corresponding bar-button item
-                for (UIBarButtonItem *item in [viewToolbar items]) {
-                    if ([[(UIControl *)view allTargets] containsObject:item]) {
-                        if (!item.isEnabled) {
-                            // skip item if not enabled
-                            qltrace(@"item %@ is not enabled", item);
-                            return;
-                        }
+        qltrace("%f %f %@", point.x, point.y, sender.view);
 
-                        // keep state
-                        performActionState = CDXListViewControllerBasePerformActionStateToolbar;
-                        ivar_assign_and_retain(performActionToolbarBarButtonItem, item);
-                        
-                        // show menu
-                        [self becomeFirstResponder];
-                        UIMenuController *menu = [UIMenuController sharedMenuController];
-                        [menu setTargetRect:view.frame inView:sender.view];
-                        // add additional menu items, defined by subclass
-                        [self menu:menu itemsForBarButtonItem:item];
-                        [menu setMenuVisible:YES animated:YES];
-                        
-                        return;
-                    }
+        // calculate total fixed width and width of flexible elements
+        CGFloat totalFixedWidth = 0;
+        NSUInteger countFlexibleWidthElements = 0;
+        for (UIBarButtonItem *item in [viewToolbar items]) {
+            if (item.tag != 0) {
+                totalFixedWidth += 44;
+            } else {
+                if (item.width != 0) {
+                    totalFixedWidth += item.width;
+                } else {
+                    countFlexibleWidthElements++;
                 }
             }
+        }
+        CGFloat singleFlexibleWidth = (sender.view.frame.size.width - totalFixedWidth) / countFlexibleWidthElements;
+
+        // find touched button
+        CGFloat left = 0;
+        CGFloat touchArea = 10.0;
+        for (UIBarButtonItem *item in [viewToolbar items]) {
+            CGFloat width = 0;
+            if (item.tag != 0) {
+                width = 44;
+            } else {
+                if (item.width != 0) {
+                    width = item.width;
+                } else {
+                    width = singleFlexibleWidth;
+                }
+            }
+
+            if (item.tag != 0 && point.x >= left - touchArea && point.x <= left + width + touchArea) {
+                if (!item.isEnabled) {
+                    // skip item if not enabled
+                    qltrace(@"item %@ is not enabled", item);
+                    return;
+                }
+
+                // keep state
+                performActionState = CDXListViewControllerBasePerformActionStateToolbar;
+                ivar_assign_and_retain(performActionToolbarBarButtonItem, item);
+
+                // show menu
+                [self becomeFirstResponder];
+                UIMenuController *menu = [UIMenuController sharedMenuController];
+                [menu setTargetRect:CGRectMake(left, 0, width, 1) inView:sender.view];
+                // add additional menu items, defined by subclass
+                [self menu:menu itemsForBarButtonItem:item];
+                [menu setMenuVisible:YES animated:YES];
+
+                return;
+            }
+
+            left += width;
         }
     }
 }

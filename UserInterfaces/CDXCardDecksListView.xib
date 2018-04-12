@@ -43,23 +43,23 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
             <items>
                 <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="30"/>
-                <barButtonItem image="Toolbar-Edit-Reorder" width="24" style="plain" id="25">
+                <barButtonItem tag="1" image="Toolbar-Edit-Reorder" width="24" style="plain" id="25">
                     <connections>
                         <action selector="editButtonPressed" destination="-1" id="32"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem style="plain" systemItem="flexibleSpace" id="45"/>
-                <barButtonItem enabled="NO" width="25" style="plain" id="47"/>
+                <barButtonItem tag="2" enabled="NO" width="25" style="plain" id="47"/>
                 <barButtonItem style="plain" systemItem="flexibleSpace" id="39"/>
-                <barButtonItem style="plain" systemItem="add" id="38">
+                <barButtonItem tag="3" style="plain" systemItem="add" id="38">
                     <connections>
                         <action selector="addButtonPressed" destination="-1" id="49"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem style="plain" systemItem="flexibleSpace" id="20"/>
-                <barButtonItem enabled="NO" width="24" style="plain" id="43"/>
+                <barButtonItem tag="4" enabled="NO" width="24" style="plain" id="43"/>
                 <barButtonItem style="plain" systemItem="flexibleSpace" id="44"/>
-                <barButtonItem image="Toolbar-Settings" width="24" style="plain" id="33">
+                <barButtonItem tag="5" image="Toolbar-Settings" width="24" style="plain" id="33">
                     <connections>
                         <action selector="settingsButtonPressed" destination="-1" id="35"/>
                     </connections>
