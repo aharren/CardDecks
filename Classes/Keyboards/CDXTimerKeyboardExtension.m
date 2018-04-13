@@ -101,13 +101,6 @@ synthesize_singleton(sharedTimerKeyboardExtension, CDXTimerKeyboardExtension);
     self.view.backgroundColor = [[CDXKeyboardExtensions sharedKeyboardExtensions] backgroundColor];
 }
 
-- (void)viewDidUnload {
-    ivar_release_and_clear(timerIntervalPicker);
-    ivar_release_and_clear(minutesLabel);
-    ivar_release_and_clear(secondsLabel);
-    [super viewDidUnload];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     qltrace();
     [super viewDidAppear:animated];

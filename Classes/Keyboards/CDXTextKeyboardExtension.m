@@ -124,13 +124,6 @@ synthesize_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
     [sizeChooserSlider setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
 }
 
-- (void)viewDidUnload {
-    ivar_release_and_clear(sizeChooserSlider);
-    ivar_release_and_clear(sizeChooserSliderSize);
-    ivar_release_and_clear(orientationSample);
-    [super viewDidUnload];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     sizeChooserSlider.minimumValue = CDXCardFontSizeAutomatic;

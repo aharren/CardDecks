@@ -60,16 +60,6 @@
     viewNoTableView.hidden = !viewTableView.hidden;
 }
 
-- (void)viewDidUnload {
-    qltrace();
-    ivar_release_and_clear(viewTableViewContainer);
-    ivar_release_and_clear(navigationItem);
-    ivar_release_and_clear(viewNoTableView);
-    ivar_release_and_clear(tableCellBackgroundColor);
-    ivar_release_and_clear(tableCellBackgroundColorAltGroup);
-    [super viewDidUnload];
-}
-
 - (void)updateNotificationForCardDeck:(id)object {
     qltrace();
     if (!ignoreCardDeckUpdateNotifications) {

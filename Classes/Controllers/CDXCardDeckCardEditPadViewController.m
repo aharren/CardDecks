@@ -49,11 +49,6 @@
     cardViewSize = CGSizeMake(320, 480);
 }
 
-- (void)viewDidUnload {
-    ivar_release_and_clear(navigationItem);
-    [super viewDidUnload];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(closeButtonPressed)] autorelease];

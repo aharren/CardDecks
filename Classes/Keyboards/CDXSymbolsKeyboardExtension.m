@@ -379,12 +379,6 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     self.view.backgroundColor = [[CDXKeyboardExtensions sharedKeyboardExtensions] backgroundColor];
 }
 
-- (void)viewDidUnload {
-    ivar_release_and_clear(loadedTableViewCellA);
-    ivar_release_and_clear(loadedTableViewCellB);
-    [super viewDidUnload];
-}
-
 - (void)reset {
     
 }
@@ -405,12 +399,6 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     ivar_release_and_clear(tableView);
     ivar_release_and_clear(backButton);
     [super dealloc];
-}
-
-- (void)viewDidUnload {
-    ivar_release_and_clear(tableView);
-    ivar_release_and_clear(backButton);
-    [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -499,12 +487,6 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     ivar_release_and_clear(listTableView);
     ivar_release_and_clear(blockTableView);
     [super dealloc];
-}
-
-- (void)viewDidUnload {
-    ivar_release_and_clear(listTableView);
-    ivar_release_and_clear(blockTableView);
-    [super viewDidUnload];
 }
 
 - (void)setCurrentBlock:(NSUInteger)index {

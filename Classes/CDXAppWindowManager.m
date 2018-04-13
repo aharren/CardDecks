@@ -424,13 +424,6 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
     [rightViewController viewDidLoad];
 }
 
-- (void)viewDidUnload {
-    qltrace();
-    [leftViewController viewDidUnload];
-    [rightViewController viewDidUnload];
-    [super viewDidUnload];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     qltrace();
     [super viewWillAppear:animated];

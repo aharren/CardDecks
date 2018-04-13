@@ -135,12 +135,6 @@
                                              initWithTarget:self action:@selector(handleTableViewTapGesture:)]);
 }
 
-- (void)viewDidUnload {
-    qltrace();
-    [self detachViewObjects];
-    [super viewDidUnload];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     qltrace();
     [super viewWillAppear:animated];

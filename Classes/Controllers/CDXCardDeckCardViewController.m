@@ -251,22 +251,6 @@
     timerSignalView.hidden = YES;
 }
 
-- (void)viewDidUnload {
-    qltrace();
-    ivar_release_and_clear(indexDotsView);
-    ivar_release_and_clear(cardsView);
-    ivar_release_and_clear(initialView);
-    ivar_release_and_clear(actionsView);
-    ivar_release_and_clear(actionsViewButtonsView);
-    ivar_release_and_clear(actionsViewShuffleButton);
-    ivar_release_and_clear(actionsViewSortButton);
-    ivar_release_and_clear(actionsViewPlayButton);
-    ivar_release_and_clear(actionsViewPlay2Button);
-    ivar_release_and_clear(actionsViewStopButton);
-    ivar_release_and_clear(timerSignalView);
-    [super viewDidUnload];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     cardsViewShowsFirstCard = YES;

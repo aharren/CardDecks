@@ -64,13 +64,6 @@
     [super dealloc];
 }
 
-- (void)viewDidUnload {
-    ivar_release_and_clear(shuffleButton);
-    ivar_release_and_clear(actionButton);
-    ivar_release_and_clear(addButton);
-    [super viewDidUnload];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     qltrace();
     [super viewWillAppear:animated];

@@ -56,13 +56,6 @@
     [super viewDidLoad];
 }
 
-- (void)viewDidUnload {
-    qltrace();
-    ivar_release_and_clear(viewTableViewContainer);
-    ivar_release_and_clear(viewNavigationItem);
-    [super viewDidUnload];
-}
-
 - (void)updateNotificationForCardDeck:(id)object {
     qltrace();
     if (!ignoreCardDeckUpdateNotifications) {

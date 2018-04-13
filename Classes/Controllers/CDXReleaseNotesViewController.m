@@ -77,11 +77,6 @@
     self.view = viewWebView;
 }
 
-- (void)viewDidUnload {
-    ivar_release_and_clear(viewWebView);
-    [super viewDidUnload];
-}
-
 - (void)closeButtonPressed {
     [self dismissViewControllerAnimated:YES completion:NULL];
 }

@@ -143,25 +143,6 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     [self resetView];
 }
 
-- (void)viewDidUnload {
-    ivar_release_and_clear(toolbar);
-    ivar_release_and_clear(toolbarActiveButtonMarker);
-    ivar_release_and_clear(simpleButton);
-    ivar_release_and_clear(textButton);
-    ivar_release_and_clear(backgroundButton);
-    ivar_release_and_clear(colorChooserSimpleView);
-    ivar_release_and_clear(colorChooserRGBView);
-    ivar_release_and_clear(colorChooserRGBSliderRed);
-    ivar_release_and_clear(colorChooserRGBSliderGreen);
-    ivar_release_and_clear(colorChooserRGBSliderBlue);
-    ivar_release_and_clear(colorChooserRGBSliderAlpha);
-    ivar_release_and_clear(colorChooserRGBSliderRedValue);
-    ivar_release_and_clear(colorChooserRGBSliderGreenValue);
-    ivar_release_and_clear(colorChooserRGBSliderBlueValue);
-    ivar_release_and_clear(colorChooserRGBSliderAlphaValue);
-    [super viewDidUnload];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self updateView];

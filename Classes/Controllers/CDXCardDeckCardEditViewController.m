@@ -130,17 +130,6 @@
     cardViewSize = [[UIScreen mainScreen] bounds].size;
 }
 
-- (void)viewDidUnload {
-    ivar_release_and_clear(text);
-    ivar_release_and_clear(cardViewScrollView);
-    ivar_release_and_clear(cardView);
-    ivar_release_and_clear(upButton);
-    ivar_release_and_clear(downButton);
-    ivar_release_and_clear(viewButtons);
-    ivar_release_and_clear(activeActionSheet);
-    [super viewDidUnload];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationItem.title = @"";
