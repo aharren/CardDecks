@@ -402,7 +402,7 @@
     
     UIActivityViewController *vc = [[[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:activities] autorelease];
     
-    vc.completionHandler = ^(NSString *activityType, BOOL completed){
+    vc.completionWithItemsHandler = ^(UIActivityType activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         qltrace(@"delete %@", url);
         NSError *error = nil;
         [[NSFileManager defaultManager] removeItemAtURL:url error:&error];
