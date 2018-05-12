@@ -49,6 +49,19 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     return self;
 }
 
+- (UIEdgeInsets)safeAreaInsets {
+    UIEdgeInsets insets = window.safeAreaInsets;
+    return insets;
+}
+
+- (CGRect)frameWithMaxSafeAreaInsets:(CGRect)frame {
+    UIEdgeInsets safeInsets = [self safeAreaInsets];
+    CGFloat maxTopBottomInset = MAX(safeInsets.top, safeInsets.bottom);
+    frame.size.height = frame.size.height - 2 * maxTopBottomInset;
+    frame.origin.y = frame.origin.y + maxTopBottomInset;
+    return frame;
+}
+
 - (UIViewController *)visibleViewController {
     qltrace();
     return nil;

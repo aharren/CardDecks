@@ -190,18 +190,19 @@
         [self resignFirstResponder];
         CDXCard *card = [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex orCard:nil];
         if (card != nil) {
-            CGSize viewSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
+            CGRect frame = [[CDXAppWindowManager sharedAppWindowManager] frameWithMaxSafeAreaInsets:self.view.frame];
             if ([[CDXDevice sharedDevice] useImageBasedRendering]) {
                 UIImage *image = [[CDXImageFactory sharedImageFactory]
                                   imageForCard:card
-                                  size:viewSize
+                                  size:frame.size
                                   deviceOrientation:orientation];
                 ivar_assign(initialView, [[UIImageView alloc] initWithImage:image]);
             } else {
                 CDXCardView *cardView = [[CDXCardView alloc] initWithFrame:CGRectMake(0,0, 1,1)];
-                [cardView setCard:card size:viewSize deviceOrientation:orientation preview:NO];
+                [cardView setCard:card size:frame.size deviceOrientation:orientation preview:NO];
                 ivar_assign(initialView, cardView);
             }
+            initialView.frame = frame;
             [self.view insertSubview:initialView atIndex:0];
         }
     }

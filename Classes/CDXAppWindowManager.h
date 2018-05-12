@@ -49,6 +49,9 @@ declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 @property (nonatomic, readonly) UIWindow *window;
 @property (nonatomic, readonly) UIDeviceOrientation deviceOrientation;
 
+- (UIEdgeInsets)safeAreaInsets;
+- (CGRect)frameWithMaxSafeAreaInsets:(CGRect)frame;
+
 - (UIViewController *)visibleViewController;
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated;
 - (void)pushViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location;

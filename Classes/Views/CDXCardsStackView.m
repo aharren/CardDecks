@@ -83,7 +83,10 @@
         cardIndex %= cardsCount;
     }
 
-    [cardViewRendering configureViewAtIndex:viewIndex viewSize:cardViewsSize cardIndex:cardIndex card:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex] deviceOrientation:deviceOrientation];
+    CGRect frame = CGRectMake(0, 0, cardViewsSize.width, cardViewsSize.height);
+    frame = [[CDXAppWindowManager sharedAppWindowManager] frameWithMaxSafeAreaInsets:frame];
+    UIView *view = [cardViewRendering configureViewAtIndex:viewIndex viewSize:frame.size cardIndex:cardIndex card:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex] deviceOrientation:deviceOrientation];
+    view.frame = frame;
 }
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate {
@@ -92,7 +95,9 @@
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsMiddle cardIndex:cardIndex];
     [self configureCardViewsViewAtIndex:CDXCardsStackViewCardViewsBottom cardIndex:(cardIndex+1) % cardsCount];
     
-    [cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsTopRight].frame = CGRectMake(cardViewsSize.width, 0, cardViewsSize.width, cardViewsSize.height);
+    CGRect cardFrame = [cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsTopRight].frame;
+    cardFrame.origin.x += cardViewsSize.width;
+    [cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsTopRight].frame = cardFrame;
     
     [cardViewRendering invalidateCaches];
     [cardViewRendering cacheViewAtIndex:CDXCardsStackViewCardViewsTopLeft cardIndex:(cardIndex+cardsCount-1) % cardsCount];
@@ -115,7 +120,7 @@
     
     cardsCount = [viewDataSource cardsViewDataSourceCardsCount];
     currentCardIndex = [viewDataSource cardsViewDataSourceInitialCardIndex];
-    
+ 
     CGRect frame = self.frame;
     cardViewsSize.width = frame.size.width;
     cardViewsSize.height = frame.size.height;
@@ -129,12 +134,12 @@
     scrollView.showsVerticalScrollIndicator = NO;
     scrollView.backgroundColor = nil;
     scrollView.bounces = NO;
-    
+
+    CGRect cardFrame = [[CDXAppWindowManager sharedAppWindowManager] frameWithMaxSafeAreaInsets:frame];
     for (NSUInteger i = 0; i < CDXCardsStackViewCardViewsSize; i++) {
-        [cardViewRendering viewAtIndex:i].frame = CGRectMake(0, 0, cardViewsSize.width, cardViewsSize.height);
+        [cardViewRendering viewAtIndex:i].frame = cardFrame;
     }
-    [cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsTopRight].frame = CGRectMake(cardViewsSize.width, 0, cardViewsSize.width, cardViewsSize.height);
-    
+
     [self showCardAtIndex:currentCardIndex];
 }
 
