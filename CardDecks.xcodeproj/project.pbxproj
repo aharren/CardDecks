@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D8E79F15D084BB08F76D8C5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB7D94BFAB549A2B8958AF9 /* libPods.a */; };
-		D437CAAE6ADF4189BD318CEE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB7D94BFAB549A2B8958AF9 /* libPods.a */; };
-		E002B5951167613A0072C409 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2711167488B00FE7924 /* Foundation.framework */; };
-		E002B5E3116761410072C409 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2731167489600FE7924 /* UIKit.framework */; };
 		E002B6C7116885150072C409 /* CDXColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B6C6116885150072C409 /* CDXColor.m */; };
 		E002B6C9116885230072C409 /* CDXColorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B6C8116885230072C409 /* CDXColorTests.m */; };
 		E002B6CC116885340072C409 /* CDXColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E002B6C6116885150072C409 /* CDXColor.m */; };
@@ -23,6 +19,11 @@
 		E007D65C19C23C4000CE9BB2 /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E007D65B19C23C4000CE9BB2 /* AppIcon.xcassets */; };
 		E007D65E19C23C4E00CE9BB2 /* LaunchImage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E007D65D19C23C4E00CE9BB2 /* LaunchImage.xcassets */; };
 		E0150074117A1E4900C3BF63 /* CDXCardsSideBySideView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0150073117A1E4900C3BF63 /* CDXCardsSideBySideView.m */; };
+		E016693D20C152E2000A5676 /* lcl.m in Sources */ = {isa = PBXBuildFile; fileRef = E016693B20C152E1000A5676 /* lcl.m */; };
+		E016693E20C152E2000A5676 /* lcl.m in Sources */ = {isa = PBXBuildFile; fileRef = E016693B20C152E1000A5676 /* lcl.m */; };
+		E016694220C1560E000A5676 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BA2731167489600FE7924 /* UIKit.framework */; };
+		E016694320C15629000A5676 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0EB6F4D11723D1A00F41F7A /* CoreGraphics.framework */; };
+		E016694420C1563E000A5676 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E097B04314E70FD300A8F38B /* AudioToolbox.framework */; };
 		E01951F6153B3CD3002CE5B2 /* ReleaseNotes.html in Resources */ = {isa = PBXBuildFile; fileRef = E01951F5153B3CD3002CE5B2 /* ReleaseNotes.html */; };
 		E01E4132154FF64300F4A8D4 /* CDXReleaseNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E4131154FF64300F4A8D4 /* CDXReleaseNotesViewController.m */; };
 		E022635D140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E022635C140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib */; };
@@ -118,7 +119,6 @@
 		E0BEE1F7117BA68D002F62A7 /* CDXCardsStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BEE1F6117BA68D002F62A7 /* CDXCardsStackView.m */; };
 		E0C0BFF319D81C3400806E21 /* CDXActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C0BFF119D81C3400806E21 /* CDXActionSheet.m */; };
 		E0C1F67418772D4300F17779 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C1F67318772D4300F17779 /* Social.framework */; };
-		E0C1F67518772D6700F17779 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C1F67318772D4300F17779 /* Social.framework */; };
 		E0C3BBB4132EBE8200604881 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0D9E159132EBA1E001435D0 /* MessageUI.framework */; };
 		E0C7D4321958CDE000201BD3 /* CDXOrderedSerializerDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E0875D9A1958CAD6007FA508 /* CDXOrderedSerializerDictionary.m */; };
 		E0C7D434195EEAAF00201BD3 /* CDXOrderedSerializerDictionaryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C7D433195EEAAF00201BD3 /* CDXOrderedSerializerDictionaryTests.m */; };
@@ -127,7 +127,6 @@
 		E0CCC9041170E9420040D222 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0CCC9031170E9420040D222 /* QuartzCore.framework */; };
 		E0CDB1F913B793550079B722 /* CDXCardDeckListPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0CDB1F813B793550079B722 /* CDXCardDeckListPadViewController.m */; };
 		E0D01AED1170EF9200004856 /* CDXImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D01AEC1170EF9200004856 /* CDXImageFactory.m */; };
-		E0D1F09E18CC6C4300BA521A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0D1F09C18CC6BFF00BA521A /* XCTest.framework */; };
 		E0D673E0151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D673DF151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib */; };
 		E0D909281172275D00AD50DA /* CDXLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D909271172275D00AD50DA /* CDXLogger.m */; };
 		E0DBA1821531F39B0049A26B /* CDXAppURL.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DBA1811531F39B0049A26B /* CDXAppURL.m */; };
@@ -135,8 +134,6 @@
 		E0DDD81011B26807004CECCB /* CDXListViewControllerBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DDD80F11B26807004CECCB /* CDXListViewControllerBase.m */; };
 		E0EB6E7C1172343600F41F7A /* CDXCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EB6E7B1172343600F41F7A /* CDXCardView.m */; };
 		E0EB6F4E11723D1A00F41F7A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0EB6F4D11723D1A00F41F7A /* CoreGraphics.framework */; };
-		E0EB6FD1117240AF00F41F7A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0CCC9031170E9420040D222 /* QuartzCore.framework */; };
-		E0EB7021117240BD00F41F7A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0EB6F4D11723D1A00F41F7A /* CoreGraphics.framework */; };
 		E0F2B2AB119550BC0092D11B /* CDXObjectCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B2AA119550BC0092D11B /* CDXObjectCache.m */; };
 		E0F2B33611955A7C0092D11B /* CDXObjectCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B33511955A7C0092D11B /* CDXObjectCacheTest.m */; };
 		E0F2B34011955B060092D11B /* CDXObjectCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F2B2AA119550BC0092D11B /* CDXObjectCache.m */; };
@@ -163,7 +160,6 @@
 		E0FE4439153333E80044FE81 /* CDXAppWindowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E047CEF6119369430024A022 /* CDXAppWindowManager.m */; };
 		E0FE443A153333F90044FE81 /* CDXDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = E023ACEB11F4D3B10051B1E2 /* CDXDevice.m */; };
 		E0FE443B153334060044FE81 /* CDXImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D01AEC1170EF9200004856 /* CDXImageFactory.m */; };
-		E0FE443C1533341C0044FE81 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E097B04314E70FD300A8F38B /* AudioToolbox.framework */; };
 		E0FE443E153334440044FE81 /* CDXCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EB6E7B1172343600F41F7A /* CDXCardView.m */; };
 /* End PBXBuildFile section */
 
@@ -178,9 +174,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		34084A45217064C571A903E3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		3DFF8E1ECDC09EFDACE611B2 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		683403470A36169815EFB2A1 /* Pods.distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.distribution.xcconfig; path = "Pods/Target Support Files/Pods/Pods.distribution.xcconfig"; sourceTree = "<group>"; };
 		7DB7D94BFAB549A2B8958AF9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E002B449116754350072C409 /* CardDecks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardDecks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E002B4FA116760650072C409 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -202,6 +195,9 @@
 		E0150072117A1E4900C3BF63 /* CDXCardsSideBySideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsSideBySideView.h; path = Classes/Views/CDXCardsSideBySideView.h; sourceTree = "<group>"; };
 		E0150073117A1E4900C3BF63 /* CDXCardsSideBySideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardsSideBySideView.m; path = Classes/Views/CDXCardsSideBySideView.m; sourceTree = "<group>"; };
 		E0150132117A245900C3BF63 /* CDXCardsViewProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardsViewProtocols.h; path = Classes/Views/CDXCardsViewProtocols.h; sourceTree = "<group>"; };
+		E016693B20C152E1000A5676 /* lcl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = lcl.m; sourceTree = SOURCE_ROOT; };
+		E016693C20C152E1000A5676 /* lcl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lcl.h; sourceTree = SOURCE_ROOT; };
+		E016693F20C152FF000A5676 /* qlog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = qlog.h; sourceTree = "<group>"; };
 		E01951F5153B3CD3002CE5B2 /* ReleaseNotes.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ReleaseNotes.html; sourceTree = "<group>"; };
 		E01E4131154FF64300F4A8D4 /* CDXReleaseNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXReleaseNotesViewController.m; path = Classes/Controllers/CDXReleaseNotesViewController.m; sourceTree = "<group>"; };
 		E01E4133154FF65400F4A8D4 /* CDXReleaseNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXReleaseNotesViewController.h; path = Classes/Controllers/CDXReleaseNotesViewController.h; sourceTree = "<group>"; };
@@ -390,22 +386,16 @@
 				E0CCC9041170E9420040D222 /* QuartzCore.framework in Frameworks */,
 				E0EB6F4E11723D1A00F41F7A /* CoreGraphics.framework in Frameworks */,
 				E0C3BBB4132EBE8200604881 /* MessageUI.framework in Frameworks */,
-				1D8E79F15D084BB08F76D8C5 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E002B4F7116760650072C409 /* Frameworks */ = {
+		E016694120C155FC000A5676 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E0D1F09E18CC6C4300BA521A /* XCTest.framework in Frameworks */,
-				E0C1F67518772D6700F17779 /* Social.framework in Frameworks */,
-				E0FE443C1533341C0044FE81 /* AudioToolbox.framework in Frameworks */,
-				E0EB7021117240BD00F41F7A /* CoreGraphics.framework in Frameworks */,
-				E0EB6FD1117240AF00F41F7A /* QuartzCore.framework in Frameworks */,
-				E002B5951167613A0072C409 /* Foundation.framework in Frameworks */,
-				E002B5E3116761410072C409 /* UIKit.framework in Frameworks */,
-				D437CAAE6ADF4189BD318CEE /* libPods.a in Frameworks */,
+				E016694420C1563E000A5676 /* AudioToolbox.framework in Frameworks */,
+				E016694320C15629000A5676 /* CoreGraphics.framework in Frameworks */,
+				E016694220C1560E000A5676 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,19 +419,8 @@
 				E03BA26E1167488000FE7924 /* Frameworks */,
 				E00DD48811662E5500D4215E /* Products */,
 				E00CE7AD120DC0CE00D82A60 /* README.md */,
-				8F50EF739AB58F9836A2FC83 /* Pods */,
 			);
 			name = CustomTemplate;
-			sourceTree = "<group>";
-		};
-		8F50EF739AB58F9836A2FC83 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				34084A45217064C571A903E3 /* Pods.debug.xcconfig */,
-				3DFF8E1ECDC09EFDACE611B2 /* Pods.release.xcconfig */,
-				683403470A36169815EFB2A1 /* Pods.distribution.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		E002B6C1116884B30072C409 /* Models */ = {
@@ -710,6 +689,9 @@
 		E0D8C7F81172254B00356C2C /* Logging */ = {
 			isa = PBXGroup;
 			children = (
+				E016693C20C152E1000A5676 /* lcl.h */,
+				E016693B20C152E1000A5676 /* lcl.m */,
+				E016693F20C152FF000A5676 /* qlog.h */,
 				E0E0DFA4194C7AE10091AF2C /* lcl_config_components.h */,
 				E0E0DFA5194C7AE10091AF2C /* lcl_config_extensions.h */,
 				E0E0DFA6194C7AE10091AF2C /* lcl_config_logger.h */,
@@ -752,10 +734,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "CardDecks" */;
 			buildPhases = (
-				5F84AD0DD5944855A536F6D5 /* Check Pods Manifest.lock */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
-				558DAC9A839840C093CDB2E3 /* Copy Pods Resources */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 			);
 			buildRules = (
@@ -772,11 +752,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E002B4FF116760660072C409 /* Build configuration list for PBXNativeTarget "Tests" */;
 			buildPhases = (
-				83FDE4A939C74ECFA869A712 /* Check Pods Manifest.lock */,
 				E002B4F5116760650072C409 /* Resources */,
 				E002B4F6116760650072C409 /* Sources */,
-				E002B4F7116760650072C409 /* Frameworks */,
-				3235E549E4744C448FC81EBD /* Copy Pods Resources */,
+				E016694120C155FC000A5676 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -885,69 +863,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		3235E549E4744C448FC81EBD /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		558DAC9A839840C093CDB2E3 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5F84AD0DD5944855A536F6D5 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		83FDE4A939C74ECFA869A712 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -962,6 +877,7 @@
 				E041E3961169FDD5009DC453 /* CDXCardDeckURLSerializer.m in Sources */,
 				E032F1311169D9FB0033980C /* CDXCardDecks.m in Sources */,
 				E02320C6117091920043D6CF /* CDXCardDecksListViewController.m in Sources */,
+				E016693D20C152E2000A5676 /* lcl.m in Sources */,
 				E02320F7117093720043D6CF /* CDXCardDeckListViewController.m in Sources */,
 				E0CCC7401170DC600040D222 /* CDXCardDeckCardViewController.m in Sources */,
 				E0D01AED1170EF9200004856 /* CDXImageFactory.m in Sources */,
@@ -1017,6 +933,7 @@
 				E0C7D4321958CDE000201BD3 /* CDXOrderedSerializerDictionary.m in Sources */,
 				E0521EB71945FE22001CCC96 /* CDXCardDeckJSONSerializer.m in Sources */,
 				E0521EB81945FE22001CCC96 /* CDXCardDeckJSONSerializerTests.m in Sources */,
+				E016693E20C152E2000A5676 /* lcl.m in Sources */,
 				E0FE443E153334440044FE81 /* CDXCardView.m in Sources */,
 				E0FE443B153334060044FE81 /* CDXImageFactory.m in Sources */,
 				E0FE443A153333F90044FE81 /* CDXDevice.m in Sources */,
@@ -1063,7 +980,6 @@
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 34084A45217064C571A903E3 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1072,6 +988,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1096,7 +1013,6 @@
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3DFF8E1ECDC09EFDACE611B2 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1106,6 +1022,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1205,12 +1122,12 @@
 		};
 		E002B4FC116760660072C409 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 34084A45217064C571A903E3 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"$(inherited)",
@@ -1236,13 +1153,13 @@
 		};
 		E002B4FD116760660072C409 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3DFF8E1ECDC09EFDACE611B2 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"$(inherited)",
@@ -1266,11 +1183,11 @@
 		};
 		E002B4FE116760660072C409 /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 683403470A36169815EFB2A1 /* Pods.distribution.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"$(inherited)",
@@ -1332,7 +1249,6 @@
 		};
 		E06615A40FFF78C800571D7D /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 683403470A36169815EFB2A1 /* Pods.distribution.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1342,6 +1258,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
