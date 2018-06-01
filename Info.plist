@@ -52,6 +52,8 @@
 	<string>MainWindow-iPad</string>
 	<key>UILaunchStoryboardName</key>
 	<string>CDXLaunchScreen</string>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UIStatusBarHidden</key>
 	<false/>
 	<key>UIStatusBarStyle</key>
