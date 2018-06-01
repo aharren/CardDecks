@@ -135,10 +135,8 @@
     self.navigationItem.title = @"";
     self.navigationItem.rightBarButtonItem = nil;
     if (!editingDefaults) {
-        UIBarButtonItem *alignmentFix = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil] autorelease];
-        alignmentFix.width = -20;
         UIBarButtonItem *buttons = [[[UIBarButtonItem alloc] initWithCustomView:viewButtons] autorelease];
-        self.navigationItem.rightBarButtonItems = @[ alignmentFix, buttons ];
+        self.navigationItem.rightBarButtonItems = @[ buttons ];
     }
     
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
