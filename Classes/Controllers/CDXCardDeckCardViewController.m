@@ -246,10 +246,20 @@
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
-    self.view.frame = [UIScreen mainScreen].bounds;
+    CGRect frame = [UIScreen mainScreen].bounds;
+    self.view.frame = frame;
     [self configureView];
     [self configureIndexDotsViewAndButtons];
     timerSignalView.hidden = YES;
+
+    UIEdgeInsets maxSafeAreaInsets = [[CDXAppWindowManager sharedAppWindowManager] maxSafeAreaInsets];
+
+    if (maxSafeAreaInsets.bottom != 0) {
+        // configure the index dots view based on screen layout
+        CGRect indexDotsViewFrame = indexDotsView.frame;
+        indexDotsViewFrame.origin.y -= maxSafeAreaInsets.bottom / 2;
+        indexDotsView.frame = indexDotsViewFrame;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

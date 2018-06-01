@@ -54,11 +54,18 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     return insets;
 }
 
+- (UIEdgeInsets)maxSafeAreaInsets {
+    UIEdgeInsets insets = [self safeAreaInsets];
+    CGFloat maxTopBottomInset = MAX(insets.top, insets.bottom);
+    insets.top = maxTopBottomInset;
+    insets.bottom = maxTopBottomInset;
+    return insets;
+}
+
 - (CGRect)frameWithMaxSafeAreaInsets:(CGRect)frame {
-    UIEdgeInsets safeInsets = [self safeAreaInsets];
-    CGFloat maxTopBottomInset = MAX(safeInsets.top, safeInsets.bottom);
-    frame.size.height = frame.size.height - 2 * maxTopBottomInset;
-    frame.origin.y = frame.origin.y + maxTopBottomInset;
+    UIEdgeInsets safeInsets = [self maxSafeAreaInsets];
+    frame.size.height = frame.size.height - safeInsets.top - safeInsets.bottom;
+    frame.origin.y = frame.origin.y + safeInsets.top;
     return frame;
 }
 
