@@ -234,7 +234,13 @@
     qltrace();
     CDXCard* card = [cardDeck cardAtIndex:cardIndex];
     if (card.timerInterval != CDXCardTimerIntervalOff) {
-        timerSignalView.backgroundColor = [[card textColor] uiColor];
+        UIEdgeInsets maxSafeAreaInsets = [[CDXAppWindowManager sharedAppWindowManager] maxSafeAreaInsets];
+        
+        if (maxSafeAreaInsets.bottom != 0) {
+            timerSignalView.backgroundColor = [UIColor whiteColor];
+        } else {
+            timerSignalView.backgroundColor = [[card textColor] uiColor];
+        }
         ivar_assign(currentTimer, [[CDXCardDeckCardViewControllerTimer alloc] initWithCardIndex:cardIndex timerInterval:card.timerInterval timerType:timerType]);
         [self performTimerCallbackDelayed];
     } else {
