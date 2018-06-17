@@ -433,8 +433,9 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
 
 - (void)layoutViewControllerViews {
     qltrace();
-    leftViewController.view.frame = CGRectMake(0, 0, 346, 1024);
-    rightViewController.view.frame = CGRectMake(347, 0, 768-347, 1024);
+    CGRect frame = self.view.frame;
+    leftViewController.view.frame = CGRectMake(0, 0, 340, frame.size.height);
+    rightViewController.view.frame = CGRectMake(341, 0, frame.size.width - 341, frame.size.height);
 }
 
 - (void)viewDidLoad {
