@@ -68,7 +68,7 @@
 - (CDXCardOrientation)textKeyboardExtensionCardOrientation;
 - (void)textKeyboardExtensionSetCardOrientation:(CDXCardOrientation)cardOrientation;
 
-- (void)paste:(id)sender;
+- (void)insertText:(NSString *)text;
 
 @end
 

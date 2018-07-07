@@ -337,17 +337,14 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
 }
 
 - (void)buttonPressed:(id)sender {
+    qltrace(@"%@", sender);
     UIButton *button = (UIButton *)sender;
     
     NSObject *responder = (NSObject *)[[CDXKeyboardExtensions sharedKeyboardExtensions] responder];
-    if ([responder respondsToSelector:@selector(paste:)]) {
-        UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
-        NSArray* pasteboardItems = [[pasteboard.items copy] autorelease];
-        
-        pasteboard.string = button.titleLabel.text;
-        [responder paste:self];
-        
-        pasteboard.items = pasteboardItems;
+    if ([responder respondsToSelector:@selector(insertText:)]) {
+        NSString *text = button.titleLabel.text;
+        qltrace(@"%@", text);
+        [(id)responder insertText:text];
     }
 }
 

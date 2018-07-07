@@ -402,8 +402,8 @@
     [self currentCard].timerInterval = interval;
 }
 
-- (void)paste:(id)sender {
-    [text paste:sender];
+- (void)insertText:(NSString *)textToInsert {
+    [text insertText:textToInsert];
 }
 
 - (void)dismissViewControllerAnimated:(BOOL)animated completion: (void (^)(void))completion {
