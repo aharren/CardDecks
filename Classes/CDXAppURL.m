@@ -26,6 +26,7 @@
 #import "CDXAppURL.h"
 #import "CDXCardDeckURLSerializer.h"
 #import "CDXCardDeckJSONSerializer.h"
+#import "CDXCardDecksListViewController.h"
 
 #undef ql_component
 #define ql_component lcl_cApplication
