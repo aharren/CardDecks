@@ -1000,7 +1000,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				PRODUCT_BUNDLE_IDENTIFIER = 0xc0.de.CardDecks;
 				PRODUCT_NAME = CardDecks;
 				PROVISIONING_PROFILE = "";
@@ -1032,7 +1032,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				PRODUCT_BUNDLE_IDENTIFIER = 0xc0.de.CardDecks;
 				PRODUCT_NAME = CardDecks;
 				PROVISIONING_PROFILE = "";
@@ -1268,7 +1268,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				PRODUCT_BUNDLE_IDENTIFIER = 0xc0.de.CardDecks;
 				PRODUCT_NAME = CardDecks;
 				PROVISIONING_PROFILE = "";
