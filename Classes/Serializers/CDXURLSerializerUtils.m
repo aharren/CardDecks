@@ -29,17 +29,12 @@
 @implementation CDXURLSerializerUtils
 
 + (NSString *)stringByAddingURLEscapes:(NSString *)string {
-    NSString *rfc3986ReservedCharacters = @":/?#[]@!$&'()*+,;=";
-    NSString *result = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
-                                                                           (CFStringRef)string,
-                                                                           NULL,
-                                                                           (CFStringRef)rfc3986ReservedCharacters,
-                                                                           kCFStringEncodingUTF8);
-    return [result autorelease];
+    NSCharacterSet *characterSet = [[NSCharacterSet characterSetWithCharactersInString:@":/?#[]@!$&'()*+,;= "] invertedSet];
+    return [string stringByAddingPercentEncodingWithAllowedCharacters:characterSet];
 }
 
 + (NSString *)stringByReplacingURLEscapes:(NSString *)string {
-    return [string stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return [string stringByRemovingPercentEncoding];
 }
 
 @end
