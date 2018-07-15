@@ -30,7 +30,7 @@
     
 }
 
-+ (BOOL)handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation cardDecks:(CDXCardDecks *)cardDecks;
++ (BOOL)handleOpenURL:(NSURL *)url cardDecks:(CDXCardDecks *)cardDecks;
 
 + (CDXCardDeck *)cardDeckFromURL:(NSURL *)url;
 

@@ -362,8 +362,8 @@
     [appWindowManager makeWindowKeyAndVisible];
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [CDXAppURL handleOpenURL:url sourceApplication:sourceApplication annotation:annotation cardDecks:cardDecks];
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary *)options {
+    return [CDXAppURL handleOpenURL:url cardDecks:cardDecks];
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {

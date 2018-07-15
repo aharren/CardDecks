@@ -46,7 +46,7 @@
 
 @implementation CDXAppURL
 
-+ (BOOL)handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation cardDecks:(CDXCardDecks *)cardDecks {
++ (BOOL)handleOpenURL:(NSURL *)url cardDecks:(CDXCardDecks *)cardDecks {
     qltrace(@"%@", url);
     CDXCardDeck *deckToAdd = [CDXAppURL cardDeckFromURL:url];
     if (deckToAdd == nil) {
