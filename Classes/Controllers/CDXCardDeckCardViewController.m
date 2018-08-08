@@ -116,6 +116,11 @@
     [super dealloc];
 }
 
+- (BOOL)prefersStatusBarHidden {
+    qltrace();
+    return YES;
+}
+
 - (void)setActionsViewHidden:(BOOL)hidden animated:(BOOL)animated {
     if (animated) {
         [UIView beginAnimations:nil context:nil];

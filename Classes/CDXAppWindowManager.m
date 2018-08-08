@@ -243,8 +243,6 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     [window setRootViewController:fullScreenViewController];
     
     [UIView commitAnimations];
-
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
 }
 
 - (void)pushFullScreenViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location {
@@ -295,7 +293,6 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     }
     
     [fullScreenViewController.view removeFromSuperview];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     [window addSubview:navigationView];
     [window setRootViewController:navigationViewController];
     
@@ -380,7 +377,6 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
 
 - (void)makeWindowKeyAndVisible {
     qltrace();
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
     [window addSubview:navigationView];
     navigationView.frame = [[UIScreen mainScreen] bounds];
@@ -571,7 +567,6 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
 
 - (void)makeWindowKeyAndVisible {
     qltrace();
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
     [window addSubview:navigationView];
     [window setRootViewController:navigationViewController];

@@ -66,6 +66,8 @@
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
 
+- (BOOL)prefersStatusBarHidden;
+
 - (IBAction)pageControlLeftButtonPressed;
 - (IBAction)pageControlRightButtonPressed;
 - (IBAction)pageControlJumpLeftButtonPressed;
