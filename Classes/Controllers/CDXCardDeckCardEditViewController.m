@@ -139,7 +139,13 @@
         self.navigationItem.rightBarButtonItems = @[ buttons ];
     }
     
+    NSArray *extensions = @[[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension],
+                            [CDXColorKeyboardExtension sharedColorKeyboardExtension],
+                            [CDXTextKeyboardExtension sharedtextKeyboardExtension],
+                            [CDXTimerKeyboardExtension sharedTimerKeyboardExtension]];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
+
     [self showCardAtIndex:cardDeckViewContext.currentCardIndex];
     [text becomeFirstResponder];
     [self showCardView:NO];
@@ -149,7 +155,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] resetKeyboardExtensions];
 
     cardViewScrollView.contentInset = text.contentInset;
     cardViewScrollView.scrollIndicatorInsets = text.scrollIndicatorInsets;
@@ -185,12 +190,6 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    NSArray *extensions = @[[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension],
-                           [CDXColorKeyboardExtension sharedColorKeyboardExtension],
-                           [CDXTextKeyboardExtension sharedtextKeyboardExtension],
-                           [CDXTimerKeyboardExtension sharedTimerKeyboardExtension]];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
 }
 
 - (void)dismissActionSheet {

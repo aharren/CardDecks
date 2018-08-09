@@ -194,7 +194,9 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] resetKeyboardExtensions];
+    NSArray *extensions = @[[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension]];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

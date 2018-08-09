@@ -200,11 +200,19 @@ static float keyboardExtensionsOsVersion;
 
 - (void)keyboardWillShow:(NSNotification *)notification {
     qltrace();
+    if (responder == nil) {
+        return;
+    }
+
     [self setToolbarHidden:NO notification:notification];
 }
 
 - (void)keyboardDidShow:(NSNotification *)notification {
     qltrace();
+    if (responder == nil) {
+        return;
+    }
+
     visible = YES;
     [toolbarActiveButtonMarker positionAtBarButtonItem:[self toolbarButtonByTag:activeExtensionTag] animated:NO];
 }
