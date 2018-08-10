@@ -114,6 +114,30 @@
     }
 }
 
+- (void)string:(NSString*)string sizeWithFont:(UIFont *)font minFontSize:(CGFloat)minFontSize actualFontSize:(CGFloat *)actualFontSize forWidth:(CGFloat)width lineBreakMode:(NSLineBreakMode)lineBreakMode {
+    NSMutableParagraphStyle *paragraphStyle = [[[NSParagraphStyle defaultParagraphStyle] mutableCopy] autorelease];
+    paragraphStyle.lineBreakMode = lineBreakMode;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    CGSize size = CGSizeMake(width, 4 * width);
+
+    CGFloat currentFontSize = floor([font pointSize]);
+
+    while (currentFontSize > minFontSize) {
+        UIFont *fontWithCurrentFontSize = [font fontWithSize:currentFontSize];
+        CGRect rect = [string boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName:fontWithCurrentFontSize, NSParagraphStyleAttributeName:paragraphStyle } context:nil];
+
+        if (rect.size.width < width) {
+            *actualFontSize = currentFontSize;
+            return;
+        }
+
+        currentFontSize--;
+    }
+
+    *actualFontSize = minFontSize;
+    return;
+}
+
 - (CGFloat)fontSizeConstrainedToSize:(CGSize)size scale:(CGFloat)scale {
     qltrace(@"%3.0f x %3.0f", size.width, size.height);
     if (fontSize != CDXCardFontSizeAutomatic) {
@@ -137,6 +161,10 @@
         CGFloat minlineFontSize = CDXCardFontSizeMax * CDXCardFontSizeScale * scale;
         UIFont *font = [UIFont systemFontOfSize:floor(minlineFontSize)];
         
+        NSMutableParagraphStyle *paragraphStyle = [[[NSParagraphStyle defaultParagraphStyle] mutableCopy] autorelease];
+        paragraphStyle.lineBreakMode = NSLineBreakByClipping;
+        paragraphStyle.alignment = NSTextAlignmentCenter;
+
         // calculate the minimal font size based on all text lines
         for (NSString *textLine in textLines) {
             // use a single space for an empty line
@@ -147,19 +175,20 @@
             CGFloat lineFontSize;
             {
                 UIFont *fontWithMinlineFontSize = [font fontWithSize:floor(minlineFontSize)];
-                [textLine sizeWithFont:fontWithMinlineFontSize minFontSize:12 actualFontSize:&lineFontSize forWidth:size.width lineBreakMode:NSLineBreakByClipping];
+                [self string:textLine sizeWithFont:fontWithMinlineFontSize minFontSize:12 actualFontSize:&lineFontSize forWidth:size.width lineBreakMode:NSLineBreakByClipping];
             }
             
             CGSize lineSize;
             {
                 UIFont *fontWithlineFontSize = [font fontWithSize:floor(lineFontSize)];
-                lineSize = [textLine sizeWithFont:fontWithlineFontSize constrainedToSize:size];
+                CGRect rect = [textLine boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName:fontWithlineFontSize, NSParagraphStyleAttributeName:paragraphStyle } context:nil];
+                lineSize = rect.size;
             }
             
             if (lineSize.height > size.height) {
                 lineFontSize = lineFontSize / lineSize.height * size.height;
                 UIFont *fontWithlineFontSize = [font fontWithSize:floor(lineFontSize)];
-                [textLine sizeWithFont:fontWithlineFontSize minFontSize:12 actualFontSize:&lineFontSize forWidth:size.width lineBreakMode:NSLineBreakByClipping];
+                [self string:textLine sizeWithFont:fontWithlineFontSize minFontSize:12 actualFontSize:&lineFontSize forWidth:size.width lineBreakMode:NSLineBreakByClipping];
             }
             
             minlineFontSize = MIN(minlineFontSize, lineFontSize);
