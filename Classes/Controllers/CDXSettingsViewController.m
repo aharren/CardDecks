@@ -380,7 +380,9 @@
         case CDXSettingTypeURLAction: {
             NSString *url = [settings urlActionURLForSettingWithTag:setting.tag];
             if (url != nil) {
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+                NSDictionary* options = [[[NSDictionary alloc] init] autorelease];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] options:options completionHandler:^(BOOL success) {
+                }];
             }
             break;
         }
