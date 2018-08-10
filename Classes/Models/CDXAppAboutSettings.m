@@ -151,7 +151,7 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
             return nil;
             break;
         case CDXAppAboutSettingsFeedback:
-            return @"mailto:carddecks@0xc0.de?subject=CardDecks " CDXApplicationVersion ": Feedback";
+            return @"mailto:carddecks@0xc0.de?subject=CardDecks%20" CDXApplicationVersion ":%20Feedback";
             break;
         case CDXAppAboutSettingsSite:
             return @"http://0xc0.de/CardDecks?m" CDXApplicationVersion "";
