@@ -141,14 +141,16 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 - (void)showInfoMessage:(NSString *)text afterDelay:(NSTimeInterval)timeDelay {
     qltrace();
     [[NSBundle mainBundle] loadNibNamed:@"CDXAppWindowMessageView" owner:self options:nil];
-    [messageView showMessage:text timeInterval:2 view:window backgroundColor:[CDXColor colorWithRed:0 green:121 blue:255 alpha:220].uiColor height:65 afterDelay:timeDelay];
+    CGFloat height = MAX([self safeAreaInsets].top, 22) + 44;
+    [messageView showMessage:text timeInterval:2 view:window backgroundColor:[CDXColor colorWithRed:0 green:121 blue:255 alpha:220].uiColor height:height afterDelay:timeDelay];
     ivar_release_and_clear(messageView);
 }
 
 - (void)showErrorMessage:(NSString *)text afterDelay:(NSTimeInterval)timeDelay {
     qltrace();
     [[NSBundle mainBundle] loadNibNamed:@"CDXAppWindowMessageView" owner:self options:nil];
-    [messageView showMessage:text timeInterval:2 view:window backgroundColor:[CDXColor colorWithRed:255 green:0 blue:0 alpha:220].uiColor height:65 afterDelay:timeDelay];
+    CGFloat height = MAX([self safeAreaInsets].top, 22) + 44;
+    [messageView showMessage:text timeInterval:2 view:window backgroundColor:[CDXColor colorWithRed:255 green:0 blue:0 alpha:220].uiColor height:height afterDelay:timeDelay];
     ivar_release_and_clear(messageView);
 }
 
