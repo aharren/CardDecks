@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeckCardEditViewController.h"
+#import "CDXDevice.h"
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -159,7 +160,7 @@
     cardViewScrollView.contentInset = text.contentInset;
     cardViewScrollView.scrollIndicatorInsets = text.scrollIndicatorInsets;
 
-    self.navigationController.navigationBar.prefersLargeTitles = YES;
+    self.navigationController.navigationBar.prefersLargeTitles = [CDXDevice sharedDevice].useLargeTitles;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

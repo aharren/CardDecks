@@ -516,7 +516,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
         ivar_assign(rightNavigationController, [[UINavigationController alloc] init]);
         [rightNavigationController setToolbarHidden:NO];
         [rightNavigationController setNavigationBarHidden:NO];
-        rightNavigationController.navigationBar.prefersLargeTitles = YES;
+        rightNavigationController.navigationBar.prefersLargeTitles = [CDXDevice sharedDevice].useLargeTitles;
         [splitViewController setRightViewController:rightNavigationController];
 
         navigationViewController = splitViewController;
