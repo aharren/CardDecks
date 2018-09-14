@@ -152,6 +152,13 @@
     [self showCardView:NO];
 
     self.navigationController.navigationBar.prefersLargeTitles = NO;
+
+    // register for keyboard...Show events
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [notificationCenter addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [notificationCenter addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [notificationCenter addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -167,6 +174,66 @@
     [self finishCardModification];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] removeResponder];
     [super viewWillDisappear:animated];
+
+    // deregister all events
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter removeObserver:self];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    qltrace();
+
+    // get animation information for the keyboard
+    double keyboardAnimationDuration;
+    [[notification.userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&keyboardAnimationDuration];
+    UIViewAnimationCurve keyboardAnimationCurve;
+    [[notification.userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&keyboardAnimationCurve];
+    CGRect keyboardAnimationEndFrame;
+    [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardAnimationEndFrame];
+
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:keyboardAnimationCurve];
+    [UIView setAnimationDuration:keyboardAnimationDuration];
+
+    CGRect toolbarFrame = [CDXKeyboardExtensions sharedKeyboardExtensions].toolbarFrame;
+
+    CGRect textFrame = text.frame;
+    text.frame = CGRectMake(textFrame.origin.x, textFrame.origin.y, textFrame.size.width, keyboardAnimationEndFrame.origin.y - toolbarFrame.size.height - textFrame.origin.y);
+    CGRect cardViewScrollViewFrame = cardViewScrollView.frame;
+    cardViewScrollView.frame = CGRectMake(cardViewScrollViewFrame.origin.x, cardViewScrollViewFrame.origin.y, cardViewScrollViewFrame.size.width, keyboardAnimationEndFrame.origin.y - toolbarFrame.size.height - cardViewScrollViewFrame.origin.y);
+
+    [UIView commitAnimations];
+}
+
+- (void)keyboardDidShow:(NSNotification *)notification {
+    qltrace();
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    qltrace();
+
+    // get animation information for the keyboard
+    double keyboardAnimationDuration;
+    [[notification.userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&keyboardAnimationDuration];
+    UIViewAnimationCurve keyboardAnimationCurve;
+    [[notification.userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&keyboardAnimationCurve];
+    CGRect keyboardAnimationEndFrame;
+    [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardAnimationEndFrame];
+
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:keyboardAnimationCurve];
+    [UIView setAnimationDuration:keyboardAnimationDuration];
+
+    CGRect textFrame = text.frame;
+    text.frame = CGRectMake(textFrame.origin.x, textFrame.origin.y, textFrame.size.width, keyboardAnimationEndFrame.origin.y - textFrame.origin.y);
+    CGRect cardViewScrollViewFrame = cardViewScrollView.frame;
+    cardViewScrollView.frame = CGRectMake(cardViewScrollViewFrame.origin.x, cardViewScrollViewFrame.origin.y, cardViewScrollViewFrame.size.width, keyboardAnimationEndFrame.origin.y - cardViewScrollViewFrame.origin.y);
+
+    [UIView commitAnimations];
+}
+
+- (void)keyboardDidHide:(NSNotification *)notification {
+    qltrace();
 }
 
 - (void)setUserInteractionEnabled:(BOOL)enabled {

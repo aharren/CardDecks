@@ -124,6 +124,7 @@ declare_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
 - (UIBarButtonItem *)toolbarButtonWithTitle:(NSString *)title;
 
 - (UIColor *)backgroundColor;
+- (CGRect) toolbarFrame;
 
 - (void)setInactive:(BOOL)inactive animated:(BOOL)animated;
 

@@ -461,6 +461,10 @@ static float keyboardExtensionsOsVersion;
     return [[backgroundColor retain] autorelease];
 }
 
+- (CGRect) toolbarFrame {
+    return toolbar.frame;
+}
+
 - (void)setInactive:(BOOL)inactive animated:(BOOL)animated {
     qltrace(@"inactive: %d, animated: %d", inactive ? 1 : 0, animated ? 1 : 0);
     if (animated) {
