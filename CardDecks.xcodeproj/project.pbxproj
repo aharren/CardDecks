@@ -38,9 +38,7 @@
 		E0260A3A11BC02F800FCAB34 /* CDXCardDeckDictionarySerializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0260A3811BC02F800FCAB34 /* CDXCardDeckDictionarySerializerTests.m */; };
 		E0260A5611BC06ED00FCAB34 /* CDXCardDeckDictionarySerializerTestsDeck1.CardDeck.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0260A5511BC06ED00FCAB34 /* CDXCardDeckDictionarySerializerTestsDeck1.CardDeck.plist */; };
 		E02AAFF31969DAEB00714366 /* CDXAppWindowMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E02AAFF21969DAEB00714366 /* CDXAppWindowMessageView.m */; };
-		E02D680E194C88E1003F06B9 /* CDXCardDeckJSONSerializerTestsDeck2.carddeck.json in Resources */ = {isa = PBXBuildFile; fileRef = E02D680D194C88E1003F06B9 /* CDXCardDeckJSONSerializerTestsDeck2.carddeck.json */; };
 		E02D680F194C8929003F06B9 /* CDXCardDeckJSONSerializerTestsDeck2.carddeck.json in Resources */ = {isa = PBXBuildFile; fileRef = E02D680D194C88E1003F06B9 /* CDXCardDeckJSONSerializerTestsDeck2.carddeck.json */; };
-		E02D6811194CF96F003F06B9 /* CDXCardDeckJSONSerializerTestsDeck3.carddeck.json in Resources */ = {isa = PBXBuildFile; fileRef = E02D6810194CF96F003F06B9 /* CDXCardDeckJSONSerializerTestsDeck3.carddeck.json */; };
 		E02D6812194CFA0C003F06B9 /* CDXCardDeckJSONSerializerTestsDeck3.carddeck.json in Resources */ = {isa = PBXBuildFile; fileRef = E02D6810194CF96F003F06B9 /* CDXCardDeckJSONSerializerTestsDeck3.carddeck.json */; };
 		E030327F152BA1B500F42494 /* CDXCardViewImageRendering.m in Sources */ = {isa = PBXBuildFile; fileRef = E030327E152BA1B500F42494 /* CDXCardViewImageRendering.m */; };
 		E032F1311169D9FB0033980C /* CDXCardDecks.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1301169D9FB0033980C /* CDXCardDecks.m */; };
@@ -73,7 +71,6 @@
 		E0521EB31945FB9E001CCC96 /* CDXCardDeckJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0521EB21945FB9E001CCC96 /* CDXCardDeckJSONSerializer.m */; };
 		E0521EB71945FE22001CCC96 /* CDXCardDeckJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0521EB21945FB9E001CCC96 /* CDXCardDeckJSONSerializer.m */; };
 		E0521EB81945FE22001CCC96 /* CDXCardDeckJSONSerializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0521EB51945FC69001CCC96 /* CDXCardDeckJSONSerializerTests.m */; };
-		E0521EBC194644EE001CCC96 /* CDXCardDeckJSONSerializerTestsDeck1.carddeck.json in Resources */ = {isa = PBXBuildFile; fileRef = E0521EBB194644EE001CCC96 /* CDXCardDeckJSONSerializerTestsDeck1.carddeck.json */; };
 		E0521EBD19464CFA001CCC96 /* CDXCardDeckJSONSerializerTestsDeck1.carddeck.json in Resources */ = {isa = PBXBuildFile; fileRef = E0521EBB194644EE001CCC96 /* CDXCardDeckJSONSerializerTestsDeck1.carddeck.json */; };
 		E0620CF611BA9EA3006AABD2 /* CDXAppWindowNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0620CF511BA9EA3006AABD2 /* CDXAppWindowNoticeView.m */; };
 		E0620D0111BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0620D0011BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib */; };
@@ -85,7 +82,6 @@
 		E0743BCB11C023BE00B40ED4 /* CDXCardDeckBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E0743BC911C023BE00B40ED4 /* CDXCardDeckBase.m */; };
 		E0764045196B377E00F660BF /* CDXAppWindowMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0764044196B377E00F660BF /* CDXAppWindowMessageView.xib */; };
 		E0805B4B11A85C6600199172 /* CDXCardDeckViewContext.m in Sources */ = {isa = PBXBuildFile; fileRef = E0805B4A11A85C6600199172 /* CDXCardDeckViewContext.m */; };
-		E0875D991958CAB9007FA508 /* CDXOrderedSerializerDictionary.h in Resources */ = {isa = PBXBuildFile; fileRef = E0875D981958CAB9007FA508 /* CDXOrderedSerializerDictionary.h */; };
 		E0875D9B1958CAD6007FA508 /* CDXOrderedSerializerDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E0875D9A1958CAD6007FA508 /* CDXOrderedSerializerDictionary.m */; };
 		E091E41619CF20010080A2E5 /* Logo.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E091E41519CF20010080A2E5 /* Logo.xcassets */; };
 		E097B04414E70FD300A8F38B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E097B04314E70FD300A8F38B /* AudioToolbox.framework */; };
@@ -806,7 +802,6 @@
 				E0CCC73A1170DC120040D222 /* CDXCardDeckCardView.xib in Resources */,
 				E0A1C00311A82C5600911848 /* CDXCardDeckCardEditView.xib in Resources */,
 				E09FCDF311B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib in Resources */,
-				E02D6811194CF96F003F06B9 /* CDXCardDeckJSONSerializerTestsDeck3.carddeck.json in Resources */,
 				E09AC62511B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib in Resources */,
 				E03B05F719C62F3D0024991E /* CDXLaunchScreen.xib in Resources */,
 				E09AC62611B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib in Resources */,
@@ -814,8 +809,6 @@
 				E09AC84511B7F95C00C96E25 /* CDXTextKeyboardExtensionView.xib in Resources */,
 				E0620D0111BA9EF5006AABD2 /* CDXAppWindowNoticeView.xib in Resources */,
 				E03B10B911C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib in Resources */,
-				E0875D991958CAB9007FA508 /* CDXOrderedSerializerDictionary.h in Resources */,
-				E0521EBC194644EE001CCC96 /* CDXCardDeckJSONSerializerTestsDeck1.carddeck.json in Resources */,
 				E007D65C19C23C4000CE9BB2 /* AppIcon.xcassets in Resources */,
 				E0A483C811F2FC7400A6ECC8 /* 0-10.CardDeck.plist in Resources */,
 				E0A483C911F2FC7400A6ECC8 /* 15-0.CardDeck.plist in Resources */,
@@ -833,7 +826,6 @@
 				E0F3AEEA13EF03BA00B253ED /* CDXTextKeyboardExtensionView~ipad.xib in Resources */,
 				E022635D140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib in Resources */,
 				E06B37DF1401668000D57C37 /* CDXSymbolsKeyboardExtensionTableViewCellB~ipad.xib in Resources */,
-				E02D680E194C88E1003F06B9 /* CDXCardDeckJSONSerializerTestsDeck2.carddeck.json in Resources */,
 				E04E7A0D14E4716200D46037 /* CDXTimerKeyboardExtensionView.xib in Resources */,
 				E0A03BB919CF1D5600B5B4BA /* CellIcons.xcassets in Resources */,
 				E0764045196B377E00F660BF /* CDXAppWindowMessageView.xib in Resources */,
