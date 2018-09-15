@@ -151,7 +151,7 @@
     [text becomeFirstResponder];
     [self showCardView:NO];
 
-    self.navigationController.navigationBar.prefersLargeTitles = NO;
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
 
     // register for keyboard...Show events
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -166,8 +166,6 @@
 
     cardViewScrollView.contentInset = text.contentInset;
     cardViewScrollView.scrollIndicatorInsets = text.scrollIndicatorInsets;
-
-    self.navigationController.navigationBar.prefersLargeTitles = [CDXDevice sharedDevice].useLargeTitles;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
