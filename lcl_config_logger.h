@@ -26,7 +26,3 @@
 
 #import "Logging/CDXLogger.h"
 
-
-/*::lcl_configure:begin::*/
-/*::lcl_configure:end::*/
-

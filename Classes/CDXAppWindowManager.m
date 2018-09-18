@@ -3,7 +3,7 @@
 // CDXAppWindowManager.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -47,6 +47,31 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuControllerWillHideMenu:) name:UIMenuControllerWillHideMenuNotification object:nil];
     }
     return self;
+}
+
+- (UIEdgeInsets)safeAreaInsets {
+    // we only consider portrait mode here, because the app is always in portrait mode
+    // since iOS 12, top also reflects the size of the status bar; so, we use bottom here for detection
+    CGFloat inset = 0;
+    if (window.safeAreaInsets.bottom > 0) {
+        inset = 34;
+    }
+    return UIEdgeInsetsMake(inset, 0, inset, 0);
+}
+
+- (UIEdgeInsets)maxSafeAreaInsets {
+    UIEdgeInsets insets = [self safeAreaInsets];
+    CGFloat maxTopBottomInset = MAX(insets.top, insets.bottom);
+    insets.top = maxTopBottomInset;
+    insets.bottom = maxTopBottomInset;
+    return insets;
+}
+
+- (CGRect)frameWithMaxSafeAreaInsets:(CGRect)frame {
+    UIEdgeInsets safeInsets = [self maxSafeAreaInsets];
+    frame.size.height = frame.size.height - safeInsets.top - safeInsets.bottom;
+    frame.origin.y = frame.origin.y + safeInsets.top;
+    return frame;
 }
 
 - (UIViewController *)visibleViewController {
@@ -121,14 +146,16 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 - (void)showInfoMessage:(NSString *)text afterDelay:(NSTimeInterval)timeDelay {
     qltrace();
     [[NSBundle mainBundle] loadNibNamed:@"CDXAppWindowMessageView" owner:self options:nil];
-    [messageView showMessage:text timeInterval:2 view:window backgroundColor:[CDXColor colorWithRed:0 green:121 blue:255 alpha:220].uiColor height:65 afterDelay:timeDelay];
+    CGFloat height = MAX([self safeAreaInsets].top, 22) + 44;
+    [messageView showMessage:text timeInterval:2 view:window backgroundColor:[CDXColor colorWithRed:0 green:121 blue:255 alpha:220].uiColor height:height afterDelay:timeDelay];
     ivar_release_and_clear(messageView);
 }
 
 - (void)showErrorMessage:(NSString *)text afterDelay:(NSTimeInterval)timeDelay {
     qltrace();
     [[NSBundle mainBundle] loadNibNamed:@"CDXAppWindowMessageView" owner:self options:nil];
-    [messageView showMessage:text timeInterval:2 view:window backgroundColor:[CDXColor colorWithRed:255 green:0 blue:0 alpha:220].uiColor height:65 afterDelay:timeDelay];
+    CGFloat height = MAX([self safeAreaInsets].top, 22) + 44;
+    [messageView showMessage:text timeInterval:2 view:window backgroundColor:[CDXColor colorWithRed:255 green:0 blue:0 alpha:220].uiColor height:height afterDelay:timeDelay];
     ivar_release_and_clear(messageView);
 }
 
@@ -223,8 +250,6 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     [window setRootViewController:fullScreenViewController];
     
     [UIView commitAnimations];
-
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
 }
 
 - (void)pushFullScreenViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location {
@@ -275,7 +300,6 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     }
     
     [fullScreenViewController.view removeFromSuperview];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     [window addSubview:navigationView];
     [window setRootViewController:navigationViewController];
     
@@ -360,7 +384,6 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
 
 - (void)makeWindowKeyAndVisible {
     qltrace();
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
     [window addSubview:navigationView];
     navigationView.frame = [[UIScreen mainScreen] bounds];
@@ -413,8 +436,9 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
 
 - (void)layoutViewControllerViews {
     qltrace();
-    leftViewController.view.frame = CGRectMake(0, 0, 346, 1024);
-    rightViewController.view.frame = CGRectMake(347, 0, 768-347, 1024);
+    CGRect frame = self.view.frame;
+    leftViewController.view.frame = CGRectMake(0, 0, 340, frame.size.height);
+    rightViewController.view.frame = CGRectMake(341, 0, frame.size.width - 341, frame.size.height);
 }
 
 - (void)viewDidLoad {
@@ -422,13 +446,6 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
     [super viewDidLoad];
     [leftViewController viewDidLoad];
     [rightViewController viewDidLoad];
-}
-
-- (void)viewDidUnload {
-    qltrace();
-    [leftViewController viewDidUnload];
-    [rightViewController viewDidUnload];
-    [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -504,6 +521,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
         ivar_assign(rightNavigationController, [[UINavigationController alloc] init]);
         [rightNavigationController setToolbarHidden:NO];
         [rightNavigationController setNavigationBarHidden:NO];
+        rightNavigationController.navigationBar.prefersLargeTitles = [CDXDevice sharedDevice].useLargeTitles;
         [splitViewController setRightViewController:rightNavigationController];
 
         navigationViewController = splitViewController;
@@ -556,7 +574,6 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
 
 - (void)makeWindowKeyAndVisible {
     qltrace();
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
     [window addSubview:navigationView];
     [window setRootViewController:navigationViewController];

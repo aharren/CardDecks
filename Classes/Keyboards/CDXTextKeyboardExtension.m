@@ -3,7 +3,7 @@
 // CDXTextKeyboardExtension.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -122,13 +122,6 @@ synthesize_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
     [super viewDidLoad];
     self.view.backgroundColor = [[CDXKeyboardExtensions sharedKeyboardExtensions] backgroundColor];
     [sizeChooserSlider setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
-}
-
-- (void)viewDidUnload {
-    ivar_release_and_clear(sizeChooserSlider);
-    ivar_release_and_clear(sizeChooserSliderSize);
-    ivar_release_and_clear(orientationSample);
-    [super viewDidUnload];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

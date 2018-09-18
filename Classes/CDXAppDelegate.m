@@ -3,7 +3,7 @@
 // CDXAppDelegate.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -362,8 +362,8 @@
     [appWindowManager makeWindowKeyAndVisible];
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [CDXAppURL handleOpenURL:url sourceApplication:sourceApplication annotation:annotation cardDecks:cardDecks];
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary *)options {
+    return [CDXAppURL handleOpenURL:url cardDecks:cardDecks];
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {

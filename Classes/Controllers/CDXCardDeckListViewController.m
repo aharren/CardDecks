@@ -3,7 +3,7 @@
 // CDXCardDeckListViewController.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -64,13 +64,6 @@
     [super dealloc];
 }
 
-- (void)viewDidUnload {
-    ivar_release_and_clear(shuffleButton);
-    ivar_release_and_clear(actionButton);
-    ivar_release_and_clear(addButton);
-    [super viewDidUnload];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     qltrace();
     [super viewWillAppear:animated];
@@ -119,7 +112,12 @@
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
+                [cell.contentView insertSubview:[[[UIImageView alloc] initWithFrame:CGRectMake(0,0,tableCellImageSize.width,tableCellImageSize.height)] autorelease] atIndex:0];
+                cell.indentationWidth = 6;
+                cell.indentationLevel = 1;
             }
+            UIImageView* image = cell.contentView.subviews[0];
+            [image setImage:nil];
             return cell;
         }
         case 2: {
@@ -128,9 +126,8 @@
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
                 cell.textLabel.font = tableCellTextFontAction;
                 cell.textLabel.textAlignment = NSTextAlignmentCenter;
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
-                cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
             }
             cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
             return cell;
@@ -148,8 +145,11 @@
             UITableViewCell *cell = [self tableView:tableView cellForSection:indexPath.section];
             CDXCard *card = [cardDeck cardAtIndex:indexPath.row];
             NSString *text = [card.text stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+            if (!self.editing) {
+                UIImageView* image = cell.contentView.subviews[0];
+                [image setImage:[[CDXImageFactory sharedImageFactory] imageForColor:card.backgroundColor size:tableCellImageSize]];
+            }
             cell.textLabel.text = text;
-            cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForColor:card.backgroundColor size:tableCellImageSize];
             
             NSInteger tag = 0;
             NSUInteger groupSize = cardDeck.groupSize;
@@ -165,7 +165,7 @@
             switch (indexPath.row) {
                 default:
                 case 0: {
-                    cell.textLabel.text = @"  CARD DEFAULTS";
+                    cell.textLabel.text = @"tap here to edit defaults for new cards";
                     break;
                 }
             }
@@ -229,7 +229,7 @@
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     cardDeckViewContext.currentCardIndex = indexPath.row;
     [self performBlockingSelector:@selector(pushCardDeckEditViewController)
-                       withObject:NO];
+                       withObject:nil];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -319,7 +319,7 @@
     qltrace();
     cardDeckViewContext.currentCardIndex = [cardDeck cardsCount]-1;
     [self performBlockingSelector:@selector(pushCardDeckEditViewControllerForDefaults)
-                       withObject:NO];
+                       withObject:nil];
 }
 
 - (IBAction)settingsButtonPressed {
@@ -402,7 +402,7 @@
     
     UIActivityViewController *vc = [[[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:activities] autorelease];
     
-    vc.completionHandler = ^(NSString *activityType, BOOL completed){
+    vc.completionWithItemsHandler = ^(UIActivityType activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         qltrace(@"delete %@", url);
         NSError *error = nil;
         [[NSFileManager defaultManager] removeItemAtURL:url error:&error];

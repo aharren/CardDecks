@@ -3,7 +3,7 @@
 // CDXCardDecksListPadViewController.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -54,13 +54,6 @@
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
-}
-
-- (void)viewDidUnload {
-    qltrace();
-    ivar_release_and_clear(viewTableViewContainer);
-    ivar_release_and_clear(viewNavigationItem);
-    [super viewDidUnload];
 }
 
 - (void)updateNotificationForCardDeck:(id)object {

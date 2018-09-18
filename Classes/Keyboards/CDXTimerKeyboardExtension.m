@@ -3,7 +3,7 @@
 // CDXTimerKeyboardExtension.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -99,13 +99,6 @@ synthesize_singleton(sharedTimerKeyboardExtension, CDXTimerKeyboardExtension);
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [[CDXKeyboardExtensions sharedKeyboardExtensions] backgroundColor];
-}
-
-- (void)viewDidUnload {
-    ivar_release_and_clear(timerIntervalPicker);
-    ivar_release_and_clear(minutesLabel);
-    ivar_release_and_clear(secondsLabel);
-    [super viewDidUnload];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

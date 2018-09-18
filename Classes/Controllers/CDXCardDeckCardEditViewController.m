@@ -3,7 +3,7 @@
 // CDXCardDeckCardEditViewController.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 #import "CDXCardDeckCardEditViewController.h"
+#import "CDXDevice.h"
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -130,37 +131,38 @@
     cardViewSize = [[UIScreen mainScreen] bounds].size;
 }
 
-- (void)viewDidUnload {
-    ivar_release_and_clear(text);
-    ivar_release_and_clear(cardViewScrollView);
-    ivar_release_and_clear(cardView);
-    ivar_release_and_clear(upButton);
-    ivar_release_and_clear(downButton);
-    ivar_release_and_clear(viewButtons);
-    ivar_release_and_clear(activeActionSheet);
-    [super viewDidUnload];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationItem.title = @"";
     self.navigationItem.rightBarButtonItem = nil;
     if (!editingDefaults) {
-        UIBarButtonItem *alignmentFix = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil] autorelease];
-        alignmentFix.width = -20;
         UIBarButtonItem *buttons = [[[UIBarButtonItem alloc] initWithCustomView:viewButtons] autorelease];
-        self.navigationItem.rightBarButtonItems = @[ alignmentFix, buttons ];
+        self.navigationItem.rightBarButtonItems = @[ buttons ];
     }
     
+    NSArray *extensions = @[[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension],
+                            [CDXColorKeyboardExtension sharedColorKeyboardExtension],
+                            [CDXTextKeyboardExtension sharedtextKeyboardExtension],
+                            [CDXTimerKeyboardExtension sharedTimerKeyboardExtension]];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
+
     [self showCardAtIndex:cardDeckViewContext.currentCardIndex];
     [text becomeFirstResponder];
     [self showCardView:NO];
+
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+
+    // register for keyboard...Show events
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [notificationCenter addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [notificationCenter addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [notificationCenter addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] resetKeyboardExtensions];
 
     cardViewScrollView.contentInset = text.contentInset;
     cardViewScrollView.scrollIndicatorInsets = text.scrollIndicatorInsets;
@@ -170,6 +172,66 @@
     [self finishCardModification];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] removeResponder];
     [super viewWillDisappear:animated];
+
+    // deregister all events
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter removeObserver:self];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    qltrace();
+
+    // get animation information for the keyboard
+    double keyboardAnimationDuration;
+    [[notification.userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&keyboardAnimationDuration];
+    UIViewAnimationCurve keyboardAnimationCurve;
+    [[notification.userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&keyboardAnimationCurve];
+    CGRect keyboardAnimationEndFrame;
+    [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardAnimationEndFrame];
+
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:keyboardAnimationCurve];
+    [UIView setAnimationDuration:keyboardAnimationDuration];
+
+    CGRect toolbarFrame = [CDXKeyboardExtensions sharedKeyboardExtensions].toolbarFrame;
+
+    CGRect textFrame = text.frame;
+    text.frame = CGRectMake(textFrame.origin.x, textFrame.origin.y, textFrame.size.width, keyboardAnimationEndFrame.origin.y - toolbarFrame.size.height - textFrame.origin.y);
+    CGRect cardViewScrollViewFrame = cardViewScrollView.frame;
+    cardViewScrollView.frame = CGRectMake(cardViewScrollViewFrame.origin.x, cardViewScrollViewFrame.origin.y, cardViewScrollViewFrame.size.width, keyboardAnimationEndFrame.origin.y - toolbarFrame.size.height - cardViewScrollViewFrame.origin.y);
+
+    [UIView commitAnimations];
+}
+
+- (void)keyboardDidShow:(NSNotification *)notification {
+    qltrace();
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    qltrace();
+
+    // get animation information for the keyboard
+    double keyboardAnimationDuration;
+    [[notification.userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&keyboardAnimationDuration];
+    UIViewAnimationCurve keyboardAnimationCurve;
+    [[notification.userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&keyboardAnimationCurve];
+    CGRect keyboardAnimationEndFrame;
+    [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardAnimationEndFrame];
+
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:keyboardAnimationCurve];
+    [UIView setAnimationDuration:keyboardAnimationDuration];
+
+    CGRect textFrame = text.frame;
+    text.frame = CGRectMake(textFrame.origin.x, textFrame.origin.y, textFrame.size.width, keyboardAnimationEndFrame.origin.y - textFrame.origin.y);
+    CGRect cardViewScrollViewFrame = cardViewScrollView.frame;
+    cardViewScrollView.frame = CGRectMake(cardViewScrollViewFrame.origin.x, cardViewScrollViewFrame.origin.y, cardViewScrollViewFrame.size.width, keyboardAnimationEndFrame.origin.y - cardViewScrollViewFrame.origin.y);
+
+    [UIView commitAnimations];
+}
+
+- (void)keyboardDidHide:(NSNotification *)notification {
+    qltrace();
 }
 
 - (void)setUserInteractionEnabled:(BOOL)enabled {
@@ -194,12 +256,6 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    NSArray *extensions = @[[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension],
-                           [CDXColorKeyboardExtension sharedColorKeyboardExtension],
-                           [CDXTextKeyboardExtension sharedtextKeyboardExtension],
-                           [CDXTimerKeyboardExtension sharedTimerKeyboardExtension]];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
 }
 
 - (void)dismissActionSheet {
@@ -411,8 +467,8 @@
     [self currentCard].timerInterval = interval;
 }
 
-- (void)paste:(id)sender {
-    [text paste:sender];
+- (void)insertText:(NSString *)textToInsert {
+    [text insertText:textToInsert];
 }
 
 - (void)dismissViewControllerAnimated:(BOOL)animated completion: (void (^)(void))completion {

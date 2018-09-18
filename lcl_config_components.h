@@ -36,7 +36,3 @@ _lcl_component(Controller,      "controller",   "Controller")
 _lcl_component(Model,           "model",        "Model")
 _lcl_component(View,            "view",         "View")
 
-
-/*::lcl_configure:begin::*/
-/*::lcl_configure:end::*/
-

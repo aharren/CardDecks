@@ -3,7 +3,7 @@
 // CDXCardDecksListViewController.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -58,11 +58,6 @@
     [super dealloc];
 }
 
-- (void)viewDidUnload {
-    ivar_release_and_clear(addButton);
-    [super viewDidUnload];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     qltrace();
     [super viewWillAppear:animated];
@@ -108,7 +103,12 @@
                 cell.detailTextLabel.textColor = tableCellDetailTextTextColor;
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
+                [cell.contentView insertSubview:[[[UIImageView alloc] initWithFrame:CGRectMake(0,0,tableCellImageSize.width,tableCellImageSize.height)] autorelease] atIndex:0];
+                cell.indentationWidth = 6;
+                cell.indentationLevel = 1;
             }
+            UIImageView* image = cell.contentView.subviews[0];
+            [image setImage:nil];
             return cell;
         }
         case 2: {
@@ -117,9 +117,8 @@
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
                 cell.textLabel.font = tableCellTextFontAction;
                 cell.textLabel.textAlignment = NSTextAlignmentCenter;
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
-                cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
             }
             cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
             return cell;
@@ -139,12 +138,23 @@
             if ([@"" isEqualToString:name]) {
                 name = @" ";
             }
+            if (!self.editing) {
+                UIImageView* image = cell.contentView.subviews[0];
+                [image setImage:[[CDXImageFactory sharedImageFactory] imageForColor:deck.thumbnailColor size:tableCellImageSize]];
+            }
             cell.textLabel.text = name;
-            cell.imageView.image = [[CDXImageFactory sharedImageFactory] imageForColor:deck.thumbnailColor size:tableCellImageSize];
-            
+
+            NSInteger tag = 0;
+            tag |= (deck.tag == currentTag) ? CDXTableViewCellTagNewObject : CDXTableViewCellTagNone;
+            cell.tag = tag;
+
             if ([deck cardsCount] == 0) {
                 cell.textLabel.textColor = tableCellTextTextColorNoCards;
-                cell.detailTextLabel.text = @"NO CARDS";
+                if ((cell.tag & CDXTableViewCellTagNewObject) == CDXTableViewCellTagNewObject) {
+                    cell.detailTextLabel.text = @"tap here to add cards to this deck";
+                } else {
+                    cell.detailTextLabel.text = @"no cards";
+                }
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             } else {
                 cell.textLabel.textColor = tableCellTextTextColor;
@@ -157,10 +167,6 @@
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
             }
             
-            NSInteger tag = 0;
-            tag |= (deck.tag == currentTag) ? CDXTableViewCellTagNewObject : CDXTableViewCellTagNone;
-            cell.tag = tag;
-            
             return cell;
         }
         case 2: {
@@ -168,7 +174,7 @@
             switch (indexPath.row) {
                 default:
                 case 0: {
-                    cell.textLabel.text = @"  DECK DEFAULTS";
+                    cell.textLabel.text = @"tap here to edit defaults for new decks";
                     break;
                 }
             }

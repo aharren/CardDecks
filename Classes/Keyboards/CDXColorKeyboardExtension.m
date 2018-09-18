@@ -3,7 +3,7 @@
 // CDXColorKeyboardExtension.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -125,32 +125,22 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     self.view.backgroundColor = [[CDXKeyboardExtensions sharedKeyboardExtensions] backgroundColor];
     NSDictionary *textAttributes = @{ NSFontAttributeName: [UIFont systemFontOfSize:15] };
     [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateDisabled];
+    [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+    [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateFocused];
     [textButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [textButton setTitleTextAttributes:textAttributes forState:UIControlStateDisabled];
+    [textButton setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+    [textButton setTitleTextAttributes:textAttributes forState:UIControlStateFocused];
     [backgroundButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [backgroundButton setTitleTextAttributes:textAttributes forState:UIControlStateDisabled];
+    [backgroundButton setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+    [backgroundButton setTitleTextAttributes:textAttributes forState:UIControlStateFocused];
     [colorChooserRGBSliderRed setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
     [colorChooserRGBSliderGreen setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
     [colorChooserRGBSliderBlue setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
     [colorChooserRGBSliderAlpha setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
     [self resetView];
-}
-
-- (void)viewDidUnload {
-    ivar_release_and_clear(toolbar);
-    ivar_release_and_clear(toolbarActiveButtonMarker);
-    ivar_release_and_clear(simpleButton);
-    ivar_release_and_clear(textButton);
-    ivar_release_and_clear(backgroundButton);
-    ivar_release_and_clear(colorChooserSimpleView);
-    ivar_release_and_clear(colorChooserRGBView);
-    ivar_release_and_clear(colorChooserRGBSliderRed);
-    ivar_release_and_clear(colorChooserRGBSliderGreen);
-    ivar_release_and_clear(colorChooserRGBSliderBlue);
-    ivar_release_and_clear(colorChooserRGBSliderAlpha);
-    ivar_release_and_clear(colorChooserRGBSliderRedValue);
-    ivar_release_and_clear(colorChooserRGBSliderGreenValue);
-    ivar_release_and_clear(colorChooserRGBSliderBlueValue);
-    ivar_release_and_clear(colorChooserRGBSliderAlphaValue);
-    [super viewDidUnload];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

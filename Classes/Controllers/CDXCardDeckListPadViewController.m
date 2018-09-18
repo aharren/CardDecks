@@ -3,7 +3,7 @@
 // CDXCardDeckListPadViewController.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -58,16 +58,6 @@
     
     viewTableView.hidden = cardDeck == nil;
     viewNoTableView.hidden = !viewTableView.hidden;
-}
-
-- (void)viewDidUnload {
-    qltrace();
-    ivar_release_and_clear(viewTableViewContainer);
-    ivar_release_and_clear(navigationItem);
-    ivar_release_and_clear(viewNoTableView);
-    ivar_release_and_clear(tableCellBackgroundColor);
-    ivar_release_and_clear(tableCellBackgroundColorAltGroup);
-    [super viewDidUnload];
 }
 
 - (void)updateNotificationForCardDeck:(id)object {

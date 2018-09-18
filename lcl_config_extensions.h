@@ -24,7 +24,5 @@
 // THE SOFTWARE.
 
 
-/*::lcl_configure:begin::*/
 #include "qlog.h"
-/*::lcl_configure:end::*/
 

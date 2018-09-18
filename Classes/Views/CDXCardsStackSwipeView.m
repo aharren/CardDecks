@@ -3,7 +3,7 @@
 // CDXCardsStackSwipeView.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -53,7 +53,10 @@
         cardIndex %= cardsCount;
     }
     
-    [cardViewRendering configureViewAtIndex:viewIndex viewSize:cardViewsSize cardIndex:cardIndex card:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex] deviceOrientation:deviceOrientation];
+    CGRect frame = CGRectMake(0, 0, cardViewsSize.width, cardViewsSize.height);
+    frame = [[CDXAppWindowManager sharedAppWindowManager] frameWithMaxSafeAreaInsets:frame];
+    UIView *view = [cardViewRendering configureViewAtIndex:viewIndex viewSize:frame.size cardIndex:cardIndex card:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex] deviceOrientation:deviceOrientation];
+    view.frame = frame;
 }
 
 - (void)showCardAtIndex:(NSUInteger)cardIndex tellDelegate:(BOOL)tellDelegate {
@@ -61,11 +64,9 @@
     [self configureCardViewsViewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle cardIndex:cardIndex];
     [self configureCardViewsViewAtIndex:CDXCardsStackSwipeViewCardViewsBottom cardIndex:(cardIndex+1) % cardsCount];
     
-    CGRect frame = self.frame;
-    frame.origin.x = -cardViewsSize.width;
-    [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft].frame = frame;
-    [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame = self.frame;
-    [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsBottom].frame = self.frame;
+    CGRect cardFrame = [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft].frame;
+    cardFrame.origin.x = -cardViewsSize.width;
+    [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft].frame = cardFrame;
     
     [cardViewRendering invalidateCaches];
     [cardViewRendering cacheViewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft cardIndex:(cardIndex+cardsCount-1) % cardsCount];
@@ -126,6 +127,7 @@
     
     CGFloat deltax = touchCurrentPosition.x - touchStartPosition.x;
     CGFloat deltay = touchCurrentPosition.y - touchStartPosition.y;
+    qltrace(@"delta x=%f y=%f", deltax, deltay);
     
     // animate if the move was at least 30 pixels wide
     if (fabs(deltax) >= 30) {
@@ -139,11 +141,13 @@
                 [UIView setAnimationDuration:0.25];
                 [UIView setAnimationDelegate:self];
                 [UIView setAnimationDidStopSelector:@selector(touchAnimationDidStop:finished:context:)];
-                CGRect frame = self.frame;
+                CGRect frame = [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame;
+                qltrace(@"start %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+                [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame = frame;
                 CGFloat y = -deltay/deltax * frame.size.height;
                 frame.origin.x = -cardViewsSize.width;
                 frame.origin.y = y;
-                [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame = self.frame;
+                qltrace(@"end %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
                 [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame = frame;
                 [UIView commitAnimations];
             }
@@ -157,12 +161,15 @@
                 [UIView setAnimationDuration:0.25];
                 [UIView setAnimationDelegate:self];
                 [UIView setAnimationDidStopSelector:@selector(touchAnimationDidStop:finished:context:)];
-                CGRect frame = self.frame;
+                CGRect frame = [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame;
                 CGFloat y = -deltay/deltax * frame.size.height;
                 frame.origin.x = -cardViewsSize.width;
                 frame.origin.y = y;
+                qltrace(@"start %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
                 [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft].frame = frame;
-                [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft].frame = self.frame;
+                frame = [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame;
+                qltrace(@"end %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+                [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft].frame = frame;
                 [UIView commitAnimations];
             }
         }

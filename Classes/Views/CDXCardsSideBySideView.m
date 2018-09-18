@@ -3,7 +3,7 @@
 // CDXCardsSideBySideView.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -88,9 +88,11 @@
         return;
     }
     cardViewsCardIndex[viewIndex] = cardIndex+1;
-    
-    UIView *view = [cardViewRendering configureViewAtIndex:viewIndex viewSize:cardViewsSize cardIndex:cardIndex card:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex] deviceOrientation:deviceOrientation];
-    view.frame = CGRectMake(scrollViewPageWidth * cardIndex + cardViewsBorder, 0, cardViewsSize.width, cardViewsSize.height);
+
+    CGRect frame = CGRectMake(scrollViewPageWidth * cardIndex + cardViewsBorder, 0, cardViewsSize.width, cardViewsSize.height);
+    frame = [[CDXAppWindowManager sharedAppWindowManager] frameWithMaxSafeAreaInsets:frame];
+    UIView *view = [cardViewRendering configureViewAtIndex:viewIndex viewSize:frame.size cardIndex:cardIndex card:[viewDataSource cardsViewDataSourceCardAtIndex:cardIndex] deviceOrientation:deviceOrientation];
+    view.frame = frame;
 }
 
 - (void)invalidateDataSourceCaches {

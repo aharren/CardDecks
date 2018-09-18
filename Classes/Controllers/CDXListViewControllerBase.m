@@ -3,7 +3,7 @@
 // CDXListViewControllerBase.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -109,20 +109,20 @@
                                           initWithCustomView:activityIndicator]
                                          autorelease];
     self.toolbarItems = viewToolbar.items;
-    ivar_assign_and_retain(tableCellTextFont, [UIFont systemFontOfSize:18]);
-    ivar_assign_and_retain(tableCellTextFontAction, [UIFont systemFontOfSize:11]);
+    ivar_assign_and_retain(tableCellTextFont, [UIFont systemFontOfSize:17]);
+    ivar_assign_and_retain(tableCellTextFontAction, [UIFont systemFontOfSize:10]);
     ivar_assign_and_retain(tableCellTextTextColor, [UIColor blackColor]);
     ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor grayColor]);
     ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor grayColor]);
     ivar_assign_and_retain(tableCellTextTextColorActionInactive, [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]);
-    ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:10]);
+    ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:9]);
     ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor grayColor]);
     ivar_assign_and_retain(tableCellBackgroundColor, [UIColor whiteColor]);
     ivar_assign_and_retain(tableCellBackgroundColorMarked, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff].uiColor);
     ivar_assign_and_retain(tableCellBackgroundColorAltGroup, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff].uiColor);
     ivar_assign_and_retain(tableCellBackgroundColorNewObject, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0+0x4 alpha:0xff].uiColor);
     ivar_assign_and_retain(tableCellBackgroundColorNewObjectAltGroup, [CDXColor colorWithRed:0xe8 green:0xe8 blue:0xe8+0x4 alpha:0xff].uiColor);
-    tableCellImageSize = CGSizeMake(10, 10);
+    tableCellImageSize = CGSizeMake(5, 51);
     
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     viewTableView.backgroundView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:screenHeight base:0.0]] autorelease];
@@ -133,12 +133,6 @@
                                                  initWithTarget:self action:@selector(handleToolbarLongPressGesture:)]);
     ivar_assign(viewTableViewTapRecognizer, [[UITapGestureRecognizer alloc]
                                              initWithTarget:self action:@selector(handleTableViewTapGesture:)]);
-}
-
-- (void)viewDidUnload {
-    qltrace();
-    [self detachViewObjects];
-    [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -158,6 +152,12 @@
     [self.navigationController.toolbar addGestureRecognizer:viewToolbarLongPressRecognizer];
     [viewTableView addGestureRecognizer:viewTableViewTapRecognizer];
     
+    if ([CDXDevice sharedDevice].useLargeTitles) {
+        self.navigationController.navigationBar.prefersLargeTitles = YES;
+        self.navigationController.navigationBar.largeTitleTextAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:23]};
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
+    }
+
     ++currentTag;
 }
 
@@ -177,10 +177,14 @@
     if ([self isEditing] == editing) {
         return;
     }
+
+    [viewTableView reloadData];
+
+    [viewTableView beginUpdates];
     [super setEditing:editing animated:animated];
     [viewTableView setEditing:editing animated:animated];
-    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+    [viewTableView endUpdates];
+
     if (editing) {
         [viewTableView removeGestureRecognizer:viewTableViewLongPressRecognizer];
         [viewTableView removeGestureRecognizer:viewTableViewTapRecognizer];
@@ -262,7 +266,7 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
+    return YES;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
@@ -332,36 +336,62 @@
     if (sender.state == UIGestureRecognizerStateBegan) {
         // find the control which was touched
         CGPoint point = [sender locationInView:sender.view];
-        for (UIView *view in [sender.view subviews]) {
-            CGRect frame = view.frame;
-            frame.origin.x -= 21;
-            frame.size.width += 42;
-            if (CGRectContainsPoint(frame, point) && ([view isKindOfClass:[UIControl class]])) {
-                // find the corresponding bar-button item
-                for (UIBarButtonItem *item in [viewToolbar items]) {
-                    if ([[(UIControl *)view allTargets] containsObject:item]) {
-                        if (!item.isEnabled) {
-                            // skip item if not enabled
-                            qltrace(@"item %@ is not enabled", item);
-                            return;
-                        }
+        qltrace("%f %f %@", point.x, point.y, sender.view);
 
-                        // keep state
-                        performActionState = CDXListViewControllerBasePerformActionStateToolbar;
-                        ivar_assign_and_retain(performActionToolbarBarButtonItem, item);
-                        
-                        // show menu
-                        [self becomeFirstResponder];
-                        UIMenuController *menu = [UIMenuController sharedMenuController];
-                        [menu setTargetRect:view.frame inView:sender.view];
-                        // add additional menu items, defined by subclass
-                        [self menu:menu itemsForBarButtonItem:item];
-                        [menu setMenuVisible:YES animated:YES];
-                        
-                        return;
-                    }
+        // calculate total fixed width and width of flexible elements
+        CGFloat totalFixedWidth = 0;
+        NSUInteger countFlexibleWidthElements = 0;
+        for (UIBarButtonItem *item in [viewToolbar items]) {
+            if (item.tag != 0) {
+                totalFixedWidth += 44;
+            } else {
+                if (item.width != 0) {
+                    totalFixedWidth += item.width;
+                } else {
+                    countFlexibleWidthElements++;
                 }
             }
+        }
+        CGFloat singleFlexibleWidth = (sender.view.frame.size.width - totalFixedWidth) / countFlexibleWidthElements;
+
+        // find touched button
+        CGFloat left = 0;
+        CGFloat touchArea = 10.0;
+        for (UIBarButtonItem *item in [viewToolbar items]) {
+            CGFloat width = 0;
+            if (item.tag != 0) {
+                width = 44;
+            } else {
+                if (item.width != 0) {
+                    width = item.width;
+                } else {
+                    width = singleFlexibleWidth;
+                }
+            }
+
+            if (item.tag != 0 && point.x >= left - touchArea && point.x <= left + width + touchArea) {
+                if (!item.isEnabled) {
+                    // skip item if not enabled
+                    qltrace(@"item %@ is not enabled", item);
+                    return;
+                }
+
+                // keep state
+                performActionState = CDXListViewControllerBasePerformActionStateToolbar;
+                ivar_assign_and_retain(performActionToolbarBarButtonItem, item);
+
+                // show menu
+                [self becomeFirstResponder];
+                UIMenuController *menu = [UIMenuController sharedMenuController];
+                [menu setTargetRect:CGRectMake(left, 0, width, 1) inView:sender.view];
+                // add additional menu items, defined by subclass
+                [self menu:menu itemsForBarButtonItem:item];
+                [menu setMenuVisible:YES animated:YES];
+
+                return;
+            }
+
+            left += width;
         }
     }
 }

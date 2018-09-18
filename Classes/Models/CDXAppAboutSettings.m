@@ -3,7 +3,7 @@
 // CDXAppAboutSettings.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -151,7 +151,7 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
             return nil;
             break;
         case CDXAppAboutSettingsFeedback:
-            return @"mailto:carddecks@0xc0.de?subject=CardDecks " CDXApplicationVersion ": Feedback";
+            return @"mailto:carddecks@0xc0.de?subject=CardDecks%20" CDXApplicationVersion ":%20Feedback";
             break;
         case CDXAppAboutSettingsSite:
             return @"http://0xc0.de/CardDecks?m" CDXApplicationVersion "";
@@ -191,6 +191,7 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Type", [device deviceTypeString]];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"UI idiom", [device deviceUIIdiomString]];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%.1f</td></tr>\n", @"Screen scale", [device deviceScreenScale]];
+            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%.0f x %.0f</td></tr>\n", @"Screen size", [device deviceScreenSize].width, [device deviceScreenSize].height];
             [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Rendering mode", [device useImageBasedRendering] ? @"image" : @"direct"];
             [content appendString:@"</table>"];
             text = [text stringByReplacingOccurrencesOfString:@"$content$" withString:content];

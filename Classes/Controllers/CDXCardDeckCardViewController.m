@@ -3,7 +3,7 @@
 // CDXCardDeckCardViewController.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -116,6 +116,11 @@
     [super dealloc];
 }
 
+- (BOOL)prefersStatusBarHidden {
+    qltrace();
+    return YES;
+}
+
 - (void)setActionsViewHidden:(BOOL)hidden animated:(BOOL)animated {
     if (animated) {
         [UIView beginAnimations:nil context:nil];
@@ -190,18 +195,19 @@
         [self resignFirstResponder];
         CDXCard *card = [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex orCard:nil];
         if (card != nil) {
-            CGSize viewSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
+            CGRect frame = [[CDXAppWindowManager sharedAppWindowManager] frameWithMaxSafeAreaInsets:self.view.frame];
             if ([[CDXDevice sharedDevice] useImageBasedRendering]) {
                 UIImage *image = [[CDXImageFactory sharedImageFactory]
                                   imageForCard:card
-                                  size:viewSize
+                                  size:frame.size
                                   deviceOrientation:orientation];
                 ivar_assign(initialView, [[UIImageView alloc] initWithImage:image]);
             } else {
                 CDXCardView *cardView = [[CDXCardView alloc] initWithFrame:CGRectMake(0,0, 1,1)];
-                [cardView setCard:card size:viewSize deviceOrientation:orientation preview:NO];
+                [cardView setCard:card size:frame.size deviceOrientation:orientation preview:NO];
                 ivar_assign(initialView, cardView);
             }
+            initialView.frame = frame;
             [self.view insertSubview:initialView atIndex:0];
         }
     }
@@ -233,7 +239,13 @@
     qltrace();
     CDXCard* card = [cardDeck cardAtIndex:cardIndex];
     if (card.timerInterval != CDXCardTimerIntervalOff) {
-        timerSignalView.backgroundColor = [[card textColor] uiColor];
+        UIEdgeInsets maxSafeAreaInsets = [[CDXAppWindowManager sharedAppWindowManager] maxSafeAreaInsets];
+        
+        if (maxSafeAreaInsets.bottom != 0) {
+            timerSignalView.backgroundColor = [UIColor whiteColor];
+        } else {
+            timerSignalView.backgroundColor = [[card textColor] uiColor];
+        }
         ivar_assign(currentTimer, [[CDXCardDeckCardViewControllerTimer alloc] initWithCardIndex:cardIndex timerInterval:card.timerInterval timerType:timerType]);
         [self performTimerCallbackDelayed];
     } else {
@@ -245,26 +257,20 @@
 - (void)viewDidLoad {
     qltrace();
     [super viewDidLoad];
-    self.view.frame = [UIScreen mainScreen].bounds;
+    CGRect frame = [UIScreen mainScreen].bounds;
+    self.view.frame = frame;
     [self configureView];
     [self configureIndexDotsViewAndButtons];
     timerSignalView.hidden = YES;
-}
 
-- (void)viewDidUnload {
-    qltrace();
-    ivar_release_and_clear(indexDotsView);
-    ivar_release_and_clear(cardsView);
-    ivar_release_and_clear(initialView);
-    ivar_release_and_clear(actionsView);
-    ivar_release_and_clear(actionsViewButtonsView);
-    ivar_release_and_clear(actionsViewShuffleButton);
-    ivar_release_and_clear(actionsViewSortButton);
-    ivar_release_and_clear(actionsViewPlayButton);
-    ivar_release_and_clear(actionsViewPlay2Button);
-    ivar_release_and_clear(actionsViewStopButton);
-    ivar_release_and_clear(timerSignalView);
-    [super viewDidUnload];
+    UIEdgeInsets maxSafeAreaInsets = [[CDXAppWindowManager sharedAppWindowManager] maxSafeAreaInsets];
+
+    if (maxSafeAreaInsets.bottom != 0) {
+        // configure the index dots view based on screen layout
+        CGRect indexDotsViewFrame = indexDotsView.frame;
+        indexDotsViewFrame.origin.y -= maxSafeAreaInsets.bottom / 2;
+        indexDotsView.frame = indexDotsViewFrame;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

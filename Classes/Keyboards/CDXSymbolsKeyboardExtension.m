@@ -3,7 +3,7 @@
 // CDXSymbolsKeyboardExtension.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -337,17 +337,14 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
 }
 
 - (void)buttonPressed:(id)sender {
+    qltrace(@"%@", sender);
     UIButton *button = (UIButton *)sender;
     
     NSObject *responder = (NSObject *)[[CDXKeyboardExtensions sharedKeyboardExtensions] responder];
-    if ([responder respondsToSelector:@selector(paste:)]) {
-        UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
-        NSArray* pasteboardItems = [[pasteboard.items copy] autorelease];
-        
-        pasteboard.string = button.titleLabel.text;
-        [responder paste:self];
-        
-        pasteboard.items = pasteboardItems;
+    if ([responder respondsToSelector:@selector(insertText:)]) {
+        NSString *text = button.titleLabel.text;
+        qltrace(@"%@", text);
+        [(id)responder insertText:text];
     }
 }
 
@@ -379,12 +376,6 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     self.view.backgroundColor = [[CDXKeyboardExtensions sharedKeyboardExtensions] backgroundColor];
 }
 
-- (void)viewDidUnload {
-    ivar_release_and_clear(loadedTableViewCellA);
-    ivar_release_and_clear(loadedTableViewCellB);
-    [super viewDidUnload];
-}
-
 - (void)reset {
     
 }
@@ -405,12 +396,6 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     ivar_release_and_clear(tableView);
     ivar_release_and_clear(backButton);
     [super dealloc];
-}
-
-- (void)viewDidUnload {
-    ivar_release_and_clear(tableView);
-    ivar_release_and_clear(backButton);
-    [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -499,12 +484,6 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
     ivar_release_and_clear(listTableView);
     ivar_release_and_clear(blockTableView);
     [super dealloc];
-}
-
-- (void)viewDidUnload {
-    ivar_release_and_clear(listTableView);
-    ivar_release_and_clear(blockTableView);
-    [super viewDidUnload];
 }
 
 - (void)setCurrentBlock:(NSUInteger)index {

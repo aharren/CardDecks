@@ -3,7 +3,7 @@
 // CDXSettingsViewController.m
 //
 //
-// Copyright (c) 2009-2015 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -132,11 +132,6 @@
     self.view = viewWebView;
 }
 
-- (void)viewDidUnload {
-    ivar_release_and_clear(viewWebView);
-    [super viewDidUnload];
-}
-
 @end
 
 
@@ -199,7 +194,9 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] resetKeyboardExtensions];
+    NSArray *extensions = @[[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension]];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -383,7 +380,9 @@
         case CDXSettingTypeURLAction: {
             NSString *url = [settings urlActionURLForSettingWithTag:setting.tag];
             if (url != nil) {
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+                NSDictionary* options = [[[NSDictionary alloc] init] autorelease];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:options completionHandler:^(BOOL success) {
+                }];
             }
             break;
         }
