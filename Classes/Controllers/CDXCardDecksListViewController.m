@@ -87,7 +87,7 @@
         case 2:
             return 1;
         case 3:
-            return 1;
+            return 2;
     }
 }
 
@@ -133,9 +133,9 @@
                 cell.textLabel.textAlignment = NSTextAlignmentCenter;
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
-                cell.textLabel.textColor = tableCellTextTextColorAction;
                 cell.userInteractionEnabled = NO;
             }
+            cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
             return cell;
         }
     }
@@ -201,7 +201,11 @@
             switch (indexPath.row) {
                 default:
                 case 0: {
-                    cell.textLabel.text = @"tap + for a new card deck, press-and-hold a card deck for copy & paste";
+                    cell.textLabel.text = @"tap + for a new card deck";
+                    break;
+                }
+                case 1: {
+                    cell.textLabel.text = @"press-and-hold a card deck for copy, duplicate, paste";
                     break;
                 }
             }
