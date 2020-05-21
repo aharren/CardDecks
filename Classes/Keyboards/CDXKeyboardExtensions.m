@@ -51,11 +51,14 @@
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:0.25];
     }
-    label.frame = CGRectMake(itemViewFrame.origin.x + (itemViewFrame.size.width - 18)/2.0, 30, 18, 18);
-    label.alpha = 1;
+    label.frame = itemView ? CGRectMake(itemViewFrame.origin.x + (itemViewFrame.size.width - 18)/2.0, itemViewFrame.origin.y + itemViewFrame.size.height - 15, 18, 18) : CGRectZero;
     if (animated) {
         [UIView commitAnimations];
     }
+}
+
+- (void)show {
+    label.alpha = 1;
 }
 
 - (void)hide {
@@ -215,6 +218,7 @@ static float keyboardExtensionsOsVersion;
 
     visible = YES;
     [toolbarActiveButtonMarker positionAtBarButtonItem:[self toolbarButtonByTag:activeExtensionTag] animated:NO];
+    [toolbarActiveButtonMarker show];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
@@ -225,6 +229,7 @@ static float keyboardExtensionsOsVersion;
 - (void)keyboardDidHide:(NSNotification *)notification {
     qltrace();
     [toolbar removeFromSuperview];
+    [toolbarActiveButtonMarker hide];
     visible = NO;
 }
 

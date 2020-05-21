@@ -72,6 +72,7 @@
 @property (nonatomic, readonly) UIView *view;
 
 - (void)positionAtBarButtonItem:(UIBarButtonItem *)item animated:(BOOL)animated;
+- (void)show;
 - (void)hide;
 
 @end

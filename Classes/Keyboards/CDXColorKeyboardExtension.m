@@ -157,6 +157,7 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     } else {
         [toolbarActiveButtonMarker positionAtBarButtonItem:simpleButton animated:NO];
     }
+    [toolbarActiveButtonMarker show];
 }
 
 - (void)setView:(UIView *)view button:(UIBarButtonItem *)button animated:(BOOL)animated {
