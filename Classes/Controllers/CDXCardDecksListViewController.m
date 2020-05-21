@@ -86,6 +86,8 @@
             return [cardDecks cardDecksCount];
         case 2:
             return 1;
+        case 3:
+            return 1;
     }
 }
 
@@ -121,6 +123,19 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
             }
             cell.textLabel.textColor = self.editing ? tableCellTextTextColorActionInactive : tableCellTextTextColorAction;
+            return cell;
+        }
+        case 3: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection2];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection3] autorelease];
+                cell.textLabel.font = tableCellTextFontAction;
+                cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                cell.textLabel.textColor = tableCellTextTextColorAction;
+                cell.userInteractionEnabled = NO;
+            }
             return cell;
         }
     }
@@ -181,6 +196,19 @@
             
             return cell;
         }
+        case 3: {
+            UITableViewCell *cell = [self tableView:tableView cellForSection:indexPath.section];
+            switch (indexPath.row) {
+                default:
+                case 0: {
+                    cell.textLabel.text = @"tap + for a new card deck, press-and-hold a card deck for copy & paste";
+                    break;
+                }
+            }
+
+            return cell;
+        }
+
     }
 }
 

@@ -42,6 +42,7 @@
         ivar_assign_and_copy(backButtonText, aBackButtonText);
         ivar_assign_and_retain(reuseIdentifierSection1, @"Section1Cell");
         ivar_assign_and_retain(reuseIdentifierSection2, @"Section2Cell");
+        ivar_assign_and_retain(reuseIdentifierSection3, @"Section3Cell");
         performActionState = CDXListViewControllerBasePerformActionStateNone;
         currentTag = 1;
     }
@@ -221,7 +222,7 @@
 #pragma mark TableView
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

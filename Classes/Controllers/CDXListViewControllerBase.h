@@ -71,6 +71,7 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
     
     NSString *reuseIdentifierSection1;
     NSString *reuseIdentifierSection2;
+    NSString *reuseIdentifierSection3;
     
     UILongPressGestureRecognizer *viewTableViewLongPressRecognizer;
     UILongPressGestureRecognizer *viewToolbarLongPressRecognizer;
