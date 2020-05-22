@@ -129,5 +129,7 @@ declare_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
 
 - (void)setInactive:(BOOL)inactive animated:(BOOL)animated;
 
++ (UIViewAnimationOptions)animationOptionsWithCurve:(UIViewAnimationCurve)curve;
+
 @end
 

@@ -171,12 +171,11 @@ synthesize_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
     
     [self sizeChooserSliderValueChanged];
     
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.2];
-    UIColor *color = button.backgroundColor;
-    button.backgroundColor = [UIColor grayColor];
-    button.backgroundColor = color;
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.2 animations:^{
+        UIColor *color = button.backgroundColor;
+        button.backgroundColor = [UIColor grayColor];
+        button.backgroundColor = color;
+    }];
 }
 
 - (IBAction)orientationButtonPressed:(id)sender {
@@ -188,14 +187,13 @@ synthesize_singleton(sharedtextKeyboardExtension, CDXTextKeyboardExtension);
         NSObject<CDXTextKeyboardExtensionResponder> *r = (NSObject<CDXTextKeyboardExtensionResponder> *)responder;
         [r textKeyboardExtensionSetCardOrientation:orientation];
     }
-    
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.2];
-    UIColor *color = button.backgroundColor;
-    button.backgroundColor = [UIColor grayColor];
-    button.backgroundColor = color;
-    [UIView commitAnimations];
-    
+
+    [UIView animateWithDuration:0.2 animations:^{
+        UIColor *color = button.backgroundColor;
+        button.backgroundColor = [UIColor grayColor];
+        button.backgroundColor = color;
+    }];
+
     [self updateOrientationSample];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] refreshKeyboardExtensions];
 }

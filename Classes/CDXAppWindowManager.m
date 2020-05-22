@@ -221,35 +221,22 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     return CGAffineTransformRotate(CGAffineTransformIdentity, transformAngle);
 }
 
-- (void)pushFullScreenViewControllerAnimationWillStart:(NSString *)animationID context:(void *)context {
-    qltrace();
-}
-
-- (void)pushFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    qltrace();
-    [fullScreenViewController setUserInteractionEnabled:YES];
-}
-
 - (void)pushFullScreenViewControllerAnimatedAndRemoveView:(NSArray *)data {
     qltrace();
     
     UIView *view = data[0];
     NSNumber *location_x = data[1];
 
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.6];
-    UIViewAnimationTransition transition = (location_x.floatValue > window.bounds.size.width / 2) ? UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight;
-    [UIView setAnimationTransition:transition forView:window cache:NO];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationWillStartSelector:@selector(pushFullScreenViewControllerAnimationWillStart:context:)];
-    [UIView setAnimationDidStopSelector:@selector(pushFullScreenViewControllerAnimationDidStop:finished:context:)];
-    
-    [view removeFromSuperview];
-    [window addSubview:fullScreenViewController.view];
-    [window setRootViewController:fullScreenViewController];
-    
-    [UIView commitAnimations];
+    UIViewAnimationOptions transition = (location_x.floatValue > window.bounds.size.width / 2) ? UIViewAnimationOptionTransitionFlipFromLeft : UIViewAnimationOptionTransitionFlipFromRight;
+    UIViewAnimationOptions curve = UIViewAnimationOptionCurveEaseInOut;
+    UIViewAnimationOptions flags = UIViewAnimationOptionLayoutSubviews;
+    UIViewAnimationOptions animateOptions = transition | curve | flags;
+    [UIView transitionFromView:view toView:fullScreenViewController.view duration:0.6 options:animateOptions completion:^(BOOL finished) {
+        [view removeFromSuperview];
+        [window addSubview:fullScreenViewController.view];
+        [window setRootViewController:fullScreenViewController];
+        [fullScreenViewController setUserInteractionEnabled:YES];
+    }];
 }
 
 - (void)pushFullScreenViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location {
@@ -273,39 +260,21 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     }
 }
 
-- (void)popFullScreenViewControllerAnimationWillStart:(NSString *)animationID context:(void *)context {
-    qltrace();
-}
-
-- (void)popFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    qltrace();
-    navigationView.userInteractionEnabled = YES;
-}
-
 - (void)popFullScreenViewControllerAnimated:(BOOL)animated withTouchLocation:(CGPoint)location {
     qltrace(@"location %f %f", location.x, location.y);
     [fullScreenViewController setUserInteractionEnabled:NO];
     
-    if (animated) {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.6];
-        UIViewAnimationTransition transition =  (location.x > window.bounds.size.width / 2) ? UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight;
-        [UIView setAnimationTransition:transition forView:window cache:NO];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-        [UIView setAnimationDelegate:self];
-        [UIView setAnimationWillStartSelector:@selector(popFullScreenViewControllerAnimationWillStart:context:)];
-        [UIView setAnimationDidStopSelector:@selector(popFullScreenViewControllerAnimationDidStop:finished:context:)];
-    } else {
-        [self popFullScreenViewControllerAnimationDidStop:nil finished:nil context:NULL];
-    }
-    
-    [fullScreenViewController.view removeFromSuperview];
-    [window addSubview:navigationView];
-    [window setRootViewController:navigationViewController];
-    
-    if (animated) {
-        [UIView commitAnimations];
-    }
+    UIViewAnimationOptions transition = (location.x > window.bounds.size.width / 2) ? UIViewAnimationOptionTransitionFlipFromLeft : UIViewAnimationOptionTransitionFlipFromRight;
+    UIViewAnimationOptions curve = UIViewAnimationOptionCurveEaseInOut;
+    UIViewAnimationOptions flags = UIViewAnimationOptionLayoutSubviews;
+    UIViewAnimationOptions animateOptions = transition | curve | flags;
+    [UIView transitionFromView:fullScreenViewController.view  toView:navigationViewController.view duration:animated ? 0.6 : 0 options:animateOptions completion:^(BOOL finished) {
+        [fullScreenViewController.view removeFromSuperview];
+        [navigationView addSubview:navigationViewController.view];
+        [window addSubview:navigationView];
+        [window setRootViewController:navigationViewController];
+        navigationView.userInteractionEnabled = YES;
+    }];
     
     ivar_release_and_clear(fullScreenViewController);
 }

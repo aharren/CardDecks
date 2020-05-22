@@ -253,12 +253,11 @@ static CDXColorRGB colorChooserSimpleColors[] = {
 - (void)colorChooserRGBSliderButtonPressedPostProcess:(UIButton *)button {
     [self colorChooserRGBSliderValueChanged];
     
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.2];
-    UIColor *color = button.backgroundColor;
-    button.backgroundColor = [UIColor grayColor];
-    button.backgroundColor = color;
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.2 animations:^{
+        UIColor *color = button.backgroundColor;
+        button.backgroundColor = [UIColor grayColor];
+        button.backgroundColor = color;
+    }];
 }
 
 - (IBAction)colorChooserRGBSliderRedButtonPressed:(id)sender {
@@ -301,16 +300,14 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     
     [self postColorUpdate:color textNotBackground:tag % 20 < 10];
     
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.5];
-    if (tag % 10 == 8) {
-        button.backgroundColor = [UIColor blackColor];
-    } else {
-        button.backgroundColor = [UIColor whiteColor];
-    }
-    
-    button.backgroundColor = [color uiColor];
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.5 animations:^{
+        if (tag % 10 == 8) {
+            button.backgroundColor = [UIColor blackColor];
+        } else {
+            button.backgroundColor = [UIColor whiteColor];
+        }
+        button.backgroundColor = [color uiColor];
+    }];
 }
 
 @end
