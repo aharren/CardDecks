@@ -34,35 +34,28 @@
     [super dealloc];
 }
 
-- (void)hideAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    qltrace();
-    [self removeFromSuperview];
-}
-
 - (void)hide {
     qltrace();
     if (!visible) {
         return;
     }
     visible = NO;
-    [UIView beginAnimations:nil context:self];
-    [UIView setAnimationDuration:0.2];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    [UIView setAnimationDidStopSelector:@selector(hideAnimationDidStop:finished:context:)];
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y - self.frame.size.height, self.frame.size.width, self.frame.size.height);
-    [UIView commitAnimations];
+    
+    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y - self.frame.size.height, self.frame.size.width, self.frame.size.height);
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
 }
 
 - (void)show {
     qltrace();
     visible = YES;
-    [UIView beginAnimations:nil context:self];
-    [UIView setAnimationDuration:0.2];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, self.frame.size.height);
-    [UIView commitAnimations];
+    
+    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, self.frame.size.height);
+    } completion:^(BOOL finished) {
+    }];
     
     [self performSelector:@selector(hide) withObject:nil afterDelay:timeInterval];
 }

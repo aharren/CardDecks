@@ -47,14 +47,11 @@
     UIView *itemView = [item valueForKey:@"view"];
     CGRect itemViewFrame = itemView ? itemView.frame : CGRectZero;
     
-    if (animated) {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.25];
-    }
-    label.frame = itemView ? CGRectMake(itemViewFrame.origin.x + (itemViewFrame.size.width - 18)/2.0, itemViewFrame.origin.y + itemViewFrame.size.height - 15, 18, 18) : CGRectZero;
-    if (animated) {
-        [UIView commitAnimations];
-    }
+    CGRect frame = itemView ? CGRectMake(itemViewFrame.origin.x + (itemViewFrame.size.width - 18)/2.0, itemViewFrame.origin.y + itemViewFrame.size.height - 15, 18, 18) : CGRectZero;
+    
+    [UIView animateWithDuration:animated ? 0.25 : 0 animations:^{
+        label.frame = frame;
+    }];
 }
 
 - (void)show {
@@ -170,35 +167,32 @@ static float keyboardExtensionsOsVersion;
                                keyboardAnimationBeginFrame.size.width, toolbar.frame.size.height);
 
     [UIView setAnimationsEnabled:YES];
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationCurve:keyboardAnimationCurve];
-    [UIView setAnimationDuration:keyboardAnimationDuration];
-    
-    toolbar.alpha = hide ? 0 : 1;
-    toolbar.frame = CGRectMake(keyboardAnimationEndFrame.origin.x, keyboardAnimationEndFrame.origin.y - toolbar.frame.size.height,
-                               keyboardAnimationEndFrame.size.width, toolbar.frame.size.height);
-    backgroundView.alpha = hide ? 0 : 1;
-    backgroundView.frame = CGRectMake(keyboardAnimationEndFrame.origin.x, keyboardAnimationEndFrame.origin.y - toolbar.frame.size.height,
-                                      keyboardAnimationEndFrame.size.width, keyboardAnimationEndFrame.size.height + toolbar.frame.size.height);
-    
-    if (activeExtensionTag != -1) {
-        if (hide) {
-            NSObject<CDXKeyboardExtension> *extension = [self keyboardExtensionByTag:activeExtensionTag];
-            UIView *extensionView = [extension keyboardExtensionView];
-            extensionView.frame = keyboardAnimationEndFrame;
-            extensionView.alpha = 0;
-            viewInactiveExtensions.hidden = YES;
-        } else {
-            NSInteger currentActiveExtensionTag = -1;
-            if (responder != nil) {
-                currentActiveExtensionTag = activeExtensionTag;
+    [UIView animateWithDuration:keyboardAnimationDuration delay:0 options:[CDXKeyboardExtensions animationOptionsWithCurve:keyboardAnimationCurve] animations:^{
+        toolbar.alpha = hide ? 0 : 1;
+        toolbar.frame = CGRectMake(keyboardAnimationEndFrame.origin.x, keyboardAnimationEndFrame.origin.y - toolbar.frame.size.height,
+                                   keyboardAnimationEndFrame.size.width, toolbar.frame.size.height);
+        backgroundView.alpha = hide ? 0 : 1;
+        backgroundView.frame = CGRectMake(keyboardAnimationEndFrame.origin.x, keyboardAnimationEndFrame.origin.y - toolbar.frame.size.height,
+                                          keyboardAnimationEndFrame.size.width, keyboardAnimationEndFrame.size.height + toolbar.frame.size.height);
+        
+        if (activeExtensionTag != -1) {
+            if (hide) {
+                NSObject<CDXKeyboardExtension> *extension = [self keyboardExtensionByTag:activeExtensionTag];
+                UIView *extensionView = [extension keyboardExtensionView];
+                extensionView.frame = keyboardAnimationEndFrame;
+                extensionView.alpha = 0;
+                viewInactiveExtensions.hidden = YES;
+            } else {
+                NSInteger currentActiveExtensionTag = -1;
+                if (responder != nil) {
+                    currentActiveExtensionTag = activeExtensionTag;
+                }
+                [self deactivateKeyboardExtension:[self keyboardExtensionByTag:activeExtensionTag] tag:activeExtensionTag];
+                [self activateKeyboardExtension:[self keyboardExtensionByTag:currentActiveExtensionTag] tag:currentActiveExtensionTag];
             }
-            [self deactivateKeyboardExtension:[self keyboardExtensionByTag:activeExtensionTag] tag:activeExtensionTag];
-            [self activateKeyboardExtension:[self keyboardExtensionByTag:currentActiveExtensionTag] tag:currentActiveExtensionTag];
         }
-    }
-
-    [UIView commitAnimations];
+    } completion:^(BOOL finished) {
+    }];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
@@ -472,16 +466,26 @@ static float keyboardExtensionsOsVersion;
 
 - (void)setInactive:(BOOL)inactive animated:(BOOL)animated {
     qltrace(@"inactive: %d, animated: %d", inactive ? 1 : 0, animated ? 1 : 0);
-    if (animated) {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.25];
-    }
     
-    viewInactiveExtensions.hidden = NO;
-    viewInactiveExtensions.alpha = inactive ? 1 : 0;
-    
-    if (animated) {
-        [UIView commitAnimations];
+    [UIView animateWithDuration:animated ? 0.25 : 0 animations:^{
+        viewInactiveExtensions.hidden = NO;
+        viewInactiveExtensions.alpha = inactive ? 1 : 0;
+    }];
+}
+
++ (UIViewAnimationOptions)animationOptionsWithCurve:(UIViewAnimationCurve)curve {
+    switch (curve) {
+        default:
+        case UIViewAnimationCurveLinear:
+            return UIViewAnimationOptionCurveLinear;
+        case UIViewAnimationCurveEaseInOut:
+            return UIViewAnimationOptionCurveEaseInOut;
+        case UIViewAnimationCurveEaseIn:
+            return UIViewAnimationOptionCurveEaseIn;
+        case UIViewAnimationCurveEaseOut:
+            return UIViewAnimationOptionCurveEaseOut;
+        case 7: // AnimationCurveKeyboard:
+            return 7 << 16;
     }
 }
 

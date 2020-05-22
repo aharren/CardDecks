@@ -57,18 +57,12 @@
 }
 
 
-- (void)hideAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    CDXAppWindowNoticeView *aNoticeView = (CDXAppWindowNoticeView *)context;
-    [aNoticeView removeFromSuperview];
-}
-
 - (void)hide:(CDXAppWindowNoticeView *)aNoticeView {
-    [UIView beginAnimations:nil context:aNoticeView];
-    [UIView setAnimationDuration:0.5];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(hideAnimationDidStop:finished:context:)];
-    aNoticeView.alpha = 0;
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.5 animations:^{
+        aNoticeView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [aNoticeView removeFromSuperview];
+    }];
 }
 
 - (void)showImageNamed:(NSString *)name text:(NSString *)aText timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation view:(UIView *)view {

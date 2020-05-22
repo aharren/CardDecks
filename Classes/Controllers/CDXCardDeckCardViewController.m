@@ -127,30 +127,20 @@
 }
 
 - (void)setActionsViewHidden:(BOOL)hidden animated:(BOOL)animated {
-    if (animated) {
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.3];
-    }
-    actionsView.alpha = hidden ? 0 : 1;
-    if (animated) {
-        [UIView commitAnimations];
-    }
+    [UIView animateWithDuration:animated ? 0.3 : 0 animations:^{
+        actionsView.alpha = hidden ? 0 : 1;
+    }];
 }
 
 - (void)configureActionsViewAnimated:(BOOL)animated {
-    if (animated) {
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.3];
-    }
-    CGAffineTransform transform = [CDXAppWindowManager transformForDeviceOrientation:deviceOrientation];
-    actionsViewShuffleButton.transform = transform;
-    actionsViewSortButton.transform = transform;
-    actionsViewPlayButton.transform = transform;
-    actionsViewPlay2Button.transform = transform;
-    actionsViewStopButton.transform = transform;
-    if (animated) {
-        [UIView commitAnimations];
-    }
+    [UIView animateWithDuration:animated ? 0.3 : 0 animations:^{
+        CGAffineTransform transform = [CDXAppWindowManager transformForDeviceOrientation:deviceOrientation];
+        actionsViewShuffleButton.transform = transform;
+        actionsViewSortButton.transform = transform;
+        actionsViewPlayButton.transform = transform;
+        actionsViewPlay2Button.transform = transform;
+        actionsViewStopButton.transform = transform;
+    }];
 }
 
 - (void)configureView {
