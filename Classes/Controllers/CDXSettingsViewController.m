@@ -104,7 +104,7 @@
     NSObject<CDXSettings> *settings;
     CDXSetting setting;
     
-    UIWebView *viewWebView;
+    WKWebView *viewWebView;
 }
 
 @end
@@ -127,7 +127,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    ivar_assign(viewWebView, [[UIWebView alloc] init]);
+    ivar_assign(viewWebView, [[WKWebView alloc] init]);
     [viewWebView loadHTMLString:[settings htmlTextValueForSettingWithTag:setting.tag] baseURL:nil];
     self.view = viewWebView;
 }

@@ -33,7 +33,7 @@
 @protected
     NSString *htmlText;
     
-    UIWebView *viewWebView;
+    WKWebView *viewWebView;
 }
 
 @end
@@ -72,7 +72,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    ivar_assign(viewWebView, [[UIWebView alloc] init]);
+    ivar_assign(viewWebView, [[WKWebView alloc] init]);
     [viewWebView loadHTMLString:htmlText baseURL:nil];
     self.view = viewWebView;
 }
