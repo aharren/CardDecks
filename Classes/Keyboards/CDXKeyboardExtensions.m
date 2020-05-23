@@ -155,13 +155,13 @@ static float keyboardExtensionsOsVersion;
     }
 
     // add the background view to the application's main window
-    [[[UIApplication sharedApplication] keyWindow] addSubview:backgroundView];
+    [[[CDXAppWindowManager sharedAppWindowManager] window] addSubview:backgroundView];
     [backgroundView sizeToFit];
     backgroundView.backgroundColor = [UIColor whiteColor];
     backgroundView.frame = CGRectMake(keyboardAnimationBeginFrame.origin.x, keyboardAnimationBeginFrame.origin.y - toolbar.frame.size.height,
                                       keyboardAnimationBeginFrame.size.width, keyboardAnimationBeginFrame.size.height + toolbar.frame.size.height);
     // add the toolbar view to the application's main window
-    [[[UIApplication sharedApplication] keyWindow] addSubview:toolbar];
+    [[[CDXAppWindowManager sharedAppWindowManager] window] addSubview:toolbar];
     [toolbar sizeToFit];
     toolbar.frame = CGRectMake(keyboardAnimationBeginFrame.origin.x, keyboardAnimationBeginFrame.origin.y - toolbar.frame.size.height,
                                keyboardAnimationBeginFrame.size.width, toolbar.frame.size.height);
