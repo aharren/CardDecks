@@ -185,7 +185,6 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    BOOL deselectRow = YES;
     switch (indexPath.section) {
         default:
         case 0: {
@@ -195,7 +194,6 @@
             cardDeckViewContext.currentCardIndex = indexPath.row;
             [self performBlockingSelector:@selector(pushCardDeckCardViewController)
                                withObject:nil];
-            deselectRow = NO;
             break;
         }
         case 2: {
@@ -203,15 +201,12 @@
                 default:
                 case 0: {
                     [self defaultsButtonPressed];
-                    deselectRow = NO;
                     break;
                 }
             }
         }
     }
-    if (deselectRow) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    }
+    [tableView cellForRowAtIndexPath:indexPath].selected = NO;
 }
 
 - (void)pushCardDeckEditViewController {
