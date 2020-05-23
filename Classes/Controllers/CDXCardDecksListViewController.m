@@ -248,7 +248,6 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    BOOL deselectRow = YES;
     switch (indexPath.section) {
         default:
         case 0: {
@@ -256,7 +255,6 @@
         }
         case 1: {
             lastCardDeckIndex = indexPath.row;
-            deselectRow = NO;
             CDXCardDeckHolder *deckHolder = [cardDecks cardDeckAtIndex:indexPath.row];
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             if ((cell.accessoryType == UITableViewCellAccessoryDisclosureIndicator ||
@@ -274,16 +272,13 @@
             switch (indexPath.row) {
                 default:
                 case 0: {
-                    deselectRow = NO;
                     [self defaultsButtonPressed];
                     break;
                 }
             }
         }
     }
-    if (deselectRow) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    }
+    [tableView cellForRowAtIndexPath:indexPath].selected = NO;
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
