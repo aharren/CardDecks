@@ -83,6 +83,7 @@
 		E0764045196B377E00F660BF /* CDXAppWindowMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0764044196B377E00F660BF /* CDXAppWindowMessageView.xib */; };
 		E0805B4B11A85C6600199172 /* CDXCardDeckViewContext.m in Sources */ = {isa = PBXBuildFile; fileRef = E0805B4A11A85C6600199172 /* CDXCardDeckViewContext.m */; };
 		E0875D9B1958CAD6007FA508 /* CDXOrderedSerializerDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E0875D9A1958CAD6007FA508 /* CDXOrderedSerializerDictionary.m */; };
+		E08E3ECB247912B7008E8FC1 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08E3ECA247912B7008E8FC1 /* WebKit.framework */; };
 		E091E41619CF20010080A2E5 /* Logo.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E091E41519CF20010080A2E5 /* Logo.xcassets */; };
 		E097B04414E70FD300A8F38B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E097B04314E70FD300A8F38B /* AudioToolbox.framework */; };
 		E09A489619F3D41B001D9286 /* CDXCopyPaste.m in Sources */ = {isa = PBXBuildFile; fileRef = E09A489419F3D41B001D9286 /* CDXCopyPaste.m */; };
@@ -278,6 +279,7 @@
 		E0805B4A11A85C6600199172 /* CDXCardDeckViewContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckViewContext.m; path = Classes/Models/CDXCardDeckViewContext.m; sourceTree = "<group>"; };
 		E0875D981958CAB9007FA508 /* CDXOrderedSerializerDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXOrderedSerializerDictionary.h; path = Classes/Serializers/CDXOrderedSerializerDictionary.h; sourceTree = "<group>"; };
 		E0875D9A1958CAD6007FA508 /* CDXOrderedSerializerDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXOrderedSerializerDictionary.m; path = Classes/Serializers/CDXOrderedSerializerDictionary.m; sourceTree = "<group>"; };
+		E08E3ECA247912B7008E8FC1 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		E091E41519CF20010080A2E5 /* Logo.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Logo.xcassets; path = Images/Logo.xcassets; sourceTree = "<group>"; };
 		E097B04314E70FD300A8F38B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		E09A489419F3D41B001D9286 /* CDXCopyPaste.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCopyPaste.m; path = Classes/CDXCopyPaste.m; sourceTree = "<group>"; };
@@ -377,6 +379,7 @@
 			files = (
 				E0C1F67418772D4300F17779 /* Social.framework in Frameworks */,
 				E097B04414E70FD300A8F38B /* AudioToolbox.framework in Frameworks */,
+				E08E3ECB247912B7008E8FC1 /* WebKit.framework in Frameworks */,
 				E03BA2721167488B00FE7924 /* Foundation.framework in Frameworks */,
 				E03BA2741167489600FE7924 /* UIKit.framework in Frameworks */,
 				E0CCC9041170E9420040D222 /* QuartzCore.framework in Frameworks */,
@@ -514,6 +517,7 @@
 		E03BA26E1167488000FE7924 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E08E3ECA247912B7008E8FC1 /* WebKit.framework */,
 				E0D1F09C18CC6BFF00BA521A /* XCTest.framework */,
 				E0C1F67318772D4300F17779 /* Social.framework */,
 				E097B04314E70FD300A8F38B /* AudioToolbox.framework */,

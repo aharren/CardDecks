@@ -27,6 +27,7 @@
 // Base includes.
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
 // Logging.
 #if !TARGET_IPHONE_SIMULATOR
