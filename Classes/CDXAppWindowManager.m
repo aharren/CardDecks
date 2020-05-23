@@ -221,43 +221,19 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     return CGAffineTransformRotate(CGAffineTransformIdentity, transformAngle);
 }
 
-- (void)pushFullScreenViewControllerAnimatedAndRemoveView:(NSArray *)data {
-    qltrace();
-    
-    UIView *view = data[0];
-    NSNumber *location_x = data[1];
-
-    UIViewAnimationOptions transition = (location_x.floatValue > window.bounds.size.width / 2) ? UIViewAnimationOptionTransitionFlipFromLeft : UIViewAnimationOptionTransitionFlipFromRight;
+- (void)pushFullScreenViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location {
+    ivar_assign_and_retain(fullScreenViewController, viewController);
+    [fullScreenViewController setUserInteractionEnabled:!animated];
+    UIViewAnimationOptions transition = (location.x > window.bounds.size.width / 2) ? UIViewAnimationOptionTransitionFlipFromLeft : UIViewAnimationOptionTransitionFlipFromRight;
     UIViewAnimationOptions curve = UIViewAnimationOptionCurveEaseInOut;
     UIViewAnimationOptions flags = UIViewAnimationOptionLayoutSubviews;
     UIViewAnimationOptions animateOptions = transition | curve | flags;
-    [UIView transitionFromView:view toView:fullScreenViewController.view duration:0.6 options:animateOptions completion:^(BOOL finished) {
-        [view removeFromSuperview];
+    [UIView transitionFromView:navigationView toView:fullScreenViewController.view duration:animated ? 0.6 : 0 options:animateOptions completion:^(BOOL finished) {
+        [navigationView removeFromSuperview];
         [window addSubview:fullScreenViewController.view];
         [window setRootViewController:fullScreenViewController];
         [fullScreenViewController setUserInteractionEnabled:YES];
     }];
-}
-
-- (void)pushFullScreenViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location {
-    ivar_assign_and_retain(fullScreenViewController, viewController);
-    [fullScreenViewController setUserInteractionEnabled:!animated];
-    if (animated) {
-        CGFloat location_x = ([CDXDevice sharedDevice].deviceUIIdiom == CDXDeviceUIIdiomPad) ? (window.bounds.size.width - 1) : (location.x);
-        navigationView.userInteractionEnabled = NO;
-        if ([[CDXDevice sharedDevice] useImageBasedRendering]) {
-            UIImageView *screenshotView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForScreen]] autorelease];
-            [navigationView removeFromSuperview];
-            [window addSubview:screenshotView];
-            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:@[screenshotView, @(location_x)] afterDelay:0.001];
-        } else {
-            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:@[navigationView, @(location_x)] afterDelay:0.001];
-        }
-    } else {
-        [navigationView removeFromSuperview];
-        [window addSubview:fullScreenViewController.view];
-        [window setRootViewController:fullScreenViewController];
-    }
 }
 
 - (void)popFullScreenViewControllerAnimated:(BOOL)animated withTouchLocation:(CGPoint)location {
