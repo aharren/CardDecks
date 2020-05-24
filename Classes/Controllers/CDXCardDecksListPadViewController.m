@@ -69,7 +69,7 @@
     [super viewWillAppear:animated];
     if (!ignoreCardDeckUpdateNotifications) {
         ivar_release_and_clear(currentCardDeck);
-        [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+        //[viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 
