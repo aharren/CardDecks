@@ -224,14 +224,19 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 - (void)pushFullScreenViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location {
     ivar_assign_and_retain(fullScreenViewController, viewController);
     [fullScreenViewController setUserInteractionEnabled:!animated];
+
     UIViewAnimationOptions transition = (location.x > window.bounds.size.width / 2) ? UIViewAnimationOptionTransitionFlipFromLeft : UIViewAnimationOptionTransitionFlipFromRight;
     UIViewAnimationOptions curve = UIViewAnimationOptionCurveEaseInOut;
     UIViewAnimationOptions flags = UIViewAnimationOptionLayoutSubviews;
     UIViewAnimationOptions animateOptions = transition | curve | flags;
-    [UIView transitionFromView:navigationView toView:fullScreenViewController.view duration:animated ? 0.6 : 0 options:animateOptions completion:^(BOOL finished) {
-        [navigationView removeFromSuperview];
-        [window addSubview:fullScreenViewController.view];
+    
+    [UIView transitionWithView:window duration:animated ? 0.6 : 0 options:animateOptions animations:^{
         [window setRootViewController:fullScreenViewController];
+        [window addSubview:navigationView];
+        [navigationView addSubview:fullScreenViewController.view];
+    } completion:^(BOOL finished) {
+        [window addSubview:fullScreenViewController.view];
+        [navigationView removeFromSuperview];
         [fullScreenViewController setUserInteractionEnabled:YES];
     }];
 }
@@ -244,11 +249,13 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     UIViewAnimationOptions curve = UIViewAnimationOptionCurveEaseInOut;
     UIViewAnimationOptions flags = UIViewAnimationOptionLayoutSubviews;
     UIViewAnimationOptions animateOptions = transition | curve | flags;
-    [UIView transitionFromView:fullScreenViewController.view  toView:navigationViewController.view duration:animated ? 0.6 : 0 options:animateOptions completion:^(BOOL finished) {
-        [fullScreenViewController.view removeFromSuperview];
-        [navigationView addSubview:navigationViewController.view];
-        [window addSubview:navigationView];
+
+    [UIView transitionWithView:window duration:animated ? 0.6 : 0 options:animateOptions animations:^{
         [window setRootViewController:navigationViewController];
+        [window addSubview:navigationView];
+        [navigationView addSubview:navigationViewController.view];
+    } completion:^(BOOL finished) {
+        [fullScreenViewController.view removeFromSuperview];
         navigationView.userInteractionEnabled = YES;
     }];
     
