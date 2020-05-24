@@ -321,11 +321,11 @@
         // show menu
         [self becomeFirstResponder];
         UIMenuController *menu = [UIMenuController sharedMenuController];
-        [menu setTargetRect:cell.frame inView:sender.view];
         // add additional menu items, defined by subclass
         [self menu:menu itemsForTableView:viewTableView cell:cell];
-        [menu setMenuVisible:YES animated:YES];
-        
+        // show
+        [menu showMenuFromView:sender.view rect:cell.frame];
+
         // keep cell selected
         cell.selected = YES;
     }
@@ -383,10 +383,10 @@
                 // show menu
                 [self becomeFirstResponder];
                 UIMenuController *menu = [UIMenuController sharedMenuController];
-                [menu setTargetRect:CGRectMake(left, 0, width, 1) inView:sender.view];
                 // add additional menu items, defined by subclass
                 [self menu:menu itemsForBarButtonItem:item];
-                [menu setMenuVisible:YES animated:YES];
+                // show
+                [menu showMenuFromView:sender.view rect:CGRectMake(left, 0, width, 1)];
 
                 return;
             }
