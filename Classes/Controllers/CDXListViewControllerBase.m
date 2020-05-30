@@ -102,9 +102,8 @@
                                          action:nil]
                                         autorelease];
     
-    ivar_assign(activityIndicator, [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]);
+    ivar_assign(activityIndicator, [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleMedium]);
     activityIndicator.hidesWhenStopped = YES;
-    activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
                                           initWithCustomView:activityIndicator]
                                          autorelease];
