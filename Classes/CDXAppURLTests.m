@@ -105,12 +105,5 @@
     XCTAssertEqualObjects(urlString, [@"carddecks:///2/add?" stringByAppendingString:string]);
 }
 
-- (void)testHttpURLStringVersion2 {
-    NSString *string = @"card%21deck,g1,d1,c1,id1,is1,it1,r1,s1,ap1&,000000ff,ffffffff,u,0,5";
-    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
-    NSString *urlString = [CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:deck];
-    XCTAssertEqualObjects(urlString, [@"http://carddecks.protocol.0xc0.de/2/add?" stringByAppendingString:string]);
-}
-
 @end
 

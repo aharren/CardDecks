@@ -70,18 +70,6 @@
 @end
 
 
-@interface CDXCardDeckListViewControllerHTTPURLTextActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
-    
-@protected
-    CDXCardDeckViewContext *cardDeckViewContext;
-    
-}
-
-- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
-
-@end
-
-
 @interface CDXCardDeckListViewControllerStringTextActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
     
 @protected
@@ -94,31 +82,7 @@
 @end
 
 
-@interface CDXCardDeckListViewControllerAutoDetectActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
-    
-@protected
-    CDXCardDeckViewContext *cardDeckViewContext;
-    
-}
-
-- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
-
-@end
-
-
 @interface CDXCardDeckListViewControllerCarddecksURLActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
-    
-@protected
-    CDXCardDeckViewContext *cardDeckViewContext;
-    
-}
-
-- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
-
-@end
-
-
-@interface CDXCardDeckListViewControllerHTTPURLActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
     
 @protected
     CDXCardDeckViewContext *cardDeckViewContext;

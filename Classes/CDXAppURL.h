@@ -37,7 +37,6 @@
 + (BOOL)mayBeCardDecksURLString:(NSString *)urlString;
 
 + (NSString *)carddecksURLStringForVersion2AddActionFromCardDeck:(CDXCardDeck *)cardDeck;
-+ (NSString *)httpURLStringForVersion2AddActionFromCardDeck:(CDXCardDeck *)cardDeck;
 
 @end
 
