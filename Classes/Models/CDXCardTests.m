@@ -178,7 +178,7 @@
 
     card.text = @"abcdefgh";
     size = [card fontSizeConstrainedToSize:CGSizeMake(640.0, 960.0) scale:1.0];
-    XCTAssertEqual(size, 160.0);
+    XCTAssertEqual(size, 161.0);
 
     card.text = @"ABCDEFGH";
     size = [card fontSizeConstrainedToSize:CGSizeMake(640.0, 960.0) scale:1.0];
