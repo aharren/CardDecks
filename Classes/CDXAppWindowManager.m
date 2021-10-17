@@ -54,7 +54,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     // since iOS 12, top also reflects the size of the status bar; so, we use bottom here for detection
     CGFloat inset = 0;
     if (window.safeAreaInsets.bottom > 0) {
-        inset = 34;
+        inset = 38;
     }
     return UIEdgeInsetsMake(inset, 0, inset, 0);
 }
