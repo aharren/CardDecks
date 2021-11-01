@@ -87,17 +87,6 @@
     holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
     [decks addPendingCardDeckAdd:holder];
     
-    deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Faces,00ff00,000000&%e2%98%bb&%e2%98%b9,ff0000"];
-    deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
-    deck.wantsAutoRotate = YES;
-    deck.shakeAction = CDXCardDeckShakeActionRandom;
-    deck.wantsPageJumps = NO;
-    deck.wantsPageControl = NO;
-    deck.pageControlStyle = CDXCardDeckPageControlStyleLight;
-    [deck updateStorageObjectDeferred:NO];
-    holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
-    [decks addPendingCardDeckAdd:holder];
-    
     deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Answers,ffffff,000000&YES,00ff00&NO,ff0000&PERHAPS,ffff00"];
     deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
     [deck cardAtIndex:0].fontSize = 150.0/5.0;
