@@ -232,11 +232,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     
     [UIView transitionWithView:window duration:animated ? 0.6 : 0 options:animateOptions animations:^{
         [window setRootViewController:fullScreenViewController];
-        [window addSubview:navigationView];
-        [navigationView addSubview:fullScreenViewController.view];
     } completion:^(BOOL finished) {
-        [window addSubview:fullScreenViewController.view];
-        [navigationView removeFromSuperview];
         [fullScreenViewController setUserInteractionEnabled:YES];
     }];
 }
@@ -252,11 +248,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 
     [UIView transitionWithView:window duration:animated ? 0.6 : 0 options:animateOptions animations:^{
         [window setRootViewController:navigationViewController];
-        [window addSubview:navigationView];
-        [navigationView addSubview:navigationViewController.view];
     } completion:^(BOOL finished) {
-        [fullScreenViewController.view removeFromSuperview];
-        navigationView.userInteractionEnabled = YES;
     }];
     
     ivar_release_and_clear(fullScreenViewController);
@@ -337,11 +329,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
 - (void)makeWindowKeyAndVisible {
     qltrace();
     
-    [window addSubview:navigationView];
-    navigationView.frame = [[UIScreen mainScreen] bounds];
     [window setRootViewController:navigationViewController];
-    [navigationView addSubview:navigationController.view];
-    
     [window makeKeyAndVisible];
 }
 
@@ -353,89 +341,10 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
 @end
 
 
-@interface CDXLeftRightSplitViewController : UIViewController {
-    
-@protected
-    UIViewController *leftViewController;
-    UIViewController *rightViewController;
-}
-
-- (void)setLeftViewController:(UIViewController *)viewController;
-- (void)setRightViewController:(UIViewController *)viewController;
-
-@end
-
-
-@implementation CDXLeftRightSplitViewController
-
-- (void)dealloc {
-    ivar_release_and_clear(leftViewController);
-    ivar_release_and_clear(rightViewController);
-    [super dealloc];
-}
-
-- (void)setLeftViewController:(UIViewController *)viewController {
-    qltrace();
-    ivar_assign_and_retain(leftViewController, viewController);
-    [self.view addSubview:leftViewController.view];
-}
-
-- (void)setRightViewController:(UIViewController *)viewController {
-    qltrace();
-    ivar_assign_and_retain(rightViewController, viewController);
-    [self.view addSubview:rightViewController.view];
-}
-
-- (void)layoutViewControllerViews {
-    qltrace();
-    CGRect frame = self.view.frame;
-    leftViewController.view.frame = CGRectMake(0, 0, 340, frame.size.height);
-    rightViewController.view.frame = CGRectMake(341, 0, frame.size.width - 341, frame.size.height);
-}
-
-- (void)viewDidLoad {
-    qltrace();
-    [super viewDidLoad];
-    [leftViewController viewDidLoad];
-    [rightViewController viewDidLoad];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    qltrace();
-    [super viewWillAppear:animated];
-    [leftViewController viewWillAppear:animated];
-    [rightViewController viewWillAppear:animated];
-    [self layoutViewControllerViews];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    qltrace();
-    [leftViewController viewDidAppear:animated];
-    [rightViewController viewDidAppear:animated];
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    qltrace();
-    [super viewWillDisappear:animated];
-    [leftViewController viewWillDisappear:animated];
-    [rightViewController viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    qltrace();
-    [leftViewController viewDidDisappear:animated];
-    [rightViewController viewDidDisappear:animated];
-    [super viewDidDisappear:animated];
-}
-
-@end
-
-
 @interface CDXAppWindowManagerPad : CDXAppWindowManager<UIPopoverControllerDelegate> {
     
 @protected
-    CDXLeftRightSplitViewController* splitViewController;
+    UISplitViewController* splitViewController;
     
     UINavigationController *leftNavigationController;
     UINavigationController *rightNavigationController;
@@ -465,17 +374,20 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
 - (id)init {
     qltrace();
     if ((self = [super init])) {
-        ivar_assign(splitViewController, [[CDXLeftRightSplitViewController alloc] init]);
+        ivar_assign(splitViewController, [[UISplitViewController alloc] initWithStyle:UISplitViewControllerStyleDoubleColumn]);
         ivar_assign(leftNavigationController, [[UINavigationController alloc] init]);
         [leftNavigationController setToolbarHidden:NO];
         [leftNavigationController setNavigationBarHidden:NO];
-        [splitViewController setLeftViewController:leftNavigationController];
+        [splitViewController setViewController:leftNavigationController forColumn:UISplitViewControllerColumnPrimary];
         ivar_assign(rightNavigationController, [[UINavigationController alloc] init]);
         [rightNavigationController setToolbarHidden:NO];
         [rightNavigationController setNavigationBarHidden:NO];
         rightNavigationController.navigationBar.prefersLargeTitles = [CDXDevice sharedDevice].useLargeTitles;
-        [splitViewController setRightViewController:rightNavigationController];
+        [splitViewController setViewController:rightNavigationController forColumn:UISplitViewControllerColumnSecondary];
 
+        [splitViewController setPreferredSplitBehavior:UISplitViewControllerSplitBehaviorTile];
+        [splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeOneBesideSecondary];
+        
         navigationViewController = splitViewController;
     }
     return self;
@@ -527,11 +439,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
 - (void)makeWindowKeyAndVisible {
     qltrace();
     
-    [window addSubview:navigationView];
-    [window setRootViewController:navigationViewController];
-    navigationView.frame = [[UIScreen mainScreen] bounds];
-    [navigationView addSubview:splitViewController.view];
-    
+    [window setRootViewController:navigationViewController];    
     [window makeKeyAndVisible];
 }
 

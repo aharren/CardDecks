@@ -33,7 +33,6 @@
     
 @protected
     IBOutlet UIWindow *window;
-    IBOutlet UIView *navigationView;
     
     IBOutlet CDXAppWindowNoticeView *noticeView;
     IBOutlet CDXAppWindowMessageView *messageView;
