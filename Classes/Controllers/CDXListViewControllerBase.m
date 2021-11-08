@@ -110,21 +110,18 @@
     self.toolbarItems = viewToolbar.items;
     ivar_assign_and_retain(tableCellTextFont, [UIFont systemFontOfSize:17]);
     ivar_assign_and_retain(tableCellTextFontAction, [UIFont systemFontOfSize:10]);
-    ivar_assign_and_retain(tableCellTextTextColor, [UIColor blackColor]);
-    ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor grayColor]);
-    ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor grayColor]);
-    ivar_assign_and_retain(tableCellTextTextColorActionInactive, [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]);
+    ivar_assign_and_retain(tableCellTextTextColor, [UIColor labelColor]);
+    ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor systemGray2Color]);
+    ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor systemGray2Color]);
+    ivar_assign_and_retain(tableCellTextTextColorActionInactive, [UIColor systemGray5Color]);
     ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:9]);
-    ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor grayColor]);
-    ivar_assign_and_retain(tableCellBackgroundColor, [UIColor whiteColor]);
-    ivar_assign_and_retain(tableCellBackgroundColorMarked, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff].uiColor);
-    ivar_assign_and_retain(tableCellBackgroundColorAltGroup, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff].uiColor);
-    ivar_assign_and_retain(tableCellBackgroundColorNewObject, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0+0x4 alpha:0xff].uiColor);
-    ivar_assign_and_retain(tableCellBackgroundColorNewObjectAltGroup, [CDXColor colorWithRed:0xe8 green:0xe8 blue:0xe8+0x4 alpha:0xff].uiColor);
+    ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor secondaryLabelColor]);
+    ivar_assign_and_retain(tableCellBackgroundColor, [UIColor systemBackgroundColor]);
+    ivar_assign_and_retain(tableCellBackgroundColorMarked, [UIColor systemGrayColor]);
+    ivar_assign_and_retain(tableCellBackgroundColorAltGroup, [UIColor systemGray6Color]);
+    ivar_assign_and_retain(tableCellBackgroundColorNewObject, [UIColor systemGray5Color]);
+    ivar_assign_and_retain(tableCellBackgroundColorNewObjectAltGroup, [UIColor systemGray4Color]);
     tableCellImageSize = CGSizeMake(5, 51);
-    
-    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
-    viewTableView.backgroundView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:screenHeight base:0.0]] autorelease];
     
     ivar_assign(viewTableViewLongPressRecognizer, [[UILongPressGestureRecognizer alloc]
                                                    initWithTarget:self action:@selector(handleTableViewLongPressGesture:)]);
