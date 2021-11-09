@@ -576,5 +576,15 @@
     XCTAssertEqualObjects(string2, @"card%21deck,g1,d0,c1,id0,is1,it0,r1,s0,ap1&,000000ff,ffffffff,u,0,5");
 }
 
+- (void)testVersion2StringWithNewline {
+    NSString *string = @""
+    "card%0adeck"
+    "&";
+    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
+    
+    NSString *string2 = [CDXCardDeckURLSerializer version2StringFromCardDeck:deck];
+    XCTAssertEqualObjects(string2, @"card%0Adeck,g0,d0,c0,id1,is0,it1,r1,s1,ap0&,000000ff,ffffffff,u,0,5");
+}
+
 @end
 

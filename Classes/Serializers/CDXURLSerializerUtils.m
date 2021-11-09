@@ -29,8 +29,7 @@
 @implementation CDXURLSerializerUtils
 
 + (NSString *)stringByAddingURLEscapes:(NSString *)string {
-    NSCharacterSet *characterSet = [[NSCharacterSet characterSetWithCharactersInString:@":/?#[]@!$&'()*+,;= "] invertedSet];
-    return [string stringByAddingPercentEncodingWithAllowedCharacters:characterSet];
+    return [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]];
 }
 
 + (NSString *)stringByReplacingURLEscapes:(NSString *)string {
