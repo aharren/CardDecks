@@ -516,5 +516,13 @@
     [activityIndicator stopAnimating];
 }
 
+#pragma mark -
+#pragma mark Appearance
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+}
+
 @end
 

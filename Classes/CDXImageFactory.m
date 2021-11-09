@@ -64,17 +64,10 @@ static void CDXGraphicsBeginImageContextNativeScale(CGSize size) {
     CDXGraphicsBeginImageContextNativeScale(size);
     CGContextRef cgContext = UIGraphicsGetCurrentContext();
     
-    // color bar
-    if (color != nil) {
-        CGContextSetFillColorWithColor(cgContext, [[color uiColor] CGColor]);
-    } else {
-        CGContextSetFillColorWithColor(cgContext, [[UIColor whiteColor] CGColor]);
-    }
-    CGContextFillRect(cgContext, CGRectMake(0, 0, size.width-2, size.height-1));
-    
-    // separator
-    CGContextSetFillColorWithColor(cgContext, [[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1] CGColor]);
-    CGContextFillRect(cgContext, CGRectMake(size.width-2, 0, 1, size.height-1));
+    CGFloat alpha = [[CDXAppWindowManager sharedAppWindowManager] userInterfaceStyle] == UIUserInterfaceStyleDark ? 0.5 : 1.0;
+    UIColor *uiColor = (color != nil) ? [color uiColor] : [UIColor clearColor];
+    CGContextSetFillColorWithColor(cgContext, [[uiColor colorWithAlphaComponent:alpha] CGColor]);
+    CGContextFillRect(cgContext, CGRectMake(0, 0, size.width-1, size.height-1));
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

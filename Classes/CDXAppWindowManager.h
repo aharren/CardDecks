@@ -48,6 +48,7 @@ declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 @property (nonatomic, readonly) UIWindow *window;
 @property (nonatomic, readonly) UIDeviceOrientation deviceOrientation;
 
+- (UIUserInterfaceStyle)userInterfaceStyle;
 - (UIEdgeInsets)safeAreaInsets;
 - (UIEdgeInsets)maxSafeAreaInsets;
 - (CGRect)frameWithMaxSafeAreaInsets:(CGRect)frame;

@@ -49,6 +49,10 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     return self;
 }
 
+- (UIUserInterfaceStyle)userInterfaceStyle {
+    return window.traitCollection.userInterfaceStyle;
+}
+
 - (UIEdgeInsets)safeAreaInsets {
     // we only consider portrait mode here, because the app is always in portrait mode
     // since iOS 12, top also reflects the size of the status bar; so, we use bottom here for detection
