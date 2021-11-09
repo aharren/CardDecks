@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,33 +26,28 @@
                     <rect key="frame" x="133" y="37" width="102" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
-                    <color key="textColor" systemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="Copyright (c) 2009-2021 Arne Harren &lt;ah@0xc0.de&gt;" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4">
                     <rect key="frame" x="0.0" y="94" width="316" height="21"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
-                    <color key="textColor" systemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5">
                     <rect key="frame" x="133" y="57" width="105" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
-                    <color key="textColor" systemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="139" y="75"/>
         </view>
     </objects>
     <resources>
         <image name="Logo-Prerendered" width="60" height="60"/>
-        <systemColor name="darkTextColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
