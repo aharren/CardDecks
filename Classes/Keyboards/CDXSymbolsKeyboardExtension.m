@@ -399,9 +399,12 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    backButton.alpha = 0;
-    if (block != NULL) {
+    if (block == NULL) {
+        backButton.alpha = 0;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    } else {
         backButton.alpha = 1;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     [super viewWillAppear:animated];
 }
