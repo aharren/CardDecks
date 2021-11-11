@@ -32,7 +32,7 @@
 - (id)init {
     if ((self = [super init])) {
         ivar_assign(label, [[UILabel alloc] init]);
-        NSAttributedString *text = [[[NSAttributedString alloc] initWithString:@"\u25B4" attributes:@{ NSForegroundColorAttributeName:[UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0], NSFontAttributeName: [UIFont systemFontOfSize:30] }] autorelease];
+        NSAttributedString *text = [[[NSAttributedString alloc] initWithString:@"\u25B4" attributes:@{ NSForegroundColorAttributeName:[UIColor labelColor], NSFontAttributeName: [UIFont systemFontOfSize:30] }] autorelease];
         [label setAttributedText:text];
         [self hide];
     }
@@ -80,7 +80,7 @@ static float keyboardExtensionsOsVersion;
         toolbar.alpha = 0;
         toolbar.barStyle = UIBarStyleDefault;
         toolbar.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, 32);
-        toolbar.backgroundColor = [UIColor whiteColor];
+        toolbar.backgroundColor = [UIColor systemBackgroundColor];
         ivar_assign(toolbarButtons, [[NSMutableArray alloc] init]);
         ivar_assign_and_retain(toolbarKeyboardButton, [self toolbarButtonWithTitle:@"abc"]);
         ivar_assign(toolbarActionButton, [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
@@ -91,7 +91,7 @@ static float keyboardExtensionsOsVersion;
         ivar_assign(backgroundView, [[UIView alloc] initWithFrame:extensionViewRect]);
         backgroundView.alpha = 0;
         backgroundView.frame = toolbar.frame;
-        ivar_assign_and_retain(backgroundColor, [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1]);
+        ivar_assign_and_retain(backgroundColor, [UIColor systemGray6Color]);
         enabled = NO;
         visible = NO;
         activeExtensionTag = -1;
@@ -157,7 +157,7 @@ static float keyboardExtensionsOsVersion;
     // add the background view to the application's main window
     [[[CDXAppWindowManager sharedAppWindowManager] window] addSubview:backgroundView];
     [backgroundView sizeToFit];
-    backgroundView.backgroundColor = [UIColor whiteColor];
+    backgroundView.backgroundColor = [UIColor systemBackgroundColor];
     backgroundView.frame = CGRectMake(keyboardAnimationBeginFrame.origin.x, keyboardAnimationBeginFrame.origin.y - toolbar.frame.size.height,
                                       keyboardAnimationBeginFrame.size.width, keyboardAnimationBeginFrame.size.height + toolbar.frame.size.height);
     // add the toolbar view to the application's main window
@@ -326,9 +326,10 @@ static float keyboardExtensionsOsVersion;
                                 target:self action:@selector(toolbarButtonPressed:)]
                                autorelease];
     button.width = 33;
-    NSDictionary *textAttributes = @{ NSFontAttributeName: [UIFont systemFontOfSize:15] };
+    NSDictionary *textAttributes = @{ NSForegroundColorAttributeName:[UIColor systemBlueColor], NSFontAttributeName: [UIFont systemFontOfSize:15] };
+    NSDictionary *textAttributesDisabled = @{ NSForegroundColorAttributeName:[UIColor labelColor], NSFontAttributeName: [UIFont systemFontOfSize:15] };;
     [button setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
-    [button setTitleTextAttributes:textAttributes forState:UIControlStateDisabled];
+    [button setTitleTextAttributes:textAttributesDisabled forState:UIControlStateDisabled];
     [button setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
     [button setTitleTextAttributes:textAttributes forState:UIControlStateFocused];
     return button;
