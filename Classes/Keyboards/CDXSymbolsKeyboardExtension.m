@@ -512,7 +512,7 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == listTableView) {
         if (indexPath.row == currentBlockIndex) {
-            cell.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
+            cell.backgroundColor = [UIColor systemGray4Color];
         } else {
             cell.backgroundColor = [UIColor clearColor];
         }
