@@ -117,7 +117,7 @@
     ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:9]);
     ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor secondaryLabelColor]);
     ivar_assign_and_retain(tableCellBackgroundColor, [UIColor systemBackgroundColor]);
-    ivar_assign_and_retain(tableCellBackgroundColorMarked, [UIColor systemGrayColor]);
+    ivar_assign_and_retain(tableCellBackgroundColorMarked, [UIColor systemGray4Color]);
     ivar_assign_and_retain(tableCellBackgroundColorAltGroup, [UIColor systemGray6Color]);
     ivar_assign_and_retain(tableCellBackgroundColorNewObject, [UIColor systemGray5Color]);
     ivar_assign_and_retain(tableCellBackgroundColorNewObjectAltGroup, [UIColor systemGray4Color]);
