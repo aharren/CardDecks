@@ -107,7 +107,6 @@
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection1];
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection1] autorelease];
-                cell.textLabel.font = tableCellTextFont;
                 cell.textLabel.textColor = tableCellTextTextColor;
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -124,7 +123,7 @@
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection2];
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
-                cell.textLabel.font = tableCellTextFontAction;
+                cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
                 cell.textLabel.textAlignment = NSTextAlignmentCenter;
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;

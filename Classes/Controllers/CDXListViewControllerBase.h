@@ -51,13 +51,10 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
     
     UIActivityIndicatorView *activityIndicator;
     
-    UIFont *tableCellTextFont;
-    UIFont *tableCellTextFontAction;
     UIColor *tableCellTextTextColor;
     UIColor *tableCellTextTextColorNoCards;
     UIColor *tableCellTextTextColorAction;
     UIColor *tableCellTextTextColorActionInactive;
-    UIFont *tableCellDetailTextFont;
     UIColor *tableCellDetailTextTextColor;
     UIColor *tableCellBackgroundColor;
     UIColor *tableCellBackgroundColorAltGroup;

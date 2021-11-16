@@ -55,13 +55,10 @@
     ivar_release_and_clear(editButton);
     ivar_release_and_clear(settingsButton);
     ivar_release_and_clear(activityIndicator);
-    ivar_release_and_clear(tableCellTextFont);
-    ivar_release_and_clear(tableCellTextFontAction);
     ivar_release_and_clear(tableCellTextTextColor);
     ivar_release_and_clear(tableCellTextTextColorNoCards);
     ivar_release_and_clear(tableCellTextTextColorAction);
     ivar_release_and_clear(tableCellTextTextColorActionInactive);
-    ivar_release_and_clear(tableCellDetailTextFont);
     ivar_release_and_clear(tableCellDetailTextTextColor);
     ivar_release_and_clear(tableCellBackgroundColor);
     ivar_release_and_clear(tableCellBackgroundColorMarked);
@@ -108,13 +105,10 @@
                                           initWithCustomView:activityIndicator]
                                          autorelease];
     self.toolbarItems = viewToolbar.items;
-    ivar_assign_and_retain(tableCellTextFont, [UIFont systemFontOfSize:17]);
-    ivar_assign_and_retain(tableCellTextFontAction, [UIFont systemFontOfSize:10]);
     ivar_assign_and_retain(tableCellTextTextColor, [UIColor labelColor]);
     ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor systemGray2Color]);
     ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor systemGray2Color]);
     ivar_assign_and_retain(tableCellTextTextColorActionInactive, [UIColor systemGray5Color]);
-    ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:9]);
     ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor secondaryLabelColor]);
     ivar_assign_and_retain(tableCellBackgroundColor, [UIColor systemBackgroundColor]);
     ivar_assign_and_retain(tableCellBackgroundColorMarked, [UIColor systemGray4Color]);
@@ -150,7 +144,6 @@
     
     if ([CDXDevice sharedDevice].useLargeTitles) {
         self.navigationController.navigationBar.prefersLargeTitles = YES;
-        self.navigationController.navigationBar.largeTitleTextAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:23]};
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
     }
 
