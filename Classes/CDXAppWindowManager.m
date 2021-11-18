@@ -476,7 +476,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     
     ivar_assign(modalViewControllerContainer, [[UIPopoverController alloc] initWithContentViewController:viewController]);
     modalViewControllerContainer.delegate = self;
-    modalViewControllerContainer.popoverContentSize = CGSizeMake(320, 720);
+    modalViewControllerContainer.popoverContentSize = CGSizeMake(520, 820);
 
     [modalViewControllerContainer presentPopoverFromBarButtonItem:barButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:animated];
 }
