@@ -64,6 +64,8 @@
         for (NSUInteger i = 0; i < CDXCardsSideBySideViewCardViewsSize; i++) {
             [scrollView addSubview:[cardViewRendering viewAtIndex:i]];
         }
+        
+        [self registerTapGestureRecognizersOnView:scrollView];
     }
     return self;
 }
@@ -205,11 +207,9 @@
     }
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (BOOL)tapGestureAllowed {
     // send touch events only if the scroll view is not scrolling
-    if ((int)scrollView.contentOffset.x % (int)(scrollViewPageWidth) == 0) {
-        [viewDelegate cardsViewDelegateTouchesEnded:touches withEvent:event];
-    }
+    return ((int)scrollView.contentOffset.x % (int)(scrollViewPageWidth) == 0);
 }
 
 @end

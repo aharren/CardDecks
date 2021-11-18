@@ -40,6 +40,7 @@ enum {
     CDXAppSettingsVersionState,
     CDXAppSettingsIdleTimer,
     CDXAppSettingsCloseTapCount,
+    CDXAppSettingsShakeTapCount,
     CDXAppSettingsActionButtonsOnLeftSide,
     CDXAppSettingsDoneButtonOnLeftSide,
     CDXAppSettingsAllKeyboardSymbols,
@@ -52,6 +53,7 @@ static const CDXSetting settings[] = {
     { CDXAppSettingsVersionState, CDXSettingTypeText, @"Version" },
     { CDXAppSettingsIdleTimer, CDXSettingTypeBoolean, @"Idle Timer" },
     { CDXAppSettingsCloseTapCount, CDXSettingTypeEnumeration, @"Close Gesture" },
+    { CDXAppSettingsShakeTapCount, CDXSettingTypeEnumeration, @"Shake Gesture" },
     { CDXAppSettingsActionButtonsOnLeftSide, CDXSettingTypeEnumeration, @"Action Buttons" },
     { CDXAppSettingsDoneButtonOnLeftSide, CDXSettingTypeEnumeration, @"Done Button" },
     { CDXAppSettingsAllKeyboardSymbols, CDXSettingTypeBoolean, @"All Unicode Symbols" },
@@ -64,6 +66,7 @@ static NSString *settingsUserDefaultsKeys[] = {
     @"Version",
     @"IdleTimer",
     @"CloseTapCount",
+    @"ShakeTapCount",
     @"ActionButtonsOnLeftSide",
     @"DoneButtonOnLeftSide",
     @"AllKeyboardSymbols",
@@ -163,11 +166,20 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
 }
 
 - (NSUInteger)closeTapCount {
-    NSUInteger value = [CDXAppSettings userDefaultsIntegerValueForKey:settingsUserDefaultsKeys[CDXAppSettingsCloseTapCount] defaultsTo:1];
-    if (value >= 1 && value <= 2) {
+    NSUInteger value = [CDXAppSettings userDefaultsIntegerValueForKey:settingsUserDefaultsKeys[CDXAppSettingsCloseTapCount] defaultsTo:2];
+    if (value >= 1 && value <= 3) {
         return value;
     } else {
         return 2;
+    }
+}
+
+- (NSUInteger)shakeTapCount {
+    NSUInteger value = [CDXAppSettings userDefaultsIntegerValueForKey:settingsUserDefaultsKeys[CDXAppSettingsShakeTapCount] defaultsTo:1];
+    if (value >= 1 && value <= 3) {
+        return value;
+    } else {
+        return 0;
     }
 }
 
@@ -250,6 +262,8 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
             return 0;
         case CDXAppSettingsCloseTapCount:
             return [self closeTapCount] - 1;
+        case CDXAppSettingsShakeTapCount:
+            return [self shakeTapCount];
         case CDXAppSettingsDoneButtonOnLeftSide:
             return [self doneButtonOnLeftSide] ? 0 : 1;
         case CDXAppSettingsActionButtonsOnLeftSide:
@@ -263,6 +277,31 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
             break;
         case CDXAppSettingsCloseTapCount:
             [CDXAppSettings setUserDefaultsIntegerValue:(value + 1) forKey:settingsUserDefaultsKeys[tag]];
+            {
+                NSUInteger closeTapCount = [self closeTapCount];
+                NSUInteger shakeTapCount = [self shakeTapCount];
+                if (closeTapCount == shakeTapCount) {
+                    if (closeTapCount == 1) {
+                        [CDXAppSettings setUserDefaultsIntegerValue:2 forKey:settingsUserDefaultsKeys[CDXAppSettingsShakeTapCount]];
+                    } else {
+                        [CDXAppSettings setUserDefaultsIntegerValue:1 forKey:settingsUserDefaultsKeys[CDXAppSettingsShakeTapCount]];
+                    }
+                }
+            }
+            break;
+        case CDXAppSettingsShakeTapCount:
+            [CDXAppSettings setUserDefaultsIntegerValue:value forKey:settingsUserDefaultsKeys[tag]];
+            {
+                NSUInteger closeTapCount = [self closeTapCount];
+                NSUInteger shakeTapCount = [self shakeTapCount];
+                if (closeTapCount == shakeTapCount) {
+                    if (shakeTapCount == 1) {
+                        [CDXAppSettings setUserDefaultsIntegerValue:2 forKey:settingsUserDefaultsKeys[CDXAppSettingsCloseTapCount]];
+                    } else {
+                        [CDXAppSettings setUserDefaultsIntegerValue:1 forKey:settingsUserDefaultsKeys[CDXAppSettingsCloseTapCount]];
+                    }
+                }
+            }
             break;
         case CDXAppSettingsDoneButtonOnLeftSide:
         case CDXAppSettingsActionButtonsOnLeftSide:
@@ -278,7 +317,9 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
         case CDXAppSettingsMigrationState:
             return 2;
         case CDXAppSettingsCloseTapCount:
-            return 2;
+            return 3;
+        case CDXAppSettingsShakeTapCount:
+            return 4;
         case CDXAppSettingsDoneButtonOnLeftSide:
         case CDXAppSettingsActionButtonsOnLeftSide:
             return 2;
@@ -298,6 +339,20 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
                     return @"Single Tap";
                 case 1:
                     return @"Double Tap";
+                case 2:
+                    return @"Triple Tap";
+            }
+        case CDXAppSettingsShakeTapCount:
+            switch (value) {
+                default:
+                case 0:
+                    return @"Shake Only";
+                case 1:
+                    return @"Shake or Single Tap";
+                case 2:
+                    return @"Shake or Double Tap";
+                case 3:
+                    return @"Shake or Triple Tap";
             }
         case CDXAppSettingsDoneButtonOnLeftSide:
         case CDXAppSettingsActionButtonsOnLeftSide:

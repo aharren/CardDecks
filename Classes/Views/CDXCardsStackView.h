@@ -59,5 +59,7 @@ enum {
 
 - (id)initWithFrame:(CGRect)rect;
 
+- (BOOL)tapGestureAllowed;
+
 @end
 

@@ -38,6 +38,8 @@
         [self addSubview:[cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsBottom]];
         [self addSubview:[cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle]];
         [self addSubview:[cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft]];
+
+        [self registerTapGestureRecognizersOnView:self];
     }
     return self;
 }
@@ -172,12 +174,9 @@
     }
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (BOOL)tapGestureAllowed {
     // send touch events only if we are not in an animation
-    if (!touchAnimationInProgress) {
-        [viewDelegate cardsViewDelegateTouchesEnded:touches withEvent:event];
-        return;
-    }
+    return (!touchAnimationInProgress);
 }
 
 @end

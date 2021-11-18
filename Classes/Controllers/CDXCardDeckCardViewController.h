@@ -59,6 +59,7 @@
     IBOutlet UIButton *actionsViewStopButton;
 
     NSUInteger closeTapCount;
+    NSUInteger shakeTapCount;
 
     IBOutlet UIView *timerSignalView;
     CDXCardDeckCardViewControllerTimer *currentTimer;

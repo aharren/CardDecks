@@ -43,6 +43,12 @@
 - (id)initWithFrame:(CGRect)rect viewCount:(NSUInteger)viewCount;
 - (id)initWithFrame:(CGRect)rect;
 
+- (void)registerTapGestureRecognizersOnView:(UIView *)view;
+- (void)handleSingleTap:(UITapGestureRecognizer *)sender;
+- (void)handleDoubleTap:(UITapGestureRecognizer *)sender;
+- (void)handleTripleTap:(UITapGestureRecognizer *)sender;
+- (BOOL)tapGestureAllowed;
+
 @property (nonatomic, assign) id<CDXCardsViewDelegate> viewDelegate;
 @property (nonatomic, assign) id<CDXCardsViewDataSource> viewDataSource;
 @property (nonatomic, assign) UIDeviceOrientation deviceOrientation;

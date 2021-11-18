@@ -66,6 +66,8 @@
         
         [scrollView addSubview:[cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsTopLeft]];
         [scrollView addSubview:[cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsTopRight]];
+
+        [self registerTapGestureRecognizersOnView:scrollView];
     }
     return self;
 }
@@ -143,11 +145,9 @@
     [self showCardAtIndex:currentCardIndex];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (BOOL)tapGestureAllowed {
     // send touch events only if the scroll view is not scrolling
-    if ((int)scrollView.contentOffset.x % (int)(scrollViewPageWidth) == 0) {
-        [viewDelegate cardsViewDelegateTouchesEnded:touches withEvent:event];
-    }
+    return ((int)scrollView.contentOffset.x % (int)(scrollViewPageWidth) == 0);
 }
 
 - (void)scrollViewDidEndScrolling {

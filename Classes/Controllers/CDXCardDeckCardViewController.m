@@ -95,6 +95,7 @@
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
         ivar_assign_and_retain(cardDeck, cardDeckViewContext.cardDeck);
         closeTapCount = [[CDXAppSettings sharedAppSettings] closeTapCount];
+        shakeTapCount = [[CDXAppSettings sharedAppSettings] shakeTapCount];
     }
     return self;
 }
@@ -345,12 +346,29 @@
     return cardDeckViewContext.currentCardIndex;
 }
 
-- (void)cardsViewDelegateTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    qltrace();
-    UITouch *touch = [touches anyObject];
-    if ([touch tapCount] == closeTapCount) {
-        CGPoint location = [touch locationInView:[CDXAppWindowManager sharedAppWindowManager].window];
+- (void)handleShakeEvent {
+    switch (cardDeck.shakeAction) {
+        case CDXCardDeckShakeActionShuffle:
+            [self shuffleButtonPressed];
+            break;
+        case CDXCardDeckShakeActionRandom:
+            [self randomButtonPressed];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)cardsViewDelegateTapRecognized:(UITapGestureRecognizer *)sender tapCount:(NSUInteger)tapCount {
+    qltrace(@"%lu", (unsigned long)tapCount);
+    if (tapCount == closeTapCount) {
+        CGPoint location = [sender locationInView:[CDXAppWindowManager sharedAppWindowManager].window];
         [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES withTouchLocation:location];
+        return;
+    }
+    if (tapCount == shakeTapCount) {
+        [self handleShakeEvent];
+        return;
     }
 }
 
@@ -405,16 +423,7 @@
     
     // shake event received, shuffle the deck
     if (event.type == UIEventSubtypeMotionShake) {
-        switch (cardDeck.shakeAction) {
-            case CDXCardDeckShakeActionShuffle:
-                [self shuffleButtonPressed];
-                break;
-            case CDXCardDeckShakeActionRandom:
-                [self randomButtonPressed];
-                break;
-            default:
-                break;
-        }
+        [self handleShakeEvent];
     }
     
     if ([super respondsToSelector:@selector(motionEnded:withEvent:)]) {

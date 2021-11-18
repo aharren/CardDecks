@@ -64,6 +64,49 @@
     [super dealloc];
 }
 
+- (void)registerTapGestureRecognizersOnView:(UIView *)view {
+    UITapGestureRecognizer *tripleTapRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self action: @selector(handleTripleTap:)] autorelease];
+    tripleTapRecognizer.numberOfTapsRequired = 3;
+
+    UITapGestureRecognizer *doubleTapRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self action: @selector(handleDoubleTap:)] autorelease];
+    doubleTapRecognizer.numberOfTapsRequired = 2;
+
+    UITapGestureRecognizer *singleTapRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self action: @selector(handleSingleTap:)] autorelease];
+    singleTapRecognizer.numberOfTapsRequired = 1;
+
+    [doubleTapRecognizer requireGestureRecognizerToFail:tripleTapRecognizer];
+    [singleTapRecognizer requireGestureRecognizerToFail:doubleTapRecognizer];
+
+    [view addGestureRecognizer:tripleTapRecognizer];
+    [view addGestureRecognizer:doubleTapRecognizer];
+    [view addGestureRecognizer:singleTapRecognizer];
+}
+
+- (void)handleSingleTap:(UITapGestureRecognizer *)sender {
+    qltrace();
+    if ([self tapGestureAllowed]) {
+        [viewDelegate cardsViewDelegateTapRecognized:sender tapCount:1];
+    }
+}
+
+- (void)handleDoubleTap:(UITapGestureRecognizer *)sender {
+    qltrace();
+    if ([self tapGestureAllowed]) {
+        [viewDelegate cardsViewDelegateTapRecognized:sender tapCount:2];
+    }
+}
+
+- (void)handleTripleTap:(UITapGestureRecognizer *)sender {
+    qltrace();
+    if ([self tapGestureAllowed]) {
+        [viewDelegate cardsViewDelegateTapRecognized:sender tapCount:3];
+    }
+}
+
+- (BOOL)tapGestureAllowed {
+    return NO;
+}
+
 - (void)showCardAtIndex:(NSUInteger)index {
     [self showCardAtIndex:index tellDelegate:YES];
 }

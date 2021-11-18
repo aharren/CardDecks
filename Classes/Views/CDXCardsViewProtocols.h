@@ -39,7 +39,7 @@
 @protocol CDXCardsViewDelegate
 
 @required
-- (void)cardsViewDelegateTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)cardsViewDelegateTapRecognized:(UITapGestureRecognizer *)sender tapCount:(NSUInteger)tapCount;
 - (void)cardsViewDelegateCurrentCardIndexHasChangedTo:(NSUInteger)index;
 
 @end
