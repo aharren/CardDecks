@@ -32,6 +32,9 @@
 
 declare_singleton(sharedAppSettings, CDXAppSettings);
 
+- (void)clearCloseTapCount;
+- (void)clearShakeTapCount;
+
 - (BOOL)enableIdleTimer;
 - (BOOL)enableAllKeyboardSymbols;
 - (NSUInteger)closeTapCount;

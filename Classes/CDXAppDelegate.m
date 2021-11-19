@@ -328,6 +328,15 @@
         [[CDXAppSettings sharedAppSettings] setMigrationState:migrationState_2];
     }
     
+    const NSUInteger migrationState_3 = 300;
+    if ([[CDXAppSettings sharedAppSettings] migrationState] < migrationState_3) {
+        // reset some settings
+        [[CDXAppSettings sharedAppSettings] clearCloseTapCount];
+        [[CDXAppSettings sharedAppSettings] clearShakeTapCount];
+
+        [[CDXAppSettings sharedAppSettings] setMigrationState:migrationState_3];
+    }
+    
     return decks;
 }
 

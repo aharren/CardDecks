@@ -144,6 +144,11 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
     [userDefaults setInteger:value forKey:key];
 }
 
++ (void)clearUserDefaultsForKey:(NSString *)key {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults removeObjectForKey:key];
+}
+
 + (NSString *)userDefaultsStringValueForKey:(NSString *)key defaultsTo:(NSString *)defaults {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if ([userDefaults stringForKey:key] == nil) {
@@ -155,6 +160,14 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
 + (void)setUserDefaultsStringValue:(NSString *)value forKey:(NSString *)key {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:value forKey:key];
+}
+
+- (void)clearCloseTapCount {
+    [CDXAppSettings clearUserDefaultsForKey:settingsUserDefaultsKeys[CDXAppSettingsCloseTapCount]];
+}
+
+- (void)clearShakeTapCount {
+    [CDXAppSettings clearUserDefaultsForKey:settingsUserDefaultsKeys[CDXAppSettingsShakeTapCount]];
 }
 
 - (BOOL)enableIdleTimer {
