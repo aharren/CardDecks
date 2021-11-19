@@ -58,42 +58,6 @@
 @end
 
 
-@interface CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
-    
-@protected
-    CDXCardDeckViewContext *cardDeckViewContext;
-    
-}
-
-- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
-
-@end
-
-
-@interface CDXCardDeckListViewControllerStringTextActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
-    
-@protected
-    NSString *text;
-    
-}
-
-- (instancetype)initWithString:(NSString *)text;
-
-@end
-
-
-@interface CDXCardDeckListViewControllerCarddecksURLActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
-    
-@protected
-    CDXCardDeckViewContext *cardDeckViewContext;
-    
-}
-
-- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
-
-@end
-
-
 @interface CDXCardDeckListViewControllerDuplicateDeckActivity : UIActivity {
     
 @protected

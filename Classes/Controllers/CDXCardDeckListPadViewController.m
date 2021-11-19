@@ -139,18 +139,6 @@
     ignoreCardDeckUpdateNotifications = NO;
 }
 
-- (IBAction)actionButtonPressed {
-    CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider *textItem = [[[CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    CDXCardDeckListViewControllerCarddecksURLActivityItemProvider *urlItem = [[[CDXCardDeckListViewControllerCarddecksURLActivityItemProvider alloc]  initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    
-    NSArray *items = @[textItem, urlItem];
-    NSArray *activities = nil;
-    
-    UIActivityViewController *vc = [[[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:activities] autorelease];
-    
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:actionButton animated:YES];
-}
-
 - (void)duplicateButtonPressed {
     ignoreCardDeckUpdateNotifications = YES;
     [super duplicateButtonPressed];
