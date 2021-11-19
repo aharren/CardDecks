@@ -115,7 +115,7 @@
     ivar_assign_and_retain(tableCellBackgroundColorAltGroup, [UIColor systemGray6Color]);
     ivar_assign_and_retain(tableCellBackgroundColorNewObject, [UIColor systemGray5Color]);
     ivar_assign_and_retain(tableCellBackgroundColorNewObjectAltGroup, [UIColor systemGray4Color]);
-    tableCellImageSize = CGSizeMake(5, 51);
+    tableCellImageSize = CGSizeMake(16, 4);
     
     ivar_assign(viewTableViewLongPressRecognizer, [[UILongPressGestureRecognizer alloc]
                                                    initWithTarget:self action:@selector(handleTableViewLongPressGesture:)]);
