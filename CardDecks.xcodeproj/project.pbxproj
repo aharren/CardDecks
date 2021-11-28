@@ -33,6 +33,7 @@
 		E02320F7117093720043D6CF /* CDXCardDeckListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E02320F6117093720043D6CF /* CDXCardDeckListViewController.m */; };
 		E02320F9117093870043D6CF /* CDXCardDeckListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E02320F8117093870043D6CF /* CDXCardDeckListView.xib */; };
 		E023ACEC11F4D3B10051B1E2 /* CDXDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = E023ACEB11F4D3B10051B1E2 /* CDXDevice.m */; };
+		E02450B92476981F0058ED8C /* CDXLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E02450B82476981F0058ED8C /* CDXLaunchScreen.storyboard */; };
 		E0260A3611BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0260A3511BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m */; };
 		E0260A3711BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0260A3511BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m */; };
 		E0260A3A11BC02F800FCAB34 /* CDXCardDeckDictionarySerializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0260A3811BC02F800FCAB34 /* CDXCardDeckDictionarySerializerTests.m */; };
@@ -46,7 +47,6 @@
 		E032F1541169DB790033980C /* CDXCardDecksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1531169DB790033980C /* CDXCardDecksTests.m */; };
 		E032F1681169DDC10033980C /* CDXCardDecksListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E032F1671169DDC10033980C /* CDXCardDecksListView.xib */; };
 		E0331B8E11FC3F18008B8E2F /* Legal.html in Resources */ = {isa = PBXBuildFile; fileRef = E0331B8D11FC3F18008B8E2F /* Legal.html */; };
-		E03B05F719C62F3D0024991E /* CDXLaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E03B05F619C62F3D0024991E /* CDXLaunchScreen.xib */; };
 		E03B10A311C3FC4300591E45 /* CDXAppAboutSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E03B10A211C3FC4300591E45 /* CDXAppAboutSettings.m */; };
 		E03B10B911C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E03B10B811C3FD4B00591E45 /* CDXAppAboutSettingsTitleView.xib */; };
 		E03B803A13B7918F00941540 /* CDXCardDeckListPadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E03B803913B7918F00941540 /* CDXCardDeckListPadView.xib */; };
@@ -83,6 +83,7 @@
 		E0764045196B377E00F660BF /* CDXAppWindowMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0764044196B377E00F660BF /* CDXAppWindowMessageView.xib */; };
 		E0805B4B11A85C6600199172 /* CDXCardDeckViewContext.m in Sources */ = {isa = PBXBuildFile; fileRef = E0805B4A11A85C6600199172 /* CDXCardDeckViewContext.m */; };
 		E0875D9B1958CAD6007FA508 /* CDXOrderedSerializerDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E0875D9A1958CAD6007FA508 /* CDXOrderedSerializerDictionary.m */; };
+		E08E3ECB247912B7008E8FC1 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08E3ECA247912B7008E8FC1 /* WebKit.framework */; };
 		E091E41619CF20010080A2E5 /* Logo.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E091E41519CF20010080A2E5 /* Logo.xcassets */; };
 		E097B04414E70FD300A8F38B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E097B04314E70FD300A8F38B /* AudioToolbox.framework */; };
 		E09A489619F3D41B001D9286 /* CDXCopyPaste.m in Sources */ = {isa = PBXBuildFile; fileRef = E09A489419F3D41B001D9286 /* CDXCopyPaste.m */; };
@@ -208,6 +209,7 @@
 		E02320F8117093870043D6CF /* CDXCardDeckListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardDeckListView.xib; path = UserInterfaces/CDXCardDeckListView.xib; sourceTree = "<group>"; };
 		E023ACEA11F4D3B10051B1E2 /* CDXDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXDevice.h; path = Classes/CDXDevice.h; sourceTree = "<group>"; };
 		E023ACEB11F4D3B10051B1E2 /* CDXDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXDevice.m; path = Classes/CDXDevice.m; sourceTree = "<group>"; };
+		E02450B82476981F0058ED8C /* CDXLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CDXLaunchScreen.storyboard; path = UserInterfaces/CDXLaunchScreen.storyboard; sourceTree = "<group>"; };
 		E0260A3411BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDeckDictionarySerializer.h; path = Classes/Serializers/CDXCardDeckDictionarySerializer.h; sourceTree = "<group>"; };
 		E0260A3511BC02D700FCAB34 /* CDXCardDeckDictionarySerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckDictionarySerializer.m; path = Classes/Serializers/CDXCardDeckDictionarySerializer.m; sourceTree = "<group>"; };
 		E0260A3811BC02F800FCAB34 /* CDXCardDeckDictionarySerializerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckDictionarySerializerTests.m; path = Classes/Serializers/CDXCardDeckDictionarySerializerTests.m; sourceTree = "<group>"; };
@@ -224,7 +226,6 @@
 		E032F1671169DDC10033980C /* CDXCardDecksListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CDXCardDecksListView.xib; path = UserInterfaces/CDXCardDecksListView.xib; sourceTree = "<group>"; };
 		E0331B8D11FC3F18008B8E2F /* Legal.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Legal.html; sourceTree = "<group>"; };
 		E034181A1195CD9F00007FF7 /* CDXAppWindowProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppWindowProtocols.h; path = Classes/CDXAppWindowProtocols.h; sourceTree = "<group>"; };
-		E03B05F619C62F3D0024991E /* CDXLaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CDXLaunchScreen.xib; path = UserInterfaces/CDXLaunchScreen.xib; sourceTree = "<group>"; };
 		E03B103011C3F4A300591E45 /* CDXApplicationVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDXApplicationVersion.h; sourceTree = "<group>"; };
 		E03B10A111C3FC4300591E45 /* CDXAppAboutSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXAppAboutSettings.h; path = Classes/Models/CDXAppAboutSettings.h; sourceTree = "<group>"; };
 		E03B10A211C3FC4300591E45 /* CDXAppAboutSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppAboutSettings.m; path = Classes/Models/CDXAppAboutSettings.m; sourceTree = "<group>"; };
@@ -278,6 +279,7 @@
 		E0805B4A11A85C6600199172 /* CDXCardDeckViewContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDeckViewContext.m; path = Classes/Models/CDXCardDeckViewContext.m; sourceTree = "<group>"; };
 		E0875D981958CAB9007FA508 /* CDXOrderedSerializerDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXOrderedSerializerDictionary.h; path = Classes/Serializers/CDXOrderedSerializerDictionary.h; sourceTree = "<group>"; };
 		E0875D9A1958CAD6007FA508 /* CDXOrderedSerializerDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXOrderedSerializerDictionary.m; path = Classes/Serializers/CDXOrderedSerializerDictionary.m; sourceTree = "<group>"; };
+		E08E3ECA247912B7008E8FC1 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		E091E41519CF20010080A2E5 /* Logo.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Logo.xcassets; path = Images/Logo.xcassets; sourceTree = "<group>"; };
 		E097B04314E70FD300A8F38B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		E09A489419F3D41B001D9286 /* CDXCopyPaste.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCopyPaste.m; path = Classes/CDXCopyPaste.m; sourceTree = "<group>"; };
@@ -377,6 +379,7 @@
 			files = (
 				E0C1F67418772D4300F17779 /* Social.framework in Frameworks */,
 				E097B04414E70FD300A8F38B /* AudioToolbox.framework in Frameworks */,
+				E08E3ECB247912B7008E8FC1 /* WebKit.framework in Frameworks */,
 				E03BA2721167488B00FE7924 /* Foundation.framework in Frameworks */,
 				E03BA2741167489600FE7924 /* UIKit.framework in Frameworks */,
 				E0CCC9041170E9420040D222 /* QuartzCore.framework in Frameworks */,
@@ -514,6 +517,7 @@
 		E03BA26E1167488000FE7924 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E08E3ECA247912B7008E8FC1 /* WebKit.framework */,
 				E0D1F09C18CC6BFF00BA521A /* XCTest.framework */,
 				E0C1F67318772D4300F17779 /* Social.framework */,
 				E097B04314E70FD300A8F38B /* AudioToolbox.framework */,
@@ -602,7 +606,7 @@
 				E022635C140160D300267F67 /* CDXSymbolsKeyboardExtensionTablePadView.xib */,
 				E04E7A0C14E4716200D46037 /* CDXTimerKeyboardExtensionView.xib */,
 				E0D673DF151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib */,
-				E03B05F619C62F3D0024991E /* CDXLaunchScreen.xib */,
+				E02450B82476981F0058ED8C /* CDXLaunchScreen.storyboard */,
 			);
 			name = "User Interfaces";
 			sourceTree = "<group>";
@@ -767,14 +771,15 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1300;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "CardDecks" */;
 			compatibilityVersion = "Xcode 9.3";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
+				Base,
+				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			productRefGroup = E00DD48811662E5500D4215E /* Products */;
@@ -797,13 +802,13 @@
 				E0A03BB719CF0E9900B5B4BA /* NoticeIcons.xcassets in Resources */,
 				E032F1681169DDC10033980C /* CDXCardDecksListView.xib in Resources */,
 				E007D65E19C23C4E00CE9BB2 /* LaunchImage.xcassets in Resources */,
+				E02450B92476981F0058ED8C /* CDXLaunchScreen.storyboard in Resources */,
 				E02320F9117093870043D6CF /* CDXCardDeckListView.xib in Resources */,
 				E07418E9188DCD4900039D8A /* Activity-Duplicate@2x.png in Resources */,
 				E0CCC73A1170DC120040D222 /* CDXCardDeckCardView.xib in Resources */,
 				E0A1C00311A82C5600911848 /* CDXCardDeckCardEditView.xib in Resources */,
 				E09FCDF311B7BA3A00135582 /* CDXSymbolsKeyboardExtensionTableView.xib in Resources */,
 				E09AC62511B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellA.xib in Resources */,
-				E03B05F719C62F3D0024991E /* CDXLaunchScreen.xib in Resources */,
 				E09AC62611B7BC8A00C96E25 /* CDXSymbolsKeyboardExtensionTableViewCellB.xib in Resources */,
 				E09AC6FD11B7E75100C96E25 /* CDXColorKeyboardExtensionView.xib in Resources */,
 				E09AC84511B7F95C00C96E25 /* CDXTextKeyboardExtensionView.xib in Resources */,
@@ -975,12 +980,13 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 3.4.1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -992,11 +998,13 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 3.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = 0xc0.de.CardDecks;
 				PRODUCT_NAME = CardDecks;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1008,13 +1016,14 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
+				CODE_SIGN_STYLE = Automatic;
 				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 3.4.1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1024,11 +1033,13 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 3.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = 0xc0.de.CardDecks;
 				PRODUCT_NAME = CardDecks;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1050,6 +1061,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1067,7 +1079,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1089,6 +1101,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1105,7 +1118,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1118,6 +1131,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1149,6 +1163,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
@@ -1215,6 +1230,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1231,7 +1247,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				ONLY_ACTIVE_ARCH = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -1244,13 +1260,14 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 3.4.1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1260,11 +1277,13 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 3.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = 0xc0.de.CardDecks;
 				PRODUCT_NAME = CardDecks;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

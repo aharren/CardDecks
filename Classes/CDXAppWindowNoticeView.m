@@ -3,7 +3,7 @@
 // CDXAppWindowNoticeView.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -57,18 +57,12 @@
 }
 
 
-- (void)hideAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    CDXAppWindowNoticeView *aNoticeView = (CDXAppWindowNoticeView *)context;
-    [aNoticeView removeFromSuperview];
-}
-
 - (void)hide:(CDXAppWindowNoticeView *)aNoticeView {
-    [UIView beginAnimations:nil context:aNoticeView];
-    [UIView setAnimationDuration:0.5];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(hideAnimationDidStop:finished:context:)];
-    aNoticeView.alpha = 0;
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.5 animations:^{
+        aNoticeView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [aNoticeView removeFromSuperview];
+    }];
 }
 
 - (void)showImageNamed:(NSString *)name text:(NSString *)aText timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation view:(UIView *)view {

@@ -3,7 +3,7 @@
 // CDXColorKeyboardExtension.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -123,17 +123,18 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     ivar_assign(toolbarActiveButtonMarker, [[CDXKeyboardExtensionMarker alloc] init]);
     [toolbar addSubview:toolbarActiveButtonMarker.view];
     self.view.backgroundColor = [[CDXKeyboardExtensions sharedKeyboardExtensions] backgroundColor];
-    NSDictionary *textAttributes = @{ NSFontAttributeName: [UIFont systemFontOfSize:15] };
+    NSDictionary *textAttributes = @{ NSForegroundColorAttributeName:[UIColor systemBlueColor], NSFontAttributeName: [UIFont systemFontOfSize:15] };
+    NSDictionary *textAttributesDisabled = @{ NSForegroundColorAttributeName:[UIColor labelColor], NSFontAttributeName: [UIFont systemFontOfSize:15] };
     [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
-    [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateDisabled];
+    [simpleButton setTitleTextAttributes:textAttributesDisabled forState:UIControlStateDisabled];
     [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
     [simpleButton setTitleTextAttributes:textAttributes forState:UIControlStateFocused];
     [textButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
-    [textButton setTitleTextAttributes:textAttributes forState:UIControlStateDisabled];
+    [textButton setTitleTextAttributes:textAttributesDisabled forState:UIControlStateDisabled];
     [textButton setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
     [textButton setTitleTextAttributes:textAttributes forState:UIControlStateFocused];
     [backgroundButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
-    [backgroundButton setTitleTextAttributes:textAttributes forState:UIControlStateDisabled];
+    [backgroundButton setTitleTextAttributes:textAttributesDisabled forState:UIControlStateDisabled];
     [backgroundButton setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
     [backgroundButton setTitleTextAttributes:textAttributes forState:UIControlStateFocused];
     [colorChooserRGBSliderRed setThumbImage:[UIImage imageNamed:@"Circle"] forState:UIControlStateNormal];
@@ -157,6 +158,7 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     } else {
         [toolbarActiveButtonMarker positionAtBarButtonItem:simpleButton animated:NO];
     }
+    [toolbarActiveButtonMarker show];
 }
 
 - (void)setView:(UIView *)view button:(UIBarButtonItem *)button animated:(BOOL)animated {
@@ -169,7 +171,7 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     
     button.enabled = NO;
     [self.view addSubview:view];
-    view.frame = CGRectMake(0, CGRectGetHeight(toolbar.bounds) + 2, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - CGRectGetHeight(toolbar.bounds) - 2);
+    view.frame = CGRectMake(0, CGRectGetHeight(toolbar.bounds) + 1, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - CGRectGetHeight(toolbar.bounds) - 1);
     
     [toolbarActiveButtonMarker positionAtBarButtonItem:button animated:animated];
 }
@@ -252,12 +254,11 @@ static CDXColorRGB colorChooserSimpleColors[] = {
 - (void)colorChooserRGBSliderButtonPressedPostProcess:(UIButton *)button {
     [self colorChooserRGBSliderValueChanged];
     
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.2];
-    UIColor *color = button.backgroundColor;
-    button.backgroundColor = [UIColor grayColor];
-    button.backgroundColor = color;
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.2 animations:^{
+        UIColor *color = button.backgroundColor;
+        button.backgroundColor = [UIColor grayColor];
+        button.backgroundColor = color;
+    }];
 }
 
 - (IBAction)colorChooserRGBSliderRedButtonPressed:(id)sender {
@@ -300,16 +301,14 @@ static CDXColorRGB colorChooserSimpleColors[] = {
     
     [self postColorUpdate:color textNotBackground:tag % 20 < 10];
     
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.5];
-    if (tag % 10 == 8) {
-        button.backgroundColor = [UIColor blackColor];
-    } else {
-        button.backgroundColor = [UIColor whiteColor];
-    }
-    
-    button.backgroundColor = [color uiColor];
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.5 animations:^{
+        if (tag % 10 == 8) {
+            button.backgroundColor = [UIColor blackColor];
+        } else {
+            button.backgroundColor = [UIColor whiteColor];
+        }
+        button.backgroundColor = [color uiColor];
+    }];
 }
 
 @end

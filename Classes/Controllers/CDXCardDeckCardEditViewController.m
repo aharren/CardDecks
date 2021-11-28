@@ -3,7 +3,7 @@
 // CDXCardDeckCardEditViewController.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 
 #import "CDXCardDeckCardEditViewController.h"
 #import "CDXDevice.h"
+#import "CDXKeyboardExtensions.h"
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -188,19 +189,16 @@
     [[notification.userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&keyboardAnimationCurve];
     CGRect keyboardAnimationEndFrame;
     [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardAnimationEndFrame];
-
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationCurve:keyboardAnimationCurve];
-    [UIView setAnimationDuration:keyboardAnimationDuration];
-
-    CGRect toolbarFrame = [CDXKeyboardExtensions sharedKeyboardExtensions].toolbarFrame;
-
-    CGRect textFrame = text.frame;
-    text.frame = CGRectMake(textFrame.origin.x, textFrame.origin.y, textFrame.size.width, keyboardAnimationEndFrame.origin.y - toolbarFrame.size.height - textFrame.origin.y);
-    CGRect cardViewScrollViewFrame = cardViewScrollView.frame;
-    cardViewScrollView.frame = CGRectMake(cardViewScrollViewFrame.origin.x, cardViewScrollViewFrame.origin.y, cardViewScrollViewFrame.size.width, keyboardAnimationEndFrame.origin.y - toolbarFrame.size.height - cardViewScrollViewFrame.origin.y);
-
-    [UIView commitAnimations];
+    
+    [UIView animateWithDuration:keyboardAnimationDuration delay:0 options:[CDXKeyboardExtensions animationOptionsWithCurve:keyboardAnimationCurve] animations:^{
+        CGRect toolbarFrame = [CDXKeyboardExtensions sharedKeyboardExtensions].toolbarFrame;
+        
+        CGRect textFrame = text.frame;
+        text.frame = CGRectMake(textFrame.origin.x, textFrame.origin.y, textFrame.size.width, keyboardAnimationEndFrame.origin.y - toolbarFrame.size.height - textFrame.origin.y);
+        CGRect cardViewScrollViewFrame = cardViewScrollView.frame;
+        cardViewScrollView.frame = CGRectMake(cardViewScrollViewFrame.origin.x, cardViewScrollViewFrame.origin.y, cardViewScrollViewFrame.size.width, keyboardAnimationEndFrame.origin.y - toolbarFrame.size.height - cardViewScrollViewFrame.origin.y);
+    } completion:^(BOOL finished) {
+    }];
 }
 
 - (void)keyboardDidShow:(NSNotification *)notification {
@@ -217,17 +215,14 @@
     [[notification.userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&keyboardAnimationCurve];
     CGRect keyboardAnimationEndFrame;
     [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardAnimationEndFrame];
-
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationCurve:keyboardAnimationCurve];
-    [UIView setAnimationDuration:keyboardAnimationDuration];
-
-    CGRect textFrame = text.frame;
-    text.frame = CGRectMake(textFrame.origin.x, textFrame.origin.y, textFrame.size.width, keyboardAnimationEndFrame.origin.y - textFrame.origin.y);
-    CGRect cardViewScrollViewFrame = cardViewScrollView.frame;
-    cardViewScrollView.frame = CGRectMake(cardViewScrollViewFrame.origin.x, cardViewScrollViewFrame.origin.y, cardViewScrollViewFrame.size.width, keyboardAnimationEndFrame.origin.y - cardViewScrollViewFrame.origin.y);
-
-    [UIView commitAnimations];
+    
+    [UIView animateWithDuration:keyboardAnimationDuration delay:0 options:[CDXKeyboardExtensions animationOptionsWithCurve:keyboardAnimationCurve] animations:^{
+        CGRect textFrame = text.frame;
+        text.frame = CGRectMake(textFrame.origin.x, textFrame.origin.y, textFrame.size.width, keyboardAnimationEndFrame.origin.y - textFrame.origin.y);
+        CGRect cardViewScrollViewFrame = cardViewScrollView.frame;
+        cardViewScrollView.frame = CGRectMake(cardViewScrollViewFrame.origin.x, cardViewScrollViewFrame.origin.y, cardViewScrollViewFrame.size.width, keyboardAnimationEndFrame.origin.y - cardViewScrollViewFrame.origin.y);
+    } completion:^(BOOL finished) {
+    }];
 }
 
 - (void)keyboardDidHide:(NSNotification *)notification {

@@ -3,7 +3,7 @@
 // CDXAppURLTests.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -103,13 +103,6 @@
     CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
     NSString *urlString = [CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:deck];
     XCTAssertEqualObjects(urlString, [@"carddecks:///2/add?" stringByAppendingString:string]);
-}
-
-- (void)testHttpURLStringVersion2 {
-    NSString *string = @"card%21deck,g1,d1,c1,id1,is1,it1,r1,s1,ap1&,000000ff,ffffffff,u,0,5";
-    CDXCardDeck *deck = [CDXCardDeckURLSerializer cardDeckFromVersion2String:string];
-    NSString *urlString = [CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:deck];
-    XCTAssertEqualObjects(urlString, [@"http://carddecks.protocol.0xc0.de/2/add?" stringByAppendingString:string]);
 }
 
 @end

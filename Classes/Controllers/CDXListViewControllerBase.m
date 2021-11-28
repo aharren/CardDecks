@@ -3,7 +3,7 @@
 // CDXListViewControllerBase.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -55,13 +55,10 @@
     ivar_release_and_clear(editButton);
     ivar_release_and_clear(settingsButton);
     ivar_release_and_clear(activityIndicator);
-    ivar_release_and_clear(tableCellTextFont);
-    ivar_release_and_clear(tableCellTextFontAction);
     ivar_release_and_clear(tableCellTextTextColor);
     ivar_release_and_clear(tableCellTextTextColorNoCards);
     ivar_release_and_clear(tableCellTextTextColorAction);
     ivar_release_and_clear(tableCellTextTextColorActionInactive);
-    ivar_release_and_clear(tableCellDetailTextFont);
     ivar_release_and_clear(tableCellDetailTextTextColor);
     ivar_release_and_clear(tableCellBackgroundColor);
     ivar_release_and_clear(tableCellBackgroundColorMarked);
@@ -102,30 +99,23 @@
                                          action:nil]
                                         autorelease];
     
-    ivar_assign(activityIndicator, [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]);
+    ivar_assign(activityIndicator, [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleMedium]);
     activityIndicator.hidesWhenStopped = YES;
-    activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
                                           initWithCustomView:activityIndicator]
                                          autorelease];
     self.toolbarItems = viewToolbar.items;
-    ivar_assign_and_retain(tableCellTextFont, [UIFont systemFontOfSize:17]);
-    ivar_assign_and_retain(tableCellTextFontAction, [UIFont systemFontOfSize:10]);
-    ivar_assign_and_retain(tableCellTextTextColor, [UIColor blackColor]);
-    ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor grayColor]);
-    ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor grayColor]);
-    ivar_assign_and_retain(tableCellTextTextColorActionInactive, [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]);
-    ivar_assign_and_retain(tableCellDetailTextFont, [UIFont systemFontOfSize:9]);
-    ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor grayColor]);
-    ivar_assign_and_retain(tableCellBackgroundColor, [UIColor whiteColor]);
-    ivar_assign_and_retain(tableCellBackgroundColorMarked, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff].uiColor);
-    ivar_assign_and_retain(tableCellBackgroundColorAltGroup, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0 alpha:0xff].uiColor);
-    ivar_assign_and_retain(tableCellBackgroundColorNewObject, [CDXColor colorWithRed:0xf0 green:0xf0 blue:0xf0+0x4 alpha:0xff].uiColor);
-    ivar_assign_and_retain(tableCellBackgroundColorNewObjectAltGroup, [CDXColor colorWithRed:0xe8 green:0xe8 blue:0xe8+0x4 alpha:0xff].uiColor);
-    tableCellImageSize = CGSizeMake(5, 51);
-    
-    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
-    viewTableView.backgroundView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForLinearGradientWithTopColor:[CDXColor colorWhite] bottomColor:[CDXColor colorWithRed:0xf8 green:0xf8 blue:0xf8 alpha:0xff] height:screenHeight base:0.0]] autorelease];
+    ivar_assign_and_retain(tableCellTextTextColor, [UIColor labelColor]);
+    ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor systemGray2Color]);
+    ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor systemGray2Color]);
+    ivar_assign_and_retain(tableCellTextTextColorActionInactive, [UIColor systemGray5Color]);
+    ivar_assign_and_retain(tableCellDetailTextTextColor, [UIColor secondaryLabelColor]);
+    ivar_assign_and_retain(tableCellBackgroundColor, [UIColor systemBackgroundColor]);
+    ivar_assign_and_retain(tableCellBackgroundColorMarked, [UIColor systemGray4Color]);
+    ivar_assign_and_retain(tableCellBackgroundColorAltGroup, [UIColor systemGray6Color]);
+    ivar_assign_and_retain(tableCellBackgroundColorNewObject, [UIColor systemGray5Color]);
+    ivar_assign_and_retain(tableCellBackgroundColorNewObjectAltGroup, [UIColor systemGray4Color]);
+    tableCellImageSize = CGSizeMake(16, 4);
     
     ivar_assign(viewTableViewLongPressRecognizer, [[UILongPressGestureRecognizer alloc]
                                                    initWithTarget:self action:@selector(handleTableViewLongPressGesture:)]);
@@ -133,6 +123,10 @@
                                                  initWithTarget:self action:@selector(handleToolbarLongPressGesture:)]);
     ivar_assign(viewTableViewTapRecognizer, [[UITapGestureRecognizer alloc]
                                              initWithTarget:self action:@selector(handleTableViewTapGesture:)]);
+
+    viewTableView.rowHeight = UITableViewAutomaticDimension;
+    viewTableView.estimatedRowHeight = UITableViewAutomaticDimension;
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -154,7 +148,6 @@
     
     if ([CDXDevice sharedDevice].useLargeTitles) {
         self.navigationController.navigationBar.prefersLargeTitles = YES;
-        self.navigationController.navigationBar.largeTitleTextAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:23]};
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
     }
 
@@ -321,11 +314,11 @@
         // show menu
         [self becomeFirstResponder];
         UIMenuController *menu = [UIMenuController sharedMenuController];
-        [menu setTargetRect:cell.frame inView:sender.view];
         // add additional menu items, defined by subclass
         [self menu:menu itemsForTableView:viewTableView cell:cell];
-        [menu setMenuVisible:YES animated:YES];
-        
+        // show
+        [menu showMenuFromView:sender.view rect:cell.frame];
+
         // keep cell selected
         cell.selected = YES;
     }
@@ -383,10 +376,10 @@
                 // show menu
                 [self becomeFirstResponder];
                 UIMenuController *menu = [UIMenuController sharedMenuController];
-                [menu setTargetRect:CGRectMake(left, 0, width, 1) inView:sender.view];
                 // add additional menu items, defined by subclass
                 [self menu:menu itemsForBarButtonItem:item];
-                [menu setMenuVisible:YES animated:YES];
+                // show
+                [menu showMenuFromView:sender.view rect:CGRectMake(left, 0, width, 1)];
 
                 return;
             }
@@ -518,6 +511,18 @@
 - (void)performBlockingSelectorEnd {
     [self setUserInteractionEnabled:YES];
     [activityIndicator stopAnimating];
+}
+
+#pragma mark -
+#pragma mark Appearance
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
 }
 
 @end

@@ -3,7 +3,7 @@
 // CDXCardDeckListPadViewController.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -137,18 +137,6 @@
     ignoreCardDeckUpdateNotifications = YES;
     [super performAction:action withSender:sender tableView:tableView indexPath:indexPath];
     ignoreCardDeckUpdateNotifications = NO;
-}
-
-- (IBAction)actionButtonPressed {
-    CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider *textItem = [[[CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    CDXCardDeckListViewControllerAutoDetectActivityItemProvider *urlItem = [[[CDXCardDeckListViewControllerAutoDetectActivityItemProvider alloc]  initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    
-    NSArray *items = @[textItem, urlItem];
-    NSArray *activities = nil;
-    
-    UIActivityViewController *vc = [[[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:activities] autorelease];
-    
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:actionButton animated:YES];
 }
 
 - (void)duplicateButtonPressed {

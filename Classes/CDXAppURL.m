@@ -3,7 +3,7 @@
 // CDXAppURL.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,6 @@
 
 #define CDXAppURLPrefix_carddecks_v1_add CDXAppURLScheme_carddecks @"://" CDXAppURLPath_v1_add @"?"
 #define CDXAppURLPrefix_carddecks_v2_add CDXAppURLScheme_carddecks @"://" CDXAppURLPath_v2_add @"?"
-#define CDXAppURLPrefix_http_v2_add @"http://carddecks.protocol.0xc0.de" CDXAppURLPath_v2_add @"?"
 
 
 @implementation CDXAppURL
@@ -114,20 +113,12 @@
         return YES;
     } else if ([urlString hasPrefix:CDXAppURLPrefix_carddecks_v2_add]) {
         return YES;
-    } else if ([urlString hasPrefix:CDXAppURLPrefix_http_v2_add]) {
-        return YES;
     }
     return NO;
 }
 
 + (NSString *)carddecksURLStringForVersion2AddActionFromCardDeck:(CDXCardDeck *)cardDeck {
     NSString *urlString = [CDXAppURLPrefix_carddecks_v2_add stringByAppendingString:[CDXCardDeckURLSerializer version2StringFromCardDeck:cardDeck]];
-    qltrace(@"%@", urlString);
-    return urlString;
-}
-
-+ (NSString *)httpURLStringForVersion2AddActionFromCardDeck:(CDXCardDeck *)cardDeck {
-    NSString *urlString = [CDXAppURLPrefix_http_v2_add stringByAppendingString:[CDXCardDeckURLSerializer version2StringFromCardDeck:cardDeck]];
     qltrace(@"%@", urlString);
     return urlString;
 }

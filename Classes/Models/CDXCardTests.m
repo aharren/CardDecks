@@ -3,7 +3,7 @@
 // CDXCardTests.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -178,7 +178,7 @@
 
     card.text = @"abcdefgh";
     size = [card fontSizeConstrainedToSize:CGSizeMake(640.0, 960.0) scale:1.0];
-    XCTAssertEqual(size, 160.0);
+    XCTAssertEqual(size, 161.0);
 
     card.text = @"ABCDEFGH";
     size = [card fontSizeConstrainedToSize:CGSizeMake(640.0, 960.0) scale:1.0];

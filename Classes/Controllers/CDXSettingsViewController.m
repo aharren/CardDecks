@@ -3,7 +3,7 @@
 // CDXSettingsViewController.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -104,7 +104,7 @@
     NSObject<CDXSettings> *settings;
     CDXSetting setting;
     
-    UIWebView *viewWebView;
+    WKWebView *viewWebView;
 }
 
 @end
@@ -127,7 +127,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    ivar_assign(viewWebView, [[UIWebView alloc] init]);
+    ivar_assign(viewWebView, [[WKWebView alloc] init]);
     [viewWebView loadHTMLString:[settings htmlTextValueForSettingWithTag:setting.tag] baseURL:nil];
     self.view = viewWebView;
 }

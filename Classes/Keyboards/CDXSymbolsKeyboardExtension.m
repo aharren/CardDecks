@@ -3,7 +3,7 @@
 // CDXSymbolsKeyboardExtension.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -399,9 +399,12 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    backButton.alpha = 0;
-    if (block != NULL) {
+    if (block == NULL) {
+        backButton.alpha = 0;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    } else {
         backButton.alpha = 1;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     [super viewWillAppear:animated];
 }
@@ -509,7 +512,7 @@ static CDXSymbolsKeyboardExtensionBlockStruct symbolsBlocksSubset[] = {
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == listTableView) {
         if (indexPath.row == currentBlockIndex) {
-            cell.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
+            cell.backgroundColor = [UIColor systemGray4Color];
         } else {
             cell.backgroundColor = [UIColor clearColor];
         }

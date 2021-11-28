@@ -3,7 +3,7 @@
 // CDXAppWindowManager.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -49,12 +49,16 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     return self;
 }
 
+- (UIUserInterfaceStyle)userInterfaceStyle {
+    return window.traitCollection.userInterfaceStyle;
+}
+
 - (UIEdgeInsets)safeAreaInsets {
     // we only consider portrait mode here, because the app is always in portrait mode
     // since iOS 12, top also reflects the size of the status bar; so, we use bottom here for detection
     CGFloat inset = 0;
     if (window.safeAreaInsets.bottom > 0) {
-        inset = 34;
+        inset = 38;
     }
     return UIEdgeInsetsMake(inset, 0, inset, 0);
 }
@@ -221,91 +225,35 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     return CGAffineTransformRotate(CGAffineTransformIdentity, transformAngle);
 }
 
-- (void)pushFullScreenViewControllerAnimationWillStart:(NSString *)animationID context:(void *)context {
-    qltrace();
-}
-
-- (void)pushFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    qltrace();
-    [fullScreenViewController setUserInteractionEnabled:YES];
-}
-
-- (void)pushFullScreenViewControllerAnimatedAndRemoveView:(NSArray *)data {
-    qltrace();
-    
-    UIView *view = data[0];
-    NSNumber *location_x = data[1];
-
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.6];
-    UIViewAnimationTransition transition = (location_x.floatValue > window.bounds.size.width / 2) ? UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight;
-    [UIView setAnimationTransition:transition forView:window cache:NO];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationWillStartSelector:@selector(pushFullScreenViewControllerAnimationWillStart:context:)];
-    [UIView setAnimationDidStopSelector:@selector(pushFullScreenViewControllerAnimationDidStop:finished:context:)];
-    
-    [view removeFromSuperview];
-    [window addSubview:fullScreenViewController.view];
-    [window setRootViewController:fullScreenViewController];
-    
-    [UIView commitAnimations];
-}
-
 - (void)pushFullScreenViewController:(UIViewController<CDXAppWindowViewController> *)viewController animated:(BOOL)animated withTouchLocation:(CGPoint)location {
     ivar_assign_and_retain(fullScreenViewController, viewController);
     [fullScreenViewController setUserInteractionEnabled:!animated];
-    if (animated) {
-        CGFloat location_x = ([CDXDevice sharedDevice].deviceUIIdiom == CDXDeviceUIIdiomPad) ? (window.bounds.size.width - 1) : (location.x);
-        navigationView.userInteractionEnabled = NO;
-        if ([[CDXDevice sharedDevice] useImageBasedRendering]) {
-            UIImageView *screenshotView = [[[UIImageView alloc] initWithImage:[[CDXImageFactory sharedImageFactory] imageForScreen]] autorelease];
-            [navigationView removeFromSuperview];
-            [window addSubview:screenshotView];
-            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:@[screenshotView, @(location_x)] afterDelay:0.001];
-        } else {
-            [self performSelector:@selector(pushFullScreenViewControllerAnimatedAndRemoveView:) withObject:@[navigationView, @(location_x)] afterDelay:0.001];
-        }
-    } else {
-        [navigationView removeFromSuperview];
-        [window addSubview:fullScreenViewController.view];
+
+    UIViewAnimationOptions transition = (location.x > window.bounds.size.width / 2) ? UIViewAnimationOptionTransitionFlipFromLeft : UIViewAnimationOptionTransitionFlipFromRight;
+    UIViewAnimationOptions curve = UIViewAnimationOptionCurveEaseInOut;
+    UIViewAnimationOptions flags = UIViewAnimationOptionLayoutSubviews;
+    UIViewAnimationOptions animateOptions = transition | curve | flags;
+    
+    [UIView transitionWithView:window duration:animated ? 0.6 : 0 options:animateOptions animations:^{
         [window setRootViewController:fullScreenViewController];
-    }
-}
-
-- (void)popFullScreenViewControllerAnimationWillStart:(NSString *)animationID context:(void *)context {
-    qltrace();
-}
-
-- (void)popFullScreenViewControllerAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    qltrace();
-    navigationView.userInteractionEnabled = YES;
+    } completion:^(BOOL finished) {
+        [fullScreenViewController setUserInteractionEnabled:YES];
+    }];
 }
 
 - (void)popFullScreenViewControllerAnimated:(BOOL)animated withTouchLocation:(CGPoint)location {
     qltrace(@"location %f %f", location.x, location.y);
     [fullScreenViewController setUserInteractionEnabled:NO];
     
-    if (animated) {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.6];
-        UIViewAnimationTransition transition =  (location.x > window.bounds.size.width / 2) ? UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight;
-        [UIView setAnimationTransition:transition forView:window cache:NO];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-        [UIView setAnimationDelegate:self];
-        [UIView setAnimationWillStartSelector:@selector(popFullScreenViewControllerAnimationWillStart:context:)];
-        [UIView setAnimationDidStopSelector:@selector(popFullScreenViewControllerAnimationDidStop:finished:context:)];
-    } else {
-        [self popFullScreenViewControllerAnimationDidStop:nil finished:nil context:NULL];
-    }
-    
-    [fullScreenViewController.view removeFromSuperview];
-    [window addSubview:navigationView];
-    [window setRootViewController:navigationViewController];
-    
-    if (animated) {
-        [UIView commitAnimations];
-    }
+    UIViewAnimationOptions transition = (location.x > window.bounds.size.width / 2) ? UIViewAnimationOptionTransitionFlipFromLeft : UIViewAnimationOptionTransitionFlipFromRight;
+    UIViewAnimationOptions curve = UIViewAnimationOptionCurveEaseInOut;
+    UIViewAnimationOptions flags = UIViewAnimationOptionLayoutSubviews;
+    UIViewAnimationOptions animateOptions = transition | curve | flags;
+
+    [UIView transitionWithView:window duration:animated ? 0.6 : 0 options:animateOptions animations:^{
+        [window setRootViewController:navigationViewController];
+    } completion:^(BOOL finished) {
+    }];
     
     ivar_release_and_clear(fullScreenViewController);
 }
@@ -385,11 +333,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
 - (void)makeWindowKeyAndVisible {
     qltrace();
     
-    [window addSubview:navigationView];
-    navigationView.frame = [[UIScreen mainScreen] bounds];
     [window setRootViewController:navigationViewController];
-    [navigationView addSubview:navigationController.view];
-    
     [window makeKeyAndVisible];
 }
 
@@ -401,89 +345,10 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
 @end
 
 
-@interface CDXLeftRightSplitViewController : UIViewController {
-    
-@protected
-    UIViewController *leftViewController;
-    UIViewController *rightViewController;
-}
-
-- (void)setLeftViewController:(UIViewController *)viewController;
-- (void)setRightViewController:(UIViewController *)viewController;
-
-@end
-
-
-@implementation CDXLeftRightSplitViewController
-
-- (void)dealloc {
-    ivar_release_and_clear(leftViewController);
-    ivar_release_and_clear(rightViewController);
-    [super dealloc];
-}
-
-- (void)setLeftViewController:(UIViewController *)viewController {
-    qltrace();
-    ivar_assign_and_retain(leftViewController, viewController);
-    [self.view addSubview:leftViewController.view];
-}
-
-- (void)setRightViewController:(UIViewController *)viewController {
-    qltrace();
-    ivar_assign_and_retain(rightViewController, viewController);
-    [self.view addSubview:rightViewController.view];
-}
-
-- (void)layoutViewControllerViews {
-    qltrace();
-    CGRect frame = self.view.frame;
-    leftViewController.view.frame = CGRectMake(0, 0, 340, frame.size.height);
-    rightViewController.view.frame = CGRectMake(341, 0, frame.size.width - 341, frame.size.height);
-}
-
-- (void)viewDidLoad {
-    qltrace();
-    [super viewDidLoad];
-    [leftViewController viewDidLoad];
-    [rightViewController viewDidLoad];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    qltrace();
-    [super viewWillAppear:animated];
-    [leftViewController viewWillAppear:animated];
-    [rightViewController viewWillAppear:animated];
-    [self layoutViewControllerViews];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    qltrace();
-    [leftViewController viewDidAppear:animated];
-    [rightViewController viewDidAppear:animated];
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    qltrace();
-    [super viewWillDisappear:animated];
-    [leftViewController viewWillDisappear:animated];
-    [rightViewController viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    qltrace();
-    [leftViewController viewDidDisappear:animated];
-    [rightViewController viewDidDisappear:animated];
-    [super viewDidDisappear:animated];
-}
-
-@end
-
-
 @interface CDXAppWindowManagerPad : CDXAppWindowManager<UIPopoverControllerDelegate> {
     
 @protected
-    CDXLeftRightSplitViewController* splitViewController;
+    UISplitViewController* splitViewController;
     
     UINavigationController *leftNavigationController;
     UINavigationController *rightNavigationController;
@@ -513,17 +378,20 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
 - (id)init {
     qltrace();
     if ((self = [super init])) {
-        ivar_assign(splitViewController, [[CDXLeftRightSplitViewController alloc] init]);
+        ivar_assign(splitViewController, [[UISplitViewController alloc] initWithStyle:UISplitViewControllerStyleDoubleColumn]);
         ivar_assign(leftNavigationController, [[UINavigationController alloc] init]);
         [leftNavigationController setToolbarHidden:NO];
         [leftNavigationController setNavigationBarHidden:NO];
-        [splitViewController setLeftViewController:leftNavigationController];
+        [splitViewController setViewController:leftNavigationController forColumn:UISplitViewControllerColumnPrimary];
         ivar_assign(rightNavigationController, [[UINavigationController alloc] init]);
         [rightNavigationController setToolbarHidden:NO];
         [rightNavigationController setNavigationBarHidden:NO];
         rightNavigationController.navigationBar.prefersLargeTitles = [CDXDevice sharedDevice].useLargeTitles;
-        [splitViewController setRightViewController:rightNavigationController];
+        [splitViewController setViewController:rightNavigationController forColumn:UISplitViewControllerColumnSecondary];
 
+        [splitViewController setPreferredSplitBehavior:UISplitViewControllerSplitBehaviorTile];
+        [splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeOneBesideSecondary];
+        
         navigationViewController = splitViewController;
     }
     return self;
@@ -575,11 +443,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
 - (void)makeWindowKeyAndVisible {
     qltrace();
     
-    [window addSubview:navigationView];
-    [window setRootViewController:navigationViewController];
-    navigationView.frame = [[UIScreen mainScreen] bounds];
-    [navigationView addSubview:splitViewController.view];
-    
+    [window setRootViewController:navigationViewController];    
     [window makeKeyAndVisible];
 }
 
@@ -612,7 +476,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     
     ivar_assign(modalViewControllerContainer, [[UIPopoverController alloc] initWithContentViewController:viewController]);
     modalViewControllerContainer.delegate = self;
-    modalViewControllerContainer.popoverContentSize = CGSizeMake(320, 720);
+    modalViewControllerContainer.popoverContentSize = CGSizeMake(520, 820);
 
     [modalViewControllerContainer presentPopoverFromBarButtonItem:barButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:animated];
 }

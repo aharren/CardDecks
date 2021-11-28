@@ -3,7 +3,7 @@
 // CDXCardsStackSwipeView.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,8 @@
         [self addSubview:[cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsBottom]];
         [self addSubview:[cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle]];
         [self addSubview:[cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft]];
+
+        [self registerTapGestureRecognizersOnView:self];
     }
     return self;
 }
@@ -99,12 +101,6 @@
     [self showCardAtIndex:currentCardIndex];
 }
 
-- (void)touchAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    [self showCardAtIndex:touchAnimationNewCardIndex];
-    touchAnimationNewCardIndex = currentCardIndex;
-    touchAnimationInProgress = NO;
-}
-
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     touchStartPosition = [touch locationInView:self];
@@ -137,19 +133,20 @@
                 touchAnimationInProgress = YES;
                 touchAnimationStartPosition = touchStartPosition;
                 touchAnimationNewCardIndex = currentCardIndex+1;
-                [UIView beginAnimations:nil context:NULL];
-                [UIView setAnimationDuration:0.25];
-                [UIView setAnimationDelegate:self];
-                [UIView setAnimationDidStopSelector:@selector(touchAnimationDidStop:finished:context:)];
-                CGRect frame = [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame;
-                qltrace(@"start %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
-                [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame = frame;
-                CGFloat y = -deltay/deltax * frame.size.height;
-                frame.origin.x = -cardViewsSize.width;
-                frame.origin.y = y;
-                qltrace(@"end %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
-                [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame = frame;
-                [UIView commitAnimations];
+                [UIView animateWithDuration:0.25 animations:^{
+                    CGRect frame = [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame;
+                    qltrace(@"start %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+                    [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame = frame;
+                    CGFloat y = -deltay/deltax * frame.size.height;
+                    frame.origin.x = -cardViewsSize.width;
+                    frame.origin.y = y;
+                    qltrace(@"end %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+                    [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame = frame;
+                } completion:^(BOOL finished) {
+                    [self showCardAtIndex:touchAnimationNewCardIndex];
+                    touchAnimationNewCardIndex = currentCardIndex;
+                    touchAnimationInProgress = NO;
+                }];
             }
         } else {
             // move to the right
@@ -157,31 +154,29 @@
                 touchAnimationInProgress = YES;
                 touchAnimationStartPosition = touchStartPosition;
                 touchAnimationNewCardIndex = currentCardIndex-1;
-                [UIView beginAnimations:nil context:NULL];
-                [UIView setAnimationDuration:0.25];
-                [UIView setAnimationDelegate:self];
-                [UIView setAnimationDidStopSelector:@selector(touchAnimationDidStop:finished:context:)];
-                CGRect frame = [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame;
-                CGFloat y = -deltay/deltax * frame.size.height;
-                frame.origin.x = -cardViewsSize.width;
-                frame.origin.y = y;
-                qltrace(@"start %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
-                [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft].frame = frame;
-                frame = [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame;
-                qltrace(@"end %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
-                [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft].frame = frame;
-                [UIView commitAnimations];
+                [UIView animateWithDuration:0.25 animations:^{
+                    CGRect frame = [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame;
+                    CGFloat y = -deltay/deltax * frame.size.height;
+                    frame.origin.x = -cardViewsSize.width;
+                    frame.origin.y = y;
+                    qltrace(@"start %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+                    [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft].frame = frame;
+                    frame = [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsMiddle].frame;
+                    qltrace(@"end %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+                    [cardViewRendering viewAtIndex:CDXCardsStackSwipeViewCardViewsTopLeft].frame = frame;
+                } completion:^(BOOL finished) {
+                    [self showCardAtIndex:touchAnimationNewCardIndex];
+                    touchAnimationNewCardIndex = currentCardIndex;
+                    touchAnimationInProgress = NO;
+                }];
             }
         }
     }
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (BOOL)tapGestureAllowed {
     // send touch events only if we are not in an animation
-    if (!touchAnimationInProgress) {
-        [viewDelegate cardsViewDelegateTouchesEnded:touches withEvent:event];
-        return;
-    }
+    return (!touchAnimationInProgress);
 }
 
 @end

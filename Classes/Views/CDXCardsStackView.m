@@ -3,7 +3,7 @@
 // CDXCardsStackView.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -66,6 +66,8 @@
         
         [scrollView addSubview:[cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsTopLeft]];
         [scrollView addSubview:[cardViewRendering viewAtIndex:CDXCardsStackViewCardViewsTopRight]];
+
+        [self registerTapGestureRecognizersOnView:scrollView];
     }
     return self;
 }
@@ -143,11 +145,9 @@
     [self showCardAtIndex:currentCardIndex];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (BOOL)tapGestureAllowed {
     // send touch events only if the scroll view is not scrolling
-    if ((int)scrollView.contentOffset.x % (int)(scrollViewPageWidth) == 0) {
-        [viewDelegate cardsViewDelegateTouchesEnded:touches withEvent:event];
-    }
+    return ((int)scrollView.contentOffset.x % (int)(scrollViewPageWidth) == 0);
 }
 
 - (void)scrollViewDidEndScrolling {

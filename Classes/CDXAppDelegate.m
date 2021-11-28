@@ -3,7 +3,7 @@
 // CDXAppDelegate.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -83,17 +83,6 @@
     deck.wantsPageJumps = YES;
     deck.wantsPageControl = NO;
     deck.pageControlStyle = CDXCardDeckPageControlStyleDark;
-    [deck updateStorageObjectDeferred:NO];
-    holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
-    [decks addPendingCardDeckAdd:holder];
-    
-    deck = [CDXCardDeckURLSerializer cardDeckFromVersion1String:@"Faces,00ff00,000000&%e2%98%bb&%e2%98%b9,ff0000"];
-    deck.displayStyle = CDXCardDeckDisplayStyleSideBySide;
-    deck.wantsAutoRotate = YES;
-    deck.shakeAction = CDXCardDeckShakeActionRandom;
-    deck.wantsPageJumps = NO;
-    deck.wantsPageControl = NO;
-    deck.pageControlStyle = CDXCardDeckPageControlStyleLight;
     [deck updateStorageObjectDeferred:NO];
     holder = [CDXCardDeckHolder cardDeckHolderWithCardDeck:deck];
     [decks addPendingCardDeckAdd:holder];
@@ -337,6 +326,15 @@
         [decks updateStorageObjectDeferred:NO];
         
         [[CDXAppSettings sharedAppSettings] setMigrationState:migrationState_2];
+    }
+    
+    const NSUInteger migrationState_3 = 300;
+    if ([[CDXAppSettings sharedAppSettings] migrationState] < migrationState_3) {
+        // reset some settings
+        [[CDXAppSettings sharedAppSettings] clearCloseTapCount];
+        [[CDXAppSettings sharedAppSettings] clearShakeTapCount];
+
+        [[CDXAppSettings sharedAppSettings] setMigrationState:migrationState_3];
     }
     
     return decks;

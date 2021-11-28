@@ -3,7 +3,7 @@
 // CDXCardDeckListViewController.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -107,7 +107,6 @@
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection1];
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection1] autorelease];
-                cell.textLabel.font = tableCellTextFont;
                 cell.textLabel.textColor = tableCellTextTextColor;
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -124,7 +123,7 @@
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection2];
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
-                cell.textLabel.font = tableCellTextFontAction;
+                cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
                 cell.textLabel.textAlignment = NSTextAlignmentCenter;
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
@@ -185,7 +184,6 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    BOOL deselectRow = YES;
     switch (indexPath.section) {
         default:
         case 0: {
@@ -195,7 +193,6 @@
             cardDeckViewContext.currentCardIndex = indexPath.row;
             [self performBlockingSelector:@selector(pushCardDeckCardViewController)
                                withObject:nil];
-            deselectRow = NO;
             break;
         }
         case 2: {
@@ -203,15 +200,12 @@
                 default:
                 case 0: {
                     [self defaultsButtonPressed];
-                    deselectRow = NO;
                     break;
                 }
             }
         }
     }
-    if (deselectRow) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    }
+    [tableView cellForRowAtIndexPath:indexPath].selected = NO;
 }
 
 - (void)pushCardDeckEditViewController {
@@ -344,42 +338,18 @@
 }
 
 - (IBAction)actionButtonPressed {
-    qltrace();
-    CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider *textItem = [[[CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    CDXCardDeckListViewControllerAutoDetectActivityItemProvider *urlItem = [[[CDXCardDeckListViewControllerAutoDetectActivityItemProvider alloc]  initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    
-    CDXCardDeckListViewControllerDuplicateDeckActivity *duplicateDeckActivity = [[[CDXCardDeckListViewControllerDuplicateDeckActivity alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    NSArray *items = @[textItem, urlItem];
-    NSArray *activities = @[duplicateDeckActivity];
-    
-    UIActivityViewController *vc = [[[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:activities] autorelease];
-    vc.excludedActivityTypes = @[UIActivityTypePostToFlickr, UIActivityTypePostToTencentWeibo, UIActivityTypePostToVimeo];
-    
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:actionButton animated:YES];
+    [self actionButtonPressedCarddecksURL];
 }
 
 - (void)actionButtonPressedCarddecksURL {
     qltrace();
-    CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider *textItem = [[[CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    CDXCardDeckListViewControllerCarddecksURLActivityItemProvider *urlItem = [[[CDXCardDeckListViewControllerCarddecksURLActivityItemProvider alloc]  initWithCardDeckViewContext:cardDeckViewContext] autorelease];
+    NSURL *url = [NSURL URLWithString:[CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
     
-    NSArray *items = @[textItem, urlItem];
-    NSArray *activities = @[];
-    
-    UIActivityViewController *vc = [[[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:activities] autorelease];
-    vc.excludedActivityTypes = @[UIActivityTypePostToFlickr, UIActivityTypePostToTencentWeibo, UIActivityTypePostToVimeo];
-    
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:actionButton animated:YES];
-}
+    CDXCardDeckListViewControllerDuplicateDeckActivity *duplicateDeckActivity = [[[CDXCardDeckListViewControllerDuplicateDeckActivity alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
 
-- (void)actionButtonPressedHTTPURL {
-    qltrace();
-    CDXCardDeckListViewControllerHTTPURLTextActivityItemProvider *textItem = [[[CDXCardDeckListViewControllerHTTPURLTextActivityItemProvider alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    CDXCardDeckListViewControllerHTTPURLActivityItemProvider *urlItem = [[[CDXCardDeckListViewControllerHTTPURLActivityItemProvider alloc]  initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    
-    NSArray *items = @[textItem, urlItem];
-    NSArray *activities = @[];
-    
+    NSArray *items = @[url];
+    NSArray *activities = @[duplicateDeckActivity];
+
     UIActivityViewController *vc = [[[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:activities] autorelease];
     vc.excludedActivityTypes = @[UIActivityTypePostToFlickr, UIActivityTypePostToTencentWeibo, UIActivityTypePostToVimeo];
     
@@ -395,10 +365,10 @@
     NSString *data = [CDXCardDeckJSONSerializer version2StringFromCardDeck:cardDeckViewContext.cardDeck];
     [data writeToURL:url atomically:YES encoding:NSUTF8StringEncoding error:NULL];
     
-    CDXCardDeckListViewControllerStringTextActivityItemProvider *textItem = [[[CDXCardDeckListViewControllerStringTextActivityItemProvider alloc] initWithString:data] autorelease];
+    CDXCardDeckListViewControllerDuplicateDeckActivity *duplicateDeckActivity = [[[CDXCardDeckListViewControllerDuplicateDeckActivity alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
     
-    NSArray *items = @[textItem, url];
-    NSArray *activities = @[];
+    NSArray *items = @[url];
+    NSArray *activities = @[duplicateDeckActivity];
     
     UIActivityViewController *vc = [[[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:activities] autorelease];
     
@@ -473,8 +443,6 @@
     } else if (barButtonItem == actionButton) {
         if (action == @selector(actionButtonPressedCarddecksURL)) {
             return YES;
-        } else if (action == @selector(actionButtonPressedHTTPURL)) {
-            return YES;
         } else if (action == @selector(actionButtonPressedJSON)) {
             return YES;
         } else {
@@ -540,189 +508,9 @@
     }
     else if (barButtonItem == actionButton) {
         UIMenuItem *menuItemCarddecksURL = [[UIMenuItem alloc] initWithTitle:@"carddecks://" action:@selector(actionButtonPressedCarddecksURL)];
-        UIMenuItem *menuItemHTTPURL = [[UIMenuItem alloc] initWithTitle:@"http://" action:@selector(actionButtonPressedHTTPURL)];
         UIMenuItem *menuItemDocument = [[UIMenuItem alloc] initWithTitle:@".carddeck" action:@selector(actionButtonPressedJSON)];
-        menuController.menuItems = @[menuItemCarddecksURL, menuItemHTTPURL, menuItemDocument];
+        menuController.menuItems = @[menuItemCarddecksURL, menuItemDocument];
     }
-}
-
-@end
-
-
-@implementation CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider
-
-- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super initWithPlaceholderItem:@""])) {
-        ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
-    }
-    return self;
-}
-
-- (void)dealloc {
-    ivar_release_and_clear(cardDeckViewContext);
-    [super dealloc];
-}
-
-- (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
-    if ([activityType isEqualToString:UIActivityTypeCopyToPasteboard]) {
-        return [CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck];
-    }
-    return nil;
-}
-
-- (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController {
-    return @"";
-}
-
-@end
-
-
-@implementation CDXCardDeckListViewControllerHTTPURLTextActivityItemProvider
-
-- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super initWithPlaceholderItem:@""])) {
-        ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
-    }
-    return self;
-}
-
-- (void)dealloc {
-    ivar_release_and_clear(cardDeckViewContext);
-    [super dealloc];
-}
-
-- (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
-    if ([activityType isEqualToString:UIActivityTypeCopyToPasteboard]) {
-        return [CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck];
-    }
-    return nil;
-}
-
-- (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController {
-    return @"";
-}
-
-@end
-
-
-@implementation CDXCardDeckListViewControllerStringTextActivityItemProvider
-
-- (id)initWithString:(NSString *)aText {
-    if ((self = [super initWithPlaceholderItem:@""])) {
-        ivar_assign_and_copy(text, aText);
-    }
-    return self;
-}
-
-- (void)dealloc {
-    ivar_release_and_clear(text);
-    [super dealloc];
-}
-
-- (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
-    if ([activityType isEqualToString:UIActivityTypeCopyToPasteboard]) {
-        return text;
-    }
-    return nil;
-}
-
-- (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController {
-    return @"";
-}
-
-@end
-
-
-@implementation CDXCardDeckListViewControllerAutoDetectActivityItemProvider
-
-- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super initWithPlaceholderItem:[NSURL URLWithString:@""]])) {
-        ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
-    }
-    return self;
-}
-
-- (void)dealloc {
-    ivar_release_and_clear(cardDeckViewContext);
-    [super dealloc];
-}
-
-- (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
-    if ([activityType isEqualToString:UIActivityTypePostToTwitter]) {
-        [[CDXAppWindowManager sharedAppWindowManager] showInfoMessage:@"Card deck attached to Twitter message" afterDelay:1];
-        return [NSURL URLWithString:[CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
-    }
-    if ([activityType isEqualToString:UIActivityTypeMessage] ||
-        [activityType isEqualToString:UIActivityTypeMail] ||
-        [activityType isEqualToString:UIActivityTypeAirDrop]) {
-        return [NSURL URLWithString:[CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
-    }
-    if ([activityType isEqualToString:UIActivityTypeCopyToPasteboard]) {
-        return nil;
-    }
-    return [NSURL URLWithString:[CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
-}
-
-- (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController {
-    return [NSURL URLWithString:@""];
-}
-
-@end
-
-
-@implementation CDXCardDeckListViewControllerCarddecksURLActivityItemProvider
-
-- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super initWithPlaceholderItem:[NSURL URLWithString:@""]])) {
-        ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
-    }
-    return self;
-}
-
-- (void)dealloc {
-    ivar_release_and_clear(cardDeckViewContext);
-    [super dealloc];
-}
-
-- (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
-    if ([activityType isEqualToString:UIActivityTypePostToTwitter]) {
-        [[CDXAppWindowManager sharedAppWindowManager] showInfoMessage:@"Card deck attached to Twitter message" afterDelay:1];
-        return [NSURL URLWithString:[CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
-    }
-    return [NSURL URLWithString:[CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
-}
-
-- (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController {
-    return [NSURL URLWithString:@""];
-}
-
-@end
-
-
-@implementation CDXCardDeckListViewControllerHTTPURLActivityItemProvider
-
-- (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)aCardDeckViewContext {
-    if ((self = [super initWithPlaceholderItem:[NSURL URLWithString:@""]])) {
-        ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
-    }
-    return self;
-}
-
-- (void)dealloc {
-    ivar_release_and_clear(cardDeckViewContext);
-    [super dealloc];
-}
-
-- (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
-    if ([activityType isEqualToString:UIActivityTypePostToTwitter]) {
-        [[CDXAppWindowManager sharedAppWindowManager] showInfoMessage:@"Card deck attached to Twitter message" afterDelay:1];
-        return [NSURL URLWithString:[CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
-    }
-    return [NSURL URLWithString:[CDXAppURL httpURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
-}
-
-- (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController {
-    return [NSURL URLWithString:@""];
 }
 
 @end

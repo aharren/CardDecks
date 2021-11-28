@@ -3,7 +3,7 @@
 // CDXCardDecksListViewController.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -98,8 +98,6 @@
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection1];
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifierSection1] autorelease];
-                cell.textLabel.font = tableCellTextFont;
-                cell.detailTextLabel.font = tableCellDetailTextFont;
                 cell.detailTextLabel.textColor = tableCellDetailTextTextColor;
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cell-RightDetail"]] autorelease];
@@ -115,7 +113,7 @@
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSection2];
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSection2] autorelease];
-                cell.textLabel.font = tableCellTextFontAction;
+                cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
                 cell.textLabel.textAlignment = NSTextAlignmentCenter;
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
@@ -216,7 +214,6 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    BOOL deselectRow = YES;
     switch (indexPath.section) {
         default:
         case 0: {
@@ -224,7 +221,6 @@
         }
         case 1: {
             lastCardDeckIndex = indexPath.row;
-            deselectRow = NO;
             CDXCardDeckHolder *deckHolder = [cardDecks cardDeckAtIndex:indexPath.row];
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             if ((cell.accessoryType == UITableViewCellAccessoryDisclosureIndicator ||
@@ -242,16 +238,13 @@
             switch (indexPath.row) {
                 default:
                 case 0: {
-                    deselectRow = NO;
                     [self defaultsButtonPressed];
                     break;
                 }
             }
         }
     }
-    if (deselectRow) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    }
+    [tableView cellForRowAtIndexPath:indexPath].selected = NO;
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {

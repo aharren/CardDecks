@@ -3,7 +3,7 @@
 // CDXAppAboutSettings.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -184,16 +184,16 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
             
             CDXDevice *device = [CDXDevice sharedDevice];
             NSMutableString *content = [[[NSMutableString alloc] init] autorelease];
-            [content appendString:@"<table style=\"border-spacing:0px;font-family:HelveticaNeue,sans-serif;font-size:12px;font-weight:100;color:#000000;background-color:#ffffff\">"];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"System version", [device deviceSystemVersionString]];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Model", [device deviceModel]];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Machine", [device deviceMachine]];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Type", [device deviceTypeString]];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"UI idiom", [device deviceUIIdiomString]];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%.1f</td></tr>\n", @"Screen scale", [device deviceScreenScale]];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%.0f x %.0f</td></tr>\n", @"Screen size", [device deviceScreenSize].width, [device deviceScreenSize].height];
-            [content appendFormat:@"<tr><td>%@</td><td>:</td><td>%@</td></tr>\n", @"Rendering mode", [device useImageBasedRendering] ? @"image" : @"direct"];
-            [content appendString:@"</table>"];
+            [content appendFormat:@"<p>"];
+            [content appendFormat:@"%@ : %@\n", @"System version", [device deviceSystemVersionString]];
+            [content appendFormat:@"<br />%@ : %@\n", @"Model", [device deviceModel]];
+            [content appendFormat:@"<br />%@ : %@\n", @"Machine", [device deviceMachine]];
+            [content appendFormat:@"<br />%@ : %@\n", @"Type", [device deviceTypeString]];
+            [content appendFormat:@"<br />%@ : %@\n", @"UI idiom", [device deviceUIIdiomString]];
+            [content appendFormat:@"<br />%@ : %.1f\n", @"Screen scale", [device deviceScreenScale]];
+            [content appendFormat:@"<br />%@ : %.0f x %.0f\n", @"Screen size", [device deviceScreenSize].width, [device deviceScreenSize].height];
+            [content appendFormat:@"<br />%@ : %@\n", @"Rendering mode", [device useImageBasedRendering] ? @"image" : @"direct"];
+            [content appendFormat:@"</p>"];
             text = [text stringByReplacingOccurrencesOfString:@"$content$" withString:content];
             
             return text;

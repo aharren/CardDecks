@@ -3,7 +3,7 @@
 // CDXCardDeckListViewController.h
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -54,78 +54,6 @@
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath;
 
 - (void)processCardAddAtBottomDelayed:(NSArray *)cards;
-
-@end
-
-
-@interface CDXCardDeckListViewControllerCarddecksURLTextActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
-    
-@protected
-    CDXCardDeckViewContext *cardDeckViewContext;
-    
-}
-
-- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
-
-@end
-
-
-@interface CDXCardDeckListViewControllerHTTPURLTextActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
-    
-@protected
-    CDXCardDeckViewContext *cardDeckViewContext;
-    
-}
-
-- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
-
-@end
-
-
-@interface CDXCardDeckListViewControllerStringTextActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
-    
-@protected
-    NSString *text;
-    
-}
-
-- (instancetype)initWithString:(NSString *)text;
-
-@end
-
-
-@interface CDXCardDeckListViewControllerAutoDetectActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
-    
-@protected
-    CDXCardDeckViewContext *cardDeckViewContext;
-    
-}
-
-- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
-
-@end
-
-
-@interface CDXCardDeckListViewControllerCarddecksURLActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
-    
-@protected
-    CDXCardDeckViewContext *cardDeckViewContext;
-    
-}
-
-- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
-
-@end
-
-
-@interface CDXCardDeckListViewControllerHTTPURLActivityItemProvider : UIActivityItemProvider <UIActivityItemSource> {
-    
-@protected
-    CDXCardDeckViewContext *cardDeckViewContext;
-    
-}
-
-- (instancetype)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
 
 @end
 

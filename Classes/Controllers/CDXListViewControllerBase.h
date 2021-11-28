@@ -3,7 +3,7 @@
 // CDXListViewControllerBase.h
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -51,13 +51,10 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
     
     UIActivityIndicatorView *activityIndicator;
     
-    UIFont *tableCellTextFont;
-    UIFont *tableCellTextFontAction;
     UIColor *tableCellTextTextColor;
     UIColor *tableCellTextTextColorNoCards;
     UIColor *tableCellTextTextColorAction;
     UIColor *tableCellTextTextColorActionInactive;
-    UIFont *tableCellDetailTextFont;
     UIColor *tableCellDetailTextTextColor;
     UIColor *tableCellBackgroundColor;
     UIColor *tableCellBackgroundColorAltGroup;
@@ -105,6 +102,9 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
 
 - (void)performBlockingSelector:(SEL)selector withObject:(NSObject *)object;
 - (void)performBlockingSelectorEnd;
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
 

@@ -3,7 +3,7 @@
 // CDXCardDeckCardViewController.m
 //
 //
-// Copyright (c) 2009-2018 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -95,6 +95,7 @@
         ivar_assign_and_retain(cardDeckViewContext, aCardDeckViewContext);
         ivar_assign_and_retain(cardDeck, cardDeckViewContext.cardDeck);
         closeTapCount = [[CDXAppSettings sharedAppSettings] closeTapCount];
+        shakeTapCount = [[CDXAppSettings sharedAppSettings] shakeTapCount];
     }
     return self;
 }
@@ -121,31 +122,26 @@
     return YES;
 }
 
+- (BOOL)prefersHomeIndicatorAutoHidden {
+    qltrace();
+    return YES;
+}
+
 - (void)setActionsViewHidden:(BOOL)hidden animated:(BOOL)animated {
-    if (animated) {
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.3];
-    }
-    actionsView.alpha = hidden ? 0 : 1;
-    if (animated) {
-        [UIView commitAnimations];
-    }
+    [UIView animateWithDuration:animated ? 0.3 : 0 animations:^{
+        actionsView.alpha = hidden ? 0 : 1;
+    }];
 }
 
 - (void)configureActionsViewAnimated:(BOOL)animated {
-    if (animated) {
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.3];
-    }
-    CGAffineTransform transform = [CDXAppWindowManager transformForDeviceOrientation:deviceOrientation];
-    actionsViewShuffleButton.transform = transform;
-    actionsViewSortButton.transform = transform;
-    actionsViewPlayButton.transform = transform;
-    actionsViewPlay2Button.transform = transform;
-    actionsViewStopButton.transform = transform;
-    if (animated) {
-        [UIView commitAnimations];
-    }
+    [UIView animateWithDuration:animated ? 0.3 : 0 animations:^{
+        CGAffineTransform transform = [CDXAppWindowManager transformForDeviceOrientation:deviceOrientation];
+        actionsViewShuffleButton.transform = transform;
+        actionsViewSortButton.transform = transform;
+        actionsViewPlayButton.transform = transform;
+        actionsViewPlay2Button.transform = transform;
+        actionsViewStopButton.transform = transform;
+    }];
 }
 
 - (void)configureView {
@@ -350,12 +346,29 @@
     return cardDeckViewContext.currentCardIndex;
 }
 
-- (void)cardsViewDelegateTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    qltrace();
-    UITouch *touch = [touches anyObject];
-    if ([touch tapCount] == closeTapCount) {
-        CGPoint location = [touch locationInView:[CDXAppWindowManager sharedAppWindowManager].window];
+- (void)handleShakeEvent {
+    switch (cardDeck.shakeAction) {
+        case CDXCardDeckShakeActionShuffle:
+            [self shuffleButtonPressed];
+            break;
+        case CDXCardDeckShakeActionRandom:
+            [self randomButtonPressed];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)cardsViewDelegateTapRecognized:(UITapGestureRecognizer *)sender tapCount:(NSUInteger)tapCount {
+    qltrace(@"%lu", (unsigned long)tapCount);
+    if (tapCount == closeTapCount) {
+        CGPoint location = [sender locationInView:[CDXAppWindowManager sharedAppWindowManager].window];
         [[CDXAppWindowManager sharedAppWindowManager] popViewControllerAnimated:YES withTouchLocation:location];
+        return;
+    }
+    if (tapCount == shakeTapCount) {
+        [self handleShakeEvent];
+        return;
     }
 }
 
@@ -410,16 +423,7 @@
     
     // shake event received, shuffle the deck
     if (event.type == UIEventSubtypeMotionShake) {
-        switch (cardDeck.shakeAction) {
-            case CDXCardDeckShakeActionShuffle:
-                [self shuffleButtonPressed];
-                break;
-            case CDXCardDeckShakeActionRandom:
-                [self randomButtonPressed];
-                break;
-            default:
-                break;
-        }
+        [self handleShakeEvent];
     }
     
     if ([super respondsToSelector:@selector(motionEnded:withEvent:)]) {
