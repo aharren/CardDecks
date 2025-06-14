@@ -55,6 +55,8 @@
     ivar_release_and_clear(editButton);
     ivar_release_and_clear(settingsButton);
     ivar_release_and_clear(activityIndicator);
+    ivar_release_and_clear(tableViewMenuInteraction);
+    ivar_release_and_clear(toolbarMenuInteraction);
     ivar_release_and_clear(tableCellTextTextColor);
     ivar_release_and_clear(tableCellTextTextColorNoCards);
     ivar_release_and_clear(tableCellTextTextColorAction);
@@ -105,6 +107,10 @@
                                           initWithCustomView:activityIndicator]
                                          autorelease];
     self.toolbarItems = viewToolbar.items;
+    ivar_assign_and_retain(tableViewMenuInteraction, [[UIEditMenuInteraction alloc] initWithDelegate:self]);
+    [self.view addInteraction:tableViewMenuInteraction];
+    ivar_assign_and_retain(toolbarMenuInteraction, [[UIEditMenuInteraction alloc] initWithDelegate:self]);
+    [self.view addInteraction:toolbarMenuInteraction];
     ivar_assign_and_retain(tableCellTextTextColor, [UIColor labelColor]);
     ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor systemGray2Color]);
     ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor systemGray2Color]);
@@ -198,16 +204,6 @@
 }
 
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
-}
-
-- (void)menuControllerWillHideMenu {
-    if (performActionState == CDXListViewControllerBasePerformActionStateTableView) {
-        UITableViewCell *cell = [viewTableView cellForRowAtIndexPath:performActionTableViewIndexPath];
-        cell.selected = NO;
-    }
-    performActionState = CDXListViewControllerBasePerformActionStateNone;
-    ivar_release_and_clear(performActionTableViewIndexPath);
-    ivar_release_and_clear(performActionToolbarBarButtonItem);
 }
 
 #pragma mark -
@@ -313,11 +309,9 @@
         
         // show menu
         [self becomeFirstResponder];
-        UIMenuController *menu = [UIMenuController sharedMenuController];
-        // add additional menu items, defined by subclass
-        [self menu:menu itemsForTableView:viewTableView cell:cell];
-        // show
-        [menu showMenuFromView:sender.view rect:cell.frame];
+        CGPoint location = [sender locationInView:self.view];
+        UIEditMenuConfiguration* config = [UIEditMenuConfiguration configurationWithIdentifier:@"table" sourcePoint:location];
+        [tableViewMenuInteraction presentEditMenuWithConfiguration:config];
 
         // keep cell selected
         cell.selected = YES;
@@ -375,11 +369,9 @@
 
                 // show menu
                 [self becomeFirstResponder];
-                UIMenuController *menu = [UIMenuController sharedMenuController];
-                // add additional menu items, defined by subclass
-                [self menu:menu itemsForBarButtonItem:item];
-                // show
-                [menu showMenuFromView:sender.view rect:CGRectMake(left, 0, width, 1)];
+                CGPoint location = [sender locationInView:self.view];
+                UIEditMenuConfiguration* config = [UIEditMenuConfiguration configurationWithIdentifier:item.title sourcePoint:location];
+                [toolbarMenuInteraction presentEditMenuWithConfiguration:config];
 
                 return;
             }
@@ -389,10 +381,19 @@
     }
 }
 
-- (void)menu:(UIMenuController *)menuController itemsForTableView:(UITableView *)tableView cell:(UITableViewCell *)cell {
+- (void)editMenuInteraction:(UIEditMenuInteraction *)interaction willDismissMenuForConfiguration:(UIEditMenuConfiguration *)configuration animator:(id<UIEditMenuInteractionAnimating>)animator {
+    if (performActionState == CDXListViewControllerBasePerformActionStateTableView) {
+        UITableViewCell *cell = [viewTableView cellForRowAtIndexPath:performActionTableViewIndexPath];
+        cell.selected = NO;
+    }
+    performActionState = CDXListViewControllerBasePerformActionStateNone;
+    ivar_release_and_clear(performActionTableViewIndexPath);
+    ivar_release_and_clear(performActionToolbarBarButtonItem);
 }
 
-- (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem {
+- (UIMenu *)editMenuInteraction:(UIEditMenuInteraction *)interaction menuForConfiguration:(UIEditMenuConfiguration *)configuration suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions {
+    qltrace(@"configuration id %@", configuration.identifier);
+    return [UIMenu menuWithChildren:suggestedActions];
 }
 
 - (void)handleTableViewTapGesture:(UITapGestureRecognizer *)sender {

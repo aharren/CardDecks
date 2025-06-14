@@ -39,7 +39,7 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
     CDXTableViewCellTagNone = 0
 };
 
-@interface CDXListViewControllerBase : UIViewController<CDXAppWindowViewController> {
+@interface CDXListViewControllerBase : UIViewController<CDXAppWindowViewController, UIEditMenuInteractionDelegate> {
     
 @protected
     IBOutlet UITableView *viewTableView;
@@ -50,7 +50,9 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
     IBOutlet UIBarButtonItem *settingsButton;
     
     UIActivityIndicatorView *activityIndicator;
-    
+    UIEditMenuInteraction *tableViewMenuInteraction;
+    UIEditMenuInteraction *toolbarMenuInteraction;
+
     UIColor *tableCellTextTextColor;
     UIColor *tableCellTextTextColorNoCards;
     UIColor *tableCellTextTextColorAction;
@@ -92,8 +94,8 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
 - (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
 
-- (void)menu:(UIMenuController *)menuController itemsForTableView:(UITableView *)tableView cell:(UITableViewCell *)cell;
-- (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem;
+- (void)editMenuInteraction:(UIEditMenuInteraction *)interaction willDismissMenuForConfiguration:(UIEditMenuConfiguration *)configuration animator:(id<UIEditMenuInteractionAnimating>)animator;
+- (UIMenu *)editMenuInteraction:(UIEditMenuInteraction *)interaction menuForConfiguration:(UIEditMenuConfiguration *)configuration suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions;
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
 - (void)updateToolbarButtons;

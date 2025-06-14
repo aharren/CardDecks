@@ -27,6 +27,7 @@
 #import "CDXCardDeckViewContext.h"
 #import "CDXCardsViewProtocols.h"
 #import "CDXAppWindowProtocols.h"
+#import "CDXAppWindowManager.h"
 #import "CDXIndexDotsView.h"
 
 

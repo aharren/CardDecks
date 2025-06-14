@@ -488,16 +488,25 @@
     [self processPendingCardDeckAdds];
 }
 
-- (void)menu:(UIMenuController *)menuController itemsForTableView:(UITableView *)tableView cell:(UITableViewCell *)cell {
-    UIMenuItem *menuItemNew = [[UIMenuItem alloc] initWithTitle:@"Duplicate" action:@selector(duplicateButtonPressed)];
-    menuController.menuItems = @[menuItemNew];
-}
-
-- (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem {
-    if (barButtonItem == addButton) {
-        UIMenuItem *menuItemNew = [[UIMenuItem alloc] initWithTitle:@"New" action:@selector(addButtonPressed)];
-        menuController.menuItems = @[menuItemNew];
+- (UIMenu *)editMenuInteraction:(UIEditMenuInteraction *)interaction menuForConfiguration:(UIEditMenuConfiguration *)configuration suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions {
+    qltrace(@"configuration id %@", configuration.identifier);
+    NSMutableArray<UIMenuElement *> *actions = [NSMutableArray arrayWithArray:suggestedActions];
+    if (interaction == tableViewMenuInteraction) {
+        [actions addObjectsFromArray:@[
+            [UIAction actionWithTitle:@"Duplicate" image:nil identifier:nil handler:^(UIAction *action) {
+                [self duplicateButtonPressed];
+            }]
+        ]];
+    } else if (interaction == toolbarMenuInteraction) {
+        if (performActionToolbarBarButtonItem == addButton) {
+            [actions addObjectsFromArray:@[
+                [UIAction actionWithTitle:@"New" image:nil identifier:nil handler:^(UIAction *action) {
+                    [self addButtonPressed];
+                }]
+            ]];
+        }
     }
+    return [UIMenu menuWithChildren:actions];
 }
 
 @end
