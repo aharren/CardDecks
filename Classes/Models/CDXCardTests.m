@@ -119,6 +119,7 @@
     XCTAssertEqual(card.cornerStyle, CDXCardCornerStyleCount-1);
     card.cornerStyle = 2;
     XCTAssertEqual(card.cornerStyle, CDXCardCornerStyleDefault);
+    [card release];
 }
 
 - (void)testOrientation {
@@ -137,6 +138,7 @@
     XCTAssertEqual(card.orientation, CDXCardOrientationCount-1);
     card.orientation = 4;
     XCTAssertEqual(card.orientation, CDXCardOrientationDefault);
+    [card release];
 }
 
 - (void)testTimerInterval {
@@ -163,30 +165,32 @@
 - (void)testFontSizeConstrainedToSize {
     CDXCard *card = [[CDXCard alloc] init];
     CGFloat size;
-
+    
     card.text = @"abcdefgh";
     size = [card fontSizeConstrainedToSize:CGSizeMake(320.0, 480.0) scale:1.0];
     XCTAssertEqual(size, 80.0);
-
+    
     card.text = @"ABCDEFGH";
     size = [card fontSizeConstrainedToSize:CGSizeMake(320.0, 480.0) scale:1.0];
     XCTAssertEqual(size, 62.0);
-
+    
     card.text = @"abcdefgh\nABCDEFGH";
     size = [card fontSizeConstrainedToSize:CGSizeMake(320.0, 480.0) scale:1.0];
     XCTAssertEqual(size, 62.0);
-
+    
     card.text = @"abcdefgh";
     size = [card fontSizeConstrainedToSize:CGSizeMake(640.0, 960.0) scale:1.0];
     XCTAssertEqual(size, 161.0);
-
+    
     card.text = @"ABCDEFGH";
     size = [card fontSizeConstrainedToSize:CGSizeMake(640.0, 960.0) scale:1.0];
     XCTAssertEqual(size, 125);
-
+    
     card.text = @"abcdefgh\nABCDEFGH";
     size = [card fontSizeConstrainedToSize:CGSizeMake(640.0, 960.0) scale:1.0];
     XCTAssertEqual(size, 125);
+
+    [card release];
 }
 
 @end
