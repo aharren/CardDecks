@@ -423,7 +423,7 @@
     }
     
     // shake event received, shuffle the deck
-    if (event.type == UIEventSubtypeMotionShake) {
+    if (event.subtype == UIEventSubtypeMotionShake) {
         [self handleShakeEvent];
     }
     
