@@ -31,6 +31,7 @@
 #import "CDXAppSettings.h"
 #import "CDXStorage.h"
 #import "CDXDevice.h"
+#import "CDXAppWindowManager.h"
 
 #undef ql_component
 #define ql_component lcl_cController
