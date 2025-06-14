@@ -166,7 +166,8 @@
     [super viewDidAppear:animated];
 
     cardViewScrollView.contentInset = text.contentInset;
-    cardViewScrollView.scrollIndicatorInsets = text.scrollIndicatorInsets;
+    cardViewScrollView.verticalScrollIndicatorInsets = text.verticalScrollIndicatorInsets;
+    cardViewScrollView.horizontalScrollIndicatorInsets = text.horizontalScrollIndicatorInsets;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
