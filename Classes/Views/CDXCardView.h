@@ -3,7 +3,7 @@
 // CDXCardView.h
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
