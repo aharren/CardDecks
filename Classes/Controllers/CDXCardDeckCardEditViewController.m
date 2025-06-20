@@ -145,7 +145,7 @@
                             [CDXColorKeyboardExtension sharedColorKeyboardExtension],
                             [CDXTextKeyboardExtension sharedtextKeyboardExtension],
                             [CDXTimerKeyboardExtension sharedTimerKeyboardExtension]];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions textFields:@[] textViews:@[ text ]];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
 
     [self showCardAtIndex:cardDeckViewContext.currentCardIndex];

@@ -34,14 +34,6 @@
 - (NSString *)keyboardExtensionTitle;
 - (UIView *)keyboardExtensionView;
 
-@optional
-
-- (void)keyboardExtensionWillBecomeActive;
-- (void)keyboardExtensionDidBecomeActive;
-
-- (void)keyboardExtensionWillBecomeInactive;
-- (void)keyboardExtensionDidBecomeInactive;
-
 @end
 
 
@@ -88,6 +80,8 @@
     CDXKeyboardExtensionMarker *toolbarActiveButtonMarker;
     
     NSObject *responder;
+    NSArray<UITextField *> *textFields;
+    NSArray<UITextView *> *textViews;
     CGRect extensionViewRect;
     
     UIView *backgroundView;
@@ -107,9 +101,11 @@
 declare_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
 
 @property (nonatomic, retain) NSObject *responder;
+@property (nonatomic, retain) NSArray<UITextField *> *textFields;
+@property (nonatomic, retain) NSArray<UITextView *> *textViews;
 @property (nonatomic, copy) NSArray *keyboardExtensions;
 
-- (void)setResponder:(NSObject *)responder keyboardExtensions:(NSArray *)keyboardExtensions;
+- (void)setResponder:(NSObject *)responder keyboardExtensions:(NSArray *)keyboardExtensions textFields:(NSArray<UITextField *> *)textFields textViews:(NSArray<UITextView *> *)textViews;
 - (void)removeResponder;
 
 - (void)setEnabled:(BOOL)enabled;

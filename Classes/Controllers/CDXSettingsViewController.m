@@ -194,8 +194,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    NSArray *extensions = @[[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension]];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:@[] textFields:@[] textViews:@[]];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
 }
 
@@ -224,13 +223,14 @@
 - (void)textStartedEditing:(UITextField *)cellText {
     qltrace();
     NSArray *extensions = @[[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension]];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:cellText keyboardExtensions:extensions];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:cellText keyboardExtensions:extensions textFields:@[ cellText ] textViews:@[]];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
 }
 
 - (void)textValueChanged:(UITextField *)cellText {
     qltrace();
     [settings setTextValue:cellText.text forSettingWithTag:cellText.tag];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] removeResponder];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

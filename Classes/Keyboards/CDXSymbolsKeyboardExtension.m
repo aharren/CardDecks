@@ -60,23 +60,6 @@ synthesize_singleton(sharedSymbolsKeyboardExtension, CDXSymbolsKeyboardExtension
     return viewController.view;
 }
 
-- (void)keyboardExtensionWillBecomeActive {
-    [self keyboardExtensionView];
-    [viewController viewWillAppear:NO];
-}
-
-- (void)keyboardExtensionDidBecomeActive {
-    [viewController viewDidAppear:NO];
-}
-
-- (void)keyboardExtensionWillBecomeInactive {
-    [viewController viewWillDisappear:NO];
-}
-
-- (void)keyboardExtensionDidBecomeInactive {
-    [viewController viewDidDisappear:NO];
-}
-
 @end
 
 
