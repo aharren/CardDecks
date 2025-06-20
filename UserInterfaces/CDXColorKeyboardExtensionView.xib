@@ -36,7 +36,7 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <items>
-                        <barButtonItem style="plain" systemItem="fixedSpace" id="FeN-W7-HtY"/>
+                        <barButtonItem width="18" style="plain" systemItem="fixedSpace" id="FeN-W7-HtY"/>
                         <barButtonItem title="simple" style="plain" id="88">
                             <connections>
                                 <action selector="simpleButtonPressed" destination="-1" id="98"/>
