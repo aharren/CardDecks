@@ -140,7 +140,8 @@
 @protected
     NSObject<CDXSettings> *settings;
     BOOL isRootView;
-    
+    UITextField *activeTextField;
+
 }
 
 @end
@@ -200,6 +201,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [[CDXKeyboardExtensions sharedKeyboardExtensions] removeResponder];
+    [self dismissActiveTextField];
     [super viewWillDisappear:animated];
 }
 
@@ -215,22 +217,36 @@
     return [settings titleForGroup:section];
 }
 
+- (void)setActiveTextField:(UITextField *)textField {
+    ivar_assign_and_retain(activeTextField, textField)
+    NSArray *extensions = @[[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension]];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:textField keyboardExtensions:extensions textFields:@[ textField ] textViews:@[]];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
+}
+
+- (void)dismissActiveTextField {
+    if (activeTextField != nil) {
+        [activeTextField resignFirstResponder];
+    }
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] removeResponder];
+    ivar_release_and_clear(activeTextField);
+}
+
 - (void)booleanValueChanged:(UISwitch *)cellSwitch {
     qltrace();
+    [self dismissActiveTextField];
     [settings setBooleanValue:cellSwitch.on forSettingWithTag:cellSwitch.tag];
 }
 
 - (void)textStartedEditing:(UITextField *)cellText {
     qltrace();
-    NSArray *extensions = @[[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension]];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:cellText keyboardExtensions:extensions textFields:@[ cellText ] textViews:@[]];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
+    [self setActiveTextField:cellText];
 }
 
 - (void)textValueChanged:(UITextField *)cellText {
     qltrace();
     [settings setTextValue:cellText.text forSettingWithTag:cellText.tag];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] removeResponder];
+    [self dismissActiveTextField];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -357,6 +373,7 @@
             break;
         }
         case CDXSettingTypeEnumeration: {
+            [self dismissActiveTextField];
             UIViewController *vc = [[[CDXSettingsEnumerationViewController alloc] initWithSettings:settings setting:setting] autorelease];
             vc.title = setting.label;
             [[self navigationController] pushViewController:vc animated:YES];
@@ -368,8 +385,10 @@
                 UITextField *cellText = (UITextField *)cell.accessoryView;
                 [cellText becomeFirstResponder];
             }
+            break;
         }
         case CDXSettingTypeSettings: {
+            [self dismissActiveTextField];
             NSObject<CDXSettings> *s = [settings settingsSettingsForSettingWithTag:setting.tag];
             if (s != nil) {
                 UIViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:s isRootView:NO] autorelease];
@@ -378,6 +397,7 @@
             break;
         }
         case CDXSettingTypeURLAction: {
+            [self dismissActiveTextField];
             NSString *url = [settings urlActionURLForSettingWithTag:setting.tag];
             if (url != nil) {
                 NSDictionary* options = [[[NSDictionary alloc] init] autorelease];
@@ -387,6 +407,7 @@
             break;
         }
         case CDXSettingTypeHTMLText: {
+            [self dismissActiveTextField];
             UIViewController *vc = [[[CDXSettingsHTMLTextViewController alloc] initWithSettings:settings setting:setting] autorelease];
             vc.title = setting.label;
             [[self navigationController] pushViewController:vc animated:YES];
