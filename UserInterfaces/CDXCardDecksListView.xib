@@ -49,7 +49,7 @@
                     </connections>
                 </barButtonItem>
                 <barButtonItem style="plain" systemItem="flexibleSpace" id="45"/>
-                <barButtonItem tag="2" enabled="NO" width="25" style="plain" id="47"/>
+                <barButtonItem width="25" style="plain" systemItem="fixedSpace" id="NwX-e9-sZB"/>
                 <barButtonItem style="plain" systemItem="flexibleSpace" id="39"/>
                 <barButtonItem tag="3" style="plain" systemItem="add" id="38">
                     <connections>
@@ -57,7 +57,7 @@
                     </connections>
                 </barButtonItem>
                 <barButtonItem style="plain" systemItem="flexibleSpace" id="20"/>
-                <barButtonItem tag="4" enabled="NO" width="24" style="plain" id="43"/>
+                <barButtonItem width="25" style="plain" systemItem="fixedSpace" id="cuA-kB-wIc"/>
                 <barButtonItem style="plain" systemItem="flexibleSpace" id="44"/>
                 <barButtonItem tag="5" image="Toolbar-Settings" width="24" style="plain" id="33">
                     <connections>
