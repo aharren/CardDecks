@@ -132,7 +132,6 @@
 
     viewTableView.rowHeight = UITableViewAutomaticDimension;
     viewTableView.estimatedRowHeight = UITableViewAutomaticDimension;
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -516,11 +515,6 @@
 
 #pragma mark -
 #pragma mark Appearance
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
-}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewAutomaticDimension;

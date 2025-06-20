@@ -105,7 +105,6 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
 - (void)performBlockingSelector:(SEL)selector withObject:(NSObject *)object;
 - (void)performBlockingSelectorEnd;
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
