@@ -54,7 +54,6 @@
     ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(editButton);
     ivar_release_and_clear(settingsButton);
-    ivar_release_and_clear(activityIndicator);
     ivar_release_and_clear(tableViewMenuInteraction);
     ivar_release_and_clear(toolbarMenuInteraction);
     ivar_release_and_clear(tableCellTextTextColor);
@@ -101,11 +100,6 @@
                                          action:nil]
                                         autorelease];
     
-    ivar_assign(activityIndicator, [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleMedium]);
-    activityIndicator.hidesWhenStopped = YES;
-    navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
-                                          initWithCustomView:activityIndicator]
-                                         autorelease];
     self.toolbarItems = viewToolbar.items;
     ivar_assign_and_retain(tableViewMenuInteraction, [[UIEditMenuInteraction alloc] initWithDelegate:self]);
     [self.view addInteraction:tableViewMenuInteraction];
@@ -504,13 +498,11 @@
 
 - (void)performBlockingSelector:(SEL)selector withObject:(NSObject *)object {
     [self setUserInteractionEnabled:NO];
-    [activityIndicator startAnimating];
     [self performSelector:selector withObject:object afterDelay:0.001];
 }
 
 - (void)performBlockingSelectorEnd {
     [self setUserInteractionEnabled:YES];
-    [activityIndicator stopAnimating];
 }
 
 #pragma mark -

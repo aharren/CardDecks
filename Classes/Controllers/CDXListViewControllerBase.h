@@ -49,7 +49,6 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
     IBOutlet UIBarButtonItem *editButton;
     IBOutlet UIBarButtonItem *settingsButton;
     
-    UIActivityIndicatorView *activityIndicator;
     UIEditMenuInteraction *tableViewMenuInteraction;
     UIEditMenuInteraction *toolbarMenuInteraction;
 
