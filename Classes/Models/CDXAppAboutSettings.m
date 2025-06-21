@@ -192,7 +192,6 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
             [content appendFormat:@"<br />%@ : %@\n", @"UI idiom", [device deviceUIIdiomString]];
             [content appendFormat:@"<br />%@ : %.1f\n", @"Screen scale", [device deviceScreenScale]];
             [content appendFormat:@"<br />%@ : %.0f x %.0f\n", @"Screen size", [device deviceScreenSize].width, [device deviceScreenSize].height];
-            [content appendFormat:@"<br />%@ : %@\n", @"Rendering mode", [device useImageBasedRendering] ? @"image" : @"direct"];
             [content appendFormat:@"</p>"];
             text = [text stringByReplacingOccurrencesOfString:@"$content$" withString:content];
             

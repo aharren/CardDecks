@@ -192,17 +192,9 @@
         CDXCard *card = [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex orCard:nil];
         if (card != nil) {
             CGRect frame = [[CDXAppWindowManager sharedAppWindowManager] frameWithMaxSafeAreaInsets:self.view.frame];
-            if ([[CDXDevice sharedDevice] useImageBasedRendering]) {
-                UIImage *image = [[CDXImageFactory sharedImageFactory]
-                                  imageForCard:card
-                                  size:frame.size
-                                  deviceOrientation:orientation];
-                ivar_assign(initialView, [[UIImageView alloc] initWithImage:image]);
-            } else {
-                CDXCardView *cardView = [[CDXCardView alloc] initWithFrame:CGRectMake(0,0, 1,1)];
-                [cardView setCard:card size:frame.size deviceOrientation:orientation preview:NO];
-                ivar_assign(initialView, cardView);
-            }
+            CDXCardView *cardView = [[CDXCardView alloc] initWithFrame:CGRectMake(0,0, 1,1)];
+            [cardView setCard:card size:frame.size deviceOrientation:orientation preview:NO];
+            ivar_assign(initialView, cardView);
             initialView.frame = frame;
             [self.view insertSubview:initialView atIndex:0];
         }

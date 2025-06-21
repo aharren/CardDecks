@@ -41,7 +41,6 @@
 		E02AAFF31969DAEB00714366 /* CDXAppWindowMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E02AAFF21969DAEB00714366 /* CDXAppWindowMessageView.m */; };
 		E02D680F194C8929003F06B9 /* CDXCardDeckJSONSerializerTestsDeck2.carddeck.json in Resources */ = {isa = PBXBuildFile; fileRef = E02D680D194C88E1003F06B9 /* CDXCardDeckJSONSerializerTestsDeck2.carddeck.json */; };
 		E02D6812194CFA0C003F06B9 /* CDXCardDeckJSONSerializerTestsDeck3.carddeck.json in Resources */ = {isa = PBXBuildFile; fileRef = E02D6810194CF96F003F06B9 /* CDXCardDeckJSONSerializerTestsDeck3.carddeck.json */; };
-		E030327F152BA1B500F42494 /* CDXCardViewImageRendering.m in Sources */ = {isa = PBXBuildFile; fileRef = E030327E152BA1B500F42494 /* CDXCardViewImageRendering.m */; };
 		E032F1311169D9FB0033980C /* CDXCardDecks.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1301169D9FB0033980C /* CDXCardDecks.m */; };
 		E032F1521169DB5D0033980C /* CDXCardDecks.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1301169D9FB0033980C /* CDXCardDecks.m */; };
 		E032F1541169DB790033980C /* CDXCardDecksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E032F1531169DB790033980C /* CDXCardDecksTests.m */; };
@@ -218,8 +217,6 @@
 		E02AAFF21969DAEB00714366 /* CDXAppWindowMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXAppWindowMessageView.m; path = Classes/CDXAppWindowMessageView.m; sourceTree = "<group>"; };
 		E02D680D194C88E1003F06B9 /* CDXCardDeckJSONSerializerTestsDeck2.carddeck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = CDXCardDeckJSONSerializerTestsDeck2.carddeck.json; path = Classes/Serializers/CDXCardDeckJSONSerializerTestsDeck2.carddeck.json; sourceTree = "<group>"; };
 		E02D6810194CF96F003F06B9 /* CDXCardDeckJSONSerializerTestsDeck3.carddeck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = CDXCardDeckJSONSerializerTestsDeck3.carddeck.json; path = Classes/Serializers/CDXCardDeckJSONSerializerTestsDeck3.carddeck.json; sourceTree = "<group>"; };
-		E030327B152BA18000F42494 /* CDXCardViewImageRendering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardViewImageRendering.h; path = Classes/Views/CDXCardViewImageRendering.h; sourceTree = "<group>"; };
-		E030327E152BA1B500F42494 /* CDXCardViewImageRendering.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardViewImageRendering.m; path = Classes/Views/CDXCardViewImageRendering.m; sourceTree = "<group>"; };
 		E032F12F1169D9FB0033980C /* CDXCardDecks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXCardDecks.h; path = Classes/Models/CDXCardDecks.h; sourceTree = "<group>"; };
 		E032F1301169D9FB0033980C /* CDXCardDecks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDecks.m; path = Classes/Models/CDXCardDecks.m; sourceTree = "<group>"; };
 		E032F1531169DB790033980C /* CDXCardDecksTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXCardDecksTests.m; path = Classes/Models/CDXCardDecksTests.m; sourceTree = "<group>"; };
@@ -488,8 +485,6 @@
 				E048D460152E37BB0081B88F /* CDXCardViewRenderingProtocols.h */,
 				E048D461152E3A1B0081B88F /* CDXCardViewDirectRendering.h */,
 				E048D462152E3A1B0081B88F /* CDXCardViewDirectRendering.m */,
-				E030327B152BA18000F42494 /* CDXCardViewImageRendering.h */,
-				E030327E152BA1B500F42494 /* CDXCardViewImageRendering.m */,
 				E0150132117A245900C3BF63 /* CDXCardsViewProtocols.h */,
 				E0F2B3BF1195617A0092D11B /* CDXCardsViewBase.h */,
 				E0F2B3C01195617A0092D11B /* CDXCardsViewBase.m */,
@@ -915,7 +910,6 @@
 				E0F3AEDB13EED59B00B253ED /* CDXCardDeckCardEditPadViewController.m in Sources */,
 				E0875D9B1958CAD6007FA508 /* CDXOrderedSerializerDictionary.m in Sources */,
 				E04E7A1114E4717300D46037 /* CDXTimerKeyboardExtension.m in Sources */,
-				E030327F152BA1B500F42494 /* CDXCardViewImageRendering.m in Sources */,
 				E048D463152E3A1B0081B88F /* CDXCardViewDirectRendering.m in Sources */,
 				E0DBA1821531F39B0049A26B /* CDXAppURL.m in Sources */,
 				E01E4132154FF64300F4A8D4 /* CDXReleaseNotesViewController.m in Sources */,
