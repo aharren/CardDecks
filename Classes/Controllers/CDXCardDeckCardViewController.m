@@ -259,6 +259,15 @@
         indexDotsViewFrame.origin.y -= maxSafeAreaInsets.bottom / 2;
         indexDotsView.frame = indexDotsViewFrame;
     }
+    
+    if (maxSafeAreaInsets.top != 0) {
+        // configure the timer signal view based on screen layout
+        CGRect frame = [[CDXAppWindowManager sharedAppWindowManager] frameWithMaxSafeAreaInsets:self.view.frame];
+        CGRect timerSignalViewFrame = timerSignalView.frame;
+        timerSignalViewFrame.origin.x = 10;
+        timerSignalViewFrame.origin.y = frame.origin.y - timerSignalViewFrame.size.height - 8;
+        timerSignalView.frame = timerSignalViewFrame;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
