@@ -55,9 +55,13 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 - (UIEdgeInsets)safeAreaInsets {
     // we only consider portrait mode here, because the app is always in portrait mode
     // since iOS 12, top also reflects the size of the status bar; so, we use bottom here for detection
+    qltrace(@"top %f bottom %f", window.safeAreaInsets.top, window.safeAreaInsets.bottom);
     CGFloat inset = 0;
     if (window.safeAreaInsets.bottom > 0) {
         inset = 38;
+        if (window.safeAreaInsets.top > 50) {
+            inset = 54;
+        }
     }
     return UIEdgeInsetsMake(inset, 0, inset, 0);
 }
@@ -67,6 +71,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     CGFloat maxTopBottomInset = MAX(insets.top, insets.bottom);
     insets.top = maxTopBottomInset;
     insets.bottom = maxTopBottomInset;
+    qltrace(@"top %f bottom %f", insets.top, insets.bottom);
     return insets;
 }
 
