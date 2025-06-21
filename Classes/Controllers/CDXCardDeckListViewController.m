@@ -319,8 +319,13 @@
 - (IBAction)settingsButtonPressed {
     qltrace();
     CDXCardDeckSettings *settings = [[[CDXCardDeckSettings alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings] autorelease];
+    CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings target:self action:@selector(settingsViewWasDismissed)] autorelease];
     [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsButton animated:YES];
+}
+
+- (void)settingsViewWasDismissed {
+    self.navigationItem.title = cardDeckViewContext.cardDeck.name;
+    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (IBAction)shuffleButtonPressed {

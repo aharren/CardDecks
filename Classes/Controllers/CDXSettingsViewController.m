@@ -141,6 +141,8 @@
     NSObject<CDXSettings> *settings;
     BOOL isRootView;
     UITextField *activeTextField;
+    id target;
+    SEL action;
 
 }
 
@@ -149,16 +151,26 @@
 
 @implementation CDXSettingsMainViewController
 
-- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings isRootView:(BOOL)aIsRootView {
+- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings isRootView:(BOOL)aIsRootView  target:(id)aTarget action:(SEL)aAction {
     if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
         ivar_assign(settings, aSettings);
         isRootView = aIsRootView;
+        ivar_assign_and_retain(target, aTarget);
+        action = aAction;
     }
     return self;
 }
 
+- (void)dealloc {
+    ivar_release_and_clear(target);
+    [super dealloc];
+}
+
 - (IBAction)closeButtonPressed {
     [self dismissViewControllerAnimated:YES completion:NULL];
+    if (target != nil && action != NULL) {
+        [target performSelector:action];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -391,7 +403,7 @@
             [self dismissActiveTextField];
             NSObject<CDXSettings> *s = [settings settingsSettingsForSettingWithTag:setting.tag];
             if (s != nil) {
-                UIViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:s isRootView:NO] autorelease];
+                UIViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:s isRootView:NO target:nil action:NULL] autorelease];
                 [[self navigationController] pushViewController:vc animated:YES];
             }
             break;
@@ -422,9 +434,13 @@
 @implementation CDXSettingsViewController
 
 - (id)initWithSettings:(NSObject<CDXSettings> *)aSettings {
+    return [self initWithSettings:aSettings target:nil action:NULL];
+}
+
+- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings target:(id)aTarget action:(SEL)aAction {
     if ((self = [super init])) {
         ivar_assign_and_retain(settings, aSettings);
-        UITableViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:settings isRootView:YES] autorelease];
+        UITableViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:settings isRootView:YES target:aTarget action:aAction] autorelease];
         [self pushViewController:vc animated:NO];
     }
     return self;

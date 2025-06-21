@@ -34,6 +34,7 @@
 }
 
 - (id)initWithSettings:(NSObject<CDXSettings> *)settings;
+- (id)initWithSettings:(NSObject<CDXSettings> *)settings target:(id)target action:(SEL)action;
 
 @end
 
