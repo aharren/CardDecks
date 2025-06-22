@@ -61,7 +61,20 @@
     ivar_release_and_clear(shuffleButton);
     ivar_release_and_clear(actionButton);
     ivar_release_and_clear(addButton);
+    ivar_release_and_clear(settingsButton);
     [super dealloc];
+}
+
+- (void)viewDidLoad {
+    qltrace();
+    [super viewDidLoad];
+    
+    ivar_assign_and_retain(shuffleButton, [self systemButtonWithImageNamed:@"Toolbar-Shuffle" action:@selector(shuffleButtonPressed)]);
+    ivar_assign_and_retain(actionButton, [self systemButtonWithImageNamed:@"Toolbar-Action" action:@selector(actionButtonPressed) longPressAction:@selector(handleToolbarLongPressGesture:)]);
+    ivar_assign_and_retain(addButton, [self systemButtonWithImageNamed:@"Toolbar-Add" action:@selector(addButtonPressed) longPressAction:@selector(handleToolbarLongPressGesture:)]);
+    ivar_assign_and_retain(settingsButton, [self systemButtonWithImageNamed:@"Toolbar-Settings" action:@selector(settingsButtonPressed)]);
+    
+    [self buildToolbarWithButtonsLeft:@[editButton, shuffleButton] middle:addButton right:@[actionButton, settingsButton]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -246,9 +259,9 @@
 
 - (void)updateShuffleButton {
     if ([cardDeck isShuffled]) {
-        shuffleButton.image = [UIImage imageNamed:@"Toolbar-Sort"];
+        //TODO shuffleButton.image = [UIImage imageNamed:@"Toolbar-Sort"];
     } else {
-        shuffleButton.image = [UIImage imageNamed:@"Toolbar-Shuffle"];
+        //TODO shuffleButton.image = [UIImage imageNamed:@"Toolbar-Shuffle"];
     }
     shuffleButton.enabled = ([self tableView:viewTableView numberOfRowsInSection:1] != 0);
 }
@@ -320,7 +333,7 @@
     qltrace();
     CDXCardDeckSettings *settings = [[[CDXCardDeckSettings alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
     CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings target:self action:@selector(settingsViewWasDismissed)] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsButton animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc /*TODO fromBarButtonItem:settingsButton*/ animated:YES];
 }
 
 - (void)settingsViewWasDismissed {
@@ -342,7 +355,7 @@
     [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
 }
 
-- (IBAction)actionButtonPressed {
+- (void)actionButtonPressed {
     [self actionButtonPressedCarddecksURL];
 }
 
@@ -358,7 +371,7 @@
     UIActivityViewController *vc = [[[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:activities] autorelease];
     vc.excludedActivityTypes = @[UIActivityTypePostToFlickr, UIActivityTypePostToTencentWeibo, UIActivityTypePostToVimeo];
     
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:actionButton animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc /*TODO fromBarButtonItem:actionButton*/ animated:YES];
 }
 
 - (void)actionButtonPressedJSON {
@@ -383,7 +396,7 @@
         [[NSFileManager defaultManager] removeItemAtURL:url error:&error];
     };
     
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:actionButton animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc /*TODO fromBarButtonItem:actionButton*/ animated:YES];
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
@@ -433,9 +446,9 @@
     }
 }
 
-- (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender button:(UIButton *)button {
     qltrace();
-    if (barButtonItem == addButton) {
+    if (button == addButton) {
         if (action == @selector(paste:)) {
             // paste is only possible if the pasteboard contains a potentially valid card deck
             NSString *carddeckString = [[UIPasteboard generalPasteboard] string];
@@ -445,7 +458,7 @@
         } else {
             return NO;
         }
-    } else if (barButtonItem == actionButton) {
+    } else if (button == actionButton) {
         if (action == @selector(actionButtonPressedCarddecksURL)) {
             return YES;
         } else if (action == @selector(actionButtonPressedJSON)) {
@@ -457,9 +470,9 @@
     return NO;
 }
 
-- (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+- (void)performAction:(SEL)action withSender:(id)sender button:(UIButton *)button {
     qltrace();
-    if (barButtonItem == addButton) {
+    if (button == addButton) {
         if (action == @selector(paste:)) {
             // paste all cards from the card deck from the pasteboard
             NSString *carddeckString = [[UIPasteboard generalPasteboard] string];
@@ -476,7 +489,7 @@
         } else {
             return;
         }
-    } else if (barButtonItem == actionButton) {
+    } else if (button == actionButton) {
         if (action == @selector(copy:)) {
             NSString *carddeckUrl = [CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeck];
             [[UIPasteboard generalPasteboard] setString:carddeckUrl];
@@ -511,14 +524,14 @@
             }]
         ]];
     } else if (interaction == toolbarMenuInteraction) {
-        if (performActionToolbarBarButtonItem == addButton) {
+        if (performActionToolbarButton == addButton) {
             [actions addObjectsFromArray:@[
                 [UIAction actionWithTitle:@"New" image:nil identifier:nil handler:^(UIAction *action) {
                     [self addButtonPressed];
                 }]
             ]];
         }
-        else if (performActionToolbarBarButtonItem == actionButton) {
+        else if (performActionToolbarButton == actionButton) {
             [actions addObjectsFromArray:@[
                 [UIAction actionWithTitle:@"carddecks://" image:nil identifier:nil handler:^(UIAction *action) {
                     [self actionButtonPressedCarddecksURL];

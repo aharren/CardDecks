@@ -8,16 +8,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CDXCardDeckListPadViewController">
             <connections>
-                <outlet property="actionButton" destination="109" id="124"/>
-                <outlet property="addButton" destination="82" id="130"/>
-                <outlet property="editButton" destination="85" id="125"/>
-                <outlet property="settingsButton" destination="71" id="127"/>
-                <outlet property="shuffleButton" destination="101" id="126"/>
                 <outlet property="view" destination="1" id="119"/>
                 <outlet property="viewNoTableView" destination="128" id="129"/>
                 <outlet property="viewTableView" destination="68" id="113"/>
                 <outlet property="viewTableViewContainer" destination="67" id="112"/>
-                <outlet property="viewToolbar" destination="x01-RO-rHA" id="tYz-A7-jMm"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -53,49 +47,10 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="116" y="66"/>
         </view>
-        <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="x01-RO-rHA">
-            <rect key="frame" x="0.0" y="0.0" width="423" height="44"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-            <items>
-                <barButtonItem tag="1" image="Toolbar-Edit-Reorder" style="plain" id="85">
-                    <connections>
-                        <action selector="editButtonPressed" destination="-1" id="117"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem tag="1" width="42" style="plain" systemItem="fixedSpace" id="4AB-2A-dYP"/>
-                <barButtonItem tag="2" image="Toolbar-Shuffle" style="plain" id="101">
-                    <connections>
-                        <action selector="shuffleButtonPressed" destination="-1" id="114"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem style="plain" systemItem="flexibleSpace" id="9eq-jy-wjh"/>
-                <barButtonItem tag="3" style="plain" systemItem="add" id="82">
-                    <connections>
-                        <action selector="addButtonPressed" destination="-1" id="118"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem style="plain" systemItem="flexibleSpace" id="9pp-Cn-8wM"/>
-                <barButtonItem tag="4" style="plain" systemItem="action" id="109">
-                    <connections>
-                        <action selector="actionButtonPressed" destination="-1" id="116"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="g4k-Rh-Oz2"/>
-                <barButtonItem tag="5" image="Toolbar-Settings" style="plain" id="71">
-                    <connections>
-                        <action selector="settingsButtonPressed" destination="-1" id="72"/>
-                    </connections>
-                </barButtonItem>
-            </items>
-            <point key="canvasLocation" x="70" y="-285"/>
-        </toolbar>
     </objects>
     <resources>
-        <image name="Toolbar-Edit-Reorder" width="22" height="22"/>
-        <image name="Toolbar-Settings" width="22" height="22"/>
-        <image name="Toolbar-Shuffle" width="22" height="22"/>
         <systemColor name="separatorColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

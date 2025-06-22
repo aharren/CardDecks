@@ -43,11 +43,9 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
     
 @protected
     IBOutlet UITableView *viewTableView;
-    IBOutlet UIToolbar *viewToolbar;
     CGFloat viewTableViewContentOffsetY;
     BOOL keepViewTableViewContentOffsetY;
-    IBOutlet UIBarButtonItem *editButton;
-    IBOutlet UIBarButtonItem *settingsButton;
+    UIButton *editButton;
     
     UIEditMenuInteraction *tableViewMenuInteraction;
     UIEditMenuInteraction *toolbarMenuInteraction;
@@ -71,17 +69,20 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
     NSString *reuseIdentifierSection2;
     
     UILongPressGestureRecognizer *viewTableViewLongPressRecognizer;
-    UILongPressGestureRecognizer *viewToolbarLongPressRecognizer;
     UITapGestureRecognizer *viewTableViewTapRecognizer;
     CDXListViewControllerBasePerformActionState performActionState;
     NSIndexPath *performActionTableViewIndexPath;
-    UIBarButtonItem *performActionToolbarBarButtonItem;
+    UIButton *performActionToolbarButton;
     
     CGPoint currentTouchLocationInWindow;
     NSUInteger currentTag;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)titleText backButtonText:(NSString *)backButtonText;
+
+- (UIButton *)systemButtonWithImageNamed:(NSString *)imageName action:(SEL)action;
+- (UIButton *)systemButtonWithImageNamed:(NSString *)imageName action:(SEL)action longPressAction:(SEL)longPressAction;
+- (void)buildToolbarWithButtonsLeft:(NSArray<UIButton *> *)left middle:(UIButton *)middle right:(NSArray<UIButton *> *)right;
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section;
@@ -90,8 +91,8 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
 - (void)performAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
 
-- (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
-- (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender button:(UIButton *)button;
+- (void)performAction:(SEL)action withSender:(id)sender button:(UIButton *)button;
 
 - (void)editMenuInteraction:(UIEditMenuInteraction *)interaction willDismissMenuForConfiguration:(UIEditMenuConfiguration *)configuration animator:(id<UIEditMenuInteractionAnimating>)animator;
 - (UIMenu *)editMenuInteraction:(UIEditMenuInteraction *)interaction menuForConfiguration:(UIEditMenuConfiguration *)configuration suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions;
@@ -99,12 +100,14 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
 - (void)updateToolbarButtons;
 
-- (IBAction)editButtonPressed;
+- (void)editButtonPressed;
 
 - (void)performBlockingSelector:(SEL)selector withObject:(NSObject *)object;
 - (void)performBlockingSelectorEnd;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+
+- (void)handleToolbarLongPressGesture:(UILongPressGestureRecognizer *)sender;
 
 @end
 

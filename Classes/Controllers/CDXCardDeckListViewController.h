@@ -34,20 +34,21 @@
     CDXCardDeckViewContext *cardDeckViewContext;
     CDXCardDeck *cardDeck;
     
-    IBOutlet UIBarButtonItem *shuffleButton;
-    IBOutlet UIBarButtonItem *actionButton;
-    IBOutlet UIBarButtonItem *addButton;
+    UIButton *shuffleButton;
+    UIButton *actionButton;
+    UIButton *addButton;
+    UIButton *settingsButton;
     BOOL viewWasAlreadyVisible;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
 
-- (IBAction)addButtonPressed;
-- (IBAction)defaultsButtonPressed;
-- (IBAction)settingsButtonPressed;
-- (IBAction)shuffleButtonPressed;
-- (IBAction)actionButtonPressed;
+- (void)addButtonPressed;
+- (void)defaultsButtonPressed;
+- (void)settingsButtonPressed;
+- (void)shuffleButtonPressed;
+- (void)actionButtonPressed;
 - (void)duplicateButtonPressed;
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;

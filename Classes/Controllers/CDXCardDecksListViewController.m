@@ -55,7 +55,18 @@
 - (void)dealloc {
     ivar_release_and_clear(cardDecks);
     ivar_release_and_clear(addButton);
+    ivar_release_and_clear(settingsButton);
     [super dealloc];
+}
+
+- (void)viewDidLoad {
+    qltrace();
+    [super viewDidLoad];
+    
+    ivar_assign_and_retain(addButton, [self systemButtonWithImageNamed:@"Toolbar-Add" action:@selector(addButtonPressed) longPressAction:@selector(handleToolbarLongPressGesture:)]);
+    ivar_assign_and_retain(settingsButton, [self systemButtonWithImageNamed:@"Toolbar-Settings" action:@selector(settingsButtonPressed)]);
+
+    [self buildToolbarWithButtonsLeft:@[editButton] middle:addButton right:@[settingsButton]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -309,7 +320,7 @@
 
 - (void)showReleaseNotes {
     CDXReleaseNotesViewController *vc = [[[CDXReleaseNotesViewController alloc] init] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsButton animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc /*TODO fromBarButtonItem:settingsButton*/ animated:YES];
 }
 
 - (IBAction)addButtonPressed {
@@ -329,7 +340,7 @@
     qltrace();
     CDXAppSettings *settings = [CDXAppSettings sharedAppSettings];
     CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsButton animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc /*TODO fromBarButtonItem:settingsButton*/ animated:YES];
 }
 
 - (void)processSinglePendingCardDeckAdd {
@@ -434,9 +445,9 @@
     }
 }
 
-- (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender button:(UIButton *)button {
     qltrace();
-    if (barButtonItem == addButton) {
+    if (button == addButton) {
         if (action == @selector(paste:)) {
             // paste is only possible if the pasteboard contains a potentially valid card deck
             NSString *carddeckString = [[UIPasteboard generalPasteboard] string];
@@ -450,9 +461,9 @@
     return NO;
 }
 
-- (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+- (void)performAction:(SEL)action withSender:(id)sender button:(UIButton *)button {
     qltrace();
-    if (barButtonItem == addButton) {
+    if (button == addButton) {
         if (action == @selector(paste:)) {
             // paste the card deck from the pasteboard as a new card deck
             NSString *carddeckString = [[UIPasteboard generalPasteboard] string];
@@ -498,7 +509,7 @@
             }]
         ]];
     } else if (interaction == toolbarMenuInteraction) {
-        if (performActionToolbarBarButtonItem == addButton) {
+        if (performActionToolbarButton == addButton) {
             [actions addObjectsFromArray:@[
                 [UIAction actionWithTitle:@"New" image:nil identifier:nil handler:^(UIAction *action) {
                     [self addButtonPressed];

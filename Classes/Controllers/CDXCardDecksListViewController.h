@@ -33,7 +33,8 @@
     CDXCardDecks *cardDecks;
     NSUInteger lastCardDeckIndex;
 
-    IBOutlet UIBarButtonItem *addButton;
+    UIButton *addButton;
+    UIButton *settingsButton;
 }
 
 - (id)initWithCardDecks:(CDXCardDecks *)cardDecks nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
