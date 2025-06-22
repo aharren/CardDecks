@@ -259,9 +259,9 @@
 
 - (void)updateShuffleButton {
     if ([cardDeck isShuffled]) {
-        //TODO shuffleButton.image = [UIImage imageNamed:@"Toolbar-Sort"];
+        [shuffleButton setImage:[UIImage imageNamed:@"Toolbar-Sort"] forState:UIControlStateNormal];
     } else {
-        //TODO shuffleButton.image = [UIImage imageNamed:@"Toolbar-Shuffle"];
+        [shuffleButton setImage:[UIImage imageNamed:@"Toolbar-Shuffle"] forState:UIControlStateNormal];
     }
     shuffleButton.enabled = ([self tableView:viewTableView numberOfRowsInSection:1] != 0);
 }
