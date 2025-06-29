@@ -86,9 +86,7 @@ static float keyboardExtensionsOsVersion;
         toolbar.backgroundColor = [UIColor systemBackgroundColor];
         ivar_assign(toolbarButtons, [[NSMutableArray alloc] init]);
         ivar_assign_and_retain(toolbarKeyboardButton, [self toolbarButtonWithTitle:@"abc"]);
-        ivar_assign(toolbarActionButton, [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-                                                                                       target:self
-                                                                                       action:@selector(toolbarActionButtonPressed:)]);
+        ivar_assign(toolbarActionButton, [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Toolbar-Action"] style:UIBarButtonItemStylePlain target:self action:@selector(toolbarActionButtonPressed:)]);
         ivar_assign(toolbarActiveButtonMarker, [[CDXKeyboardExtensionMarker alloc] init]);
         [toolbar addSubview:toolbarActiveButtonMarker.view];
         ivar_assign(backgroundView, [[UIView alloc] initWithFrame:extensionViewRect]);
