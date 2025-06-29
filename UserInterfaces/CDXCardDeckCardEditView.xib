@@ -51,7 +51,7 @@
             <point key="canvasLocation" x="137.59999999999999" y="154.72263868065968"/>
         </view>
         <view contentMode="scaleToFill" id="hJ5-2J-mvf">
-            <rect key="frame" x="0.0" y="0.0" width="71" height="37"/>
+            <rect key="frame" x="0.0" y="0.0" width="80" height="37"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fxe-V4-NEr">
