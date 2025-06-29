@@ -38,6 +38,8 @@
     UIButton *actionButton;
     UIButton *addButton;
     UIButton *settingsButton;
+    UIBarButtonItem *actionBarButtonItem;
+    UIBarButtonItem *settingsBarButtonItem;
     BOOL viewWasAlreadyVisible;
 }
 

@@ -94,24 +94,28 @@
     return button;
 }
 
-- (void)buildToolbarWithButtonsLeft:(NSArray<UIButton *> *)left middle:(UIButton *)middle right:(NSArray<UIButton *> *)right {
+- (UIBarButtonItem *)barButtonItemWithButton:(UIButton *)button {
+    return [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+}
+
+- (void)buildToolbarWithBarButtonItemsLeft:(NSArray<UIBarButtonItem *> *)left middle:(UIBarButtonItem *)middle right:(NSArray<UIBarButtonItem *> *)right {
     NSMutableArray<UIBarButtonItem *> *items = [NSMutableArray array];
     
     [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:20]];
-    for (UIButton* button in left) {
-        [items addObject:[[[UIBarButtonItem alloc] initWithCustomView:button] autorelease]];
+    for (UIBarButtonItem* barButtonItem in left) {
+        [items addObject:barButtonItem];
         [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:40]];
     }
     
     [items addObject:[UIBarButtonItem flexibleSpaceItem]];
     if (middle != nil) {
-        [items addObject:[[[UIBarButtonItem alloc] initWithCustomView:middle] autorelease]];
+        [items addObject:middle];
         [items addObject:[UIBarButtonItem flexibleSpaceItem]];
     }
     
-    for (UIButton* button in right) {
+    for (UIBarButtonItem* barButtonItem in right) {
         [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:40]];
-        [items addObject:[[[UIBarButtonItem alloc] initWithCustomView:button] autorelease]];
+        [items addObject:barButtonItem];
     }
     [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:20]];
     

@@ -56,6 +56,7 @@
     ivar_release_and_clear(cardDecks);
     ivar_release_and_clear(addButton);
     ivar_release_and_clear(settingsButton);
+    ivar_release_and_clear(settingsBarButtonItem);
     [super dealloc];
 }
 
@@ -65,8 +66,10 @@
     
     ivar_assign_and_retain(addButton, [self systemButtonWithImageNamed:@"Toolbar-Add" action:@selector(addButtonPressed) longPressAction:@selector(handleToolbarLongPressGesture:)]);
     ivar_assign_and_retain(settingsButton, [self systemButtonWithImageNamed:@"Toolbar-Settings" action:@selector(settingsButtonPressed)]);
-
-    [self buildToolbarWithButtonsLeft:@[editButton] middle:addButton right:@[settingsButton]];
+    
+    ivar_assign_and_retain(settingsBarButtonItem, [self barButtonItemWithButton:settingsButton]);
+    
+    [self buildToolbarWithBarButtonItemsLeft:@[[self barButtonItemWithButton:editButton]] middle:[self barButtonItemWithButton:addButton] right:@[settingsBarButtonItem]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

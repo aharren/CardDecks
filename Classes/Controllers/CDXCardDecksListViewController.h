@@ -35,6 +35,7 @@
 
     UIButton *addButton;
     UIButton *settingsButton;
+    UIBarButtonItem *settingsBarButtonItem;
 }
 
 - (id)initWithCardDecks:(CDXCardDecks *)cardDecks nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;

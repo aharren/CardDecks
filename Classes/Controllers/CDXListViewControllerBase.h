@@ -82,7 +82,8 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
 
 - (UIButton *)systemButtonWithImageNamed:(NSString *)imageName action:(SEL)action;
 - (UIButton *)systemButtonWithImageNamed:(NSString *)imageName action:(SEL)action longPressAction:(SEL)longPressAction;
-- (void)buildToolbarWithButtonsLeft:(NSArray<UIButton *> *)left middle:(UIButton *)middle right:(NSArray<UIButton *> *)right;
+- (UIBarButtonItem *)barButtonItemWithButton:(UIButton *)button;
+- (void)buildToolbarWithBarButtonItemsLeft:(NSArray<UIBarButtonItem *> *)left middle:(UIBarButtonItem *)middle right:(NSArray<UIBarButtonItem *> *)right;
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section;

@@ -62,6 +62,8 @@
     ivar_release_and_clear(actionButton);
     ivar_release_and_clear(addButton);
     ivar_release_and_clear(settingsButton);
+    ivar_release_and_clear(actionBarButtonItem);
+    ivar_release_and_clear(settingsBarButtonItem);
     [super dealloc];
 }
 
@@ -74,7 +76,10 @@
     ivar_assign_and_retain(addButton, [self systemButtonWithImageNamed:@"Toolbar-Add" action:@selector(addButtonPressed) longPressAction:@selector(handleToolbarLongPressGesture:)]);
     ivar_assign_and_retain(settingsButton, [self systemButtonWithImageNamed:@"Toolbar-Settings" action:@selector(settingsButtonPressed)]);
     
-    [self buildToolbarWithButtonsLeft:@[editButton, shuffleButton] middle:addButton right:@[actionButton, settingsButton]];
+    ivar_assign_and_retain(actionBarButtonItem, [self barButtonItemWithButton:actionButton]);
+    ivar_assign_and_retain(settingsBarButtonItem, [self barButtonItemWithButton:settingsButton]);
+    
+    [self buildToolbarWithBarButtonItemsLeft:@[[self barButtonItemWithButton:editButton],[self barButtonItemWithButton:shuffleButton]] middle:[self barButtonItemWithButton:addButton] right:@[actionBarButtonItem, settingsBarButtonItem]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
