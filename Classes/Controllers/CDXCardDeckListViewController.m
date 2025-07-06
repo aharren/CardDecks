@@ -338,7 +338,7 @@
     qltrace();
     CDXCardDeckSettings *settings = [[[CDXCardDeckSettings alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
     CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings target:self action:@selector(settingsViewWasDismissed)] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc /*TODO fromBarButtonItem:settingsButton*/ animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsBarButtonItem forViewController:self animated:YES];
 }
 
 - (void)settingsViewWasDismissed {
@@ -376,7 +376,7 @@
     UIActivityViewController *vc = [[[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:activities] autorelease];
     vc.excludedActivityTypes = @[UIActivityTypePostToFlickr, UIActivityTypePostToTencentWeibo, UIActivityTypePostToVimeo];
     
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc /*TODO fromBarButtonItem:actionButton*/ animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:actionBarButtonItem forViewController:self animated:YES];
 }
 
 - (void)actionButtonPressedJSON {
@@ -401,7 +401,7 @@
         [[NSFileManager defaultManager] removeItemAtURL:url error:&error];
     };
     
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc /*TODO fromBarButtonItem:actionButton*/ animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsBarButtonItem forViewController:self animated:YES];
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {

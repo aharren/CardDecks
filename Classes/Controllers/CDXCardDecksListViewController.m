@@ -323,7 +323,7 @@
 
 - (void)showReleaseNotes {
     CDXReleaseNotesViewController *vc = [[[CDXReleaseNotesViewController alloc] init] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc /*TODO fromBarButtonItem:settingsButton*/ animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsBarButtonItem forViewController:self animated:YES];
 }
 
 - (IBAction)addButtonPressed {
@@ -343,7 +343,7 @@
     qltrace();
     CDXAppSettings *settings = [CDXAppSettings sharedAppSettings];
     CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc /*TODO fromBarButtonItem:settingsButton*/ animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsBarButtonItem forViewController:self animated:YES];
 }
 
 - (void)processSinglePendingCardDeckAdd {

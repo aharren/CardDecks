@@ -160,14 +160,14 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     ivar_release_and_clear(messageView);
 }
 
-- (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated {
+- (void)presentModalViewController:(UIViewController *)modalViewController animated:(BOOL)animated {
     qltrace();
-    [[self visibleViewController] presentViewController:viewController animated:animated completion:NULL];
+    [[self visibleViewController] presentViewController:modalViewController animated:animated completion:NULL];
 }
 
-- (void)presentModalViewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem animated:(BOOL)animated {
+- (void)presentModalViewController:(UIViewController *)modalViewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem forViewController:(UIViewController *)fromViewController animated:(BOOL)animated {
     qltrace();
-    [[self visibleViewController] presentViewController:viewController animated:animated completion:NULL];
+    [[self visibleViewController] presentViewController:modalViewController animated:animated completion:NULL];
 }
 
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
@@ -342,7 +342,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
 @end
 
 
-@interface CDXAppWindowManagerPad : CDXAppWindowManager<UIPopoverControllerDelegate> {
+@interface CDXAppWindowManagerPad : CDXAppWindowManager {
     
 @protected
     UISplitViewController* splitViewController;
@@ -353,7 +353,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
     UIViewController<CDXAppWindowViewController> * initialLeftViewController;
     UIViewController<CDXAppWindowViewController> * initialRightViewController;
     
-    UIPopoverController *modalViewControllerContainer;
+    UIViewController *modalViewControllerOwner;
 }
 
 @end
@@ -444,39 +444,37 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     [window makeKeyAndVisible];
 }
 
-- (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated {
+- (void)presentModalViewController:(UIViewController *)modalViewController animated:(BOOL)animated {
     qltrace();
-    if (modalViewControllerContainer != nil) {
+    if (modalViewControllerOwner != nil) {
         [self dismissModalViewControllerAnimated:animated];
     }
     
-    [splitViewController presentViewController:viewController animated:animated completion:NULL];
+    [splitViewController presentViewController:modalViewController animated:animated completion:NULL];
 }
 
-- (void)presentModalViewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem animated:(BOOL)animated {
-    qltrace();
-    if (modalViewControllerContainer != nil) {
+- (void)presentModalViewController:(UIViewController *)modalViewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem forViewController:(UIViewController *)forViewController animated:(BOOL)animated {
+    qltrace(@"%@", barButtonItem);
+    if (modalViewControllerOwner != nil) {
         [self dismissModalViewControllerAnimated:animated];
-        return;
     }
     
-    ivar_assign(modalViewControllerContainer, [[UIPopoverController alloc] initWithContentViewController:viewController]);
-    modalViewControllerContainer.delegate = self;
-    modalViewControllerContainer.popoverContentSize = CGSizeMake(520, 820);
-
-    [modalViewControllerContainer presentPopoverFromBarButtonItem:barButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:animated];
-}
-
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
-    qltrace();
-    [self dismissModalViewControllerAnimated:NO];
+    ivar_assign_and_retain(modalViewControllerOwner, forViewController);
+    
+    modalViewController.modalPresentationStyle = UIModalPresentationPopover;
+    modalViewController.preferredContentSize = CGSizeMake(400, MAX(400, window.bounds.size.height - 150));
+    modalViewController.popoverPresentationController.sourceItem = barButtonItem;
+    modalViewController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionDown;
+    [forViewController presentViewController:modalViewController animated:YES completion:NULL];
 }
 
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
     qltrace();
     [splitViewController dismissViewControllerAnimated:animated completion:NULL];
-    [modalViewControllerContainer dismissPopoverAnimated:animated];
-    ivar_release_and_clear(modalViewControllerContainer);
+    if (modalViewControllerOwner != nil) {
+        [modalViewControllerOwner dismissViewControllerAnimated:animated completion:NULL];
+    }
+    ivar_release_and_clear(modalViewControllerOwner);
 }
 
 - (void)showActionSheet:(CDXActionSheet *)actionSheet viewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem *)barButtonItem {
