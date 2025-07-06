@@ -60,9 +60,9 @@
     viewNoTableView.hidden = !viewTableView.hidden;
 }
 
-- (void)updateNotificationForCardDeck:(id)object {
+- (void)updateNotificationForCardDeck:(NSNotification *)notification {
     qltrace();
-    if (!ignoreCardDeckUpdateNotifications) {
+    if (!ignoreCardDeckUpdateNotifications && notification.object == cardDeck) {
         [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
         self.navigationItem.title = cardDeck.name;
     }
@@ -98,6 +98,7 @@
     ignoreCardDeckUpdateNotifications = YES;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewWillDisappear:animated];
+    [self.view removeFromSuperview];
     [CDXStorage drainAllDeferredActions];
 }
 
