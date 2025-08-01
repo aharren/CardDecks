@@ -92,7 +92,7 @@
 }
 
 static const NSUInteger cardOrientationsCount = (NSUInteger)CDXCardOrientationCount;
-static NSString *cardOrientations[cardOrientationsCount] = {
+static NSString *cardOrientations[CDXCardOrientationCount] = {
     [CDXCardOrientationUp] = @"up",
     [CDXCardOrientationRight] = @"right",
     [CDXCardOrientationDown] = @"down",
@@ -108,7 +108,7 @@ static NSString *cardOrientations[cardOrientationsCount] = {
 }
 
 static const NSUInteger cornerStylesCount = (NSUInteger)CDXCardCornerStyleCount;
-static NSString *cornerStyles[cornerStylesCount] = {
+static NSString *cornerStyles[CDXCardCornerStyleCount] = {
     [CDXCardCornerStyleRounded] = @"rounded",
     [CDXCardCornerStyleCornered] = @"cornered"
 };
@@ -122,7 +122,7 @@ static NSString *cornerStyles[cornerStylesCount] = {
 }
 
 static const NSUInteger displayStylesCount = (NSUInteger)CDXCardDeckDisplayStyleCount;
-static NSString *displayStyles[displayStylesCount] = {
+static NSString *displayStyles[CDXCardDeckDisplayStyleCount] = {
     [CDXCardDeckDisplayStyleSideBySide] = @"side-by-side,scroll",
     [CDXCardDeckDisplayStyleStack] = @"stacked,scroll",
     [CDXCardDeckDisplayStyleSwipeStack] = @"stacked,swipe"
@@ -137,7 +137,7 @@ static NSString *displayStyles[displayStylesCount] = {
 }
 
 static const NSUInteger pageControlStylesCount = (NSUInteger)CDXCardDeckPageControlStyleCount;
-static NSString *pageControlStyles[pageControlStylesCount] = {
+static NSString *pageControlStyles[CDXCardDeckPageControlStyleCount] = {
     [CDXCardDeckPageControlStyleLight] = @"light",
     [CDXCardDeckPageControlStyleDark] = @"dark"
 };
@@ -151,7 +151,7 @@ static NSString *pageControlStyles[pageControlStylesCount] = {
 }
 
 static const NSUInteger shakeActionsCount = (NSUInteger)CDXCardDeckShakeActionCount;
-static NSString *shakeActions[shakeActionsCount] = {
+static NSString *shakeActions[CDXCardDeckShakeActionCount] = {
     [CDXCardDeckShakeActionNone] = @"off",
     [CDXCardDeckShakeActionRandom] = @"random",
     [CDXCardDeckShakeActionShuffle] = @"shuffle"
@@ -166,7 +166,7 @@ static NSString *shakeActions[shakeActionsCount] = {
 }
 
 static const NSUInteger autoPlaysCount = (NSUInteger)CDXCardDeckAutoPlayCount;
-static NSString *autoPlays[autoPlaysCount] = {
+static NSString *autoPlays[CDXCardDeckAutoPlayCount] = {
     [CDXCardDeckAutoPlayOff] = @"off",
     [CDXCardDeckAutoPlayPlay] = @"play1x",
     [CDXCardDeckAutoPlayPlay2] = @"play5x"
