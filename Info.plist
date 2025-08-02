@@ -12,7 +12,7 @@
 			<key>CFBundleTypeName</key>
 			<string>Card Deck</string>
 			<key>LSHandlerRank</key>
-			<string>Default</string>
+			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>0xc0.de.CardDecks.UTI.carddeck</string>
