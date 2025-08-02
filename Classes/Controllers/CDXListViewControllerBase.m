@@ -85,12 +85,18 @@
 
 - (UIButton *)systemButtonWithImageNamed:(NSString *)imageName action:(SEL)action {
     UIButton *button = [UIButton systemButtonWithImage:[UIImage imageNamed:imageName] target:self action:action];
+    CGRect frame = button.frame;
+    frame.size.width += 10;
+    button.frame = frame;
     return button;
 }
 
 - (UIButton *)systemButtonWithImageNamed:(NSString *)imageName action:(SEL)action longPressAction:(SEL)longPressAction {
     UIButton *button = [self systemButtonWithImageNamed:imageName action:action];
     [button addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:longPressAction]];
+    CGRect frame = button.frame;
+    frame.size.width += 10;
+    button.frame = frame;
     return button;
 }
 
@@ -101,10 +107,10 @@
 - (void)buildToolbarWithBarButtonItemsLeft:(NSArray<UIBarButtonItem *> *)left middle:(UIBarButtonItem *)middle right:(NSArray<UIBarButtonItem *> *)right {
     NSMutableArray<UIBarButtonItem *> *items = [NSMutableArray array];
     
-    [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:20]];
+    [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:17]];
     for (UIBarButtonItem* barButtonItem in left) {
         [items addObject:barButtonItem];
-        [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:40]];
+        [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:25]];
     }
     
     [items addObject:[UIBarButtonItem flexibleSpaceItem]];
@@ -114,10 +120,10 @@
     }
     
     for (UIBarButtonItem* barButtonItem in right) {
-        [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:40]];
+        [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:25]];
         [items addObject:barButtonItem];
     }
-    [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:20]];
+    [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:17]];
     
     self.toolbarItems = items;
 }
