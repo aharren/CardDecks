@@ -204,7 +204,7 @@ static const CDXCardDeckSettingGroup groups[] = {
     }
 }
 
-- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag {
+- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag compact:(BOOL)compact {
     switch (tag) {
         default:
             return @"";

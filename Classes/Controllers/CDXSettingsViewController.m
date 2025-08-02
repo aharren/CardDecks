@@ -75,7 +75,7 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
     }
-    cell.textLabel.text = [settings descriptionForEumerationValue:indexPath.row forSettingWithTag:setting.tag];
+    cell.textLabel.text = [settings descriptionForEumerationValue:indexPath.row forSettingWithTag:setting.tag compact:NO];
     if (indexPath.row == [settings enumerationValueForSettingWithTag:setting.tag]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
@@ -309,7 +309,7 @@
             cell.tag = setting.tag;
             cell.textLabel.text = setting.label;
             NSUInteger enumValue = [settings enumerationValueForSettingWithTag:setting.tag];
-            cell.detailTextLabel.text = [settings descriptionForEumerationValue:enumValue forSettingWithTag:setting.tag];
+            cell.detailTextLabel.text = [settings descriptionForEumerationValue:enumValue forSettingWithTag:setting.tag compact:YES];
             return cell;
         }
         case CDXSettingTypeText: {

@@ -122,7 +122,7 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
     return 0;
 }
 
-- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag {
+- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag compact:(BOOL)compact {
     return @"";
 }
 

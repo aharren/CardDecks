@@ -59,7 +59,7 @@ typedef struct {
 - (void)setEnumerationValue:(NSUInteger)value  forSettingWithTag:(NSUInteger)tag;
 
 - (NSUInteger)enumerationValuesCountForSettingWithTag:(NSUInteger)tag;
-- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag;
+- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag compact:(BOOL)compact;
 
 - (NSString *)textValueForSettingWithTag:(NSUInteger)tag;
 - (void)setTextValue:(NSString *)value forSettingWithTag:(NSUInteger)tag;

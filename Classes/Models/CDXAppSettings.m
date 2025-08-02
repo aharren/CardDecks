@@ -362,7 +362,7 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
     }
 }
 
-- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag {
+- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag compact:(BOOL)compact {
     switch (tag) {
         default:
             return @"";
@@ -396,7 +396,7 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
                 case 0:
                     return @"carddecks:// URL";
                 case 1:
-                    return @".carddeck JSON Document";
+                    return compact ? @".carddeck JSON" : @".carddeck JSON Document";
             }
         case CDXAppSettingsDoneButtonOnLeftSide:
         case CDXAppSettingsActionButtonsOnLeftSide:
