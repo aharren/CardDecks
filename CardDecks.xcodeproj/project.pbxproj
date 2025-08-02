@@ -171,11 +171,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7DB7D94BFAB549A2B8958AF9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E002B449116754350072C409 /* CardDecks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardDecks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E002B4FA116760650072C409 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E002B4FB116760650072C409 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
-		E002B627116762260072C409 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Developer/Library/Frameworks/SenTestingKit.framework; sourceTree = SDKROOT; };
 		E002B6C5116885150072C409 /* CDXColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXColor.h; path = Classes/Models/CDXColor.h; sourceTree = "<group>"; };
 		E002B6C6116885150072C409 /* CDXColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXColor.m; path = Classes/Models/CDXColor.m; sourceTree = "<group>"; };
 		E002B6C8116885230072C409 /* CDXColorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXColorTests.m; path = Classes/Models/CDXColorTests.m; sourceTree = "<group>"; };
@@ -326,7 +324,6 @@
 		E0D01AEB1170EF9200004856 /* CDXImageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXImageFactory.h; path = Classes/CDXImageFactory.h; sourceTree = "<group>"; };
 		E0D01AEC1170EF9200004856 /* CDXImageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDXImageFactory.m; path = Classes/CDXImageFactory.m; sourceTree = "<group>"; };
 		E0D1425A2E3E2C3200A23A77 /* Document-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Document-Icon.png"; sourceTree = "<group>"; };
-		E0D1F09C18CC6BFF00BA521A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		E0D673DF151640F90040A2B5 /* CDXTimerKeyboardExtensionView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "CDXTimerKeyboardExtensionView~ipad.xib"; path = "UserInterfaces/CDXTimerKeyboardExtensionView~ipad.xib"; sourceTree = "<group>"; };
 		E0D77FB219E321DF00450F82 /* CDXActionSheetProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CDXActionSheetProtocols.h; path = Classes/CDXActionSheetProtocols.h; sourceTree = "<group>"; };
 		E0D909261172275D00AD50DA /* CDXLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDXLogger.h; path = Logging/CDXLogger.h; sourceTree = "<group>"; };
@@ -515,16 +512,13 @@
 			isa = PBXGroup;
 			children = (
 				E08E3ECA247912B7008E8FC1 /* WebKit.framework */,
-				E0D1F09C18CC6BFF00BA521A /* XCTest.framework */,
 				E0C1F67318772D4300F17779 /* Social.framework */,
 				E097B04314E70FD300A8F38B /* AudioToolbox.framework */,
 				E0D9E159132EBA1E001435D0 /* MessageUI.framework */,
 				E0EB6F4D11723D1A00F41F7A /* CoreGraphics.framework */,
 				E03BA2711167488B00FE7924 /* Foundation.framework */,
 				E03BA2731167489600FE7924 /* UIKit.framework */,
-				E002B627116762260072C409 /* SenTestingKit.framework */,
 				E0CCC9031170E9420040D222 /* QuartzCore.framework */,
-				7DB7D94BFAB549A2B8958AF9 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
