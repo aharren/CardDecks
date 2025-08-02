@@ -39,6 +39,7 @@ declare_singleton(sharedAppSettings, CDXAppSettings);
 - (BOOL)enableAllKeyboardSymbols;
 - (NSUInteger)closeTapCount;
 - (NSUInteger)shakeTapCount;
+- (NSUInteger)defaultShareType;
 - (BOOL)doneButtonOnLeftSide;
 - (BOOL)actionButtonsOnLeftSide;
 - (NSUInteger)migrationState;
