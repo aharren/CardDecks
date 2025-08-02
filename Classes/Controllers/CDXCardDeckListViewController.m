@@ -362,13 +362,13 @@
 
 - (void)actionButtonPressed {
     if ([[CDXAppSettings sharedAppSettings] defaultShareType] == 0) {
-        [self actionButtonPressedCarddecksURL];
+        [self shareCardDeckAsCarddecksURL];
     } else {
-        [self actionButtonPressedJSON];
+        [self shareCardDeckAsJSONDocument];
     }
 }
 
-- (void)actionButtonPressedCarddecksURL {
+- (void)shareCardDeckAsCarddecksURL {
     qltrace();
     NSURL *url = [NSURL URLWithString:[CDXAppURL carddecksURLStringForVersion2AddActionFromCardDeck:cardDeckViewContext.cardDeck]];
     
@@ -383,7 +383,7 @@
     [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:actionBarButtonItem forViewController:self animated:YES];
 }
 
-- (void)actionButtonPressedJSON {
+- (void)shareCardDeckAsJSONDocument {
     qltrace();
     NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:[cardDeckViewContext.cardDeck.name stringByAppendingString:@".carddeck"]];
     NSURL *url = [NSURL fileURLWithPath:path];
@@ -468,9 +468,9 @@
             return NO;
         }
     } else if (button == actionButton) {
-        if (action == @selector(actionButtonPressedCarddecksURL)) {
+        if (action == @selector(shareCardDeckAsCarddecksURL)) {
             return YES;
-        } else if (action == @selector(actionButtonPressedJSON)) {
+        } else if (action == @selector(shareCardDeckAsJSONDocument)) {
             return YES;
         } else {
             return NO;
@@ -543,10 +543,10 @@
         else if (performActionToolbarButton == actionButton) {
             [actions addObjectsFromArray:@[
                 [UIAction actionWithTitle:@"carddecks://" image:nil identifier:nil handler:^(UIAction *action) {
-                    [self actionButtonPressedCarddecksURL];
+                    [self shareCardDeckAsCarddecksURL];
                 }],
                 [UIAction actionWithTitle:@".carddeck" image:nil identifier:nil handler:^(UIAction *action) {
-                    [self actionButtonPressedJSON];
+                    [self shareCardDeckAsJSONDocument];
                 }]
             ]];
         }
