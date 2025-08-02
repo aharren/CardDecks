@@ -34,6 +34,7 @@ declare_singleton(sharedAppSettings, CDXAppSettings);
 
 - (void)clearCloseTapCount;
 - (void)clearShakeTapCount;
+- (void)clearDefaultShareType;
 
 - (BOOL)enableIdleTimer;
 - (BOOL)enableAllKeyboardSymbols;

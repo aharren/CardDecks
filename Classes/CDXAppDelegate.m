@@ -337,6 +337,14 @@
         [[CDXAppSettings sharedAppSettings] setMigrationState:migrationState_3];
     }
     
+    const NSUInteger migrationState_4 = 400;
+    if ([[CDXAppSettings sharedAppSettings] migrationState] < migrationState_4) {
+        // reset some settings
+        [[CDXAppSettings sharedAppSettings] clearDefaultShareType];
+
+        [[CDXAppSettings sharedAppSettings] setMigrationState:migrationState_4];
+    }
+
     return decks;
 }
 

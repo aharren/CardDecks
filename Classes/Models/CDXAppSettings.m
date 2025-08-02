@@ -173,6 +173,10 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
     [CDXAppSettings clearUserDefaultsForKey:settingsUserDefaultsKeys[CDXAppSettingsShakeTapCount]];
 }
 
+- (void)clearDefaultShareType {
+    [CDXAppSettings clearUserDefaultsForKey:settingsUserDefaultsKeys[CDXAppSettingsDefaultShareType]];
+}
+
 - (BOOL)enableIdleTimer {
     return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsIdleTimer] defaultsTo:NO];
 }
@@ -200,7 +204,7 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
 }
 
 - (NSUInteger)defaultShareType {
-    NSUInteger value = [CDXAppSettings userDefaultsIntegerValueForKey:settingsUserDefaultsKeys[CDXAppSettingsDefaultShareType] defaultsTo:0];
+    NSUInteger value = [CDXAppSettings userDefaultsIntegerValueForKey:settingsUserDefaultsKeys[CDXAppSettingsDefaultShareType] defaultsTo:1];
     if (value >= 1 && value <= 1) {
         return value;
     } else {
