@@ -361,7 +361,11 @@
 }
 
 - (void)actionButtonPressed {
-    [self actionButtonPressedCarddecksURL];
+    if ([[CDXAppSettings sharedAppSettings] defaultShareType] == 0) {
+        [self actionButtonPressedCarddecksURL];
+    } else {
+        [self actionButtonPressedJSON];
+    }
 }
 
 - (void)actionButtonPressedCarddecksURL {
