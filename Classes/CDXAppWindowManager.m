@@ -450,6 +450,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
         [self dismissModalViewControllerAnimated:animated];
     }
     
+    modalViewController.preferredContentSize = window.bounds.size;
     [splitViewController presentViewController:modalViewController animated:animated completion:NULL];
 }
 
