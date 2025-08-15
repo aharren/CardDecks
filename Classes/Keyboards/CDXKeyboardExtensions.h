@@ -83,6 +83,7 @@
     NSArray<UITextField *> *textFields;
     NSArray<UITextView *> *textViews;
     CGRect extensionViewRect;
+    BOOL extensionViewRectIsSet;
     
     UIView *backgroundView;
     

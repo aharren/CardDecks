@@ -89,7 +89,7 @@ static float keyboardExtensionsOsVersion;
         ivar_assign(toolbarActionButton, [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Toolbar-Action"] style:UIBarButtonItemStylePlain target:self action:@selector(toolbarActionButtonPressed:)]);
         ivar_assign(toolbarActiveButtonMarker, [[CDXKeyboardExtensionMarker alloc] init]);
         [toolbar addSubview:toolbarActiveButtonMarker.view];
-        ivar_assign(backgroundView, [[UIView alloc] initWithFrame:extensionViewRect]);
+        ivar_assign(backgroundView, [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)]);
         backgroundView.alpha = 0;
         backgroundView.frame = toolbar.frame;
         ivar_assign_and_retain(backgroundColor, [UIColor systemGray6Color]);
@@ -102,6 +102,7 @@ static float keyboardExtensionsOsVersion;
             viewInactiveExtensions.backgroundColor = [UIColor colorWithRed:0.68 green:0.68 blue:0.68 alpha:0.5];
         }
         viewInactiveExtensions.userInteractionEnabled = NO;
+        extensionViewRectIsSet = NO;
     }
     
     return self;
@@ -157,9 +158,24 @@ static float keyboardExtensionsOsVersion;
         return;
     }
     
+    CGFloat keyboardMinHeight = 100;
+    if (!hide && keyboardAnimationEndFrame.size.height < keyboardMinHeight) {
+        return;
+    }
+    
     // remember the rectangle for the extension views
     if (!hide) {
-        extensionViewRect = keyboardAnimationEndFrame;
+        if (!extensionViewRectIsSet) {
+            extensionViewRect = keyboardAnimationEndFrame;
+            CGFloat toolbarHeight = 55.0;
+            if ([CDXDevice sharedDevice].deviceUIIdiom == CDXDeviceUIIdiomPad) {
+                extensionViewRect.size.height -= toolbarHeight;
+            }
+            extensionViewRectIsSet = extensionViewRect.size.height >= keyboardMinHeight;
+            qltrace(@"%f %f %f %f", extensionViewRect.origin.x, extensionViewRect.origin.y, extensionViewRect.size.width,  extensionViewRect.size.height);
+        }
+    } else {
+        extensionViewRectIsSet = NO;
     }
 
     // add the background view to the application's main window
