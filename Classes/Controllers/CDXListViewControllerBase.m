@@ -348,8 +348,8 @@
         UIEditMenuConfiguration* config = [UIEditMenuConfiguration configurationWithIdentifier:@"table" sourcePoint:location];
         [tableViewMenuInteraction presentEditMenuWithConfiguration:config];
 
-        // keep cell selected
-        cell.selected = YES;
+        // deselect the cell
+        cell.selected = NO;
     }
 }
 
