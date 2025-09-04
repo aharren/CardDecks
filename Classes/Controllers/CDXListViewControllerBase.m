@@ -365,7 +365,8 @@
             
             // show menu
             [self becomeFirstResponder];
-            CGPoint location = [sender locationInView:self.view];
+            CGRect buttonRectInView = [button frameInView:self.view];
+            CGPoint location = CGPointMake(buttonRectInView.origin.x + buttonRectInView.size.width / 2, buttonRectInView.origin.y);
             UIEditMenuConfiguration* config = [UIEditMenuConfiguration configurationWithIdentifier:@"toolbar" sourcePoint:location];
             [toolbarMenuInteraction presentEditMenuWithConfiguration:config];
             
