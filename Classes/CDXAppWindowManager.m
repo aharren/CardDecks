@@ -352,8 +352,6 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
     
     UIViewController<CDXAppWindowViewController> * initialLeftViewController;
     UIViewController<CDXAppWindowViewController> * initialRightViewController;
-    
-    UIViewController *modalViewControllerOwner;
 }
 
 @end
@@ -446,22 +444,12 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
 
 - (void)presentModalViewController:(UIViewController *)modalViewController animated:(BOOL)animated {
     qltrace();
-    if (modalViewControllerOwner != nil) {
-        [self dismissModalViewControllerAnimated:animated];
-    }
-    
     modalViewController.preferredContentSize = window.bounds.size;
     [splitViewController presentViewController:modalViewController animated:animated completion:NULL];
 }
 
 - (void)presentModalViewController:(UIViewController *)modalViewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem forViewController:(UIViewController *)forViewController animated:(BOOL)animated {
     qltrace(@"%@", barButtonItem);
-    if (modalViewControllerOwner != nil) {
-        [self dismissModalViewControllerAnimated:animated];
-    }
-    
-    ivar_assign_and_retain(modalViewControllerOwner, forViewController);
-    
     modalViewController.modalPresentationStyle = UIModalPresentationPopover;
     modalViewController.preferredContentSize = CGSizeMake(400, MAX(400, window.bounds.size.height - 150));
     modalViewController.popoverPresentationController.sourceItem = barButtonItem;
@@ -472,10 +460,6 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
     qltrace();
     [splitViewController dismissViewControllerAnimated:animated completion:NULL];
-    if (modalViewControllerOwner != nil) {
-        [modalViewControllerOwner dismissViewControllerAnimated:animated completion:NULL];
-    }
-    ivar_release_and_clear(modalViewControllerOwner);
 }
 
 - (void)showActionSheet:(CDXActionSheet *)actionSheet viewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem *)barButtonItem {
