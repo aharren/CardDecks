@@ -337,11 +337,11 @@
 - (IBAction)settingsButtonPressed {
     qltrace();
     CDXCardDeckSettings *settings = [[[CDXCardDeckSettings alloc] initWithCardDeckViewContext:cardDeckViewContext] autorelease];
-    CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings target:self action:@selector(settingsViewWasDismissed)] autorelease];
+    CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings target:self action:@selector(settingsUpdateCallback)] autorelease];
     [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsBarButtonItem forViewController:self animated:YES];
 }
 
-- (void)settingsViewWasDismissed {
+- (void)settingsUpdateCallback {
     self.navigationItem.title = cardDeckViewContext.cardDeck.name;
     [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
 }

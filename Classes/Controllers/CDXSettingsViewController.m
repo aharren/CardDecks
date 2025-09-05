@@ -38,6 +38,8 @@
 @protected
     NSObject<CDXSettings> *settings;
     CDXSetting setting;
+    id target;
+    SEL action;
     
 }
 
@@ -46,18 +48,32 @@
 
 @implementation CDXSettingsEnumerationViewController
 
-- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings setting:(CDXSetting)aSetting {
+- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings setting:(CDXSetting)aSetting target:(id)aTarget action:(SEL)aAction {
     if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
         ivar_assign(settings, aSettings);
         setting = aSetting;
+        ivar_assign_and_retain(target, aTarget);
+        action = aAction;
     }
     return self;
+}
+
+- (void)dealloc {
+    ivar_release_and_clear(target);
+    [super dealloc];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tableView.tableHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 6)] autorelease];
     self.tableView.tableHeaderView.backgroundColor = [UIColor clearColor];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (target != nil && action != NULL) {
+        [target performSelector:action];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -151,7 +167,7 @@
 
 @implementation CDXSettingsMainViewController
 
-- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings isRootView:(BOOL)aIsRootView  target:(id)aTarget action:(SEL)aAction {
+- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings isRootView:(BOOL)aIsRootView target:(id)aTarget action:(SEL)aAction {
     if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
         ivar_assign(settings, aSettings);
         isRootView = aIsRootView;
@@ -168,9 +184,6 @@
 
 - (IBAction)closeButtonPressed {
     [self dismissViewControllerAnimated:YES completion:NULL];
-    if (target != nil && action != NULL) {
-        [target performSelector:action];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -215,6 +228,9 @@
     [[CDXKeyboardExtensions sharedKeyboardExtensions] removeResponder];
     [self dismissActiveTextField];
     [super viewWillDisappear:animated];
+    if (target != nil && action != NULL) {
+        [target performSelector:action];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -242,6 +258,9 @@
     }
     [[CDXKeyboardExtensions sharedKeyboardExtensions] removeResponder];
     ivar_release_and_clear(activeTextField);
+    if (target != nil && action != NULL) {
+        [target performSelector:action];
+    }
 }
 
 - (void)booleanValueChanged:(UISwitch *)cellSwitch {
@@ -386,7 +405,7 @@
         }
         case CDXSettingTypeEnumeration: {
             [self dismissActiveTextField];
-            UIViewController *vc = [[[CDXSettingsEnumerationViewController alloc] initWithSettings:settings setting:setting] autorelease];
+            UIViewController *vc = [[[CDXSettingsEnumerationViewController alloc] initWithSettings:settings setting:setting target:target action:action] autorelease];
             vc.title = setting.label;
             [[self navigationController] pushViewController:vc animated:YES];
             break;
