@@ -405,7 +405,7 @@
         [[NSFileManager defaultManager] removeItemAtURL:url error:&error];
     };
     
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsBarButtonItem forViewController:self animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:actionBarButtonItem forViewController:self animated:YES];
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
