@@ -3,7 +3,7 @@
 // CDXCardDeckListViewController.h
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -34,20 +34,23 @@
     CDXCardDeckViewContext *cardDeckViewContext;
     CDXCardDeck *cardDeck;
     
-    IBOutlet UIBarButtonItem *shuffleButton;
-    IBOutlet UIBarButtonItem *actionButton;
-    IBOutlet UIBarButtonItem *addButton;
+    UIButton *shuffleButton;
+    UIButton *actionButton;
+    UIButton *addButton;
+    UIButton *settingsButton;
+    UIBarButtonItem *actionBarButtonItem;
+    UIBarButtonItem *settingsBarButtonItem;
     BOOL viewWasAlreadyVisible;
 }
 
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext nibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 - (id)initWithCardDeckViewContext:(CDXCardDeckViewContext *)cardDeckViewContext;
 
-- (IBAction)addButtonPressed;
-- (IBAction)defaultsButtonPressed;
-- (IBAction)settingsButtonPressed;
-- (IBAction)shuffleButtonPressed;
-- (IBAction)actionButtonPressed;
+- (void)addButtonPressed;
+- (void)defaultsButtonPressed;
+- (void)settingsButtonPressed;
+- (void)shuffleButtonPressed;
+- (void)actionButtonPressed;
 - (void)duplicateButtonPressed;
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;

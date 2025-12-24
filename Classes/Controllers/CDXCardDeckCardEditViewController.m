@@ -3,7 +3,7 @@
 // CDXCardDeckCardEditViewController.m
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@
 #import "CDXCardDeckCardEditViewController.h"
 #import "CDXDevice.h"
 #import "CDXKeyboardExtensions.h"
+#import "CDXAppWindowManager.h"
 
 #undef ql_component
 #define ql_component lcl_cController
@@ -145,7 +146,7 @@
                             [CDXColorKeyboardExtension sharedColorKeyboardExtension],
                             [CDXTextKeyboardExtension sharedtextKeyboardExtension],
                             [CDXTimerKeyboardExtension sharedTimerKeyboardExtension]];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions textFields:@[] textViews:@[ text ]];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
 
     [self showCardAtIndex:cardDeckViewContext.currentCardIndex];
@@ -166,7 +167,8 @@
     [super viewDidAppear:animated];
 
     cardViewScrollView.contentInset = text.contentInset;
-    cardViewScrollView.scrollIndicatorInsets = text.scrollIndicatorInsets;
+    cardViewScrollView.verticalScrollIndicatorInsets = text.verticalScrollIndicatorInsets;
+    cardViewScrollView.horizontalScrollIndicatorInsets = text.horizontalScrollIndicatorInsets;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -233,9 +235,6 @@
 }
 
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
-}
-
-- (void)menuControllerWillHideMenu {
 }
 
 - (IBAction)upButtonPressed {

@@ -3,7 +3,7 @@
 // CDXAppAboutSettings.m
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -122,7 +122,7 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
     return 0;
 }
 
-- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag {
+- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag compact:(BOOL)compact {
     return @"";
 }
 
@@ -192,7 +192,6 @@ synthesize_singleton(sharedAppAboutSettings, CDXAppAboutSettings);
             [content appendFormat:@"<br />%@ : %@\n", @"UI idiom", [device deviceUIIdiomString]];
             [content appendFormat:@"<br />%@ : %.1f\n", @"Screen scale", [device deviceScreenScale]];
             [content appendFormat:@"<br />%@ : %.0f x %.0f\n", @"Screen size", [device deviceScreenSize].width, [device deviceScreenSize].height];
-            [content appendFormat:@"<br />%@ : %@\n", @"Rendering mode", [device useImageBasedRendering] ? @"image" : @"direct"];
             [content appendFormat:@"</p>"];
             text = [text stringByReplacingOccurrencesOfString:@"$content$" withString:content];
             

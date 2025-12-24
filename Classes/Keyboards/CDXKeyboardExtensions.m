@@ -3,7 +3,7 @@
 // CDXKeyboardExtensions.m
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 
 #import "CDXKeyboardExtensions.h"
 #import "CDXDevice.h"
+#import "CDXAppWindowManager.h"
 
 
 @implementation CDXKeyboardExtensionMarker
@@ -70,6 +71,8 @@
 synthesize_singleton(sharedKeyboardExtensions, CDXKeyboardExtensions);
 
 @synthesize responder;
+@synthesize textFields;
+@synthesize textViews;
 @synthesize keyboardExtensions;
 
 static float keyboardExtensionsOsVersion;
@@ -83,12 +86,10 @@ static float keyboardExtensionsOsVersion;
         toolbar.backgroundColor = [UIColor systemBackgroundColor];
         ivar_assign(toolbarButtons, [[NSMutableArray alloc] init]);
         ivar_assign_and_retain(toolbarKeyboardButton, [self toolbarButtonWithTitle:@"abc"]);
-        ivar_assign(toolbarActionButton, [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-                                                                                       target:self
-                                                                                       action:@selector(toolbarActionButtonPressed:)]);
+        ivar_assign(toolbarActionButton, [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Toolbar-Action"] style:UIBarButtonItemStylePlain target:self action:@selector(toolbarActionButtonPressed:)]);
         ivar_assign(toolbarActiveButtonMarker, [[CDXKeyboardExtensionMarker alloc] init]);
         [toolbar addSubview:toolbarActiveButtonMarker.view];
-        ivar_assign(backgroundView, [[UIView alloc] initWithFrame:extensionViewRect]);
+        ivar_assign(backgroundView, [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)]);
         backgroundView.alpha = 0;
         backgroundView.frame = toolbar.frame;
         ivar_assign_and_retain(backgroundColor, [UIColor systemGray6Color]);
@@ -101,6 +102,7 @@ static float keyboardExtensionsOsVersion;
             viewInactiveExtensions.backgroundColor = [UIColor colorWithRed:0.68 green:0.68 blue:0.68 alpha:0.5];
         }
         viewInactiveExtensions.userInteractionEnabled = NO;
+        extensionViewRectIsSet = NO;
     }
     
     return self;
@@ -114,6 +116,8 @@ static float keyboardExtensionsOsVersion;
     ivar_release_and_clear(toolbarActiveButtonMarker);
     ivar_release_and_clear(backgroundView);
     ivar_release_and_clear(responder);
+    ivar_release_and_clear(textFields);
+    ivar_release_and_clear(textViews);
     ivar_release_and_clear(keyboardExtensions);
     ivar_release_and_clear(backgroundColor);
     ivar_release_and_clear(viewInactiveExtensions);
@@ -149,9 +153,29 @@ static float keyboardExtensionsOsVersion;
     CGRect keyboardAnimationEndFrame;
     [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardAnimationEndFrame];
     
+    if (CGRectEqualToRect(keyboardAnimationBeginFrame, keyboardAnimationEndFrame)) {
+        // keyboard didn't move/hide/show, it's just a switch to another input view
+        return;
+    }
+    
+    CGFloat keyboardMinHeight = 100;
+    if (!hide && keyboardAnimationEndFrame.size.height < keyboardMinHeight) {
+        return;
+    }
+    
     // remember the rectangle for the extension views
     if (!hide) {
-        extensionViewRect = keyboardAnimationEndFrame;
+        if (!extensionViewRectIsSet) {
+            extensionViewRect = keyboardAnimationEndFrame;
+            CGFloat toolbarHeight = 55.0;
+            if ([CDXDevice sharedDevice].deviceUIIdiom == CDXDeviceUIIdiomPad) {
+                extensionViewRect.size.height -= toolbarHeight;
+            }
+            extensionViewRectIsSet = extensionViewRect.size.height >= keyboardMinHeight;
+            qltrace(@"%f %f %f %f", extensionViewRect.origin.x, extensionViewRect.origin.y, extensionViewRect.size.width,  extensionViewRect.size.height);
+        }
+    } else {
+        extensionViewRectIsSet = NO;
     }
 
     // add the background view to the application's main window
@@ -247,9 +271,11 @@ static float keyboardExtensionsOsVersion;
     }
 }
 
-- (void)setResponder:(NSObject *)aResponder keyboardExtensions:(NSArray *)aKeyboardExtensions {
+- (void)setResponder:(NSObject *)aResponder keyboardExtensions:(NSArray *)aKeyboardExtensions textFields:(NSArray<UITextField *> *)aTextFields textViews:(NSArray<UITextView *> *)aTextViews {
     NSInteger tag = -1;
     ivar_assign_and_retain(responder, aResponder);
+    ivar_assign_and_retain(textFields, aTextFields);
+    ivar_assign_and_retain(textViews, aTextViews);
     [toolbarButtons removeAllObjects];
     [toolbarButtons addObject:toolbarKeyboardButton];
     toolbarKeyboardButton.tag = tag;
@@ -293,30 +319,9 @@ static float keyboardExtensionsOsVersion;
 
 - (void)removeResponder {
     ivar_release_and_clear(responder);
+    ivar_release_and_clear(textFields);
+    ivar_release_and_clear(textViews);
     [toolbarActiveButtonMarker positionAtBarButtonItem:toolbarKeyboardButton animated:NO];
-}
-
-- (UIWindow *)keyboardWindow {
-    // try to find the keyboard's window
-    NSArray *applicationWindows = [[UIApplication sharedApplication] windows];
-    for (UIWindow *window in applicationWindows) {
-        for (UIView *view in [window subviews]) {
-            if ([@"UIKeyboard" isEqualToString:NSStringFromClass([view class])]) {
-                return window;
-            }
-        }
-    }
-    for (UIWindow *window in applicationWindows) {
-        if ([@"UIRemoteKeyboardWindow" isEqualToString:NSStringFromClass([window class])]) {
-            return window;
-        }
-    }
-    // return the second window
-    if ([applicationWindows count] > 1) {
-        return applicationWindows[1];
-    }
-    // fail
-    return nil;
 }
 
 - (UIBarButtonItem *)toolbarButtonWithTitle:(NSString *)title {
@@ -345,18 +350,8 @@ static float keyboardExtensionsOsVersion;
     NSUInteger count = [keyboardExtensions count];
     for (NSUInteger tag = 0; tag < count; tag++) {
         NSObject<CDXKeyboardExtension> *keyboardExtension = keyboardExtensions[tag];
-        if (tag == activeExtensionTag) {
-            if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionWillBecomeActive)]) {
-                [keyboardExtension keyboardExtensionWillBecomeActive];
-            }
-        }
         UIBarButtonItem *button = [self toolbarButtonByTag:tag];
         button.title = [keyboardExtension keyboardExtensionTitle];
-        if (tag == activeExtensionTag) {
-            if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionDidBecomeActive)]) {
-                [keyboardExtension keyboardExtensionDidBecomeActive];
-            }
-        }
     }
 }
 
@@ -374,23 +369,37 @@ static float keyboardExtensionsOsVersion;
 }
 
 - (void)activateKeyboardExtension:(NSObject<CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag {
-    if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionWillBecomeActive)]) {
-        [keyboardExtension keyboardExtensionWillBecomeActive];
-    }
-    
+    qltrace();
     if (keyboardExtension != nil) {
-        UIView *view = [keyboardExtension keyboardExtensionView];
+        UIInputView *view = [[[UIInputView alloc] init] autorelease];
         view.frame = extensionViewRect;
         view.alpha = 1;
-        [[self keyboardWindow] addSubview:view];
         
+        UIView *subview = [keyboardExtension keyboardExtensionView];
+        subview.frame = CGRectMake(0, 0, extensionViewRect.size.width, extensionViewRect.size.height);
+        subview.alpha = 1;
+        [view addSubview:subview];
+
+        for (UITextField* textField in textFields) {
+            textField.inputView = view;
+            [textField reloadInputViews];
+        }
+        for (UITextField* textView in textViews) {
+            textView.inputView = view;
+            [textView reloadInputViews];
+        }
+
         viewInactiveExtensions.frame = extensionViewRect;
         viewInactiveExtensions.hidden = YES;
-        [[self keyboardWindow] addSubview:viewInactiveExtensions];
-    }
-    
-    if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionDidBecomeActive)]) {
-        [keyboardExtension keyboardExtensionDidBecomeActive];
+    } else {
+        for (UITextField* textField in textFields) {
+            textField.inputView = nil;
+            [textField reloadInputViews];
+        }
+        for (UITextField* textView in textViews) {
+            textView.inputView = nil;
+            [textView reloadInputViews];
+        }
     }
     
     activeExtensionTag = tag;
@@ -415,20 +424,12 @@ static float keyboardExtensionsOsVersion;
 }
 
 - (void)deactivateKeyboardExtension:(NSObject<CDXKeyboardExtension> *)keyboardExtension tag:(NSInteger)tag {
-    if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionWillBecomeInactive)]) {
-        [keyboardExtension keyboardExtensionWillBecomeInactive];
-    }    
-    
     if (keyboardExtension != nil) {
         UIView *view = [keyboardExtension keyboardExtensionView];
         [view removeFromSuperview];
         
         [viewInactiveExtensions removeFromSuperview];
     }
-    
-    if ([keyboardExtension respondsToSelector:@selector(keyboardExtensionDidBecomeInactive)]) {
-        [keyboardExtension keyboardExtensionDidBecomeInactive];
-    }    
     
     UIBarButtonItem *button = [self toolbarButtonByTag:tag];
     button.enabled = YES;

@@ -3,7 +3,7 @@
 // CDXCardDecksListViewController.m
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -55,7 +55,21 @@
 - (void)dealloc {
     ivar_release_and_clear(cardDecks);
     ivar_release_and_clear(addButton);
+    ivar_release_and_clear(settingsButton);
+    ivar_release_and_clear(settingsBarButtonItem);
     [super dealloc];
+}
+
+- (void)viewDidLoad {
+    qltrace();
+    [super viewDidLoad];
+    
+    ivar_assign_and_retain(addButton, [self systemButtonWithImageNamed:@"Toolbar-Add" action:@selector(addButtonPressed) longPressAction:@selector(handleToolbarLongPressGesture:)]);
+    ivar_assign_and_retain(settingsButton, [self systemButtonWithImageNamed:@"Toolbar-Settings" action:@selector(settingsButtonPressed)]);
+    
+    ivar_assign_and_retain(settingsBarButtonItem, [self barButtonItemWithButton:settingsButton]);
+    
+    [self buildToolbarWithBarButtonItemsLeft:@[[self barButtonItemWithButton:editButton]] middle:[self barButtonItemWithButton:addButton] right:@[settingsBarButtonItem]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -309,7 +323,7 @@
 
 - (void)showReleaseNotes {
     CDXReleaseNotesViewController *vc = [[[CDXReleaseNotesViewController alloc] init] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsButton animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsBarButtonItem forViewController:self animated:YES];
 }
 
 - (IBAction)addButtonPressed {
@@ -329,7 +343,7 @@
     qltrace();
     CDXAppSettings *settings = [CDXAppSettings sharedAppSettings];
     CDXSettingsViewController *vc = [[[CDXSettingsViewController alloc] initWithSettings:settings] autorelease];
-    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsButton animated:YES];
+    [[CDXAppWindowManager sharedAppWindowManager] presentModalViewController:vc fromBarButtonItem:settingsBarButtonItem forViewController:self animated:YES];
 }
 
 - (void)processSinglePendingCardDeckAdd {
@@ -434,9 +448,9 @@
     }
 }
 
-- (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender button:(UIButton *)button {
     qltrace();
-    if (barButtonItem == addButton) {
+    if (button == addButton) {
         if (action == @selector(paste:)) {
             // paste is only possible if the pasteboard contains a potentially valid card deck
             NSString *carddeckString = [[UIPasteboard generalPasteboard] string];
@@ -450,9 +464,9 @@
     return NO;
 }
 
-- (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+- (void)performAction:(SEL)action withSender:(id)sender button:(UIButton *)button {
     qltrace();
-    if (barButtonItem == addButton) {
+    if (button == addButton) {
         if (action == @selector(paste:)) {
             // paste the card deck from the pasteboard as a new card deck
             NSString *carddeckString = [[UIPasteboard generalPasteboard] string];
@@ -488,16 +502,25 @@
     [self processPendingCardDeckAdds];
 }
 
-- (void)menu:(UIMenuController *)menuController itemsForTableView:(UITableView *)tableView cell:(UITableViewCell *)cell {
-    UIMenuItem *menuItemNew = [[UIMenuItem alloc] initWithTitle:@"Duplicate" action:@selector(duplicateButtonPressed)];
-    menuController.menuItems = @[menuItemNew];
-}
-
-- (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem {
-    if (barButtonItem == addButton) {
-        UIMenuItem *menuItemNew = [[UIMenuItem alloc] initWithTitle:@"New" action:@selector(addButtonPressed)];
-        menuController.menuItems = @[menuItemNew];
+- (UIMenu *)editMenuInteraction:(UIEditMenuInteraction *)interaction menuForConfiguration:(UIEditMenuConfiguration *)configuration suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions {
+    qltrace(@"configuration id %@", configuration.identifier);
+    NSMutableArray<UIMenuElement *> *actions = [NSMutableArray arrayWithArray:suggestedActions];
+    if (interaction == tableViewMenuInteraction) {
+        [actions addObjectsFromArray:@[
+            [UIAction actionWithTitle:@"Duplicate" image:nil identifier:nil handler:^(UIAction *action) {
+                [self duplicateButtonPressed];
+            }]
+        ]];
+    } else if (interaction == toolbarMenuInteraction) {
+        if (performActionToolbarButton == addButton) {
+            [actions addObjectsFromArray:@[
+                [UIAction actionWithTitle:@"New" image:nil identifier:nil handler:^(UIAction *action) {
+                    [self addButtonPressed];
+                }]
+            ]];
+        }
     }
+    return [UIMenu menuWithChildren:actions];
 }
 
 @end

@@ -3,7 +3,7 @@
 // CDXSettingsViewController.m
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,8 @@
 @protected
     NSObject<CDXSettings> *settings;
     CDXSetting setting;
+    id target;
+    SEL action;
     
 }
 
@@ -46,18 +48,32 @@
 
 @implementation CDXSettingsEnumerationViewController
 
-- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings setting:(CDXSetting)aSetting {
+- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings setting:(CDXSetting)aSetting target:(id)aTarget action:(SEL)aAction {
     if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
         ivar_assign(settings, aSettings);
         setting = aSetting;
+        ivar_assign_and_retain(target, aTarget);
+        action = aAction;
     }
     return self;
+}
+
+- (void)dealloc {
+    ivar_release_and_clear(target);
+    [super dealloc];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tableView.tableHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 6)] autorelease];
     self.tableView.tableHeaderView.backgroundColor = [UIColor clearColor];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (target != nil && action != NULL) {
+        [target performSelector:action];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -75,7 +91,7 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
     }
-    cell.textLabel.text = [settings descriptionForEumerationValue:indexPath.row forSettingWithTag:setting.tag];
+    cell.textLabel.text = [settings descriptionForEumerationValue:indexPath.row forSettingWithTag:setting.tag compact:NO];
     if (indexPath.row == [settings enumerationValueForSettingWithTag:setting.tag]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
@@ -140,7 +156,10 @@
 @protected
     NSObject<CDXSettings> *settings;
     BOOL isRootView;
-    
+    UITextField *activeTextField;
+    id target;
+    SEL action;
+
 }
 
 @end
@@ -148,12 +167,19 @@
 
 @implementation CDXSettingsMainViewController
 
-- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings isRootView:(BOOL)aIsRootView {
+- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings isRootView:(BOOL)aIsRootView target:(id)aTarget action:(SEL)aAction {
     if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
         ivar_assign(settings, aSettings);
         isRootView = aIsRootView;
+        ivar_assign_and_retain(target, aTarget);
+        action = aAction;
     }
     return self;
+}
+
+- (void)dealloc {
+    ivar_release_and_clear(target);
+    [super dealloc];
 }
 
 - (IBAction)closeButtonPressed {
@@ -194,14 +220,17 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    NSArray *extensions = @[[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension]];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:extensions];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:self keyboardExtensions:@[] textFields:@[] textViews:@[]];
     [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [[CDXKeyboardExtensions sharedKeyboardExtensions] removeResponder];
+    [self dismissActiveTextField];
     [super viewWillDisappear:animated];
+    if (target != nil && action != NULL) {
+        [target performSelector:action];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -216,21 +245,39 @@
     return [settings titleForGroup:section];
 }
 
+- (void)setActiveTextField:(UITextField *)textField {
+    ivar_assign_and_retain(activeTextField, textField)
+    NSArray *extensions = @[[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension]];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:textField keyboardExtensions:extensions textFields:@[ textField ] textViews:@[]];
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
+}
+
+- (void)dismissActiveTextField {
+    if (activeTextField != nil) {
+        [activeTextField resignFirstResponder];
+    }
+    [[CDXKeyboardExtensions sharedKeyboardExtensions] removeResponder];
+    ivar_release_and_clear(activeTextField);
+    if (target != nil && action != NULL) {
+        [target performSelector:action];
+    }
+}
+
 - (void)booleanValueChanged:(UISwitch *)cellSwitch {
     qltrace();
+    [self dismissActiveTextField];
     [settings setBooleanValue:cellSwitch.on forSettingWithTag:cellSwitch.tag];
 }
 
 - (void)textStartedEditing:(UITextField *)cellText {
     qltrace();
-    NSArray *extensions = @[[CDXSymbolsKeyboardExtension sharedSymbolsKeyboardExtension]];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setResponder:cellText keyboardExtensions:extensions];
-    [[CDXKeyboardExtensions sharedKeyboardExtensions] setEnabled:YES];
+    [self setActiveTextField:cellText];
 }
 
 - (void)textValueChanged:(UITextField *)cellText {
     qltrace();
     [settings setTextValue:cellText.text forSettingWithTag:cellText.tag];
+    [self dismissActiveTextField];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -281,7 +328,7 @@
             cell.tag = setting.tag;
             cell.textLabel.text = setting.label;
             NSUInteger enumValue = [settings enumerationValueForSettingWithTag:setting.tag];
-            cell.detailTextLabel.text = [settings descriptionForEumerationValue:enumValue forSettingWithTag:setting.tag];
+            cell.detailTextLabel.text = [settings descriptionForEumerationValue:enumValue forSettingWithTag:setting.tag compact:YES];
             return cell;
         }
         case CDXSettingTypeText: {
@@ -357,7 +404,8 @@
             break;
         }
         case CDXSettingTypeEnumeration: {
-            UIViewController *vc = [[[CDXSettingsEnumerationViewController alloc] initWithSettings:settings setting:setting] autorelease];
+            [self dismissActiveTextField];
+            UIViewController *vc = [[[CDXSettingsEnumerationViewController alloc] initWithSettings:settings setting:setting target:target action:action] autorelease];
             vc.title = setting.label;
             [[self navigationController] pushViewController:vc animated:YES];
             break;
@@ -368,16 +416,19 @@
                 UITextField *cellText = (UITextField *)cell.accessoryView;
                 [cellText becomeFirstResponder];
             }
+            break;
         }
         case CDXSettingTypeSettings: {
+            [self dismissActiveTextField];
             NSObject<CDXSettings> *s = [settings settingsSettingsForSettingWithTag:setting.tag];
             if (s != nil) {
-                UIViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:s isRootView:NO] autorelease];
+                UIViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:s isRootView:NO target:nil action:NULL] autorelease];
                 [[self navigationController] pushViewController:vc animated:YES];
             }
             break;
         }
         case CDXSettingTypeURLAction: {
+            [self dismissActiveTextField];
             NSString *url = [settings urlActionURLForSettingWithTag:setting.tag];
             if (url != nil) {
                 NSDictionary* options = [[[NSDictionary alloc] init] autorelease];
@@ -387,6 +438,7 @@
             break;
         }
         case CDXSettingTypeHTMLText: {
+            [self dismissActiveTextField];
             UIViewController *vc = [[[CDXSettingsHTMLTextViewController alloc] initWithSettings:settings setting:setting] autorelease];
             vc.title = setting.label;
             [[self navigationController] pushViewController:vc animated:YES];
@@ -401,9 +453,13 @@
 @implementation CDXSettingsViewController
 
 - (id)initWithSettings:(NSObject<CDXSettings> *)aSettings {
+    return [self initWithSettings:aSettings target:nil action:NULL];
+}
+
+- (id)initWithSettings:(NSObject<CDXSettings> *)aSettings target:(id)aTarget action:(SEL)aAction {
     if ((self = [super init])) {
         ivar_assign_and_retain(settings, aSettings);
-        UITableViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:settings isRootView:YES] autorelease];
+        UITableViewController *vc = [[[CDXSettingsMainViewController alloc] initWithSettings:settings isRootView:YES target:aTarget action:aAction] autorelease];
         [self pushViewController:vc animated:NO];
     }
     return self;

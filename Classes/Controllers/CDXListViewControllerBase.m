@@ -3,7 +3,7 @@
 // CDXListViewControllerBase.m
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -51,10 +51,9 @@
 - (void)detachViewObjects {
     qltrace();
     ivar_release_and_clear(viewTableView);
-    ivar_release_and_clear(viewToolbar);
     ivar_release_and_clear(editButton);
-    ivar_release_and_clear(settingsButton);
-    ivar_release_and_clear(activityIndicator);
+    ivar_release_and_clear(tableViewMenuInteraction);
+    ivar_release_and_clear(toolbarMenuInteraction);
     ivar_release_and_clear(tableCellTextTextColor);
     ivar_release_and_clear(tableCellTextTextColorNoCards);
     ivar_release_and_clear(tableCellTextTextColorAction);
@@ -66,10 +65,9 @@
     ivar_release_and_clear(tableCellBackgroundColorNewObject);
     ivar_release_and_clear(tableCellBackgroundColorNewObjectAltGroup);
     ivar_release_and_clear(viewTableViewLongPressRecognizer);
-    ivar_release_and_clear(viewToolbarLongPressRecognizer);
     ivar_release_and_clear(viewTableViewTapRecognizer);
     ivar_release_and_clear(performActionTableViewIndexPath);
-    ivar_release_and_clear(performActionToolbarBarButtonItem);
+    ivar_release_and_clear(performActionToolbarButton);
 }
 
 - (void)dealloc {
@@ -80,6 +78,54 @@
     ivar_release_and_clear(reuseIdentifierSection1);
     ivar_release_and_clear(reuseIdentifierSection2);
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark Toolbar
+
+- (UIButton *)systemButtonWithImageNamed:(NSString *)imageName action:(SEL)action {
+    UIButton *button = [UIButton systemButtonWithImage:[UIImage imageNamed:imageName] target:self action:action];
+    CGRect frame = button.frame;
+    frame.size.width += 10;
+    button.frame = frame;
+    return button;
+}
+
+- (UIButton *)systemButtonWithImageNamed:(NSString *)imageName action:(SEL)action longPressAction:(SEL)longPressAction {
+    UIButton *button = [self systemButtonWithImageNamed:imageName action:action];
+    [button addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:longPressAction]];
+    CGRect frame = button.frame;
+    frame.size.width += 10;
+    button.frame = frame;
+    return button;
+}
+
+- (UIBarButtonItem *)barButtonItemWithButton:(UIButton *)button {
+    return [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+}
+
+- (void)buildToolbarWithBarButtonItemsLeft:(NSArray<UIBarButtonItem *> *)left middle:(UIBarButtonItem *)middle right:(NSArray<UIBarButtonItem *> *)right {
+    NSMutableArray<UIBarButtonItem *> *items = [NSMutableArray array];
+    
+    [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:17]];
+    for (UIBarButtonItem* barButtonItem in left) {
+        [items addObject:barButtonItem];
+        [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:25]];
+    }
+    
+    [items addObject:[UIBarButtonItem flexibleSpaceItem]];
+    if (middle != nil) {
+        [items addObject:middle];
+        [items addObject:[UIBarButtonItem flexibleSpaceItem]];
+    }
+    
+    for (UIBarButtonItem* barButtonItem in right) {
+        [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:25]];
+        [items addObject:barButtonItem];
+    }
+    [items addObject:[UIBarButtonItem fixedSpaceItemOfWidth:17]];
+    
+    self.toolbarItems = items;
 }
 
 #pragma mark -
@@ -99,12 +145,10 @@
                                          action:nil]
                                         autorelease];
     
-    ivar_assign(activityIndicator, [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleMedium]);
-    activityIndicator.hidesWhenStopped = YES;
-    navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
-                                          initWithCustomView:activityIndicator]
-                                         autorelease];
-    self.toolbarItems = viewToolbar.items;
+    ivar_assign_and_retain(tableViewMenuInteraction, [[UIEditMenuInteraction alloc] initWithDelegate:self]);
+    [self.view addInteraction:tableViewMenuInteraction];
+    ivar_assign_and_retain(toolbarMenuInteraction, [[UIEditMenuInteraction alloc] initWithDelegate:self]);
+    [self.view addInteraction:toolbarMenuInteraction];
     ivar_assign_and_retain(tableCellTextTextColor, [UIColor labelColor]);
     ivar_assign_and_retain(tableCellTextTextColorNoCards, [UIColor systemGray2Color]);
     ivar_assign_and_retain(tableCellTextTextColorAction, [UIColor systemGray2Color]);
@@ -119,14 +163,13 @@
     
     ivar_assign(viewTableViewLongPressRecognizer, [[UILongPressGestureRecognizer alloc]
                                                    initWithTarget:self action:@selector(handleTableViewLongPressGesture:)]);
-    ivar_assign(viewToolbarLongPressRecognizer, [[UILongPressGestureRecognizer alloc]
-                                                 initWithTarget:self action:@selector(handleToolbarLongPressGesture:)]);
     ivar_assign(viewTableViewTapRecognizer, [[UITapGestureRecognizer alloc]
                                              initWithTarget:self action:@selector(handleTableViewTapGesture:)]);
 
     viewTableView.rowHeight = UITableViewAutomaticDimension;
     viewTableView.estimatedRowHeight = UITableViewAutomaticDimension;
-
+    
+    ivar_assign_and_retain(editButton, [self systemButtonWithImageNamed:@"Toolbar-Edit-Reorder" action:@selector(editButtonPressed)]);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -141,9 +184,8 @@
     keepViewTableViewContentOffsetY = NO;
     performActionState = CDXListViewControllerBasePerformActionStateNone;
     ivar_release_and_clear(performActionTableViewIndexPath);
-    ivar_release_and_clear(performActionToolbarBarButtonItem);
+    ivar_release_and_clear(performActionToolbarButton);
     [viewTableView addGestureRecognizer:viewTableViewLongPressRecognizer];
-    [self.navigationController.toolbar addGestureRecognizer:viewToolbarLongPressRecognizer];
     [viewTableView addGestureRecognizer:viewTableViewTapRecognizer];
     
     if ([CDXDevice sharedDevice].useLargeTitles) {
@@ -162,7 +204,6 @@
     }
     [self performBlockingSelectorEnd];
     [viewTableView removeGestureRecognizer:viewTableViewLongPressRecognizer];
-    [self.navigationController.toolbar removeGestureRecognizer:viewToolbarLongPressRecognizer];
     [viewTableView removeGestureRecognizer:viewTableViewTapRecognizer];
 }
 
@@ -198,16 +239,6 @@
 }
 
 - (void)deviceOrientationDidChange:(UIDeviceOrientation)orientation {
-}
-
-- (void)menuControllerWillHideMenu {
-    if (performActionState == CDXListViewControllerBasePerformActionStateTableView) {
-        UITableViewCell *cell = [viewTableView cellForRowAtIndexPath:performActionTableViewIndexPath];
-        cell.selected = NO;
-    }
-    performActionState = CDXListViewControllerBasePerformActionStateNone;
-    ivar_release_and_clear(performActionTableViewIndexPath);
-    ivar_release_and_clear(performActionToolbarBarButtonItem);
 }
 
 #pragma mark -
@@ -313,86 +344,50 @@
         
         // show menu
         [self becomeFirstResponder];
-        UIMenuController *menu = [UIMenuController sharedMenuController];
-        // add additional menu items, defined by subclass
-        [self menu:menu itemsForTableView:viewTableView cell:cell];
-        // show
-        [menu showMenuFromView:sender.view rect:cell.frame];
+        CGPoint location = [sender locationInView:self.view];
+        UIEditMenuConfiguration* config = [UIEditMenuConfiguration configurationWithIdentifier:@"table" sourcePoint:location];
+        [tableViewMenuInteraction presentEditMenuWithConfiguration:config];
 
-        // keep cell selected
-        cell.selected = YES;
+        // deselect the cell
+        cell.selected = NO;
     }
 }
 
 - (void)handleToolbarLongPressGesture:(UILongPressGestureRecognizer *)sender {
     qltrace(@"%@", sender);
     if (sender.state == UIGestureRecognizerStateBegan) {
-        // find the control which was touched
-        CGPoint point = [sender locationInView:sender.view];
-        qltrace("%f %f %@", point.x, point.y, sender.view);
-
-        // calculate total fixed width and width of flexible elements
-        CGFloat totalFixedWidth = 0;
-        NSUInteger countFlexibleWidthElements = 0;
-        for (UIBarButtonItem *item in [viewToolbar items]) {
-            if (item.tag != 0) {
-                totalFixedWidth += 44;
-            } else {
-                if (item.width != 0) {
-                    totalFixedWidth += item.width;
-                } else {
-                    countFlexibleWidthElements++;
-                }
-            }
-        }
-        CGFloat singleFlexibleWidth = (sender.view.frame.size.width - totalFixedWidth) / countFlexibleWidthElements;
-
-        // find touched button
-        CGFloat left = 0;
-        CGFloat touchArea = 10.0;
-        for (UIBarButtonItem *item in [viewToolbar items]) {
-            CGFloat width = 0;
-            if (item.tag != 0) {
-                width = 44;
-            } else {
-                if (item.width != 0) {
-                    width = item.width;
-                } else {
-                    width = singleFlexibleWidth;
-                }
-            }
-
-            if (item.tag != 0 && point.x >= left - touchArea && point.x <= left + width + touchArea) {
-                if (!item.isEnabled) {
-                    // skip item if not enabled
-                    qltrace(@"item %@ is not enabled", item);
-                    return;
-                }
-
-                // keep state
-                performActionState = CDXListViewControllerBasePerformActionStateToolbar;
-                ivar_assign_and_retain(performActionToolbarBarButtonItem, item);
-
-                // show menu
-                [self becomeFirstResponder];
-                UIMenuController *menu = [UIMenuController sharedMenuController];
-                // add additional menu items, defined by subclass
-                [self menu:menu itemsForBarButtonItem:item];
-                // show
-                [menu showMenuFromView:sender.view rect:CGRectMake(left, 0, width, 1)];
-
-                return;
-            }
-
-            left += width;
+        if ([sender.view isKindOfClass:[UIButton class]]) {
+            UIButton* button = (UIButton *)sender.view;
+            
+            // keep state
+            performActionState = CDXListViewControllerBasePerformActionStateToolbar;
+            ivar_assign_and_retain(performActionToolbarButton, button);
+            
+            // show menu
+            [self becomeFirstResponder];
+            CGRect buttonRectInView = [button frameInView:self.view];
+            CGPoint location = CGPointMake(buttonRectInView.origin.x + buttonRectInView.size.width / 2, buttonRectInView.origin.y);
+            UIEditMenuConfiguration* config = [UIEditMenuConfiguration configurationWithIdentifier:@"toolbar" sourcePoint:location];
+            [toolbarMenuInteraction presentEditMenuWithConfiguration:config];
+            
+            return;
         }
     }
 }
 
-- (void)menu:(UIMenuController *)menuController itemsForTableView:(UITableView *)tableView cell:(UITableViewCell *)cell {
+- (void)editMenuInteraction:(UIEditMenuInteraction *)interaction willDismissMenuForConfiguration:(UIEditMenuConfiguration *)configuration animator:(id<UIEditMenuInteractionAnimating>)animator {
+    if (performActionState == CDXListViewControllerBasePerformActionStateTableView) {
+        UITableViewCell *cell = [viewTableView cellForRowAtIndexPath:performActionTableViewIndexPath];
+        cell.selected = NO;
+    }
+    performActionState = CDXListViewControllerBasePerformActionStateNone;
+    ivar_release_and_clear(performActionTableViewIndexPath);
+    ivar_release_and_clear(performActionToolbarButton);
 }
 
-- (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem {
+- (UIMenu *)editMenuInteraction:(UIEditMenuInteraction *)interaction menuForConfiguration:(UIEditMenuConfiguration *)configuration suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions {
+    qltrace(@"configuration id %@", configuration.identifier);
+    return [UIMenu menuWithChildren:suggestedActions];
 }
 
 - (void)handleTableViewTapGesture:(UITapGestureRecognizer *)sender {
@@ -426,7 +421,7 @@
     return NO;
 }
 
-- (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender button:(UIButton *)button {
     qltrace();
     return NO;
 }
@@ -441,8 +436,8 @@
             return NO;
         }
     } else if (performActionState == CDXListViewControllerBasePerformActionStateToolbar) {
-        if (performActionToolbarBarButtonItem != nil) {
-            return [self canPerformAction:action withSender:sender barButtonItem:performActionToolbarBarButtonItem];
+        if (performActionToolbarButton != nil) {
+            return [self canPerformAction:action withSender:sender button:performActionToolbarButton];
         } else {
             return NO;
         }
@@ -455,7 +450,7 @@
     qltrace();
 }
 
-- (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem {
+- (void)performAction:(SEL)action withSender:(id)sender button:(UIButton *)button {
     qltrace();
 }
 
@@ -468,8 +463,8 @@
             return;
         }
     } else if (performActionState == CDXListViewControllerBasePerformActionStateToolbar) {
-        if (performActionToolbarBarButtonItem != nil) {
-            [self performAction:@selector(copy:) withSender:sender barButtonItem:performActionToolbarBarButtonItem];
+        if (performActionToolbarButton != nil) {
+            [self performAction:@selector(copy:) withSender:sender button:performActionToolbarButton];
             return;
         }
     }
@@ -484,8 +479,8 @@
             return;
         }
     } else if (performActionState == CDXListViewControllerBasePerformActionStateToolbar) {
-        if (performActionToolbarBarButtonItem != nil) {
-            [self performAction:@selector(paste:) withSender:sender barButtonItem:performActionToolbarBarButtonItem];
+        if (performActionToolbarButton != nil) {
+            [self performAction:@selector(paste:) withSender:sender button:performActionToolbarButton];
             return;
         }
     }
@@ -504,22 +499,15 @@
 
 - (void)performBlockingSelector:(SEL)selector withObject:(NSObject *)object {
     [self setUserInteractionEnabled:NO];
-    [activityIndicator startAnimating];
     [self performSelector:selector withObject:object afterDelay:0.001];
 }
 
 - (void)performBlockingSelectorEnd {
     [self setUserInteractionEnabled:YES];
-    [activityIndicator stopAnimating];
 }
 
 #pragma mark -
 #pragma mark Appearance
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
-}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewAutomaticDimension;

@@ -3,7 +3,7 @@
 // CDXCardsViewBase.m
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 // THE SOFTWARE.
 
 #import "CDXCardsViewBase.h"
-#import "CDXCardViewImageRendering.h"
 #import "CDXCardViewDirectRendering.h"
 #import "CDXDevice.h"
 
@@ -44,11 +43,7 @@
         deviceOrientation = UIDeviceOrientationPortrait;
         
         NSObject<CDXCardViewRendering> *viewRendering = nil;
-        if ([[CDXDevice sharedDevice] useImageBasedRendering]) {
-            viewRendering = [[CDXCardViewImageRendering alloc] initWithSize:viewCount];
-        } else {
-            viewRendering = [[CDXCardViewDirectRendering alloc] initWithSize:viewCount];
-        }
+        viewRendering = [[CDXCardViewDirectRendering alloc] initWithSize:viewCount];
         ivar_assign(cardViewRendering, viewRendering);
     }
     return self;

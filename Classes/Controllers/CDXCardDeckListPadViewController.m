@@ -3,7 +3,7 @@
 // CDXCardDeckListPadViewController.m
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -60,9 +60,9 @@
     viewNoTableView.hidden = !viewTableView.hidden;
 }
 
-- (void)updateNotificationForCardDeck:(id)object {
+- (void)updateNotificationForCardDeck:(NSNotification *)notification {
     qltrace();
-    if (!ignoreCardDeckUpdateNotifications) {
+    if (!ignoreCardDeckUpdateNotifications && notification.object == cardDeck) {
         [viewTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
         self.navigationItem.title = cardDeck.name;
     }
@@ -98,6 +98,7 @@
     ignoreCardDeckUpdateNotifications = YES;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewWillDisappear:animated];
+    [self.view removeFromSuperview];
     [CDXStorage drainAllDeferredActions];
 }
 

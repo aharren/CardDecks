@@ -3,7 +3,7 @@
 // CDXAppWindowManager.h
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -63,8 +63,8 @@ declare_singleton(sharedAppWindowManager, CDXAppWindowManager);
 - (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation view:(UIView*)viewOrNil;
 - (void)showInfoMessage:(NSString *)text afterDelay:(NSTimeInterval)timeDelay;
 - (void)showErrorMessage:(NSString *)text afterDelay:(NSTimeInterval)timeDelay;
-- (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated;
-- (void)presentModalViewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem animated:(BOOL)animated;
+- (void)presentModalViewController:(UIViewController *)modalViewController animated:(BOOL)animated;
+- (void)presentModalViewController:(UIViewController *)modalViewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem forViewController:(UIViewController *)forViewController animated:(BOOL)animated;
 - (void)dismissModalViewControllerAnimated:(BOOL)animated;
 - (void)showActionSheet:(CDXActionSheet *)actionSheet viewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem *)barButtonItem;
 - (void)applicationWillEnterForeground;

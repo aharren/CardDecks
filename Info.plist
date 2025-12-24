@@ -11,8 +11,12 @@
 		<dict>
 			<key>CFBundleTypeName</key>
 			<string>Card Deck</string>
+			<key>CFBundleTypeIconFiles</key>
+			<array>
+				<string>Document-Icon.png</string>
+			</array>
 			<key>LSHandlerRank</key>
-			<string>Default</string>
+			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>0xc0.de.CardDecks.UTI.carddeck</string>
@@ -72,6 +76,10 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.text</string>
+			</array>
+			<key>UTTypeIconFiles</key>
+			<array>
+				<string>Document-Icon.png</string>
 			</array>
 			<key>UTTypeIdentifier</key>
 			<string>0xc0.de.CardDecks.UTI.carddeck</string>

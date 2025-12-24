@@ -3,7 +3,7 @@
 // CDXAppSettings.m
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -41,6 +41,7 @@ enum {
     CDXAppSettingsIdleTimer,
     CDXAppSettingsCloseTapCount,
     CDXAppSettingsShakeTapCount,
+    CDXAppSettingsDefaultShareType,
     CDXAppSettingsActionButtonsOnLeftSide,
     CDXAppSettingsDoneButtonOnLeftSide,
     CDXAppSettingsAllKeyboardSymbols,
@@ -54,6 +55,7 @@ static const CDXSetting settings[] = {
     { CDXAppSettingsIdleTimer, CDXSettingTypeBoolean, @"Idle Timer" },
     { CDXAppSettingsCloseTapCount, CDXSettingTypeEnumeration, @"Close Gesture" },
     { CDXAppSettingsShakeTapCount, CDXSettingTypeEnumeration, @"Shake Gesture" },
+    { CDXAppSettingsDefaultShareType, CDXSettingTypeEnumeration, @"Default Share Type" },
     { CDXAppSettingsActionButtonsOnLeftSide, CDXSettingTypeEnumeration, @"Action Buttons" },
     { CDXAppSettingsDoneButtonOnLeftSide, CDXSettingTypeEnumeration, @"Done Button" },
     { CDXAppSettingsAllKeyboardSymbols, CDXSettingTypeBoolean, @"All Unicode Symbols" },
@@ -67,6 +69,7 @@ static NSString *settingsUserDefaultsKeys[] = {
     @"IdleTimer",
     @"CloseTapCount",
     @"ShakeTapCount",
+    @"DefaultShareType",
     @"ActionButtonsOnLeftSide",
     @"DoneButtonOnLeftSide",
     @"AllKeyboardSymbols",
@@ -85,7 +88,7 @@ static const CDXAppSettingGroup groupsPhone[] = {
     { @"Internals", 2, CDXAppSettingsMigrationState },
 #endif
     { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
-    { @"Card Deck", 2, CDXAppSettingsCloseTapCount },
+    { @"Card Deck", 3, CDXAppSettingsCloseTapCount },
     { @"User Interface", 1, CDXAppSettingsDoneButtonOnLeftSide },
     { @"Keyboard", 1, CDXAppSettingsAllKeyboardSymbols },
     { @"", 0, 0 }
@@ -97,7 +100,7 @@ static const CDXAppSettingGroup groupsPad[] = {
     { @"Internals", 2, CDXAppSettingsMigrationState },
 #endif
     { @"Energy Saver", 1, CDXAppSettingsIdleTimer },
-    { @"Card Deck", 2, CDXAppSettingsCloseTapCount },
+    { @"Card Deck", 3, CDXAppSettingsCloseTapCount },
     { @"Keyboard", 1, CDXAppSettingsAllKeyboardSymbols },
     { @"", 0, 0 }
 };
@@ -170,6 +173,10 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
     [CDXAppSettings clearUserDefaultsForKey:settingsUserDefaultsKeys[CDXAppSettingsShakeTapCount]];
 }
 
+- (void)clearDefaultShareType {
+    [CDXAppSettings clearUserDefaultsForKey:settingsUserDefaultsKeys[CDXAppSettingsDefaultShareType]];
+}
+
 - (BOOL)enableIdleTimer {
     return [CDXAppSettings userDefaultsBooleanValueForKey:settingsUserDefaultsKeys[CDXAppSettingsIdleTimer] defaultsTo:NO];
 }
@@ -190,6 +197,15 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
 - (NSUInteger)shakeTapCount {
     NSUInteger value = [CDXAppSettings userDefaultsIntegerValueForKey:settingsUserDefaultsKeys[CDXAppSettingsShakeTapCount] defaultsTo:1];
     if (value >= 1 && value <= 3) {
+        return value;
+    } else {
+        return 0;
+    }
+}
+
+- (NSUInteger)defaultShareType {
+    NSUInteger value = [CDXAppSettings userDefaultsIntegerValueForKey:settingsUserDefaultsKeys[CDXAppSettingsDefaultShareType] defaultsTo:1];
+    if (value >= 1 && value <= 1) {
         return value;
     } else {
         return 0;
@@ -277,6 +293,8 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
             return [self closeTapCount] - 1;
         case CDXAppSettingsShakeTapCount:
             return [self shakeTapCount];
+        case CDXAppSettingsDefaultShareType:
+            return [self defaultShareType];
         case CDXAppSettingsDoneButtonOnLeftSide:
             return [self doneButtonOnLeftSide] ? 0 : 1;
         case CDXAppSettingsActionButtonsOnLeftSide:
@@ -316,6 +334,9 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
                 }
             }
             break;
+        case CDXAppSettingsDefaultShareType:
+            [CDXAppSettings setUserDefaultsIntegerValue:value forKey:settingsUserDefaultsKeys[tag]];
+            break;
         case CDXAppSettingsDoneButtonOnLeftSide:
         case CDXAppSettingsActionButtonsOnLeftSide:
             [CDXAppSettings setUserDefaultsBooleanValue:(value ? NO : YES) forKey:settingsUserDefaultsKeys[tag]];
@@ -333,13 +354,15 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
             return 3;
         case CDXAppSettingsShakeTapCount:
             return 4;
+        case CDXAppSettingsDefaultShareType:
+            return 2;
         case CDXAppSettingsDoneButtonOnLeftSide:
         case CDXAppSettingsActionButtonsOnLeftSide:
             return 2;
     }
 }
 
-- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag {
+- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag compact:(BOOL)compact {
     switch (tag) {
         default:
             return @"";
@@ -366,6 +389,14 @@ synthesize_singleton_methods(sharedAppSettings, CDXAppSettings);
                     return @"Shake or Double Tap";
                 case 3:
                     return @"Shake or Triple Tap";
+            }
+        case CDXAppSettingsDefaultShareType:
+            switch (value) {
+                default:
+                case 0:
+                    return @"carddecks:// URL";
+                case 1:
+                    return compact ? @".carddeck JSON" : @".carddeck JSON Document";
             }
         case CDXAppSettingsDoneButtonOnLeftSide:
         case CDXAppSettingsActionButtonsOnLeftSide:

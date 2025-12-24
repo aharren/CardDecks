@@ -3,7 +3,7 @@
 // CDXAppDelegate.m
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -337,6 +337,14 @@
         [[CDXAppSettings sharedAppSettings] setMigrationState:migrationState_3];
     }
     
+    const NSUInteger migrationState_4 = 400;
+    if ([[CDXAppSettings sharedAppSettings] migrationState] < migrationState_4) {
+        // reset some settings
+        [[CDXAppSettings sharedAppSettings] clearDefaultShareType];
+
+        [[CDXAppSettings sharedAppSettings] setMigrationState:migrationState_4];
+    }
+
     return decks;
 }
 

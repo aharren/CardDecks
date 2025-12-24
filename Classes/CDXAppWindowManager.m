@@ -3,7 +3,7 @@
 // CDXAppWindowManager.m
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,6 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
         deviceOrientation = UIDeviceOrientationPortrait;
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuControllerWillHideMenu:) name:UIMenuControllerWillHideMenuNotification object:nil];
     }
     return self;
 }
@@ -56,9 +55,13 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
 - (UIEdgeInsets)safeAreaInsets {
     // we only consider portrait mode here, because the app is always in portrait mode
     // since iOS 12, top also reflects the size of the status bar; so, we use bottom here for detection
+    qltrace(@"top %f bottom %f", window.safeAreaInsets.top, window.safeAreaInsets.bottom);
     CGFloat inset = 0;
     if (window.safeAreaInsets.bottom > 0) {
         inset = 38;
+        if (window.safeAreaInsets.top > 50) {
+            inset = 54;
+        }
     }
     return UIEdgeInsetsMake(inset, 0, inset, 0);
 }
@@ -68,6 +71,7 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     CGFloat maxTopBottomInset = MAX(insets.top, insets.bottom);
     insets.top = maxTopBottomInset;
     insets.bottom = maxTopBottomInset;
+    qltrace(@"top %f bottom %f", insets.top, insets.bottom);
     return insets;
 }
 
@@ -133,13 +137,6 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     }
 }
 
-- (void)menuControllerWillHideMenu:(NSNotification *)notification {
-    UIViewController *vc = [self visibleViewController];
-    if ([vc conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
-        [(UIViewController<CDXAppWindowViewController> *)vc menuControllerWillHideMenu];
-    }
-}
-
 - (void)showNoticeWithImageNamed:(NSString *)name text:(NSString *)text timeInterval:(NSTimeInterval)timeInterval orientation:(UIDeviceOrientation)orientation view:(UIView*)viewOrNil {
     qltrace();
     [[NSBundle mainBundle] loadNibNamed:@"CDXAppWindowNoticeView" owner:self options:nil];
@@ -163,14 +160,14 @@ synthesize_singleton_definition(sharedAppWindowManager, CDXAppWindowManager);
     ivar_release_and_clear(messageView);
 }
 
-- (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated {
+- (void)presentModalViewController:(UIViewController *)modalViewController animated:(BOOL)animated {
     qltrace();
-    [[self visibleViewController] presentViewController:viewController animated:animated completion:NULL];
+    [[self visibleViewController] presentViewController:modalViewController animated:animated completion:NULL];
 }
 
-- (void)presentModalViewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem animated:(BOOL)animated {
+- (void)presentModalViewController:(UIViewController *)modalViewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem forViewController:(UIViewController *)fromViewController animated:(BOOL)animated {
     qltrace();
-    [[self visibleViewController] presentViewController:viewController animated:animated completion:NULL];
+    [[self visibleViewController] presentViewController:modalViewController animated:animated completion:NULL];
 }
 
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
@@ -345,7 +342,7 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
 @end
 
 
-@interface CDXAppWindowManagerPad : CDXAppWindowManager<UIPopoverControllerDelegate> {
+@interface CDXAppWindowManagerPad : CDXAppWindowManager {
     
 @protected
     UISplitViewController* splitViewController;
@@ -355,8 +352,6 @@ synthesize_singleton_methods(sharedAppWindowManagerPhone, CDXAppWindowManagerPho
     
     UIViewController<CDXAppWindowViewController> * initialLeftViewController;
     UIViewController<CDXAppWindowViewController> * initialRightViewController;
-    
-    UIPopoverController *modalViewControllerContainer;
 }
 
 @end
@@ -447,50 +442,24 @@ synthesize_singleton_methods(sharedAppWindowManagerPad, CDXAppWindowManagerPad);
     [window makeKeyAndVisible];
 }
 
-- (void)menuControllerWillHideMenu:(NSNotification *)notification {
-    UIViewController *vcleft = [leftNavigationController visibleViewController];
-    if ([vcleft conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
-        [(UIViewController<CDXAppWindowViewController> *)vcleft menuControllerWillHideMenu];
-    }
-    UIViewController *vcright = [rightNavigationController visibleViewController];
-    if ([vcright conformsToProtocol:@protocol(CDXAppWindowViewController)]) {
-        [(UIViewController<CDXAppWindowViewController> *)vcright menuControllerWillHideMenu];
-    }
+- (void)presentModalViewController:(UIViewController *)modalViewController animated:(BOOL)animated {
+    qltrace();
+    modalViewController.preferredContentSize = window.bounds.size;
+    [splitViewController presentViewController:modalViewController animated:animated completion:NULL];
 }
 
-- (void)presentModalViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    qltrace();
-    if (modalViewControllerContainer != nil) {
-        [self dismissModalViewControllerAnimated:animated];
-    }
-    
-    [splitViewController presentViewController:viewController animated:animated completion:NULL];
-}
-
-- (void)presentModalViewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem animated:(BOOL)animated {
-    qltrace();
-    if (modalViewControllerContainer != nil) {
-        [self dismissModalViewControllerAnimated:animated];
-        return;
-    }
-    
-    ivar_assign(modalViewControllerContainer, [[UIPopoverController alloc] initWithContentViewController:viewController]);
-    modalViewControllerContainer.delegate = self;
-    modalViewControllerContainer.popoverContentSize = CGSizeMake(520, 820);
-
-    [modalViewControllerContainer presentPopoverFromBarButtonItem:barButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:animated];
-}
-
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
-    qltrace();
-    [self dismissModalViewControllerAnimated:NO];
+- (void)presentModalViewController:(UIViewController *)modalViewController fromBarButtonItem:(UIBarButtonItem*)barButtonItem forViewController:(UIViewController *)forViewController animated:(BOOL)animated {
+    qltrace(@"%@", barButtonItem);
+    modalViewController.modalPresentationStyle = UIModalPresentationPopover;
+    modalViewController.preferredContentSize = CGSizeMake(400, MAX(400, window.bounds.size.height - 150));
+    modalViewController.popoverPresentationController.sourceItem = barButtonItem;
+    modalViewController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionDown;
+    [forViewController presentViewController:modalViewController animated:YES completion:NULL];
 }
 
 - (void)dismissModalViewControllerAnimated:(BOOL)animated {
     qltrace();
     [splitViewController dismissViewControllerAnimated:animated completion:NULL];
-    [modalViewControllerContainer dismissPopoverAnimated:animated];
-    ivar_release_and_clear(modalViewControllerContainer);
 }
 
 - (void)showActionSheet:(CDXActionSheet *)actionSheet viewController:(UIViewController *)viewController fromBarButtonItem:(UIBarButtonItem *)barButtonItem {

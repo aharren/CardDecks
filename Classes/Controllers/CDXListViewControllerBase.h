@@ -3,7 +3,7 @@
 // CDXListViewControllerBase.h
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -39,18 +39,17 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
     CDXTableViewCellTagNone = 0
 };
 
-@interface CDXListViewControllerBase : UIViewController<CDXAppWindowViewController> {
+@interface CDXListViewControllerBase : UIViewController<CDXAppWindowViewController, UIEditMenuInteractionDelegate> {
     
 @protected
     IBOutlet UITableView *viewTableView;
-    IBOutlet UIToolbar *viewToolbar;
     CGFloat viewTableViewContentOffsetY;
     BOOL keepViewTableViewContentOffsetY;
-    IBOutlet UIBarButtonItem *editButton;
-    IBOutlet UIBarButtonItem *settingsButton;
+    UIButton *editButton;
     
-    UIActivityIndicatorView *activityIndicator;
-    
+    UIEditMenuInteraction *tableViewMenuInteraction;
+    UIEditMenuInteraction *toolbarMenuInteraction;
+
     UIColor *tableCellTextTextColor;
     UIColor *tableCellTextTextColorNoCards;
     UIColor *tableCellTextTextColorAction;
@@ -70,17 +69,21 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
     NSString *reuseIdentifierSection2;
     
     UILongPressGestureRecognizer *viewTableViewLongPressRecognizer;
-    UILongPressGestureRecognizer *viewToolbarLongPressRecognizer;
     UITapGestureRecognizer *viewTableViewTapRecognizer;
     CDXListViewControllerBasePerformActionState performActionState;
     NSIndexPath *performActionTableViewIndexPath;
-    UIBarButtonItem *performActionToolbarBarButtonItem;
+    UIButton *performActionToolbarButton;
     
     CGPoint currentTouchLocationInWindow;
     NSUInteger currentTag;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil titleText:(NSString*)titleText backButtonText:(NSString *)backButtonText;
+
+- (UIButton *)systemButtonWithImageNamed:(NSString *)imageName action:(SEL)action;
+- (UIButton *)systemButtonWithImageNamed:(NSString *)imageName action:(SEL)action longPressAction:(SEL)longPressAction;
+- (UIBarButtonItem *)barButtonItemWithButton:(UIButton *)button;
+- (void)buildToolbarWithBarButtonItemsLeft:(NSArray<UIBarButtonItem *> *)left middle:(UIBarButtonItem *)middle right:(NSArray<UIBarButtonItem *> *)right;
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSection:(NSUInteger)section;
@@ -89,22 +92,23 @@ typedef NS_OPTIONS(NSInteger, CDXTableViewCellTag) {
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
 - (void)performAction:(SEL)action withSender:(id)sender tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
 
-- (BOOL)canPerformAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
-- (void)performAction:(SEL)action withSender:(id)sender barButtonItem:(UIBarButtonItem *)barButtonItem;
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender button:(UIButton *)button;
+- (void)performAction:(SEL)action withSender:(id)sender button:(UIButton *)button;
 
-- (void)menu:(UIMenuController *)menuController itemsForTableView:(UITableView *)tableView cell:(UITableViewCell *)cell;
-- (void)menu:(UIMenuController *)menuController itemsForBarButtonItem:(UIBarButtonItem *)barButtonItem;
+- (void)editMenuInteraction:(UIEditMenuInteraction *)interaction willDismissMenuForConfiguration:(UIEditMenuConfiguration *)configuration animator:(id<UIEditMenuInteractionAnimating>)animator;
+- (UIMenu *)editMenuInteraction:(UIEditMenuInteraction *)interaction menuForConfiguration:(UIEditMenuConfiguration *)configuration suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions;
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
 - (void)updateToolbarButtons;
 
-- (IBAction)editButtonPressed;
+- (void)editButtonPressed;
 
 - (void)performBlockingSelector:(SEL)selector withObject:(NSObject *)object;
 - (void)performBlockingSelectorEnd;
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+
+- (void)handleToolbarLongPressGesture:(UILongPressGestureRecognizer *)sender;
 
 @end
 

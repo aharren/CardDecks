@@ -3,7 +3,7 @@
 // CDXDevice.m
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,6 @@
 @synthesize deviceScreenScale;
 @synthesize deviceScreenSize;
 @synthesize deviceSystemVersionString;
-@synthesize useImageBasedRendering;
 @synthesize useLargeTitles;
 
 synthesize_singleton(sharedDevice, CDXDevice);
@@ -100,14 +99,10 @@ static NSString* CDXDeviceGetSystemInformationByName(const char* name) {
             ivar_assign_and_copy(deviceUIIdiomString, @"phone");
         }
         
-        // use image-based rendering on devices with non-retina displays, and
-        // first-retina-generations of iPhone and iPod
-        useImageBasedRendering = (deviceScreenScale <= 1.0) || ([deviceMachine hasPrefix:@"iphone3,"]) || ([deviceMachine hasPrefix:@"ipod4,"]);
-        
         // large devices, starting with iPhone 6's screen size
         useLargeTitles = (deviceScreenSize.height >= 1334) && deviceUIIdiom == CDXDeviceUIIdiomPhone;
         
-        qltrace(@"%@ %@ %d %d %f %f-%f %@ %d %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, deviceScreenSize.width, deviceScreenSize.height, deviceSystemVersionString, useImageBasedRendering ? 1 : 0, useLargeTitles ? 1 : 0);
+        qltrace(@"%@ %@ %d %d %f %f-%f %@ %d", deviceModel, deviceMachine, deviceType, deviceUIIdiom, deviceScreenScale, deviceScreenSize.width, deviceScreenSize.height, deviceSystemVersionString, useLargeTitles ? 1 : 0);
     }
     return self;
 }

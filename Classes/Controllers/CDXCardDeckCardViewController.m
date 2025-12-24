@@ -3,7 +3,7 @@
 // CDXCardDeckCardViewController.m
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -192,17 +192,9 @@
         CDXCard *card = [cardDeck cardAtIndex:cardDeckViewContext.currentCardIndex orCard:nil];
         if (card != nil) {
             CGRect frame = [[CDXAppWindowManager sharedAppWindowManager] frameWithMaxSafeAreaInsets:self.view.frame];
-            if ([[CDXDevice sharedDevice] useImageBasedRendering]) {
-                UIImage *image = [[CDXImageFactory sharedImageFactory]
-                                  imageForCard:card
-                                  size:frame.size
-                                  deviceOrientation:orientation];
-                ivar_assign(initialView, [[UIImageView alloc] initWithImage:image]);
-            } else {
-                CDXCardView *cardView = [[CDXCardView alloc] initWithFrame:CGRectMake(0,0, 1,1)];
-                [cardView setCard:card size:frame.size deviceOrientation:orientation preview:NO];
-                ivar_assign(initialView, cardView);
-            }
+            CDXCardView *cardView = [[CDXCardView alloc] initWithFrame:CGRectMake(0,0, 1,1)];
+            [cardView setCard:card size:frame.size deviceOrientation:orientation preview:NO];
+            ivar_assign(initialView, cardView);
             initialView.frame = frame;
             [self.view insertSubview:initialView atIndex:0];
         }
@@ -267,6 +259,15 @@
         indexDotsViewFrame.origin.y -= maxSafeAreaInsets.bottom / 2;
         indexDotsView.frame = indexDotsViewFrame;
     }
+    
+    if (maxSafeAreaInsets.top != 0) {
+        // configure the timer signal view based on screen layout
+        CGRect frame = [[CDXAppWindowManager sharedAppWindowManager] frameWithMaxSafeAreaInsets:self.view.frame];
+        CGRect timerSignalViewFrame = timerSignalView.frame;
+        timerSignalViewFrame.origin.x = 10;
+        timerSignalViewFrame.origin.y = frame.origin.y - timerSignalViewFrame.size.height - 8;
+        timerSignalView.frame = timerSignalViewFrame;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -329,9 +330,6 @@
     }
 
     [self configureActionsViewAnimated:YES];
-}
-
-- (void)menuControllerWillHideMenu {
 }
 
 - (NSUInteger)cardsViewDataSourceCardsCount {
@@ -422,7 +420,7 @@
     }
     
     // shake event received, shuffle the deck
-    if (event.type == UIEventSubtypeMotionShake) {
+    if (event.subtype == UIEventSubtypeMotionShake) {
         [self handleShakeEvent];
     }
     

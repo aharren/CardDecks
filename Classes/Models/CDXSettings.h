@@ -3,7 +3,7 @@
 // CDXSettings.h
 //
 //
-// Copyright (c) 2009-2021 Arne Harren <ah@0xc0.de>
+// Copyright (c) 2009-2025 Arne Harren <ah@0xc0.de>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -59,7 +59,7 @@ typedef struct {
 - (void)setEnumerationValue:(NSUInteger)value  forSettingWithTag:(NSUInteger)tag;
 
 - (NSUInteger)enumerationValuesCountForSettingWithTag:(NSUInteger)tag;
-- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag;
+- (NSString *)descriptionForEumerationValue:(NSUInteger)value forSettingWithTag:(NSUInteger)tag compact:(BOOL)compact;
 
 - (NSString *)textValueForSettingWithTag:(NSUInteger)tag;
 - (void)setTextValue:(NSString *)value forSettingWithTag:(NSUInteger)tag;
